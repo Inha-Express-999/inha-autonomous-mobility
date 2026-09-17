@@ -1,0 +1,10 @@
+Elevation derivatives produced using Copernicus WorldDEM-30.
+See original licence: ../../Docs/MapResearch/2026-09-17/copernicus_eula.pdf
+Licence online: https://docs.sentinel-hub.com/api/latest/static/files/data/dem/resources/license/License-COPDEM-30.pdf
+Full mandatory attribution and liability wording is in Article 6 of that licence and must accompany any public distribution.
+This local research dataset has not been published. Preserve the licence when distributing it.
+Derived relief is an artistic low-envelope/smoothed approximation, not a surveyed bare-earth model.
+
+OSM features: © OpenStreetMap contributors, ODbL 1.0.
+https://www.openstreetmap.org/copyright
+Preserve source IDs and attribution. Source and derived map data are not licensed as project MIT code.

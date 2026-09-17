@@ -7,3 +7,5 @@
 *.unity text eol=lf
 *.prefab text eol=lf
 Assets/InhaCampus/Meshes/*.asset filter=lfs diff=lfs merge=lfs -text
+Docs/MapResearch/2026-09-17/*.osm -text
+Docs/MapResearch/2026-09-17/*.xml -text

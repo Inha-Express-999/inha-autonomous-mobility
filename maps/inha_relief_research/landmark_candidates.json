@@ -1,0 +1,718 @@
+[
+  {
+    "osm_type": "node",
+    "osm_id": "2273253114",
+    "tags": {
+      "bus": "yes",
+      "highway": "bus_stop",
+      "local_ref": "woongbijae",
+      "name": "(웅비재)woongbijae",
+      "network": "인천광역시 시내버스",
+      "network:ko": "인천광역시 시내버스",
+      "network:wikidata": "Q12613485",
+      "public_transport": "platform"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        126.6536904,
+        37.4470961
+      ]
+    },
+    "status": "osm_candidate_not_verified_stop"
+  },
+  {
+    "osm_type": "node",
+    "osm_id": "4741793208",
+    "tags": {
+      "amenity": "university",
+      "name": "인하대학교 정문"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        126.6531848,
+        37.4477024
+      ]
+    },
+    "status": "osm_candidate_not_verified_stop"
+  },
+  {
+    "osm_type": "node",
+    "osm_id": "4741793209",
+    "tags": {
+      "barrier": "entrance",
+      "name": "인하대학교 후문"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        126.6564271,
+        37.4511471
+      ]
+    },
+    "status": "osm_candidate_not_verified_stop"
+  },
+  {
+    "osm_type": "node",
+    "osm_id": "4741793210",
+    "tags": {
+      "amenity": "university",
+      "name": "인하대학교 후문쪽문"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        126.6546437,
+        37.4516913
+      ]
+    },
+    "status": "osm_candidate_not_verified_stop"
+  },
+  {
+    "osm_type": "node",
+    "osm_id": "5910775268",
+    "tags": {
+      "name": "인하대",
+      "name:en": "Inha University",
+      "name:ko": "인하대",
+      "operator": "한국철도공사",
+      "operator:en": "Korea Railroad Corporation",
+      "operator:ko": "한국철도공사",
+      "operator:short": "KORAIL",
+      "operator:type": "public",
+      "operator:wikidata": "Q18169",
+      "operator:wikipedia": "en:Korail",
+      "public_transport": "stop_position",
+      "railway": "stop",
+      "ref": "K269",
+      "train": "yes"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        126.6500767,
+        37.4476431
+      ]
+    },
+    "status": "osm_candidate_not_verified_stop"
+  },
+  {
+    "osm_type": "node",
+    "osm_id": "5910775269",
+    "tags": {
+      "name": "인하대",
+      "name:en": "Inha Univ.",
+      "name:ja": "インハデ(仁荷大)",
+      "name:ko": "인하대",
+      "name:zh": "仁荷大学",
+      "operator": "한국철도공사",
+      "operator:en": "Korea Railroad Corporation",
+      "operator:ko": "한국철도공사",
+      "operator:short": "KORAIL",
+      "operator:type": "public",
+      "operator:wikidata": "Q18169",
+      "operator:wikipedia": "en:Korail",
+      "public_transport": "station",
+      "railway": "station",
+      "station": "train",
+      "train": "yes",
+      "wheelchair": "yes",
+      "wikidata": "Q1593043",
+      "wikipedia": "ko:인하대역"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        126.6497844,
+        37.4482473
+      ]
+    },
+    "status": "osm_candidate_not_verified_stop"
+  },
+  {
+    "osm_type": "node",
+    "osm_id": "5910775615",
+    "tags": {
+      "name": "인하대",
+      "name:en": "Inha University",
+      "name:ko": "인하대",
+      "operator": "한국철도공사",
+      "operator:en": "Korea Railroad Corporation",
+      "operator:ko": "한국철도공사",
+      "operator:short": "KORAIL",
+      "operator:type": "public",
+      "operator:wikidata": "Q18169",
+      "operator:wikipedia": "en:Korail",
+      "public_transport": "stop_position",
+      "railway": "stop",
+      "ref": "K269",
+      "train": "yes"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        126.6493767,
+        37.4489904
+      ]
+    },
+    "status": "osm_candidate_not_verified_stop"
+  },
+  {
+    "osm_type": "node",
+    "osm_id": "9767086762",
+    "tags": {
+      "entrance": "entrance",
+      "ref": "2호관 북쪽입구"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        126.6558381,
+        37.4509946
+      ]
+    },
+    "status": "osm_candidate_not_verified_stop"
+  },
+  {
+    "osm_type": "node",
+    "osm_id": "9767122969",
+    "tags": {
+      "entrance": "entrance",
+      "ref": "비룡플라자 입구1"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        126.6563688,
+        37.4496712
+      ]
+    },
+    "status": "osm_candidate_not_verified_stop"
+  },
+  {
+    "osm_type": "node",
+    "osm_id": "9767122970",
+    "tags": {
+      "entrance": "yes",
+      "ref": "비룡플라자 입구2"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        126.6563578,
+        37.4491754
+      ]
+    },
+    "status": "osm_candidate_not_verified_stop"
+  },
+  {
+    "osm_type": "node",
+    "osm_id": "10058101213",
+    "tags": {
+      "access": "permit",
+      "door": "automatic",
+      "entrance": "entrance",
+      "level": "1",
+      "ref": "2호관 남쪽 출입구",
+      "wheelchair": "yes"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        126.6548306,
+        37.4500506
+      ]
+    },
+    "status": "osm_candidate_not_verified_stop"
+  },
+  {
+    "osm_type": "node",
+    "osm_id": "10058101214",
+    "tags": {
+      "access": "permit",
+      "door": "hinged",
+      "entrance": "entrance",
+      "level": "2",
+      "ref": "2호관 동쪽 출입구",
+      "wheelchair": "limited"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        126.6557078,
+        37.4502393
+      ]
+    },
+    "status": "osm_candidate_not_verified_stop"
+  },
+  {
+    "osm_type": "node",
+    "osm_id": "10058120919",
+    "tags": {
+      "access": "private",
+      "door": "shutter",
+      "entrance": "gate",
+      "level": "1",
+      "ref": "2호관 구조시험동 입구",
+      "wheelchair": "no"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [
+        126.6543983,
+        37.4504961
+      ]
+    },
+    "status": "osm_candidate_not_verified_stop"
+  },
+  {
+    "osm_type": "way",
+    "osm_id": "217948855",
+    "tags": {
+      "building": "dormitory",
+      "name": "웅비재",
+      "name:en": "Woongbijae (Dormitory #1)"
+    },
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            126.6534147,
+            37.4467441
+          ],
+          [
+            126.6535632,
+            37.4469725
+          ],
+          [
+            126.6537652,
+            37.4468897
+          ],
+          [
+            126.6537746,
+            37.4469042
+          ],
+          [
+            126.6538671,
+            37.4468663
+          ],
+          [
+            126.6538618,
+            37.4468582
+          ],
+          [
+            126.6541291,
+            37.4467487
+          ],
+          [
+            126.654138,
+            37.4467624
+          ],
+          [
+            126.6542252,
+            37.4467267
+          ],
+          [
+            126.654219,
+            37.4467172
+          ],
+          [
+            126.6544323,
+            37.4466298
+          ],
+          [
+            126.6542209,
+            37.4463047
+          ],
+          [
+            126.6540782,
+            37.4463632
+          ],
+          [
+            126.6542442,
+            37.4466185
+          ],
+          [
+            126.6541739,
+            37.4466473
+          ],
+          [
+            126.6541591,
+            37.4466246
+          ],
+          [
+            126.654073,
+            37.4466599
+          ],
+          [
+            126.6540878,
+            37.4466826
+          ],
+          [
+            126.6540267,
+            37.4467076
+          ],
+          [
+            126.6538611,
+            37.446453
+          ],
+          [
+            126.6537139,
+            37.4465133
+          ],
+          [
+            126.6538768,
+            37.4467639
+          ],
+          [
+            126.6538103,
+            37.4467912
+          ],
+          [
+            126.6537941,
+            37.4467663
+          ],
+          [
+            126.6537049,
+            37.4468028
+          ],
+          [
+            126.6537196,
+            37.4468254
+          ],
+          [
+            126.6536648,
+            37.4468479
+          ],
+          [
+            126.6535375,
+            37.446652
+          ],
+          [
+            126.6534599,
+            37.4466838
+          ],
+          [
+            126.6534813,
+            37.4467168
+          ],
+          [
+            126.6534147,
+            37.4467441
+          ]
+        ]
+      ]
+    },
+    "status": "osm_candidate_not_verified_stop"
+  },
+  {
+    "osm_type": "way",
+    "osm_id": "218017288",
+    "tags": {
+      "building": "university",
+      "name": "5호관",
+      "name:en": "Building #5"
+    },
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            126.6568616,
+            37.448707
+          ],
+          [
+            126.6568308,
+            37.4486567
+          ],
+          [
+            126.6567934,
+            37.4486683
+          ],
+          [
+            126.6567479,
+            37.4486013
+          ],
+          [
+            126.6567821,
+            37.4485871
+          ],
+          [
+            126.6567629,
+            37.4485631
+          ],
+          [
+            126.6570927,
+            37.4484328
+          ],
+          [
+            126.6570927,
+            37.4483929
+          ],
+          [
+            126.6571089,
+            37.4483632
+          ],
+          [
+            126.6571414,
+            37.4483452
+          ],
+          [
+            126.6571706,
+            37.4483336
+          ],
+          [
+            126.6572096,
+            37.4483336
+          ],
+          [
+            126.6572275,
+            37.4483426
+          ],
+          [
+            126.6572449,
+            37.4483537
+          ],
+          [
+            126.6575475,
+            37.4482201
+          ],
+          [
+            126.6575637,
+            37.4482459
+          ],
+          [
+            126.6576075,
+            37.4482278
+          ],
+          [
+            126.6576482,
+            37.4483052
+          ],
+          [
+            126.6576075,
+            37.448322
+          ],
+          [
+            126.6576417,
+            37.4483774
+          ],
+          [
+            126.6568616,
+            37.448707
+          ]
+        ]
+      ]
+    },
+    "status": "osm_candidate_not_verified_stop"
+  },
+  {
+    "osm_type": "way",
+    "osm_id": "218036946",
+    "tags": {
+      "building": "yes",
+      "name": "2호관",
+      "name:en": "Building #2"
+    },
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            126.6586523,
+            37.4479481
+          ],
+          [
+            126.6588401,
+            37.4478782
+          ],
+          [
+            126.6585815,
+            37.4474673
+          ],
+          [
+            126.6583884,
+            37.4475495
+          ],
+          [
+            126.6586523,
+            37.4479481
+          ]
+        ]
+      ]
+    },
+    "status": "osm_candidate_not_verified_stop"
+  },
+  {
+    "osm_type": "way",
+    "osm_id": "218081857",
+    "tags": {
+      "building": "university",
+      "name": "하이테크센터",
+      "name:en": "Inha Hi-Tech Center",
+      "operator": "인하대학교"
+    },
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            126.6572379,
+            37.4502699
+          ],
+          [
+            126.6574273,
+            37.4501721
+          ],
+          [
+            126.6576761,
+            37.4505509
+          ],
+          [
+            126.6577606,
+            37.4506905
+          ],
+          [
+            126.6568184,
+            37.4510394
+          ],
+          [
+            126.6568052,
+            37.4510133
+          ],
+          [
+            126.6566866,
+            37.4507888
+          ],
+          [
+            126.6574065,
+            37.450528
+          ],
+          [
+            126.6573682,
+            37.4504694
+          ],
+          [
+            126.6572379,
+            37.4502699
+          ]
+        ]
+      ]
+    },
+    "status": "osm_candidate_not_verified_stop"
+  },
+  {
+    "osm_type": "way",
+    "osm_id": "218189298",
+    "tags": {
+      "building": "yes",
+      "building:levels": "14",
+      "name": "60주년기념관",
+      "name:en": "60th Anniversary Hall",
+      "surface": "glass"
+    },
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            126.6541464,
+            37.450336
+          ],
+          [
+            126.654848,
+            37.4513115
+          ],
+          [
+            126.6545519,
+            37.4514372
+          ],
+          [
+            126.6541926,
+            37.4509034
+          ],
+          [
+            126.6538579,
+            37.450461
+          ],
+          [
+            126.6541464,
+            37.450336
+          ]
+        ]
+      ]
+    },
+    "status": "osm_candidate_not_verified_stop"
+  },
+  {
+    "osm_type": "way",
+    "osm_id": "218397211",
+    "tags": {
+      "building": "dormitory",
+      "name": "비룡재",
+      "name:en": "Biryongjae (Dormitory #2)"
+    },
+    "geometry": {
+      "type": "Polygon",
+      "coordinates": [
+        [
+          [
+            126.659709,
+            37.4481043
+          ],
+          [
+            126.6598776,
+            37.4480394
+          ],
+          [
+            126.6596812,
+            37.4477614
+          ],
+          [
+            126.6596927,
+            37.4474544
+          ],
+          [
+            126.6596822,
+            37.4474078
+          ],
+          [
+            126.6596613,
+            37.4473695
+          ],
+          [
+            126.6595321,
+            37.4471669
+          ],
+          [
+            126.6593765,
+            37.447221
+          ],
+          [
+            126.6595025,
+            37.4474294
+          ],
+          [
+            126.6595128,
+            37.4474623
+          ],
+          [
+            126.6595048,
+            37.4477725
+          ],
+          [
+            126.6595205,
+            37.4478497
+          ],
+          [
+            126.659709,
+            37.4481043
+          ]
+        ]
+      ]
+    },
+    "status": "osm_candidate_not_verified_stop"
+  }
+]

@@ -1,0 +1,55 @@
+{
+  "project_version": "0.1.0.0",
+  "map_version": "inha-relief-research-1",
+  "status": "approximate_visual_only",
+  "source": {
+    "crs": "EPSG:4326",
+    "resolution": [
+      0.0002777777777777778,
+      0.0002777777777777778
+    ],
+    "nodata": null,
+    "width": 3600,
+    "height": 3600
+  },
+  "source_sha256": "f530dd28308ecd6c5ceb0405dc1ffb7113bcafdec30d023de50f16dc433a274f",
+  "crs_wkt": "PROJCRS[\"unknown\",BASEGEOGCRS[\"unknown\",DATUM[\"World Geodetic System 1984\",ELLIPSOID[\"WGS 84\",6378137,298.257223563,LENGTHUNIT[\"metre\",1]],ID[\"EPSG\",6326]],PRIMEM[\"Greenwich\",0,ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8901]]],CONVERSION[\"unknown\",METHOD[\"Azimuthal Equidistant\",ID[\"EPSG\",1125]],PARAMETER[\"Latitude of natural origin\",37.4506,ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8801]],PARAMETER[\"Longitude of natural origin\",126.6535,ANGLEUNIT[\"degree\",0.0174532925199433],ID[\"EPSG\",8802]],PARAMETER[\"False easting\",0,LENGTHUNIT[\"metre\",1],ID[\"EPSG\",8806]],PARAMETER[\"False northing\",0,LENGTHUNIT[\"metre\",1],ID[\"EPSG\",8807]]],CS[Cartesian,2],AXIS[\"(E)\",east,ORDER[1],LENGTHUNIT[\"metre\",1,ID[\"EPSG\",9001]]],AXIS[\"(N)\",north,ORDER[2],LENGTHUNIT[\"metre\",1,ID[\"EPSG\",9001]]]]",
+  "vertical_datum": "EGM2008 orthometric source heights; relative visual offset",
+  "origin_wgs84": [
+    126.6535,
+    37.4506
+  ],
+  "reference_height_m": 17.458595275878906,
+  "unity": {
+    "resolution": 257,
+    "size_x_m": 2048.0,
+    "size_z_m": 2048.0,
+    "position_x": -900.0,
+    "position_y": -16.0,
+    "position_z": -900.0,
+    "size_y_m": 100.0,
+    "raw": "terrain_south_first_u16.raw",
+    "byte_order": "little",
+    "row_order": "south_to_north",
+    "columns": "west_to_east"
+  },
+  "source_dsm_range_m": [
+    2.0881900787353516,
+    109.73023223876953
+  ],
+  "approximate_range_m": [
+    3.328233003616333,
+    100.25790405273438
+  ],
+  "quantization_error_m": 0.0007661027967245104,
+  "grid_spacing_m": 8.0,
+  "algorithm": "32m sampling, 3x3 p20 low envelope, two 3x3 mean passes, bilinear 8m interpolation",
+  "limitations": [
+    "Not bare-earth survey",
+    "Buildings may remain or real hills may be suppressed",
+    "Not valid for slope/accessibility certification",
+    "Existing map uses approximate local projection; alignment migration required"
+  ],
+  "feature_count": 983,
+  "candidate_count": 19
+}
