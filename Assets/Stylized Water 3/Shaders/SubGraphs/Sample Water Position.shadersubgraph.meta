@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: ce8ad133d43b93a499457fea2e42aa4a
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 60072b568d64c40a485e0fc55012dc9f, type: 3}
+  documentationPath: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 287769
+  packageName: Stylized Water 3
+  packageVersion: 3.3.1
+  assetPath: Assets/Stylized Water 3/Shaders/SubGraphs/Sample Water Position.shadersubgraph
+  uploadId: 997146

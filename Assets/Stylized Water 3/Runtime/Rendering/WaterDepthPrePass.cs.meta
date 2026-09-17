@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: ee414025d7224501aa15d27be26b3991
+timeCreated: 1788427132
+AssetOrigin:
+  serializedVersion: 1
+  productId: 287769
+  packageName: Stylized Water 3
+  packageVersion: 3.3.1
+  assetPath: Assets/Stylized Water 3/Runtime/Rendering/WaterDepthPrePass.cs
+  uploadId: 997146

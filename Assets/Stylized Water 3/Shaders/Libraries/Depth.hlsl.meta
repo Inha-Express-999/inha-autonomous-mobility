@@ -1,0 +1,10 @@
+﻿fileFormatVersion: 2
+guid: a0df975bdca3479e96b0db2e5d34113f
+timeCreated: 1788503104
+AssetOrigin:
+  serializedVersion: 1
+  productId: 287769
+  packageName: Stylized Water 3
+  packageVersion: 3.3.1
+  assetPath: Assets/Stylized Water 3/Shaders/Libraries/Depth.hlsl
+  uploadId: 997146

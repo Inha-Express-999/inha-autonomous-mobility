@@ -1,0 +1,68 @@
+{
+    "name": "sc.stylizedwater3.runtime",
+    "rootNamespace": "",
+    "references": [
+        "GUID:15fc0a57446b3144c949da3e2b9737a9",
+        "GUID:df380645f10b7bc4b97d4f5eb6303d95",
+        "GUID:d8b63aba1907145bea998dd612889d6b",
+        "GUID:e0cd26848372d4e5c891c569017e11f1",
+        "GUID:75ecb28acc33857438e533566abcb3be",
+        "GUID:f06555f75b070af458a003d92f9efb00",
+        "GUID:9cb5eaf8df574e829047543e7b48b611",
+        "GUID:21d1eb854b91ade49bc69a263d12bee2",
+        "GUID:d04eb9c554ad44ceab303cecf0c0cf82",
+        "GUID:75469ad4d38634e559750d17036d5f7c",
+        "GUID:2665a8d13d1b3f18800f46e256720795",
+        "GUID:6bf9d12c8968c4c0e8a1d8545e5deac6"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [
+        {
+            "name": "com.unity.render-pipelines.universal",
+            "expression": "17.0.3",
+            "define": "URP"
+        },
+        {
+            "name": "com.unity.visualeffectgraph",
+            "expression": "17.0.3",
+            "define": "VFX_GRAPH"
+        },
+        {
+            "name": "com.unity.splines",
+            "expression": "2.4.0",
+            "define": "SPLINES"
+        },
+        {
+            "name": "com.unity.modules.xr",
+            "expression": "1.0.0",
+            "define": "ENABLE_XR_MODULE"
+        },
+        {
+            "name": "com.unity.mathematics",
+            "expression": "1.3.0",
+            "define": "MATHEMATICS"
+        },
+        {
+            "name": "com.unity.inputsystem",
+            "expression": "1.11.0",
+            "define": "INPUT_SYSTEM_INSTALLED"
+        },
+        {
+            "name": "com.unity.burst",
+            "expression": "1.8.23",
+            "define": "BURST"
+        },
+        {
+            "name": "com.jbooth.microverse.splines",
+            "expression": "1.7.0",
+            "define": "MICROVERSE"
+        }
+    ],
+    "noEngineReferences": false
+}
