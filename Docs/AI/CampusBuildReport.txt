@@ -1,0 +1,1 @@
+Buildings: 26; road sections: 71; trees: 612; mesh assets: 225

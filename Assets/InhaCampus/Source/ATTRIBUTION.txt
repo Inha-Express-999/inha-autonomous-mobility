@@ -1,0 +1,8 @@
+Geographic data: © OpenStreetMap contributors, ODbL 1.0.
+https://www.openstreetmap.org/copyright
+https://opendatacommons.org/licenses/odbl/1-0/
+Source: https://www.openstreetmap.org/api/0.6/map?bbox=126.648,37.445,126.659,37.454
+Local transformed coordinate database: campus.json and road-surfaces.json.
+Origin: 37.4506 N, 126.6535 E; X east, Z north, metres.
+Building heights without source tags and facade/vegetation details are approximations.
+See Docs/AI/InhaCampus.md for provenance and reproduction.

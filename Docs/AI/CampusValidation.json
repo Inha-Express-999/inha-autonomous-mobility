@@ -1,0 +1,13 @@
+{
+  "scene": "Assets/InhaCampus/InhaCampus.unity",
+  "buildingGroups": 26,
+  "renderers": 232,
+  "colliders": 67,
+  "missingScripts": 0,
+  "runtimeBehaviours": 0,
+  "rigidbodies": 0,
+  "canvases": 0,
+  "roadSamples": 196,
+  "roadSurfaceHits": 196,
+  "failures": []
+}

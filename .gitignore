@@ -104,3 +104,13 @@ InitTestScene*.unity*
 
 # Auto-generated cache in Assets folder
 /[Aa]ssets/[Ss]ceneDependencyCache*
+
+# Local agent state and reference-only third-party photographs
+/.codex/
+/.agents/
+/Docs/AI/MainBuildingReference.jpg
+/Docs/AI/CampusReference.png
+__pycache__/
+.env
+.env.*
+!.env.example
