@@ -1,0 +1,4 @@
+# Downloaded references and full tile are local research cache; hashes/URLs stay tracked.
+*.tif
+*.html
+copernicus_eula.pdf

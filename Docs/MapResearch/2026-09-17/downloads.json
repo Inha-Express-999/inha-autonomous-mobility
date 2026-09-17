@@ -1,0 +1,72 @@
+[
+  {
+    "name": "copernicus_n37_e126.tif",
+    "url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N37_00_E126_00_DEM/Copernicus_DSM_COG_10_N37_00_E126_00_DEM.tif",
+    "resolved_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N37_00_E126_00_DEM/Copernicus_DSM_COG_10_N37_00_E126_00_DEM.tif",
+    "retrieved_utc": "2026-09-17T09:07:15.155267+00:00",
+    "content_type": "image/tiff",
+    "bytes": 29862574,
+    "sha256": "f530dd28308ecd6c5ceb0405dc1ffb7113bcafdec30d023de50f16dc433a274f",
+    "status": "downloaded"
+  },
+  {
+    "name": "copernicus_metadata.xml",
+    "url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N37_00_E126_00_DEM/Copernicus_DSM_10_N37_00_E126_00.xml",
+    "resolved_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N37_00_E126_00_DEM/Copernicus_DSM_10_N37_00_E126_00.xml",
+    "retrieved_utc": "2026-09-17T09:07:09.013540+00:00",
+    "content_type": "application/xml",
+    "bytes": 44725,
+    "sha256": "a3709a6f9133d94ccbaaa91bb1a2119de41fbce2e9ec4f51ed372960d9c8f84b",
+    "status": "downloaded"
+  },
+  {
+    "name": "copernicus_eula.pdf",
+    "url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N37_00_E126_00_DEM/INFO/eula_F.pdf",
+    "resolved_url": "https://copernicus-dem-30m.s3.amazonaws.com/Copernicus_DSM_COG_10_N37_00_E126_00_DEM/INFO/eula_F.pdf",
+    "retrieved_utc": "2026-09-17T09:07:09.267741+00:00",
+    "content_type": "application/pdf",
+    "bytes": 117522,
+    "sha256": "32049914c37f14e7d53b48d13d74a49e77c030236e2acc7a0df426f9344feba2",
+    "status": "downloaded"
+  },
+  {
+    "name": "copernicus_readme.html",
+    "url": "https://copernicus-dem-30m.s3.amazonaws.com/readme.html",
+    "resolved_url": "https://copernicus-dem-30m.s3.amazonaws.com/readme.html",
+    "retrieved_utc": "2026-09-17T09:07:08.816551+00:00",
+    "content_type": "text/html",
+    "bytes": 8536,
+    "sha256": "922461d55070e3c7e0cf2903ec54190d69e3773da2dc9e776a3f03566cfd56d2",
+    "status": "downloaded"
+  },
+  {
+    "name": "expanded_campus.osm",
+    "url": "https://www.openstreetmap.org/api/0.6/map?bbox=126.645,37.443,126.665,37.457",
+    "resolved_url": "https://www.openstreetmap.org/api/0.6/map?bbox=126.645,37.443,126.665,37.457",
+    "retrieved_utc": "2026-09-17T09:07:11.751994+00:00",
+    "content_type": "application/xml; charset=utf-8",
+    "bytes": 1401152,
+    "sha256": "cf400f997d72d4d42f057adf6ce5b54861c9d5dcdc28d944c2934ffa1a4e84ca",
+    "status": "downloaded"
+  },
+  {
+    "name": "inhatc_campus.html",
+    "url": "https://www.inhatc.ac.kr/kr/103/subview.do",
+    "resolved_url": "https://www.inhatc.ac.kr/kr/103/subview.do",
+    "retrieved_utc": "2026-09-17T09:07:11.260266+00:00",
+    "content_type": "text/html; charset=UTF-8",
+    "bytes": 138659,
+    "sha256": "6de9178a10d1bb2482cfb4cf4dc76ca55e27ec47ac08d128677b728268714da3",
+    "status": "downloaded"
+  },
+  {
+    "name": "inha_campus_reference.html",
+    "url": "https://cvl.inha.ac.kr/contact.html",
+    "resolved_url": "https://cvl.inha.ac.kr/contact.html",
+    "retrieved_utc": "2026-09-17T09:07:09.634128+00:00",
+    "content_type": "text/html",
+    "bytes": 16442,
+    "sha256": "3d19e07b2effd538c1e32fbfc6c8b23d563feb8b06fd6a4cec54efc13fcfbc13",
+    "status": "downloaded"
+  }
+]
