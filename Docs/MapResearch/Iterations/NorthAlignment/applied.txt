@@ -1,0 +1,1 @@
+North alignment applied. Map yaw=1.195283E-05. Rotated authoring anchors and all visual roots; north-up terrain base rebuilt with transported sculpt residual. Legacy planar scale versus AEQD residual remains separately documented.

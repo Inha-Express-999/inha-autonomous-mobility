@@ -1,0 +1,2 @@
+Clipped original marking triangles to actual playing-surface triangle union. Original projected area=329.5806m2; retained=280.5721m2; removed=49.00851m2. Original source preserved. This does not certify field dimensions or fix field grading.
+Baked marking vertices=38712 outside sports surfaces=0

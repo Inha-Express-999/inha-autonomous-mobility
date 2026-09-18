@@ -1,0 +1,3 @@
+Restored OSM frontage 37.233791m; route access unverified.
+dorm_2_general approach bounds=Center: (556.09, 9.06, -308.37), Extents: (3.42, 0.15, 2.91) intersects frontage bounds=False
+dorm_2_accessible approach bounds=Center: (563.03, 9.06, -296.03), Extents: (3.42, 0.15, 2.91) intersects frontage bounds=True

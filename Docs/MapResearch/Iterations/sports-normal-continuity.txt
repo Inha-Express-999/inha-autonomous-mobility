@@ -1,0 +1,4 @@
+sport 281499585 duplicate normal vector error=0 height range=0.6470127
+sport 281499584 duplicate normal vector error=0 height range=10.71909
+sport 237487555 duplicate normal vector error=0 height range=0.6855001
+대운동장 duplicate normal vector error=0 height range=0

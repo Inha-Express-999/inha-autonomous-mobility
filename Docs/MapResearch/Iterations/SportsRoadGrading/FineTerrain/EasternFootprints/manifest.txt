@@ -1,0 +1,3 @@
+building_0.raw|하이테크센터 | OSM 218081857_0
+building_1.raw|학생회관 | OSM 218038027_0
+building_2.raw|C호관 | OSM 568420972_0

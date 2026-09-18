@@ -1,0 +1,14 @@
+building 218188170 | OSM 218188170_0 bottom samples=72 gap=0 burial=0
+평생교육관 | OSM 218186034_0 bottom samples=414 gap=0 burial=0
+60주년기념관 | OSM 218189298_0 bottom samples=90 gap=0 burial=0
+서호관 | OSM 218188831_0 bottom samples=108 gap=0 burial=0
+관중석 | OSM 1203054818_0 bottom samples=72 gap=0 burial=0
+2남관 | OSM 219983082_0 bottom samples=378 gap=0.159359 burial=0
+주차관리실 | OSM 1098539003_0 bottom samples=72 gap=0 burial=0
+나빌레관 | OSM 218188169_0 bottom samples=216 gap=0 burial=0
+학군단 | OSM 218265217_0 bottom samples=144 gap=0 burial=0
+정석학술정보관 | OSM 217958067_0 bottom samples=252 gap=0 burial=0
+5호관 | OSM r3149246_218188830_0 bottom samples=414 gap=2.006665 burial=0
+로스쿨관 | OSM 217950511_0 bottom samples=576 gap=0 burial=0
+Grazie | OSM 575176169_0 bottom samples=90 gap=0 burial=0
+본관 | OSM 217958071_0 bottom samples=360 gap=0 burial=0

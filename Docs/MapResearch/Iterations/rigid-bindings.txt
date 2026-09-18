@@ -1,0 +1,3 @@
+Architecture details bound to main building: 3
+Planar water groups: 2
+Stylized Water 3 mobile material cloned; no wave displacement.

@@ -1,0 +1,45 @@
+{
+  "status": "solved",
+  "variables": 9212,
+  "constraints": 4229,
+  "iterations": 150,
+  "applied": true,
+  "dependencies": {
+    "osqp": "1.1.3"
+  },
+  "before": {
+    "samples": 1596,
+    "p95": 0.26199976816193504,
+    "max": 0.7109243642920948,
+    "above10": 317
+  },
+  "after": {
+    "samples": 1596,
+    "p95": 0.21847050283919284,
+    "max": 0.8109246240450236,
+    "above10": 154
+  },
+  "maximum_change_m": 15.824458003044128,
+  "fixed_error_m": 0.0,
+  "building_ranges": {
+    "building 218188170 | OSM 218188170_0": 0.0,
+    "\ud3c9\uc0dd\uad50\uc721\uad00 | OSM 218186034_0": 0.0,
+    "60\uc8fc\ub144\uae30\ub150\uad00 | OSM 218189298_0": 0.0,
+    "\uc11c\ud638\uad00 | OSM 218188831_0": 0.0,
+    "\uad00\uc911\uc11d | OSM 1203054818_0": 0.0,
+    "2\ub0a8\uad00 | OSM 219983082_0": 0.0,
+    "\uc8fc\ucc28\uad00\ub9ac\uc2e4 | OSM 1098539003_0": 0.0,
+    "\ub098\ube4c\ub808\uad00 | OSM 218188169_0": 0.0,
+    "\ud559\uad70\ub2e8 | OSM 218265217_0": 0.0,
+    "\uc815\uc11d\ud559\uc220\uc815\ubcf4\uad00 | OSM 217958067_0": 0.0,
+    "5\ud638\uad00 | OSM r3149246_218188830_0": 0.0,
+    "\ub85c\uc2a4\ucfe8\uad00 | OSM 217950511_0": 0.0,
+    "Grazie | OSM 575176169_0": 0.0,
+    "\ubcf8\uad00 | OSM 217958071_0": 0.0
+  },
+  "scene_rebaked": true,
+  "post_bake_anchor_fixes": [
+    "5 building",
+    "2 south"
+  ]
+}

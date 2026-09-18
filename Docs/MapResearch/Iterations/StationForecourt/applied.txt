@@ -1,0 +1,1 @@
+Station pad x+-4m z[-12,6],25m outer transition. changed=852 maxChangeM=0.9340726; synthetic, access unverified.

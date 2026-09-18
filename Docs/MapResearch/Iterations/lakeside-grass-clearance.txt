@@ -1,0 +1,1 @@
+Lakeside candidates: clumps checked=1408 removed=146 patches changed=11. Center plus8 envelope samples against active paving colliders; original source assets retained; unused source vertices retained.

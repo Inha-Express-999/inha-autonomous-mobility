@@ -1,0 +1,1 @@
+PASS: dorm_2 accessible approach responds to one terrain sample raised 2m; landing seam fixed; original terrain sample and mesh restored. Maximum local mesh rise=1.733864m. This checks authoring response, not accessibility or runtime path safety.

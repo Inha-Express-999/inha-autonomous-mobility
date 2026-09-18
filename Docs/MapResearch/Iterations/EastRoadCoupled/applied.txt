@@ -1,0 +1,1 @@
+APPLIED joint-protected.raw. Initial coupled-proposal maximum road grade regressed and was superseded. Final road area over10%=1667.782579m2; p95=0.07056837; max=0.520785451. Original terrain in before.raw.

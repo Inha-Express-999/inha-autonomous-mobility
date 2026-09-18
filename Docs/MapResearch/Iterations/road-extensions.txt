@@ -1,0 +1,1 @@
+OSM road pieces=105; width synthetic; access unverified. Geometry follows current Terrain through Bake. No runtime graph or complete entrance connection claimed.

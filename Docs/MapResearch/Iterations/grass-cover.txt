@@ -1,0 +1,1 @@
+Idyllic Grass_01 clumps=92386; combined renderer patches=735. Spacing=0.8m with full-cell random jitter, scale=1.1..1.8. All blade vertices and 24 footprint envelope samples checked inside source green. Projected building/water mesh triangles with footprint radius and entrance corridors excluded. Terrain Bake updates grass vertices. Mobile profile not yet benchmarked.

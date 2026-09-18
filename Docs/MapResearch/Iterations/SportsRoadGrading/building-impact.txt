@@ -1,0 +1,12 @@
+Proposal delta using the SAME bilinear interpolation for both arrays. Not absolute Unity SampleHeight.
+building 218188170 | OSM 218188170_0 shift m=-1.884
+평생교육관 | OSM 218186034_0 shift m=-0.088
+서호관 | OSM 218188831_0 shift m=-11.899
+Main facade full height pilasters shift m=-0.632
+Main building glazed entrance towers shift m=-0.632
+나빌레관 | OSM 218188169_0 shift m=-0.761
+5호관 | OSM r3149246_218188830_0 shift m=-3.478
+Grazie | OSM 575176169_0 shift m=-0.974
+5호관 | proposed entrances shift m=-3.478
+Main building stone portal frames shift m=-0.632
+본관 | OSM 217958071_0 shift m=-0.632

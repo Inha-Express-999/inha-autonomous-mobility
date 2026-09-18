@@ -1,0 +1,87 @@
+"""Joint quadratic terrain design; constraints are enforced inside the solve.
+Editor research tool, not runtime planning or measured accessibility data.
+"""
+import csv,json,runpy
+from pathlib import Path
+import numpy as np
+import scipy.sparse as sp
+import osqp
+
+ROOT=Path(__file__).resolve().parents[1]
+s={'__file__':str(ROOT/'AgentScripts/smooth_sports_roads.py')};exec((ROOT/'AgentScripts/smooth_sports_roads.py').read_text().split('protected=')[0],s);s['before']=np.fromfile(s['OUT']/'refinement-before.raw','<f4').reshape(s['n'],s['n']);s['x'],s['z']=np.meshgrid(s['ox']+np.arange(s['n'])*s['dx'],s['oz']+np.arange(s['n'])*s['dz'])
+n=s['n'];out=s['OUT'];before=s['before'].astype(float);height=before*s['sy']+s['oy']
+x,z=s['x'],s['z'];dx,dz=s['dx'],s['dz']
+region=(x>=-500)&(x<=280)&(z>=-450)&(z<=300)
+indices=np.full((n,n),-1,int);indices[region]=np.arange(region.sum())
+N=int(region.sum());base=height[region]
+def dilate(mask):
+    p=np.pad(mask,1)
+    return np.logical_or.reduce([p[j:j+n,i:i+n] for j in range(3) for i in range(3)])
+water=dilate(s['mask'](out/'water-triangles.raw'))
+polygons={}
+for row in csv.DictReader((out/'pedestrian-boundaries.csv').open(encoding='utf-8-sig')):
+    if row['id']!='inkyung_roadside_pavement':continue
+    polygons.setdefault(row['id'],[]).append((float(row['x']),float(row['z'])))
+walk=s['rasterize']((({'type':'Polygon','coordinates':[[*v,v[0]]]},1) for v in polygons.values()),out_shape=(n,n),transform=s['transform'],all_touched=True).astype(bool)
+fixed=water|dilate(walk)
+pad=s['mask'](out/'sports-triangles.raw')&(abs(height+6.923518)<.003)
+fixed|=pad
+interior=region&np.roll(region,1,0)&np.roll(region,-1,0)&np.roll(region,1,1)&np.roll(region,-1,1)
+fixed|=region&~interior
+rows=[];cols=[];data=[];lo=[];hi=[]
+def constraint(coeffs,lower,upper):
+    row=len(lo)
+    for index,value in coeffs:
+        rows.append(row);cols.append(int(index));data.append(value)
+    lo.append(lower);hi.append(upper)
+for j,i in np.argwhere(fixed&region):constraint([(indices[j,i],1)],height[j,i],height[j,i])
+groups=[]
+for line in (out/'Footprints/manifest.txt').read_text(encoding='utf-8-sig').splitlines():
+    file,name=line.split('|',1);mask=dilate(s['mask'](out/'Footprints'/file))
+    if np.any(mask&~region):raise ValueError('Footprint extends outside design domain: '+name)
+    cells=indices[mask];groups.append((name,mask))
+    for index in cells[1:]:constraint([(index,1),(cells[0],-1)],0,0)
+# Synthetic lakeside building platform target; evaluate before applying.
+for name,mask in groups:
+    if '219983082_0' in name:
+        constraint([(indices[mask][0],1)],1.5,1.5)
+road=dilate(s['mask'](out/'active-roads.raw'))&interior&~water
+for j,i in np.argwhere(road):
+    for dj,di,limit in ((0,1,.045*dx),(1,0,.045*dz)):
+        if indices[j+dj,i+di]>=0:
+            core=(-350<=x[j,i]<=-60 and -260<=z[j,i]<=110)
+            if True: # Existing hard core bounds conflict with merged building support pads.
+                continue
+            constraint([(indices[j,i],1),(indices[j+dj,i+di],-1)],-limit,limit)
+# Curvature regularization avoids abrupt changes between independently bounded
+# slopes. It is secondary to the hard water, building and road constraints.
+lr=[];lc=[];ld=[];row=0
+for j,i in np.argwhere(interior):
+    lr.append(row);lc.append(indices[j,i]);ld.append(4)
+    for dj,di in ((1,0),(-1,0),(0,1),(0,-1)):
+        lr.append(row);lc.append(indices[j+dj,i+di]);ld.append(-1)
+    row+=1
+L=sp.coo_matrix((ld,(lr,lc)),shape=(row,N)).tocsc()
+P=(sp.eye(N,format='csc')+4*(L.T@L)).tocsc()
+er=[];ec=[];ev=[];edge=0
+for j,i in np.argwhere(road):
+    for dj,di in ((0,1),(1,0)):
+        if indices[j+dj,i+di]<0:continue
+        er.extend([edge,edge]);ec.extend([indices[j,i],indices[j+dj,i+di]]);ev.extend([1,-1]);edge+=1
+E=sp.coo_matrix((ev,(er,ec)),shape=(edge,N)).tocsc()
+P=(P+10000*(E.T@E)).tocsc()
+A=sp.coo_matrix((data,(rows,cols)),shape=(len(lo),N)).tocsc()
+solver=osqp.OSQP();solver.setup(P=P,q=-base,A=A,l=np.array(lo),u=np.array(hi),verbose=False,eps_abs=1e-5,eps_rel=1e-6,max_iter=30000,polishing=True)
+result=solver.solve()
+report=dict(status=result.info.status,variables=N,constraints=len(lo),iterations=result.info.iter,applied=False,dependencies=dict(osqp=osqp.__version__))
+if result.info.status=='solved':
+    after=before.copy();after[region]=(result.x-s['oy'])/s['sy'];after=after.astype('<f4')
+    values=after.astype(float)*s['sy']+s['oy']
+    allroad=s['mask'](out/'active-roads.raw')&interior
+    def metric(h):
+        gz,gx=np.gradient(h*s['sy'],dz,dx);g=np.hypot(gx,gz)[allroad]
+        return dict(samples=int(allroad.sum()),p95=float(np.percentile(g,95)),max=float(g.max()),above10=int((g>.1).sum()))
+    report.update(before=metric(before),after=metric(after.astype(float)),maximum_change_m=float(np.max(abs(after-before))*s['sy']),fixed_error_m=float(np.max(abs(values-height)[fixed&region])),building_ranges={name:float(np.ptp(values[mask])) for name,mask in groups})
+    after.tofile(out/'lakeside-platform-proposal.raw')
+(out/'lakeside-platform-report.json').write_text(json.dumps(report,indent=2),encoding='utf-8')
+print(json.dumps(report,indent=2))

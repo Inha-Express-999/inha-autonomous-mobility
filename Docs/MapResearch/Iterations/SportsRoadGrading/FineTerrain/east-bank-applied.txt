@@ -1,0 +1,1 @@
+REVERTED after actual mesh and entrance regressions. Restored east-bank-before.raw and saved scene. Proposed local grid improvement did not justify actual road max grade 60.71% and Biryong general approach 15.6%.

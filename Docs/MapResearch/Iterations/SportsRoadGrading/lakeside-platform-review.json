@@ -1,0 +1,23 @@
+{
+  "hotspot": {
+    "before": {
+      "max": 0.8109132647514343,
+      "p95": 0.7978506088256836
+    },
+    "after": {
+      "max": 0.14704269170761108,
+      "p95": 0.10082361102104187
+    }
+  },
+  "sports_core": {
+    "before": {
+      "max": 0.20781321823596954,
+      "p95": 0.048863641917705536
+    },
+    "after": {
+      "max": 0.7445408701896667,
+      "p95": 0.13452903926372528
+    }
+  },
+  "decision": "Rejected: broad building-support coupling and sports-area regression; not applied."
+}

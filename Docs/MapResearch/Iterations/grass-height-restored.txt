@@ -1,0 +1,2 @@
+Grass patches=735; source height scale .28 -> .75; XZ source placement and triangle masks unchanged; maximum local source relief=0.9415632m. Collider-free decorative grass; gameplay state unaffected.
+Grass verification samples=5880 XZ error=6.29136E-05 height fit error=4.768372E-07

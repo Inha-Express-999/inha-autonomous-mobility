@@ -1,0 +1,2 @@
+anniversary_60_general: rows=28, overlap samples=33, min clearance=0.004999876, max=0.005000353
+anniversary_60_accessible: rows=32, overlap samples=33, min clearance=0.004999638, max=0.005000353

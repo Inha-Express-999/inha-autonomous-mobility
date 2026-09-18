@@ -1,0 +1,1 @@
+PASS: real scene renderer visibility toggled by runtime component methods. Low nearby=127; high nearby=732; distant=0; return count restored. Camera, quality and renderer states restored. Editor functional test; not a mobile FPS benchmark.

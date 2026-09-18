@@ -1,0 +1,1 @@
+Width=1.8; top samples=5x65; max longitudinal=0.0448822; max cross=0.03896846; burial=0; driveway terminal vertical offset=0.005000114; route unverified.

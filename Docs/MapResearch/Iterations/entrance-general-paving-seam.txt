@@ -1,0 +1,1 @@
+building_5_general: 13 rows x33 width samples; overlapping samples=33, min clearance=0.004999638, max=0.005000591

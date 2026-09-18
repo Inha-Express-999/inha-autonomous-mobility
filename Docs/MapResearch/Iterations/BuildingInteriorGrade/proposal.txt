@@ -1,0 +1,6 @@
+4호관 | OSM 219982956_0 lowered interior cells=214 road-protected=7 floorY=-5.551167
+9호관 | OSM 568420969_0 lowered interior cells=56 road-protected=0 floorY=-4.443181
+6호관 | OSM 568420968_0 lowered interior cells=91 road-protected=0 floorY=-2.4593
+체육관 | OSM 218037242_0 lowered interior cells=160 road-protected=0 floorY=-0.8232965
+김현태인하드림센터 | OSM 568420970_0 lowered interior cells=77 road-protected=0 floorY=0.8865871
+TOTAL=598 maxLoweringM=3.409331 no exterior cells changed; target floor minus0.1m; roads/pedestrian2m envelope protected. Grid-only proposal; boundary interpolation must be checked.

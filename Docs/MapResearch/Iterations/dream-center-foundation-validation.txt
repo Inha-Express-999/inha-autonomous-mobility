@@ -1,0 +1,1 @@
+Upper vertex deviation=0; repeat fit drift=0; max lower vertex terrain gap=-0.05473018; collider match=True

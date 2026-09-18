@@ -1,0 +1,1 @@
+Project-owned shared walkway palette: BaseColor RGBA(0.580, 0.690, 0.680, 1.000) -> RGBA(0.480, 0.490, 0.470, 1.000); ColorDim=RGBA(0.720, 0.740, 0.700, 1.000). FlatKit source shader and package assets unchanged.

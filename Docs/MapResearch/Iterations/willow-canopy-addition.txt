@@ -1,0 +1,1 @@
+Renderers=36 shared variant meshes=9 additional triangles across unique meshes=6618 non-quad groups retained without extra caps=123. Source assets preserved; previous partial trial assets are unused.

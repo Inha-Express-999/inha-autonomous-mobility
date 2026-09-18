@@ -1,0 +1,189 @@
+{
+  "original_pieces": 105,
+  "scoped_pieces": 15,
+  "original_length_m": 12465.835018712027,
+  "retained_length_m": 1267.417868062789,
+  "targets": [
+    {
+      "target": "station_exit_7",
+      "mode": "road",
+      "nearest_node": "4741793219",
+      "target_gap_m": 27.208695248366052,
+      "osm_connected": true,
+      "route_verified": false,
+      "corridor_length_m": 416.8315631220637
+    },
+    {
+      "target": "station_exit_1",
+      "mode": "road",
+      "nearest_node": "4741793219",
+      "target_gap_m": 40.83378987002957,
+      "osm_connected": true,
+      "route_verified": false,
+      "corridor_length_m": 416.8315631220637
+    },
+    {
+      "target": "station_exit_2",
+      "mode": "road",
+      "nearest_node": "11257934931",
+      "target_gap_m": 26.27148462135236,
+      "osm_connected": true,
+      "route_verified": false,
+      "corridor_length_m": 340.4950534516237
+    },
+    {
+      "target": "station_exit_3",
+      "mode": "road",
+      "nearest_node": "11257934931",
+      "target_gap_m": 41.093739604397115,
+      "osm_connected": true,
+      "route_verified": false,
+      "corridor_length_m": 340.4950534516237
+    },
+    {
+      "target": "station_exit_4",
+      "mode": "road",
+      "nearest_node": "436836633",
+      "target_gap_m": 25.555027051571628,
+      "osm_connected": true,
+      "route_verified": false,
+      "corridor_length_m": 345.99957014182513
+    },
+    {
+      "target": "station_exit_5",
+      "mode": "road",
+      "nearest_node": "11257934917",
+      "target_gap_m": 34.24343048931348,
+      "osm_connected": true,
+      "route_verified": false,
+      "corridor_length_m": 281.2918941325569
+    },
+    {
+      "target": "station_exit_6",
+      "mode": "road",
+      "nearest_node": "11257934923",
+      "target_gap_m": 14.429731896803323,
+      "osm_connected": true,
+      "route_verified": false,
+      "corridor_length_m": 239.22310783181615
+    },
+    {
+      "target": "dorm_1",
+      "mode": "road",
+      "nearest_node": "10058049431",
+      "target_gap_m": 47.71517873185232,
+      "osm_connected": true,
+      "route_verified": false,
+      "corridor_length_m": 53.53139532398758
+    },
+    {
+      "target": "dorm_2",
+      "mode": "road",
+      "nearest_node": "4654965041",
+      "target_gap_m": 24.620748139423966,
+      "osm_connected": true,
+      "route_verified": false,
+      "corridor_length_m": 823.7597259345097
+    },
+    {
+      "target": "dorm_3_location_candidate",
+      "mode": "road",
+      "nearest_node": "2877968867",
+      "target_gap_m": 18.98662604962878,
+      "osm_connected": true,
+      "route_verified": false,
+      "corridor_length_m": 709.8807254072403
+    },
+    {
+      "target": "station_exit_7",
+      "mode": "pedestrian",
+      "nearest_node": "4741793219",
+      "target_gap_m": 27.208695248366052,
+      "osm_connected": true,
+      "route_verified": false,
+      "corridor_length_m": 416.8315631220637
+    },
+    {
+      "target": "station_exit_1",
+      "mode": "pedestrian",
+      "nearest_node": "4741793219",
+      "target_gap_m": 40.83378987002957,
+      "osm_connected": true,
+      "route_verified": false,
+      "corridor_length_m": 416.8315631220637
+    },
+    {
+      "target": "station_exit_2",
+      "mode": "pedestrian",
+      "nearest_node": "11257934931",
+      "target_gap_m": 26.27148462135236,
+      "osm_connected": true,
+      "route_verified": false,
+      "corridor_length_m": 340.4950534516237
+    },
+    {
+      "target": "station_exit_3",
+      "mode": "pedestrian",
+      "nearest_node": "11257934934",
+      "target_gap_m": 30.873031687324737,
+      "osm_connected": true,
+      "route_verified": false,
+      "corridor_length_m": 367.77462288832055
+    },
+    {
+      "target": "station_exit_4",
+      "mode": "pedestrian",
+      "nearest_node": "436836633",
+      "target_gap_m": 25.555027051571628,
+      "osm_connected": true,
+      "route_verified": false,
+      "corridor_length_m": 345.99957014182513
+    },
+    {
+      "target": "station_exit_5",
+      "mode": "pedestrian",
+      "nearest_node": "11257934944",
+      "target_gap_m": 27.760292869383452,
+      "osm_connected": true,
+      "route_verified": false,
+      "corridor_length_m": 349.44856785424287
+    },
+    {
+      "target": "station_exit_6",
+      "mode": "pedestrian",
+      "nearest_node": "11257934923",
+      "target_gap_m": 14.429731896803323,
+      "osm_connected": true,
+      "route_verified": false,
+      "corridor_length_m": 239.22310783181615
+    },
+    {
+      "target": "dorm_1",
+      "mode": "pedestrian",
+      "nearest_node": "10058049431",
+      "target_gap_m": 47.71517873185232,
+      "osm_connected": true,
+      "route_verified": false,
+      "corridor_length_m": 53.53139532398758
+    },
+    {
+      "target": "dorm_2",
+      "mode": "pedestrian",
+      "nearest_node": "4654965041",
+      "target_gap_m": 24.620748139423966,
+      "osm_connected": true,
+      "route_verified": false,
+      "corridor_length_m": 823.7597259345097
+    },
+    {
+      "target": "dorm_3_location_candidate",
+      "mode": "pedestrian",
+      "nearest_node": "2877968867",
+      "target_gap_m": 18.98662604962878,
+      "osm_connected": true,
+      "route_verified": false,
+      "corridor_length_m": 709.8807254072403
+    }
+  ],
+  "note": "OSM node connectivity only. Target gaps are not bridged by invented lines. Dorm 3 location remains a candidate."
+}

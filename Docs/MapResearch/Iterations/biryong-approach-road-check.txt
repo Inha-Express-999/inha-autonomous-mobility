@@ -1,0 +1,1 @@
+Biryong general approach: 629 top samples, main asphalt overlap=0. Collider footprint audit only; routing and measured accessibility unverified.

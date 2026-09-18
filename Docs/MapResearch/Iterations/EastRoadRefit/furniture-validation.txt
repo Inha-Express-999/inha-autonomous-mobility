@@ -1,0 +1,1 @@
+Restored furniture=141 checked stones=141 max binding error=0

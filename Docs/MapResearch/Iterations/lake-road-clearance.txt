@@ -1,0 +1,6 @@
+Projected current asphalt cross-sections; offsets from lake edge. Not measured road widths.
+t=0.1 asphalt offsets=0..6.75
+t=0.3 asphalt offsets=0.25..7
+t=0.5 asphalt offsets=0.25..7
+t=0.7 asphalt offsets=0.5..7.25
+t=0.9 asphalt offsets=0.5..7.25

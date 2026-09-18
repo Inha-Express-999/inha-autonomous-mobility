@@ -1,0 +1,96 @@
+{
+  "status": "candidate_not_applied",
+  "source": "refinement-before.raw",
+  "interpolation": "bilinear; original 257x257 samples preserved exactly",
+  "note": "More authoring resolution only; no improvement in measured DSM accuracy.",
+  "comparisons": [
+    {
+      "resolution": 257,
+      "spacing_m": 8.0,
+      "overlaps": [
+        {
+          "first": "서호관 | OSM 218188831_0",
+          "second": "building 218188170 | OSM 218188170_0",
+          "cells": 10
+        },
+        {
+          "first": "2남관 | OSM 219983082_0",
+          "second": "60주년기념관 | OSM 218189298_0",
+          "cells": 17
+        },
+        {
+          "first": "나빌레관 | OSM 218188169_0",
+          "second": "building 218188170 | OSM 218188170_0",
+          "cells": 14
+        },
+        {
+          "first": "나빌레관 | OSM 218188169_0",
+          "second": "서호관 | OSM 218188831_0",
+          "cells": 9
+        },
+        {
+          "first": "5호관 | OSM r3149246_218188830_0",
+          "second": "60주년기념관 | OSM 218189298_0",
+          "cells": 11
+        },
+        {
+          "first": "5호관 | OSM r3149246_218188830_0",
+          "second": "서호관 | OSM 218188831_0",
+          "cells": 23
+        },
+        {
+          "first": "Grazie | OSM 575176169_0",
+          "second": "60주년기념관 | OSM 218189298_0",
+          "cells": 9
+        }
+      ]
+    },
+    {
+      "resolution": 513,
+      "spacing_m": 4.0,
+      "overlaps": [
+        {
+          "first": "서호관 | OSM 218188831_0",
+          "second": "building 218188170 | OSM 218188170_0",
+          "cells": 6
+        },
+        {
+          "first": "2남관 | OSM 219983082_0",
+          "second": "60주년기념관 | OSM 218189298_0",
+          "cells": 14
+        },
+        {
+          "first": "나빌레관 | OSM 218188169_0",
+          "second": "building 218188170 | OSM 218188170_0",
+          "cells": 13
+        },
+        {
+          "first": "나빌레관 | OSM 218188169_0",
+          "second": "서호관 | OSM 218188831_0",
+          "cells": 2
+        },
+        {
+          "first": "5호관 | OSM r3149246_218188830_0",
+          "second": "서호관 | OSM 218188831_0",
+          "cells": 25
+        },
+        {
+          "first": "Grazie | OSM 575176169_0",
+          "second": "60주년기념관 | OSM 218189298_0",
+          "cells": 3
+        }
+      ]
+    },
+    {
+      "resolution": 1025,
+      "spacing_m": 2.0,
+      "overlaps": [
+        {
+          "first": "나빌레관 | OSM 218188169_0",
+          "second": "building 218188170 | OSM 218188170_0",
+          "cells": 14
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,203 @@
+{
+    "scope": "visual authoring only; not approved Stops or runtime graph",
+    "landmarks": [
+        {
+            "id": "main_gate",
+            "status": "osm_gate_location_synthetic_layout_unverified_access",
+            "present": true,
+            "general": true,
+            "accessible": true,
+            "routeValidated": false,
+            "generalPosition": {
+                "x": -33.984046936035159,
+                "y": -5.3304033279418949,
+                "z": -326.7179260253906
+            },
+            "accessiblePosition": {
+                "x": -12.820594787597657,
+                "y": -5.3304033279418949,
+                "z": -327.04791259765627
+            }
+        },
+        {
+            "id": "inha_station",
+            "status": "osm_exit_7_wheelchair_no_accessible_entrance_unresolved",
+            "present": true,
+            "general": true,
+            "accessible": false,
+            "routeValidated": false,
+            "generalPosition": {
+                "x": -286.06829833984377,
+                "y": -8.844619750976563,
+                "z": -313.9226989746094
+            },
+            "accessiblePosition": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            }
+        },
+        {
+            "id": "rear_gate",
+            "status": "osm_gate_location_synthetic_layout_unverified_access",
+            "present": true,
+            "general": true,
+            "accessible": true,
+            "routeValidated": false,
+            "generalPosition": {
+                "x": 266.3414306640625,
+                "y": -0.493072509765625,
+                "z": 54.28923416137695
+            },
+            "accessiblePosition": {
+                "x": 258.6809997558594,
+                "y": -0.493072509765625,
+                "z": 72.71710968017578
+            }
+        },
+        {
+            "id": "building_5",
+            "status": "synthetic_facade_entrances_not_verified_access",
+            "present": true,
+            "general": true,
+            "accessible": true,
+            "routeValidated": false,
+            "generalPosition": {
+                "x": 27.883018493652345,
+                "y": -5.302935600280762,
+                "z": 124.42799377441406
+            },
+            "accessiblePosition": {
+                "x": -21.871780395507814,
+                "y": -5.302935600280762,
+                "z": 146.68641662597657
+            }
+        },
+        {
+            "id": "building_2",
+            "status": "synthetic_facade_entrances_not_verified_access",
+            "present": true,
+            "general": true,
+            "accessible": true,
+            "routeValidated": false,
+            "generalPosition": {
+                "x": 191.36570739746095,
+                "y": -2.2509918212890627,
+                "z": 52.418914794921878
+            },
+            "accessiblePosition": {
+                "x": 170.85610961914063,
+                "y": -2.2509918212890627,
+                "z": 63.62772750854492
+            }
+        },
+        {
+            "id": "hitech",
+            "status": "synthetic_facade_entrances_not_verified_access",
+            "present": true,
+            "general": true,
+            "accessible": true,
+            "routeValidated": false,
+            "generalPosition": {
+                "x": 351.5756530761719,
+                "y": 0.12342071533203125,
+                "z": 21.719158172607423
+            },
+            "accessiblePosition": {
+                "x": 318.26922607421877,
+                "y": 0.12342071533203125,
+                "z": 37.20758819580078
+            }
+        },
+        {
+            "id": "anniversary_60",
+            "status": "synthetic_facade_entrances_not_verified_access",
+            "present": true,
+            "general": true,
+            "accessible": true,
+            "routeValidated": false,
+            "generalPosition": {
+                "x": 83.39985656738281,
+                "y": -2.342550277709961,
+                "z": 75.15859985351563
+            },
+            "accessiblePosition": {
+                "x": 70.69863891601563,
+                "y": -2.342550277709961,
+                "z": 51.462196350097659
+            }
+        },
+        {
+            "id": "biryong_plaza",
+            "status": "osm_entrance_positions_synthetic_roles_and_pavilions_access_unknown",
+            "present": true,
+            "general": true,
+            "accessible": true,
+            "routeValidated": false,
+            "generalPosition": {
+                "x": 253.52871704101563,
+                "y": 2.2078990936279299,
+                "z": -103.0782699584961
+            },
+            "accessiblePosition": {
+                "x": 252.5565643310547,
+                "y": 2.2078990936279299,
+                "z": -158.10215759277345
+            }
+        },
+        {
+            "id": "dorm_1",
+            "status": "osm_footprint_photo_guided_synthetic_height_and_entrances",
+            "present": true,
+            "general": true,
+            "accessible": true,
+            "routeValidated": false,
+            "generalPosition": {
+                "x": 69.42033386230469,
+                "y": -7.907778739929199,
+                "z": -465.9237976074219
+            },
+            "accessiblePosition": {
+                "x": 76.82228088378906,
+                "y": -7.907778739929199,
+                "z": -451.4551696777344
+            }
+        },
+        {
+            "id": "dorm_2",
+            "status": "osm_footprint_photo_guided_synthetic_height_and_entrances",
+            "present": true,
+            "general": true,
+            "accessible": true,
+            "routeValidated": false,
+            "generalPosition": {
+                "x": 551.5022583007813,
+                "y": 8.964902877807618,
+                "z": -305.79180908203127
+            },
+            "accessiblePosition": {
+                "x": 556.0631103515625,
+                "y": 8.964902877807618,
+                "z": -297.8477783203125
+            }
+        },
+        {
+            "id": "dorm_3",
+            "status": "official_map_relative_location_approximate_outline_synthetic_entrances",
+            "present": true,
+            "general": true,
+            "accessible": true,
+            "routeValidated": false,
+            "generalPosition": {
+                "x": 543.690673828125,
+                "y": 9.10213851928711,
+                "z": -385.66107177734377
+            },
+            "accessiblePosition": {
+                "x": 550.9706420898438,
+                "y": 9.10213851928711,
+                "z": -388.334228515625
+            }
+        }
+    ]
+}

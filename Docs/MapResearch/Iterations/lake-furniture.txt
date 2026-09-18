@@ -1,0 +1,1 @@
+User-observed pavilion-side stone path and roadside benches. Synthetic spacing and dimensions, not measured access. Stone slabs=254 + 3 branch slabs; benches=10; removed grass clumps=537. Independent terrain bindings; shared instanced materials; fixed furniture batching enabled.

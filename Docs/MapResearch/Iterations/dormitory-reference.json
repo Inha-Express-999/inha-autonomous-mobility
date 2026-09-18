@@ -1,0 +1,37 @@
+{
+  "source_url": "https://inha.uway.com/file/2026_inha_js.pdf",
+  "retrieved_date": "2026-09-17",
+  "sha256": "f290821d27f325dffd6478f1cee24c8a060ef679cf5055c41b021ed6429a9da5",
+  "photo_pdf_page": 48,
+  "campus_map_pdf_page": 53,
+  "visual_review": "rendered with Poppler and inspected",
+  "profiles": [
+    {
+      "id": "dorm_1",
+      "name": "Woongbijae",
+      "floors_above_ground": 5,
+      "osm_way": "217948855",
+      "appearance": "Long low white wings; repeated square windows; vertical pale blue glazed bays; small raised roof canopies."
+    },
+    {
+      "id": "dorm_2",
+      "name": "Biryongjae",
+      "floors_above_ground": 13,
+      "osm_way": "218397211",
+      "appearance": "Tall slab wings; light grey and beige wall fields; repeated small windows; vertical balcony strips; low glazed podium."
+    },
+    {
+      "id": "dorm_3",
+      "name": "Guesthouse",
+      "floors_above_ground": 10,
+      "osm_way": null,
+      "appearance": "Slim rectangular tower; grey beige facade; regular window grid; modest flat roof silhouette.",
+      "location_status": "Official diagram places it beside dorm 2; exact footprint unresolved."
+    }
+  ],
+  "limitations": [
+    "Photo montage is not a georeferenced image.",
+    "No floor height, entrance accessibility or street connection has been measured.",
+    "Unnamed nearby OSM buildings must not be relabelled without further correspondence evidence."
+  ]
+}

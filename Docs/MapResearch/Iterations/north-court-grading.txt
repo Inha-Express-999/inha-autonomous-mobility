@@ -1,0 +1,1 @@
+North court synthetic plateau target=-6.923518 changed terrain samples=211 maximum change m=10.74284; exact footprint, 11.4m interpolation support and 32m smooth transition. Original float32 height grid backed up; spectator stand will refit during bake.

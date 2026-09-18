@@ -1,0 +1,31 @@
+{
+  "status": "candidate_not_applied",
+  "target_height_m": 1.5,
+  "region_before": {
+    "samples": 4684,
+    "p95": 0.3339467099095872,
+    "maximum": 0.845352560429872,
+    "above10": 1176
+  },
+  "region_after": {
+    "samples": 4684,
+    "p95": 0.3406236945647908,
+    "maximum": 2.45179766367862,
+    "above10": 1758
+  },
+  "hotspot_before": {
+    "samples": 178,
+    "p95": 0.6061105691238327,
+    "maximum": 0.845352560429872,
+    "above10": 97
+  },
+  "hotspot_after": {
+    "samples": 178,
+    "p95": 0.3846951525627286,
+    "maximum": 0.4682493694979112,
+    "above10": 141
+  },
+  "fixed_error_m": 0.0,
+  "outside_error_m": 0.0,
+  "maximum_change_m": 8.063388913869858
+}

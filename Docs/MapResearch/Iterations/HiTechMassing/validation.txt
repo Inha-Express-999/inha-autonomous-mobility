@@ -1,0 +1,1 @@
+Bottom vertex samples=27 max gap/burial=0 collider matches=True

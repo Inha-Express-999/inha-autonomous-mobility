@@ -1,0 +1,1 @@
+Foundation follows terrain perimeter; apron clearance .10m at maximum site sample; entry/exit ramps 22.5m/21.5m terminating on the existing road collider. Root=(-293.58, -7.46, 2.72) maximum ramp grade=0.005951166. Road graph and operation remain unverified.

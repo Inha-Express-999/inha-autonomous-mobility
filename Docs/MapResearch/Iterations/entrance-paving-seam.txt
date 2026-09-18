@@ -1,0 +1,1 @@
+building_5_accessible: 18 rows x 33 width samples; paving overlap hits=33, approach-minus-paving min=0.004999638m max=0.005000114m; repeated fit drift=0m. Synthetic geometry, not verified access route.

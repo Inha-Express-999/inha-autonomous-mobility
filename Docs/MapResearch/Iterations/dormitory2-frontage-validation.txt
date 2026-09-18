@@ -1,0 +1,1 @@
+Dormitory2 shared frontage: 325 top vertices; road overlap=0; excludeFromVehicleRouting=True; pedestrianAccessVerified=False

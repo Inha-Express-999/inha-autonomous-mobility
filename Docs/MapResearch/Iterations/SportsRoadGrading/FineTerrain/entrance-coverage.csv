@@ -1,0 +1,11 @@
+landmark,general,accessible,routeValidated
+rear_gate,rear_gate_general,rear_gate_accessible,False
+building_5,building_5_general,building_5_accessible,False
+main_gate,main_gate_general,main_gate_accessible,False
+anniversary_60,anniversary_60_general,anniversary_60_accessible,False
+biryong_plaza,biryong_plaza_general,biryong_plaza_accessible,False
+hitech,hitech_general,hitech_accessible,False
+dorm_1,dorm_1_general,dorm_1_accessible,False
+building_2,building_2_general,building_2_accessible,False
+inha_station,inha_station_general_exit_7,MISSING,False
+dorm_2,dorm_2_general,dorm_2_accessible,False

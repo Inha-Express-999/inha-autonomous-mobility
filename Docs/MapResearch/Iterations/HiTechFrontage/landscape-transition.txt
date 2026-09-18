@@ -1,0 +1,1 @@
+Landscape transition: 20m outward and 10m lateral smooth falloff; changed samples=388; maximum lowering=7.061044m; collider-covered road grid points protected.

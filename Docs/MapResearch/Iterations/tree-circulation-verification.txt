@@ -1,0 +1,3 @@
+After terrain rebake: active vegetation roots=296; road/pavement projected triangle overlaps within trunk radius0.35m=0
+
+Tree canopies and actual accessibility are not certified by this audit.

@@ -1,0 +1,38 @@
+Synthetic building and sports pads after geographic realignment; not surveyed grades.
+2남관 | OSM 219983082_0: pad samples=220, normalized height=0.2256187
+2북관 | OSM r14633181_1098496322_0: pad samples=53, normalized height=0.2444327
+2북관 | OSM r14633181_218264949_0: pad samples=107, normalized height=0.2526108
+4호관 | OSM 219982956_0: pad samples=67, normalized height=0.2293792
+5호관 | OSM r3149246_218188830_0: pad samples=469, normalized height=0.184271
+60주년기념관 | OSM 218189298_0: pad samples=147, normalized height=0.1782947
+6호관 | OSM 568420968_0: pad samples=65, normalized height=0.1375224
+9호관 | OSM 568420969_0: pad samples=107, normalized height=0.1158885
+building 218188170 | OSM 218188170_0: pad samples=26, normalized height=0.1676643
+building 219982954 | OSM 219982954_0: pad samples=31, normalized height=0.2475479
+building 797050851 | OSM 797050851_0: pad samples=57, normalized height=0.2217633
+C호관 | OSM 568420972_0: pad samples=47, normalized height=0.2108655
+Grazie | OSM 575176169_0: pad samples=29, normalized height=0.160194
+node/4741793208: pad samples=26, normalized height=0.07100847
+node/4741793209: pad samples=28, normalized height=0.2521938
+node/4741793213: pad samples=21, normalized height=0.06624258
+node/9767122969;node/9767122970: pad samples=34, normalized height=0.1831157
+proposed hub on OSM way/568420971: pad samples=91, normalized height=0.09531604
+sport 237487555: pad samples=121, normalized height=0.08727659
+sport 281499584: pad samples=126, normalized height=0.1655631
+sport 281499585: pad samples=96, normalized height=0.08430327
+way/217948855: pad samples=128, normalized height=0.08105734
+way/218397211: pad samples=98, normalized height=0.2496374
+관중석 | OSM 1203054818_0: pad samples=70, normalized height=0.1981807
+김현태인하드림센터 | OSM 568420970_0: pad samples=47, normalized height=0.1678622
+나빌레관 | OSM 218188169_0: pad samples=64, normalized height=0.1468
+로스쿨관 | OSM 217950511_0: pad samples=95, normalized height=0.08968167
+본관 | OSM 217958071_0: pad samples=132, normalized height=0.1451767
+서호관 | OSM 218188831_0: pad samples=109, normalized height=0.2421098
+정석학술정보관 | OSM 217958067_0: pad samples=139, normalized height=0.09054479
+주차관리실 | OSM 1098539003_0: pad samples=21, normalized height=0.06745099
+체육관 | OSM 218037242_0: pad samples=71, normalized height=0.1530607
+평생교육관 | OSM 218186034_0: pad samples=79, normalized height=0.09050024
+하이테크센터 | OSM 218081857_0: pad samples=148, normalized height=0.2406078
+학군단 | OSM 218265217_0: pad samples=51, normalized height=0.08369354
+학생회관 | OSM 218038027_0: pad samples=165, normalized height=0.1872428
+Unique changed samples=2717; maximum height change=7.587039m. Footprint+7m level apron, transition to 16m. Field heights remain synthetic.

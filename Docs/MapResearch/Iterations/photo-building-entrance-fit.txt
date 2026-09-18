@@ -1,0 +1,4 @@
+anniversary_60_general wall hits=3/3 maxDoorPlaneOffsetM=0.8999722
+anniversary_60_accessible wall hits=3/3 maxDoorPlaneOffsetM=0.8999851
+hitech_general wall hits=3/3 maxDoorPlaneOffsetM=0.2249854
+hitech_accessible wall hits=3/3 maxDoorPlaneOffsetM=0.2249737

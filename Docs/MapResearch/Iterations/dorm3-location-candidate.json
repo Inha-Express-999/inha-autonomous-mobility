@@ -1,0 +1,14 @@
+{
+  "landmark_id": "dorm_3",
+  "candidate_type": "historical_event_map_destination",
+  "latitude": 37.446848,
+  "longitude": 126.659725,
+  "crs": "EPSG:4326",
+  "source": "https://indico.cern.ch/event/239000/page/1649-travel-information",
+  "source_date": "2013-04",
+  "retrieved_date": "2026-09-17",
+  "verified_building_geometry": false,
+  "verified_entrance": false,
+  "verified_access": false,
+  "note": "Coordinates from Google Maps daddr hyperlink. May represent an arrival point rather than building center. Do not import as a verified Stop."
+}

@@ -1,0 +1,16 @@
+{
+  "description": "Synthetic road corridor smoothing, 20m Gaussian scale; fixed building/water/sports bounds. Grid metrics exclude protected-border road cells.",
+  "road_cells": 4258,
+  "measured_core_cells": 3010,
+  "changed_cells": 10319,
+  "max_height_change_m": 3.8048073649406433,
+  "protected_height_change_m": 0.0,
+  "before": {
+    "road_grade_p95": 0.12574760842792157,
+    "road_grid_roughness_rms_m": 0.6663565162808
+  },
+  "after": {
+    "road_grade_p95": 0.09690242260694504,
+    "road_grid_roughness_rms_m": 0.2463168352842331
+  }
+}

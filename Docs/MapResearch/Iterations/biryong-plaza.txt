@@ -1,0 +1,1 @@
+OSM entrance nodes 9767122969 / 9767122970; attached to building way 218038027. General/access role split and pavilion design are synthetic. Actual step-free access, plaza boundary and vehicle Stops unverified.

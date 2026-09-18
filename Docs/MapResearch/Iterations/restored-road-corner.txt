@@ -1,0 +1,1 @@
+Endpoint seam m=0 inverted top triangles=0; 12m edge transition; synthetic visual junction, not surveyed.

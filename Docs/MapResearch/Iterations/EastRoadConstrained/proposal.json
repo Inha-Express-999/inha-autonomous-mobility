@@ -1,0 +1,21 @@
+{
+  "status": "solved",
+  "variables": 1870,
+  "road_faces": 788,
+  "strict_status": "primal infeasible",
+  "iterations": 975,
+  "applied": false,
+  "max_change_m": 1.2985930442810059,
+  "fixed_change_m": 0.0,
+  "maximum_gradient_constraint_slack": 0.1718967413720081,
+  "exported_mesh_before": {
+    "faces": 4025,
+    "max_gradient": 0.5149332398481311,
+    "area_over_10_percent": 513.9294345541421
+  },
+  "exported_mesh_prediction": {
+    "faces": 4025,
+    "max_gradient": 0.5124068227555306,
+    "area_over_10_percent": 394.6960256793682
+  }
+}

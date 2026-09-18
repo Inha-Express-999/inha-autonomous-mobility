@@ -1,0 +1,2 @@
+Dormitory2 bottom vertex samples=24 maximum absolute terrain gap=0.05199623
+Before grading same vertices maximum gap=0.05199623m; existing foundation gap, not introduced by candidate.

@@ -1,0 +1,5 @@
+Synthetic water/pavement fitting, not measured elevations or validated vehicle/pedestrian routes.
+본관 앞 수로 | reflecting pool: old=-7.027016, new=-7.027016; authored pond level when supplied, otherwise boundary fitting
+인경호 | mapped shoreline: old=2.04, new=2.04; authored pond level when supplied, otherwise boundary fitting
+Pavilion deck base=2.16; shore connection grade remains unverified.
+Redesigned promenade: 3m main width, 1.8m stone-path returns, bench strip .8m; asphalt overlap=0/1435; maximum centerline grade=0.03863968. Profile and access synthetic/unverified.

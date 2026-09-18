@@ -1,0 +1,103 @@
+{
+  "status": "proposal_not_applied",
+  "synthetic_grid_gradient_limit": 0.06,
+  "before": {
+    "grid_samples": 551,
+    "p95": 0.2688918414406856,
+    "over_10percent": 94,
+    "max": 0.7109243642920948
+  },
+  "after": {
+    "grid_samples": 551,
+    "p95": 0.06127327695161059,
+    "over_10percent": 0,
+    "max": 0.0649435827553318
+  },
+  "changed_samples": 3618,
+  "maximum_change_m": 15.460845828056335,
+  "sports_pad_maximum_error_m": 5.7571410749801544e-08,
+  "changed_structural_samples": 1601,
+  "caveat": "Buildings and approaches require refitting; 80m outer feather is not slope constrained. Eight-neighbor limits are not continuous road-grade guarantees.",
+  "building_pad_checks": [
+    {
+      "name": "building 218188170 | OSM 218188170_0",
+      "solver_height_range_m": 0.0,
+      "final_height_range_m": 0.0
+    },
+    {
+      "name": "\ud3c9\uc0dd\uad50\uc721\uad00 | OSM 218186034_0",
+      "solver_height_range_m": 0.0,
+      "final_height_range_m": 0.6622724235057831
+    },
+    {
+      "name": "60\uc8fc\ub144\uae30\ub150\uad00 | OSM 218189298_0",
+      "solver_height_range_m": 0.0,
+      "final_height_range_m": 9.036503732204437
+    },
+    {
+      "name": "\uc11c\ud638\uad00 | OSM 218188831_0",
+      "solver_height_range_m": 0.0,
+      "final_height_range_m": 0.0
+    },
+    {
+      "name": "\uad00\uc911\uc11d | OSM 1203054818_0",
+      "solver_height_range_m": 0.0,
+      "final_height_range_m": 0.0
+    },
+    {
+      "name": "2\ub0a8\uad00 | OSM 219983082_0",
+      "solver_height_range_m": 0.0,
+      "final_height_range_m": 13.472551107406616
+    },
+    {
+      "name": "\uc8fc\ucc28\uad00\ub9ac\uc2e4 | OSM 1098539003_0",
+      "solver_height_range_m": 0.0,
+      "final_height_range_m": 0.631752610206604
+    },
+    {
+      "name": "\ub098\ube4c\ub808\uad00 | OSM 218188169_0",
+      "solver_height_range_m": 0.0,
+      "final_height_range_m": 0.0
+    },
+    {
+      "name": "\ud559\uad70\ub2e8 | OSM 218265217_0",
+      "solver_height_range_m": 0.0,
+      "final_height_range_m": 0.0
+    },
+    {
+      "name": "\uc815\uc11d\ud559\uc220\uc815\ubcf4\uad00 | OSM 217958067_0",
+      "solver_height_range_m": 0.0,
+      "final_height_range_m": 0.0
+    },
+    {
+      "name": "5\ud638\uad00 | OSM r3149246_218188830_0",
+      "solver_height_range_m": 0.0,
+      "final_height_range_m": 9.134165942668915
+    },
+    {
+      "name": "\ub85c\uc2a4\ucfe8\uad00 | OSM 217950511_0",
+      "solver_height_range_m": 0.0,
+      "final_height_range_m": 0.0
+    },
+    {
+      "name": "Grazie | OSM 575176169_0",
+      "solver_height_range_m": 0.0,
+      "final_height_range_m": 0.0
+    },
+    {
+      "name": "\ubcf8\uad00 | OSM 217958071_0",
+      "solver_height_range_m": 0.0,
+      "final_height_range_m": 3.058728575706482
+    }
+  ],
+  "application_gate_passed": false,
+  "failed_building_pads": [
+    "\ud3c9\uc0dd\uad50\uc721\uad00 | OSM 218186034_0",
+    "60\uc8fc\ub144\uae30\ub150\uad00 | OSM 218189298_0",
+    "2\ub0a8\uad00 | OSM 219983082_0",
+    "\uc8fc\ucc28\uad00\ub9ac\uc2e4 | OSM 1098539003_0",
+    "5\ud638\uad00 | OSM r3149246_218188830_0",
+    "\ubcf8\uad00 | OSM 217958071_0"
+  ],
+  "water_and_walk_fixed_error_m": 0.0
+}

@@ -1,0 +1,1 @@
+Static batching eligible renderer visits=573; owned material instancing visits=3080; multi-level LOD groups=295. Grass distance culling: low70/medium140/high450 metres; mobile defaults medium. Static batches are built by Unity build/runtime pipeline; flags are not measured draw-call savings. Native frustum culling retained. Occlusion bake and device profiling pending.

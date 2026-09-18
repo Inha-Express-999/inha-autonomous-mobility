@@ -1,0 +1,3 @@
+Water y range=3.444049..3.444049
+Minimum vertex clearance=0.1200018
+Shader=Stylized Water 3/Standard supported=True

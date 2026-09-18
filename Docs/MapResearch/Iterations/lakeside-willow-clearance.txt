@@ -1,0 +1,1 @@
+Lakeside willow10 relocated from=(244.97, 1.83, -52.74) to=(245.53, 1.83, -51.90); horizontal shift=1.000002m. Trunk envelope radius0.75m avoids pavement/water and eight envelope points remain within authored green; neighbouring trunks at least2m. Synthetic landscaping.

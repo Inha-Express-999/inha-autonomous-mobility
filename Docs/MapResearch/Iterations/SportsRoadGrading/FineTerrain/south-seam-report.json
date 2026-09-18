@@ -1,0 +1,18 @@
+{
+  "before": {
+    "samples": 713,
+    "p95": 0.2635686708942592,
+    "maximum": 0.43414186616619593,
+    "above10": 83
+  },
+  "after": {
+    "samples": 713,
+    "p95": 0.07035412709322147,
+    "maximum": 0.11735553998148192,
+    "above10": 5
+  },
+  "max_change_m": 1.8447861671447754,
+  "changed_samples": 5546,
+  "applied": false,
+  "method": "Screened harmonic smoothing; fixed outer boundary and unchanged building footprints"
+}

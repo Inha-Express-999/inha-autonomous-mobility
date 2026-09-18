@@ -1,0 +1,60 @@
+{
+  "source": "Docs\\MapResearch\\2026-09-17\\expanded_campus.osm",
+  "source_sha256": "cf400f997d72d4d42f057adf6ce5b54861c9d5dcdc28d944c2934ffa1a4e84ca",
+  "driveway": {
+    "way": "1098489687",
+    "tags": {
+      "description": "인하대학교 등록차량 진출로(진출 단독)",
+      "highway": "service",
+      "oneway": "yes",
+      "service": "driveway",
+      "surface": "asphalt"
+    },
+    "nodes": [
+      "4741759443",
+      "10058049431"
+    ]
+  },
+  "candidates": [
+    {
+      "candidate_way": "1098546960",
+      "tags": {
+        "highway": "pedestrian"
+      },
+      "reachable_foot_way_ids": [
+        "1098546960",
+        "1098546961",
+        "1098546962"
+      ],
+      "shared_nodes_with_dorm_driveway": [],
+      "road_contacts_and_crossings": []
+    },
+    {
+      "candidate_way": "1098546961",
+      "tags": {
+        "highway": "pedestrian"
+      },
+      "reachable_foot_way_ids": [
+        "1098546960",
+        "1098546961",
+        "1098546962"
+      ],
+      "shared_nodes_with_dorm_driveway": [],
+      "road_contacts_and_crossings": []
+    },
+    {
+      "candidate_way": "1098546962",
+      "tags": {
+        "highway": "pedestrian"
+      },
+      "reachable_foot_way_ids": [
+        "1098546960",
+        "1098546961",
+        "1098546962"
+      ],
+      "shared_nodes_with_dorm_driveway": [],
+      "road_contacts_and_crossings": []
+    }
+  ],
+  "interpretation": "Shared OSM nodes only. Roads are not silently traversed. Steps remain in this inventory and are not accessible routes. Missing links in this cache do not prove that a real-world footpath is absent. No width, grade, crossing safety or accessible Stop approval is inferred."
+}

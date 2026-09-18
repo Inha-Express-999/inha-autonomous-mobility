@@ -1,0 +1,66 @@
+{
+  "status": "not_applied",
+  "source_id": "218189298_0",
+  "reference": "https://news.unn.net/news/articleView.html?idxno=523193",
+  "assumptions": "Approximate photo-based low wing 19m, existing tower height retained; split at legacy z35. Orientation and proportions require visual review, not surveyed dimensions.",
+  "footprint_area_m2": 3558.8308170000005,
+  "parts": [
+    {
+      "name": "Low wing",
+      "height": 19.0,
+      "points": [
+        {
+          "x": 57.125,
+          "y": 0,
+          "z": -29.299
+        },
+        {
+          "x": 93.9507747111148,
+          "y": 0,
+          "z": 35
+        },
+        {
+          "x": 61.92034005165341,
+          "y": 0,
+          "z": 35
+        },
+        {
+          "x": 61.208,
+          "y": 0,
+          "z": 33.671
+        },
+        {
+          "x": 31.629,
+          "y": 0,
+          "z": -15.426
+        }
+      ]
+    },
+    {
+      "name": "North tower",
+      "height": 53.199999999999996,
+      "points": [
+        {
+          "x": 93.9507747111148,
+          "y": 0,
+          "z": 35
+        },
+        {
+          "x": 119.129,
+          "y": 0,
+          "z": 78.962
+        },
+        {
+          "x": 92.961,
+          "y": 0,
+          "z": 92.912
+        },
+        {
+          "x": 61.92034005165341,
+          "y": 0,
+          "z": 35
+        }
+      ]
+    }
+  ]
+}

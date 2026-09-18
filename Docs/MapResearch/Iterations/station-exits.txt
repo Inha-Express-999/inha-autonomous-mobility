@@ -1,0 +1,8 @@
+Inha station exits from cached OSM. Coordinates observed; dimensions and orientation synthetic. Unknown accessibility is not accessible=true. One station landmark, multiple entrance records. No vehicle Stops or underground routes approved.
+Exit 7: node/4741793213 lon=126.650263 lat=37.4478074 wheelchair=no created=False
+Exit 1: node/4741793359 lon=126.6496632 lat=37.4475977 wheelchair=unknown created=True
+Exit 2: node/4741793360 lon=126.6494097 lat=37.448306 wheelchair=unknown created=True
+Exit 3: node/4741793361 lon=126.6490718 lat=37.4487299 wheelchair=unknown created=True
+Exit 4: node/4741793362 lon=126.6500924 lat=37.4490116 wheelchair=no created=True
+Exit 5: node/4741793363 lon=126.6504634 lat=37.4487264 wheelchair=no created=True
+Exit 6: node/4741793364 lon=126.6505383 lat=37.4482704 wheelchair=no created=True

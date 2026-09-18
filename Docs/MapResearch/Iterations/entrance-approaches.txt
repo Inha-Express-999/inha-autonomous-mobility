@@ -1,0 +1,33 @@
+Synthetic entrance approach geometry; not measured accessibility or connected pedestrian routes.
+Automatically refitted after Terrain Bake. Values are mesh grades, not regulatory approval.
+rear_gate_general: length=2.183284m, width=3.6m, maximum longitudinal grade=0.0000, maximum cross grade=0.0000, sampled terrain above approach=0.000m; route remains unverified
+rear_gate_general_reverse: length=6m, width=3.6m, maximum longitudinal grade=0.0458, maximum cross grade=0.0000, sampled terrain above approach=0.000m; route remains unverified
+rear_gate_accessible: length=6m, width=3.6m, maximum longitudinal grade=0.0325, maximum cross grade=0.0000, sampled terrain above approach=0.000m; route remains unverified
+rear_gate_accessible_reverse: length=6m, width=3.6m, maximum longitudinal grade=0.0325, maximum cross grade=0.0000, sampled terrain above approach=0.000m; route remains unverified
+building_5_general: length=2.837876m, width=3.2m, maximum longitudinal grade=0.0581, maximum cross grade=0.0000, sampled terrain above approach=0.000m; route remains unverified
+building_5_accessible: length=4.248384m, width=3.2m, maximum longitudinal grade=0.0384, maximum cross grade=0.0000, sampled terrain above approach=0.000m; route remains unverified
+main_gate_general: length=4.970017m, width=3.6m, maximum longitudinal grade=0.0000, maximum cross grade=0.0000, sampled terrain above approach=0.000m; route remains unverified
+main_gate_general_reverse: length=6m, width=3.6m, maximum longitudinal grade=0.0458, maximum cross grade=0.0000, sampled terrain above approach=0.000m; route remains unverified
+main_gate_accessible: length=0.3775318m, width=3.6m, maximum longitudinal grade=0.0348, maximum cross grade=0.0040, sampled terrain above approach=0.000m; route remains unverified
+main_gate_accessible_reverse: length=10m, width=3.6m, maximum longitudinal grade=0.0281, maximum cross grade=0.0000, sampled terrain above approach=0.000m; route remains unverified
+main_building_general: length=2.5m, width=3.3m, maximum longitudinal grade=0.0000, maximum cross grade=0.0000, sampled terrain above approach=0.000m; route remains unverified
+main_building_accessible: length=2.5m, width=3.3m, maximum longitudinal grade=0.0000, maximum cross grade=0.0000, sampled terrain above approach=0.000m; route remains unverified
+anniversary_60_general: length=6.540561m, width=3.2m, maximum longitudinal grade=0.0247, maximum cross grade=0.0004, sampled terrain above approach=0.000m; route remains unverified
+anniversary_60_accessible: length=7.579927m, width=3.2m, maximum longitudinal grade=0.0211, maximum cross grade=0.0020, sampled terrain above approach=0.000m; route remains unverified
+biryong_plaza_general: length=8.97682m, width=4m, maximum longitudinal grade=0.0140, maximum cross grade=0.0013, sampled terrain above approach=0.000m; route remains unverified
+biryong_plaza_accessible: length=6m, width=4m, maximum longitudinal grade=0.0452, maximum cross grade=0.0035, sampled terrain above approach=0.000m; route remains unverified
+hitech_general: length=6m, width=3.2m, maximum longitudinal grade=0.0192, maximum cross grade=0.0000, sampled terrain above approach=0.000m; route remains unverified
+hitech_accessible: length=6m, width=3.2m, maximum longitudinal grade=0.0192, maximum cross grade=0.0000, sampled terrain above approach=0.000m; route remains unverified
+dorm_1_general: length=6m, width=3.3m, maximum longitudinal grade=0.0362, maximum cross grade=0.0089, sampled terrain above approach=0.000m; route remains unverified
+dorm_1_accessible: length=6m, width=3.3m, maximum longitudinal grade=0.0381, maximum cross grade=0.0040, sampled terrain above approach=0.000m; route remains unverified
+building_2_general: length=6.484094m, width=3.2m, maximum longitudinal grade=0.0276, maximum cross grade=0.0029, sampled terrain above approach=0.000m; route remains unverified
+building_2_accessible: length=1.473415m, width=3.2m, maximum longitudinal grade=0.0378, maximum cross grade=0.0000, sampled terrain above approach=0.000m; route remains unverified
+library_general: length=6m, width=3.3m, maximum longitudinal grade=0.0322, maximum cross grade=0.0061, sampled terrain above approach=0.000m; route remains unverified
+library_accessible: length=6m, width=3.3m, maximum longitudinal grade=0.0269, maximum cross grade=0.0033, sampled terrain above approach=0.000m; route remains unverified
+inha_station_general_exit_7: length=6m, width=3.4m, maximum longitudinal grade=0.0425, maximum cross grade=0.0000, sampled terrain above approach=0.000m; route remains unverified
+dorm_2_general: length=9.300831m, width=3.3m, maximum longitudinal grade=0.0279, maximum cross grade=0.0120, sampled terrain above approach=0.000m; route remains unverified
+dorm_2_accessible: length=4.064878m, width=3.3m, maximum longitudinal grade=0.0272, maximum cross grade=0.0000, sampled terrain above approach=0.000m; route remains unverified
+dorm_3_general: length=6m, width=3.3m, maximum longitudinal grade=0.0206, maximum cross grade=0.0000, sampled terrain above approach=0.000m; route remains unverified
+dorm_3_accessible: length=6m, width=3.3m, maximum longitudinal grade=0.0206, maximum cross grade=0.0000, sampled terrain above approach=0.000m; route remains unverified
+student_center_general: length=6m, width=3.3m, maximum longitudinal grade=0.0909, maximum cross grade=0.0600, sampled terrain above approach=0.000m; route remains unverified
+student_center_accessible: length=6m, width=3.3m, maximum longitudinal grade=0.0459, maximum cross grade=0.0020, sampled terrain above approach=0.000m; route remains unverified

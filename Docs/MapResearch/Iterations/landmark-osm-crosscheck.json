@@ -1,0 +1,53 @@
+{
+  "source": "https://www.openstreetmap.org/api/0.6/map?bbox=126.6555,37.4468,126.6612,37.4503",
+  "plazaEntrances": [
+    {
+      "id": "9767122969",
+      "lon": 126.6563688,
+      "lat": 37.4496712,
+      "tags": {
+        "entrance": "entrance",
+        "ref": "비룡플라자 입구1"
+      },
+      "parentWays": [
+        {
+          "id": "218038027",
+          "tags": {
+            "building": "university",
+            "name": "학생회관",
+            "name:en": "Student Center"
+          }
+        },
+        {
+          "id": "1063267429",
+          "tags": {
+            "footway": "sidewalk",
+            "highway": "footway"
+          }
+        }
+      ]
+    },
+    {
+      "id": "9767122970",
+      "lon": 126.6563578,
+      "lat": 37.4491754,
+      "tags": {
+        "entrance": "yes",
+        "ref": "비룡플라자 입구2"
+      },
+      "parentWays": [
+        {
+          "id": "218038027",
+          "tags": {
+            "building": "university",
+            "name": "학생회관",
+            "name:en": "Student Center"
+          }
+        }
+      ]
+    }
+  ],
+  "dorm3Status": "official campus map locates it next to dorm2; no separately named OSM feature found; footprint correspondence unresolved",
+  "officialMap": "https://inha.uway.com/file/2026_inha_js.pdf",
+  "officialPdfPage": 53
+}

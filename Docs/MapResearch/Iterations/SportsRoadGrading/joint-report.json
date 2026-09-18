@@ -1,0 +1,21 @@
+{
+  "status": "proposal_not_applied",
+  "synthetic_grid_gradient_limit": 0.06,
+  "before": {
+    "grid_samples": 551,
+    "p95": 0.2688918414406856,
+    "over_10percent": 94,
+    "max": 0.7109243642920948
+  },
+  "after": {
+    "grid_samples": 551,
+    "p95": 0.06494238148667375,
+    "over_10percent": 0,
+    "max": 0.06494364359692514
+  },
+  "changed_samples": 1789,
+  "maximum_change_m": 13.098123669624329,
+  "sports_pad_maximum_error_m": 5.7571410749801544e-08,
+  "changed_structural_samples": 826,
+  "caveat": "Buildings and approaches require refitting; 80m outer feather is not slope constrained. Eight-neighbor limits are not continuous road-grade guarantees."
+}

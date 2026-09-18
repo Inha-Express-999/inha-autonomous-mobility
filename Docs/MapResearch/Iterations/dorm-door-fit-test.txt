@@ -1,0 +1,4 @@
+dorm_1_general gap[-1]=0.03999972 gap[0]=0.04000282 gap[1]=0.1200008
+dorm_1_accessible gap[-1]=0.04001498 gap[0]=0.0400157 gap[1]=-0.03998709
+dorm_2_general gap[-1]=0.03997898 gap[0]=0.03998995 gap[1]=0.0400002
+dorm_2_accessible gap[-1]=0.0399487 gap[0]=0.03995967 gap[1]=0.1199708

@@ -1,0 +1,1 @@
+Lower-only corridor: portal local core X 2..27, Z 4..10, 2m smooth transition; target portal base elevation=0.1234207; changed grid samples=45; maximum lowering=4.629799m. Synthetic landscaping, not measured elevation.

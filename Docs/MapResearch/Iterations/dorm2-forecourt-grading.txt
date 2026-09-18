@@ -1,0 +1,1 @@
+Changed terrain samples=35 maximum lowering m=4.959523 target synthetic platform m=8.964903; original 257x257 float32 heights in dorm2-forecourt-before.raw. Entrance rectangles 3.3m x 10m, bilinear support margin 11.4m and smooth 16m shoulder. Not surveyed ground.

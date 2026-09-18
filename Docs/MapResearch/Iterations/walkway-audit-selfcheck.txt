@@ -1,0 +1,1 @@
+PASS: inactive required walkway detected as missing; one inverted top face and mismatched mesh collider detected as geometry_issue; original object/mesh restored and audit refreshed.

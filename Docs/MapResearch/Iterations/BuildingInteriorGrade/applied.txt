@@ -1,0 +1,1 @@
+Applied interior-only terrain proposal; preserved building/anchored binding samples=4 maximum resulting world-position drift=0. Original height array retained in before.raw.

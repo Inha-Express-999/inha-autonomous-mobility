@@ -1,0 +1,1 @@
+Original mesh retained=True lowerVertices=72 upperVertexErrorM=0 bottomEdgeSamples=6658 maxBottomGapM=-0.07999992 vertices=144

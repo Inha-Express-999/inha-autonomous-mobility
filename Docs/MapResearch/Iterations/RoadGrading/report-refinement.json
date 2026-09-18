@@ -1,0 +1,16 @@
+{
+  "description": "Second road grading pass; actual projected structural triangles and rigid anchor support cells protected.",
+  "road_cells": 4258,
+  "measured_core_cells": 3500,
+  "changed_cells": 11343,
+  "max_height_change_m": 2.8690792620182037,
+  "protected_height_change_m": 0.0,
+  "before": {
+    "road_grade_p95": 0.11904044146801716,
+    "road_grid_roughness_rms_m": 0.6541667177627489
+  },
+  "after": {
+    "road_grade_p95": 0.0956866592168808,
+    "road_grid_roughness_rms_m": 0.3499743342399597
+  }
+}

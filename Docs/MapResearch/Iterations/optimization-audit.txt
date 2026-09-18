@@ -1,0 +1,8 @@
+Scene=Assets/CampusSim/Scenes/CampusTerrain.unity
+StandaloneWindows64: static batching=True
+Android: static batching=True
+iOS: static batching=True
+Unique owned materials=31; instancing enabled=31
+Active BatchingStatic renderers=577
+SRP batching=True
+SRP Batcher may take priority over material instancing. Actual instanced draws require Frame Debugger verification. No measured FPS or draw-call savings claimed.

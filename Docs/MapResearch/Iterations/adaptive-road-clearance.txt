@@ -1,0 +1,1 @@
+Adaptive roads=17 triangles=2044 barycentric samples=30660 buried samples=0 minimum clearance m=0.1534691; original meshes independent and colliders match. Sampling is not continuous surface proof.

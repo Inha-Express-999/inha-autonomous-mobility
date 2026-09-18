@@ -1,0 +1,1 @@
+Paint vertices fitted to asphalt=108012/108228; clearance 0.015m. Non-overlapping vertices retain terrain-baked height.

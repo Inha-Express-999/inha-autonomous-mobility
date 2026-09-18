@@ -1,0 +1,2 @@
+West entry apron: road coverage=17/17; max seam height error m=1.573563E-05; collider matches=True
+East exit apron: road coverage=17/17; max seam height error m=0.0001654625; collider matches=True

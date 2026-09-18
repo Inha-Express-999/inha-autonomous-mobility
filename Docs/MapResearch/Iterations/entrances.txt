@@ -1,0 +1,2 @@
+Landmarks=4; separate entrances=8; required landmarks pending=7.
+Synthetic facade proposals, not verified real entrances or usable vehicle stops.

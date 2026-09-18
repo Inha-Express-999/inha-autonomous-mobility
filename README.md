@@ -1,7 +1,7 @@
 # inha-autonomous-mobility
 인하대학교 교내 자율주행 운송 서비스 / Inha University Autonomous Campus Mobility Service
 
-프로젝트 버전: **0.1.1.0**. [통합 개발 규칙](AGENTS.md), [지도 작업 현황](Docs/MapResearch/PLAN.md), [PC·모바일 UI 명세](Docs/ClientUI/REQUIREMENTS.md), [화면별 적용·검증 계획](Docs/ClientUI/IMPLEMENTATION.md)을 기준으로 개발합니다. 클라이언트 UI와 Python 서버는 구현 예정이며, 아래 환경 맵 안내와 구분합니다.
+프로젝트 버전: **0.1.1.1**. [통합 개발 규칙](AGENTS.md), [지도 작업 현황](Docs/MapResearch/PLAN.md), [PC·모바일 UI 명세](Docs/ClientUI/REQUIREMENTS.md), [화면별 적용·검증 계획](Docs/ClientUI/IMPLEMENTATION.md)을 기준으로 개발합니다. 클라이언트 UI와 Python 서버는 구현 예정이며, 아래 환경 맵 안내와 구분합니다.
 
 ## Unity 프로젝트 실행
 

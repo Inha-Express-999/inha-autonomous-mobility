@@ -1,0 +1,58 @@
+{
+  "id": "dorm_3",
+  "name": "제3생활관 게스트하우스",
+  "floors": 10,
+  "source": "https://dormeng.inha.ac.kr/sites/dormeng/images/map_img02.jpg",
+  "context_source": "https://sites.google.com/inha.ac.kr/meew2024/veune",
+  "floor_source": "https://inha.uway.com/file/2026_inha_js.pdf",
+  "status": "official_map_relative_location_approximate_outline_synthetic_entrances",
+  "control_point_rms_m": 3.121475940537193,
+  "coordinate_frame": "existing legacy campus local XZ; apply INHA UNIVERSITY transform",
+  "approximate": true,
+  "verified_geometry": false,
+  "verified_entrances": false,
+  "verified_access": false,
+  "points": [
+    {
+      "x": 538.2720479735899,
+      "z": -383.54343223041604
+    },
+    {
+      "x": 556.4721142845546,
+      "z": -390.2263129621931
+    },
+    {
+      "x": 560.8392206103563,
+      "z": -375.9345718569793
+    },
+    {
+      "x": 550.3709334330506,
+      "z": -371.75997569339177
+    }
+  ],
+  "map_annotation_envelope": [
+    {
+      "x": 535.6078203585337,
+      "z": -384.905157535275
+    },
+    {
+      "x": 561.6079150884832,
+      "z": -394.4521300092423
+    },
+    {
+      "x": 567.846638411057,
+      "z": -374.03535700179395
+    },
+    {
+      "x": 552.8919424434775,
+      "z": -368.07164819666895
+    }
+  ],
+  "synthetic_envelope_scale": 0.7,
+  "synthetic_placement_adjustment_m": {
+    "x": -3.0,
+    "z": 0.0
+  },
+  "height_per_floor_m": 3.2,
+  "note": "Map annotations approximate the building extent; registration error is not geographic accuracy. No surveyed entrance or accessible Stop implied."
+}

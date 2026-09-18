@@ -1,0 +1,1 @@
+Rebuild renderers=36 count mismatches=0 max vertex drift=0; original leaf geometry preserved, no added colliders.

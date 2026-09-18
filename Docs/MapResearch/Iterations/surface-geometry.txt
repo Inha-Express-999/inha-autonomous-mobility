@@ -1,0 +1,49 @@
+green 218220046 vertices=1893 edge=22.0311 sourceY=-0.04..-0.04 midpointGap=0.02478075
+Main facade full height pilasters vertices=720 edge=1.979912 sourceY=0..18.6 midpointGap=0
+Sports field line markings vertices=20619 edge=22.88121 sourceY=0.0755..0.0925 midpointGap=0.02410221
+Main building stone portal frames vertices=1536 edge=8.500607 sourceY=0..21.5 midpointGap=0
+Main building glazed entrance towers vertices=72 edge=8.558635 sourceY=0..20 midpointGap=0
+Continuous yellow road edges vertices=244248 edge=23.94556 sourceY=0.085..0.097 midpointGap=0.02499771
+Junction aware kerbs vertices=61455 edge=23.9796 sourceY=0.2..0.2 midpointGap=0.0249958
+Continuous pedestrian network vertices=55824 edge=23.97934 sourceY=0.145..0.145 midpointGap=0.02499723
+Continuous asphalt network vertices=50499 edge=23.97934 sourceY=0.081..0.081 midpointGap=0.02499962
+Crosswalks and lane dashes vertices=31434 edge=3.041414 sourceY=0.0875..0.115 midpointGap=0.02495337
+Stone water edge vertices=2520 edge=16.67526 sourceY=-0.05999999..0.42 midpointGap=0.02280521
+Water vertices=945 edge=22.29212 sourceY=0.06..0.06 midpointGap=0.02474499
+Stone water edge vertices=9624 edge=15.90584 sourceY=-0.05999999..0.42 midpointGap=0.02356148
+Water vertices=1395 edge=17.06697 sourceY=0.06..0.06 midpointGap=0.02469444
+아고라 광장 vertices=954 edge=16.33704 sourceY=0.055..0.055 midpointGap=0.02465534
+plaza 1098539005 vertices=522 edge=13.34363 sourceY=0.055..0.055 midpointGap=0.02336311
+green 1098539004 vertices=1788 edge=20.88675 sourceY=-0.04..-0.04 midpointGap=0.02457809
+green 1098496333 vertices=1950 edge=23.668 sourceY=-0.04..-0.04 midpointGap=0.02488422
+비룡주차장 vertices=3924 edge=23.90387 sourceY=0.055..0.055 midpointGap=0.02499294
+sport 281499585 vertices=1149 edge=19.21674 sourceY=0.055..0.055 midpointGap=0.02495813
+sport 281499584 vertices=12258 edge=21.50736 sourceY=0.055..0.055 midpointGap=0.02495766
+green 259010434 vertices=192 edge=23.84499 sourceY=-0.04..-0.04 midpointGap=0
+green 259009147 vertices=3165 edge=14.38518 sourceY=-0.04..-0.04 midpointGap=0.02486515
+green 258995412 vertices=693 edge=21.0123 sourceY=-0.04..-0.04 midpointGap=0.02461815
+sport 237487555 vertices=630 edge=22.52392 sourceY=0.055..0.055 midpointGap=0.02486229
+green 218215618 vertices=10629 edge=20.71638 sourceY=-0.04..-0.04 midpointGap=0.02499866
+green 236366217 vertices=3243 edge=23.97396 sourceY=-0.04..-0.04 midpointGap=0.02485371
+대운동장 vertices=1284 edge=23.97289 sourceY=0.055..0.055 midpointGap=0.0249157
+green 219985528 vertices=1302 edge=21.35221 sourceY=-0.04..-0.04 midpointGap=0.02476025
+green 219204912 vertices=3312 edge=22.95432 sourceY=-0.04..-0.04 midpointGap=0.02467442
+green 219203541 vertices=141 edge=19.65797 sourceY=-0.04..-0.04 midpointGap=0.02385616
+green 219203540 vertices=42 edge=23.45711 sourceY=-0.04..-0.04 midpointGap=0
+green 219203139 vertices=5217 edge=23.87812 sourceY=-0.04..-0.04 midpointGap=0.02494907
+green 218595314 vertices=189 edge=17.57837 sourceY=-0.04..-0.04 midpointGap=0.02483559
+green 218595312 vertices=1428 edge=17.91425 sourceY=-0.04..-0.04 midpointGap=0.02494431
+green 218590972 vertices=45 edge=20.27047 sourceY=-0.04..-0.04 midpointGap=0
+green 218590963 vertices=33 edge=23.93055 sourceY=-0.04..-0.04 midpointGap=0
+green 218399242 vertices=63 edge=18.61957 sourceY=-0.04..-0.04 midpointGap=0.02342463
+green 218399239 vertices=1038 edge=23.81218 sourceY=-0.04..-0.04 midpointGap=0.02485418
+green 218398980 vertices=1683 edge=22.0312 sourceY=-0.04..-0.04 midpointGap=0.0249548
+green 218397335 vertices=2289 edge=23.87146 sourceY=-0.04..-0.04 midpointGap=0.02468014
+green 218397332 vertices=4815 edge=22.39877 sourceY=-0.04..-0.04 midpointGap=0.02490139
+green 218397239 vertices=3714 edge=20.52309 sourceY=-0.04..-0.04 midpointGap=0.02496815
+green 218269414 vertices=51 edge=23.28593 sourceY=-0.04..-0.04 midpointGap=0
+하와이인하공원 vertices=2832 edge=23.32437 sourceY=-0.04..-0.04 midpointGap=0.02497029
+green 218398979 vertices=1983 edge=23.44571 sourceY=-0.04..-0.04 midpointGap=0.02496338
+green 218267473 vertices=6855 edge=17.67002 sourceY=-0.04..-0.04 midpointGap=0.02494669
+green 218221016 vertices=4941 edge=18.15648 sourceY=-0.04..-0.04 midpointGap=0.0248785
+green 218221011 vertices=4824 edge=19.19589 sourceY=-0.04..-0.04 midpointGap=0.02499485

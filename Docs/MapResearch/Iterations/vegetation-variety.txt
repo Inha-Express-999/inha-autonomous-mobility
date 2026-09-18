@@ -1,0 +1,1 @@
+Grass clumps by species 1/2/3=55095/20391/16900; changed patch meshes=298; total patches=735. New blades fit within the previously accepted circular footprint and height. Three grass tones, four tree tones. Trees recolored=295; broadleaf 02/05 replacements=57. Existing willows and native LOD preserved. Prior grass/tree objects archived EditorOnly. Mobile performance not measured.

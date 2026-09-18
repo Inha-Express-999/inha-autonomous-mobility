@@ -1,0 +1,1 @@
+samples=13220 min=-7.012287 median=-3.258066 max=-2.154403 currentFloor=-3.676372 proposedFloor=-2.104403

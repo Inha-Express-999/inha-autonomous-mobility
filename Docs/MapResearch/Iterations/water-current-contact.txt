@@ -1,0 +1,2 @@
+본관 앞 수로 | reflecting pool min=-0.1118851 worst=(5.56994, -7.61234, -257.76470) buried=1/306 offset=0.1674361 original=(0.00000, 0.00000, 0.00000)
+인경호 | mapped shoreline min=-0.02309608 worst=(255.18100, 2.00000, -58.46402) buried=5/1683 offset=-0.267899 original=(0.00000, 0.00000, 0.00000)

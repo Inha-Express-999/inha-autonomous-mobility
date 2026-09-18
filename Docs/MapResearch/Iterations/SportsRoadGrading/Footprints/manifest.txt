@@ -1,0 +1,14 @@
+building_0.raw|building 218188170 | OSM 218188170_0
+building_1.raw|평생교육관 | OSM 218186034_0
+building_2.raw|60주년기념관 | OSM 218189298_0
+building_3.raw|서호관 | OSM 218188831_0
+building_4.raw|관중석 | OSM 1203054818_0
+building_5.raw|2남관 | OSM 219983082_0
+building_6.raw|주차관리실 | OSM 1098539003_0
+building_7.raw|나빌레관 | OSM 218188169_0
+building_8.raw|학군단 | OSM 218265217_0
+building_9.raw|정석학술정보관 | OSM 217958067_0
+building_10.raw|5호관 | OSM r3149246_218188830_0
+building_11.raw|로스쿨관 | OSM 217950511_0
+building_12.raw|Grazie | OSM 575176169_0
+building_13.raw|본관 | OSM 217958071_0

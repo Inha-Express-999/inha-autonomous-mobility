@@ -1,0 +1,1 @@
+21504 samples; min terrain clearance=0.221415; repeat drift=0

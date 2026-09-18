@@ -1,0 +1,1 @@
+Separated tower mesh layers=6; glass offset=.14m; frame offset=.22m. Source meshes preserved.

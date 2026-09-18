@@ -1,0 +1,1 @@
+building4 floor=-2.250992 other buildings/anchors max drift=0

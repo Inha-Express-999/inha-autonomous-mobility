@@ -1,0 +1,19 @@
+{
+  "method": "Constrained harmonic terrain relaxation; fixed footprints, sports platforms and anchors",
+  "before": {
+    "grid_samples": 551,
+    "p95": 0.2688918414406856,
+    "over_10percent": 94,
+    "max": 0.7109243642920948
+  },
+  "after": {
+    "grid_samples": 551,
+    "p95": 0.23799355560113988,
+    "over_10percent": 82,
+    "max": 0.6546576970812797
+  },
+  "changed_samples": 1856,
+  "maximum_height_change_m": 3.6890439987182617,
+  "fixed_sample_error_m": 0.0,
+  "status": "proposal_not_applied"
+}

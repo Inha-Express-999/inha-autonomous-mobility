@@ -1,0 +1,1 @@
+Synthetic accessible portal relocated 5m along same facade: (558.67, 8.96, -293.58) to (556.22, 8.96, -297.94). Separation=9.159812; not a surveyed entrance.

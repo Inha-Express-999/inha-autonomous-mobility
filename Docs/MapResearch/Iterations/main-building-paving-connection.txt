@@ -1,0 +1,1 @@
+Top vertices=485; max face gradient=0.04509916; minimum vertex terrain clearance=0.2344482; endpoint paving offset=0.005m; access unverified.

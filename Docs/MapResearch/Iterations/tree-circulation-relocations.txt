@@ -1,0 +1,8 @@
+BroadleafTree_05_Green from=(112.31, -3.77, -355.10) to=(111.65, -3.78, -360.05) horizontalShift=4.99999
+Grove tree 188 from=(-157.68, -6.93, -81.88) to=(-156.76, -6.93, -81.50) horizontalShift=0.9999946
+Grove tree 211 from=(-121.88, -5.58, -43.88) to=(-123.70, -5.58, -41.50) horizontalShift=3
+Grove tree 189 from=(-151.87, -6.87, -85.62) to=(-150.81, -6.87, -84.56) horizontalShift=1.499996
+BroadleafTree_02_Green from=(-136.61, -6.67, -82.13) to=(-135.61, -6.66, -82.13) horizontalShift=1
+Grove tree 040 from=(85.51, -5.51, -265.40) to=(86.70, -5.47, -264.48) horizontalShift=1.500005
+Lakeside willow 0 from=(179.06, 1.91, -135.64) to=(179.67, 1.88, -134.84) horizontalShift=0.9999995
+Grove tree 035 from=(-119.83, -5.69, -50.27) to=(-119.13, -5.73, -50.98) horizontalShift=1.000001

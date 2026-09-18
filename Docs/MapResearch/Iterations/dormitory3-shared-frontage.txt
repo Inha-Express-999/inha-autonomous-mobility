@@ -1,0 +1,1 @@
+Width=1.8m; top samples=145; maximum longitudinal grade=2.341227E-07; terrain burial=0; 5 terminal samples gap to accessible approach=-9.536743E-07..0m. Authoring geometry only.

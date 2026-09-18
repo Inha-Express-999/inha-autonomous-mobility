@@ -1,0 +1,2 @@
+Ground surfaces retessellated: 46
+Material submeshes preserved; maximum requested planar triangle edge 2m.

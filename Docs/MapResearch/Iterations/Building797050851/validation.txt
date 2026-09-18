@@ -1,0 +1,1 @@
+footprint samples=13220 intrusion samples=0 maximum terrain minus floor=-0.04999971 foundation samples=3200 maximum foundation gap=-0.05000019 upper source vertex drift=0 repeated bake position drift=0 repeated mesh drift=0 collider matches=True

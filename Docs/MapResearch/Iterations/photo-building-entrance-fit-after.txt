@@ -1,0 +1,4 @@
+anniversary_60_general target offset=.04m maximum error=7.867813E-06
+anniversary_60_accessible target offset=.04m maximum error=5.483627E-06
+hitech_general target offset=.04m maximum error=1.049042E-05
+hitech_accessible target offset=.04m maximum error=4.529953E-06

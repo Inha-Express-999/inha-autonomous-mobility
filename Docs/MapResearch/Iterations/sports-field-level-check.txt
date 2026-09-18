@@ -1,0 +1,1 @@
+Main field vertices=648 height range m=0 collider matches=True

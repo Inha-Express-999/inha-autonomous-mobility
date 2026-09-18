@@ -1,0 +1,2 @@
+Entry_Unverified point=(-304.597, -6.805, -37.139) road coverage=0/17 max height difference=0
+Exit_Unverified point=(-264.407, -6.504, 32.033) road coverage=1/17 max height difference=0.224546

@@ -1,0 +1,1 @@
+Scene snapshot references shared meshes. Restore source heights and scene, then Bake to restore derived geometry; this is not an isolated duplicate project.

@@ -1,0 +1,3 @@
+sport 281499584 height range=0 collider matches=True
+대운동장 height range=0 collider matches=True
+Stand anchor height error=0

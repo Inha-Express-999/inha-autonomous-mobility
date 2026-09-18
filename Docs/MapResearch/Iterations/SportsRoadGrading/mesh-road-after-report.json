@@ -1,0 +1,8 @@
+{
+  "triangles": 560,
+  "area_m2": 12189.613387408,
+  "area_weighted_p95": 0.0179024022,
+  "area_over_10percent_m2": 0,
+  "maximum": 0.04610466,
+  "note": "Current baked main asphalt mesh, same sports ROI; mesh triangle gradient is not route longitudinal grade."
+}

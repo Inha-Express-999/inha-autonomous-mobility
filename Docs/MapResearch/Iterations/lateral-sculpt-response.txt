@@ -1,0 +1,1 @@
+HiTech shared frontage: local terrain sample +2m; maximum mesh rise=1.829309m; restored vertex drift=0m. Synthetic authoring response; grade after sculpt is not automatically accessible.

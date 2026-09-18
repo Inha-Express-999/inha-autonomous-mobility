@@ -1,0 +1,2 @@
+West entry apron vertices=344 side wall quads=58 maximum bottom above terrain m=-0.05000019 collider=True
+East exit apron vertices=344 side wall quads=58 maximum bottom above terrain m=-0.05000019 collider=True

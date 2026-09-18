@@ -1,0 +1,32 @@
+{
+  "source_osm_id": "218081857_0",
+  "parts": [
+    {
+      "point_indices": [
+        0,
+        1,
+        2,
+        7,
+        8
+      ],
+      "height_m": 58.0,
+      "floors": 16
+    },
+    {
+      "point_indices": [
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "height_m": 22.0,
+      "floors": 6
+    }
+  ],
+  "footprint_area_m2": 3377.8868430000007,
+  "triangles": 1513,
+  "status": "photo_based_synthetic_dimensions",
+  "reference": "https://www.dnews.co.kr/uhtml/view.jsp?idxno=202209211119048250511"
+}

@@ -1,0 +1,1 @@
+Shadow AB changed pixels over RGB6=34028/480000 total RGB difference=824814

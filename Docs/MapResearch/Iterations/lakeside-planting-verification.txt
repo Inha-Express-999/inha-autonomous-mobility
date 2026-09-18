@@ -1,0 +1,3 @@
+Retained grass patches=11 active clumps=1262 pavement conflicts=0
+Lakeside willow 10 position=(245.53, 1.83, -51.90) pavement samples=0
+Sample-based clearance; not an exact triangle-intersection proof.

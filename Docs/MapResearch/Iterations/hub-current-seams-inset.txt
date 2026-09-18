@@ -1,0 +1,4 @@
+Inset sampling: 1mm inside ramp terminal edge; 33 width samples.
+West entry apron hits=33/33 maxSeamM=1.049042E-05
+East exit apron hits=33/33 maxSeamM=0.0001001358
+Departure bays=3

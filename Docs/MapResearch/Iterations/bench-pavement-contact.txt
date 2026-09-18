@@ -1,0 +1,10 @@
+Lakeside bench 10 legSamples=24 misses=0 gap=0.01499987..0.01500034
+Lakeside bench 5 legSamples=24 misses=0 gap=0.0150001..0.01500034
+Lakeside bench 8 legSamples=24 misses=0 gap=0.01499987..0.01500034
+Lakeside bench 1 legSamples=24 misses=0 gap=0.01499987..0.01500034
+Lakeside bench 6 legSamples=24 misses=0 gap=0.01499987..0.01500034
+Lakeside bench 9 legSamples=24 misses=0 gap=0.01499987..0.01500034
+Lakeside bench 3 legSamples=24 misses=0 gap=0.01499987..0.01500034
+Lakeside bench 2 legSamples=24 misses=0 gap=0.01499987..0.01500034
+Lakeside bench 7 legSamples=24 misses=0 gap=0.01499987..0.0150001
+Lakeside bench 4 legSamples=24 misses=0 gap=0.01499987..0.0150001

@@ -1,0 +1,1 @@
+Width=2.5m; top samples=287; maximum longitudinal grade=0.01632308; terrain burial=0; 7 terminal samples gap=0.005000114..0.005000114m. Authoring geometry only.

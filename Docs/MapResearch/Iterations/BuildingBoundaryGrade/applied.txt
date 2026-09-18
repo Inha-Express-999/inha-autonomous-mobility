@@ -1,0 +1,1 @@
+preserved building/anchor bindings=310 compensated=0 max world drift=0

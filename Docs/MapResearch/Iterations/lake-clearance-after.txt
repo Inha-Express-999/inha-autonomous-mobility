@@ -1,0 +1,1 @@
+Lake samples=54379 buried=0 minimum clearance=0.01693439 repeated fitting drift=0

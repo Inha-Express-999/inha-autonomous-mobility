@@ -1,0 +1,10 @@
+dorm_1
+dorm_1_general world=(69.580, -7.894, -466.007)
+bounds=Center: (74.02, -7.80, -468.31), Extents: (3.42, 0.16, 2.84)
+dorm_1_accessible world=(77.053, -7.894, -451.575)
+bounds=Center: (81.49, -7.80, -453.87), Extents: (3.42, 0.16, 2.84)
+dorm_2
+dorm_2_general world=(551.729, 8.965, -305.919)
+bounds=Center: (556.09, 9.45, -308.37), Extents: (3.42, 0.53, 2.91)
+dorm_2_accessible world=(558.672, 8.965, -293.578)
+bounds=Center: (563.03, 9.80, -296.03), Extents: (3.42, 0.89, 2.91)

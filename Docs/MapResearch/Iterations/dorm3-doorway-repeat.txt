@@ -1,0 +1,1 @@
+source window quads=170; displayed window quads=167; repeat vertex drift=0; repeat indices equal=True; collider matches=True

@@ -1,0 +1,1 @@
+Approach boundaries=22 vertices=1158; unique IDs, finite nonzero polygons, vehicle exclusion=true, pedestrian access verified=false. Authoring metadata only; no runtime exporter enforcement claimed.

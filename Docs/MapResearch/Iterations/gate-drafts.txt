@@ -1,0 +1,3 @@
+2 OSM-located gate landmarks, 4 separate passage anchors.
+Node 4741793208 main, 4741793209 rear.
+Orientation, structures and passage locations are synthetic; not verified access or vehicle routes.

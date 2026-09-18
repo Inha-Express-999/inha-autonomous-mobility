@@ -1,0 +1,1 @@
+Facade bottom edge samples=1196 maximum absolute ground contact error m=0

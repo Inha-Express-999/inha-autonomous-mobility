@@ -1,0 +1,1 @@
+PASS: top vertices=410, inverted=0, terrain protrusion m=0, minimum clearance above water m=0.1723206, repeat rebuild max vertex delta=0, collider matches=True

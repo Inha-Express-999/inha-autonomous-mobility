@@ -1,0 +1,1 @@
+Changed grid samples=53 max lowering=4.057869 target=-6.923518; roof footprint plus 12m interpolation support and 12m shoulder; synthetic ground correction.

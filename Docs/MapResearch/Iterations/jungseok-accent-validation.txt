@@ -1,0 +1,1 @@
+Accent triangles=256; collider matches=True; all materials FlatKit=True; base building position=(0.00, -6.06, 0.00); no ground-level extension (minimum accent local Y=4).

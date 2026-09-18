@@ -1,0 +1,1 @@
+Samples=11290 terrain through water=0 minimum clearance=0.1136217 level=2.04

@@ -1,0 +1,2 @@
+oldFloor=-5.551167 proposedFloor=-2.250992 cells=337 maxTerrainChange=4.667136
+Neighbour roof footprints protected with 2.9m interpolation margin. Restored cells=84 final changed cells=253 max change=4.57863

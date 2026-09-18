@@ -1,0 +1,1 @@
+Lake water samples=2541 buried=5 minimumClearance=-0.02309608

@@ -1,0 +1,1 @@
+Benches=10 foot samples=240 paving misses=0 signed gap=-0.005000353..-0.004999876 metres; checked against actual pavement collider after terrain bake.

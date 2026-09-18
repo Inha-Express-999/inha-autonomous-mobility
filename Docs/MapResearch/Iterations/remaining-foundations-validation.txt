@@ -1,0 +1,4 @@
+4호관 | OSM 219982956_0 upperDeviation=0 maxBottomGap=-0.1031275 colliderMatch=True
+6호관 | OSM 568420968_0 upperDeviation=0 maxBottomGap=-0.05000019 colliderMatch=True
+9호관 | OSM 568420969_0 upperDeviation=0 maxBottomGap=-0.2271614 colliderMatch=True
+체육관 | OSM 218037242_0 upperDeviation=0 maxBottomGap=-0.04999995 colliderMatch=True

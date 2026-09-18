@@ -1,0 +1,1 @@
+Active patches=735; authored blade relief scale=.28. Source meshes, XZ placement, density, palette and species preserved. Terrain Bake reapplies height scale.

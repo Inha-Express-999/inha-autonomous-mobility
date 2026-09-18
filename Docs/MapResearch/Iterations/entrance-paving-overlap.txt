@@ -1,0 +1,8 @@
+row=17, localZ=6.85, paving-above-approach=0.04166603
+row=18, localZ=7.1, paving-above-approach=0.03499985
+row=19, localZ=7.35, paving-above-approach=0.02833319
+row=20, localZ=7.6, paving-above-approach=0.02166653
+row=21, localZ=7.85, paving-above-approach=0.01499939
+row=22, localZ=8.1, paving-above-approach=0.008333206
+row=23, localZ=8.349999, paving-above-approach=0.001666546
+row=24, localZ=8.6, paving-above-approach=-0.005000114

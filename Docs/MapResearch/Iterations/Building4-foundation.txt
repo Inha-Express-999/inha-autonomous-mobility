@@ -1,0 +1,1 @@
+Bottom edge samples=3510; lowered vertices=126; original local bottom=0; fitted bottom=-4.812406. Upper source vertices retained; source asset unchanged.

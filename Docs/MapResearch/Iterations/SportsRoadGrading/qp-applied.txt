@@ -1,0 +1,2 @@
+Applied normalized height array to current Terrain. Baseline before.raw preserved and matched. Scene rebake pending; current proposal retains unresolved outer-road grades.
+Full terrain bake and scene save completed.

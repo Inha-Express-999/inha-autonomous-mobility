@@ -1,0 +1,2 @@
+OSM road pieces=15; width synthetic; access unverified. Geometry follows current Terrain through Bake. No runtime graph or complete entrance connection claimed.
+Active exterior connection pieces=15; old roots inactive/EditorOnly=2; colliders match and batching flags applied

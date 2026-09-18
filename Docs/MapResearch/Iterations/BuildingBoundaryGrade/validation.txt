@@ -1,0 +1,5 @@
+4호관 | OSM 219982956_0 samples=4508 terrainAboveFloor=241 maxPenetration=3.300175
+9호관 | OSM 568420969_0 samples=7359 terrainAboveFloor=0 maxPenetration=0
+6호관 | OSM 568420968_0 samples=4216 terrainAboveFloor=0 maxPenetration=0
+체육관 | OSM 218037242_0 samples=5181 terrainAboveFloor=0 maxPenetration=0
+김현태인하드림센터 | OSM 568420970_0 samples=2372 terrainAboveFloor=1 maxPenetration=0.08042717

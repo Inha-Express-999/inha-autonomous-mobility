@@ -1,0 +1,1 @@
+Compensated bindings=141 building/anchor max drift=0.1608238

@@ -1,0 +1,1 @@
+samples=14336; min terrain clearance=0.04678822; repeated vertex drift=0

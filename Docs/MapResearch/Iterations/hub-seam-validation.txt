@@ -1,0 +1,3 @@
+Geometry-only hub seam test; not vehicle route or access approval. Samples inset 1mm to avoid exact triangle-edge raycast ambiguity.
+West entry apron: coverage=33/33, maximum seam=1.049042E-05m
+East exit apron: coverage=33/33, maximum seam=0.0001001358m

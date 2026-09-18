@@ -1,0 +1,10 @@
+main_gate separation=21.16603m, heightAnchor=node/4741793208, status=osm_gate_location_synthetic_layout_unverified_access
+anniversary_60 separation=26.88568m, heightAnchor=60주년기념관 | OSM 218189298_0, status=synthetic_facade_entrances_not_verified_access
+biryong_plaza separation=55.03247m, heightAnchor=node/9767122969;node/9767122970, status=osm_entrance_positions_synthetic_roles_and_pavilions_access_unknown
+rear_gate separation=19.95667m, heightAnchor=node/4741793209, status=osm_gate_location_synthetic_layout_unverified_access
+inha_station INCOMPLETE: missing entrance pair; osm_exit_7_wheelchair_no_accessible_entrance_unresolved
+hitech separation=36.73154m, heightAnchor=하이테크센터 | OSM 218081857_0, status=synthetic_facade_entrances_not_verified_access
+dorm_2 separation=14.15983m, heightAnchor=way/218397211, status=osm_footprint_photo_guided_synthetic_height_and_entrances
+building_5 separation=54.50668m, heightAnchor=5호관 | OSM r3149246_218188830_0, status=synthetic_facade_entrances_not_verified_access
+dorm_1 separation=16.25186m, heightAnchor=way/217948855, status=osm_footprint_photo_guided_synthetic_height_and_entrances
+building_2 separation=23.37265m, heightAnchor=2북관 | OSM r14633181_218264949_0, status=synthetic_facade_entrances_not_verified_access

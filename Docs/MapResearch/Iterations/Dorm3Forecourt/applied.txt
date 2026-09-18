@@ -1,0 +1,1 @@
+Changed cells=280 maximum terrain change=3.560349 target=9.052138

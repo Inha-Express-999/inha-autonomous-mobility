@@ -1,0 +1,8 @@
+{
+  "triangles": 4205,
+  "horizontal_area_m2": 40932.0381364966,
+  "area_weighted_p95_grade": 0.0535558425,
+  "area_over_10percent_m2": 734.9089950069999,
+  "max_grade": 0.520785451,
+  "note": "Surface gradient magnitude; longitudinal and cross grades are not separated."
+}

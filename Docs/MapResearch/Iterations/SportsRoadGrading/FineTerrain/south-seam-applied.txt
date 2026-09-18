@@ -1,0 +1,1 @@
+Applied south seam proposal, rebaked terrain bindings and saved working scene. Original road-grade-before.raw preserved.

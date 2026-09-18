@@ -1,0 +1,1 @@
+Landing-to-passage height error=0; outwardDot=1; approachExists=True; accessibleEntrance=False; routeValidated=False

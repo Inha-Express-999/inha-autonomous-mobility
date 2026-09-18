@@ -1,0 +1,7 @@
+z=-8 firstX=-29.5 world=(574.140, 8.794, -388.320)
+z=-6 firstX=-36 world=(579.553, 8.513, -392.438)
+z=-4 no road
+z=-2 no road
+z=0 no road
+z=2 no road
+z=4 no road

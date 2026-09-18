@@ -1,0 +1,2 @@
+West entry apron coverage=32/33 maxSeamM=4.768372E-06
+East exit apron coverage=25/33 maxSeamM=9.393692E-05

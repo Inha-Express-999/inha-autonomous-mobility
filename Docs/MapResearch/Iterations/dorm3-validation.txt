@@ -1,0 +1,1 @@
+footprint samples=3706 terrain intrusions=0 minimum floor clearance=0.1017513 portal separation=7.755237 routeValidated=False

@@ -1,0 +1,1 @@
+Posts=26; longitudinal rails=96; triangles=1464; renderers=1; materials=1; no transverse end bars; visual synthetic dimensions only.

@@ -1,0 +1,3 @@
+Idyllic Fantasy Nature instances=43
+Seed=17092026; visual landscaping only, not surveyed tree positions.
+6m sampled green boundary margin, 15m center spacing, building/water bounds excluded. Route graph validation remains pending.

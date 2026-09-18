@@ -1,0 +1,2 @@
+Corrected terrain size=(2048.00, 100.00, 2048.00) resolution=1025; hotspot road area=563.8615 above10 area=141.6216 maximum=0.1387156
+Foundation follows terrain perimeter; apron clearance .10m at maximum site sample; entry/exit ramps 22.5m/21.5m terminating on the existing road collider. Root=(-293.58, -7.29, 2.72) maximum ramp grade=0.005264401. Road graph and operation remain unverified.

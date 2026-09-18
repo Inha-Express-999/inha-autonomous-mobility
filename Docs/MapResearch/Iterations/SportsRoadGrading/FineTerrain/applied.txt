@@ -1,0 +1,2 @@
+Applied and rebaked 1025 terrain; backup=Assets/CampusSim/Generated/BeforeFineTerrain.asset
+World size explicitly restored to (2048.00, 100.00, 2048.00) and rebaked. Initial scale-expanded mesh metrics are invalid.

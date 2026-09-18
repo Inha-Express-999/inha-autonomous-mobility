@@ -1,0 +1,1 @@
+Building renderers=414; owned Flat Kit materials=17. Soft cel transitions; cool shaded colors; cast and receive shadows enabled. Original materials preserved.

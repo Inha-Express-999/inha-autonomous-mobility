@@ -1,0 +1,1 @@
+Samples=21504 minimum clearance=0.02054977 repeat drift=0

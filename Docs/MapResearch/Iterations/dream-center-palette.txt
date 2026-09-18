@@ -1,0 +1,1 @@
+Photo-guided palette renderers=7 bounds-center drift=0; source materials retained. Geometry/entrance orientation unresolved; photo dated2017.

@@ -1,0 +1,14 @@
+area_id,top_triangles,max_surface_gradient,area_above_5_percent_m2,vehicle_excluded,access_verified,inverted_faces,collider_matches_mesh,geometry_status
+hitech_shared_frontage,1680,0.01916922,0,True,False,0,True,geometry_checked_access_unverified
+dormitory3_driveway_connection,512,0.04506532,0,True,False,0,True,geometry_checked_access_unverified
+library_paving_connection,768,0.04518482,0,True,False,0,True,geometry_checked_access_unverified
+biryong_plaza_accessible_lateral,480,0.04646102,0,True,False,0,True,geometry_checked_access_unverified
+dormitory2_shared_frontage,192,0.03019059,0,True,False,0,True,geometry_checked_access_unverified
+main_building_shared_frontage,224,0,0,True,False,0,True,geometry_checked_access_unverified
+dormitory1_shared_frontage,448,0.03593533,0,True,False,0,True,geometry_checked_access_unverified
+rear_gate_accessible_lateral,160,0.02792314,0,True,False,0,True,geometry_checked_access_unverified
+student_center_shared_frontage,224,0.05802865,5.62743672356009,True,False,0,True,geometry_checked_access_unverified
+library_shared_frontage,224,0.02892183,0,True,False,0,True,geometry_checked_access_unverified
+main_building_paving_connection,768,0.0450417,0,True,False,0,True,geometry_checked_access_unverified
+dormitory3_shared_frontage,224,0.02062635,0,True,False,0,True,geometry_checked_access_unverified
+hitech_general_lateral,1200,0.02157675,0,True,False,0,True,geometry_checked_access_unverified

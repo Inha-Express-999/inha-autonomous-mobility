@@ -1,0 +1,1 @@
+Shared frontage: changed=50 maximum lowering=5.27958m; core local X=-38.73157..2 Z=4..10 with 2m transition; lower only to portal base.

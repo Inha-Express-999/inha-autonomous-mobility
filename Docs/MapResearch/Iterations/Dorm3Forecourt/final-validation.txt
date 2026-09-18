@@ -1,0 +1,1 @@
+Distinct portals=True separation=7.755237 foundation repeat drift=0 upper source drift=0 collider match=True facade triangles=428 roof triangles=2 routeValidated=False

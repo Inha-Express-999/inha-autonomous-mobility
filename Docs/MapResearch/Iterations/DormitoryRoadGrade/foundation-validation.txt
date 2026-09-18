@@ -1,0 +1,1 @@
+Upper vertex deviation=0; maximum bottom-vertex gap=-0.05733967; repeated fit drift=0; collider matches=True

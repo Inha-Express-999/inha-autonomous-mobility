@@ -1,0 +1,35 @@
+{
+    "MonoBehaviour": {
+        "m_Enabled": true,
+        "m_EditorHideFlags": 0,
+        "m_Name": "",
+        "m_EditorClassIdentifier": "Assembly-CSharp::CampusSim.CampusTerrainBinding",
+        "kind": 1,
+        "sourceMesh": {
+            "instanceID": 0
+        },
+        "originalMesh": {
+            "instanceID": 0
+        },
+        "heightAnchor": {
+            "instanceID": 0
+        },
+        "bakedMesh": {
+            "instanceID": 0
+        },
+        "samplePoint": {
+            "x": 149.6530303955078,
+            "y": 8.225000381469727,
+            "z": -20.84654998779297
+        },
+        "originalPosition": {
+            "x": 0.0,
+            "y": 0.14009952545166017,
+            "z": 0.0
+        },
+        "surfaceOffset": 0.0,
+        "surfaceReliefScale": 1.0,
+        "sourceId": "4호관 | OSM 219982956_0",
+        "verifiedAccess": false
+    }
+}

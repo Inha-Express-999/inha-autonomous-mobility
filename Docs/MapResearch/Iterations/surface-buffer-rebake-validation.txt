@@ -1,0 +1,1 @@
+Surface bindings=795; maximum vertex displacement=0; vertex-count changes=0; index changes=0; collider mesh mismatches=0

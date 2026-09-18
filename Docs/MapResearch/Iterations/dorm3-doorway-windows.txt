@@ -1,0 +1,1 @@
+Removed overlapping window quads=3; retained window quads=167; source mesh unchanged.

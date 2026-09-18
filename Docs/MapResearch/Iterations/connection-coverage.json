@@ -1,0 +1,11 @@
+{
+  "status": "horizontal_visual_coverage_only",
+  "sample_spacing_max_m": 1,
+  "active_mesh_triangles": 28000,
+  "uncovered_edges": [],
+  "uncovered_length_estimate_m": 0,
+  "caveats": [
+    "Legacy OSM coordinates; working map must be north aligned at origin.",
+    "Does not validate building entrance gaps, surface heights or access."
+  ]
+}

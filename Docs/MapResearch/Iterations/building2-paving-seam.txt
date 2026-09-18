@@ -1,0 +1,1 @@
+building_2_accessible: overlap samples=33, gap min=0.004946947, max=0.004999995, threshold/approach seam=0, threshold grade=0.05009372

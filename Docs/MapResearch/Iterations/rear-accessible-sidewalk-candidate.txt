@@ -1,0 +1,1 @@
+Rear accessible nearest sampled forward sidewalk relative to landing start: distance=5m, portal-local point=(-5.00, 0.30, 2.50). Grid 0.5m; no route or obstruction validation.

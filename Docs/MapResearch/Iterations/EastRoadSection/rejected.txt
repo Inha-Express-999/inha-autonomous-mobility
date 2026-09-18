@@ -1,0 +1,1 @@
+Reverted: max road grade unchanged, area over 10% increased from 896.4892 to 897.9221 m2, promenade grade increased from 2.080935% to 3.243991%. No building metadata compensation files were created.

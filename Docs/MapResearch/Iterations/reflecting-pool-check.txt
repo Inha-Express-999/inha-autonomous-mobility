@@ -1,0 +1,1 @@
+Water samples=462 below terrain=0 minimum depth=0.1053619 maximum depth=2.848634

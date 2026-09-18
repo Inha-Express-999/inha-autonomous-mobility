@@ -1,0 +1,1 @@
+Exit 7 node/4741793213 at 126.6502630 37.4478074. General entrance pavilion only; dimensions/orientation synthetic. OSM wheelchair=no. Accessible entrance null/unresolved; no underground route or vehicle Stop.

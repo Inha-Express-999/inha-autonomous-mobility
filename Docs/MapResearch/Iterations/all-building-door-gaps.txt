@@ -1,0 +1,12 @@
+building_5 anchor=5호관 | OSM r3149246_218188830_0 colliders=2
+building_5_general wallGap=0.02499747
+building_5_accessible wallGap=0.02501035
+anniversary_60 anchor=60주년기념관 | OSM 218189298_0 colliders=1
+anniversary_60_general wallGap=0.03999424
+anniversary_60_accessible wallGap=0.04000449
+hitech anchor=하이테크센터 | OSM 218081857_0 colliders=1
+hitech_general wallGap=0.03999376
+hitech_accessible wallGap=0.03999829
+building_2 anchor=2북관 | OSM r14633181_218264949_0 colliders=2
+building_2_general wallGap=0.02496696
+building_2_accessible wallGap=0.02497149

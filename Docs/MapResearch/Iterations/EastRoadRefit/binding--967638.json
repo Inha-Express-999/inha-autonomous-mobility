@@ -1,0 +1,35 @@
+{
+    "MonoBehaviour": {
+        "m_Enabled": true,
+        "m_EditorHideFlags": 0,
+        "m_Name": "",
+        "m_EditorClassIdentifier": "Assembly-CSharp::CampusSim.CampusTerrainBinding",
+        "kind": 1,
+        "sourceMesh": {
+            "instanceID": 0
+        },
+        "originalMesh": {
+            "instanceID": 0
+        },
+        "heightAnchor": {
+            "instanceID": 0
+        },
+        "bakedMesh": {
+            "instanceID": 0
+        },
+        "samplePoint": {
+            "x": 202.2652130126953,
+            "y": 0.0,
+            "z": -103.78042602539063
+        },
+        "originalPosition": {
+            "x": 202.2652130126953,
+            "y": 0.0,
+            "z": -103.78042602539063
+        },
+        "surfaceOffset": 0.10000000149011612,
+        "surfaceReliefScale": 1.0,
+        "sourceId": "synthetic lakeside furniture; user-observed arrangement",
+        "verifiedAccess": false
+    }
+}

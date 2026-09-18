@@ -1,0 +1,1 @@
+Synthetic field plateau target m=-6.923518 changed samples=543 maximum change m=7.480315; exact field triangle union with 11.4m interpolation support and 24m smooth shoulder. Original full height array saved before edit.

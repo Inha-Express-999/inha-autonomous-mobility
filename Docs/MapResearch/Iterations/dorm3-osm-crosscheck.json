@@ -1,0 +1,170 @@
+{
+  "candidate": {
+    "landmark_id": "dorm_3",
+    "candidate_type": "historical_event_map_destination",
+    "latitude": 37.446848,
+    "longitude": 126.659725,
+    "crs": "EPSG:4326",
+    "source": "https://indico.cern.ch/event/239000/page/1649-travel-information",
+    "source_date": "2013-04",
+    "retrieved_date": "2026-09-17",
+    "verified_building_geometry": false,
+    "verified_entrance": false,
+    "verified_access": false,
+    "note": "Coordinates from Google Maps daddr hyperlink. May represent an arrival point rather than building center. Do not import as a verified Stop."
+  },
+  "method": "Local tangent approximation; origin is historical map destination; not surveyed geometry.",
+  "nearest_buildings": [
+    {
+      "osm_way": "218397211",
+      "tags": {
+        "building": "dormitory",
+        "name": "비룡재",
+        "name:en": "Biryongjae (Dormitory #2)"
+      },
+      "edge_distance_m": 39.28,
+      "candidate_inside_polygon": false
+    },
+    {
+      "osm_way": "218036946",
+      "tags": {
+        "building": "yes",
+        "name": "2호관",
+        "name:en": "Building #2"
+      },
+      "edge_distance_m": 122.22,
+      "candidate_inside_polygon": false
+    },
+    {
+      "osm_way": "568420967",
+      "tags": {
+        "building": "university",
+        "name": "1호관",
+        "name:en": "Building #1"
+      },
+      "edge_distance_m": 127.84,
+      "candidate_inside_polygon": false
+    },
+    {
+      "osm_way": "568420973",
+      "tags": {
+        "building": "university",
+        "name": "동아리관",
+        "name:en": "Dong-arigwan(Student Club Hall)"
+      },
+      "edge_distance_m": 128.67,
+      "candidate_inside_polygon": false
+    },
+    {
+      "osm_way": "218018325",
+      "tags": {
+        "building": "university",
+        "name": "4호관",
+        "name:en": "Building #4"
+      },
+      "edge_distance_m": 157.47,
+      "candidate_inside_polygon": false
+    },
+    {
+      "osm_way": "782271763",
+      "tags": {
+        "amenity": "parking",
+        "building": "parking",
+        "name": "재넘이공영주차장",
+        "parking": "multi-storey"
+      },
+      "edge_distance_m": 159.24,
+      "candidate_inside_polygon": false
+    },
+    {
+      "osm_way": "471332107",
+      "tags": {
+        "building": "yes"
+      },
+      "edge_distance_m": 162.96,
+      "candidate_inside_polygon": false
+    },
+    {
+      "osm_way": "471332106",
+      "tags": {
+        "building": "yes"
+      },
+      "edge_distance_m": 168.64,
+      "candidate_inside_polygon": false
+    }
+  ],
+  "nearest_highways": [
+    {
+      "osm_way": "284010313",
+      "tags": {
+        "highway": "service",
+        "name": "재넘이길123번길",
+        "name:en": "Jaeneomi-gil 123beon-gil",
+        "name:ko": "재넘이길123번길"
+      },
+      "edge_distance_m": 18.95
+    },
+    {
+      "osm_way": "471332807",
+      "tags": {
+        "highway": "service",
+        "lanes": "1",
+        "surface": "asphalt"
+      },
+      "edge_distance_m": 39.86
+    },
+    {
+      "osm_way": "731224474",
+      "tags": {
+        "highway": "service",
+        "name": "소성로87번길",
+        "name:en": "Soseong-ro 87beon-gil",
+        "name:ko": "소성로87번길"
+      },
+      "edge_distance_m": 49.91
+    },
+    {
+      "osm_way": "284010312",
+      "tags": {
+        "highway": "service",
+        "name": "재넘이길123번길",
+        "name:en": "Jaeneomi-gil 123beon-gil",
+        "name:ko": "재넘이길123번길"
+      },
+      "edge_distance_m": 57.1
+    },
+    {
+      "osm_way": "481241715",
+      "tags": {
+        "highway": "service"
+      },
+      "edge_distance_m": 133.49
+    },
+    {
+      "osm_way": "481241712",
+      "tags": {
+        "highway": "service"
+      },
+      "edge_distance_m": 145.1
+    },
+    {
+      "osm_way": "284010488",
+      "tags": {
+        "highway": "service"
+      },
+      "edge_distance_m": 168.79
+    },
+    {
+      "osm_way": "281586687",
+      "tags": {
+        "highway": "service",
+        "name": "재넘이길",
+        "name:en": "Jaeneomi-gil",
+        "name:ko": "재넘이길"
+      },
+      "edge_distance_m": 193.67
+    }
+  ],
+  "verified_building_geometry": false,
+  "verified_access": false
+}

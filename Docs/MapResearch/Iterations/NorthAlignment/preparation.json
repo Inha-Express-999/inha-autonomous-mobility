@@ -1,0 +1,67 @@
+{
+  "status": "prepared; scene application separately recorded",
+  "source_sha256": "39a93164faee8953b435b846518e69cd7eb2c5bb9383d5ecda17f1d69bda93bd",
+  "yaw_before": -27.600006103515625,
+  "yaw_after": 0,
+  "controls": [
+    {
+      "name": "main_gate",
+      "kind": "OSM node/4741793208",
+      "longitude": 126.6531848,
+      "latitude": 37.4477024,
+      "legacy_north_up": [
+        -27.85563908786827,
+        -321.5756480004744
+      ],
+      "aeqd": [
+        -27.891126943283275,
+        -321.5932165232295
+      ],
+      "rotation_displacement_m": 153.98762251691184,
+      "legacy_vs_aeqd_m": 0.039598495852144464
+    },
+    {
+      "name": "rear_gate",
+      "kind": "OSM node/4741793209",
+      "longitude": 126.6564271,
+      "latitude": 37.4511471,
+      "legacy_north_up": [
+        258.6809682019686,
+        60.71715799984233
+      ],
+      "aeqd": [
+        258.9986491562457,
+        60.724524619203045
+      ],
+      "rotation_displacement_m": 126.76202735453634,
+      "legacy_vs_aeqd_m": 0.31776635408929266
+    },
+    {
+      "name": "dorm_2_area",
+      "kind": "OSM footprint centroid probe; not entrance",
+      "longitude": 126.6596125,
+      "latitude": 37.4476264,
+      "legacy_north_up": [
+        540.1890670391658,
+        -330.0101280004705
+      ],
+      "aeqd": [
+        540.8778102486442,
+        -330.0106596449846
+      ],
+      "rotation_displacement_m": 301.9916800451324,
+      "legacy_vs_aeqd_m": 0.68874341466796
+    }
+  ],
+  "clipped_height_samples": 0,
+  "transported_sculpt_residual_range_m": [
+    -5.001370247618048,
+    7.9701506638722845
+  ],
+  "limitations": [
+    "8m bilinear transport smooths authored changes; source retained for rollback",
+    "Legacy linear map scale remains; not a complete AEQD geometry migration",
+    "Rotated terrain boundary outside previous extent receives source relief without invented sculpt residual",
+    "Building pads, lake basins and entrance approaches require post-application checks"
+  ]
+}

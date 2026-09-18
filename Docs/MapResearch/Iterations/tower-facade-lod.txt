@@ -1,0 +1,3 @@
+Tower detail LOD; building mass, roof, colliders and entrance anchors retained.
+60주년기념관: detailed vertices=282420, distant vertices=332, retained ratio=0.00118, source materials=Assets/CampusSim/Generated/BuildingStyle/Blue green glazing.mat;Assets/CampusSim/Generated/BuildingStyle/Sky reflected glazing.mat;Assets/CampusSim/Generated/BuildingStyle/Window frames.mat;Assets/CampusSim/Generated/BuildingStyle/Light granite.mat
+하이테크센터: detailed vertices=304884, distant vertices=480, retained ratio=0.00157, source materials=Assets/CampusSim/Generated/BuildingStyle/Blue green glazing.mat;Assets/CampusSim/Generated/BuildingStyle/Sky reflected glazing.mat;Assets/CampusSim/Generated/BuildingStyle/Window frames.mat;Assets/CampusSim/Generated/BuildingStyle/Light granite.mat

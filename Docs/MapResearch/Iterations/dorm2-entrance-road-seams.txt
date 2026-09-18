@@ -1,0 +1,2 @@
+dorm_2_general road edge seam m=6.103516E-05 maximum carriageway intrusion m=6.103516E-05 collider=True
+dorm_2_accessible road edge seam m=0 maximum carriageway intrusion m=0 collider=True

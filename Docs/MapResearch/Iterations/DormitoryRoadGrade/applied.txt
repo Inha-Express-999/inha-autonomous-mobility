@@ -1,0 +1,2 @@
+Changed=65 max change=1.314222m; Z -334..-306 smoothstep between existing end heights; X core 561..568 with 2m transition.
+REVERTED: global road area above 10% increased from 1888.0584 to1935.3917m2. Restored exact terrain checkpoint and rebaked.

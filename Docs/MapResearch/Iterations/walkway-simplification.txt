@@ -1,0 +1,1 @@
+Surface simplification samples=6330 missing=0 max height deviation=0.0003890991m

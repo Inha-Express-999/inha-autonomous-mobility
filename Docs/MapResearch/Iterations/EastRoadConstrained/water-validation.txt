@@ -1,0 +1,1 @@
+Lake samples=11290 terrain through water=0 minimum water clearance=0.1411276 waterLevel=2.04

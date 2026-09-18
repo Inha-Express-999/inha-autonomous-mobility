@@ -1,0 +1,1 @@
+Library mesh triangles=400 vertices=800; repeat vertex drift=0; rebake world displacement=0; collider matches=True; top roof normal Y=0.9701435; accent objects=1

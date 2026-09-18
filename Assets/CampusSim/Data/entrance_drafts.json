@@ -1,0 +1,119 @@
+{
+  "coordinates": "legacy campus local x=east z=north; apply map transform",
+  "excludedAmbiguousCandidates": [
+    {
+      "osmType": "way",
+      "osmId": "218017288",
+      "name": "5호관",
+      "reason": "Different from existing Inha building footprint; about 449m centroid discrepancy; campus identity unresolved"
+    },
+    {
+      "osmType": "way",
+      "osmId": "218036946",
+      "name": "2호관",
+      "reason": "Different from existing Inha building footprint; about 474m centroid discrepancy; campus identity unresolved"
+    }
+  ],
+  "landmarks": [
+    {
+      "id": "building_5",
+      "name": "5호관",
+      "featureId": "r3149246_218188830_0",
+      "status": "synthetic_facade_entrances_not_verified_access",
+      "entrances": [
+        {
+          "id": "building_5_general",
+          "role": "general",
+          "x": 27.882990267924978,
+          "z": 124.42800512087814,
+          "heading": 24.10192139224965
+        },
+        {
+          "id": "building_5_accessible",
+          "role": "accessible",
+          "x": -21.871809732075018,
+          "z": 146.6864051208781,
+          "heading": 24.10192139224965
+        }
+      ]
+    },
+    {
+      "id": "building_2",
+      "name": "2호관",
+      "featureId": "r14633181_218264949_0",
+      "status": "synthetic_facade_entrances_not_verified_access",
+      "entrances": [
+        {
+          "id": "building_2_general",
+          "role": "general",
+          "x": 191.36569225390267,
+          "z": 52.418976041203535,
+          "heading": 28.657257529409986
+        },
+        {
+          "id": "building_2_accessible",
+          "role": "accessible",
+          "x": 170.85609225390266,
+          "z": 63.62777604120354,
+          "heading": 28.657257529409986
+        }
+      ]
+    },
+    {
+      "id": "hitech",
+      "name": "하이테크",
+      "featureId": "218081857_0",
+      "status": "synthetic_facade_entrances_not_verified_access",
+      "entrances": [
+        {
+          "id": "hitech_general",
+          "role": "general",
+          "x": 351.6536161865776,
+          "z": 21.886987952056216,
+          "heading": 24.939734573571183
+        },
+        {
+          "id": "hitech_accessible",
+          "role": "accessible",
+          "x": 318.3472161865776,
+          "z": 37.37538795205622,
+          "heading": 24.939734573571183
+        }
+      ]
+    },
+    {
+      "id": "anniversary_60",
+      "name": "60주년기념관",
+      "featureId": "218189298_0",
+      "status": "synthetic_facade_entrances_not_verified_access",
+      "entrances": [
+        {
+          "id": "anniversary_60_general",
+          "role": "general",
+          "x": 82.64186140472789,
+          "z": 75.56487353042108,
+          "heading": -61.80882385774106
+        },
+        {
+          "id": "anniversary_60_accessible",
+          "role": "accessible",
+          "x": 69.94066140472789,
+          "z": 51.868473530421085,
+          "heading": -61.80882385774106
+        }
+      ]
+    }
+  ],
+  "additionalSceneLandmarks": [
+    "main_gate",
+    "rear_gate"
+  ],
+  "gatePassageFile": "gate_passage_drafts.json",
+  "pending": [
+    "인하대역",
+    "비룡플라자",
+    "제1생활관",
+    "제2생활관",
+    "제3생활관"
+  ]
+}

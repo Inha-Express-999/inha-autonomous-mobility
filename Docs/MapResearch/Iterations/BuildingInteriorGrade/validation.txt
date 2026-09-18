@@ -1,0 +1,5 @@
+4호관 | OSM 219982956_0 half-metre samples=4508 terrain above floor=456 max penetration=3.300175
+9호관 | OSM 568420969_0 half-metre samples=7359 terrain above floor=42 max penetration=0.4251509
+6호관 | OSM 568420968_0 half-metre samples=4216 terrain above floor=150 max penetration=0.6400642
+체육관 | OSM 218037242_0 half-metre samples=5181 terrain above floor=118 max penetration=0.2946939
+김현태인하드림센터 | OSM 568420970_0 half-metre samples=2372 terrain above floor=163 max penetration=0.89921

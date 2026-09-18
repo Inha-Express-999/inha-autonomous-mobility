@@ -1,0 +1,1 @@
+APPLIED transition-proposal.raw. Initial coupled-proposal.raw superseded due to boundary regression. Final area above10%=920.386514m2; p95=0.0629737; maximum=0.5149332. Original terrain before.raw retained.

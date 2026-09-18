@@ -1,0 +1,1 @@
+Vertices=148 groundErrorM=5.960464E-08 maxCenterlineGrade=0.0431857

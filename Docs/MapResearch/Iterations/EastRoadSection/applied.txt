@@ -1,0 +1,1 @@
+Actual building count=24 maximum position drift=0

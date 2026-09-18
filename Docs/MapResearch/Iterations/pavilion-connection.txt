@@ -1,0 +1,1 @@
+Synthetic general pedestrian stairs: steps=15, rise=2.340253m, run=13.4313m, width=1.8m. Starts on existing stone, ends at deck side. Not step-free; no accessible route approval. Old submerged connector stones archived.
