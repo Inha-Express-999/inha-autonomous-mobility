@@ -1,0 +1,8 @@
+{
+  "name": "InhaExpress.Client.Networking",
+  "rootNamespace": "InhaExpress.Client.Networking",
+  "references": [
+    "InhaExpress.Client.Domain"
+  ],
+  "autoReferenced": true
+}

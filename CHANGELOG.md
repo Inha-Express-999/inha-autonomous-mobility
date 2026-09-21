@@ -1,5 +1,13 @@
 # 변경 이력
 
+## 0.1.2.0 — 2026-09-22 · PC·모바일 클라이언트 실행 골격 추가
+
+- 공통 `CampusWorld`와 역할별 `PC_Operator`, `Mobile_Passenger` 씬을 추가하고 PC·모바일 Bootstrap에서 Additive로 조합하도록 구성했다.
+- 기존 `CampusTerrain`을 복제하지 않고 공통 월드에서 Additive로 불러오며, Domain·Networking·Presentation·PC·Mobile 어셈블리 경계를 추가했다.
+- Windows와 Android Build Profile을 분리해 각 플랫폼이 올바른 Bootstrap과 역할 씬으로 시작하도록 구성했다.
+- VERSION·Unity bundleVersion·README·클라이언트 구현 문서를 0.1.2.0으로 동기화했다. 통신 schema_version과 Unity Editor 6000.3.21f1은 변경하지 않는다.
+- 검증: Unity Editor C# 컴파일 성공, 신규 씬 참조와 `.meta` 확인, Windows/Android 프로필별 씬 순서 확인. 실제 Player 빌드·Play Mode UI·서버 통합은 미수행이며 기존 외부 Vegetation Shader 오류는 남아 있다.
+
 ## 0.1.1.1 — 2026-09-18 · 씬 보행 연결 현황과 생활관 제한사항 기록
 
 - 제3생활관·정석학술정보관·본관·학생회관의 일반/이동지원 출입구와 보행 연결 authoring 결과를 지도 계획에 반영했다.

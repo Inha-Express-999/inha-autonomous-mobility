@@ -1,0 +1,8 @@
+{
+  "name": "InhaExpress.Client.Presentation",
+  "rootNamespace": "InhaExpress.Client.Presentation",
+  "references": [
+    "InhaExpress.Client.Domain"
+  ],
+  "autoReferenced": true
+}

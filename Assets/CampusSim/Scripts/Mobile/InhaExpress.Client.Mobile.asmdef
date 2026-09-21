@@ -1,0 +1,10 @@
+{
+  "name": "InhaExpress.Client.Mobile",
+  "rootNamespace": "InhaExpress.Client.Mobile",
+  "references": [
+    "InhaExpress.Client.Domain",
+    "InhaExpress.Client.Networking",
+    "InhaExpress.Client.Presentation"
+  ],
+  "autoReferenced": true
+}

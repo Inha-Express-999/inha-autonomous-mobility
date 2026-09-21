@@ -1,0 +1,10 @@
+{
+  "name": "InhaExpress.Client.PC",
+  "rootNamespace": "InhaExpress.Client.PC",
+  "references": [
+    "InhaExpress.Client.Domain",
+    "InhaExpress.Client.Networking",
+    "InhaExpress.Client.Presentation"
+  ],
+  "autoReferenced": true
+}
