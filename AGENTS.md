@@ -3,13 +3,13 @@
 ## 0. 프로젝트와 작업 규칙
 
 **제목:** 실제 캠퍼스 지도 기반 승객·물류 통합 자율주행 운송 서비스 시뮬레이션  
-**문서:** v0.1.1.1 · 2026-09-18 · 요구사항/설계/구현/검증 통합본
+**문서:** v0.2.0.0 · 2026-09-21 · 요구사항/설계/구현/검증 통합본
 **대상:** 개발자와 AI 코딩 에이전트. 구현 완료 보고서가 아니다.
 
-Python이 배차·경로·보행자·상태를 계산하고 Unity PC 관제와 모바일 승객 클라이언트가 각 역할에 맞게 표시·입력한다. 핵심은 **혼잡·접근성·안전을 고려한 승객 이동과 배송**이다.
+Unity가 캠퍼스의 동적 Ground Truth·Physics·차량/보행자/장애물 실제 상태와 Raycast 기반 센서 관측을 생성하고, Python이 정밀지도·요청·배차·전역 경로·센서 관측 기반 지역 계획/안전 판단/제어를 수행한다. Unity PC 관제와 모바일 승객 클라이언트는 같은 서비스를 역할에 맞게 표시·입력한다. 핵심은 **혼잡·접근성·안전과 센서 기반 인지를 고려한 승객 이동과 배송**이다.
 
 1. 작업 전 기존 코드·Git 변경·버전·테스트를 조사한다. 사용자 코드를 무단 교체하지 않는다. 신규 작업은 §16의 M0→M1부터 시작한다.
-2. 신규 저장소는 Python 권위적 시뮬레이션+Unity+WebSocket을 기본으로 한다. 기존 ROS2 구현은 유지하고 어댑터로 연결한다.
+2. 신규 저장소는 **Unity 동적 시뮬레이션 Ground Truth/Physics + Python 서비스·계획·제어 + WebSocket**을 기본으로 한다. Python은 보행자·타 차량·동적 장애물의 실제 Transform을 직접 받지 않고 ego localization과 센서 관측으로만 동적 환경을 인지한다. 기존 ROS2 구현은 유지하고 어댑터로 연결한다.
 3. **09:00/10:30/12:00/13:30/15:00 전후 혼잡과 비룡플라자 앞 우회**는 필수다. 사용자 관찰이지 공식 시간표/실측 통계가 아니다.
 4. 안전·통행·접근성·차량 능력은 강제 제약이다. 급한 요청도 위반할 수 없다. RRT보다 감속·정지를 먼저 처리한다.
 5. 좌표·도로 폭·경사·차량 제원·성능·IOSS 인정 여부를 추측해 확정하지 않는다. 합성 가정과 측정값을 구분한다.
@@ -53,25 +53,35 @@ Unity **앱/프로젝트 버전**과 Unity **Editor 버전**은 구분한다. Ed
 
 필수 요구사항 ID는 MAP(지도·그래프), REQ(요청·상태·마감), ACC(이동지원), DSP(배차·공정성·충전), PLN(A*·RRT), CRD(보행/밀도), ZON(비룡플라자 우회), SAF(난입/경합), UI(PC 관제·모바일 승객), EXP(실험/재생), OSS(IOSS 증빙)다. 각 인수 조건은 §14 테스트와 §16 단계로 검증한다.
 
-초기 성능 목표는 기준 장비에서 차량 3대·보행자 300명, tick p95≤50 ms, UI≥30 FPS, A* p95≤100 ms, 배차 p95≤300 ms다. PC와 모바일의 UI 목표는 각각 기준 장비/단말·품질 설정을 기록해 측정한다. 이는 측정 전 목표이며 안전 루프를 막아 달성하지 않는다. 10대/1,000명은 스트레스 실험이다.
+초기 성능 목표는 기준 장비에서 **차량 3대·보행자 300명·동시 WebSocket 클라이언트 최대 50개**이며, simulation/sensor/control loop p95≤50 ms, UI≥30 FPS, A* p95≤100 ms, 배차 p95≤300 ms를 목표로 한다. 50개 동시 접속은 예를 들어 PC 관제 1개와 모바일 승객 최대 49개 세션으로 구성할 수 있으며, 실제 서비스 용량 보장이 아니라 프로젝트 부하 검증 목표다. PC와 모바일의 UI 목표는 각각 기준 장비/단말·품질 설정을 기록해 측정한다. 이는 측정 전 목표이며 안전 루프를 막아 달성하지 않는다. **차량 10대·보행자 1,000명은 시뮬레이션 스트레스 실험**으로 유지하고, 보행자 수와 동시 접속자 수는 서로 다른 부하 축으로 분리해 측정한다. 최악 조합으로 1,000명 보행자+50개 동시 연결도 별도 스트레스 케이스에서 측정한다.
 
 ## 2. 아키텍처와 저장소
 
 ```text
 OSM/현장 검증 → Map Builder → 버전 고정 graph/geometry/landmarks/stops/zones
-요청 → Dispatch → Global A* → Local RRT → Safety/Controller
-          ↑           ↑                         ↓
-       Crowd ← Python Simulation Engine/WorldState → 기록·평가
-                       ↕ WebSocket 서버
-              ┌───────────┴───────────┐
-       Unity PC_Operator      Unity Mobile_Passenger
-       전체 3D 디지털트윈 관제   단순 3D 승객 호출·운행 안내
+요청 → Dispatch → Global A* ──────────────────────────────┐
+                                                         ↓
+                    Python Planning/Service Server ← ego localization
+                    정밀지도·요청·배차·전역 경로·정책      ↑
+                              ↑ sensor.observation         │ control command
+                              │                            ↓
+                    Unity Simulation World / Physics / Sensor Rig
+                    차량·보행자·동적 장애물 Ground Truth
+                    LiDAR/Radar Raycast → Local perception
+                              │
+                              ├→ Python Local RRT / TTC / Safety / Controller
+                              │
+                              └→ PC Operator Ground Truth + Sensor Debug
+
+Python WebSocket 서버 ↔ Unity PC_Operator / Unity Mobile_Passenger
 AI Agent → MCP(선택) → Unity Editor importer/검증/테스트
 ```
 
-위치·속도·시간·인원·적재·충돌·예약의 단일 원본은 Python `WorldState`다. Unity는 승인된 상태를 보간 표시하며 NavMesh/물리가 차량·보행자를 별도로 이동시키지 않는다. 무창 실행과 시각화 실행에 같은 엔진을 사용한다. PC와 모바일은 서로 직접 통신하지 않고 동일 Python authoritative 서버에 접속한다. 초기 시연은 PC 한 대에서 Python 서버와 PC 관제 앱을 함께 실행하고 모바일은 같은 Wi-Fi/LAN으로 Python 서버에 접속한다. 두 화면은 같은 run/map/tick의 상태를 역할별로 표시하며 클라이언트가 배차·Stop·경로·안전을 독자 결정하지 않는다.
+**정적 지도·랜드마크·Stop·Zone·요청·배차·서비스 상태와 계획 결과의 권위 상태는 Python이 관리하고, 차량·보행자·동적 장애물의 실제 공간 상태와 물리 상호작용 Ground Truth는 Unity Simulation World가 관리한다.** Python은 ego 차량의 localization 결과와 Unity 센서 계층이 생성한 관측만 받아 동적 환경을 인지하며, 보행자·타 차량·동적 장애물의 실제 Transform/속도/미래 궤적을 직접 받지 않는다. 센서에 관측되지 않은 동적 객체는 자율주행 판단에서도 알 수 없는 것으로 취급한다.
 
-하나의 Unity 프로젝트에서 공통 3D `CampusWorld`와 코드·DTO·네트워크·프리팹을 공유한다. 역할별 씬/UI는 `PC_Operator`, `Mobile_Passenger`로 분리하고 `CampusWorld + 역할 씬`의 Additive 로딩을 권장한다. 지도 수정은 공통 자산에 반영하고 역할별 표현·품질만 분리한다.
+Global A*는 정밀지도와 검증된 정적 제약·시간대 prior·서버 정책을 사용한다. Local RRT·TTC·감속/정지·재출발·Controller는 최신의 유효한 SensorObservation을 주 입력으로 사용한다. Unity는 Python 제어 명령을 차량 모델/Physics에 적용해 실제 pose를 갱신하고, ego pose/velocity/heading을 localization 입력으로 다시 전달한다. PC와 모바일은 서로 직접 통신하지 않고 동일 Python 서비스 서버에 접속한다. 초기 시연은 PC 한 대에서 Python 서버와 PC 관제 앱을 함께 실행하고 모바일은 같은 Wi-Fi/LAN으로 Python 서버에 접속한다.
+
+하나의 Unity 프로젝트에서 공통 3D `CampusWorld`와 코드·DTO·네트워크·프리팹을 공유한다. 역할별 씬/UI는 `PC_Operator`, `Mobile_Passenger`로 분리하고 `CampusWorld + 역할 씬`의 Additive 로딩을 권장한다. 지도 수정은 공통 자산에 반영하고 역할별 표현·품질만 분리한다. PC는 디버그 목적으로 Unity Ground Truth와 센서 인식을 함께 시각화할 수 있지만, Python 자율주행 로직에는 Ground Truth 동적 Transform을 전달하지 않는다.
 
 기본 스택은 Python 3.11 이상 호환 버전, FastAPI/Pydantic, NumPy, OSMnx/NetworkX, pyproj/Shapely, Unity LTS와 NativeWebSocket이다. 기존 Unity 버전을 우선 유지하고 신규 환경은 M0에서 호환성을 검증한다. 의존성은 smoke test 후 lockfile에 고정한다.
 
@@ -147,6 +157,7 @@ ID는 문자열, 시간은 run 이후 초/Asia/Seoul 표시다. 누락·NaN·음
 | Passenger | id(합성), request_id, origin/destination_landmark_id, pedestrian_id, 이동 단계, vehicle_id |
 | Zone | id, geometry, 유효면적, profile·정책, 검증 상태 |
 | Route | id, edge_ids/polyline, map_version, cost_snapshot_id, 생성 tick, 비용·ETA·사유 |
+| SensorObservation | vehicle_id, sensor_id/type, observed_tick, ego pose version, detection의 range/bearing/local position/entity class, radar 상대속도(해당 시), 유효성 |
 | RunManifest | run_id, seed, code_commit, project_version, config/map hash, 정책·의존성 버전, 접속 클라이언트 버전/빌드 식별자 |
 
 `service_type`은 PASSENGER/CARGO다. 이동지원·마감은 요청 속성이다. 실명·학번·장애 진단명은 수집하지 않는다. `service_needs`는 `requires_step_free: bool`, `wheelchair_slots: int≥0`, `boarding_assistance: bool`을 가지며 일반 이동은 false/0/false다. 휠체어 슬롯 요구가 있으면 계단 없는 접근도 요구한다. 이동지원 우선순위는 이 요구조건에서 도출하며 별도 장애 여부 플래그를 두지 않는다. 요청 생성 시 Stop은 미결정일 수 있으나 VALIDATED 전에 서버가 확정한다. 승객 요청은 모바일·PC·자동 생성 모두 랜드마크 입력 계약을 사용한다. 배송의 Stop 직접 지정은 허용하되 같은 서버 검증을 거친다. 출발=목적 랜드마크 및 미등록/미검증 랜드마크의 승객 요청은 명시적 사유로 거부한다.
@@ -226,7 +237,7 @@ simulation clock을 사용하며 일시정지 시 생성·대기도 멈춘다. �
 
 ### 생성률과 관측
 
-초기 관측은 합성 정답 상태(ground truth)다. 생성률 λ는 명/초, 밀도 ρ는 명/m²다. 초기 전/후 흐름은 아래와 같다. 시간과 σ는 모두 초이며 pulse는 `[Tk-900,Tk+900]` 밖에서 0이다.
+보행자의 실제 위치와 이동은 Unity Ground Truth에 존재하지만 Python 혼잡/주행 판단은 이를 직접 읽지 않는다. 생성률 λ는 명/초, 밀도 ρ는 명/m²다. 시간대별 혼잡 prior는 서버 설정으로 유지하고, 실제 관측 혼잡은 차량 센서에서 전달된 보행자 detection을 이용해 추정한다. 초기 전/후 흐름은 아래와 같다. 시간과 σ는 모두 초이며 pulse는 `[Tk-900,Tk+900]` 밖에서 0이다.
 
 ```text
 G(t;μ,σ) = exp(-0.5*((t-μ)/σ)^2)
@@ -248,16 +259,17 @@ spawn_count ~ Poisson(λ_z(t)*dt)
 유효면적은 zone에서 건물 등 비보행 면적을 뺀 m² 값이다. 면적 미확인은 unknown으로 처리한다. Unity 렌더링에서 생략한 사람도 집계/충돌에는 포함한다.
 
 ```text
-rho_observed = zone 내 World 보행자 수 / usable_area_m2
+observed_count_z = 최근 관측창에서 zone과 대응되는 unique pedestrian detections
+coverage_z = 센서 가시영역/zone 유효면적의 추정 비율
+rho_observed = coverage가 충분할 때 coverage 보정 observed_count_z / usable_area_m2, 아니면 unknown
 alpha_dt = 1-exp(-실제_갱신간격_s/ema_tau_s)
 rho_ema = alpha_dt*rho_observed+(1-alpha_dt)*previous_ema
 N_prior(t) ≈ integral(λ_z(s), s=t-mean_dwell_s .. t)
 rho_prior(t) = N_prior(t)/usable_area_m2
-rho_route(t) = max(rho_observed(t),
-                  0.7*rho_ema(t)+0.3*rho_prior(t+60))
+rho_route(t) = 관측 신뢰도가 충분하면 observed/ema와 prior를 결합하고, 부족하면 prior 중심으로 계산
 ```
 
-유입/체류 근사의 근거를 기록하고 예상/현재 인원을 더하지 않는다. 계획기에 미래 난입/숨은 위치를 주지 않는다. zone 외에 차량 주변 격자도 검사하며 안전에는 원시 관측을 쓴다. 화면은 합성 관측/예상/실측 보정 여부를 구분한다.
+`rho_observed`는 Unity Ground Truth 인원수를 직접 세어 만들지 않는다. 센서의 가림·거리·FOV 때문에 관측 범위가 부족하면 unknown/low-confidence로 기록하고, 이를 실제 전체 인원으로 과장하지 않는다. 시간대 prior는 차량이 아직 해당 구역을 관측하지 못했을 때 선제 우회 판단에 사용할 수 있으며, 최신 센서 관측이 들어오면 정책에 따라 보정한다. 계획기에 미래 난입/숨은 위치를 주지 않는다. 안전에는 가공 전 최신 SensorObservation을 우선 사용한다. PC 화면은 Ground Truth(디버그 전용), 센서 관측, prior/추정값을 구분해 표시한다.
 
 ## 8. 비룡플라자 앞 정책
 
@@ -279,6 +291,16 @@ CLOSED는 우회가 길어도 진입하지 않는다. 내부 차량은 급회전
 사유는 `CROWD_AVOIDANCE/ZONE_CLOSED/NO_ACCESSIBLE_ALTERNATIVE`로 구별한다. polygon 미확인은 합성 fixture로만 검증한다.
 
 ## 9. RRT·제어·난입 안전
+
+### Unity Raycast 기반 LiDAR/Radar 센서 모사
+
+각 차량은 Unity Physics의 `Physics.Raycast`/`Physics.RaycastNonAlloc` 등을 이용하는 Sensor Rig를 가진다. 이는 실제 LiDAR/Radar의 광학·전파·Doppler·노이즈 특성을 정밀 재현하는 것이 아니라, **제한된 FOV·거리·갱신주기를 가진 센서 동작 abstraction**이다. ray 수, 최대거리, FOV, layer mask, 갱신주기는 config로 관리하고 기준 장비에서 측정 후 확정한다. 높은 ray 수를 매 `Update`마다 무조건 쏘지 않으며, 고정 sensor tick과 preallocated buffer/비할당 API를 우선 검토한다.
+
+LiDAR 모사는 다수 ray hit로부터 거리·sensor-local hit position·bearing·entity class/id(시뮬레이션 태그가 있을 때)를 생성해 local obstacle/perception 입력으로 사용한다. Radar 모사는 전방 또는 설정된 FOV의 detection에 대해 거리·bearing을 제공하고, 관측된 entity의 현재/이전 detection을 결합해 상대속도를 추정할 수 있다. Raycast hit만으로 실제 Radar Doppler를 구현했다고 표현하지 않는다.
+
+Unity는 각 관측에 `vehicle_id`, `sensor_id`, `sensor_type`, `observed_tick`, ego `pose_version`을 붙여 Python에 전달한다. Python은 tick/pose version/age를 검증해 stale frame을 버린다. **Python은 센서 detection을 검증하기 위해 보행자·타 차량·동적 장애물의 Ground Truth Transform을 조회하지 않는다.** 테스트/PC 디버그에서는 Unity 내부 Ground Truth와 detection을 비교할 수 있지만, 그 비교값을 주행 판단 입력으로 역류시키지 않는다.
+
+Global A*는 정밀지도 기반 reference route를 만들고, Local RRT는 reference corridor와 최신 SensorObservation으로 발견한 장애물/보행자를 이용한다. TTC·정지거리·YIELDING/EMERGENCY_STOP도 센서 관측에서 도출된 상대 위치·상대속도와 ego 상태를 기반으로 계산한다. 관측이 오래되거나 센서가 무효하면 보수적으로 감속/정지한다.
 
 차량은 **저속 차동구동형 unicycle 모델**이다. 자동차형은 별도 곡률 제한 모델이 필요하다. waypoint 방위와 heading 차이의 비례제어로 각속도를 제한하고 급회전 시 감속한다. `x+=v*sin(heading)*dt`, `y+=v*cos(heading)*dt`, `heading+=omega*dt`로 적분하며 가감속·회전 footprint를 검증한다.
 
@@ -324,7 +346,7 @@ d_stop = v*reaction_time_s+v²/(2*brake_decel_mps2)+margin_m
 
 재현 모드는 고정 iteration·결과 적용 tick·독립 RNG를 사용한다. 작업이 늦으면 wall-clock만 늦추고 tick을 생략하지 않는다. 실시간 모드는 deadline 실패 시 정지/기존 유효 경로를 쓰고 결과를 기록한다. wall-clock timeout 차이를 seed만으로 재현된다고 주장하지 않는다.
 
-`/ws/sim`은 명령/상태, `/health`는 준비 상태, `/api/scenarios`는 조회다. PC·모바일 모두 이 서버를 사용하며 계약 테스트부터 구현한다. 서버가 세션의 역할·요청 소유권을 검증한다. PC 관제만 시뮬레이션 제어/시나리오 이벤트를 허용하고 모바일은 자신의 요청 생성·조회·취소만 허용한다.
+`/ws/sim`은 명령/상태, `/health`는 준비 상태, `/api/scenarios`는 조회다. PC·모바일 모두 이 서버를 사용하며 계약 테스트부터 구현한다. 서버가 세션의 역할·요청 소유권을 검증한다. PC 관제만 시뮬레이션 제어/시나리오 이벤트를 허용하고 모바일은 자신의 요청 생성·조회·취소만 허용한다. **동시 WebSocket 클라이언트 목표 상한은 50개**이며, 연결 수·초당 메시지 수·serialization 시간·송신 queue 크기·전송량·지연을 별도 측정한다. 느린 모바일 한 세션의 송신 queue가 simulation/sensor/control loop나 다른 세션을 장시간 차단하지 않게 backpressure/queue limit/전송 주기 정책을 둔다.
 
 ```json
 {
@@ -349,7 +371,9 @@ d_stop = v*reaction_time_s+v²/(2*brake_decel_mps2)+margin_m
 }
 ```
 
-ID는 합성 예시다. 서버는 `command.ack/reject`와 applied_tick을 답한다. 출력은 `world.snapshot`, `request/route/zone.updated`, `error`다. snapshot에는 tick·sim_time·map version·구독 범위를 넣는다. PC는 전체 관제 상태, 모바일은 자신의 요청·확정 Stop·배차 차량·ETA·표시 경로·임무/운행 상태·판단 사유를 받는다. 모바일에 전체 군중/heatmap/debug나 다른 승객 요청을 보내지 않는다. 역할별 출력은 같은 WorldState의 투영이며 시뮬레이션 개체를 제거하지 않는다. `request.updated`에는 Stop 결정/변경 이유, `route.updated`에는 route_id·변경 tick·사유를 포함한다. 운행 상태/사유는 snapshot에도 넣어 이벤트 유실 시 복구한다.
+ID는 합성 예시다. 서버는 `command.ack/reject`와 applied_tick을 답한다. 출력은 `world.snapshot`, `request/route/zone.updated`, `sensor.debug`(PC 전용), `error`다. snapshot에는 tick·sim_time·map version·구독 범위를 넣는다. PC는 전체 관제 상태, 모바일은 자신의 요청·확정 Stop·배차 차량·ETA·표시 경로·임무/운행 상태·판단 사유를 받는다. 모바일에 전체 군중/heatmap/debug나 다른 승객 요청을 보내지 않는다. 역할별 출력은 서버 서비스 상태와 Unity에서 승인된 ego/표시 상태의 역할별 투영이다. 모바일에는 전체 Ground Truth·센서 point/hit·타 승객 정보를 보내지 않는다. `request.updated`에는 Stop 결정/변경 이유, `route.updated`에는 route_id·변경 tick·사유를 포함한다. 운행 상태/사유는 snapshot에도 넣어 이벤트 유실 시 복구한다.
+
+Unity→Python 내부 센서 입력은 `sensor.observation` 계약을 사용한다. payload에는 최소 `vehicle_id`, `sensor_id`, `sensor_type`, `observed_tick`, `pose_version`, detection 목록을 넣는다. detection은 sensor-local range/bearing/position과 class/id(알 수 있을 때)를 포함하고 Radar는 추정 상대속도를 포함할 수 있다. 서버는 미래 tick, 과도하게 오래된 frame, 존재하지 않는 vehicle/sensor, 현재 ego pose version과 불일치한 관측을 거부하거나 안전상 무효로 처리한다. sensor 원시 데이터는 일반 모바일 세션에 방송하지 않는다.
 
 통신 계약 v3의 JSON Schema와 Python/C# fixture를 함께 갱신한다. v1/v2 호환이 필요하면 경계 어댑터에서 기존 Stop/건물과 landmark_id의 검증된 대응으로 명시적으로 변환하고 미지원 버전은 거부한다. §12 설정의 schema_version은 별도 계약이다.
 
@@ -374,6 +398,21 @@ transport:
   host: "127.0.0.1"
   port: 8765
   snapshot_hz: 10
+  max_clients: 50
+  per_client_send_queue_limit: 128
+sensors:
+  lidar:
+    enabled: true
+    update_hz: 10
+    ray_count: 180        # 초기 합성값, 측정 후 조정
+    horizontal_fov_deg: 180
+    max_range_m: 25
+  radar:
+    enabled: true
+    update_hz: 10
+    horizontal_fov_deg: 90
+    max_range_m: 40
+  stale_after_s: 0.25
 crowd:
   source: user_observation_and_synthetic_model
   transition_times: ["09:00", "10:30", "12:00", "13:30", "15:00"]
@@ -427,13 +466,13 @@ safety:
 
 사용자가 제공한 [PC·모바일 상세 UI 명세](Docs/ClientUI/REQUIREMENTS.md)의 전체 34절을 구현 기준으로 적용한다. [적용 결정·화면별 검증 계획](Docs/ClientUI/IMPLEMENTATION.md)을 함께 따른다. PC는 가로, 모바일은 세로이며 P01~P08/M01~M13을 누락하지 않는다. 공통 CampusWorld와 Additive 역할 씬, Python 권위 상태, 1초 갱신 중단 시 보간·ETA 중단, 역할별 정보 제한은 필수다. Apple과 같은 간결한 시각 스타일을 지향하되 상태·단위·판단 사유의 가독성을 우선한다. 명세의 예시 데이터는 실제 구현·검증 결과로 취급하지 않는다.
 
-도로 mesh·건물 윤곽·거점을 먼저 만들고 외관보다 연결/폭/축척을 검증한다. 개체 view는 ID 기반 pool과 렌더 보간을 사용한다. `Scripts/Common`은 DTO·네트워크·좌표 변환·MapData·VehicleView를 공유하고 PC/Mobile은 각 UI·카메라·표현을 담당한다.
+도로 mesh·건물 윤곽·거점을 먼저 만들고 외관보다 연결/폭/축척을 검증한다. Unity `CampusWorld`는 차량·보행자·동적 장애물의 Ground Truth와 Physics를 관리하며, 차량 Sensor Rig가 Raycast 기반 LiDAR/Radar 관측을 생성한다. 개체 view는 ID 기반 pool을 사용하고, ego 차량은 Python control command를 Unity 차량 모델에 적용해 실제 pose를 갱신한다. `Scripts/Common`은 DTO·네트워크·좌표 변환·MapData·VehicleView·SensorRig를 공유하고 PC/Mobile은 각 UI·카메라·표현을 담당한다.
 
 `CampusWorld`에는 공통 지도·건물·Stop·차량 프리팹 참조를 두고 Additive 역할 씬에서 필요한 view를 구성한다. 네트워크 세션/상태 저장소는 앱당 하나만 생성하며 씬 전환 시 중복 접속·카메라·EventSystem·이벤트 구독을 막는다. PC/모바일 빌드 설정과 품질 프로파일을 분리하고 PC 전용 군중·heatmap·debug 자산이 모바일에서 불필요하게 로드되지 않게 한다.
 
-- **PC_Operator:** 전체 3D 디지털트윈에서 모든 차량·보행 혼잡/heatmap, A* 전역/RRT 지역 경로, 요청/배차, 임무·ETA·배터리, 대기 이유·지표와 시간/배속/정지·승객/배송 입력·시뮬레이션 제어를 제공한다.
+- **PC_Operator:** 전체 3D 디지털트윈에서 Unity Ground Truth 차량·보행자·동적 장애물, 혼잡/heatmap, A* 전역/RRT 지역 경로, 요청/배차, 임무·ETA·배터리, 대기 이유·지표와 시간/배속/정지·승객/배송 입력·시뮬레이션 제어를 제공한다. 선택한 차량에 대해 LiDAR ray/hit point/FOV, Radar target/range/bearing/relative speed, SensorObservation age, 인식된 객체와 Ground Truth의 디버그 비교를 토글 시각화한다. Ground Truth 비교는 관제/검증 전용이며 Python 주행 입력으로 사용하지 않는다.
 - **Mobile_Passenger:** 같은 3D 세계를 단순화한 승객 앱이다. 일반 이동/이동지원 선택→필요 조건 입력→출발/목적 랜드마크 선택→호출→서버가 선택한 출입구 확인→내 차량 위치·ETA·경로·상태 확인 흐름과 취소를 제공한다. 쿼터뷰 중심으로 랜드마크 선택·제한된 이동/확대와 내 차량 따라보기를 제공한다. 랜드마크 검색/목록 선택도 지원해 정밀한 3D 터치를 필수로 하지 않는다.
-- 모바일은 저LOD 건물/차량과 선별 표시를 사용하고 내 차량·승하차 출입구·경로를 강조한다. 전체 군중/heatmap/RRT 샘플·debug는 렌더링하지 않는다. 생략된 개체도 서버의 밀도·충돌·안전 계산에는 유지한다.
+- 모바일은 저LOD 건물/차량과 선별 표시를 사용하고 내 차량·승하차 출입구·경로를 강조한다. 전체 군중/heatmap/RRT 샘플·LiDAR/Radar hit·Ground Truth debug는 렌더링하거나 구독하지 않는다. 모바일은 센서 원시정보가 아니라 서버가 확정한 운행 상태/사유만 받는다.
 - 두 UI는 색상 외 문자/아이콘을 제공한다. 모바일은 서버 상태를 “승객에게 이동 중 / 탑승 대기 / 목적지로 이동 중”으로 안내하고 `CROWD_AVOIDANCE`는 “혼잡 구간을 피해 경로를 변경했어요”, `YIELDING`과 보행자 원인이 함께 있을 때는 “보행자 통행을 기다리고 있어요”로 표시한다. 실제 서버의 tick·사유에 근거하며 정지 원인을 추측하거나 클라이언트에서 자율주행 판단을 생성하지 않는다.
 
 PC의 난입·공사·고장 버튼은 서버 이벤트를 생성한다. heatmap에 단위/예상·관측 구분/비룡플라자 경계를 표시하며 실제 학생 위치 추적으로 표현하지 않는다. OSM 출처를 PC·모바일 지도 화면에 표시한다.[S9]
@@ -466,8 +505,10 @@ MCP 권한·경로를 제한하고 외부 명령/삭제/비밀키 노출을 막�
 | T18 | 공통 지도 수정·Additive·모바일 단말 | 양쪽 좌표/Stop 일치, 세션/카메라 중복 없음, 저LOD·선별 표시 및 UI≥30 FPS 목표 측정 |
 | T19 | 필수 랜드마크·대표 시설 커버리지·OD | 필수 목록/시설 대응 누락 없음, service_needs별 Stop·보행 연결·차량 경로 확인, 불가 사유 기록, 동일 출발/목적 거부 |
 | T20 | 보행 승객의 호출→승차→하차→랜드마크 도착 | 요청/승객/차량 연계, 인원 보존·보행 중복 집계 없음, 랜드마크 도착/하차 완료 구분, 접근 실패의 성공 집계 없음 |
+| T21 | LiDAR/Radar 센서 관측 기반 장애물/보행자 접근·가림·stale frame | Python이 Ground Truth 동적 Transform을 직접 받지 않고 최신 SensorObservation으로 RRT/TTC/감속·정지 판단, 가려진 객체는 미인지, stale/pose 불일치 관측 거부, PC sensor debug와 판단 사유 일치 |
+| T22 | PC 1 + 모바일을 포함한 최대 50 WebSocket 동시 연결 및 1,000명 보행자 복합 부하 | 연결/소유권 정상, 느린 세션 격리, simulation/sensor/control loop p95와 network queue/serialization/전송량 측정, 모바일별 데이터 격리, 300명 기준과 1,000명 stress 결과 구분 |
 
-좌표/비용/FSM/밀도/TTC/제동/배차를 단위 검증한다. 공통 JSON을 Python/C#에서 검사하고 Unity EditMode는 importer/DTO, PlayMode는 두 역할의 표시/정지/재접속·Additive 로딩을 테스트한다. T15는 일반 이동도 접근 가능한 Stop 이용 가능, 폐쇄/접근성 unknown/휠체어 용량 부족을 포함한다. T16은 모바일의 관제 명령·타인 요청 접근 거부와 PC lease 소실을 구분한다. 모바일 표시 생략 전후 동일 manifest의 서버 상태/event digest가 유지되는지 검증한다.
+좌표/비용/FSM/밀도/TTC/제동/배차/센서 frame 유효성·좌표 변환을 단위 검증한다. 공통 JSON을 Python/C#에서 검사하고 Unity EditMode는 importer/DTO, PlayMode는 두 역할의 표시/정지/재접속·Additive 로딩을 테스트한다. T15는 일반 이동도 접근 가능한 Stop 이용 가능, 폐쇄/접근성 unknown/휠체어 용량 부족을 포함한다. T16은 모바일의 관제 명령·타인 요청 접근 거부와 PC lease 소실을 구분한다. 모바일 표시 생략 전후 동일 manifest의 서버 상태/event digest가 유지되는지 검증한다.
 
 ### 실험 체계
 
@@ -485,7 +526,9 @@ MCP 권한·경로를 제한하고 외부 명령/삭제/비밀키 노출을 막�
 | 혼잡 노출 | 주행 중 밀도×dt 적분·zone 진입 횟수 |
 | 안전 | 충돌 사건/시도·차량 km, 최소 clearance/TTC, 비상제동 |
 | 접근성 | 조건 충족 완료/유효 이동지원 요청 |
-| 연산 | 계획/배차/tick p50·p95, timeout, 장비 |
+| 연산 | 계획/배차/sensor/control loop p50·p95, timeout, 장비 |
+| 센서 | frame age/drop, detection 수, 가림/미탐지 사례, Raycast 비용, 차량별 sensor update Hz |
+| 네트워크 | 동시 연결 수, 초당 메시지/바이트, serialization p50·p95, queue peak/drop, 연결/재접속 지연 |
 
 같은 접촉을 중복 집계하지 않으며 분모 0은 null이다. seed 원자료·분산/신뢰구간·실패를 남기고 실제 성능으로 일반화하지 않는다.
 
@@ -505,9 +548,9 @@ python -m ruff check backend
 python -m mypy backend/src
 ```
 
-`0:20`은 seed 0~19다. serve 기본은 127.0.0.1:8765이며 외부 공개하지 않는다. 모바일 실기기 시연은 명시적으로 허용한 LAN 주소에 바인딩하고 단말에서 접근 가능한 서버 주소를 설정한다. 예를 들어 PC LAN IP가 192.168.0.10이면 모바일 URL은 `ws://192.168.0.10:8765/ws/sim`이며 모바일의 localhost는 PC를 가리키지 않는다. PC 방화벽은 사설망의 해당 포트만 허용하고 Wi-Fi 단말 격리 여부를 확인한다. 원격 시연 시 인증/origin/메시지 크기·빈도·역할 권한을 제한한다. 서버 worker 증가로 simulation owner를 중복 생성하지 않는다.
+`0:20`은 seed 0~19다. serve 기본은 127.0.0.1:8765이며 외부 공개하지 않는다. 모바일 실기기 시연은 명시적으로 허용한 LAN 주소에 바인딩하고 단말에서 접근 가능한 서버 주소를 설정한다. 예를 들어 PC LAN IP가 192.168.0.10이면 모바일 URL은 `ws://192.168.0.10:8765/ws/sim`이며 모바일의 localhost는 PC를 가리키지 않는다. PC 방화벽은 사설망의 해당 포트만 허용하고 Wi-Fi 단말 격리 여부를 확인한다. 원격 시연 시 인증/origin/메시지 크기·빈도·역할 권한을 제한한다. 서버 worker 증가로 계획/서비스 owner를 중복 생성하지 않는다. 최대 50 세션 부하는 연결 수만 확인하지 말고 초당 메시지/serialization/queue/backpressure와 sensor/control loop 지연을 함께 기록한다.
 
-run별 manifest/config, events.jsonl, snapshots, metrics.json, requests/vehicles.csv를 저장한다. 이벤트에는 tick·개체 ID·이유를 넣는다. 큰 로그는 Git에서 제외한다. 다른 seed/지도/코드를 섞지 않는다.
+run별 manifest/config, events.jsonl, snapshots, metrics.json, requests/vehicles.csv와 필요 시 sensor/network summary를 저장한다. 원시 ray 전체를 항상 영구 저장하지 말고 재현/분석에 필요한 sample·detection·집계만 정책적으로 기록한다. 이벤트에는 tick·개체 ID·이유를 넣는다. 큰 로그는 Git에서 제외한다. 다른 seed/지도/코드를 섞지 않는다.
 
 Python 타입/예외·C# 모델/화면 책임을 분리하고 정책 숫자는 config에 둔다. PR은 요구사항 ID, 변경 이유, 정상/실패 테스트, 한계를 기록한다. 릴리스 전 VERSION·문서·서버·Unity PC/모바일의 프로젝트 버전 일치, 네 자리 형식·증가/하위 초기화 규칙, CHANGELOG 및 플랫폼 매핑을 검사한다. Editor 변경 시 두 빌드와 공통 DTO/씬 회귀 검사를 수행한다. 사용자 변경을 덮어쓰거나 테스트를 지워 통과시키지 않는다.
 
@@ -519,13 +562,13 @@ Python 타입/예외·C# 모델/화면 책임을 분리하고 정책 숫자는 c
 | M1 | 차량 1대·A*·승객/배송·공통 CampusWorld/PC Unity | T01/T03, 요청→완료 흐름 |
 | M2 | 실제 지도/보정·랜드마크 목록/Stop·대표 시설 커버리지·비룡플라자 | T14/T19, 최소 6개 거점 fixture에서 전체 필수 목록으로 확장·출처/검증 기록 |
 | M3 | 다섯 시간대·인구/예측·heatmap·우회 | T04~T06 |
-| M4 | 난입·제동·RRT·재출발 | T07~T09 |
+| M4 | Unity Raycast LiDAR/Radar SensorRig·SensorObservation·난입·제동·RRT·재출발 | T07~T09/T21, Python Ground Truth 동적 Transform 직접 참조 없음 |
 | M5 | 3대·service_needs/Stop 결정·마감/공정 배차·충전·예약 | T02/T10~T12/T15/T20, 중복 배정·승객 중복 집계 없음 |
-| M5a | Mobile 통합·Additive 역할 씬·승객 3D UI·통신 v3 | T16~T18, 실기기 호출→완료·판단 안내·재접속 |
-| M6 | B0~B2·재생·측정·OSS/IOSS 증빙 | T13 및 M5a 통과, 대표 시설 커버리지 보고·PC/모바일 동시 데모·원자료·한계 보고 |
+| M5a | Mobile 통합·Additive 역할 씬·승객 3D UI·센서 입력 계약·최대 50 WebSocket 세션 기반 | T16~T18/T22 일부, 실기기 호출→완료·판단 안내·재접속·세션 격리 |
+| M6 | B0~B2·재생·센서/성능/네트워크 부하 측정·OSS/IOSS 증빙 | T13/T22 및 M5a 통과, 300명 기준/1,000명 stress·최대 50 연결 결과, 대표 시설 커버리지 보고·PC/모바일 동시 데모·원자료·한계 보고 |
 | M7 | 검증된 교외·ROS2·RRT*·합승 | M6 통과 후 개별 비교 |
 
-2026-09-17 최신 사용자 지시에 따른 제작 순서는 **씬 수정·검증 → PC/모바일 UI 목업 및 일부 기능 → Python 서버 제작·연결**이다. M0에서 DTO/역할 경계를 먼저 정하고 UI 목업은 명시적인 합성 fixture로 진행한다. 실제 배차·ETA·Stop·주행을 클라이언트에 임시 구현하지 않는다. 목업 완료는 M1~M6 알고리즘·안전·통신 검증 완료를 대신하지 않으며, 실제 모바일 통합 완료는 M5a의 조건을 충족해야 한다. 서버 구현 시 fixture→도메인→통합→UI 연결→실패 처리→측정 순서로 검증한다.
+2026-09-17 최신 사용자 지시에 따른 제작 순서는 **씬 수정·검증 → PC/모바일 UI 목업 및 일부 기능 → Python 서버 제작·연결**이다. M0에서 DTO/역할 경계를 먼저 정하고 UI 목업은 명시적인 합성 fixture로 진행한다. 실제 배차·ETA·Stop·자율주행 판단을 모바일/PC UI에 임시 구현하지 않는다. 단, Unity Simulation World의 Physics·SensorRig·차량 actuator 적용은 클라이언트 표현이 아니라 시뮬레이션 환경 책임으로 구현한다. 목업 완료는 M1~M6 알고리즘·안전·통신 검증 완료를 대신하지 않으며, 실제 모바일 통합 완료는 M5a의 조건을 충족해야 한다. 서버 구현 시 fixture→도메인→통합→UI 연결→실패 처리→측정 순서로 검증한다.
 
 시연은 비혼잡 배송→이동지원→10:30 혼잡/우회→난입 제동/재탐색→다중 배차→동일 seed 비교 순서다. 이동지원은 모바일의 동일 랜드마크 선택에 대해 service_needs별 출입구 결정을 확인하고, 우회/제동은 PC의 판단 근거와 모바일의 승객 안내를 동시에 보여준다. 화면만 성공하고 로그가 없으면 완료가 아니다.
 
