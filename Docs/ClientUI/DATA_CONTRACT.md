@@ -1,6 +1,6 @@
 # 클라이언트 데이터 계약 결정
 
-프로젝트 0.1.3.1 · 2026-09-22 · M0 클라이언트 모델 초안
+프로젝트 0.1.4.0 · 2026-09-22 · M0 클라이언트 모델 초안
 
 ## 범위와 권위
 
@@ -44,4 +44,12 @@ ServerEventDto는 이벤트 메타데이터만 제공하며 delta 적용은 아�
 
 ## 검증과 다음 단계
 
-Unity EditMode의 InhaExpress.Client.Tests.EditMode 어셈블리로 검증한다. 실제 지도 정확도·Player 빌드·실서버 호환성은 이 테스트 범위가 아니다. 다음 작업은 명시적인 합성 FixtureClientDataSource와 역할별 snapshot 생성·재생이다.
+Unity EditMode의 InhaExpress.Client.Tests.EditMode 어셈블리로 검증한다. 실제 지도 정확도·Player 빌드·실서버 호환성은 이 테스트 범위가 아니다. FixtureClientDataSource와 역할별 snapshot 생성·재생을 추가했다. 다음 작업은 UI 구성과 별도로 실제 서버의 JSON/소유권/요청 command·ack 계약을 확정하는 것이다.
+
+## 데이터 공급자 경계
+
+Networking의 IClientDataSource는 Start/Pump/Dispose와 ConnectionState, SnapshotReceived(snapshot, monotonicReceivedAt)를 제공한다. 콜백은 Unity 메인 스레드에서만 발행한다. ClientRuntimeHost가 WorldStateStore에 적용하고 Presenter는 SnapshotChanged를 구독/해제한다. 향후 WebSocket 구현이 worker에서 받은 메시지는 Pump에서 검증 후 전달해야 한다. fixture는 실서버 실패 시 자동 대체 경로로 사용하지 않는다.
+
+FixtureScenario는 synthetic-ui-v1 지도와 6개의 합성 Landmark, 3대 차량, 2개 요청으로 만든 고정 예시다. PC projection을 모바일에서 숨기는 방식이 아니라, 생성 단계부터 요청 owner 기준으로 projection한다. 다른 구독자는 검색용 Landmark만 받는다. 모바일 Landmark.StopIds도 전달된 Stop에 맞게 축소한다. 이는 서버 인증 구현이나 실제 권한 검증 증빙은 아니다.
+
+재생 tick은 0.05초 단위이고 전체 snapshot은 최대 10Hz다. 부하로 건너뛴 중간 프레임은 몰아서 전달하지 않는다. 일시정지/완료 후에도 같은 tick·증가하는 seq로 heartbeat를 전달한다. 수신 중단은 클라이언트 상태를 보존하고 합성 시간은 계속 흐른다. 재개는 최신 전체 snapshot을 전달한다. Restart는 새 run·seq=0으로 시작하며 이전 run을 재사용하지 않는다. 합성 위치는 실제 CampusTerrain에 올리지 않는다.

@@ -1,5 +1,14 @@
 # 변경 이력
 
+## 0.1.4.0 — 2026-09-22 · 합성 클라이언트 재생과 개발 HUD
+
+- IClientDataSource 경계와 45초 합성 FixtureClientDataSource를 추가했다. 0.05초 기록 tick/최대 10Hz snapshot, 일시정지 heartbeat, 수신 중단·복구, 새 run 재시작을 제공한다. 실제 배차·주행·네트워크 알고리즘이 아니다.
+- Bootstrap의 단일 runtime host를 역할별 PC/모바일 Presenter에 연결했다. 영어 IMGUI 개발 HUD는 fixture/버전/연결·stale/요청·차량 상태를 표시한다. 개발용 로컬 재생 버튼은 Editor/Development Build에만 표시한다.
+- 모바일 snapshot 생성 단계부터 다른 요청·차량·무관 Stop/route·Zone을 제외한다. PC의 관측·EMA unknown과 합성 prior를 구분한다.
+- 기존 4개 Bootstrap/역할 씬을 Editor API로 연결하고 재실행 가능한 Configure Fixture HUD 메뉴를 추가했다. CampusTerrain·공유 지도/에셋·빌드 프로필은 변경하지 않았다.
+- 검증: Unity 6000.3.21f1 컴파일 성공, EditMode 54/54 및 PlayMode 1/1 통과. PC·모바일 역할 Play smoke에서 표시/소유권·stale/복구·재시작과 구독 해제를 확인했다. Android/Windows Player 빌드·실단말·서버 통합·성능 목표는 미검증이다.
+- 호환성: schema_version=3 유지, 독립 합성 map_version=synthetic-ui-v1. JSON/WebSocket·사용자 호출 화면·지도 차량 렌더링은 아직 없다. 독립 fixture 앱 간 실시간 동기화를 제공하지 않는다. VERSION·bundleVersion·현재 문서를 동기화했다.
+
 ## 0.1.3.1 — 2026-09-22 · Visual Studio 환경 파일 제외
 
 - 로컬에서 자동 생성되는 루트 `.vsconfig`을 Git 추적 대상에서 제외했다.

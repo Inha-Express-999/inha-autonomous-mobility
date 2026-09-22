@@ -1,7 +1,7 @@
 # inha-autonomous-mobility
 인하대학교 교내 자율주행 운송 서비스 / Inha University Autonomous Campus Mobility Service
 
-프로젝트 버전: **0.1.3.1**. [통합 개발 규칙](AGENTS.md), [지도 작업 현황](Docs/MapResearch/PLAN.md), [PC·모바일 UI 명세](Docs/ClientUI/REQUIREMENTS.md), [화면별 적용·검증 계획](Docs/ClientUI/IMPLEMENTATION.md)을 기준으로 개발합니다. 클라이언트 Bootstrap·빌드 프로필과 공통 DTO·상태 저장소·좌표 변환이 구현되어 있습니다. 실제 UI와 Python 서버 연동은 구현 예정입니다. 데이터 모델 사용법은 [클라이언트 데이터 계약](Docs/ClientUI/DATA_CONTRACT.md)을 참고하세요.
+프로젝트 버전: **0.1.4.0**. [통합 개발 규칙](AGENTS.md), [지도 작업 현황](Docs/MapResearch/PLAN.md), [PC·모바일 UI 명세](Docs/ClientUI/REQUIREMENTS.md), [화면별 적용·검증 계획](Docs/ClientUI/IMPLEMENTATION.md)을 기준으로 개발합니다. 클라이언트 Bootstrap·빌드 프로필, 공통 DTO·상태 저장소·좌표 변환과 합성 재생 데이터·역할별 개발 HUD가 구현되어 있습니다. 사용자용 UI와 Python 서버 연동은 구현 예정입니다. [합성 재생 실행 방법](Docs/ClientUI/FIXTURE_REPLAY.md)과 [클라이언트 데이터 계약](Docs/ClientUI/DATA_CONTRACT.md)을 참고하세요.
 
 ## Unity 프로젝트 실행
 

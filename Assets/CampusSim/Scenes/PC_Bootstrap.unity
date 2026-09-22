@@ -150,6 +150,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: InhaExpress.Client.Presentation::InhaExpress.Client.Presentation.ClientBootstrap
   worldScenePath: Assets/CampusSim/Scenes/CampusWorld.unity
   roleScenePath: Assets/CampusSim/Scenes/PC_Operator.unity
+  clientRole: 0
+  useFixture: 1
 --- !u!4 &1862045250
 Transform:
   m_ObjectHideFlags: 0

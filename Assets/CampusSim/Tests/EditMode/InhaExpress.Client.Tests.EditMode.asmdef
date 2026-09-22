@@ -1,6 +1,6 @@
 {
   "name": "InhaExpress.Client.Tests.EditMode",
-  "references": ["InhaExpress.Client.Domain", "InhaExpress.Client.Presentation"],
+  "references": ["InhaExpress.Client.Domain", "InhaExpress.Client.Presentation", "InhaExpress.Client.Networking", "InhaExpress.Client.PC", "InhaExpress.Client.Mobile"],
   "includePlatforms": ["Editor"],
   "optionalUnityReferences": ["TestAssemblies"],
   "autoReferenced": false
