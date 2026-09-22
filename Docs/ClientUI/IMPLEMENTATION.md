@@ -1,6 +1,6 @@
 # 클라이언트 명세 적용 및 검증 계획
 
-프로젝트 기준 **0.1.3.0** · 2026-09-22 · 상태: 클라이언트 골격 및 DTO·상태 저장소·좌표 변환 구현, UI/서버 구현 전.
+프로젝트 기준 **0.1.3.1** · 2026-09-22 · 상태: 클라이언트 골격 및 DTO·상태 저장소·좌표 변환 구현, UI/서버 구현 전.
 
 공통 모델과 검증 범위는 [DATA_CONTRACT.md](DATA_CONTRACT.md)에 기록한다. Domain은 UnityEngine 참조가 없는 불변 C# 읽기 모델이며, Presentation의 WorldStateStore는 완전한 snapshot만 적용한다. 이벤트 delta/JSON 역직렬화/WebSocket은 다음 단계다.
 

@@ -1,5 +1,11 @@
 # 변경 이력
 
+## 0.1.3.1 — 2026-09-22 · Visual Studio 환경 파일 제외
+
+- 로컬에서 자동 생성되는 루트 `.vsconfig`을 Git 추적 대상에서 제외했다.
+- VERSION·Unity bundleVersion·현재 문서 머리말을 0.1.3.1로 동기화했다. 코드·통신 schema_version·map_version은 변경하지 않았다.
+- 검증: `git check-ignore -v .vsconfig`으로 ignore 규칙 적용을 확인했다.
+
 ## 0.1.3.0 — 2026-09-22 · 클라이언트 데이터 모델과 상태 저장소
 
 - 차량·요청·이동지원·랜드마크·Stop·경로·Zone·snapshot·이벤트/명령 응답의 불변 C# 읽기 모델 및 enum을 추가했다. Domain 어셈블리의 UnityEngine 의존을 제거했다.
