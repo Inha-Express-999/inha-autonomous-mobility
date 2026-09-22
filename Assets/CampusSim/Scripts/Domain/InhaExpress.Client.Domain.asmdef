@@ -1,5 +1,6 @@
 {
   "name": "InhaExpress.Client.Domain",
   "rootNamespace": "InhaExpress.Client.Domain",
-  "autoReferenced": true
+  "autoReferenced": true,
+  "noEngineReferences": true
 }

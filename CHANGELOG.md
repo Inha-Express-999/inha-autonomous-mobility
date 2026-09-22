@@ -1,5 +1,14 @@
 # 변경 이력
 
+## 0.1.3.0 — 2026-09-22 · 클라이언트 데이터 모델과 상태 저장소
+
+- 차량·요청·이동지원·랜드마크·Stop·경로·Zone·snapshot·이벤트/명령 응답의 불변 C# 읽기 모델 및 enum을 추가했다. Domain 어셈블리의 UnityEngine 의존을 제거했다.
+- WorldStateStore에 완전한 snapshot 교체, ID 조회, 중복/과거 sequence 무시, run 변경/이전 run 패킷 거부, 참조 검증, 모바일 구독 범위 검사, 실시간 1초 stale 판정을 추가했다.
+- Python local metric 좌표↔Unity 축 변환과 heading 변환을 추가했다. 음수 좌표와 미확인 측정값을 보존하며 NaN/Infinity를 거부한다.
+- 호환성: 기존 통신 schema_version=3 유지. JSON 직렬화·서버 계약 fixture·delta 이벤트·WebSocket 연결은 미구현이며 모델을 직접 JsonUtility에 전달하지 않는다. 사용법/제약은 Docs/ClientUI/DATA_CONTRACT.md에 기록했다.
+- 검증: Unity 6000.3.21f1 컴파일 성공, InhaExpress.Client.Tests.EditMode 34/34 통과(0 실패, 0 생략). 실제 Player 빌드·실기기·서버 통합은 미수행. 기존 외부 Vegetation 셰이더 오류 이력은 해결 범위 밖이다.
+- VERSION·Unity bundleVersion·README·클라이언트 문서를 0.1.3.0으로 동기화했다.
+
 ## 0.1.2.0 — 2026-09-22 · PC·모바일 클라이언트 실행 골격 추가
 
 - 공통 `CampusWorld`와 역할별 `PC_Operator`, `Mobile_Passenger` 씬을 추가하고 PC·모바일 Bootstrap에서 Additive로 조합하도록 구성했다.

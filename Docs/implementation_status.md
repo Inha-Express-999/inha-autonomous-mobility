@@ -1,6 +1,17 @@
 # 구현 현황
 
-기준 버전 0.1.0.0 · 2026-09-17
+기준 버전 0.1.3.0 · 2026-09-22
+
+## 현재 클라이언트 진행
+
+- M0 클라이언트 기반: Bootstrap/Additive 씬·Windows/Android 프로필에 이어 Domain DTO·enum, WorldStateStore, 좌표 변환을 구현했다.
+- Unity 6000.3.21f1 재컴파일 성공. Unity Test Runner EditMode 어셈블리 `InhaExpress.Client.Tests.EditMode`: 34 통과 / 0 실패 / 0 생략, 도구 보고 실행 시간 0.52초.
+- 검증: snapshot 불변성/원자적 적용, 오래된 sequence/run 처리, 참조 검증, 모바일 소유권·데이터 범위, nullable 측정값, 이동지원 조건, schema/project version 구분, 3개 합성 기준점 왕복 오차≤0.01m.
+- 남은 범위: fixture 제공자, JSON Schema/공통 서버 fixture, 이벤트 delta, WebSocket, 실제 화면·서버·Physics 연동. 테스트는 실제 지도 정확도 또는 운행 안전 검증이 아니다.
+- 다음 작업: 합성 FixtureClientDataSource를 구현하고 PC/모바일 Presenter에 연결한다. 모델 결정은 `ClientUI/DATA_CONTRACT.md` 참조.
+- 버전 0.1.3.0 릴리스 범위에 위 클라이언트 데이터 기반과 검증 결과를 포함한다.
+
+## 지도 조사 이력 (0.1.0.0 · 2026-09-17)
 
 - M0 준비 일부: VERSION/CHANGELOG 추가, 지도 개선 계획과 오픈소스 가공 도구/고정 의존성 기록.
 - M2 사전 조사: 확장 OSM, Copernicus DSM 타일/메타데이터/라이선스 확보. 필수 랜드마크 11개로 사용자 정정 반영.
