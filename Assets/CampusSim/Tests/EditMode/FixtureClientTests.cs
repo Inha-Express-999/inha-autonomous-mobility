@@ -10,7 +10,7 @@ namespace InhaExpress.Client.Tests
 {
     public sealed class FixtureClientTests
     {
-        private const string Version = "0.1.4.0";
+        private const string Version = "0.1.5.0";
 
         [Test]
         public void RoleProjectionAtSameTickPreservesOwnVehicleAndRequest()
@@ -179,11 +179,11 @@ namespace InhaExpress.Client.Tests
         [Test]
         public void PassengerGuidanceRequiresMatchingStateAndReason()
         {
-            StringAssert.Contains("Avoiding congestion", PassengerStatusPresenter.Describe(Snapshot(420)));
-            StringAssert.Contains("Yielding to a pedestrian", PassengerStatusPresenter.Describe(Snapshot(500)));
-            StringAssert.DoesNotContain("Yielding to a pedestrian", PassengerStatusPresenter.Describe(Snapshot(550)));
-            StringAssert.Contains("not completed yet", PassengerStatusPresenter.StatusText(RequestStatus.DROPOFF_SERVICE));
-            StringAssert.Contains("final walk not verified", PassengerStatusPresenter.StatusText(RequestStatus.COMPLETED));
+            StringAssert.Contains("혼잡", PassengerStatusPresenter.Describe(Snapshot(420)));
+            StringAssert.Contains("보행자", PassengerStatusPresenter.Describe(Snapshot(500)));
+            StringAssert.DoesNotContain("보행자", PassengerStatusPresenter.Describe(Snapshot(550)));
+            StringAssert.Contains("완료 전", PassengerStatusPresenter.StatusText(RequestStatus.DROPOFF_SERVICE));
+            StringAssert.Contains("최종 보행", PassengerStatusPresenter.StatusText(RequestStatus.COMPLETED));
         }
 
         [Test]

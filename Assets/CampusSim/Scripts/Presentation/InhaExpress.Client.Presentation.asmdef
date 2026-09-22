@@ -3,7 +3,10 @@
   "rootNamespace": "InhaExpress.Client.Presentation",
   "references": [
     "InhaExpress.Client.Domain",
-    "InhaExpress.Client.Networking"
+    "InhaExpress.Client.Networking",
+    "Unity.InputSystem",
+    "Unity.InputSystem.UI",
+    "Unity.ugui"
   ],
   "autoReferenced": true
 }

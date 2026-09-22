@@ -1,5 +1,15 @@
 # 변경 이력
 
+## 0.1.5.0 — 2026-09-22 · Fixture PC·모바일 uGUI 화면
+
+- 기존 IMGUI 개발 HUD를 Input System EventSystem 기반 uGUI로 교체했다. 화면은 런타임에 역할 Scene의 Presenter가 만들며 authoritative 상태는 기존 WorldStateStore가 계속 소유한다.
+- PC에는 상단 버전/연결 상태, 차량·요청 집계와 목록, Campus 3D 영역, 선택 차량·Zone inspector, 타임라인과 fixture 제어를 배치했다.
+- 모바일에는 Safe Area 대응 헤더, Campus 뷰, 요청 상태·출발/목적·Stop·합성 ETA·배정 차량·진행 단계·상태/사유 안내를 포함한 하단 시트를 배치했다. 다른 요청과 Zone 데이터는 계속 projection에서 제외된다.
+- PC·모바일의 사용자 안내, 상태, 버튼 문구를 한국어로 제공한다. Fixture·Zone·Stop·ETA·ID처럼 프로젝트에서 기술 용어로 쓰는 표현은 의미가 어색해지지 않도록 영어를 유지했다.
+- 지연 로드되는 Campus 카메라를 감지해 Canvas를 Screen Space Camera로 연결하고, 화면당 Canvas/EventSystem을 하나만 생성한다. snapshot 변경 때만 역할 본문을 갱신하고 연결/stale 표시는 10Hz로 제한한다.
+- 검증: Unity 6000.3.21f1 컴파일, PC 1440×900 및 모바일 역할 720×1280 시각 확인. 실제 uGUI 버튼으로 pause/restart/disconnect/reconnect 동작을 확인했다. 최종 자동 테스트 결과와 Player/실단말 제한은 구현 현황에 기록한다.
+- 호환성: schema_version=3과 map_version=synthetic-ui-v1 유지. 실제 호출 입력·WebSocket·차량/경로 3D overlay·Player 빌드·실단말 성능은 포함하지 않는다.
+
 ## 0.1.4.0 — 2026-09-22 · 합성 클라이언트 재생과 개발 HUD
 
 - IClientDataSource 경계와 45초 합성 FixtureClientDataSource를 추가했다. 0.05초 기록 tick/최대 10Hz snapshot, 일시정지 heartbeat, 수신 중단·복구, 새 run 재시작을 제공한다. 실제 배차·주행·네트워크 알고리즘이 아니다.

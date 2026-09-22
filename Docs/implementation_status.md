@@ -1,15 +1,15 @@
 # 구현 현황
 
-기준 버전 0.1.4.0 · 2026-09-22
+기준 버전 0.1.5.0 · 2026-09-22
 
 ## 현재 클라이언트 진행
 
-- M0 클라이언트 기반: Bootstrap/Additive 씬·Windows/Android 프로필·DTO·WorldStateStore·좌표 변환에 이어 IClientDataSource, FixtureClientDataSource, ClientRuntimeHost와 PC/모바일 개발용 텍스트 HUD를 연결했다.
-- Unity 6000.3.21f1 재컴파일 성공. 최종 EditMode 54/54 통과(도구 보고 1.02초), PlayMode 수명주기 테스트 1/1 통과(도구 보고 0.1초). 처음 EditMode로 작성한 enable/disable 테스트는 런타임 메시지 환경이 달라 실패했고, 실제 PlayMode 테스트로 이동하여 통과했다.
+- M0 클라이언트 기반: Bootstrap/Additive 씬·Windows/Android 프로필·DTO·WorldStateStore·좌표 변환·FixtureClientDataSource에 PC 관제 대시보드와 모바일 승객 하단 시트 uGUI를 연결했다.
+- Unity 6000.3.21f1 재컴파일 성공. 최종 EditMode 54/54 통과(도구 보고 4.6초), uGUI 생성·버튼 구성·Presenter 수명주기 PlayMode 테스트 1/1 통과(도구 보고 0.26초). 최종 검증 구간의 새 Console 오류는 0개다.
 - 기존 DTO 검증에 더해 역할별 전체 901 tick 참조 검증, 타 소유자 데이터 제외, 일시정지 heartbeat, 수신 중단 1초 stale/전체 snapshot 복구, 새 run 재시작, 완료 후 heartbeat, 거친/세밀한 시간 진행 일치, Presenter 재바인딩·비활성/재활성·host 파괴 정리를 검사했다.
-- Editor PC Bootstrap과 모바일 Bootstrap/역할 씬에서 Play smoke를 실행했다. PC host/view 각 1개, 차량 3대·요청 2개, stale/복구/새 run을 확인했다. 모바일에는 자기 요청 1개·배정 차량만·Zone 0개이며 disable/enable 후 표시 복구를 확인했다. 현재 Windows 프로필은 변경하지 않고 모바일 역할 씬을 미리 Additive 로드해 검증했다. Android 빌드 검증은 아니다.
-- 남은 범위: 사용자용 한글 UI/호출 입력/지도 차량 표시·카메라, JSON Schema/서버 공통 fixture, 이벤트 delta, WebSocket·서버·Physics 연동. 실제 지도 정확도·운행 안전·실기기 성능 검증은 하지 않았다.
-- 다음 작업: 이 데이터 공급자 경계를 유지하며 모바일 출발/목적 Landmark 선택·호출 확인 화면과 PC 차량/요청 패널을 구성한다. 실제 호출 성공은 서버 command/ack 연동 전 구현 완료로 표시하지 않는다. 실행법은 `ClientUI/FIXTURE_REPLAY.md`, 계약은 `ClientUI/DATA_CONTRACT.md` 참조.
+- Editor PC Bootstrap과 모바일 Bootstrap/역할 씬에서 Play smoke를 실행했다. PC는 1440×900에서 차량 3대·요청 2개·Zone inspector·타임라인을, 모바일은 720×1280에서 자기 요청 1개·Zone 0개·요청 진행 하단 시트를 확인했다. 실제 uGUI 버튼의 pause/restart/disconnect/reconnect도 확인했다. 모바일 검증은 Windows 프로필을 바꾸지 않고 역할 씬을 미리 Additive 로드했으므로 Android 빌드 검증은 아니다.
+- 남은 범위: 호출 입력/랜드마크 검색·선택/지도 차량·경로 overlay, JSON Schema/서버 공통 fixture, 이벤트 delta, WebSocket·서버·Physics 연동. 실제 지도 정확도·운행 안전·실기기 성능 검증은 하지 않았다.
+- 다음 작업: 모바일 출발/목적 Landmark 선택·이동지원·호출 확인 화면을 이 uGUI 구조에 연결한다. 실제 호출 성공은 서버 command/ack 연동 전 구현 완료로 표시하지 않는다. 실행법은 `ClientUI/FIXTURE_REPLAY.md`, 계약은 `ClientUI/DATA_CONTRACT.md` 참조.
 - 현재 변경은 미커밋 작업이며 릴리스 완료/태그 생성/푸시를 뜻하지 않는다.
 
 ## 지도 조사 이력 (0.1.0.0 · 2026-09-17)
