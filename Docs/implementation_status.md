@@ -1,6 +1,13 @@
 # 구현 현황
 
-기준 버전 0.1.5.0 · 2026-09-22
+기준 버전 0.1.6.0 · 2026-09-23
+
+## Python 서버 M0 기반
+
+- `backend/`에 FastAPI와 Pydantic 기반의 독립 서비스 골격을 추가했다. 합성 Landmark·Stop·차량 fixture, 요청 입력 검증, 접근 가능한 Stop 선택, 차량 능력 조건의 단순 배차, 취소 및 command_id 기반 멱등 처리를 제공한다.
+- 서버는 Unity의 Physics·Ground Truth·센서 관측을 소유하지 않는다. 현재 ETA 180초와 합성 지도 데이터는 개발 fixture이며 실제 측정이나 실제 캠퍼스 운행 판단이 아니다.
+- `GET /health`, Landmark 조회, 요청 생성·소유자별 조회·취소 API를 제공한다. 기본 바인딩은 `127.0.0.1:8765`이며 LAN 공개는 하지 않는다.
+- 검증: Python `pytest backend/tests` 4/4 통과, Ruff 검사 통과. 실제 Unity WebSocket transport와 공통 JSON fixture는 다음 단계다. A*·RRT·배터리·혼잡·센서·실제 지도·Player/실기기 검증은 아직 포함하지 않는다.
 
 ## 현재 클라이언트 진행
 
@@ -10,7 +17,7 @@
 - Editor PC Bootstrap과 모바일 Bootstrap/역할 씬에서 Play smoke를 실행했다. PC는 1440×900에서 차량 3대·요청 2개·Zone inspector·타임라인을, 모바일은 720×1280에서 자기 요청 1개·Zone 0개·요청 진행 하단 시트를 확인했다. 실제 uGUI 버튼의 pause/restart/disconnect/reconnect도 확인했다. 모바일 검증은 Windows 프로필을 바꾸지 않고 역할 씬을 미리 Additive 로드했으므로 Android 빌드 검증은 아니다.
 - 남은 범위: 호출 입력/랜드마크 검색·선택/지도 차량·경로 overlay, JSON Schema/서버 공통 fixture, 이벤트 delta, WebSocket·서버·Physics 연동. 실제 지도 정확도·운행 안전·실기기 성능 검증은 하지 않았다.
 - 다음 작업: 모바일 출발/목적 Landmark 선택·이동지원·호출 확인 화면을 이 uGUI 구조에 연결한다. 실제 호출 성공은 서버 command/ack 연동 전 구현 완료로 표시하지 않는다. 실행법은 `ClientUI/FIXTURE_REPLAY.md`, 계약은 `ClientUI/DATA_CONTRACT.md` 참조.
-- 현재 변경은 미커밋 작업이며 릴리스 완료/태그 생성/푸시를 뜻하지 않는다.
+- 클라이언트 fixture 화면은 0.1.5.0 단계이며, 0.1.6.0 서버 기반과 실제 네트워크로 연결된 상태는 아니다.
 
 ## 지도 조사 이력 (0.1.0.0 · 2026-09-17)
 

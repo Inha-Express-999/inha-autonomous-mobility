@@ -1,5 +1,12 @@
 # 변경 이력
 
+## 0.1.6.0 — 2026-09-23 · Python 서버 M0 기반
+
+- FastAPI/Pydantic 기반 `backend/`를 추가했다. 합성 Landmark·Stop·차량 fixture를 바탕으로 요청 검증, 이동지원 Stop 선택, 차량 능력 조건의 단순 배차, 요청 취소와 command_id 멱등 처리를 제공한다.
+- 서버는 기본적으로 `127.0.0.1:8765`에서만 수신한다. Unity WebSocket transport, 실제 지도/Stop 검증, A*·RRT·배터리·혼잡·센서·Physics 연동은 포함하지 않는다.
+- 호환성: Unity 클라이언트의 schema_version=3은 변경하지 않았다. VERSION·Unity bundleVersion·README·구현 현황을 0.1.6.0으로 동기화했다.
+- 검증: Python `pytest backend/tests` 4/4 통과, Ruff 검사 통과. Unity 재컴파일, Player/실기기, 성능 측정은 이번 변경 범위에서 수행하지 않았다.
+
 ## 0.1.5.0 — 2026-09-22 · Fixture PC·모바일 uGUI 화면
 
 - 기존 IMGUI 개발 HUD를 Input System EventSystem 기반 uGUI로 교체했다. 화면은 런타임에 역할 Scene의 Presenter가 만들며 authoritative 상태는 기존 WorldStateStore가 계속 소유한다.

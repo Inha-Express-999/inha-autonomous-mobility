@@ -112,6 +112,9 @@ InitTestScene*.unity*
 /Docs/AI/MainBuildingReference.jpg
 /Docs/AI/CampusReference.png
 __pycache__/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
 .env
 .env.*
 !.env.example
