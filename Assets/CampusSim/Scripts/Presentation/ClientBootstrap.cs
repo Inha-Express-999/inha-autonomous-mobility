@@ -13,6 +13,8 @@ namespace InhaExpress.Client.Presentation
         [SerializeField] private string roleScenePath;
         [SerializeField] private ClientRole clientRole;
         [SerializeField] private bool useFixture = true;
+        [SerializeField] private string serverWebSocketUrl = "ws://127.0.0.1:8765/v1/client/ws";
+        [SerializeField] private string passengerSubscriberId;
 
         private static ClientBootstrap instance;
         private bool isLoading;
@@ -46,10 +48,14 @@ namespace InhaExpress.Client.Presentation
             isLoading = true;
             yield return LoadAdditiveSceneIfNeeded(worldScenePath);
             yield return LoadAdditiveSceneIfNeeded(roleScenePath);
-            if (!useFixture) yield break; // No implicit mock fallback after a real transport failure.
+            string subscriber = clientRole == ClientRole.Mobile_Passenger
+                ? (useFixture ? FixtureScenario.PassengerId : passengerSubscriberId)
+                : null;
             Runtime = gameObject.AddComponent<ClientRuntimeHost>();
-            string subscriber = clientRole == ClientRole.Mobile_Passenger ? FixtureScenario.PassengerId : null;
-            Runtime.Initialize(clientRole, new FixtureClientDataSource(clientRole, Application.version, subscriber), subscriber);
+            IClientDataSource source = useFixture
+                ? (IClientDataSource)new FixtureClientDataSource(clientRole, Application.version, subscriber)
+                : new WebSocketClientDataSource(serverWebSocketUrl, clientRole, Application.version, subscriber);
+            Runtime.Initialize(clientRole, source, subscriber);
             int boundViews = 0;
             foreach (var root in SceneManager.GetSceneByPath(roleScenePath).GetRootGameObjects())
                 foreach (var component in root.GetComponentsInChildren<MonoBehaviour>(true))

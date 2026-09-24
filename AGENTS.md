@@ -3,7 +3,7 @@
 ## 0. 프로젝트와 작업 규칙
 
 **제목:** 실제 캠퍼스 지도 기반 승객·물류 통합 자율주행 운송 서비스 시뮬레이션  
-**문서:** v0.2.1.1 · 2026-09-24 · 요구사항/설계/구현/검증 통합본
+**문서:** v0.2.2.0 · 2026-09-24 · 요구사항/설계/구현/검증 통합본
 **대상:** 개발자와 AI 코딩 에이전트. 구현 완료 보고서가 아니다.
 
 Unity가 캠퍼스의 동적 Ground Truth·Physics·차량/보행자/장애물 실제 상태와 Raycast 기반 센서 관측을 생성하고, Python이 정밀지도·요청·배차·전역 경로·센서 관측 기반 지역 계획/안전 판단/제어를 수행한다. Unity PC 관제와 모바일 승객 클라이언트는 같은 서비스를 역할에 맞게 표시·입력한다. 핵심은 **혼잡·접근성·안전과 센서 기반 인지를 고려한 승객 이동과 배송**, 그리고 **Baseline 알고리즘과 개선 알고리즘의 정량 비교**다.
@@ -15,7 +15,9 @@ Unity가 캠퍼스의 동적 Ground Truth·Physics·차량/보행자/장애물 �
 - 구현됨: 인하대학교 3D 캠퍼스 맵, 공통 `CampusWorld`, PC/Mobile Bootstrap 및 Additive 역할 씬, PC/Mobile 빌드 분리, 공통 DTO, `WorldStateStore`, 좌표 변환, fixture 기반 `IClientDataSource`, 합성 snapshot 재생, PC/Mobile uGUI 기본 화면.
 - 부분 구현/검증 중: 역할별 데이터 projection, fixture 기반 연결/중단/재생 UI, PC/Mobile 화면별 표시 로직.
 - 부분 구현: Python FastAPI/Pydantic 서비스 기반과 합성 Landmark·Stop·차량을 사용한 요청 검증·단순 배정·취소 API. 메모리 상태와 합성 ETA만 제공하며 실제 지도/경로/주행 상태 권위 서버로 사용할 수 없다.
-- 아직 실제 서비스로 미구현: Unity WebSocket 연동, 실제 지도 기반 요청→운송→완료 상태 전이, Dijkstra/A*/D* Lite, Greedy/Hungarian 배차, Reservation/CBS, Raycast LiDAR/Radar SensorRig, RRT/TTC/Safety, 차량 동역학/제어, 보행자 300명/혼잡 추정, 실제 ETA 및 전체 통합 시나리오.
+- 부분 구현: schema_version과 map_version을 분리한 합성 6-stop RoadGraph 계약/fixture, 자체 Dijkstra/A* 및 all-pairs 비교 CLI. 실제 캠퍼스 경로 승인은 아니며 M1은 T03 100 OD·반복 측정과 요청→완료 흐름 전까지 완료가 아니다.
+- 초기 통합 단계: Python WebSocket handler와 Unity `WebSocketClientDataSource`가 schema-v3 합성 snapshot 및 Mobile_Passenger create/cancel command·ACK를 제공한다. Mobile 요청 UI와 합성 RoadGraph를 따른 V01의 요청→픽업→운송→완료 상태 전이가 연결됐다. Python 서비스/HTTP/ASGI 단위·통합 검증 20개가 통과했지만 Unity transport/UI 연동은 미검증이며 Unity Physics를 구동하지 않는다. subscriberId 기반 투영은 인증이 아니며, 자동 재접속·실제 지도/주행 데이터는 미구현이다.
+- 아직 실제 서비스로 미구현: 실제 지도 기반 요청→운송→완료 상태 전이, 인증/세션 관리, D* Lite, Greedy/Hungarian 배차, Reservation/CBS, Raycast LiDAR/Radar SensorRig, RRT/TTC/Safety, 차량 동역학/제어, 보행자 300명/혼잡 추정, 실제 ETA 및 전체 통합 시나리오.
 - 차량 모델 3종과 프리팹은 `Assets/CampusSim/Models/` 및 `Assets/CampusSim/Prefabs/`에 추가되어 있다. 이는 시각 에셋 준비 상태이며 차량 제원·Collider·동역학·안전 검증 완료를 의미하지 않는다.
 - fixture와 UI 목업은 실제 서버/알고리즘 완료를 의미하지 않는다. 실제 알고리즘 결과와 서버 상태를 연결하기 전에는 합성값을 실측 결과로 보고하지 않는다.
 
@@ -65,7 +67,9 @@ Unity가 캠퍼스의 동적 Ground Truth·Physics·차량/보행자/장애물 �
 
 버전과 CHANGELOG 항목은 실제 커밋에 포함될 변경만 설명한다. 과거 커밋을 소급 수정하지 않으며, 커밋에 포함되지 않은 작업을 릴리스 완료로 보고하지 않는다.
 
-기존 문서 v1.0~v1.2는 네 자리 규칙 도입 전 문서 개정 번호이며 완성/공개 버전이 아니다. 2026-09-17 맵 수정 전 체크포인트를 `0.1.0.0`으로 재설정한 이력은 유지하되, 이후 클라이언트 구조·DTO·fixture·uGUI 구현, 알고리즘 비교 설계 보완과 커밋별 버전/description 관리 규칙을 반영해 현재 문서 기준은 **`0.2.1.1`**이다. 과거 버전은 소급 변경하지 않는다.
+커밋과 원격 저장소 반영은 별도 작업이다. 사용자가 커밋을 요청했거나 현재 작업에서 커밋이 명시적으로 승인된 경우 로컬 커밋과 해당 주석 태그까지 만든다. **push는 사용자가 직접 진행하므로 에이전트는 push하지 않으며, push 권한·자격 증명·승인을 요청하지 않는다.** 작업 완료 보고에는 로컬 커밋/태그가 생성됐는지와 원격 반영 여부를 구분해 적는다.
+
+기존 문서 v1.0~v1.2는 네 자리 규칙 도입 전 문서 개정 번호이며 완성/공개 버전이 아니다. 2026-09-17 맵 수정 전 체크포인트를 `0.1.0.0`으로 재설정한 이력은 유지하되, 이후 클라이언트 구조·DTO·fixture·uGUI 구현, 알고리즘 비교 설계 보완과 커밋별 버전/description 관리 규칙을 반영해 현재 문서 기준은 **`0.2.2.0`**이다. 과거 버전은 소급 변경하지 않는다.
 
 저장소 루트 `VERSION`을 단일 원본으로 두고 문서 머리말·Python 서버의 프로젝트 버전·Unity PC/모바일 앱의 프로젝트 표시 버전·릴리스 태그를 같은 릴리스에서 일치시킨다. Unity PC와 모바일은 동일 프로젝트 버전을 사용하고 플랫폼·빌드 식별자는 별도 기록한다. `CHANGELOG.md`에 버전·날짜·변경 이유·호환성/마이그레이션·검증 결과를 기록한다. 문서만 바꾸는 경우에도 해당 변경 수준에 맞게 증가시키되 과거 빌드의 버전은 소급 변경하지 않는다. 현재 문서는 이 관리 체계의 구현 요구사항이며 VERSION/앱이 이미 갱신되었다고 가정하지 않는다.
 
@@ -78,6 +82,16 @@ Unity **앱/프로젝트 버전**과 Unity **Editor 버전**은 구분한다. Ed
 모든 씬·에셋·렌더링 변경에서 PC와 모바일의 성능 비용을 함께 검토한다. 고정 건물·도로에는 Static Batching 적합성을 확인하고, 반복되는 동일 메시·재질 수목에는 GPU Instancing과 LOD를 우선 검토한다. 동일 객체에 두 방식을 무조건 중복 적용하지 않는다. 풀·장식에는 프러스텀/거리 컬링과 품질별 표시 거리·밀도를 적용한다. 지형 베이크 등 Editor 변경 후에도 배치·LOD·컬링 경계가 유효한지 확인한다.
 
 공유 에셋 원본을 임의 변경하지 말고 프로젝트용 재질을 사용한다. 개체를 화면에서 생략해도 Python의 이동·충돌·밀도·안전 계산은 생략하지 않는다. 최적화 완료 보고에는 적용 설정과 실제 측정을 구분하고, 기준 기기·해상도·품질·카메라 경로·FPS/프레임 시간·배치 수·메모리를 기록한다. 설정 플래그만 켠 상태를 성능 개선 검증 완료로 표현하지 않는다. 모바일 품질 조절과 LOD는 고품질 PC 표현을 유지하면서 설계한다.
+
+### 지도 그래프·캠퍼스 오브젝트 재사용 규칙
+
+주행 노드·edge의 **권위 데이터는 버전이 지정된 RoadGraph/지도 데이터**로 관리한다. Unity 씬의 GameObject 목록을 경로 데이터 원본으로 삼지 않는다. 그래프 구축 시 실제 또는 합성 구간을 구분하고 노드 ID, 방향 edge ID, polyline, Stop/랜드마크 참조와 검증 상태를 명시한다.
+
+노드·edge를 추가하는 작업에는 반복 배치·검토에 쓸 Unity authoring/시각화 prefab도 함께 검토한다. 예를 들어 node marker, Stop marker, 방향/폐쇄 상태를 표시하는 edge segment·route debug 요소를 재사용 prefab 또는 prefab variant로 만든다. prefab 인스턴스는 그래프 ID를 참조하거나 시각화만 담당하며, prefab의 Transform이 그래프 좌표·연결·통행 규칙을 대신하지 않는다. 긴 곡선 도로를 작은 prefab GameObject 수천 개로 나눠 렌더링하지 말고 graph geometry와 렌더링/편집 표현을 분리한다.
+
+캠퍼스 환경에서는 여러 위치·씬에서 반복 사용하고 hierarchy·재질·컴포넌트 구성이 안정적인 가로등, 표지판, 벤치, 정류장 요소, 수목 군집 등부터 프로젝트 소유 prefab 또는 prefab variant로 정리한다. 단 한 번만 쓰는 고유 건물/지형과 원본 vendor 에셋은 이유 없이 prefab화·복제·수정하지 않는다. 공유 프리팹은 `Assets/CampusSim/Prefabs/` 아래 목적별 폴더에 두고, 명확한 이름·피벗/축·단위·필요 컴포넌트·근거/검증 상태를 문서화한다. 반복 개체의 LOD·컬링·배칭 비용도 PC와 모바일에서 함께 확인한다.
+
+prefab 원본/variant를 변경할 때는 연결된 씬 인스턴스 영향과 prefab override를 확인해 협업자가 안전하게 재사용하도록 한다. 그래프 데이터, marker prefab, 실제 환경 모델/물리 collider를 한 객체에 무심코 결합하지 말고 역할을 분리한다. 현재 있는 환경 지도 prefab과 차량 모델 prefab은 이후 표준화의 입력으로 검토할 수 있으나, 그래프 노드·edge prefab이 이미 구현된 것으로 간주하지 않는다.
 
 ## 1. 범위와 필수 요구사항
 
@@ -117,7 +131,7 @@ Global A*는 정밀지도와 검증된 정적 제약·시간대 prior·서버 �
 
 하나의 Unity 프로젝트에서 공통 3D `CampusWorld`와 코드·DTO·네트워크·프리팹을 공유한다. 역할별 씬/UI는 `PC_Operator`, `Mobile_Passenger`로 분리하고 `CampusWorld + 역할 씬`의 Additive 로딩을 권장한다. 지도 수정은 공통 자산에 반영하고 역할별 표현·품질만 분리한다. PC는 디버그 목적으로 Unity Ground Truth와 센서 인식을 함께 시각화할 수 있지만, Python 자율주행 로직에는 Ground Truth 동적 Transform을 전달하지 않는다.
 
-목표 서버 스택은 Python 3.11 이상 호환 버전, FastAPI/Pydantic, NumPy, OSMnx/NetworkX, pyproj/Shapely와 NativeWebSocket이며, 현재 실제 Python/WebSocket 서비스 통합은 미완료 상태다. 기존 Unity 버전을 우선 유지하고 신규 환경은 M0에서 호환성을 검증한다. 의존성은 smoke test 후 lockfile에 고정한다.
+목표 서버 스택은 Python 3.11 이상 호환 버전, FastAPI/Pydantic, NumPy, OSMnx/NetworkX, pyproj/Shapely와 Unity WebSocket transport다. schema-v3 합성 snapshot, Mobile 요청 UI 및 create/cancel command·ACK, 합성 graph 기반 단일 차량 상태 전이는 구현됐다. 인증·재접속·실서비스 지도 데이터와 Unity Physics 차량 구동은 미완료다. 기존 Unity 버전을 우선 유지하고 신규 환경은 M0에서 호환성을 검증한다. 의존성은 smoke test 후 lockfile에 고정한다.
 
 OSMnx·pyproj[S1] [S2], FastAPI·NativeWebSocket[S3] [S4]을 활용한다. 선택 ROS2는 Connector/Endpoint를 함께 검증하며[S5] OMPL은 비교용이다.
 
@@ -752,7 +766,7 @@ A* + Hungarian + D* Lite + CBS
 
 ## 15. 실행 계약·개발 품질
 
-아래 CLI는 Python 서버 구현 단계에서 제공해야 하는 실행 계약이다. **현재 실제 서버/CLI가 구현·실행되었다고 가정하지 않는다.** 개발 의존성도 선언한다.
+아래 CLI는 목표 실행 계약이다. 현재 `serve`와 합성 graph의 `route-compare` 초기 구현이 있다. `validate-map`, 전체 시뮬레이션 `run`, scenario 기반 `serve`, `evaluate`, `replay`는 아직 구현되었다고 가정하지 않는다. 개발 의존성도 선언한다.
 
 ```bash
 python -m pip install -e "./backend[dev]"
@@ -761,6 +775,7 @@ python -m campus_sim.cli run --scenario scenarios/offpeak.yaml --seed 42
 python -m campus_sim.cli serve --scenario scenarios/biryong_peak.yaml
 python -m campus_sim.cli evaluate --suite scenarios/evaluation.yaml --seeds 0:20
 python -m campus_sim.cli replay --run artifacts/runs/RUN_ID
+python -m campus_sim.cli route-compare --map maps/fixtures/campus-synthetic-6.json
 python -m pytest backend/tests
 python -m ruff check backend
 python -m mypy backend/src
@@ -794,6 +809,8 @@ Python 타입/예외·C# 모델/화면 책임을 분리하고 정책 숫자는 c
 
 ```text
 1. RoadGraph 및 Landmark/Stop 실제 데이터와 출처·검증 상태 정합화
+   - 그래프 노드·edge를 만들 때 반복 편집용 node/Stop marker와 edge 시각화 prefab을 함께 정리한다.
+   - 대표 캠퍼스 오브젝트 중 재사용 빈도가 높은 항목을 prefab/variant로 단계적으로 분리한다.
 2. Dijkstra Baseline
 3. A* 및 E1 비교
 4. 차량 1대 이동 / Request 최소 수직 흐름 (차량 프리팹을 시각 루트로 연결하고 축·스케일·피벗·Collider를 확인; 검증되지 않은 제원은 가정으로 명시)

@@ -1,12 +1,17 @@
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, HTTPException, WebSocket, status
 
 from campus_sim.domain import CommandAck, CreateRequest, Landmark, RequestView
+from campus_sim.realtime import serve_client_socket
 from campus_sim.service import MobilityService
 
 
 def create_app(service: MobilityService | None = None) -> FastAPI:
-    app = FastAPI(title="Inha Autonomous Mobility API", version="0.2.1.1")
+    app = FastAPI(title="Inha Autonomous Mobility API", version="0.2.2.0")
     app.state.service = service or MobilityService.synthetic_fixture()
+
+    @app.websocket("/v1/client/ws")
+    async def client_socket(websocket: WebSocket) -> None:
+        await serve_client_socket(websocket, app.state.service)
 
     @app.get("/health")
     def health() -> dict[str, str]:

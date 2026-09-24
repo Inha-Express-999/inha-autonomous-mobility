@@ -10,12 +10,13 @@ namespace InhaExpress.Client.Presentation
         void Bind(ClientRuntimeHost host);
     }
 
-    // Bootstrap owns one host/session. A future transport implements IClientDataSource.
+    // Bootstrap owns one host/session. Fixture and WebSocket transports share this boundary.
     public sealed class ClientRuntimeHost : MonoBehaviour
     {
         private IClientDataSource source;
         public WorldStateStore Store { get; private set; }
         public FixtureClientDataSource Fixture => source as FixtureClientDataSource;
+        public IClientCommandSource Commands => source as IClientCommandSource;
         public ConnectionState ConnectionState => source?.ConnectionState ?? ConnectionState.Disconnected;
         public ClientRole Role { get; private set; }
 

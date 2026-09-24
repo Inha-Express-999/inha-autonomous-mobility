@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Text;
 using InhaExpress.Client.Domain;
 using InhaExpress.Client.Presentation;
@@ -10,6 +11,13 @@ namespace InhaExpress.Client.Mobile
     {
         private Text statusLabel, statusTitle, routeText, etaValue, vehicleText, reasonText, progressText, mapHint;
         private Image statusAccent;
+        private Text pickupChoice, dropoffChoice, stepFreeChoice, requestFeedback;
+        private Button createRequestButton, cancelRequestButton;
+        private readonly List<LandmarkDto> availableLandmarks = new List<LandmarkDto>();
+        private int pickupIndex, dropoffIndex = 1;
+        private bool requiresStepFree;
+        private string pendingMessageId;
+        private RequestDto activeRequest;
         public override ClientRole Role => ClientRole.Mobile_Passenger;
         protected override string Format(WorldSnapshotDto snapshot) => Describe(snapshot);
 
@@ -30,9 +38,10 @@ namespace InhaExpress.Client.Mobile
             var marker = FixtureUiFactory.Panel(mapGlass, "Vehicle Marker", new Vector2(0.62f, 0.66f),
                 new Vector2(0.62f, 0.66f), new Vector2(-20, -20), new Vector2(20, 20), FixtureUiPalette.Blue);
             FixtureUiFactory.Text(marker, "Text", "V1", 11, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
+            marker.gameObject.SetActive(Host.Fixture != null);
 
             var sheet = FixtureUiFactory.Panel(root, "Trip Bottom Sheet", Vector2.zero, new Vector2(1, 0),
-                new Vector2(12, 14), new Vector2(-12, 470), FixtureUiPalette.Surface);
+                new Vector2(12, 14), new Vector2(-12, Host.Commands != null ? 620 : 470), FixtureUiPalette.Surface);
             var handle = FixtureUiFactory.Panel(sheet, "Handle", new Vector2(0.5f, 1), new Vector2(0.5f, 1),
                 new Vector2(-24, -14), new Vector2(24, -10), FixtureUiPalette.Line);
             handle.GetComponent<Image>().raycastTarget = false;
@@ -74,11 +83,50 @@ namespace InhaExpress.Client.Mobile
                 FixtureUiPalette.Amber, TextAnchor.MiddleLeft, FontStyle.Bold);
             ((RectTransform)warningText.transform).offsetMin = new Vector2(12, 8);
             ((RectTransform)warningText.transform).offsetMax = new Vector2(-12, -8);
+            warning.gameObject.SetActive(Host.Fixture != null);
+
+            var requestControls = FixtureUiFactory.Rect(sheet.transform, "Request Controls",
+                Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+            requestControls.gameObject.SetActive(Host.Commands != null);
+            var pickupButton = BuildChoiceButton(requestControls, "Pickup Choice", -390, out pickupChoice);
+            pickupButton.onClick.AddListener(() => CycleLandmark(true));
+            var dropoffButton = BuildChoiceButton(requestControls, "Dropoff Choice", -440, out dropoffChoice);
+            dropoffButton.onClick.AddListener(() => CycleLandmark(false));
+            var accessButton = FixtureUiFactory.Button(requestControls, "Step Free", "계단 없는 승하차: 아니요",
+                FixtureUiPalette.Ink, out stepFreeChoice);
+            SetFormButtonRect(accessButton, -490, -450);
+            accessButton.onClick.AddListener(ToggleStepFree);
+            createRequestButton = FixtureUiFactory.Button(requestControls, "Create Request", "차량 요청",
+                FixtureUiPalette.Blue, out _);
+            SetFormButtonRect(createRequestButton, -540, -492);
+            createRequestButton.onClick.AddListener(CreateRequest);
+            cancelRequestButton = FixtureUiFactory.Button(requestControls, "Cancel Request", "요청 취소",
+                FixtureUiPalette.Red, out _);
+            SetFormButtonRect(cancelRequestButton, -590, -542);
+            cancelRequestButton.onClick.AddListener(CancelRequest);
+            requestFeedback = FixtureUiFactory.Text(requestControls, "Request Feedback", "출발지와 목적지를 선택하세요.",
+                11, FixtureUiPalette.Muted, TextAnchor.MiddleLeft);
+            SetRect(requestFeedback, 18, -616, -18, -592);
         }
 
         protected override void RenderSnapshot(WorldSnapshotDto snapshot)
         {
             mapHint.text = $"{snapshot.MapVersion}  ·  project {snapshot.ProjectVersion}";
+            UpdateLandmarkChoices(snapshot.Landmarks);
+            activeRequest = null;
+            foreach (var candidate in snapshot.Requests)
+                if (candidate.Status != RequestStatus.CANCELLED && candidate.Status != RequestStatus.COMPLETED &&
+                    candidate.Status != RequestStatus.REJECTED && candidate.Status != RequestStatus.FAILED &&
+                    candidate.Status != RequestStatus.EXPIRED)
+                {
+                    activeRequest = candidate;
+                    break;
+                }
+            if (cancelRequestButton != null)
+                cancelRequestButton.interactable = activeRequest != null &&
+                    (activeRequest.Status == RequestStatus.QUEUED || activeRequest.Status == RequestStatus.ASSIGNED) &&
+                    pendingMessageId == null;
+            UpdateChoiceLabels();
             if (snapshot.Requests.Count == 0)
             {
                 statusLabel.text = "활성 요청 없음";
@@ -90,16 +138,151 @@ namespace InhaExpress.Client.Mobile
                 progressText.text = "○  ○  ○  ○";
                 return;
             }
-            var request = snapshot.Requests[0];
+            var request = activeRequest ?? snapshot.Requests[snapshot.Requests.Count - 1];
             statusLabel.text = FixtureUiText.RequestStatus(request.Status);
             statusTitle.text = StatusText(request.Status);
-            routeText.text = $"{DisplayLandmark(request.PickupLandmarkId)}   →   {DisplayLandmark(request.DropoffLandmarkId)}\n" +
+            routeText.text = $"{LandmarkName(request.PickupLandmarkId)}   →   {LandmarkName(request.DropoffLandmarkId)}\n" +
                 $"{request.PickupStopId ?? "Stop 결정 중"}  ·  {request.DropoffStopId ?? "Stop 결정 중"}";
             etaValue.text = request.EtaS.HasValue ? $"{request.EtaS.Value:F0}초" : "—";
             vehicleText.text = request.VehicleId ?? "미배정";
             reasonText.text = Guidance(snapshot, request);
             progressText.text = Progress(request.Status);
             statusAccent.color = IsComplete(request.Status) ? FixtureUiPalette.Green : FixtureUiPalette.Blue;
+        }
+
+        protected override void OnCommandAcknowledged(ServiceCommandAckDto acknowledgement)
+        {
+            if (requestFeedback == null || acknowledgement.MessageId != pendingMessageId) return;
+            pendingMessageId = null;
+            requestFeedback.text = acknowledgement.Accepted
+                ? acknowledgement.CommandType == "cancel_request" ? "요청을 취소했습니다." : "서버가 요청을 접수했습니다."
+                : $"요청을 처리하지 못했습니다: {acknowledgement.ErrorCode}";
+            requestFeedback.color = acknowledgement.Accepted ? FixtureUiPalette.Green : FixtureUiPalette.Red;
+            UpdateChoiceLabels();
+        }
+
+        private void UpdateLandmarkChoices(IReadOnlyList<LandmarkDto> landmarks)
+        {
+            string pickupId = SelectedLandmarkId(pickupIndex);
+            string dropoffId = SelectedLandmarkId(dropoffIndex);
+            availableLandmarks.Clear();
+            foreach (var landmark in landmarks) availableLandmarks.Add(landmark);
+            pickupIndex = IndexFor(pickupId, 0);
+            dropoffIndex = IndexFor(dropoffId, availableLandmarks.Count > 1 ? 1 : 0);
+            if (availableLandmarks.Count > 1 && pickupIndex == dropoffIndex)
+                dropoffIndex = (pickupIndex + 1) % availableLandmarks.Count;
+        }
+
+        private int IndexFor(string id, int fallback)
+        {
+            if (id != null)
+                for (int i = 0; i < availableLandmarks.Count; i++)
+                    if (availableLandmarks[i].Id == id) return i;
+            return availableLandmarks.Count == 0 ? 0 : Mathf.Clamp(fallback, 0, availableLandmarks.Count - 1);
+        }
+
+        private string SelectedLandmarkId(int index) =>
+            index >= 0 && index < availableLandmarks.Count ? availableLandmarks[index].Id : null;
+
+        private void CycleLandmark(bool pickup)
+        {
+            if (availableLandmarks.Count < 2) return;
+            int next = ((pickup ? pickupIndex : dropoffIndex) + 1) % availableLandmarks.Count;
+            if (pickup)
+            {
+                if (next == dropoffIndex) next = (next + 1) % availableLandmarks.Count;
+                pickupIndex = next;
+            }
+            else
+            {
+                if (next == pickupIndex) next = (next + 1) % availableLandmarks.Count;
+                dropoffIndex = next;
+            }
+            UpdateChoiceLabels();
+        }
+
+        private void UpdateChoiceLabels()
+        {
+            if (pickupChoice == null) return;
+            pickupChoice.text = "출발: " + SelectedLandmarkName(pickupIndex);
+            dropoffChoice.text = "목적지: " + SelectedLandmarkName(dropoffIndex);
+            stepFreeChoice.text = "계단 없는 승하차: " + (requiresStepFree ? "예" : "아니요");
+            createRequestButton.interactable = Host.Commands != null && availableLandmarks.Count > 1 &&
+                activeRequest == null && pendingMessageId == null &&
+                SelectedLandmarkId(pickupIndex) != SelectedLandmarkId(dropoffIndex);
+        }
+
+        private string SelectedLandmarkName(int index) =>
+            index >= 0 && index < availableLandmarks.Count ? availableLandmarks[index].Name : "거점 없음";
+
+        private string LandmarkName(string id)
+        {
+            foreach (var landmark in availableLandmarks)
+                if (landmark.Id == id) return landmark.Name;
+            return id;
+        }
+
+        private void ToggleStepFree()
+        {
+            requiresStepFree = !requiresStepFree;
+            UpdateChoiceLabels();
+        }
+
+        private void CreateRequest()
+        {
+            if (Host.Commands == null) return;
+            try
+            {
+                var command = new PassengerRequestCommandDto(SelectedLandmarkId(pickupIndex),
+                    SelectedLandmarkId(dropoffIndex), new ServiceNeedsDto(requiresStepFree, 0, false));
+                pendingMessageId = command.MessageId;
+                Host.Commands.SendPassengerRequest(command);
+                requestFeedback.text = "서버 응답을 기다리는 중…";
+                requestFeedback.color = FixtureUiPalette.Muted;
+                UpdateChoiceLabels();
+            }
+            catch (System.Exception error)
+            {
+                pendingMessageId = null;
+                requestFeedback.text = "요청 전송 실패: " + error.Message;
+                requestFeedback.color = FixtureUiPalette.Red;
+            }
+        }
+
+        private void CancelRequest()
+        {
+            if (Host.Commands == null || activeRequest == null || pendingMessageId != null) return;
+            try
+            {
+                var command = new CancelRequestCommandDto(activeRequest.Id);
+                pendingMessageId = command.MessageId;
+                Host.Commands.SendCancelRequest(command);
+                requestFeedback.text = "취소 응답을 기다리는 중…";
+                requestFeedback.color = FixtureUiPalette.Muted;
+                UpdateChoiceLabels();
+            }
+            catch (System.Exception error)
+            {
+                pendingMessageId = null;
+                requestFeedback.text = "취소 전송 실패: " + error.Message;
+                requestFeedback.color = FixtureUiPalette.Red;
+            }
+        }
+
+        private static Button BuildChoiceButton(Transform parent, string name, float bottom, out Text label)
+        {
+            var button = FixtureUiFactory.Button(parent, name, "거점 선택", FixtureUiPalette.Ink, out label);
+            SetFormButtonRect(button, bottom, bottom + 40);
+            return button;
+        }
+
+        private static void SetFormButtonRect(Button button, float bottom, float top)
+        {
+            var rect = (RectTransform)button.transform;
+            rect.anchorMin = new Vector2(0, 1);
+            rect.anchorMax = new Vector2(1, 1);
+            rect.offsetMin = new Vector2(18, bottom);
+            rect.offsetMax = new Vector2(-18, top);
         }
 
         public static string Describe(WorldSnapshotDto snapshot)
@@ -173,8 +356,6 @@ namespace InhaExpress.Client.Mobile
         }
 
         private static bool IsComplete(RequestStatus status) => status == RequestStatus.COMPLETED;
-        private static string DisplayLandmark(string id) => id == "landmark-0" ? "Fixture A" : id == "landmark-1" ? "Fixture B" : id;
-
         private static void SetRect(Text text, float left, float bottom, float right, float top)
         {
             var rect = (RectTransform)text.transform;

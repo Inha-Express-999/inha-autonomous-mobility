@@ -11,4 +11,11 @@ namespace InhaExpress.Client.Networking
         void Start(double monotonicNowS);
         void Pump(double monotonicNowS);
     }
+
+    public interface IClientCommandSource
+    {
+        event Action<ServiceCommandAckDto> CommandAcknowledged;
+        void SendPassengerRequest(PassengerRequestCommandDto command);
+        void SendCancelRequest(CancelRequestCommandDto command);
+    }
 }

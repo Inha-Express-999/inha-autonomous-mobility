@@ -46,4 +46,66 @@ namespace InhaExpress.Client.Domain
             RejectionCode = rejectionCode;
         }
     }
+
+    public sealed class PassengerRequestCommandDto
+    {
+        public string MessageId { get; }
+        public string PickupLandmarkId { get; }
+        public string DropoffLandmarkId { get; }
+        public ServiceNeedsDto ServiceNeeds { get; }
+        public int PartySize { get; }
+        public double? LatestArrivalS { get; }
+
+        public PassengerRequestCommandDto(string pickupLandmarkId, string dropoffLandmarkId,
+            ServiceNeedsDto serviceNeeds, int partySize = 1, double? latestArrivalS = null,
+            string messageId = null)
+        {
+            MessageId = DtoGuard.Text(messageId ?? Guid.NewGuid().ToString("N"), nameof(messageId));
+            PickupLandmarkId = DtoGuard.Text(pickupLandmarkId, nameof(pickupLandmarkId));
+            DropoffLandmarkId = DtoGuard.Text(dropoffLandmarkId, nameof(dropoffLandmarkId));
+            if (PickupLandmarkId == DropoffLandmarkId)
+                throw new ArgumentException("Pickup and dropoff landmarks must differ.");
+            ServiceNeeds = serviceNeeds ?? throw new ArgumentNullException(nameof(serviceNeeds));
+            if (partySize < 1 || ServiceNeeds.WheelchairSlots > partySize)
+                throw new ArgumentOutOfRangeException(nameof(partySize));
+            PartySize = partySize;
+            LatestArrivalS = DtoGuard.OptionalNumber(latestArrivalS, nameof(latestArrivalS));
+        }
+    }
+
+    public sealed class CancelRequestCommandDto
+    {
+        public string MessageId { get; }
+        public string RequestId { get; }
+
+        public CancelRequestCommandDto(string requestId, string messageId = null)
+        {
+            MessageId = DtoGuard.Text(messageId ?? Guid.NewGuid().ToString("N"), nameof(messageId));
+            RequestId = DtoGuard.Text(requestId, nameof(requestId));
+        }
+    }
+
+    public sealed class ServiceCommandAckDto
+    {
+        public string MessageId { get; }
+        public string CommandType { get; }
+        public bool Accepted { get; }
+        public RequestDto Request { get; }
+        public string ErrorCode { get; }
+        public string ErrorMessage { get; }
+
+        public ServiceCommandAckDto(string messageId, string commandType, bool accepted,
+            RequestDto request, string errorCode, string errorMessage)
+        {
+            MessageId = DtoGuard.Text(messageId, nameof(messageId));
+            CommandType = DtoGuard.Text(commandType, nameof(commandType));
+            if (accepted && (request == null || errorCode != null) ||
+                !accepted && (request != null || string.IsNullOrWhiteSpace(errorCode)))
+                throw new ArgumentException("Inconsistent service command acknowledgement.");
+            Accepted = accepted;
+            Request = request;
+            ErrorCode = errorCode;
+            ErrorMessage = errorMessage;
+        }
+    }
 }

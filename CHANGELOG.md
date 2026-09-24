@@ -1,4 +1,10 @@
 # 변경 이력
+## 0.2.2.0 — 2026-09-24 · 합성 서버-클라이언트 주행 프로토타입
+
+- Python 합성 6-stop graph, Dijkstra/A* 비교, 단일 차량 V01의 경로 이동·요청 상태 전이와 Unity schema-v3 WebSocket 요청 생성/취소를 연결했다. Unity 모바일에 네트워크 데이터 소스와 요청 UI를 추가했다.
+- 소유자/명령 멱등성, ACK 복사, 요청별 route projection, 차량 용량·활성 상태 검증, edge 속도 제한 등 안정성 처리를 추가했다. 재사용 가능한 노드·edge 및 캠퍼스 오브젝트는 Prefab으로 관리하는 협업 규칙을 유지한다.
+- 호환성/마이그레이션: 프로젝트 버전은 0.2.2.0으로 동기화했다. WebSocket schema_version=3은 유지했다. 실제 지도·Unity Physics 주행, 인증·자동 재접속은 미구현이다.
+- 검증: Python/ASGI 테스트 20개 통과, graph route-compare 30/30 경로 비용 일치, Python compileall 및 `git diff --check` 통과. Starlette/httpx deprecation warning 1건. Unity 재컴파일은 수행되지 않아 C# 변경 검증은 미완료다.
 
 ## 0.2.1.1 — 2026-09-24 · 지도·구현 현황 및 UI 디자인 기준 정리
 

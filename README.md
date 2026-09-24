@@ -1,7 +1,7 @@
 # inha-autonomous-mobility
 인하대학교 교내 자율주행 운송 서비스 / Inha University Autonomous Campus Mobility Service
 
-프로젝트 버전: **0.2.1.1**. [통합 개발 규칙](AGENTS.md), [구현 현황](Docs/implementation_status.md), [지도 출처·검증 현황](Docs/MapResearch/PLAN.md), [PC·모바일 UI 명세](Docs/ClientUI/REQUIREMENTS.md), [화면별 적용·검증 계획](Docs/ClientUI/IMPLEMENTATION.md)을 기준으로 개발합니다. 클라이언트 Bootstrap·빌드 프로필, 공통 DTO·상태 저장소·좌표 변환, 합성 재생 데이터와 역할별 uGUI 기본 화면이 구현되어 있습니다. Python 서버에는 합성 fixture 기반 요청 검증·취소·단순 배정 API가 있으나, 실제 지도/경로/운송 상태를 소유하거나 Unity WebSocket과 연결된 상태는 아닙니다. 차량 시각 모델·프리팹은 `Assets/CampusSim/Models/`와 `Assets/CampusSim/Prefabs/`에 있으며 주행 제어·동역학은 미구현입니다. [서버 실행 안내](Docs/server_m0.md), [합성 재생 실행 방법](Docs/ClientUI/FIXTURE_REPLAY.md), [클라이언트 데이터 계약](Docs/ClientUI/DATA_CONTRACT.md)을 참고하세요.
+프로젝트 버전: **0.2.2.0**. [통합 개발 규칙](AGENTS.md), [구현 현황](Docs/implementation_status.md), [지도 출처·검증 현황](Docs/MapResearch/PLAN.md), [PC·모바일 UI 명세](Docs/ClientUI/REQUIREMENTS.md), [화면별 적용·검증 계획](Docs/ClientUI/IMPLEMENTATION.md)을 기준으로 개발합니다. 클라이언트 Bootstrap·빌드 프로필, 공통 DTO·상태 저장소·좌표 변환, 합성 재생 데이터와 역할별 uGUI 기본 화면이 구현되어 있습니다. Python 서버는 합성 fixture 기반 요청 API, 6-stop graph용 Dijkstra/A* 비교 CLI, Mobile 요청 UI용 create/cancel command·ACK, V01 합성 graph 이동 및 요청 상태 전이와 Unity schema-v3 WebSocket snapshot을 제공합니다. 이는 실제 지도 경로나 Unity Physics 주행이 아니며 인증·자동 재접속은 미구현입니다. 차량 시각 모델·프리팹은 `Assets/CampusSim/Models/`와 `Assets/CampusSim/Prefabs/`에 있으며 주행 제어·동역학은 미구현입니다. [서버 및 planner 실행 안내](Docs/server_m0.md), [합성 재생 실행 방법](Docs/ClientUI/FIXTURE_REPLAY.md), [클라이언트 데이터 계약](Docs/ClientUI/DATA_CONTRACT.md)을 참고하세요.
 
 ## Unity 프로젝트 실행
 

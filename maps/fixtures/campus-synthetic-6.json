@@ -1,0 +1,34 @@
+{
+  "schema_version": 1,
+  "map_id": "campus-synthetic-6",
+  "map_version": "synthetic-campus-6stop-v1",
+  "data_status": "SYNTHETIC_FIXTURE",
+  "coordinate_frame": "SYNTHETIC_LOCAL_METERS",
+  "verification_status": "SYNTHETIC_FIXTURE",
+  "source_date": null,
+  "source_hash": null,
+  "origin_wgs84": null,
+  "source_description": "Hand-authored routing fixture for planner development only; no coordinates or connections represent approved campus routes.",
+  "nodes": [
+    {"id": "n1", "landmark_id": "fixture_landmark_1", "stop_id": "fixture_stop_1", "position_m": {"x": 0, "y": 0}},
+    {"id": "n2", "landmark_id": "fixture_landmark_2", "stop_id": "fixture_stop_2", "position_m": {"x": 100, "y": 0}},
+    {"id": "n3", "landmark_id": "fixture_landmark_3", "stop_id": "fixture_stop_3", "position_m": {"x": 200, "y": 0}},
+    {"id": "n4", "landmark_id": "fixture_landmark_4", "stop_id": "fixture_stop_4", "position_m": {"x": 300, "y": 0}},
+    {"id": "n5", "landmark_id": "fixture_landmark_5", "stop_id": "fixture_stop_5", "position_m": {"x": 100, "y": 120}},
+    {"id": "n6", "landmark_id": "fixture_landmark_6", "stop_id": "fixture_stop_6", "position_m": {"x": 240, "y": 120}}
+  ],
+  "edges": [
+    {"id": "e12", "from_node": "n1", "to_node": "n2", "key": "0", "geometry_m": [{"x": 0, "y": 0}, {"x": 100, "y": 0}], "length_m": 100, "width_m": 4, "allowed_speed_mps": 5, "allowed_service_types": ["PASSENGER", "CARGO"], "allowed_vehicle_classes": ["CAMPUS_SHUTTLE"], "zone_ids": [], "source": "synthetic-fixture", "verification_status": "SYNTHETIC", "step_free": true},
+    {"id": "e21", "from_node": "n2", "to_node": "n1", "key": "0", "geometry_m": [{"x": 100, "y": 0}, {"x": 0, "y": 0}], "length_m": 100, "width_m": 4, "allowed_speed_mps": 5, "allowed_service_types": ["PASSENGER", "CARGO"], "allowed_vehicle_classes": ["CAMPUS_SHUTTLE"], "zone_ids": [], "source": "synthetic-fixture", "verification_status": "SYNTHETIC", "step_free": true},
+    {"id": "e23", "from_node": "n2", "to_node": "n3", "key": "0", "geometry_m": [{"x": 100, "y": 0}, {"x": 200, "y": 0}], "length_m": 100, "width_m": 4, "allowed_speed_mps": 5, "crowd_penalty_s": 90, "allowed_service_types": ["PASSENGER", "CARGO"], "allowed_vehicle_classes": ["CAMPUS_SHUTTLE"], "zone_ids": [], "source": "synthetic-fixture", "verification_status": "SYNTHETIC", "step_free": true},
+    {"id": "e32", "from_node": "n3", "to_node": "n2", "key": "0", "geometry_m": [{"x": 200, "y": 0}, {"x": 100, "y": 0}], "length_m": 100, "width_m": 4, "allowed_speed_mps": 5, "crowd_penalty_s": 90, "allowed_service_types": ["PASSENGER", "CARGO"], "allowed_vehicle_classes": ["CAMPUS_SHUTTLE"], "zone_ids": [], "source": "synthetic-fixture", "verification_status": "SYNTHETIC", "step_free": true},
+    {"id": "e34", "from_node": "n3", "to_node": "n4", "key": "0", "geometry_m": [{"x": 200, "y": 0}, {"x": 300, "y": 0}], "length_m": 100, "width_m": 4, "allowed_speed_mps": 5, "allowed_service_types": ["PASSENGER", "CARGO"], "allowed_vehicle_classes": ["CAMPUS_SHUTTLE"], "zone_ids": [], "source": "synthetic-fixture", "verification_status": "SYNTHETIC", "step_free": true},
+    {"id": "e43", "from_node": "n4", "to_node": "n3", "key": "0", "geometry_m": [{"x": 300, "y": 0}, {"x": 200, "y": 0}], "length_m": 100, "width_m": 4, "allowed_speed_mps": 5, "allowed_service_types": ["PASSENGER", "CARGO"], "allowed_vehicle_classes": ["CAMPUS_SHUTTLE"], "zone_ids": [], "source": "synthetic-fixture", "verification_status": "SYNTHETIC", "step_free": true},
+    {"id": "e25", "from_node": "n2", "to_node": "n5", "key": "0", "geometry_m": [{"x": 100, "y": 0}, {"x": 100, "y": 120}], "length_m": 120, "width_m": 4, "allowed_speed_mps": 5, "allowed_service_types": ["PASSENGER", "CARGO"], "allowed_vehicle_classes": ["CAMPUS_SHUTTLE"], "zone_ids": [], "source": "synthetic-fixture", "verification_status": "SYNTHETIC", "step_free": false},
+    {"id": "e52", "from_node": "n5", "to_node": "n2", "key": "0", "geometry_m": [{"x": 100, "y": 120}, {"x": 100, "y": 0}], "length_m": 120, "width_m": 4, "allowed_speed_mps": 5, "allowed_service_types": ["PASSENGER", "CARGO"], "allowed_vehicle_classes": ["CAMPUS_SHUTTLE"], "zone_ids": [], "source": "synthetic-fixture", "verification_status": "SYNTHETIC", "step_free": false},
+    {"id": "e56", "from_node": "n5", "to_node": "n6", "key": "0", "geometry_m": [{"x": 100, "y": 120}, {"x": 170, "y": 140}, {"x": 240, "y": 120}], "length_m": 150, "width_m": 4, "allowed_speed_mps": 5, "allowed_service_types": ["PASSENGER", "CARGO"], "allowed_vehicle_classes": ["CAMPUS_SHUTTLE"], "zone_ids": [], "source": "synthetic-fixture", "verification_status": "SYNTHETIC", "step_free": true},
+    {"id": "e65", "from_node": "n6", "to_node": "n5", "key": "0", "geometry_m": [{"x": 240, "y": 120}, {"x": 170, "y": 140}, {"x": 100, "y": 120}], "length_m": 150, "width_m": 4, "allowed_speed_mps": 5, "allowed_service_types": ["PASSENGER", "CARGO"], "allowed_vehicle_classes": ["CAMPUS_SHUTTLE"], "zone_ids": [], "source": "synthetic-fixture", "verification_status": "SYNTHETIC", "step_free": true},
+    {"id": "e64", "from_node": "n6", "to_node": "n4", "key": "0", "geometry_m": [{"x": 240, "y": 120}, {"x": 300, "y": 0}], "length_m": 140, "width_m": 4, "allowed_speed_mps": 5, "allowed_service_types": ["PASSENGER", "CARGO"], "allowed_vehicle_classes": ["CAMPUS_SHUTTLE"], "zone_ids": [], "source": "synthetic-fixture", "verification_status": "SYNTHETIC", "step_free": true},
+    {"id": "e46", "from_node": "n4", "to_node": "n6", "key": "0", "geometry_m": [{"x": 300, "y": 0}, {"x": 240, "y": 120}], "length_m": 140, "width_m": 4, "allowed_speed_mps": 5, "allowed_service_types": ["PASSENGER", "CARGO"], "allowed_vehicle_classes": ["CAMPUS_SHUTTLE"], "zone_ids": [], "source": "synthetic-fixture", "verification_status": "SYNTHETIC", "step_free": true}
+  ]
+}

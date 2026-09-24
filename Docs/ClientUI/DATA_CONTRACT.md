@@ -1,12 +1,12 @@
 # 클라이언트 데이터 계약 결정
 
-프로젝트 0.1.5.0 · 2026-09-22 · M0 클라이언트 모델 초안
+프로젝트 0.2.2.0 · 2026-09-24 · 클라이언트 projection 및 WebSocket alpha 계약
 
 ## 범위와 권위
 
 AGENTS §4/§11/§13에 따른 클라이언트 표시용 최소 projection이다. 서버 도메인 전체 모델이나 최종 JSON Schema가 아니다. Python 서비스 상태와 Unity 표시 pose의 승인된 projection을 받아 표시한다. 이 DTO를 Python 주행 계획기에 Ground Truth 입력으로 보내지 않는다. 실제 Physics·SensorRig·배차·상태 전이는 구현하지 않는다.
 
-통신 schema_version은 기존 명세의 정수 3을 따른다. 프로젝트 버전은 네 자리 숫자이며 map_version은 별도 문자열이다. 기존 통신 버전을 새로 올리지 않았다. 서버 구현 시 snake_case JSON, enum 문자열, 필수 필드 누락 검사와 공통 Python/C# fixture를 경계 어댑터에서 확정한다. 현재 생성자 기반 불변 모델은 Unity JsonUtility용 직렬화 모델이 아니며, 누락을 0/false로 자동 치환해서는 안 된다.
+통신 schema_version은 기존 명세의 정수 3을 따른다. 프로젝트 버전은 네 자리 숫자이며 map_version은 별도 문자열이다. wire format은 camelCase JSON과 enum 문자열을 사용한다. Unity WebSocket adapter는 schema-v3 snapshot을 Newtonsoft.Json으로 읽고 누락·미지원 필드를 거부한다. 공통 JSON Schema 파일은 아직 없으며, Python `realtime.py`와 C# `IClientCommandSource`에 passenger 요청 command/ACK alpha 계약이 정의되어 있다. 생성자 기반 불변 모델은 Unity JsonUtility용 직렬화 모델이 아니다.
 
 ## 모델
 
@@ -38,17 +38,17 @@ IsStale은 마지막 적용 후 단조 증가 실시간 1초 이상이면 true�
 
 ## 모바일 구독
 
-WorldStateStore(ClientRole.Mobile_Passenger, authenticatedSubscriberId)를 생성한다. snapshot의 role/subscriber와 요청 OwnerId를 검사하며, 다른 소유자/화물/미배정 차량/무관한 경로·Stop/Zone telemetry를 거부한다. 검색용 Landmark 목록은 허용하되 StopIds는 해당 snapshot에 포함된 Stop으로 투영한다. 현재 공유 envelope의 Zones는 모바일에서 반드시 빈 배열이다. 추후 네트워크 서버는 애초에 허용 데이터만 직렬화해야 하며 이 클라이언트 검사가 서버 인증·권한 검사를 대체하지 않는다.
+WorldStateStore(ClientRole.Mobile_Passenger, subscriberId)를 생성한다. snapshot의 role/subscriber와 요청 OwnerId를 검사하며, 다른 소유자/화물/미배정 차량/무관한 경로·Stop/Zone telemetry를 거부한다. 검색용 Landmark 목록은 허용하되 StopIds는 해당 snapshot에 포함된 Stop으로 투영한다. 현재 공유 envelope의 Zones는 모바일에서 반드시 빈 배열이다. 현재 subscriberId는 클라이언트 입력 식별자이며 인증 정보가 아니다. 이 클라이언트 검사는 서버 인증·권한 검사를 대체하지 않는다.
 
 ServerEventDto는 이벤트 메타데이터만 제공하며 delta 적용은 아직 없다. reconnect snapshot 복구와 이벤트 중복 처리도 transport 단계에서 연결한다.
 
 ## 검증과 다음 단계
 
-Unity EditMode의 InhaExpress.Client.Tests.EditMode 어셈블리로 검증한다. 실제 지도 정확도·Player 빌드·실서버 호환성은 이 테스트 범위가 아니다. FixtureClientDataSource와 역할별 snapshot 생성·재생을 추가했다. 다음 작업은 UI 구성과 별도로 실제 서버의 JSON/소유권/요청 command·ack 계약을 확정하는 것이다.
+Unity EditMode의 InhaExpress.Client.Tests.EditMode 어셈블리 과거 기록은 이 DTO/상태 저장소 범위의 검증이다. 실제 지도 정확도·Player 빌드·실서버 호환성을 증명하지 않는다. FixtureClientDataSource와 역할별 snapshot 재생, Python WebSocket snapshot, Mobile passenger 요청 create/cancel command·ACK adapter 및 요청 UI 연결이 있다. Python fake-socket 및 FastAPI ASGI 테스트 20개는 별도 [서버 안정성 메모](../server_stability.md)에 기록했다. Unity compile/Player 통합, 인증된 소유권, reconnect/run 전환과 공통 JSON Schema/fixture는 남아 있다.
 
 ## 데이터 공급자 경계
 
-Networking의 IClientDataSource는 Start/Pump/Dispose와 ConnectionState, SnapshotReceived(snapshot, monotonicReceivedAt)를 제공한다. 콜백은 Unity 메인 스레드에서만 발행한다. ClientRuntimeHost가 WorldStateStore에 적용하고 Presenter는 SnapshotChanged를 구독/해제한다. 향후 WebSocket 구현이 worker에서 받은 메시지는 Pump에서 검증 후 전달해야 한다. fixture는 실서버 실패 시 자동 대체 경로로 사용하지 않는다.
+Networking의 IClientDataSource는 Start/Pump/Dispose와 ConnectionState, SnapshotReceived(snapshot, monotonicReceivedAt)를 제공한다. 콜백은 Unity 메인 스레드에서만 발행한다. ClientRuntimeHost가 WorldStateStore에 적용하고 Presenter는 SnapshotChanged를 구독/해제한다. WebSocketClientDataSource는 백그라운드 수신 텍스트를 Pump에서 schema·role 검사 후 전달하고, `IClientCommandSource`로 passenger 생성/취소 command와 ACK를 제공한다. Mobile Presenter가 ACK 및 요청 snapshot 상태를 표시한다. 실패 시 fixture로 자동 대체하지 않으며 자동 reconnect는 없다. 해당 Unity 코드의 이번 변경 compile/실기기 실행은 아직 검증되지 않았다.
 
 FixtureScenario는 synthetic-ui-v1 지도와 6개의 합성 Landmark, 3대 차량, 2개 요청으로 만든 고정 예시다. PC projection을 모바일에서 숨기는 방식이 아니라, 생성 단계부터 요청 owner 기준으로 projection한다. 다른 구독자는 검색용 Landmark만 받는다. 모바일 Landmark.StopIds도 전달된 Stop에 맞게 축소한다. 이는 서버 인증 구현이나 실제 권한 검증 증빙은 아니다.
 

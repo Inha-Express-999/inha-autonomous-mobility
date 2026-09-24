@@ -1,4 +1,5 @@
 using InhaExpress.Client.Domain;
+using InhaExpress.Client.Networking;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -10,8 +11,9 @@ namespace InhaExpress.Client.Presentation
         protected RectTransform ContentRoot { get; private set; }
         protected Text SimulationText { get; private set; }
         private WorldStateStore subscribedStore;
+        private IClientCommandSource subscribedCommands;
         private GameObject viewRoot;
-        private Text connectionText, pauseButtonText, deliveryButtonText;
+        private Text connectionText, sourceBadge, pauseButtonText, deliveryButtonText;
         private Image connectionPill;
         private Canvas canvas;
         private string body = "Waiting for Bootstrap...";
@@ -47,6 +49,8 @@ namespace InhaExpress.Client.Presentation
             if (subscribedStore != null) return;
             subscribedStore = Host.Store;
             subscribedStore.SnapshotChanged += OnSnapshot;
+            subscribedCommands = Host.Commands;
+            if (subscribedCommands != null) subscribedCommands.CommandAcknowledged += OnCommandAck;
             if (subscribedStore.Current != null) OnSnapshot(subscribedStore.Current);
         }
 
@@ -55,7 +59,14 @@ namespace InhaExpress.Client.Presentation
             if (subscribedStore == null) return;
             subscribedStore.SnapshotChanged -= OnSnapshot;
             subscribedStore = null;
+            if (subscribedCommands != null)
+            {
+                subscribedCommands.CommandAcknowledged -= OnCommandAck;
+                subscribedCommands = null;
+            }
         }
+
+        private void OnCommandAck(ServiceCommandAckDto acknowledgement) => OnCommandAcknowledged(acknowledgement);
 
         private void OnSnapshot(WorldSnapshotDto snapshot)
         {
@@ -67,6 +78,7 @@ namespace InhaExpress.Client.Presentation
         protected abstract string Format(WorldSnapshotDto snapshot);
         protected abstract void BuildRoleView(RectTransform root);
         protected abstract void RenderSnapshot(WorldSnapshotDto snapshot);
+        protected virtual void OnCommandAcknowledged(ServiceCommandAckDto acknowledgement) { }
 
         private void EnsureView()
         {
@@ -110,10 +122,11 @@ namespace InhaExpress.Client.Presentation
                 ((RectTransform)brand.transform).offsetMin = new Vector2(12, 0);
                 ((RectTransform)brand.transform).offsetMax = new Vector2(-242, 0);
             }
-            var badge = FixtureUiFactory.Panel(bar, "Fixture Badge", new Vector2(mobile ? 0.52f : 0.5f, 0.18f),
+            var badge = FixtureUiFactory.Panel(bar, "Data Source Badge", new Vector2(mobile ? 0.52f : 0.5f, 0.18f),
                 new Vector2(mobile ? 0.52f : 0.5f, 0.82f), new Vector2(mobile ? -56 : -74, 0),
                 new Vector2(mobile ? 56 : 74, 0), new Color(0.94f, 0.62f, 0.12f, 0.16f));
-            FixtureUiFactory.Text(badge, "Text", mobile ? "FIXTURE" : "FIXTURE · 서버 미연결", mobile ? 10 : 12,
+            sourceBadge = FixtureUiFactory.Text(badge, "Text", Host.Fixture != null ? "FIXTURE" : "PYTHON SERVER",
+                mobile ? 10 : 12,
                 FixtureUiPalette.Amber,
                 TextAnchor.MiddleCenter, FontStyle.Bold);
             SimulationText = FixtureUiFactory.Text(bar, "Simulation Clock", "0.0s", 13,
@@ -144,7 +157,7 @@ namespace InhaExpress.Client.Presentation
             var delivery = FixtureUiFactory.Button(tray, "Delivery", "연결 끊기", FixtureUiPalette.Red, out deliveryButtonText);
             SetButtonRect(delivery, -102, -12);
             delivery.onClick.AddListener(ToggleDelivery);
-            tray.gameObject.SetActive(Application.isEditor || Debug.isDebugBuild);
+            tray.gameObject.SetActive(Host.Fixture != null && (Application.isEditor || Debug.isDebugBuild));
         }
 
         private static void SetButtonRect(Button button, float left, float right)
@@ -179,12 +192,15 @@ namespace InhaExpress.Client.Presentation
             nextStatusRefresh = now + 0.1;
             bool stale = Host.Store.IsStale(now);
             bool paused = Host.Fixture != null && Host.Fixture.IsPaused;
+            bool fixture = Host.Fixture != null;
+            sourceBadge.text = fixture ? "FIXTURE" : "PYTHON SERVER";
+            sourceBadge.color = fixture ? FixtureUiPalette.Amber : FixtureUiPalette.Blue;
             connectionText.text = stale ? "● 상태 지연" : "● " + ConnectionLabel(Host.ConnectionState);
             connectionText.color = stale ? FixtureUiPalette.Red : FixtureUiPalette.Green;
             connectionPill.color = stale ? new Color(0.85f, 0.34f, 0.34f, 0.12f) :
                 new Color(0.11f, 0.61f, 0.41f, 0.12f);
             pauseButtonText.text = paused ? "계속" : "일시정지";
-            deliveryButtonText.text = Host.Fixture != null && Host.Fixture.DeliveryEnabled ? "연결 끊기" : "다시 연결";
+            if (fixture) deliveryButtonText.text = Host.Fixture.DeliveryEnabled ? "연결 끊기" : "다시 연결";
         }
 
         private static string ConnectionLabel(ConnectionState state)
