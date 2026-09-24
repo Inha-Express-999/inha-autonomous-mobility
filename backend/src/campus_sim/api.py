@@ -5,7 +5,7 @@ from campus_sim.service import MobilityService
 
 
 def create_app(service: MobilityService | None = None) -> FastAPI:
-    app = FastAPI(title="Inha Autonomous Mobility API", version="0.1.6.0")
+    app = FastAPI(title="Inha Autonomous Mobility API", version="0.2.1.1")
     app.state.service = service or MobilityService.synthetic_fixture()
 
     @app.get("/health")

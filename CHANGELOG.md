@@ -1,5 +1,17 @@
 # 변경 이력
 
+## 0.2.1.1 — 2026-09-24 · 지도·구현 현황 및 UI 디자인 기준 정리
+
+- 지도 데이터 출처, 재현 정보, 검사 범위, 한계와 운송 서비스 사용 가능 여부를 `Docs/MapResearch/PLAN.md` 및 `Docs/implementation_status.md`에 구분해 기록했다. OSM/DSM 후보·시각 Terrain을 검증된 차량/보행 그래프나 접근 가능한 Stop으로 간주하지 않는다.
+- 현재 M0 클라이언트와 Python 합성 fixture 서비스, M1~M6 미완료 단계를 구분하고 과거 검증 결과가 재실행된 것으로 오해되지 않게 현황을 갱신했다.
+- `f97fa11`에서 추가된 세 차량 프리팹을 M1 주행 구현의 시각 에셋 준비물로 기록했다. 프리팹과 차량 동역학·제원·Collider 검증을 구분했다.
+- 공통/PC/모바일 UI 디자인 문서를 구현 명세와 연결하고, 서버 명령이 필요한 population 조절 및 현재 요청 상태 계약에 없는 모바일 하차 요청은 확정 기능으로 간주하지 않도록 검토 결과를 기록했다.
+- `UI_DESIGN_SYSTEM.md`, `PC_CLIENT_DESIGN.md`, `MOBILE_CLIENT_DESIGN.md`를 확인하고 구현 명세에서 시각 설계 참조로 연결했다. 서버 명령이 필요한 population 조절과 현재 계약에 없는 모바일 하차 요청은 확정 기능으로 간주하지 않는다.
+- `AGENTS.md`에 모든 커밋의 버전 증가, 커밋 본문(description) 요건 및 주석 태그 규칙을 명시했다.
+- 버전 정합성: VERSION, Unity bundleVersion, Python package/API, README 및 현황 문서를 0.2.1.1로 맞췄다. schema_version, map_version, 과거 문서/fixture 이력은 별도 버전으로 유지했다.
+- 호환성/마이그레이션: 통신 schema_version과 DTO 계약 변경 없음. 런타임 동작 변경 없음.
+- 검증: 문서 링크·버전 문자열 및 `git diff --check`를 확인했다. Python/Unity 테스트는 실행하지 않았다.
+
 ## 0.1.6.0 — 2026-09-23 · Python 서버 M0 기반
 
 - FastAPI/Pydantic 기반 `backend/`를 추가했다. 합성 Landmark·Stop·차량 fixture를 바탕으로 요청 검증, 이동지원 Stop 선택, 차량 능력 조건의 단순 배차, 요청 취소와 command_id 멱등 처리를 제공한다.

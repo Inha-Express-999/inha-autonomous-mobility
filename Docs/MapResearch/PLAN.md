@@ -1,8 +1,35 @@
 # 인하 캠퍼스 지도 개선 계획 및 확보 자료
 
-프로젝트 기준: 0.1.1.1 · 조사일: 2026-09-18 · 상태: 별도 Terrain 작업 씬 구현·검증 진행 중, 전체 완료 아님
+프로젝트 기준: 0.2.1.1 · 현황 갱신: 2026-09-24 · 조사 원본 취득: 2026-09-17 · 상태: 지도 시각화/조사는 진행됐으나 운송용 지도 검증은 미완료
 
-후속 클라이언트 작업은 [사용자 UI 명세 전체](../ClientUI/REQUIREMENTS.md)와 [적용·검증 계획](../ClientUI/IMPLEMENTATION.md)을 따른다. 씬 수정·검증 후 PC 가로/모바일 세로 UI 목업·일부 기능을 구현하고, 이후 Python 서버를 제작·연결한다.
+## 데이터 검증 등급과 사용 경계 (2026-09-24)
+
+이 문서의 “검증”은 대상 파일·구역·검사 기준이 적힌 개별 결과에만 적용한다. Terrain 렌더 확인, 출입구 후보 조사, OSM 원본 보존은 차량 통행이나 접근 가능한 Stop의 승인으로 간주하지 않는다. 프로젝트 구현 판정은 [구현 현황](../implementation_status.md)의 표를 단일 요약으로 사용한다.
+
+| 자료/에셋 | 출처와 추적 정보 | 확인된 범위 | 미확인/사용 제한 |
+|---|---|---|---|
+| `Assets/InhaCampus/Source/campus.osm` | OSM API bbox 126.648,37.445–126.659,37.454. 라이선스/출처는 `Assets/InhaCampus/Source/ATTRIBUTION.txt` | 원본 보존, Unity 시각 맵의 건물/도로 배치 입력 | `ele` 태그가 없고 기존 도로 폭·건물 높이 일부는 가정값. 실제 차로/보도 분리, 통행 방향, 경사·폭, 차량 통행, 교차로 연결과 Stop 미검증 |
+| `expanded_campus.osm` | `2026-09-17/downloads.json`에 다운로드 시각·URL·SHA-256·크기 기록 | 인하대 주변 및 인하공전 포함 확장 조사 영역 | bbox는 서비스 polygon이 아님. relation 구성, topology, 합법/안전한 연결 및 접근성 검증 필요 |
+| Copernicus GLO-30 DSM 원본/metadata/EULA | `2026-09-17/downloads.json`, `copernicus_metadata.xml`, `copernicus_eula.pdf`; 원본 타일 SHA-256은 `maps/inha_relief_research/manifest.json`과 대조 | 재투영·근사 지형 생성 재현에 필요한 원본 이력/약관 확보 | 30m급 DSM은 bare-earth 지형 측량이 아님. 건물·수목이 섞일 수 있고 실제 지형이 억제될 수 있음. 경사/단차/접근성 인증 자료가 아님 |
+| `maps/inha_relief_research/` 산출물 | `manifest.json`의 map_version, 원점, CRS, vertical datum, 처리방법, 범위, hash와 limitations | AEQD 원점 126.6535E, 37.4506N, 257² 격자, 8m 보간 간격, RAW 축/바이트 순서 기록. quantization round-trip 약 0.00077m | 양자화 오차는 원자료 정확도가 아니다. manifest가 기존 로컬 투영과의 정렬 이관 필요성을 명시. 최종 Terrain/서비스 좌표 정확도 검증 완료 아님 |
+| `osm_features.geojson`, `landmark_candidates.json` | 같은 조사 산출물. 원 OSM ID/태그/geometry 후보 보존 | 983 node/way feature, 19 관련 후보라는 과거 처리 결과 | 후보 수는 시설/필수 landmark 완료 건수가 아니다. OSM relation·출입구·Stop 및 차량/보행 graph로 직접 사용 불가 |
+| 공식 시설 참고 자료 | `2026-09-17/inhatc_campus.html`, `inha_campus_reference.html`, `inha_2026_admissions.pdf`, `BUILDING_REFERENCES.md` | 명칭/대략 위치를 교차 조사하는 참고 | 서비스 출입구/도로·보도 동선의 현장 검증을 대신하지 않음 |
+| Iterations 검사 자료 | `Iterations/` 하위 보고서·CSV·JSON·이미지별 범위 | 각 파일에 적힌 메시 접합, 높이, 렌더 등의 특정 검사 | 보고서마다 검사 대상이 다르므로 전체 캠퍼스 통행/접근성/좌표 검증으로 일반화 금지 |
+
+### 운송 지도 승인 전 남은 검증
+
+- 필수 11개 랜드마크와 대표 시설 전체 목록을 대조하고, 각 시설의 landmark/인근 연결·누락 사유를 기록한다.
+- 각 Stop의 실제 안전 정차 위치, 차량 접근 edge, 승하차 슬롯과 연결 보행경로를 검증한다. 일반/접근 가능 출입구와 이동지원 요구를 구별해 기록한다.
+- 차량 graph와 pedestrian graph를 분리하고 edge geometry/길이/폭/제한/경사/출처/검증 상태를 저장한다. `unknown`을 실지도 경로에서 통행 가능으로 취급하지 않는다.
+- 원점·CRS 이동 적용 후 기준점 3개의 축·축척 및 왕복 오차를 재확인하고 Unity 씬/Stop과 맞춘다. 시각 Terrain 편집값을 안전 경사 측정값으로 쓰지 않는다.
+- 비룡플라자 앞 zone polygon, 진입 edge, 경계 밖 대기/대체 지점을 검증한다. 이름으로 좌표를 추정하지 않는다.
+- 현재 계획 기록상 필수/추가 14개 Landmark 후보·27개 출입구·27개 접근 메시 중 미해결 역할 1개가 있고, 인하대역의 이동지원 출입구가 확정되지 않았다. 인벤토리 수량을 승인된 서비스 거점 수로 보고하지 않는다.
+
+### 차량 에셋과 주행 연결
+
+`Assets/CampusSim/Prefabs/Annyoung Car.prefab`, `DefaultCar.prefab`, `InduckCar.prefab`는 `f97fa11`에서 추가된 시각 프리팹이다. M1 차량 이동 구현 때 프리팹을 주행 객체의 시각 루트에 연결하고, 메시 축/전방, 피벗, 실측 또는 확인된 크기, Collider/바닥 접촉을 검토한다. 프리팹 자체는 차량 제원·동역학·충돌 안전 검증 결과가 아니며 추측한 크기/능력치를 서비스 설정에 넣지 않는다.
+
+후속 클라이언트 작업은 [사용자 UI 명세 전체](../ClientUI/REQUIREMENTS.md)와 [적용·검증 계획](../ClientUI/IMPLEMENTATION.md)을 따른다. PC 가로/모바일 세로 UI 기본 골격과 Python 서비스 기반은 존재한다. 실제 호출 입력·전체 화면 기능·권위 상태 연결은 계속 미완료다.
 
 ## 현재 구현과 남은 검증
 
