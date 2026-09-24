@@ -3,17 +3,26 @@
 ## 0. 프로젝트와 작업 규칙
 
 **제목:** 실제 캠퍼스 지도 기반 승객·물류 통합 자율주행 운송 서비스 시뮬레이션  
-**문서:** v0.2.0.0 · 2026-09-21 · 요구사항/설계/구현/검증 통합본
+**문서:** v0.2.1.0 · 2026-09-24 · 요구사항/설계/구현/검증 통합본
 **대상:** 개발자와 AI 코딩 에이전트. 구현 완료 보고서가 아니다.
 
-Unity가 캠퍼스의 동적 Ground Truth·Physics·차량/보행자/장애물 실제 상태와 Raycast 기반 센서 관측을 생성하고, Python이 정밀지도·요청·배차·전역 경로·센서 관측 기반 지역 계획/안전 판단/제어를 수행한다. Unity PC 관제와 모바일 승객 클라이언트는 같은 서비스를 역할에 맞게 표시·입력한다. 핵심은 **혼잡·접근성·안전과 센서 기반 인지를 고려한 승객 이동과 배송**이다.
+Unity가 캠퍼스의 동적 Ground Truth·Physics·차량/보행자/장애물 실제 상태와 Raycast 기반 센서 관측을 생성하고, Python이 정밀지도·요청·배차·전역 경로·센서 관측 기반 지역 계획/안전 판단/제어를 수행한다. Unity PC 관제와 모바일 승객 클라이언트는 같은 서비스를 역할에 맞게 표시·입력한다. 핵심은 **혼잡·접근성·안전과 센서 기반 인지를 고려한 승객 이동과 배송**, 그리고 **Baseline 알고리즘과 개선 알고리즘의 정량 비교**다.
 
-1. 작업 전 기존 코드·Git 변경·버전·테스트를 조사한다. 사용자 코드를 무단 교체하지 않는다. 신규 작업은 §16의 M0→M1부터 시작한다.
-2. 신규 저장소는 **Unity 동적 시뮬레이션 Ground Truth/Physics + Python 서비스·계획·제어 + WebSocket**을 기본으로 한다. Python은 보행자·타 차량·동적 장애물의 실제 Transform을 직접 받지 않고 ego localization과 센서 관측으로만 동적 환경을 인지한다. 기존 ROS2 구현은 유지하고 어댑터로 연결한다.
+### 현재 구현 기준선(2026-09-24)
+
+현재 저장소는 완성 상태가 아니라 **클라이언트/씬 기반 구조와 합성 데이터 검증 환경까지 구현된 단계**다. 작업 전에는 반드시 실제 코드와 Git 상태를 다시 확인하고 아래 기준과 차이가 있으면 실제 저장소를 우선한다.
+
+- 구현됨: 인하대학교 3D 캠퍼스 맵, 공통 `CampusWorld`, PC/Mobile Bootstrap 및 Additive 역할 씬, PC/Mobile 빌드 분리, 공통 DTO, `WorldStateStore`, 좌표 변환, fixture 기반 `IClientDataSource`, 합성 snapshot 재생, PC/Mobile uGUI 기본 화면.
+- 부분 구현/검증 중: 역할별 데이터 projection, fixture 기반 연결/중단/재생 UI, PC/Mobile 화면별 표시 로직.
+- 아직 실제 서비스로 미구현: Python 권위 서버, 실제 WebSocket 연동, 실제 요청 생성/ACK, Dijkstra/A*/D* Lite, Greedy/Hungarian 배차, Reservation/CBS, Raycast LiDAR/Radar SensorRig, RRT/TTC/Safety, 실제 차량 제어, 보행자 300명/혼잡 추정, 실제 ETA 및 전체 통합 시나리오.
+- fixture와 UI 목업은 실제 서버/알고리즘 완료를 의미하지 않는다. 실제 알고리즘 결과와 서버 상태를 연결하기 전에는 합성값을 실측 결과로 보고하지 않는다.
+
+1. 작업 전 기존 코드·Git 변경·버전·테스트를 조사한다. 사용자 코드를 무단 교체하지 않는다. **신규 알고리즘 작업은 현재 구현 기준선을 보존한 채 §16의 M1 이후 미완료 항목을 우선한다.**
+2. 기본 아키텍처는 **Unity 동적 시뮬레이션 Ground Truth/Physics + Python 서비스·계획·제어 + WebSocket**이다. Python은 보행자·타 차량·동적 장애물의 실제 Transform을 직접 받지 않고 ego localization과 센서 관측으로만 동적 환경을 인지한다. 기존 ROS2 구현이 존재하면 유지하고 어댑터로 연결한다.
 3. **09:00/10:30/12:00/13:30/15:00 전후 혼잡과 비룡플라자 앞 우회**는 필수다. 사용자 관찰이지 공식 시간표/실측 통계가 아니다.
 4. 안전·통행·접근성·차량 능력은 강제 제약이다. 급한 요청도 위반할 수 없다. RRT보다 감속·정지를 먼저 처리한다.
 5. 좌표·도로 폭·경사·차량 제원·성능·IOSS 인정 여부를 추측해 확정하지 않는다. 합성 가정과 측정값을 구분한다.
-6. A*/RRT는 자체 구현한다. MCP는 선택적 Editor 자동화에만 사용하며 런타임 판단에는 LLM을 넣지 않는다.
+6. Dijkstra/A*/D* Lite, Greedy/Hungarian, Reservation/CBS, RRT/TTC의 구현·비교 범위를 이 문서에 따른다. 핵심 알고리즘은 자체 구현을 우선하고 외부 라이브러리는 검증/참고용으로 분리한다. MCP는 선택적 Editor 자동화에만 사용하며 런타임 자율주행 판단에는 LLM을 넣지 않는다.
 7. 이 프로젝트는 시뮬레이션이다. 실제 차량 제어·승객 운송·안전 인증·공공도로 운행 허가는 범위 밖이다.
 
 ### 프로젝트·문서·Unity 버전 규칙
@@ -31,7 +40,7 @@ Unity가 캠퍼스의 동적 Ground Truth·Physics·차량/보행자/장애물 �
 
 프로젝트 변경을 커밋할 때 제목에 `[vA.B.C.D]`를 명시하고 같은 커밋에 주석 있는 Git 태그 `vA.B.C.D`를 반드시 생성한다. VERSION·Unity bundleVersion·문서·CHANGELOG를 함께 대조한다. 기존 태그는 이동·덮어쓰기하지 않고 다음 미사용 버전을 사용한다. 과거 커밋을 소급 수정하지 않으며, 커밋에 포함되지 않은 작업을 릴리스 완료로 보고하지 않는다.
 
-기존 문서 v1.0~v1.2는 네 자리 규칙 도입 전 문서 개정 번호이며 완성/공개 버전이 아니다. 초기 통합 설계 기준선은 `0.2.0.0`이었으며, 2026-09-17 사용자의 명시적 요청으로 맵 수정 전 체크포인트를 **`0.1.0.0`**으로 재설정한다. 이번 재설정은 일회성 예외이며 후속 변경에는 위 증가 규칙을 적용한다. 이는 구현 완료를 뜻하지 않으며 후속 변경부터 위 규칙으로 증가시킨다.
+기존 문서 v1.0~v1.2는 네 자리 규칙 도입 전 문서 개정 번호이며 완성/공개 버전이 아니다. 2026-09-17 맵 수정 전 체크포인트를 `0.1.0.0`으로 재설정한 이력은 유지하되, 이후 클라이언트 구조·DTO·fixture·uGUI 구현 및 본 알고리즘 비교 설계 보완을 반영해 현재 문서 기준은 **`0.2.1.0`**이다. 과거 버전은 소급 변경하지 않는다.
 
 저장소 루트 `VERSION`을 단일 원본으로 두고 문서 머리말·Python 서버의 프로젝트 버전·Unity PC/모바일 앱의 프로젝트 표시 버전·릴리스 태그를 같은 릴리스에서 일치시킨다. Unity PC와 모바일은 동일 프로젝트 버전을 사용하고 플랫폼·빌드 식별자는 별도 기록한다. `CHANGELOG.md`에 버전·날짜·변경 이유·호환성/마이그레이션·검증 결과를 기록한다. 문서만 바꾸는 경우에도 해당 변경 수준에 맞게 증가시키되 과거 빌드의 버전은 소급 변경하지 않는다. 현재 문서는 이 관리 체계의 구현 요구사항이며 VERSION/앱이 이미 갱신되었다고 가정하지 않는다.
 
@@ -83,7 +92,7 @@ Global A*는 정밀지도와 검증된 정적 제약·시간대 prior·서버 �
 
 하나의 Unity 프로젝트에서 공통 3D `CampusWorld`와 코드·DTO·네트워크·프리팹을 공유한다. 역할별 씬/UI는 `PC_Operator`, `Mobile_Passenger`로 분리하고 `CampusWorld + 역할 씬`의 Additive 로딩을 권장한다. 지도 수정은 공통 자산에 반영하고 역할별 표현·품질만 분리한다. PC는 디버그 목적으로 Unity Ground Truth와 센서 인식을 함께 시각화할 수 있지만, Python 자율주행 로직에는 Ground Truth 동적 Transform을 전달하지 않는다.
 
-기본 스택은 Python 3.11 이상 호환 버전, FastAPI/Pydantic, NumPy, OSMnx/NetworkX, pyproj/Shapely, Unity LTS와 NativeWebSocket이다. 기존 Unity 버전을 우선 유지하고 신규 환경은 M0에서 호환성을 검증한다. 의존성은 smoke test 후 lockfile에 고정한다.
+목표 서버 스택은 Python 3.11 이상 호환 버전, FastAPI/Pydantic, NumPy, OSMnx/NetworkX, pyproj/Shapely와 NativeWebSocket이며, 현재 실제 Python/WebSocket 서비스 통합은 미완료 상태다. 기존 Unity 버전을 우선 유지하고 신규 환경은 M0에서 호환성을 검증한다. 의존성은 smoke test 후 lockfile에 고정한다.
 
 OSMnx·pyproj[S1] [S2], FastAPI·NativeWebSocket[S3] [S4]을 활용한다. 선택 ROS2는 Connector/Endpoint를 함께 검증하며[S5] OMPL은 비교용이다.
 
@@ -178,11 +187,11 @@ CREATED → VALIDATED → QUEUED → ASSIGNED → PICKUP_SERVICE
 
 ## 5. 배차·배송 알고리즘
 
-초기는 접근성 승객/승객·화물 전환/화물 차량 각 1대다. 전환은 빈 차량만 허용한다. 제원은 합성 설정이다.
+초기는 차량 3대를 기준으로 하며 차량별 지원 서비스·정원·휠체어/화물 용량과 배터리 제원은 합성 설정으로 시작한다. 실제 배차는 아직 미구현이며, **Greedy Dispatch를 Baseline으로 먼저 구현한 뒤 Hungarian Algorithm 기반 batch matching과 동일 시나리오에서 비교**한다.
 
-### 가능성 → 요청 순서 → 차량 선택
+### 공통 단계: 가능성 필터 → 요청 우선순위 → 매칭
 
-랜드마크별 후보 Stop을 service_needs로 필터링하고 거점/서비스 영역, 차량 능력·정원/적재, 접근성, 픽업/운송 경로, 완료 후 충전 거점까지 에너지를 먼저 검사한다. 요청 검증에서 확정한 Stop을 배차 시 재검증하며 대체 시 변경 이유를 기록·통지한다. 차량이 바쁘면 대기, 구조적으로 수행 불가면 이유와 함께 거부한다. 요청은 새 입력/차량 해제/고장/중요 경로 변경과 매 1초마다 재평가한다.
+랜드마크별 후보 Stop을 `service_needs`로 필터링하고 거점/서비스 영역, 차량 능력·정원/적재, 접근성, 픽업/운송 경로, 완료 후 충전 거점까지 에너지를 먼저 검사한다. 요청 검증에서 확정한 Stop을 배차 시 재검증하며 대체 시 변경 이유를 기록·통지한다. 차량이 바쁘면 대기, 구조적으로 수행 불가면 이유와 함께 거부한다. 요청은 새 입력/차량 해제/고장/중요 경로 변경과 매 1초마다 재평가한다.
 
 ```text
 wait_s = now_s-created_s
@@ -193,11 +202,53 @@ priority = base + wait_s/aging_interval_s
            + deadline_weight*clamp(1-slack_s/deadline_window_s, 0, 2)
 ```
 
-초기는 base=일반 승객 2/화물 1/이동지원 3, deadline_weight=2, deadline_window_s=600인 정책 가정이다. 동률은 생성 시각→ID로 결정한다. 순서대로 적합 유휴 차량 중 아래 비용이 최소인 차량을 할당한다.
+초기 정책 가정은 base=일반 승객 2/화물 1/이동지원 3, `deadline_weight=2`, `deadline_window_s=600`이다. 이는 실험 전 가정이며 결과에 따라 조정한다. 동률은 생성 시각→ID로 결정한다.
+
+차량-요청 비용은 다음 공통 식을 사용한다.
 
 `J(v,r)=픽업 소요시간 + 0.5×운송 소요시간 + 2×예상 지각시간 + 에너지 환산시간 + 희소 차량 사용 패널티`
 
-비용은 초 단위이며 경로·승하차 ETA와 선택 내역을 기록한다. 동일 요청의 priority를 모든 차량 점수에서 빼도 차량 선택은 같으므로 요청 순서에 적용한다. 예약·배정은 원자적으로 처리한다.
+비용은 초 단위이며 경로·승하차 ETA와 선택 내역을 기록한다. 접근성 불충족, 정원/적재량 부족, 배터리 부족, 경로 없음, 통행 제한, 고장 등은 큰 비용으로 우회시키지 않고 **Hard Constraint로 후보에서 제외**한다.
+
+### Baseline: Greedy Dispatch
+
+요청을 priority 순으로 정렬하고, 각 요청마다 현재 적합한 유휴 차량 중 `J(v,r)`가 가장 작은 차량을 즉시 할당한다.
+
+```text
+요청 우선순위 정렬
+→ feasible vehicle filtering
+→ 요청 하나 선택
+→ min J(v,r) 차량 할당
+→ 다음 요청
+```
+
+구현이 단순하고 온라인 요청 처리에 적합하지만, 여러 요청을 순차 처리하므로 전체 차량-요청 조합의 총 비용이 최소라는 보장은 없다.
+
+### 개선 비교: Hungarian Algorithm
+
+동일 배차 tick에 둘 이상의 미할당 요청과 둘 이상의 적합 차량이 존재하면 `J(v,r)`를 비용 행렬로 구성하고 Hungarian Algorithm으로 batch matching을 계산한다.
+
+```text
+          R1    R2    R3
+V1       J11   J12   J13
+V2       J21   J22   J23
+V3       J31   J32   J33
+```
+
+미할당/불가능 조합은 명시적으로 처리하고, 차량 수와 요청 수가 다르면 dummy row/column 또는 부분 매칭 정책을 명시한다. Hungarian 결과도 안전·접근성·배터리 Hard Constraint를 완화할 수 없다. 요청이 한 건뿐이거나 batch 조건이 성립하지 않으면 Greedy와 동일하게 단일 요청을 처리할 수 있다.
+
+### 배차 비교 지표
+
+Greedy와 Hungarian을 동일한 요청/차량 상태에서 비교한다.
+
+- 평균/p95 Pickup ETA
+- 평균/p95 요청 대기시간
+- 전체 요청 완료시간과 정시 완료율
+- 총 차량 이동거리와 공차 이동거리/공차율
+- 미배정·만료 요청 수
+- 배차 계산시간 p50/p95
+- 배차 변경/재배차 횟수
+- 서비스별 공정성
 
 ### 공정성·고장·배터리
 
@@ -209,23 +260,93 @@ priority = base + wait_s/aging_interval_s
 
 에너지는 `거리×Wh/m + 대기전력(W)×초/3600`에 적재 보정을 더한 단순 모델이다. 픽업→목적지→도달 가능한 충전소와 예비량 15%를 확인한다. 수행 중 부족하면 새 배차 중지·안전 거점/지원 상태로 전환하며 순간이동하지 않는다.
 
-FIFO+거리와 우선순위+ETA를 비교한다. 선택 batch 매칭은 미할당/불가능 조합을 처리한다. 합승은 M6 후 픽업 선행·구간 용량·우회 한도를 지키는 삽입법으로 확장한다.
+허브/재배치는 M5에서 최소 2~3개의 검증된 staging hub를 두고 시작한다. 호출이 없을 때 목적 없는 random roaming은 기본 정책으로 사용하지 않는다. 임무 종료 차량은 가까운 hub 또는 수요/혼잡/현재 차량 분포를 고려한 hub로 `REPOSITIONING`하고, 필요하면 새 요청에 즉시 전환할 수 있다. 수요 기반 rebalancing은 Greedy/Hungarian 배차 비교와 분리해 기록한다.
 
-## 6. 전역 경로: 자체 A*
+합승은 M6 이후 선택 확장으로 두며 픽업 선행·구간 용량·우회 한도를 지키는 삽입법으로 확장한다.
 
-**제약 필터 → 비용 snapshot → A* → geometry 복원 → 주행 검증** 순서다. 통행 금지·차체 폭·접근성·폐쇄는 edge 제외 조건이며 큰 비용으로 대체하지 않는다. edge 중간 출발은 임시 노드로 연결하고 순간이동하지 않는다.
+## 6. 전역 경로: Dijkstra Baseline → A* → D* Lite
+
+전역 계획은 **제약 필터 → 비용 snapshot → 경로 탐색 → geometry 복원 → 주행 검증** 순서다. 통행 금지·차체 폭·접근성·폐쇄는 edge 제외 조건이며 큰 비용으로 대체하지 않는다. edge 중간 출발은 임시 노드로 연결하고 순간이동하지 않는다.
+
+공통 edge 비용은 다음을 사용한다.
 
 ```text
 cost_e = length_m/allowed_speed_mps
          + crowd_penalty_s + zone_penalty_s + expected_wait_s
+```
+
+추가 비용은 모두 0 이상이며 제한속도는 전역 상한 이하다. 동일한 graph/cost snapshot/Hard Constraint를 사용해 알고리즘만 바꾸어 비교한다.
+
+### Baseline: Dijkstra
+
+Dijkstra는 목적지 휴리스틱 없이 `g(n)`만으로 최단경로를 계산한다. 정적 비용 snapshot에서는 A*의 정답 검증 Baseline으로 사용한다.
+
+```text
+f(n) = g(n)
+h(n) = 0
+```
+
+자체 구현하며 heap/g-score/parent edge/stale entry 제거를 검증한다.
+
+### 개선: 자체 A*
+
+A*는 동일한 edge cost에 admissible heuristic을 사용해 목적지 방향 탐색을 우선한다.
+
+```text
+f(n) = g(n) + h(n)
 h(n) = straight_line_distance(n,goal)/global_max_speed_mps
 ```
 
-추가 비용은 모두 0 이상, 제한속도는 전역 상한 이하다. 정적 snapshot에서 허용적 휴리스틱을 유지한다. heap/g-score/parent edge/stale entry 제거를 자체 구현하고 동일 비용 Dijkstra로 검증한다. NetworkX A*는 참고·검증용이다.[S6]
+정적 snapshot에서 허용적 휴리스틱을 유지하며, A*의 목적은 최적성을 희생하는 것이 아니라 **Dijkstra와 같은 최적 비용을 더 적은 탐색량으로 얻는지 확인하는 것**이다. NetworkX A*는 참고·검증용이며 프로젝트 결과에는 자체 구현과 구분한다.[S6]
 
-1차는 관측/단기예측 비용을 탐색 동안 고정한다. 미래 전체의 시간의존 최적 경로가 아니며 시간확장 그래프는 선택이다.
+Dijkstra와 A*는 정적 graph의 동일 출발/목적 쌍에서 다음을 비교한다.
 
-경로용 혼잡 비용은 1초마다 갱신한다. 폐쇄/위험은 즉시, 일반 재계획은 최소 5초 간격이다. 안전한 기존 경로의 변경은 `개선≥10% AND 개선≥15초`일 때만 적용한다. cache key에는 지도·차량/요청 profile·cost snapshot을 포함한다.
+- Path Cost / Path Length
+- Expanded Nodes / Generated Nodes
+- Peak Open Set Size
+- Planning Time p50/p95
+- 메모리 사용량 또는 자료구조 peak
+- `A* Path Cost == Dijkstra Path Cost` 여부
+
+추가 실험으로 거리 휴리스틱, 시간 하한 휴리스틱, 필요 시 Weighted heuristic을 분리해 측정한다. Weighted heuristic이 admissibility를 깨면 더 이상 최적 경로 보장 실험으로 묶지 않고 별도 근사 실험으로 명시한다.
+
+### 동적 재탐색 Baseline: A* Full Replan
+
+1차는 관측/단기예측 비용을 탐색 동안 고정한다. 경로용 혼잡 비용은 1초마다 갱신하고, 폐쇄/위험은 즉시, 일반 재계획은 최소 5초 간격으로 평가한다. 기존 경로가 여전히 안전하면 `개선≥10% AND 개선≥15초`일 때만 일반 경로 변경을 적용한다.
+
+비용/통행 상태가 바뀌면 Baseline은 기존 탐색 상태를 버리고 새 snapshot에서 A*를 처음부터 수행한다.
+
+```text
+기존 A* Route
+→ edge cost/closure 변경
+→ A* 전체 재탐색
+→ 새 Route
+```
+
+### 개선 비교: D* Lite
+
+D* Lite는 지도 topology가 동일하고 일부 edge cost/통행 가능 상태가 변경되는 상황에서 이전 탐색 정보를 재사용해 증분 재계획한다. 적용 대상은 비룡플라자 `NORMAL/CAUTION/AVOID/CLOSED` 변화, 공사/폐쇄, 혼잡 cost 변화, 검증된 통행 조건 변경 등이다.
+
+```text
+기존 Search State
++ 변경된 edge cost
+→ incremental update
+→ 새 Route
+```
+
+D* Lite도 현재 시점의 Hard Constraint를 반드시 지키며 금지 edge를 임의의 큰 비용으로 통과시키지 않는다. map topology/version이 호환되지 않거나 증분 상태를 안전하게 재사용할 수 없으면 새 계획 상태로 초기화한다.
+
+A* Full Replan과 D* Lite는 동일한 동적 이벤트 시나리오에서 다음을 비교한다.
+
+- Replanning Time p50/p95
+- Expanded/Updated Nodes
+- 최종 Path Cost
+- Route Change Count
+- planning CPU time
+- 이벤트 발생→새 유효 경로 확보까지 지연
+- 결과 경로의 안전/통행 제약 준수
+
+cache key에는 지도·차량/요청 profile·cost snapshot을 포함하고 알고리즘 종류와 상태 버전을 기록한다.
 
 도달 불가·시작=목적지·일방/평행 edge를 테스트한다. 경로가 없으면 대체/대기/실패를 반환하며 직선 이동·금지구간 통과는 금지한다.
 
@@ -324,13 +445,57 @@ d_stop = v*reaction_time_s+v²/(2*brake_decel_mps2)+margin_m
 
 노후 관측·무효 계획·충돌 위험이면 정지하고, 안전 여유 1초 유지와 경로 재검증 후 출발한다. tick 사이 충돌도 검사한다. 물리적으로 피할 수 없는 난입은 최소위험 반응과 실패를 기록하며 무조건 충돌 0을 보장하지 않는다.
 
-## 10. 차량 경합·교착
+## 10. 차량 경합·교착: Reservation Baseline → CBS 비교
+
+다중 차량 경로 충돌은 **계획 단계의 coordination**과 **실시간 안전 회피**를 분리한다. Reservation/CBS는 계획된 차량끼리의 시간·공간 충돌을 줄이는 계층이고, 보행자 난입·예상 밖 지연·센서 기반 위험은 §9의 RRT/TTC/Safety가 최종 처리한다.
+
+### Baseline: Priority / Resource Reservation
 
 좁은 양방향 통로는 두 방향 edge를 하나의 resource로 묶어 1대만 점유한다. 교차로 충돌 영역도 예약하며 차량은 정지선 밖에서 기다린다. 출구 공간이 없으면 진입하지 않는다.
 
-진입 전 lease와 실제 점유를 분리한다. **차량이 내부에 있으면 lease 만료만으로 재배정하지 않는다.** 이탈 확인 후 해제하며 내부 고장은 자원 폐쇄/우회로 처리한다. 요청 순서로 중재하고 보행자 안전이 우선한다.
+진입 전 lease와 실제 점유를 분리한다. **차량이 내부에 있으면 lease 만료만으로 재배정하지 않는다.** 이탈 확인 후 해제하며 내부 고장은 자원 폐쇄/우회로 처리한다. 기본 중재는 이미 점유한 차량, 안전상 양보가 어려운 차량, 요청 우선순위/대기시간, 결정적 tie-break 순으로 정의하고 보행자 안전을 최우선으로 둔다.
 
-정체 timeout에 대기 관계를 검사해 안전한 대피/재계획 또는 교착을 보고한다. 임의 후진·삭제는 금지한다. 최적 경로해가 아닌 예약 관리다.
+정체 timeout에 대기 관계를 검사해 안전한 대피/재계획 또는 교착을 보고한다. 임의 후진·삭제는 금지한다. 이 Baseline은 단순하고 안전하게 구현하기 위한 예약 관리이며 전체 다중 차량 경로 비용의 최적해를 보장하지 않는다.
+
+### 개선 비교: Conflict-Based Search(CBS)
+
+차량 수가 기본 3대인 시나리오에서는 각 차량의 시간화된 전역 경로를 바탕으로 CBS를 선택 비교 알고리즘으로 구현한다.
+
+충돌은 최소한 다음을 검출한다.
+
+- Vertex conflict: 같은 시각에 동일 노드/충돌 영역 점유
+- Edge conflict: 같은 시각에 동일 edge를 반대 방향 또는 충돌 가능한 방식으로 사용
+- Resource conflict: 좁은 통로/교차로의 안전 점유 시간이 겹침
+
+충돌이 발견되면 해당 차량 중 하나에 시간-공간 제약을 추가한 두 분기를 만들고, low-level planner가 제약을 만족하도록 해당 차량 경로를 다시 계산한다.
+
+```text
+V1: C @ t=5
+V2: C @ t=5
+        ↓ conflict
+      CT root
+      /     \
+V1 C@5 금지  V2 C@5 금지
+   ↓            ↓
+ replan       replan
+```
+
+CBS의 low-level planner는 Dijkstra/A* 중 검증된 구현을 사용하고, 동적 혼잡 재계획과 섞을 때는 실험 조건을 분리한다. CBS가 생성한 시간 계획은 센서 기반 실제 상태보다 우선하지 않는다. RRT 우회, 제동, 센서 지연 등으로 계획 시간이 무효해지면 안전 계층이 우선하고 coordination은 재평가한다.
+
+### Reservation vs CBS 비교 지표
+
+- 차량 간 계획 conflict 수
+- 실제 이중 점유/충돌 시도 수
+- 총/평균 Reservation Wait Time
+- 전체 완료시간(Makespan)
+- Sum of Path Cost / 총 이동시간
+- 차량별 대기시간 편차
+- Replanning Count
+- Planning Time p50/p95
+- Constraint Tree node 수
+- Deadlock/timeout 발생 횟수
+
+CBS는 기본 차량 3대에서 비교하고, 차량 수 증가 스트레스에서는 계산량 증가를 별도로 기록한다. CBS가 항상 더 빠르다고 가정하지 않으며, 단순 Reservation이 충분한 상황과 CBS가 이득인 상황을 구분해 보고한다.
 
 ## 11. 시계·동시성·통신
 
@@ -487,7 +652,7 @@ MCP 권한·경로를 제한하고 외부 명령/삭제/비밀키 노출을 막�
 |---|---|---|
 | T01 | 승객/화물 정상 1건 | 픽업→운송→인도/하차, 상태·시간 일치 |
 | T02 | 용량/접근성 부적합 | 후보 제외/거부 사유, 적재 음수 없음 |
-| T03 | 정적 graph 100개 쌍 | A* 비용=Dijkstra, edge/geometry 검증 |
+| T03 | 정적 graph 100개 쌍 | A* 비용=Dijkstra, edge/geometry 검증, 탐색량/시간 기록 |
 | T04 | 다섯 피크 전/중/후 | 생성률 증감·정확한 시각·밀도 단위 |
 | T05 | 비룡플라자 AVOID | 허용 증가량 내 안전한 대안 우회 |
 | T06 | CLOSED·대안 없음/내부 목적지 | 진입 금지·접근성 확인 후 대체/대기 |
@@ -507,12 +672,36 @@ MCP 권한·경로를 제한하고 외부 명령/삭제/비밀키 노출을 막�
 | T20 | 보행 승객의 호출→승차→하차→랜드마크 도착 | 요청/승객/차량 연계, 인원 보존·보행 중복 집계 없음, 랜드마크 도착/하차 완료 구분, 접근 실패의 성공 집계 없음 |
 | T21 | LiDAR/Radar 센서 관측 기반 장애물/보행자 접근·가림·stale frame | Python이 Ground Truth 동적 Transform을 직접 받지 않고 최신 SensorObservation으로 RRT/TTC/감속·정지 판단, 가려진 객체는 미인지, stale/pose 불일치 관측 거부, PC sensor debug와 판단 사유 일치 |
 | T22 | PC 1 + 모바일을 포함한 최대 50 WebSocket 동시 연결 및 1,000명 보행자 복합 부하 | 연결/소유권 정상, 느린 세션 격리, simulation/sensor/control loop p95와 network queue/serialization/전송량 측정, 모바일별 데이터 격리, 300명 기준과 1,000명 stress 결과 구분 |
+| T23 | 동일 차량/요청 batch | Greedy와 Hungarian의 Hard Constraint 준수, 총 배차비용·대기/공차·계산시간 비교 |
+| T24 | 동일 동적 edge 변경 시나리오 | A* Full Replan과 D* Lite의 최종 경로 제약 준수, 재탐색 시간·노드 수·Path Cost 비교 |
+| T25 | 차량 3대의 시간/공간 경로 충돌 | Reservation과 CBS의 conflict/대기/Makespan/계산시간 비교, 안전 계층 우선 유지 |
 
-좌표/비용/FSM/밀도/TTC/제동/배차/센서 frame 유효성·좌표 변환을 단위 검증한다. 공통 JSON을 Python/C#에서 검사하고 Unity EditMode는 importer/DTO, PlayMode는 두 역할의 표시/정지/재접속·Additive 로딩을 테스트한다. T15는 일반 이동도 접근 가능한 Stop 이용 가능, 폐쇄/접근성 unknown/휠체어 용량 부족을 포함한다. T16은 모바일의 관제 명령·타인 요청 접근 거부와 PC lease 소실을 구분한다. 모바일 표시 생략 전후 동일 manifest의 서버 상태/event digest가 유지되는지 검증한다.
+좌표/비용/FSM/밀도/TTC/제동/배차/센서 frame 유효성·좌표 변환을 단위 검증한다. 공통 JSON을 Python/C#에서 검사하고 Unity EditMode는 importer/DTO, PlayMode는 두 역할의 표시/정지/재접속·Additive 로딩을 테스트한다. 현재 구현된 Bootstrap/Additive/DTO/WorldStateStore/fixture/uGUI 테스트는 유지하고, 실제 서버/알고리즘 통합 후 같은 화면이 합성값이 아닌 권위 상태를 표시하는지 회귀 검증한다.
 
-### 실험 체계
+### 알고리즘 비교 실험 체계
 
-`B0=거리 A*+FIFO`, `B1=혼잡 A*+FIFO`, `B2=혼잡 A*+우선/공정 배차`를 동일 지도/요청/보행 OD·난입 조건으로 비교한다. 우회 정책과 RRT 유무는 별도 실험으로 분리한다. 모든 군의 필수 안전 규칙은 같다.
+핵심 알고리즘은 다음 네 축에서 **Baseline → 개선/대안**으로 비교한다.
+
+| 실험 | Baseline | 개선/대안 | 핵심 질문 |
+|---|---|---|---|
+| E1 전역 경로 | Dijkstra | A* | 같은 최적 비용을 더 적은 탐색으로 얻는가 |
+| E2 배차 | Greedy Dispatch | Hungarian | 여러 차량/요청의 전체 배차 비용과 대기/공차가 개선되는가 |
+| E3 동적 재탐색 | A* Full Replan | D* Lite | edge cost/폐쇄 변화 시 이전 탐색 상태 재사용이 유리한가 |
+| E4 다중 차량 coordination | Priority/Reservation | CBS | 계획 충돌과 대기/Makespan을 줄이는가, 계산비용은 얼마인가 |
+
+각 실험은 알고리즘 외 조건을 가능한 한 동일하게 유지한다. 모든 군의 필수 안전·접근성·통행 Hard Constraint는 동일하며, RRT/TTC는 E1~E4의 우열을 만들기 위해 임의로 비활성화하지 않는다. 필요 시 계획 알고리즘 자체의 순수 비교용 정적 fixture와 전체 통합 시나리오를 분리한다.
+
+통합 비교는 다음처럼 구성할 수 있다.
+
+```text
+Baseline Stack
+Dijkstra + Greedy + A* Full Replan + Reservation
+
+Improved Stack
+A* + Hungarian + D* Lite + CBS
+```
+
+단, `Improved Stack`이 모든 조건에서 절대 우수하다고 가정하지 않는다. 각 알고리즘의 계산 비용과 문제 규모에 따른 trade-off를 함께 보고한다. 기존 혼잡/우선/공정 배차 실험(`B0~B2`)은 E1~E4와 충돌하지 않게 정책 실험으로 유지하되, 결과표에서는 어떤 알고리즘 stack을 사용했는지 명시한다.
 
 수요/보행/난입/계획 RNG를 분리하고 같은 외생 이벤트 파일을 쓴다. 상호작용한 보행 궤적은 달라질 수 있다. 시나리오당 20 seed를 목표로 조정/평가를 분리한다. warm-up/초기 인구와 미완료/실패를 보고한다.
 
@@ -526,7 +715,11 @@ MCP 권한·경로를 제한하고 외부 명령/삭제/비밀키 노출을 막�
 | 혼잡 노출 | 주행 중 밀도×dt 적분·zone 진입 횟수 |
 | 안전 | 충돌 사건/시도·차량 km, 최소 clearance/TTC, 비상제동 |
 | 접근성 | 조건 충족 완료/유효 이동지원 요청 |
-| 연산 | 계획/배차/sensor/control loop p50·p95, timeout, 장비 |
+| 경로 탐색 | Path Cost, Expanded/Generated Nodes, Open Set peak, planning p50/p95 |
+| 동적 재탐색 | replan p50/p95, updated nodes, 새 경로 확보 지연, route change count |
+| 배차 | 총 matching cost, Pickup ETA, 대기시간, 공차거리, assignment p50/p95 |
+| 다중 차량 | conflict 수, resource wait, Makespan, CT nodes, deadlock/timeout |
+| 연산 | planning/dispatch/sensor/control loop p50·p95, timeout, 장비 |
 | 센서 | frame age/drop, detection 수, 가림/미탐지 사례, Raycast 비용, 차량별 sensor update Hz |
 | 네트워크 | 동시 연결 수, 초당 메시지/바이트, serialization p50·p95, queue peak/drop, 연결/재접속 지연 |
 
@@ -534,7 +727,7 @@ MCP 권한·경로를 제한하고 외부 명령/삭제/비밀키 노출을 막�
 
 ## 15. 실행 계약·개발 품질
 
-M0에서 아래 CLI를 구현한다. **현재 존재/실행된 명령이라고 가정하지 않는다.** 개발 의존성도 선언한다.
+아래 CLI는 Python 서버 구현 단계에서 제공해야 하는 실행 계약이다. **현재 실제 서버/CLI가 구현·실행되었다고 가정하지 않는다.** 개발 의존성도 선언한다.
 
 ```bash
 python -m pip install -e "./backend[dev]"
@@ -556,25 +749,47 @@ Python 타입/예외·C# 모델/화면 책임을 분리하고 정책 숫자는 c
 
 ## 16. 단계·완료 기준·에이전트 절차
 
+현재 프로젝트는 캠퍼스 맵과 PC/Mobile 클라이언트 골격, Bootstrap/Additive 씬, DTO/WorldStateStore/좌표 변환, fixture data source, uGUI 기본 화면까지 구현되어 있다. 따라서 아래 단계는 **전체 로드맵과 완료 기준**이며, 이미 구현된 클라이언트 기반 구조를 다시 만드는 지시가 아니다. 작업 시작 시 `docs/implementation_status.md`와 실제 코드/Git을 확인해 완료 항목을 재검증한다.
+
 | 단계 | 구현 | 종료 조건 |
 |---|---|---|
-| M0 | 기존 코드 조사, 네 자리 VERSION/CHANGELOG·Unity 버전 관리·계약·CLI·합성 지도 | 버전 원본/동기화 검사·고정 시계·무창 실행·fixture 통과 |
-| M1 | 차량 1대·A*·승객/배송·공통 CampusWorld/PC Unity | T01/T03, 요청→완료 흐름 |
+| M0 | 기존 코드 조사, VERSION/CHANGELOG·Unity 버전 관리·계약·CLI·합성 fixture·공통 CampusWorld/Bootstrap/Additive/DTO 기반 | 현재 구현된 클라이언트/fixture 구조 회귀 테스트, 버전/계약 일치 확인 |
+| M1 | 차량 1대·RoadGraph·Dijkstra Baseline·A*·승객/배송 최소 수직 흐름 | T01/T03, Dijkstra=A* Path Cost 검증, 탐색량/시간 기록, 요청→완료 최소 흐름 |
 | M2 | 실제 지도/보정·랜드마크 목록/Stop·대표 시설 커버리지·비룡플라자 | T14/T19, 최소 6개 거점 fixture에서 전체 필수 목록으로 확장·출처/검증 기록 |
-| M3 | 다섯 시간대·인구/예측·heatmap·우회 | T04~T06 |
+| M3 | 다섯 시간대·인구/예측·heatmap·우회·A* Full Replan Baseline·D* Lite | T04~T06/T24, 동적 edge 변경에서 재탐색 비교 |
 | M4 | Unity Raycast LiDAR/Radar SensorRig·SensorObservation·난입·제동·RRT·재출발 | T07~T09/T21, Python Ground Truth 동적 Transform 직접 참조 없음 |
-| M5 | 3대·service_needs/Stop 결정·마감/공정 배차·충전·예약 | T02/T10~T12/T15/T20, 중복 배정·승객 중복 집계 없음 |
-| M5a | Mobile 통합·Additive 역할 씬·승객 3D UI·센서 입력 계약·최대 50 WebSocket 세션 기반 | T16~T18/T22 일부, 실기기 호출→완료·판단 안내·재접속·세션 격리 |
-| M6 | B0~B2·재생·센서/성능/네트워크 부하 측정·OSS/IOSS 증빙 | T13/T22 및 M5a 통과, 300명 기준/1,000명 stress·최대 50 연결 결과, 대표 시설 커버리지 보고·PC/모바일 동시 데모·원자료·한계 보고 |
-| M7 | 검증된 교외·ROS2·RRT*·합승 | M6 통과 후 개별 비교 |
+| M5 | 차량 3대·service_needs/Stop 결정·Greedy/Hungarian 배차·허브/재배치·충전·Reservation/CBS | T02/T10~T12/T15/T20/T23/T25, 중복 배정·승객 중복 집계 없음, 알고리즘 비교 결과 기록 |
+| M5a | 실제 Python WebSocket 서버 통합·Mobile/PC 권위 상태 연결·승객 3D UI·센서 입력 계약·최대 50 세션 기반 | T16~T18/T22 일부, fixture가 아닌 실제 서버로 호출→완료·판단 안내·재접속·세션 격리 |
+| M6 | E1~E4·B0~B2·재생·센서/성능/네트워크 부하 측정·OSS/IOSS 증빙 | T13/T22 및 M5a 통과, 300명 기준/1,000명 stress·최대 50 연결 결과, PC/모바일 동시 데모·원자료·한계 보고 |
+| M7 | 검증된 교외·ROS2·RRT*·합승·Jev 등 선택 연구 | M6 통과 후 개별 비교, 필수 결과와 분리 |
 
-2026-09-17 최신 사용자 지시에 따른 제작 순서는 **씬 수정·검증 → PC/모바일 UI 목업 및 일부 기능 → Python 서버 제작·연결**이다. M0에서 DTO/역할 경계를 먼저 정하고 UI 목업은 명시적인 합성 fixture로 진행한다. 실제 배차·ETA·Stop·자율주행 판단을 모바일/PC UI에 임시 구현하지 않는다. 단, Unity Simulation World의 Physics·SensorRig·차량 actuator 적용은 클라이언트 표현이 아니라 시뮬레이션 환경 책임으로 구현한다. 목업 완료는 M1~M6 알고리즘·안전·통신 검증 완료를 대신하지 않으며, 실제 모바일 통합 완료는 M5a의 조건을 충족해야 한다. 서버 구현 시 fixture→도메인→통합→UI 연결→실패 처리→측정 순서로 검증한다.
+### 현재 우선 개발 순서
 
-시연은 비혼잡 배송→이동지원→10:30 혼잡/우회→난입 제동/재탐색→다중 배차→동일 seed 비교 순서다. 이동지원은 모바일의 동일 랜드마크 선택에 대해 service_needs별 출입구 결정을 확인하고, 우회/제동은 PC의 판단 근거와 모바일의 승객 안내를 동시에 보여준다. 화면만 성공하고 로그가 없으면 완료가 아니다.
+2026-09-24 기준으로 이미 구현된 PC/Mobile UI 골격과 fixture 환경을 보존하고 다음 순서로 실제 기능을 채운다.
+
+```text
+1. RoadGraph 및 Landmark/Stop 실제 데이터
+2. Dijkstra Baseline
+3. A* 및 E1 비교
+4. 차량 1대 이동 / Request 최소 수직 흐름
+5. Python 권위 서버 및 실제 WebSocket 계약 연결
+6. LiDAR/Radar SensorRig
+7. TTC / Safety
+8. RRT Local Planning
+9. 혼잡/비룡플라자 + A* Replan / D* Lite
+10. 차량 3대 + Greedy / Hungarian
+11. Reservation / CBS
+12. 보행자 300명 / 허브 재배치 / PC·Mobile 통합
+13. E1~E4 및 성능/부하/재현 실험
+```
+
+UI 목업 완료를 M1~M6 알고리즘·안전·통신 검증 완료로 간주하지 않는다. 실제 배차·ETA·Stop·자율주행 판단을 모바일/PC UI에 임시로 재구현하지 않고 Python 권위 상태를 연결한다. Unity Simulation World의 Physics·SensorRig·차량 actuator 적용은 클라이언트 표현이 아니라 시뮬레이션 환경 책임이다.
+
+시연은 비혼잡 기본 운송→Dijkstra/A* 비교→이동지원→10:30 혼잡/우회 및 A* Replan/D* Lite→난입 제동/RRT→Greedy/Hungarian 다중 배차→Reservation/CBS 경합→동일 seed 통합 비교 순서로 구성한다. 화면만 성공하고 로그가 없으면 완료가 아니다.
 
 에이전트는 git status/코드를 읽고 요구사항 ID·최소 변경을 정한다. 정책/계약 변경은 ADR에 남기고 단위/통합·lint/타입·Unity 검사를 실행한다. 불가능한 검사는 미실행으로 보고한다.
 
-`docs/implementation_status.md`에 단계·명령/결과·결함·다음 작업을 기록한다. 외부 업로드/IOSS/유료 API는 승인 범위에서만 수행한다.
+`docs/implementation_status.md`에는 단계별로 `IMPLEMENTED / FIXTURE_ONLY / PARTIAL / NOT_STARTED / VERIFIED` 상태를 구분하고, 명령/결과·결함·다음 작업을 기록한다. 현재 fixture UI를 실제 서버 통합 완료로 표시하지 않는다. 외부 업로드/IOSS/유료 API는 승인 범위에서만 수행한다.
 
 ## 17. OSS·IOSS·참고 근거
 
