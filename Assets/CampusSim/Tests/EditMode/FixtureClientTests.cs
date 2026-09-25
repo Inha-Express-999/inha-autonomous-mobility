@@ -182,6 +182,8 @@ namespace InhaExpress.Client.Tests
             StringAssert.Contains("혼잡", PassengerStatusPresenter.Describe(Snapshot(420)));
             StringAssert.Contains("보행자", PassengerStatusPresenter.Describe(Snapshot(500)));
             StringAssert.DoesNotContain("보행자", PassengerStatusPresenter.Describe(Snapshot(550)));
+            StringAssert.Contains("센서 관측 지연", FixtureUiText.Reason(ReasonCode.SENSOR_DATA_STALE));
+            StringAssert.Contains("장애물 정지", FixtureUiText.Reason(ReasonCode.OBSTACLE_STOP));
             StringAssert.Contains("완료 전", PassengerStatusPresenter.StatusText(RequestStatus.DROPOFF_SERVICE));
             StringAssert.Contains("최종 보행", PassengerStatusPresenter.StatusText(RequestStatus.COMPLETED));
         }

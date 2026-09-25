@@ -1,0 +1,5 @@
+{
+  "global_replan_interval_s": 5.0,
+  "improvement_ratio": 0.1,
+  "improvement_s": 15.0
+}

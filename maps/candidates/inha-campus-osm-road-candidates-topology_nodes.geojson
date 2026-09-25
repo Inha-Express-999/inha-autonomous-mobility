@@ -1,0 +1,3960 @@
+{
+  "type": "FeatureCollection",
+  "name": "inha-campus-osm-road-candidates",
+  "data_status": "CANDIDATE_ONLY",
+  "verification_status": "UNVERIFIED",
+  "source_sha256": "8eb03c576a7a924e3cb4ab263fba25245431d8d25881c86ee12e7b781b265a61",
+  "coordinate_frame": "WGS84 longitude, latitude",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "osm-node-436222329",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6478939,
+          37.4521569
+        ]
+      },
+      "properties": {
+        "osm_node_id": "436222329",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-436222330",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6484831,
+          37.4520878
+        ]
+      },
+      "properties": {
+        "osm_node_id": "436222330",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-436222348",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6718448,
+          37.4617762
+        ]
+      },
+      "properties": {
+        "osm_node_id": "436222348",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-436222363",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6484389,
+          37.4522211
+        ]
+      },
+      "properties": {
+        "osm_node_id": "436222363",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-436222364",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6478256,
+          37.452278
+        ]
+      },
+      "properties": {
+        "osm_node_id": "436222364",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-436790186",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6749808,
+          37.4395094
+        ]
+      },
+      "properties": {
+        "osm_node_id": "436790186",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-436830039",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6511351,
+          37.4453438
+        ]
+      },
+      "properties": {
+        "osm_node_id": "436830039",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-436830040",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6504795,
+          37.4454029
+        ]
+      },
+      "properties": {
+        "osm_node_id": "436830040",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"crossing\": \"no\", \"highway\": \"traffic_signals\", \"traffic_signals\": \"signal\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-436836503",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6498752,
+          37.4485853
+        ]
+      },
+      "properties": {
+        "osm_node_id": "436836503",
+        "candidate_way_count": 4,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"junction\": \"yes\", \"name\": \"비룡삼거리\", \"name:en\": \"Biryongsamgeori\", \"name:ko\": \"비룡삼거리\", \"name:ko-Latn\": \"Biryongsamgeori\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-436836603",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6482129,
+          37.4518976
+        ]
+      },
+      "properties": {
+        "osm_node_id": "436836603",
+        "candidate_way_count": 4,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-436836606",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6479423,
+          37.452929
+        ]
+      },
+      "properties": {
+        "osm_node_id": "436836606",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-436836610",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6499796,
+          37.4563619
+        ]
+      },
+      "properties": {
+        "osm_node_id": "436836610",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"junction\": \"yes\", \"name\": \"용현사거리\", \"name:en\": \"Yonghyeon Crossroad\", \"name:ko\": \"용현사거리\", \"name:ko-Latn\": \"Yonghyeonsageori\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-436836634",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6495475,
+          37.4496517
+        ]
+      },
+      "properties": {
+        "osm_node_id": "436836634",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-436868703",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.65307,
+          37.45222
+        ]
+      },
+      "properties": {
+        "osm_node_id": "436868703",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-436868707",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6564766,
+          37.4512632
+        ]
+      },
+      "properties": {
+        "osm_node_id": "436868707",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-436879748",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.667571,
+          37.4488826
+        ]
+      },
+      "properties": {
+        "osm_node_id": "436879748",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"junction\": \"yes\", \"name\": \"제운사거리\", \"name:en\": \"Jeun Crossroad\", \"name:ko\": \"제운사거리\", \"name:ko-Latn\": \"Jeunsageori\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-1770237413",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.656548,
+          37.4460547
+        ]
+      },
+      "properties": {
+        "osm_node_id": "1770237413",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2262335931",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6544702,
+          37.4514903
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2262335931",
+        "candidate_way_count": 3,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2262335934",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6546715,
+          37.4517233
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2262335934",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2262335935",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6554559,
+          37.4496873
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2262335935",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2262335936",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6541191,
+          37.4502665
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2262335936",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2262335939",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.656379,
+          37.4510352
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2262335939",
+        "candidate_way_count": 3,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2262335940",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6549418,
+          37.4513755
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2262335940",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2262335941",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6573682,
+          37.4504694
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2262335941",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"entrance\": \"entrance\", \"wheelchair\": \"yes\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2276360845",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6550435,
+          37.447939
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2276360845",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2401071755",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6569674,
+          37.4511411
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2401071755",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2401071756",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.657465,
+          37.4522506
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2401071756",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2401071757",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6563589,
+          37.4525422
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2401071757",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2401071758",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6577903,
+          37.4530348
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2401071758",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2401071760",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6537646,
+          37.4520049
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2401071760",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2401071761",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6558634,
+          37.4514268
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2401071761",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2401071762",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6562076,
+          37.4530877
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2401071762",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2401071763",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6576398,
+          37.4534447
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2401071763",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2425231803",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6356428,
+          37.4569698
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2425231803",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2429042702",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6571344,
+          37.4429537
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2429042702",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2429042772",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6586002,
+          37.4452329
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2429042772",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2429042803",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6479481,
+          37.4524035
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2429042803",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2429042810",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.656357,
+          37.4526691
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2429042810",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2429042939",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.671946,
+          37.461696
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2429042939",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2429042941",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6721606,
+          37.4616964
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2429042941",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"junction\": \"yes\", \"name\": \"도화IC\", \"name:en\": \"Dowha IC.\", \"name:ja\": \"道禾出入口\", \"name:ko\": \"도화IC\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2429042945",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6717702,
+          37.4619871
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2429042945",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"junction\": \"yes\", \"name\": \"도화IC\", \"name:en\": \"Dohwa IC.\", \"name:ja\": \"道禾出入口\", \"name:ko\": \"도화IC\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2445317858",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6572336,
+          37.4517335
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2445317858",
+        "candidate_way_count": 3,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2445317859",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.655,
+          37.4523214
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2445317859",
+        "candidate_way_count": 3,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2643032901",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6532344,
+          37.4473242
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2643032901",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2643032904",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6533746,
+          37.4479326
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2643032904",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2643032907",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6542786,
+          37.4490012
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2643032907",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2643032908",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6540219,
+          37.4490993
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2643032908",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2855690575",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6586179,
+          37.4536846
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2855690575",
+        "candidate_way_count": 4,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2855690576",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6582773,
+          37.4539404
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2855690576",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2855690581",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6590377,
+          37.4533232
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2855690581",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2855690584",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6561731,
+          37.455796
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2855690584",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2855690586",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6582446,
+          37.4539649
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2855690586",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2855690589",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6585805,
+          37.4537127
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2855690589",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2855690591",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6605832,
+          37.4519929
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2855690591",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2855717085",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6601431,
+          37.4509484
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2855717085",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856079397",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6606375,
+          37.4443909
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856079397",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856199546",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6546834,
+          37.4543239
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856199546",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856199554",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6556916,
+          37.4533355
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856199554",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856199560",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6519329,
+          37.4542563
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856199560",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856199566",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6542177,
+          37.4539881
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856199566",
+        "candidate_way_count": 3,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856199568",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6546313,
+          37.4539362
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856199568",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856199575",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6531157,
+          37.4532641
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856199575",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856199588",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6533409,
+          37.4534191
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856199588",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856199591",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6526903,
+          37.4526442
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856199591",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856199592",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6516539,
+          37.4538198
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856199592",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856210688",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.655873,
+          37.4539923
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856210688",
+        "candidate_way_count": 3,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856210690",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6547975,
+          37.4548057
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856210690",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856210695",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6551771,
+          37.4532086
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856210695",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856212862",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6555565,
+          37.4539497
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856212862",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856212863",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6565645,
+          37.4541126
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856212863",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856212864",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6567763,
+          37.4536029
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856212864",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856212908",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6545444,
+          37.4534584
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856212908",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856218036",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6496634,
+          37.4556453
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856218036",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856218037",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6511041,
+          37.4529766
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856218037",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856218038",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6514152,
+          37.4534599
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856218038",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856218044",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6498461,
+          37.4535047
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856218044",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856218068",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6518524,
+          37.454103
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856218068",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856218070",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6521661,
+          37.4525501
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856218070",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856218074",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6515505,
+          37.4536909
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856218074",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2856218081",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6502216,
+          37.4540902
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2856218081",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2876922893",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6571541,
+          37.4542598
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2876922893",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2876922894",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6579119,
+          37.4538829
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2876922894",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2877961305",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6583478,
+          37.4507712
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2877961305",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2877961307",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6585997,
+          37.4513649
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2877961307",
+        "candidate_way_count": 4,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2877961308",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6603574,
+          37.4514568
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2877961308",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2877968866",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.659824,
+          37.4464052
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2877968866",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2877968880",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6589536,
+          37.4450868
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2877968880",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2877970942",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6579196,
+          37.446352
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2877970942",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2877970943",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6574972,
+          37.4456746
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2877970943",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2879019540",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6486432,
+          37.4540095
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2879019540",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2881072415",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6505676,
+          37.4527594
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2881072415",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2881072419",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6507951,
+          37.4531063
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2881072419",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2881072421",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6546154,
+          37.4543939
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2881072421",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2881072422",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6493821,
+          37.4523213
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2881072422",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2881072424",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6482567,
+          37.4533899
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2881072424",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2881072425",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6492062,
+          37.4529733
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2881072425",
+        "candidate_way_count": 3,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2881072426",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6480814,
+          37.4524009
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2881072426",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2881072427",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6485915,
+          37.4532487
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2881072427",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2881072428",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6542821,
+          37.45398
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2881072428",
+        "candidate_way_count": 3,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2881072433",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6535502,
+          37.4541497
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2881072433",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2881072435",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6483647,
+          37.4523447
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2881072435",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2881072437",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6493425,
+          37.4531718
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2881072437",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2881072442",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6496323,
+          37.4535939
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2881072442",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2881072448",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6502727,
+          37.4523408
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2881072448",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2881072450",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6488564,
+          37.4531369
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2881072450",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2881076905",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6548345,
+          37.4527502
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2881076905",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2882114717",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6516004,
+          37.4540328
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2882114717",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2882114718",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6515926,
+          37.4537434
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2882114718",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2886789147",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6503957,
+          37.4463706
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2886789147",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2886789148",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6501975,
+          37.4461775
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2886789148",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2886789150",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6501438,
+          37.4464671
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2886789150",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2886789154",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6503727,
+          37.4464912
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2886789154",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2886789160",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6515225,
+          37.4463159
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2886789160",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-2886789174",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6494894,
+          37.4470165
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2886789174",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4309918709",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6561261,
+          37.4520136
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4309918709",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4656657827",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6493598,
+          37.4471815
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4656657827",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4656657828",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6431803,
+          37.4458646
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4656657828",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4658502132",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6466761,
+          37.4466096
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4658502132",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4703015310",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.65511,
+          37.4437652
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4703015310",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"junction\": \"yes\", \"name\": \"남부서사거리\", \"name:en\": \"Nambuseo crossroad\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759434",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6532817,
+          37.4477196
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759434",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759438",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6546858,
+          37.4480616
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759438",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759439",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6555442,
+          37.4492969
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759439",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759440",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6538798,
+          37.4484186
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759440",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759441",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.655379,
+          37.4472182
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759441",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759442",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6547292,
+          37.4474328
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759442",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759443",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6546486,
+          37.4472949
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759443",
+        "candidate_way_count": 3,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759444",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6558984,
+          37.4491737
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759444",
+        "candidate_way_count": 3,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759445",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6502519,
+          37.4513896
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759445",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759446",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.653543,
+          37.4501295
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759446",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759447",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6536596,
+          37.4500696
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759447",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759448",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6562233,
+          37.4490593
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759448",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759449",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6564605,
+          37.4501252
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759449",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759450",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6564949,
+          37.4510135
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759450",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759451",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6554416,
+          37.4493495
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759451",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759453",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.65544,
+          37.4496945
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759453",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759455",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6537715,
+          37.4504638
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759455",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759458",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.654571,
+          37.4508684
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759458",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759460",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6551299,
+          37.4506979
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759460",
+        "candidate_way_count": 3,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759462",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6553011,
+          37.4506885
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759462",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759479",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6518116,
+          37.4510626
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759479",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759481",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6530014,
+          37.4505575
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759481",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759482",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6528736,
+          37.4503783
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759482",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759483",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6523204,
+          37.4505968
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759483",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759484",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6523828,
+          37.4506941
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759484",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759486",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6525725,
+          37.4507396
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759486",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759487",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6523421,
+          37.4508374
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759487",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759490",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6527628,
+          37.450422
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759490",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759491",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6515963,
+          37.4488071
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759491",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759492",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6512514,
+          37.4489698
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759492",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759493",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6527431,
+          37.4482803
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759493",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759495",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6531223,
+          37.4477904
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759495",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759497",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6527163,
+          37.4475486
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759497",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759498",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6536329,
+          37.4500791
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759498",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759500",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6528056,
+          37.4488638
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759500",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759503",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6524029,
+          37.4484321
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759503",
+        "candidate_way_count": 4,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759505",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.653599,
+          37.4485071
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759505",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759506",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6533032,
+          37.4495876
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759506",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759507",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6552095,
+          37.4487903
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759507",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759508",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6551815,
+          37.4487502
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759508",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759509",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6548005,
+          37.4499825
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759509",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759510",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6547443,
+          37.4499134
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759510",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759511",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6545112,
+          37.4497409
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759511",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759512",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6547295,
+          37.4496452
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759512",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759513",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6568015,
+          37.4507178
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759513",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759621",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6579184,
+          37.4508863
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759621",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759622",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6591346,
+          37.448694
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759622",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759628",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6572392,
+          37.4497374
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759628",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759651",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6565626,
+          37.4489209
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759651",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759654",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.65899,
+          37.4478988
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759654",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759655",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6579704,
+          37.44832
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759655",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759657",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6563369,
+          37.4461392
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759657",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759658",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6576446,
+          37.4484546
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759658",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4741759660",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6576524,
+          37.4481435
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741759660",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4958020924",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6561551,
+          37.4438807
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4958020924",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4958020925",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.657317,
+          37.4457468
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4958020925",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4958020926",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6570598,
+          37.4453337
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4958020926",
+        "candidate_way_count": 3,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4958020927",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6562796,
+          37.4456335
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4958020927",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4958020936",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6578819,
+          37.4450114
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4958020936",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4958020937",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6562433,
+          37.445402
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4958020937",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4958020938",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6569335,
+          37.4451309
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4958020938",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4958020939",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6577439,
+          37.4448204
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4958020939",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4958020940",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6561194,
+          37.4451857
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4958020940",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4958020941",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6567988,
+          37.4449146
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4958020941",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-4958020942",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6577828,
+          37.4445338
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4958020942",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-6231555713",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6576755,
+          37.4534535
+        ]
+      },
+      "properties": {
+        "osm_node_id": "6231555713",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-6231555715",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.658646,
+          37.4538366
+        ]
+      },
+      "properties": {
+        "osm_node_id": "6231555715",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-6848997560",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6561751,
+          37.4540449
+        ]
+      },
+      "properties": {
+        "osm_node_id": "6848997560",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-6848997561",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6533791,
+          37.4535226
+        ]
+      },
+      "properties": {
+        "osm_node_id": "6848997561",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-8841043778",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.648445,
+          37.4449722
+        ]
+      },
+      "properties": {
+        "osm_node_id": "8841043778",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-8956947365",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6556296,
+          37.4507889
+        ]
+      },
+      "properties": {
+        "osm_node_id": "8956947365",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-8956947373",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6526055,
+          37.448332
+        ]
+      },
+      "properties": {
+        "osm_node_id": "8956947373",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-8956947377",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6521954,
+          37.4481004
+        ]
+      },
+      "properties": {
+        "osm_node_id": "8956947377",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10058049420",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6554622,
+          37.4508504
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10058049420",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10058049421",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.654882,
+          37.4503235
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10058049421",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10058049431",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6544119,
+          37.4468509
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10058049431",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10058056496",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6524007,
+          37.4480083
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10058056496",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10058056498",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6525739,
+          37.4485087
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10058056498",
+        "candidate_way_count": 3,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10058120920",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6559989,
+          37.4517294
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10058120920",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10058120921",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.655832,
+          37.4517811
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10058120921",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10058120935",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.653454,
+          37.450164
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10058120935",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10058460594",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6555227,
+          37.4486497
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10058460594",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10058460613",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6522374,
+          37.4503168
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10058460613",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10058460615",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6525153,
+          37.4500793
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10058460615",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10058484930",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6510121,
+          37.4508836
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10058484930",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10058484932",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6513249,
+          37.4509655
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10058484932",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10058484939",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.649388,
+          37.4506846
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10058484939",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10058484940",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6495807,
+          37.4507037
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10058484940",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10058484943",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6507999,
+          37.4508765
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10058484943",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10058484947",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6496659,
+          37.450524
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10058484947",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10058484948",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6502158,
+          37.4511292
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10058484948",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10058484949",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6497761,
+          37.450369
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10058484949",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10058484950",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6503584,
+          37.4510672
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10058484950",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10058484951",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6499146,
+          37.450217
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10058484951",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10058484952",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6505024,
+          37.4510052
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10058484952",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10058484953",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6500783,
+          37.4501303
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10058484953",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10058484954",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6506581,
+          37.4509379
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10058484954",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10069027266",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6554109,
+          37.4522091
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10069027266",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-10069027267",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6553059,
+          37.4519855
+        ]
+      },
+      "properties": {
+        "osm_node_id": "10069027267",
+        "candidate_way_count": 1,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-11257934902",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6498151,
+          37.4452981
+        ]
+      },
+      "properties": {
+        "osm_node_id": "11257934902",
+        "candidate_way_count": 3,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-11257934906",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6503879,
+          37.4447443
+        ]
+      },
+      "properties": {
+        "osm_node_id": "11257934906",
+        "candidate_way_count": 3,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-11257934910",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6512803,
+          37.4452986
+        ]
+      },
+      "properties": {
+        "osm_node_id": "11257934910",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-11257934912",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6504468,
+          37.4458802
+        ]
+      },
+      "properties": {
+        "osm_node_id": "11257934912",
+        "candidate_way_count": 3,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-11257934918",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6500185,
+          37.4480135
+        ]
+      },
+      "properties": {
+        "osm_node_id": "11257934918",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-11257934923",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6505577,
+          37.4483995
+        ]
+      },
+      "properties": {
+        "osm_node_id": "11257934923",
+        "candidate_way_count": 3,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-11257934926",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6497772,
+          37.449048
+        ]
+      },
+      "properties": {
+        "osm_node_id": "11257934926",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-11257934927",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6497117,
+          37.44922
+        ]
+      },
+      "properties": {
+        "osm_node_id": "11257934927",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-11257934931",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6494694,
+          37.4485379
+        ]
+      },
+      "properties": {
+        "osm_node_id": "11257934931",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-11257934947",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6486557,
+          37.4510138
+        ]
+      },
+      "properties": {
+        "osm_node_id": "11257934947",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-12866720413",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6532052,
+          37.4445424
+        ]
+      },
+      "properties": {
+        "osm_node_id": "12866720413",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-12866720417",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6546057,
+          37.4467792
+        ]
+      },
+      "properties": {
+        "osm_node_id": "12866720417",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-14067346833",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6481582,
+          37.4469254
+        ]
+      },
+      "properties": {
+        "osm_node_id": "14067346833",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-node-14067346834",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6488257,
+          37.4450627
+        ]
+      },
+      "properties": {
+        "osm_node_id": "14067346834",
+        "candidate_way_count": 2,
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{}"
+      }
+    }
+  ],
+  "source_query_bbox_wgs84": {
+    "west_lon": 126.648,
+    "south_lat": 37.445,
+    "east_lon": 126.659,
+    "north_lat": 37.454
+  }
+}

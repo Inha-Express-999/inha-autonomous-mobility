@@ -16,6 +16,20 @@ namespace InhaExpress.Client.Networking
     {
         event Action<ServiceCommandAckDto> CommandAcknowledged;
         void SendPassengerRequest(PassengerRequestCommandDto command);
+        void SendCargoRequest(CargoRequestCommandDto command);
         void SendCancelRequest(CancelRequestCommandDto command);
+    }
+
+    // Ego-only pose reports from the Unity simulation to Python; no other actor transforms are sent.
+    public interface IEgoLocalizationSource
+    {
+        event Action<EgoLocalizationAckDto> EgoLocalizationAcknowledged;
+        void SendEgoLocalization(EgoLocalizationDto observation);
+    }
+
+    public interface ISensorObservationSource
+    {
+        event Action<SensorObservationAckDto> SensorObservationAcknowledged;
+        void SendSensorObservation(SensorObservationDto observation);
     }
 }

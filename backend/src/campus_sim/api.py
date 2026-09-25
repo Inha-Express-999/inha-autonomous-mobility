@@ -1,39 +1,80 @@
+import asyncio
+from contextlib import asynccontextmanager
+from pathlib import Path
+
 from fastapi import FastAPI, HTTPException, WebSocket, status
 
+from campus_sim import __version__
 from campus_sim.domain import CommandAck, CreateRequest, Landmark, RequestView
 from campus_sim.realtime import serve_client_socket
 from campus_sim.service import MobilityService
 
 
-def create_app(service: MobilityService | None = None) -> FastAPI:
-    app = FastAPI(title="Inha Autonomous Mobility API", version="0.2.2.0")
-    app.state.service = service or MobilityService.synthetic_fixture()
+def create_app(
+    service: MobilityService | None = None,
+    *,
+    map_path: str | Path | None = None,
+) -> FastAPI:
+    if service is not None and map_path is not None:
+        raise ValueError("provide a service instance or map_path, not both")
+    service_instance = service or (
+        MobilityService.from_synthetic_graph(map_path, active_fleet=True)
+        if map_path is not None
+        else MobilityService.synthetic_fleet_fixture()
+    )
+
+    @asynccontextmanager
+    async def lifespan(app: FastAPI):
+        stop_event = asyncio.Event()
+        clock_task = asyncio.create_task(service_instance.run_clock(stop_event, fixed_dt_s=0.05))
+        app.state.clock_task = clock_task
+        try:
+            yield
+        finally:
+            stop_event.set()
+            await clock_task
+
+    app = FastAPI(
+        title="Inha Autonomous Mobility API",
+        version=__version__,
+        lifespan=lifespan,
+    )
+    app.state.service = service_instance
 
     @app.websocket("/v1/client/ws")
     async def client_socket(websocket: WebSocket) -> None:
         await serve_client_socket(websocket, app.state.service)
 
     @app.get("/health")
-    def health() -> dict[str, str]:
-        return {"status": "ok", "schema_version": "3"}
+    async def health() -> dict[str, object]:
+        graph = app.state.service.graph
+        return {
+            "status": "ok",
+            "project_version": __version__,
+            "schema_version": "3",
+            "map_version": graph.map_version if graph is not None else None,
+            "map_data_status": graph.data_status if graph is not None else None,
+            "node_count": len(graph.nodes) if graph is not None else 0,
+            "edge_count": len(graph.edges) if graph is not None else 0,
+        }
 
     @app.get("/v1/landmarks", response_model=list[Landmark])
-    def list_landmarks() -> list[Landmark]:
+    async def list_landmarks() -> list[Landmark]:
         return list(app.state.service.landmarks.values())
 
     @app.post("/v1/requests", response_model=CommandAck, status_code=status.HTTP_201_CREATED)
-    def create_request(command: CreateRequest) -> CommandAck:
+    async def create_request(command: CreateRequest) -> CommandAck:
         try:
             return app.state.service.create_request(command)
         except ValueError as error:
             raise HTTPException(status_code=422, detail=str(error)) from error
 
     @app.get("/v1/owners/{owner_id}/requests", response_model=list[RequestView])
-    def list_owner_requests(owner_id: str) -> list[RequestView]:
+    async def list_owner_requests(owner_id: str) -> list[RequestView]:
         return app.state.service.requests_for_owner(owner_id)
 
     @app.post("/v1/requests/{request_id}/cancel", response_model=CommandAck)
-    def cancel_request(request_id: str, command_id: str, owner_id: str) -> CommandAck:
+    async def cancel_request(request_id: str, command_id: str, owner_id: str) -> CommandAck:
         try:
             return app.state.service.cancel_request(request_id, command_id, owner_id)
         except KeyError as error:

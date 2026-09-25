@@ -33,6 +33,38 @@ namespace InhaExpress.Client.Tests
                 Array.Empty<StopDto>(), routes ?? Array.Empty<RouteDto>(), zones ?? Array.Empty<ZoneDto>());
 
         [Test]
+        public void SensorDetectionRequiresPolarAndLocalPositionToAgree()
+        {
+            var local = new MapPositionDto(5.0 * Math.Cos(0.2), 5.0 * Math.Sin(0.2), 0.1);
+            Assert.DoesNotThrow(() => new SensorDetectionDto(
+                5.0, 0.2, local, SensorEntityClass.PEDESTRIAN));
+
+            Assert.Throws<ArgumentException>(() => new SensorDetectionDto(
+                4.0, 0.2, local, SensorEntityClass.PEDESTRIAN));
+            Assert.Throws<ArgumentException>(() => new SensorDetectionDto(
+                5.0, 0.4, local, SensorEntityClass.PEDESTRIAN));
+        }
+
+        [Test]
+        public void LidarRejectsRelativeSpeedAndFramesAreBounded()
+        {
+            var movingDetection = new SensorDetectionDto(5.0, 0.2,
+                new MapPositionDto(5.0 * Math.Cos(0.2), 5.0 * Math.Sin(0.2), 0.0),
+                SensorEntityClass.VEHICLE, relativeSpeedMps: 1.0);
+            Assert.Throws<ArgumentException>(() => new SensorObservationDto(
+                "V01", "front-lidar", SensorType.LIDAR_2D, 1, 1, "map-v1", true,
+                new[] { movingDetection }));
+
+            var detections = new SensorDetectionDto[65];
+            for (int index = 0; index < detections.Length; index++)
+                detections[index] = new SensorDetectionDto(5.0, 0.2,
+                    new MapPositionDto(5.0 * Math.Cos(0.2), 5.0 * Math.Sin(0.2), 0.0),
+                    SensorEntityClass.UNKNOWN);
+            Assert.Throws<ArgumentOutOfRangeException>(() => new SensorObservationDto(
+                "V01", "front-lidar", SensorType.LIDAR_2D, 1, 1, "map-v1", true, detections));
+        }
+
+        [Test]
         public void SnapshotPublishesBeforeNotificationAndSupportsIdLookup()
         {
             var store = new WorldStateStore(ClientRole.PC_Operator);
@@ -141,6 +173,18 @@ namespace InhaExpress.Client.Tests
             var route = new RouteDto("route", "map", points);
             points[0] = new MapPositionDto(0, 0, 0);
             Assert.That(route.Polyline[0].X, Is.EqualTo(Position.X));
+        }
+
+        [Test]
+        public void RouteSegmentSpeedProfileMustMatchGeometry()
+        {
+            var points = new[] { Position, new MapPositionDto(0, 0, 0) };
+            Assert.Throws<ArgumentException>(() => new RouteDto(
+                "route", "map", points, segmentSpeedsMps: new[] { 0.2, 0.3 }));
+            Assert.Throws<ArgumentOutOfRangeException>(() => new RouteDto(
+                "route", "map", points, segmentSpeedsMps: new[] { 0.0 }));
+            Assert.That(new RouteDto("route", "map", points,
+                segmentSpeedsMps: new[] { 0.2 }).SegmentSpeedsMps[0], Is.EqualTo(0.2));
         }
 
         [Test]

@@ -1,0 +1,131 @@
+{
+  "schema_version": 1,
+  "scenario_id": "synthetic-dispatch-greedy-vs-hungarian-v1",
+  "data_status": "SYNTHETIC_COST_MATRIX",
+  "comparison": {
+    "priority_order": "descending priority, then created_s, then request_id",
+    "cost_snapshot": "identical finite J(v,r) values and hard-constraint None cells",
+    "energy_model_included": false,
+    "note": "This compares assignment solvers only; it is not campus dispatch evidence."
+  },
+  "input_validation": {
+    "vehicle_count": 3,
+    "request_count": 3,
+    "hard_constraint_cells": 3
+  },
+  "greedy": {
+    "assignments": [
+      {
+        "request_id": "R-MOBILITY",
+        "vehicle_id": "V01",
+        "cost_s": 1.0
+      },
+      {
+        "request_id": "R-PASSENGER",
+        "vehicle_id": "V02",
+        "cost_s": 100.0
+      },
+      {
+        "request_id": "R-CARGO",
+        "vehicle_id": "V03",
+        "cost_s": 3.0
+      }
+    ],
+    "matched_count": 3,
+    "total_cost_s": 104.0,
+    "unmatched_request_ids": [],
+    "elapsed_ns": 5900
+  },
+  "hungarian": {
+    "assignments": [
+      {
+        "request_id": "R-MOBILITY",
+        "vehicle_id": "V02",
+        "cost_s": 2.0
+      },
+      {
+        "request_id": "R-PASSENGER",
+        "vehicle_id": "V01",
+        "cost_s": 1.1
+      },
+      {
+        "request_id": "R-CARGO",
+        "vehicle_id": "V03",
+        "cost_s": 3.0
+      }
+    ],
+    "matched_count": 3,
+    "total_cost_s": 6.1,
+    "unmatched_request_ids": [],
+    "elapsed_ns": 18500
+  },
+  "measurement": {
+    "repetitions": 20,
+    "warmups": 2,
+    "deterministic_assignments": true,
+    "duration_ns": {
+      "greedy": {
+        "sample_count": 20,
+        "mean": 4810,
+        "min": 3700,
+        "p50": 4600,
+        "p95": 6400,
+        "max": 7900
+      },
+      "hungarian": {
+        "sample_count": 20,
+        "mean": 16215,
+        "min": 13600,
+        "p50": 15200,
+        "p95": 18500,
+        "max": 27400
+      }
+    },
+    "duration_samples_ns": {
+      "greedy": [
+        5900,
+        5100,
+        6400,
+        5200,
+        4900,
+        4900,
+        4800,
+        4600,
+        4200,
+        4200,
+        4100,
+        4600,
+        4200,
+        4200,
+        4000,
+        4000,
+        3700,
+        4100,
+        7900,
+        5200
+      ],
+      "hungarian": [
+        18500,
+        27400,
+        18500,
+        17700,
+        16900,
+        17000,
+        16200,
+        15200,
+        14400,
+        14600,
+        15200,
+        14700,
+        14700,
+        14000,
+        14300,
+        13600,
+        14100,
+        13900,
+        16100,
+        17300
+      ]
+    }
+  }
+}

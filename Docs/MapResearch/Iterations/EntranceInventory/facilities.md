@@ -1,6 +1,6 @@
 # Representative facility coverage
 
-Generated UTC: 2026-09-17T21:52:20.2697559Z
+Generated UTC: 2026-09-24T13:51:02.4932364Z
 
 Scene building inventory only. Named associations below identify existing authoring records, not verified walking connections or approved Stops. Unnamed OSM buildings require identification. This is not the complete official facility list.
 
@@ -19,7 +19,6 @@ Scene building inventory only. Named associations below identify existing author
 | building 797050851 | OSM 797050851_0 | unassigned | not established | unverified |
 | C호관 | OSM 568420972_0 | unassigned | not established | unverified |
 | Grazie | OSM 575176169_0 | unassigned | not established | unverified |
-| 관중석 | OSM 1203054818_0 | unassigned | not established | unverified |
 | 김현태인하드림센터 | OSM 568420970_0 | unassigned | not established | unverified |
 | 나빌레관 | OSM 218188169_0 | unassigned | not established | unverified |
 | 로스쿨관 | OSM 217950511_0 | unassigned | not established | unverified |
@@ -33,4 +32,4 @@ Scene building inventory only. Named associations below identify existing author
 | 학군단 | OSM 218265217_0 | unassigned | not established | unverified |
 | 학생회관 | OSM 218038027_0 | student_center | draft pair | unverified |
 
-Scene building parts: 26; parts without a landmark association: 17. Multiple parts may represent one facility. Dormitories, gates, station and plaza are tracked separately in EntranceInventory/entrances.csv.
+Scene building parts: 25; parts without a landmark association: 16. Multiple parts may represent one facility. Dormitories, gates, station and plaza are tracked separately in EntranceInventory/entrances.csv.

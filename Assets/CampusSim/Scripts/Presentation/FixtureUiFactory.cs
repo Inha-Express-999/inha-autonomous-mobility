@@ -101,6 +101,10 @@ namespace InhaExpress.Client.Presentation
                 case Domain.ReasonCode.PEDESTRIAN: return "보행자";
                 case Domain.ReasonCode.ROAD_CLOSED: return "도로 폐쇄";
                 case Domain.ReasonCode.VEHICLE_FAILURE: return "차량 고장";
+                case Domain.ReasonCode.SENSOR_DATA_STALE: return "센서 관측 지연";
+                case Domain.ReasonCode.SENSOR_INVALID: return "센서 관측 무효";
+                case Domain.ReasonCode.OBSTACLE_STOP: return "전방 장애물 정지";
+                case Domain.ReasonCode.SAFETY_RESUME_HOLD: return "안전 재확인 중";
                 default: return reason.ToString();
             }
         }

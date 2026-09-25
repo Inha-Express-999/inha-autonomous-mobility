@@ -1,6 +1,6 @@
 # 인하 캠퍼스 지도 개선 계획 및 확보 자료
 
-프로젝트 기준: 0.2.2.0 · 현황 갱신: 2026-09-24 · 조사 원본 취득: 2026-09-17 · 상태: 지도 시각화/조사는 진행됐으나 운송용 지도 검증은 미완료
+프로젝트 기준: 0.2.3.0 · 현황 갱신: 2026-09-24 · 조사 원본 취득: 2026-09-17 · 상태: 지도 시각화/조사는 진행됐으나 운송용 지도 검증은 미완료
 
 ## 데이터 검증 등급과 사용 경계 (2026-09-24)
 
@@ -9,6 +9,7 @@
 | 자료/에셋 | 출처와 추적 정보 | 확인된 범위 | 미확인/사용 제한 |
 |---|---|---|---|
 | `Assets/InhaCampus/Source/campus.osm` | OSM API bbox 126.648,37.445–126.659,37.454. 라이선스/출처는 `Assets/InhaCampus/Source/ATTRIBUTION.txt` | 원본 보존, Unity 시각 맵의 건물/도로 배치 입력 | `ele` 태그가 없고 기존 도로 폭·건물 높이 일부는 가정값. 실제 차로/보도 분리, 통행 방향, 경사·폭, 차량 통행, 교차로 연결과 Stop 미검증 |
+| OSM 차량 도로 후보 추출 | `AgentScripts/MapData/extract_osm_road_candidates.py`, `maps/candidates/inha-campus-osm-road-candidates.json`, 원본 GeoJSON 4개, query-bbox 표시 전용 GeoJSON 2개와 `-field-review.csv`; 입력 OSM SHA-256은 JSON 및 CSV에 기록 | highway way 187개 원본 tag/node ref/WGS84 geometry 보존. 142개 차량 통행 검토 후보·44개 비차량 highway·1개 명시적 motor_vehicle 금지. 후보 topology는 공유 node 179개, node 232개, segment 297개, 약한 연결 성분 225·4·3. 원본 way 53개(차량 통행 검토 후보 중 45개)는 OSM query bbox 밖 vertex를 포함 | 전체 geometry는 원본 layer에 보존하고 clip layer는 표시 전용이다. 검토표는 조사 입력자료이며 모든 segment `routable=false`; validator는 KEEP 후보에 공식 접근·현장 측정 근거를 요구하고 원본 명시적 금지 태그와 충돌하면 실패한다. query bbox는 다운로드 extent이지 서비스 경계가 아니다. 분류와 제한은 [OSM 차량 도로 후보](OSM_ROAD_CANDIDATES.md) 참조 |
 | `expanded_campus.osm` | `2026-09-17/downloads.json`에 다운로드 시각·URL·SHA-256·크기 기록 | 인하대 주변 및 인하공전 포함 확장 조사 영역 | bbox는 서비스 polygon이 아님. relation 구성, topology, 합법/안전한 연결 및 접근성 검증 필요 |
 | Copernicus GLO-30 DSM 원본/metadata/EULA | `2026-09-17/downloads.json`, `copernicus_metadata.xml`, `copernicus_eula.pdf`; 원본 타일 SHA-256은 `maps/inha_relief_research/manifest.json`과 대조 | 재투영·근사 지형 생성 재현에 필요한 원본 이력/약관 확보 | 30m급 DSM은 bare-earth 지형 측량이 아님. 건물·수목이 섞일 수 있고 실제 지형이 억제될 수 있음. 경사/단차/접근성 인증 자료가 아님 |
 | `maps/inha_relief_research/` 산출물 | `manifest.json`의 map_version, 원점, CRS, vertical datum, 처리방법, 범위, hash와 limitations | AEQD 원점 126.6535E, 37.4506N, 257² 격자, 8m 보간 간격, RAW 축/바이트 순서 기록. quantization round-trip 약 0.00077m | 양자화 오차는 원자료 정확도가 아니다. manifest가 기존 로컬 투영과의 정렬 이관 필요성을 명시. 최종 Terrain/서비스 좌표 정확도 검증 완료 아님 |
@@ -36,7 +37,7 @@
 작업 씬은 `Assets/CampusSim/Scenes/CampusTerrain.unity`다. Terrain 재베이크, 건물 Flat Kit 재질, 호수 수심 초안, 버드나무와 정자, 서쪽 주차장 차량 허브, OSM 기반 외곽 도로, 수목 LOD와 풀 거리 컬링이 구현되어 있다. `Iterations/`의 검사 결과는 각 파일에 명시한 범위만 증명한다.
 
 - 필수 11개와 추가 시설을 포함한 최신 랜드마크 인벤토리는 14개, 출입구 27개, 접근 메시 27개이며 미해결 역할은 1개다. 인하대역은 일반 출구만 있으며 이동지원 출입구 위치가 미확정이다. 현재 항목은 실제 접근성이나 차량 Stop 승인이 아니다. `Iterations/EntranceInventory/entrances.csv`를 따른다.
-- 대표 시설의 범위는 필수 11곳보다 넓다. 현재 OSM 건물 부품 26개 중 20개는 랜드마크 연결이 미지정이다. 본관·정석학술정보관·학생회관·김현태인하드림센터 등을 우선 확장해야 한다. `Iterations/EntranceInventory/facilities.md`는 실제 씬에서 재생성한 현황이며 전체 공식 시설 목록과의 최종 대조는 별도 남아 있다.
+- 대표 시설의 범위는 필수 11곳보다 넓다. 관중석 way `1203054818`을 일반 건물에서 분리해 시각용 관중석 프리팹으로 바꾼 뒤, 최신 씬 inventory에는 OSM 건물 부품 25개 중 16개가 landmark 연결 미지정으로 기록된다. 2026-09-18의 20개 및 이전 26/17 수치는 당시 건물 분류를 포함한 작업 이력으로 보존한다. 저장 OSM 원본에서 현재 16개 way의 직접 태그를 대조했고 13개에는 표시명 후보가 있으며 `218188170`, `219982954`, `797050851` 세 건에는 이름 태그가 없다. 관중석은 이름/설명 태그가 있지만 OSM `building=commercial` 분류와 충돌해 원본 태그를 보존하고 생성기에서 건물 extrusion을 제외했다. 현재 프리팹은 footprint에 맞춘 시각용 합성 단차 모델이며 실측 형상, 접근성, 좌석 수, Stop 승인을 의미하지 않는다. `217950511` 로스쿨관 명칭은 OSM과 일치한다. 세부 근거는 [`OSM_FACILITY_RECONCILIATION.md`](OSM_FACILITY_RECONCILIATION.md)에 기록했다. 대표 시설 전체 공식 목록, footprint, 출입구·보행/차량 경로 서비스 검증은 여전히 미완료다.
 - 지도 루트의 -27.6° 회전을 사용자 명시적 승인 후 북쪽 기준으로 보정했고 지형 조형 차이와 출입구 기준점도 함께 이동했다. 기록은 `Iterations/NorthAlignment/`에 있다. 기존 평면 좌표와 AEQD의 최대 약 0.69m 차이(검사점 기준)는 남아 있다. 보정 후 일부 건물 접근로의 높이 불일치를 확인했으며, 건물/운동장 부지 재형성은 별도 자동 승인 거절로 미적용이다. 이 추가안의 최대 높이 변화는 7.59m, 변경 격자는 2,717개로 `pad-preview.txt`와 `pad-review.png`에 기록했다. 전체 좌표·접근성 검증 완료는 아니다.
 - 출입구 접근 메시의 지형 반응은 확인했으나 전체 보행/차량 그래프 연결, 교차로 접합, 통행 조건, 경사와 단차 검증은 남아 있다.
 - PC/모바일 정적 배칭 설정과 재질 인스턴싱 설정, 295개 수목 LOD 그룹을 적용했다. 풀 거리 컬링의 숨김/복원 기능 검사는 통과했다. 실제 인스턴싱 드로콜, 오클루전 베이크, 단말 FPS/메모리는 미검증이다.
@@ -243,7 +244,7 @@ Temp/map-research-venv/Scripts/python.exe AgentScripts/prepare_elevation_researc
 
 - **생활관 연결과 외형:** 제1생활관은 주차장 진입로와 보행 후보가 분리되어 도로·횡단 연결이 미확정이다. 제2생활관은 남쪽 연결 도로와 건물 하부 접지가 일부 남아 있고, 제3생활관은 공식 위치도의 상대 배치를 이용한 합성 매스라 실제 건물 외곽·출입문·진입도로가 아직 다를 수 있다. 세 생활관의 현재 연결은 authoring 초안이며 차량 Stop·이동지원 승인 경로로 사용할 수 없다.
 - **씬 마감:** 운동장 서쪽 자율주행 허브 진출입 램프, 남은 도로 경사와 교차로 접합, 학교 밖 도로 정리, 본관 앞 수면 접지, 인경호 도로쪽 보도·돌길·벤치의 실제 보행 연결을 재검증한다. 학생회관 보행면에는 5% 초과 경사 면적이 남아 있다.
-- **지도 커버리지:** 인하대역 이동지원 출입구, 대표 시설 20개 연결, 전체 차량·보행 graph와 Stop 검증이 남아 있다. 필요 시 인하공전은 별도 campus_id와 검증된 연결 구간으로 확장한다.
+- **지도 커버리지:** 인하대역 이동지원 출입구, 미연결 건물 부품/대표 시설 식별, 전체 차량·보행 graph와 Stop 검증이 남아 있다. 필요 시 인하공전은 별도 campus_id와 검증된 연결 구간으로 확장한다.
 - **제품화:** 씬 검증 게이트 이후 PC 가로 관제·모바일 세로 승객 UI를 구현하고, UI 검증 뒤 Python authoritative 서버·WebSocket·계약 검증을 연결한다. 성능은 기준 장비에서 FPS/프레임 시간/배치·메모리를 실제 측정해야 한다.
 
 - 최신 재검수 대응: 풀 735개 메시 묶음의 높이 비율을 0.28에서 0.75로 복구해 입체감을 회복했다. 원본 XZ 위치·삼각형 경계 마스크는 유지했고, 지형 높이 재적합을 검사했다. 허브·운동장 선·교외 도로 정리·주요 건물 외형과 후속 UI/서버 작업은 위 재검수 목록에 남긴다.
@@ -332,6 +333,8 @@ Temp/map-research-venv/Scripts/python.exe AgentScripts/prepare_elevation_researc
 - 화면에서 북쪽 코트의 기울어짐/삼각형 음영이 정리된 것을 확인했다. 지형 변경 범위의 인접 도로 종·횡경사와 관중석 전체 바닥 접촉은 별도 검사 대상이다. 원본 DSM 대비 큰 보정은 실제 측정값이 아니라 시뮬레이션 경기장 부지 정리다.
 
 ### 관중석 발치 지형 침범 보정 — 2026-09-17
+
+이 항목은 당시 씬의 잘못된 일반 건물 extrusion을 바닥 접촉 관점에서 검사한 과거 기록이다. 2026-09-24 현재 OSM way `1203054818`은 건물 inventory에서 제외하고 시각용 단차 관중석 프리팹으로 표현한다. 과거 바닥 접촉 수치는 새 프리팹의 형상·접촉 검증을 뜻하지 않는다. 세부 판정은 [`OSM_FACILITY_RECONCILIATION.md`](OSM_FACILITY_RECONCILIATION.md)를 따른다.
 
 - 관중석 기준점은 맞았으나 외벽 바닥 외곽의 지형이 최대 0.274913m 올라오는 것을 확인했다. 건물을 올리지 않고 지형을 기존 바닥 높이에 맞췄다.
 - 지붕 투영 외곽에 12m 보간 지지 여유/12m 전이를 적용했다. 8m 높이 격자 특성상 주변 격자 53개가 변경됐으며 최대 격자 낮춤은 4.057869m였다. 바닥 침범량과 주변 격자 변경량은 다른 측정이다. 원본 배열은 `Iterations/spectator-footing-before.raw`에 보존했다.

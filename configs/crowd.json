@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "profile_status": "SYNTHETIC_ASSUMPTION",
+  "timezone": "Asia/Seoul",
+  "start_time": "08:30:00",
+  "transition_times": ["09:00:00", "10:30:00", "12:00:00", "13:30:00", "15:00:00"],
+  "window_before_s": 900,
+  "window_after_s": 900,
+  "pre_peak_offset_s": -300,
+  "post_peak_offset_s": 300,
+  "sigma_s": 240,
+  "pre_peak_weight": 0.6,
+  "post_peak_weight": 0.4,
+  "zones": {
+    "synthetic-test-corridor": {
+      "base_rate_persons_per_s": 0.001,
+      "peak_rate_persons_per_s": 0.1,
+      "usable_area_m2": 100,
+      "mean_dwell_s": 300,
+      "zone_multiplier": 2.0,
+      "caution_density": 0.2,
+      "avoid_density": 0.5,
+      "avoid_during_peak": true,
+      "detour_extra_s": 90,
+      "detour_ratio": 0.3,
+      "avoid_penalty_s_per_m": 0.5,
+      "penalty_s_per_density_m": 4.0
+    }
+  }
+}

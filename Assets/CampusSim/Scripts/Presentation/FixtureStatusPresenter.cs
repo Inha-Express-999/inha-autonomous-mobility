@@ -79,6 +79,7 @@ namespace InhaExpress.Client.Presentation
         protected abstract void BuildRoleView(RectTransform root);
         protected abstract void RenderSnapshot(WorldSnapshotDto snapshot);
         protected virtual void OnCommandAcknowledged(ServiceCommandAckDto acknowledgement) { }
+        protected virtual void RefreshConnectionState() { }
 
         private void EnsureView()
         {
@@ -190,6 +191,7 @@ namespace InhaExpress.Client.Presentation
             double now = Time.realtimeSinceStartupAsDouble;
             if (now < nextStatusRefresh) return;
             nextStatusRefresh = now + 0.1;
+            RefreshConnectionState();
             bool stale = Host.Store.IsStale(now);
             bool paused = Host.Fixture != null && Host.Fixture.IsPaused;
             bool fixture = Host.Fixture != null;

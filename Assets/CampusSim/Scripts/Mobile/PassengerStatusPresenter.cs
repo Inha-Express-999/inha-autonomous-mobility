@@ -59,7 +59,7 @@ namespace InhaExpress.Client.Mobile
 
             var etaCard = FixtureUiFactory.Panel(sheet, "ETA Card", new Vector2(0, 1), new Vector2(0.45f, 1),
                 new Vector2(18, -204), new Vector2(-5, -142), FixtureUiPalette.Canvas);
-            FixtureUiFactory.Text(etaCard, "Label", "ETA", 10, FixtureUiPalette.Muted,
+            FixtureUiFactory.Text(etaCard, "Label", "목적지 도착까지", 10, FixtureUiPalette.Muted,
                 TextAnchor.UpperCenter, FontStyle.Bold);
             etaValue = FixtureUiFactory.Text(etaCard, "Value", "—", 20, FixtureUiPalette.Blue,
                 TextAnchor.LowerCenter, FontStyle.Bold);
@@ -328,6 +328,14 @@ namespace InhaExpress.Client.Mobile
         {
             foreach (var vehicle in snapshot.Vehicles)
             {
+                if (vehicle.Reason == ReasonCode.SENSOR_DATA_STALE)
+                    return "센서 관측이 오래되어 안전 확인을 위해 정차했습니다.";
+                if (vehicle.Reason == ReasonCode.SENSOR_INVALID)
+                    return "센서 관측이 유효하지 않아 정차했습니다.";
+                if (vehicle.Reason == ReasonCode.OBSTACLE_STOP)
+                    return "전방 장애물과 안전 거리를 확보하기 위해 정차했습니다.";
+                if (vehicle.Reason == ReasonCode.SAFETY_RESUME_HOLD)
+                    return "안전 상태를 확인한 뒤 다시 출발합니다.";
                 if (vehicle.MotionState == VehicleMotionState.YIELDING && vehicle.Reason == ReasonCode.PEDESTRIAN)
                     return "보행자에게 양보 중입니다. 안전이 확인되면 다시 출발합니다.";
                 if (vehicle.MissionState == VehicleMissionState.TO_DROPOFF && vehicle.Reason == ReasonCode.CROWD_AVOIDANCE)

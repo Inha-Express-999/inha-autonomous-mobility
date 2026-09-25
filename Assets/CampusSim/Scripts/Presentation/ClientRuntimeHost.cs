@@ -17,6 +17,8 @@ namespace InhaExpress.Client.Presentation
         public WorldStateStore Store { get; private set; }
         public FixtureClientDataSource Fixture => source as FixtureClientDataSource;
         public IClientCommandSource Commands => source as IClientCommandSource;
+        public IEgoLocalizationSource Localization => source as IEgoLocalizationSource;
+        public ISensorObservationSource Sensors => source as ISensorObservationSource;
         public ConnectionState ConnectionState => source?.ConnectionState ?? ConnectionState.Disconnected;
         public ClientRole Role { get; private set; }
 

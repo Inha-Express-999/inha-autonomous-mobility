@@ -1,0 +1,1407 @@
+{
+  "schema_version": 1,
+  "map_id": "campus-synthetic-benchmark-11",
+  "map_version": "synthetic-benchmark-11node-v1",
+  "data_status": "SYNTHETIC_FIXTURE",
+  "coordinate_frame": "SYNTHETIC_LOCAL_METERS",
+  "verification_status": "SYNTHETIC_FIXTURE",
+  "source_date": null,
+  "source_hash": null,
+  "origin_wgs84": null,
+  "source_description": "Deterministic synthetic grid graph for the T03 100 origin-destination benchmark only; coordinates and connections do not represent Inha University campus routes.",
+  "nodes": [
+    {
+      "id": "n01",
+      "landmark_id": "benchmark_landmark_01",
+      "stop_id": "benchmark_stop_01",
+      "position_m": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    {
+      "id": "n02",
+      "landmark_id": "benchmark_landmark_02",
+      "stop_id": "benchmark_stop_02",
+      "position_m": {
+        "x": 80.0,
+        "y": 0.0
+      }
+    },
+    {
+      "id": "n03",
+      "landmark_id": "benchmark_landmark_03",
+      "stop_id": "benchmark_stop_03",
+      "position_m": {
+        "x": 160.0,
+        "y": 0.0
+      }
+    },
+    {
+      "id": "n04",
+      "landmark_id": "benchmark_landmark_04",
+      "stop_id": "benchmark_stop_04",
+      "position_m": {
+        "x": 240.0,
+        "y": 0.0
+      }
+    },
+    {
+      "id": "n05",
+      "landmark_id": "benchmark_landmark_05",
+      "stop_id": "benchmark_stop_05",
+      "position_m": {
+        "x": 0.0,
+        "y": 90.0
+      }
+    },
+    {
+      "id": "n06",
+      "landmark_id": "benchmark_landmark_06",
+      "stop_id": "benchmark_stop_06",
+      "position_m": {
+        "x": 80.0,
+        "y": 90.0
+      }
+    },
+    {
+      "id": "n07",
+      "landmark_id": "benchmark_landmark_07",
+      "stop_id": "benchmark_stop_07",
+      "position_m": {
+        "x": 160.0,
+        "y": 90.0
+      }
+    },
+    {
+      "id": "n08",
+      "landmark_id": "benchmark_landmark_08",
+      "stop_id": "benchmark_stop_08",
+      "position_m": {
+        "x": 240.0,
+        "y": 90.0
+      }
+    },
+    {
+      "id": "n09",
+      "landmark_id": "benchmark_landmark_09",
+      "stop_id": "benchmark_stop_09",
+      "position_m": {
+        "x": 0.0,
+        "y": 180.0
+      }
+    },
+    {
+      "id": "n10",
+      "landmark_id": "benchmark_landmark_10",
+      "stop_id": "benchmark_stop_10",
+      "position_m": {
+        "x": 80.0,
+        "y": 180.0
+      }
+    },
+    {
+      "id": "n11",
+      "landmark_id": "benchmark_landmark_11",
+      "stop_id": "benchmark_stop_11",
+      "position_m": {
+        "x": 160.0,
+        "y": 180.0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e001_n01_n02",
+      "from_node": "n01",
+      "to_node": "n02",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 0.0,
+          "y": 0.0
+        },
+        {
+          "x": 40.0,
+          "y": 0.0
+        },
+        {
+          "x": 80.0,
+          "y": 0.0
+        }
+      ],
+      "length_m": 80.0,
+      "width_m": 3.5,
+      "allowed_speed_mps": 4.0,
+      "crowd_penalty_s": 0.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e002_n02_n01",
+      "from_node": "n02",
+      "to_node": "n01",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 80.0,
+          "y": 0.0
+        },
+        {
+          "x": 40.0,
+          "y": 0.0
+        },
+        {
+          "x": 0.0,
+          "y": 0.0
+        }
+      ],
+      "length_m": 80.0,
+      "width_m": 3.5,
+      "allowed_speed_mps": 4.0,
+      "crowd_penalty_s": 0.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e003_n01_n05",
+      "from_node": "n01",
+      "to_node": "n05",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 0.0,
+          "y": 0.0
+        },
+        {
+          "x": -3.0,
+          "y": 45.0
+        },
+        {
+          "x": 0.0,
+          "y": 90.0
+        }
+      ],
+      "length_m": 90.199778,
+      "width_m": 4.0,
+      "allowed_speed_mps": 5.0,
+      "crowd_penalty_s": 2.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e004_n05_n01",
+      "from_node": "n05",
+      "to_node": "n01",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 0.0,
+          "y": 90.0
+        },
+        {
+          "x": 3.0,
+          "y": 45.0
+        },
+        {
+          "x": 0.0,
+          "y": 0.0
+        }
+      ],
+      "length_m": 90.199778,
+      "width_m": 4.0,
+      "allowed_speed_mps": 5.0,
+      "crowd_penalty_s": 2.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e005_n02_n03",
+      "from_node": "n02",
+      "to_node": "n03",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 80.0,
+          "y": 0.0
+        },
+        {
+          "x": 120.0,
+          "y": 0.0
+        },
+        {
+          "x": 160.0,
+          "y": 0.0
+        }
+      ],
+      "length_m": 80.0,
+      "width_m": 4.0,
+      "allowed_speed_mps": 6.0,
+      "crowd_penalty_s": 4.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e006_n03_n02",
+      "from_node": "n03",
+      "to_node": "n02",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 160.0,
+          "y": 0.0
+        },
+        {
+          "x": 120.0,
+          "y": 0.0
+        },
+        {
+          "x": 80.0,
+          "y": 0.0
+        }
+      ],
+      "length_m": 80.0,
+      "width_m": 4.0,
+      "allowed_speed_mps": 6.0,
+      "crowd_penalty_s": 4.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e007_n02_n06",
+      "from_node": "n02",
+      "to_node": "n06",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 80.0,
+          "y": 0.0
+        },
+        {
+          "x": 80.0,
+          "y": 45.0
+        },
+        {
+          "x": 80.0,
+          "y": 90.0
+        }
+      ],
+      "length_m": 90.0,
+      "width_m": 4.0,
+      "allowed_speed_mps": 4.0,
+      "crowd_penalty_s": 6.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e008_n06_n02",
+      "from_node": "n06",
+      "to_node": "n02",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 80.0,
+          "y": 90.0
+        },
+        {
+          "x": 80.0,
+          "y": 45.0
+        },
+        {
+          "x": 80.0,
+          "y": 0.0
+        }
+      ],
+      "length_m": 90.0,
+      "width_m": 4.0,
+      "allowed_speed_mps": 4.0,
+      "crowd_penalty_s": 6.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e009_n03_n04",
+      "from_node": "n03",
+      "to_node": "n04",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 160.0,
+          "y": 0.0
+        },
+        {
+          "x": 200.0,
+          "y": 0.0
+        },
+        {
+          "x": 240.0,
+          "y": 0.0
+        }
+      ],
+      "length_m": 80.0,
+      "width_m": 4.0,
+      "allowed_speed_mps": 5.0,
+      "crowd_penalty_s": 0.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e010_n04_n03",
+      "from_node": "n04",
+      "to_node": "n03",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 240.0,
+          "y": 0.0
+        },
+        {
+          "x": 200.0,
+          "y": 0.0
+        },
+        {
+          "x": 160.0,
+          "y": 0.0
+        }
+      ],
+      "length_m": 80.0,
+      "width_m": 4.0,
+      "allowed_speed_mps": 5.0,
+      "crowd_penalty_s": 0.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e011_n03_n07",
+      "from_node": "n03",
+      "to_node": "n07",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 160.0,
+          "y": 0.0
+        },
+        {
+          "x": 157.0,
+          "y": 45.0
+        },
+        {
+          "x": 160.0,
+          "y": 90.0
+        }
+      ],
+      "length_m": 90.199778,
+      "width_m": 3.5,
+      "allowed_speed_mps": 6.0,
+      "crowd_penalty_s": 2.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e012_n07_n03",
+      "from_node": "n07",
+      "to_node": "n03",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 160.0,
+          "y": 90.0
+        },
+        {
+          "x": 163.0,
+          "y": 45.0
+        },
+        {
+          "x": 160.0,
+          "y": 0.0
+        }
+      ],
+      "length_m": 90.199778,
+      "width_m": 3.5,
+      "allowed_speed_mps": 6.0,
+      "crowd_penalty_s": 2.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e013_n04_n05",
+      "from_node": "n04",
+      "to_node": "n05",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 240.0,
+          "y": 0.0
+        },
+        {
+          "x": 120.0,
+          "y": 45.0
+        },
+        {
+          "x": 0.0,
+          "y": 90.0
+        }
+      ],
+      "length_m": 256.320112,
+      "width_m": 4.0,
+      "allowed_speed_mps": 4.0,
+      "crowd_penalty_s": 4.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e014_n05_n04",
+      "from_node": "n05",
+      "to_node": "n04",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 0.0,
+          "y": 90.0
+        },
+        {
+          "x": 120.0,
+          "y": 45.0
+        },
+        {
+          "x": 240.0,
+          "y": 0.0
+        }
+      ],
+      "length_m": 256.320112,
+      "width_m": 4.0,
+      "allowed_speed_mps": 4.0,
+      "crowd_penalty_s": 4.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e015_n04_n08",
+      "from_node": "n04",
+      "to_node": "n08",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 240.0,
+          "y": 0.0
+        },
+        {
+          "x": 240.0,
+          "y": 45.0
+        },
+        {
+          "x": 240.0,
+          "y": 90.0
+        }
+      ],
+      "length_m": 90.0,
+      "width_m": 4.0,
+      "allowed_speed_mps": 5.0,
+      "crowd_penalty_s": 6.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e016_n08_n04",
+      "from_node": "n08",
+      "to_node": "n04",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 240.0,
+          "y": 90.0
+        },
+        {
+          "x": 240.0,
+          "y": 45.0
+        },
+        {
+          "x": 240.0,
+          "y": 0.0
+        }
+      ],
+      "length_m": 90.0,
+      "width_m": 4.0,
+      "allowed_speed_mps": 5.0,
+      "crowd_penalty_s": 6.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e017_n05_n06",
+      "from_node": "n05",
+      "to_node": "n06",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 0.0,
+          "y": 90.0
+        },
+        {
+          "x": 40.0,
+          "y": 90.0
+        },
+        {
+          "x": 80.0,
+          "y": 90.0
+        }
+      ],
+      "length_m": 80.0,
+      "width_m": 4.0,
+      "allowed_speed_mps": 6.0,
+      "crowd_penalty_s": 0.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e018_n06_n05",
+      "from_node": "n06",
+      "to_node": "n05",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 80.0,
+          "y": 90.0
+        },
+        {
+          "x": 40.0,
+          "y": 90.0
+        },
+        {
+          "x": 0.0,
+          "y": 90.0
+        }
+      ],
+      "length_m": 80.0,
+      "width_m": 4.0,
+      "allowed_speed_mps": 6.0,
+      "crowd_penalty_s": 0.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e019_n05_n09",
+      "from_node": "n05",
+      "to_node": "n09",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 0.0,
+          "y": 90.0
+        },
+        {
+          "x": -3.0,
+          "y": 135.0
+        },
+        {
+          "x": 0.0,
+          "y": 180.0
+        }
+      ],
+      "length_m": 90.199778,
+      "width_m": 4.0,
+      "allowed_speed_mps": 4.0,
+      "crowd_penalty_s": 2.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e020_n09_n05",
+      "from_node": "n09",
+      "to_node": "n05",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 0.0,
+          "y": 180.0
+        },
+        {
+          "x": 3.0,
+          "y": 135.0
+        },
+        {
+          "x": 0.0,
+          "y": 90.0
+        }
+      ],
+      "length_m": 90.199778,
+      "width_m": 4.0,
+      "allowed_speed_mps": 4.0,
+      "crowd_penalty_s": 2.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e021_n06_n07",
+      "from_node": "n06",
+      "to_node": "n07",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 80.0,
+          "y": 90.0
+        },
+        {
+          "x": 120.0,
+          "y": 90.0
+        },
+        {
+          "x": 160.0,
+          "y": 90.0
+        }
+      ],
+      "length_m": 80.0,
+      "width_m": 3.5,
+      "allowed_speed_mps": 5.0,
+      "crowd_penalty_s": 4.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e022_n07_n06",
+      "from_node": "n07",
+      "to_node": "n06",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 160.0,
+          "y": 90.0
+        },
+        {
+          "x": 120.0,
+          "y": 90.0
+        },
+        {
+          "x": 80.0,
+          "y": 90.0
+        }
+      ],
+      "length_m": 80.0,
+      "width_m": 3.5,
+      "allowed_speed_mps": 5.0,
+      "crowd_penalty_s": 4.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e023_n06_n10",
+      "from_node": "n06",
+      "to_node": "n10",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 80.0,
+          "y": 90.0
+        },
+        {
+          "x": 80.0,
+          "y": 135.0
+        },
+        {
+          "x": 80.0,
+          "y": 180.0
+        }
+      ],
+      "length_m": 90.0,
+      "width_m": 4.0,
+      "allowed_speed_mps": 6.0,
+      "crowd_penalty_s": 6.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e024_n10_n06",
+      "from_node": "n10",
+      "to_node": "n06",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 80.0,
+          "y": 180.0
+        },
+        {
+          "x": 80.0,
+          "y": 135.0
+        },
+        {
+          "x": 80.0,
+          "y": 90.0
+        }
+      ],
+      "length_m": 90.0,
+      "width_m": 4.0,
+      "allowed_speed_mps": 6.0,
+      "crowd_penalty_s": 6.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e025_n07_n08",
+      "from_node": "n07",
+      "to_node": "n08",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 160.0,
+          "y": 90.0
+        },
+        {
+          "x": 200.0,
+          "y": 90.0
+        },
+        {
+          "x": 240.0,
+          "y": 90.0
+        }
+      ],
+      "length_m": 80.0,
+      "width_m": 4.0,
+      "allowed_speed_mps": 4.0,
+      "crowd_penalty_s": 0.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e026_n08_n07",
+      "from_node": "n08",
+      "to_node": "n07",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 240.0,
+          "y": 90.0
+        },
+        {
+          "x": 200.0,
+          "y": 90.0
+        },
+        {
+          "x": 160.0,
+          "y": 90.0
+        }
+      ],
+      "length_m": 80.0,
+      "width_m": 4.0,
+      "allowed_speed_mps": 4.0,
+      "crowd_penalty_s": 0.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e027_n07_n11",
+      "from_node": "n07",
+      "to_node": "n11",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 160.0,
+          "y": 90.0
+        },
+        {
+          "x": 157.0,
+          "y": 135.0
+        },
+        {
+          "x": 160.0,
+          "y": 180.0
+        }
+      ],
+      "length_m": 90.199778,
+      "width_m": 4.0,
+      "allowed_speed_mps": 5.0,
+      "crowd_penalty_s": 2.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e028_n11_n07",
+      "from_node": "n11",
+      "to_node": "n07",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 160.0,
+          "y": 180.0
+        },
+        {
+          "x": 163.0,
+          "y": 135.0
+        },
+        {
+          "x": 160.0,
+          "y": 90.0
+        }
+      ],
+      "length_m": 90.199778,
+      "width_m": 4.0,
+      "allowed_speed_mps": 5.0,
+      "crowd_penalty_s": 2.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e029_n08_n09",
+      "from_node": "n08",
+      "to_node": "n09",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 240.0,
+          "y": 90.0
+        },
+        {
+          "x": 120.0,
+          "y": 135.0
+        },
+        {
+          "x": 0.0,
+          "y": 180.0
+        }
+      ],
+      "length_m": 256.320112,
+      "width_m": 4.0,
+      "allowed_speed_mps": 6.0,
+      "crowd_penalty_s": 4.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e030_n09_n08",
+      "from_node": "n09",
+      "to_node": "n08",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 0.0,
+          "y": 180.0
+        },
+        {
+          "x": 120.0,
+          "y": 135.0
+        },
+        {
+          "x": 240.0,
+          "y": 90.0
+        }
+      ],
+      "length_m": 256.320112,
+      "width_m": 4.0,
+      "allowed_speed_mps": 6.0,
+      "crowd_penalty_s": 4.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e031_n09_n10",
+      "from_node": "n09",
+      "to_node": "n10",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 0.0,
+          "y": 180.0
+        },
+        {
+          "x": 40.0,
+          "y": 180.0
+        },
+        {
+          "x": 80.0,
+          "y": 180.0
+        }
+      ],
+      "length_m": 80.0,
+      "width_m": 3.5,
+      "allowed_speed_mps": 4.0,
+      "crowd_penalty_s": 6.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e032_n10_n09",
+      "from_node": "n10",
+      "to_node": "n09",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 80.0,
+          "y": 180.0
+        },
+        {
+          "x": 40.0,
+          "y": 180.0
+        },
+        {
+          "x": 0.0,
+          "y": 180.0
+        }
+      ],
+      "length_m": 80.0,
+      "width_m": 3.5,
+      "allowed_speed_mps": 4.0,
+      "crowd_penalty_s": 6.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e033_n10_n11",
+      "from_node": "n10",
+      "to_node": "n11",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 80.0,
+          "y": 180.0
+        },
+        {
+          "x": 120.0,
+          "y": 180.0
+        },
+        {
+          "x": 160.0,
+          "y": 180.0
+        }
+      ],
+      "length_m": 80.0,
+      "width_m": 4.0,
+      "allowed_speed_mps": 5.0,
+      "crowd_penalty_s": 0.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    },
+    {
+      "id": "e034_n11_n10",
+      "from_node": "n11",
+      "to_node": "n10",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 160.0,
+          "y": 180.0
+        },
+        {
+          "x": 120.0,
+          "y": 180.0
+        },
+        {
+          "x": 80.0,
+          "y": 180.0
+        }
+      ],
+      "length_m": 80.0,
+      "width_m": 4.0,
+      "allowed_speed_mps": 5.0,
+      "crowd_penalty_s": 0.0,
+      "zone_penalty_s": 0.0,
+      "expected_wait_s": 0.0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-benchmark-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "is_open": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "assignment_algorithm": "greedy",
+  "request_priority": {
+    "base_priority": {
+      "passenger": 2.0,
+      "cargo": 1.0,
+      "mobility_needs": 3.0
+    },
+    "aging_interval_s": 120.0,
+    "deadline_weight": 2.0,
+    "deadline_window_s": 600.0
+  },
+  "fairness": {
+    "wait_s": 600.0,
+    "every_n_assignments": 3
+  },
+  "service_times_s": {
+    "pickup": 2.0,
+    "dropoff": 2.0
+  }
+}

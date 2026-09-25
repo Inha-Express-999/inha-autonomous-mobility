@@ -172,6 +172,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1862045249}
+  - component: {fileID: 1862045250}
   m_Layer: 0
   m_Name: PC Operator Root
   m_TagString: Untagged
@@ -194,6 +195,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1862045250
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1862045248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6fe596d49f3f4f33afee392c5bf58b25, type: 3}
+  m_Name:
+  m_EditorClassIdentifier: InhaExpress.Client.Presentation::InhaExpress.Client.Presentation.VehicleActorSpawner
+  requiredMapVersion: ""
+  vehiclePrefabs:
+  - vehicleId: V01
+    prefab: {fileID: 7523031473761932775, guid: c1a3b6cec7a38ed4b9fa320fa057eaf8, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -47,15 +47,24 @@ namespace InhaExpress.Client.Domain
         public string Id { get; }
         public string MapVersion { get; }
         public ReadOnlyCollection<MapPositionDto> Polyline { get; }
+        public ReadOnlyCollection<double> SegmentSpeedsMps { get; }
         public ReasonCode Reason { get; }
         public RouteDto(string id, string mapVersion, IEnumerable<MapPositionDto> polyline,
-            ReasonCode reason = ReasonCode.UNKNOWN)
+            ReasonCode reason = ReasonCode.UNKNOWN, IEnumerable<double> segmentSpeedsMps = null)
         {
             Id = DtoGuard.Text(id, nameof(id));
             MapVersion = DtoGuard.Text(mapVersion, nameof(mapVersion));
             Polyline = DtoGuard.Copy(polyline, nameof(polyline));
+            SegmentSpeedsMps = segmentSpeedsMps == null
+                ? new List<double>().AsReadOnly()
+                : DtoGuard.Copy(segmentSpeedsMps, nameof(segmentSpeedsMps));
             Reason = DtoGuard.EnumValue(reason, nameof(reason));
             if (Polyline.Count == 0) throw new System.ArgumentException("Route geometry is empty.");
+            if (SegmentSpeedsMps.Count != 0 && SegmentSpeedsMps.Count != Polyline.Count - 1)
+                throw new System.ArgumentException("Segment speed count must match route segments.", nameof(segmentSpeedsMps));
+            foreach (var speed in SegmentSpeedsMps)
+                if (DtoGuard.Finite(speed, nameof(segmentSpeedsMps)) <= 0.0)
+                    throw new System.ArgumentOutOfRangeException(nameof(segmentSpeedsMps));
         }
     }
 

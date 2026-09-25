@@ -7,6 +7,11 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 root=ET.parse('Assets/InhaCampus/Source/campus.osm').getroot()
 origin=(37.4506,126.6535)
+# Way 1203054818 is described by OSM as open-air grandstand seating, although
+# it carries building=commercial. Keep it out of generic building extrusion;
+# CampusTerrain uses a dedicated, explicitly unverified visual prefab instead.
+# Preserve the original OSM source and tags; this does not verify the stand geometry.
+NON_BUILDING_STRUCTURE_WAYS={'1203054818'}
 nodes={n.attrib['id']:((float(n.attrib['lon'])-origin[1])*111320*math.cos(math.radians(origin[0])),(float(n.attrib['lat'])-origin[0])*110980) for n in root.findall('node')}
 ways=[]; holes={}
 for w in root.findall('way'):
@@ -32,6 +37,7 @@ def vec(p):return {'x':round(p[0],3),'y':0,'z':round(p[1],3)}
 items=[]
 for i,t,p in ways:
  if not p or not any(inside(q,boundary) for q in p):continue
+ if i in NON_BUILDING_STRUCTURE_WAYS:continue
  kind=''
  if 'building' in t:kind='building'
  elif 'highway' in t and t['highway'] not in ['construction']:kind='road'

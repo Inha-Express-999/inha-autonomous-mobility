@@ -1,4 +1,13 @@
 # 변경 이력
+## 0.2.3.0 — 2026-09-25 · 합성 운송·센서·배차 기반 확장
+
+- 합성 RoadGraph의 경로 비교와 요청→픽업→하차 흐름을 확장하고 3대 차량의 Greedy/Hungarian 배차, 시간대 혼잡 prior와 우회 정책을 추가했다. 배차 비교 artifact의 비용행렬은 수기 합성값이다.
+- Python WebSocket 위치·센서 관측 검증과 제한적 정지거리 safety gate를 연결했다. Unity 합성 미리보기에는 차량 wrapper prefab, 경로 표시·추종, 위치·2D Raycast LiDAR 송신과 PC/모바일 표시를 추가했다.
+- OSM 도로 후보와 현장 검토표, 합성 graph 시각화 prefab 및 관련 문서를 추가했다. 후보 구간은 모두 미검증·주행 불가 상태다.
+- 호환성/마이그레이션: 프로젝트 버전을 0.2.3.0으로 동기화했다. WebSocket schema_version=3과 합성 map_version은 유지한다. 새 센서/경로 필드와 설정 파일을 사용하는 클라이언트는 같은 버전의 서버와 함께 실행해야 한다.
+- 검증: 이전 작업 기록의 Python backend 93개·MapData 9개 테스트와 Ruff 통과를 확인했다. 이번 커밋 준비에서는 Python compileall이 통과했다. 현재 환경에 pytest가 없어 전체 suite는 재실행하지 못했다.
+- 미검증/한계: Unity Test Runner/Player 왕복, 실제 캠퍼스 운송 그래프·Stop, TTC/RRT·물리 제동, 보행자 통합 및 성능·부하 측정은 완료되지 않았다.
+
 ## 0.2.2.0 — 2026-09-24 · 합성 서버-클라이언트 주행 프로토타입
 
 - Python 합성 6-stop graph, Dijkstra/A* 비교, 단일 차량 V01의 경로 이동·요청 상태 전이와 Unity schema-v3 WebSocket 요청 생성/취소를 연결했다. Unity 모바일에 네트워크 데이터 소스와 요청 UI를 추가했다.

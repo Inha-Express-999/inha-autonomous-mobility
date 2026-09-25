@@ -1,0 +1,6159 @@
+{
+  "type": "FeatureCollection",
+  "name": "inha-campus-osm-road-candidates",
+  "data_status": "CANDIDATE_ONLY",
+  "verification_status": "UNVERIFIED",
+  "source_sha256": "8eb03c576a7a924e3cb4ab263fba25245431d8d25881c86ee12e7b781b265a61",
+  "coordinate_frame": "WGS84 longitude, latitude",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "osm-way-37400830",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6482129,
+            37.4518976
+          ],
+          [
+            126.648,
+            37.451944441008656
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "37400830",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-71395177",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.65208380673182,
+            37.445
+          ],
+          [
+            126.6516253,
+            37.4451871
+          ],
+          [
+            126.6513708,
+            37.4452705
+          ],
+          [
+            126.6512803,
+            37.4452986
+          ],
+          [
+            126.6511351,
+            37.4453438
+          ],
+          [
+            126.6509646,
+            37.4453824
+          ],
+          [
+            126.6507206,
+            37.4454153
+          ],
+          [
+            126.6504795,
+            37.4454029
+          ],
+          [
+            126.6502649,
+            37.4453873
+          ],
+          [
+            126.6500351,
+            37.4453504
+          ],
+          [
+            126.6498151,
+            37.4452981
+          ],
+          [
+            126.6488257,
+            37.4450627
+          ],
+          [
+            126.64856194430938,
+            37.445
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "71395177",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-165484707",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.656548,
+            37.4460547
+          ],
+          [
+            126.6565064,
+            37.4459894
+          ],
+          [
+            126.6564848,
+            37.4459554
+          ],
+          [
+            126.6562796,
+            37.4456335
+          ],
+          [
+            126.6558782,
+            37.4450036
+          ],
+          [
+            126.65587590601756,
+            37.445
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "165484707",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-216916382",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6573682,
+            37.4504694
+          ],
+          [
+            126.6568015,
+            37.4507178
+          ],
+          [
+            126.6566735,
+            37.4507791
+          ],
+          [
+            126.6567214,
+            37.450971
+          ],
+          [
+            126.6564949,
+            37.4510135
+          ],
+          [
+            126.656379,
+            37.4510352
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "216916382",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-216916383",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6564766,
+            37.4512632
+          ],
+          [
+            126.6564271,
+            37.4511471
+          ],
+          [
+            126.656379,
+            37.4510352
+          ],
+          [
+            126.6559488,
+            37.4511371
+          ],
+          [
+            126.6549418,
+            37.4513755
+          ],
+          [
+            126.6544702,
+            37.4514903
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "216916383",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-216916384",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6554559,
+            37.4496873
+          ],
+          [
+            126.65544,
+            37.4496945
+          ],
+          [
+            126.6548005,
+            37.4499825
+          ],
+          [
+            126.6541191,
+            37.4502665
+          ],
+          [
+            126.654378,
+            37.4506113
+          ],
+          [
+            126.654571,
+            37.4508684
+          ],
+          [
+            126.6549418,
+            37.4513755
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "216916384",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-216916385",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6554559,
+            37.4496873
+          ],
+          [
+            126.656379,
+            37.4510352
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "216916385",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-231774838",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.659,
+            37.453778312231854
+          ],
+          [
+            126.6586179,
+            37.4536846
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "231774838",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-231774839",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.659,
+            37.45331446998706
+          ],
+          [
+            126.6589604,
+            37.4533053
+          ],
+          [
+            126.6577903,
+            37.4530348
+          ],
+          [
+            126.656357,
+            37.4526691
+          ],
+          [
+            126.6559249,
+            37.4525584
+          ],
+          [
+            126.655,
+            37.4523214
+          ],
+          [
+            126.6544168,
+            37.452172
+          ],
+          [
+            126.6537646,
+            37.4520049
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "231774839",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-231774841",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6563589,
+            37.4525422
+          ],
+          [
+            126.6571024,
+            37.4523462
+          ],
+          [
+            126.657465,
+            37.4522506
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "231774841",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-231774843",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6558634,
+            37.4514268
+          ],
+          [
+            126.6559989,
+            37.4517294
+          ],
+          [
+            126.6561261,
+            37.4520136
+          ],
+          [
+            126.6563589,
+            37.4525422
+          ],
+          [
+            126.656357,
+            37.4526691
+          ],
+          [
+            126.6562076,
+            37.4530877
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "231774843",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-234766657",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.65885057749816,
+            37.454
+          ],
+          [
+            126.653597,
+            37.4526996
+          ],
+          [
+            126.6525714,
+            37.4524942
+          ],
+          [
+            126.6518604,
+            37.4523767
+          ],
+          [
+            126.6511698,
+            37.4522919
+          ],
+          [
+            126.6503335,
+            37.4522233
+          ],
+          [
+            126.6494416,
+            37.4522102
+          ],
+          [
+            126.6484389,
+            37.4522211
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "234766657",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-234766658",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6484831,
+            37.4520878
+          ],
+          [
+            126.6494424,
+            37.4520629
+          ],
+          [
+            126.6503426,
+            37.4520651
+          ],
+          [
+            126.6512275,
+            37.4521617
+          ],
+          [
+            126.6519015,
+            37.452269
+          ],
+          [
+            126.6526125,
+            37.4523865
+          ],
+          [
+            126.6536153,
+            37.4525904
+          ],
+          [
+            126.658646,
+            37.4538366
+          ],
+          [
+            126.659,
+            37.453924297637066
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "234766658",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-234766669",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6484389,
+            37.4522211
+          ],
+          [
+            126.648,
+            37.45226181972934
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "234766669",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-234766670",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.648,
+            37.45214445683978
+          ],
+          [
+            126.6484831,
+            37.4520878
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "234766670",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-234766709",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6583949915383,
+            37.454
+          ],
+          [
+            126.6582446,
+            37.4539649
+          ],
+          [
+            126.6579119,
+            37.4538829
+          ],
+          [
+            126.6573752,
+            37.4537506
+          ],
+          [
+            126.6567763,
+            37.4536029
+          ],
+          [
+            126.6556916,
+            37.4533355
+          ],
+          [
+            126.6551771,
+            37.4532086
+          ],
+          [
+            126.6535444,
+            37.4528061
+          ],
+          [
+            126.6526903,
+            37.4526442
+          ],
+          [
+            126.6523066,
+            37.4525715
+          ],
+          [
+            126.6521661,
+            37.4525501
+          ],
+          [
+            126.6514398,
+            37.4524397
+          ],
+          [
+            126.6503509,
+            37.4523428
+          ],
+          [
+            126.6502727,
+            37.4523408
+          ],
+          [
+            126.6494426,
+            37.4523196
+          ],
+          [
+            126.6493821,
+            37.4523213
+          ],
+          [
+            126.6486759,
+            37.4523409
+          ],
+          [
+            126.6483647,
+            37.4523447
+          ],
+          [
+            126.6480814,
+            37.4524009
+          ],
+          [
+            126.648,
+            37.45240248769693
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "234766709",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-234766713",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6586002,
+            37.4452329
+          ],
+          [
+            126.6585607,
+            37.4451687
+          ],
+          [
+            126.65845675479807,
+            37.445
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "234766713",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-236508980",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6572336,
+            37.4517335
+          ],
+          [
+            126.6568874,
+            37.451821
+          ],
+          [
+            126.6567534,
+            37.4518549
+          ],
+          [
+            126.6567077,
+            37.4518665
+          ],
+          [
+            126.6561261,
+            37.4520136
+          ],
+          [
+            126.6558514,
+            37.4520887
+          ],
+          [
+            126.6554109,
+            37.4522091
+          ],
+          [
+            126.6551849,
+            37.4522709
+          ],
+          [
+            126.655,
+            37.4523214
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "236508980",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-258995842",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6533746,
+            37.4479326
+          ],
+          [
+            126.6535087,
+            37.4478766
+          ],
+          [
+            126.6538798,
+            37.4484186
+          ],
+          [
+            126.6542786,
+            37.4490012
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "258995842",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-281585931",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.65821472486488,
+            37.454
+          ],
+          [
+            126.6582446,
+            37.4539649
+          ],
+          [
+            126.6582773,
+            37.4539404
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "281585931",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-281585933",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6582773,
+            37.4539404
+          ],
+          [
+            126.6585805,
+            37.4537127
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "281585933",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-281585936",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6586179,
+            37.4536846
+          ],
+          [
+            126.659,
+            37.45335565540733
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "281585936",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-281588709",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6585997,
+            37.4513649
+          ],
+          [
+            126.659,
+            37.45125687554101
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "281588709",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-281589090",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6569674,
+            37.4511411
+          ],
+          [
+            126.6570936,
+            37.451422
+          ],
+          [
+            126.6572336,
+            37.4517335
+          ],
+          [
+            126.657465,
+            37.4522506
+          ],
+          [
+            126.6577903,
+            37.4530348
+          ],
+          [
+            126.6576398,
+            37.4534447
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "281589090",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-281621314",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.659,
+            37.44506762617587
+          ],
+          [
+            126.6589536,
+            37.4450868
+          ],
+          [
+            126.6586002,
+            37.4452329
+          ],
+          [
+            126.6583178,
+            37.445346
+          ],
+          [
+            126.6574972,
+            37.4456746
+          ],
+          [
+            126.657317,
+            37.4457468
+          ],
+          [
+            126.6571841,
+            37.4458
+          ],
+          [
+            126.656832,
+            37.445941
+          ],
+          [
+            126.6566257,
+            37.4460236
+          ],
+          [
+            126.656548,
+            37.4460547
+          ],
+          [
+            126.6563369,
+            37.4461392
+          ],
+          [
+            126.6546057,
+            37.4467792
+          ],
+          [
+            126.6544119,
+            37.4468509
+          ],
+          [
+            126.6532344,
+            37.4473242
+          ],
+          [
+            126.6527163,
+            37.4475486
+          ],
+          [
+            126.6505577,
+            37.4483995
+          ],
+          [
+            126.6501311,
+            37.4485677
+          ],
+          [
+            126.6498752,
+            37.4485853
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "281621314",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-281635648",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.65587104853952,
+            37.454
+          ],
+          [
+            126.655873,
+            37.4539923
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "281635648",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-281635652",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6545444,
+            37.4534584
+          ],
+          [
+            126.6547519,
+            37.4534302
+          ],
+          [
+            126.6548913,
+            37.4533514
+          ],
+          [
+            126.6551771,
+            37.4532086
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "281635652",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-281635840",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.65661128964096,
+            37.454
+          ],
+          [
+            126.6567763,
+            37.4536029
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "281635840",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-281636619",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6542177,
+            37.4539881
+          ],
+          [
+            126.65416146666666,
+            37.454
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "281636619",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-281636623",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6516539,
+            37.4538198
+          ],
+          [
+            126.6531157,
+            37.4532641
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "281636623",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-281636624",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6542177,
+            37.4539881
+          ],
+          [
+            126.6541268,
+            37.4539514
+          ],
+          [
+            126.6540464,
+            37.4539029
+          ],
+          [
+            126.6539176,
+            37.4537917
+          ],
+          [
+            126.6537754,
+            37.4536363
+          ],
+          [
+            126.6536735,
+            37.4535468
+          ],
+          [
+            126.6533972,
+            37.4534127
+          ],
+          [
+            126.6533409,
+            37.4534191
+          ],
+          [
+            126.6532229,
+            37.4533382
+          ],
+          [
+            126.6531157,
+            37.4532641
+          ],
+          [
+            126.6526903,
+            37.4526442
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "281636624",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-281636883",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6514152,
+            37.4534599
+          ],
+          [
+            126.6515091,
+            37.4536218
+          ],
+          [
+            126.6515505,
+            37.4536909
+          ],
+          [
+            126.6515926,
+            37.4537434
+          ],
+          [
+            126.6516539,
+            37.4538198
+          ],
+          [
+            126.65178020543784,
+            37.454
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "281636883",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-281636885",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6515505,
+            37.4536909
+          ],
+          [
+            126.6514072,
+            37.4537538
+          ],
+          [
+            126.651273,
+            37.4538198
+          ],
+          [
+            126.6510905,
+            37.4538918
+          ],
+          [
+            126.6510236,
+            37.4539071
+          ],
+          [
+            126.6508008,
+            37.4539195
+          ],
+          [
+            126.6507123,
+            37.4539003
+          ],
+          [
+            126.6505033,
+            37.4539901
+          ],
+          [
+            126.65048807777777,
+            37.454
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "281636885",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-281636887",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6521661,
+            37.4525501
+          ],
+          [
+            126.6517827,
+            37.4526977
+          ],
+          [
+            126.6511041,
+            37.4529766
+          ],
+          [
+            126.6507951,
+            37.4531063
+          ],
+          [
+            126.6498461,
+            37.4535047
+          ],
+          [
+            126.6496323,
+            37.4535939
+          ],
+          [
+            126.64866580935995,
+            37.454
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "281636887",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-281636888",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6498461,
+            37.4535047
+          ],
+          [
+            126.65018731299598,
+            37.454
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "281636888",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-283879195",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.65767742815058,
+            37.454
+          ],
+          [
+            126.6577148,
+            37.4539886
+          ],
+          [
+            126.6577942,
+            37.4539574
+          ],
+          [
+            126.6579119,
+            37.4538829
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "283879195",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-284008454",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6583478,
+            37.4507712
+          ],
+          [
+            126.6584834,
+            37.4510909
+          ],
+          [
+            126.6585997,
+            37.4513649
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "284008454",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-284010488",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6579196,
+            37.446352
+          ],
+          [
+            126.6577759,
+            37.4461215
+          ],
+          [
+            126.6574972,
+            37.4456746
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "284010488",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-284366927",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6496323,
+            37.4535939
+          ],
+          [
+            126.6493425,
+            37.4531718
+          ],
+          [
+            126.6492062,
+            37.4529733
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "284366927",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-284366928",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.65348826003063,
+            37.454
+          ],
+          [
+            126.653459,
+            37.4538709
+          ],
+          [
+            126.6534082,
+            37.4536012
+          ],
+          [
+            126.6533791,
+            37.4535226
+          ],
+          [
+            126.6533409,
+            37.4534191
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "284366928",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-284366930",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6485915,
+            37.4532487
+          ],
+          [
+            126.6484969,
+            37.4531022
+          ],
+          [
+            126.6480814,
+            37.4524009
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "284366930",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-284366931",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6488564,
+            37.4531369
+          ],
+          [
+            126.6483647,
+            37.4523447
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "284366931",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-284366932",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6482567,
+            37.4533899
+          ],
+          [
+            126.6485915,
+            37.4532487
+          ],
+          [
+            126.6488564,
+            37.4531369
+          ],
+          [
+            126.6491752,
+            37.4530023
+          ],
+          [
+            126.6492062,
+            37.4529733
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "284366932",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-284366933",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.65428482394881,
+            37.454
+          ],
+          [
+            126.6542821,
+            37.45398
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "284366933",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-284366934",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6493425,
+            37.4531718
+          ],
+          [
+            126.6497121,
+            37.4530561
+          ],
+          [
+            126.6500071,
+            37.4529645
+          ],
+          [
+            126.6500955,
+            37.4529425
+          ],
+          [
+            126.6505676,
+            37.4527594
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "284366934",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-284366935",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6507951,
+            37.4531063
+          ],
+          [
+            126.6507473,
+            37.4530277
+          ],
+          [
+            126.6505676,
+            37.4527594
+          ],
+          [
+            126.6502727,
+            37.4523408
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "284366935",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-284367128",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6548345,
+            37.4527502
+          ],
+          [
+            126.655,
+            37.4523214
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "284367128",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-284973519",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6503727,
+            37.4464912
+          ],
+          [
+            126.6501438,
+            37.4464671
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "284973519",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-284973520",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6515225,
+            37.4463159
+          ],
+          [
+            126.6506025,
+            37.4462754
+          ],
+          [
+            126.6505247,
+            37.4462903
+          ],
+          [
+            126.6504523,
+            37.4463159
+          ],
+          [
+            126.6503957,
+            37.4463706
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "284973520",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-284973522",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6494894,
+            37.4470165
+          ],
+          [
+            126.6497522,
+            37.4469015
+          ],
+          [
+            126.6500043,
+            37.4468035
+          ],
+          [
+            126.6500741,
+            37.4467759
+          ],
+          [
+            126.6501438,
+            37.4464671
+          ],
+          [
+            126.6501975,
+            37.4461775
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "284973522",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-471689462",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.648,
+            37.44822052184446
+          ],
+          [
+            126.6488203,
+            37.4484021
+          ],
+          [
+            126.6494694,
+            37.4485379
+          ],
+          [
+            126.6496828,
+            37.4485825
+          ],
+          [
+            126.6498752,
+            37.4485853
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "471689462",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241657",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6533746,
+            37.4479326
+          ],
+          [
+            126.6532669,
+            37.447981
+          ],
+          [
+            126.653599,
+            37.4485071
+          ],
+          [
+            126.6540219,
+            37.4490993
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241657",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241658",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6532344,
+            37.4473242
+          ],
+          [
+            126.6531798,
+            37.4475546
+          ],
+          [
+            126.6532817,
+            37.4477196
+          ],
+          [
+            126.6535204,
+            37.447743
+          ],
+          [
+            126.6544898,
+            37.4477788
+          ],
+          [
+            126.6545433,
+            37.4478088
+          ],
+          [
+            126.6546858,
+            37.4480616
+          ],
+          [
+            126.6551815,
+            37.4487502
+          ],
+          [
+            126.6552095,
+            37.4487903
+          ],
+          [
+            126.6555442,
+            37.4492969
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241658",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241659",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6538798,
+            37.4484186
+          ],
+          [
+            126.6546858,
+            37.4480616
+          ],
+          [
+            126.6550435,
+            37.447939
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241659",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241660",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.655379,
+            37.4472182
+          ],
+          [
+            126.6547292,
+            37.4474328
+          ],
+          [
+            126.6542396,
+            37.4476053
+          ],
+          [
+            126.6542128,
+            37.4476021
+          ],
+          [
+            126.6541229,
+            37.4475153
+          ],
+          [
+            126.654129,
+            37.4475009
+          ],
+          [
+            126.6546486,
+            37.4472949
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241660",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241661",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6546486,
+            37.4472949
+          ],
+          [
+            126.6547292,
+            37.4474328
+          ],
+          [
+            126.6550435,
+            37.447939
+          ],
+          [
+            126.6555227,
+            37.4486497
+          ],
+          [
+            126.6558984,
+            37.4491737
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241661",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241662",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6502519,
+            37.4513896
+          ],
+          [
+            126.6513249,
+            37.4509655
+          ],
+          [
+            126.651659,
+            37.4508581
+          ],
+          [
+            126.6523204,
+            37.4505968
+          ],
+          [
+            126.6527628,
+            37.450422
+          ],
+          [
+            126.6528736,
+            37.4503783
+          ],
+          [
+            126.653454,
+            37.450164
+          ],
+          [
+            126.653543,
+            37.4501295
+          ],
+          [
+            126.6536329,
+            37.4500791
+          ],
+          [
+            126.6536596,
+            37.4500696
+          ],
+          [
+            126.6545112,
+            37.4497409
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241662",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241663",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6558984,
+            37.4491737
+          ],
+          [
+            126.6562594,
+            37.4497847
+          ],
+          [
+            126.6564605,
+            37.4501252
+          ],
+          [
+            126.6564949,
+            37.4510135
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241663",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241664",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6554416,
+            37.4493495
+          ],
+          [
+            126.65541,
+            37.4494074
+          ],
+          [
+            126.65544,
+            37.4496945
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241664",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241665",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6541191,
+            37.4502665
+          ],
+          [
+            126.6536596,
+            37.4500696
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241665",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241666",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6544702,
+            37.4514903
+          ],
+          [
+            126.6543714,
+            37.4513665
+          ],
+          [
+            126.6541975,
+            37.4511325
+          ],
+          [
+            126.6540495,
+            37.4509215
+          ],
+          [
+            126.6537715,
+            37.4504638
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241666",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241667",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6537715,
+            37.4504638
+          ],
+          [
+            126.6540524,
+            37.4503513
+          ],
+          [
+            126.6540932,
+            37.4503348
+          ],
+          [
+            126.6541191,
+            37.4502665
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241667",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241668",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.654571,
+            37.4508684
+          ],
+          [
+            126.6548597,
+            37.4507605
+          ],
+          [
+            126.6549285,
+            37.450746
+          ],
+          [
+            126.6551299,
+            37.4506979
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241668",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241669",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6551299,
+            37.4506979
+          ],
+          [
+            126.6553011,
+            37.4506885
+          ],
+          [
+            126.6553605,
+            37.4507036
+          ],
+          [
+            126.6554622,
+            37.4508504
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241669",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241675",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6518116,
+            37.4510626
+          ],
+          [
+            126.6523421,
+            37.4508374
+          ],
+          [
+            126.6525725,
+            37.4507396
+          ],
+          [
+            126.6530014,
+            37.4505575
+          ],
+          [
+            126.6534567,
+            37.4503831
+          ],
+          [
+            126.6534912,
+            37.4502634
+          ],
+          [
+            126.653454,
+            37.450164
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241675",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241676",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6530014,
+            37.4505575
+          ],
+          [
+            126.6528736,
+            37.4503783
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241676",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241677",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6523204,
+            37.4505968
+          ],
+          [
+            126.6523828,
+            37.4506941
+          ],
+          [
+            126.6524914,
+            37.4507296
+          ],
+          [
+            126.6525725,
+            37.4507396
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241677",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241679",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6523421,
+            37.4508374
+          ],
+          [
+            126.65237,
+            37.4507871
+          ],
+          [
+            126.6523828,
+            37.4507245
+          ],
+          [
+            126.6523828,
+            37.4506941
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241679",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241681",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6527628,
+            37.450422
+          ],
+          [
+            126.6526207,
+            37.4502253
+          ],
+          [
+            126.6525153,
+            37.4500793
+          ],
+          [
+            126.6515963,
+            37.4488071
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241681",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241683",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6524029,
+            37.4484321
+          ],
+          [
+            126.6526055,
+            37.448332
+          ],
+          [
+            126.6527431,
+            37.4482803
+          ],
+          [
+            126.6528221,
+            37.4481866
+          ],
+          [
+            126.6531223,
+            37.4477904
+          ],
+          [
+            126.6529862,
+            37.4476498
+          ],
+          [
+            126.6527163,
+            37.4475486
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241683",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241685",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6536329,
+            37.4500791
+          ],
+          [
+            126.6533032,
+            37.4495876
+          ],
+          [
+            126.6532897,
+            37.4495668
+          ],
+          [
+            126.6528056,
+            37.4488638
+          ],
+          [
+            126.6526098,
+            37.4486051
+          ],
+          [
+            126.6525739,
+            37.4485087
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241685",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241687",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6521954,
+            37.4481004
+          ],
+          [
+            126.6524029,
+            37.4484321
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241687",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241689",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6531223,
+            37.4477904
+          ],
+          [
+            126.6532817,
+            37.4477196
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241689",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241690",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6528056,
+            37.4488638
+          ],
+          [
+            126.653599,
+            37.4485071
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241690",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241692",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6533032,
+            37.4495876
+          ],
+          [
+            126.6551815,
+            37.4487502
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241692",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241694",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6548005,
+            37.4499825
+          ],
+          [
+            126.6547443,
+            37.4499134
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241694",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241696",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6547295,
+            37.4496452
+          ],
+          [
+            126.6554416,
+            37.4493495
+          ],
+          [
+            126.6555442,
+            37.4492969
+          ],
+          [
+            126.6558984,
+            37.4491737
+          ],
+          [
+            126.6562233,
+            37.4490593
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241696",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241697",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6545112,
+            37.4497409
+          ],
+          [
+            126.6546693,
+            37.449672
+          ],
+          [
+            126.6547295,
+            37.4496452
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241697",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241699",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6568015,
+            37.4507178
+          ],
+          [
+            126.6565183,
+            37.4502257
+          ],
+          [
+            126.6564605,
+            37.4501252
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241699",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241706",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.659,
+            37.44899747220267
+          ],
+          [
+            126.6588174,
+            37.4490641
+          ],
+          [
+            126.6586556,
+            37.449131
+          ],
+          [
+            126.6584768,
+            37.4491435
+          ],
+          [
+            126.6578454,
+            37.449435
+          ],
+          [
+            126.6572392,
+            37.4497374
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241706",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241714",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6579184,
+            37.4508863
+          ],
+          [
+            126.6576167,
+            37.4502816
+          ],
+          [
+            126.6572392,
+            37.4497374
+          ],
+          [
+            126.6569716,
+            37.4494106
+          ],
+          [
+            126.6567423,
+            37.4491296
+          ],
+          [
+            126.6565626,
+            37.4489209
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241714",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241715",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6562233,
+            37.4490593
+          ],
+          [
+            126.6565626,
+            37.4489209
+          ],
+          [
+            126.6574799,
+            37.4485227
+          ],
+          [
+            126.6576446,
+            37.4484546
+          ],
+          [
+            126.6579704,
+            37.44832
+          ],
+          [
+            126.65899,
+            37.4478988
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241715",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241716",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6579704,
+            37.44832
+          ],
+          [
+            126.6578071,
+            37.4482416
+          ],
+          [
+            126.6576524,
+            37.4481435
+          ],
+          [
+            126.6563369,
+            37.4461392
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241716",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-481241717",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6576446,
+            37.4484546
+          ],
+          [
+            126.6576784,
+            37.4482991
+          ],
+          [
+            126.6576524,
+            37.4481435
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "481241717",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-505994421",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.65685198252427,
+            37.445
+          ],
+          [
+            126.6569335,
+            37.4451309
+          ],
+          [
+            126.6570598,
+            37.4453337
+          ],
+          [
+            126.657317,
+            37.4457468
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "505994421",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-505994422",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6570598,
+            37.4453337
+          ],
+          [
+            126.6562796,
+            37.4456335
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "505994422",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-505994427",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6570598,
+            37.4453337
+          ],
+          [
+            126.6578819,
+            37.4450114
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "505994427",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-505994428",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6562433,
+            37.445402
+          ],
+          [
+            126.6569335,
+            37.4451309
+          ],
+          [
+            126.6572751468921,
+            37.445
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "505994428",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-505994429",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6561194,
+            37.4451857
+          ],
+          [
+            126.6565847802287,
+            37.445
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "505994429",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-653535230",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6486966,
+            37.4504752
+          ],
+          [
+            126.6485412,
+            37.4504891
+          ],
+          [
+            126.6484395,
+            37.450582
+          ],
+          [
+            126.6482762,
+            37.4508731
+          ],
+          [
+            126.6481284,
+            37.4510272
+          ],
+          [
+            126.6480205,
+            37.451125
+          ],
+          [
+            126.648,
+            37.45116733116884
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "653535230",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-653535242",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6487251,
+            37.4484716
+          ],
+          [
+            126.6483743,
+            37.4487585
+          ],
+          [
+            126.6480875,
+            37.4487206
+          ],
+          [
+            126.648,
+            37.44879676396762
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "653535242",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-653535243",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.648,
+            37.449285814218015
+          ],
+          [
+            126.6482805,
+            37.4491718
+          ],
+          [
+            126.6494938,
+            37.4486711
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "653535243",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-653537033",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6482805,
+            37.4491718
+          ],
+          [
+            126.6484469,
+            37.4494511
+          ],
+          [
+            126.6483631,
+            37.4496511
+          ],
+          [
+            126.6483425,
+            37.449702
+          ],
+          [
+            126.6482437,
+            37.4498007
+          ],
+          [
+            126.6481975,
+            37.4498491
+          ],
+          [
+            126.648,
+            37.45005591760742
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "653537033",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-653537037",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.648,
+            37.44980443763741
+          ],
+          [
+            126.6481975,
+            37.4498491
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "653537037",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-653537041",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6480875,
+            37.4487206
+          ],
+          [
+            126.648,
+            37.44866417163871
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "653537041",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-665737674",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6576755,
+            37.4534535
+          ],
+          [
+            126.6583673,
+            37.4536863
+          ],
+          [
+            126.658646,
+            37.4538366
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "665737674",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-731224474",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.659,
+            37.44515974414415
+          ],
+          [
+            126.6589536,
+            37.4450868
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "731224474",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-731224523",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.655873,
+            37.4539923
+          ],
+          [
+            126.65591722376425,
+            37.454
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "731224523",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-731224525",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6555565,
+            37.4539497
+          ],
+          [
+            126.655873,
+            37.4539923
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "731224525",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-731224528",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.65463987358783,
+            37.454
+          ],
+          [
+            126.6546313,
+            37.4539362
+          ],
+          [
+            126.6546096,
+            37.4537747
+          ],
+          [
+            126.6545444,
+            37.4534584
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "731224528",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-731224529",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.65212333401102,
+            37.454
+          ],
+          [
+            126.6533791,
+            37.4535226
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "731224529",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-731224530",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6542821,
+            37.45398
+          ],
+          [
+            126.6542177,
+            37.4539881
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "731224530",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-731224531",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6546313,
+            37.4539362
+          ],
+          [
+            126.6542821,
+            37.45398
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "731224531",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-731224532",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6556916,
+            37.4533355
+          ],
+          [
+            126.655586,
+            37.4535153
+          ],
+          [
+            126.6555324,
+            37.453609
+          ],
+          [
+            126.6554144,
+            37.4537389
+          ],
+          [
+            126.6551541,
+            37.4539408
+          ],
+          [
+            126.6550743421231,
+            37.454
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "731224532",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-731224536",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6511041,
+            37.4529766
+          ],
+          [
+            126.6512087,
+            37.4531555
+          ],
+          [
+            126.6514152,
+            37.4534599
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "731224536",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-731224537",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.65161637291668,
+            37.454
+          ],
+          [
+            126.6516191,
+            37.4539944
+          ],
+          [
+            126.6515931,
+            37.453831
+          ],
+          [
+            126.6515926,
+            37.4537434
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "731224537",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-731224540",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6492062,
+            37.4529733
+          ],
+          [
+            126.6493768,
+            37.4523896
+          ],
+          [
+            126.6493821,
+            37.4523213
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "731224540",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-731804508",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6493598,
+            37.4471815
+          ],
+          [
+            126.648292,
+            37.4469539
+          ],
+          [
+            126.6481582,
+            37.4469254
+          ],
+          [
+            126.648,
+            37.446891691370354
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "731804508",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-937727088",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6544702,
+            37.4514903
+          ],
+          [
+            126.6528558,
+            37.4521058
+          ],
+          [
+            126.6524453,
+            37.4520187
+          ],
+          [
+            126.6518116,
+            37.4510626
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "937727088",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-940020898",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6572336,
+            37.4517335
+          ],
+          [
+            126.6575754,
+            37.4516413
+          ],
+          [
+            126.6581758,
+            37.4514793
+          ],
+          [
+            126.6585997,
+            37.4513649
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "940020898",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-940020899",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6585997,
+            37.4513649
+          ],
+          [
+            126.6586465,
+            37.4514753
+          ],
+          [
+            126.659,
+            37.451483954289415
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "940020899",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-940020900",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.65307,
+            37.45222
+          ],
+          [
+            126.6533195,
+            37.452378
+          ],
+          [
+            126.6537419,
+            37.4524818
+          ],
+          [
+            126.6540629,
+            37.4525606
+          ],
+          [
+            126.6544806,
+            37.4526633
+          ],
+          [
+            126.6548345,
+            37.4527502
+          ],
+          [
+            126.6562076,
+            37.4530877
+          ],
+          [
+            126.6576398,
+            37.4534447
+          ],
+          [
+            126.6576755,
+            37.4534535
+          ],
+          [
+            126.6586179,
+            37.4536846
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "940020900",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-940020901",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6585805,
+            37.4537127
+          ],
+          [
+            126.6586179,
+            37.4536846
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "940020901",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-955217469",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.65044223194029,
+            37.445
+          ],
+          [
+            126.6504507,
+            37.4450432
+          ],
+          [
+            126.6504708,
+            37.4452208
+          ],
+          [
+            126.6504795,
+            37.4454029
+          ],
+          [
+            126.6504632,
+            37.4455976
+          ],
+          [
+            126.6504468,
+            37.4458802
+          ],
+          [
+            126.6504447,
+            37.4461138
+          ],
+          [
+            126.6503957,
+            37.4463706
+          ],
+          [
+            126.6503727,
+            37.4464912
+          ],
+          [
+            126.6501251,
+            37.4475882
+          ],
+          [
+            126.6500185,
+            37.4480135
+          ],
+          [
+            126.6498752,
+            37.4485853
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "955217469",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-968147725",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6553011,
+            37.4506885
+          ],
+          [
+            126.6554641,
+            37.4506175
+          ],
+          [
+            126.655504,
+            37.4506138
+          ],
+          [
+            126.6556296,
+            37.4507889
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "968147725",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1063265596",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.654378,
+            37.4506113
+          ],
+          [
+            126.654983,
+            37.4503464
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1063265596",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1063266065",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6558381,
+            37.4509946
+          ],
+          [
+            126.6559488,
+            37.4511371
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1063266065",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1063267429",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6562594,
+            37.4497847
+          ],
+          [
+            126.6563688,
+            37.4496712
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1063267429",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1063267904",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6538932,
+            37.4509699
+          ],
+          [
+            126.6540495,
+            37.4509215
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1063267904",
+        "review_status": "EXPLICIT_ACCESS_DENY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1063267905",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6541637,
+            37.4514446
+          ],
+          [
+            126.6543714,
+            37.4513665
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1063267905",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1063268261",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6540495,
+            37.4509215
+          ],
+          [
+            126.6541926,
+            37.4509034
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1063268261",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1063579312",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6547443,
+            37.4499134
+          ],
+          [
+            126.6547524,
+            37.4497945
+          ],
+          [
+            126.6546693,
+            37.449672
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1063579312",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098486596",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6558514,
+            37.4520887
+          ],
+          [
+            126.6559798,
+            37.4524082
+          ],
+          [
+            126.6559249,
+            37.4525584
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098486596",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098489686",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6551299,
+            37.4506979
+          ],
+          [
+            126.654882,
+            37.4503235
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098489686",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098489687",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6546486,
+            37.4472949
+          ],
+          [
+            126.6544119,
+            37.4468509
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098489687",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098491073",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6526055,
+            37.448332
+          ],
+          [
+            126.6524007,
+            37.4480083
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098491073",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098491074",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6512514,
+            37.4489698
+          ],
+          [
+            126.6515963,
+            37.4488071
+          ],
+          [
+            126.6524029,
+            37.4484321
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098491074",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098491075",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6525739,
+            37.4485087
+          ],
+          [
+            126.6524029,
+            37.4484321
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098491075",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098491076",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6525739,
+            37.4485087
+          ],
+          [
+            126.6525887,
+            37.4484826
+          ],
+          [
+            126.6526884,
+            37.4483478
+          ],
+          [
+            126.6527431,
+            37.4482803
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098491076",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098496323",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6559989,
+            37.4517294
+          ],
+          [
+            126.655832,
+            37.4517811
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098496323",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098496324",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6559989,
+            37.4517294
+          ],
+          [
+            126.6565748,
+            37.4515677
+          ],
+          [
+            126.6570936,
+            37.451422
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098496324",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098496325",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6564433,
+            37.4512721
+          ],
+          [
+            126.6565748,
+            37.4515677
+          ],
+          [
+            126.6567077,
+            37.4518665
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098496325",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098496326",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6568874,
+            37.451821
+          ],
+          [
+            126.6571024,
+            37.4523462
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098496326",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098496327",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6570936,
+            37.451422
+          ],
+          [
+            126.6579049,
+            37.4512287
+          ],
+          [
+            126.6580533,
+            37.4511933
+          ],
+          [
+            126.6584834,
+            37.4510909
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098496327",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098496328",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6579049,
+            37.4512287
+          ],
+          [
+            126.657759,
+            37.450929
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098496328",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098496329",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6580533,
+            37.4511933
+          ],
+          [
+            126.6581758,
+            37.4514793
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098496329",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098496330",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6544702,
+            37.4514903
+          ],
+          [
+            126.6546715,
+            37.4517233
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098496330",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098496331",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6537715,
+            37.4504638
+          ],
+          [
+            126.653543,
+            37.4501295
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098496331",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098496332",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6540524,
+            37.4503513
+          ],
+          [
+            126.6539814,
+            37.4503237
+          ],
+          [
+            126.6538774,
+            37.4502714
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098496332",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098539002",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6552095,
+            37.4487903
+          ],
+          [
+            126.6555227,
+            37.4486497
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098539002",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098539006",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6522374,
+            37.4503168
+          ],
+          [
+            126.6521798,
+            37.4502247
+          ],
+          [
+            126.6525153,
+            37.4500793
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098539006",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098539007",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6523725,
+            37.450331
+          ],
+          [
+            126.6526207,
+            37.4502253
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098539007",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098539008",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6521798,
+            37.4502247
+          ],
+          [
+            126.651972,
+            37.4503076
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098539008",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098539009",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6521798,
+            37.4502247
+          ],
+          [
+            126.6521418,
+            37.4501686
+          ],
+          [
+            126.6520534,
+            37.4500381
+          ],
+          [
+            126.6518786,
+            37.4497802
+          ],
+          [
+            126.6517888,
+            37.4496477
+          ],
+          [
+            126.6517418,
+            37.4495784
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098539009",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098539010",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6520088,
+            37.4495474
+          ],
+          [
+            126.6517888,
+            37.4496477
+          ],
+          [
+            126.6515862,
+            37.44974
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098539010",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098539011",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6521017,
+            37.4496889
+          ],
+          [
+            126.6518786,
+            37.4497802
+          ],
+          [
+            126.6516718,
+            37.4498649
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098539011",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098539012",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6522704,
+            37.4499455
+          ],
+          [
+            126.6520534,
+            37.4500381
+          ],
+          [
+            126.6518498,
+            37.4501249
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098539012",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098539013",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6523595,
+            37.4500812
+          ],
+          [
+            126.6521418,
+            37.4501686
+          ],
+          [
+            126.6519362,
+            37.4502511
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098539013",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098539014",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6510121,
+            37.4508836
+          ],
+          [
+            126.6512211,
+            37.4509046
+          ],
+          [
+            126.6513249,
+            37.4509655
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098539014",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098539015",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6502519,
+            37.4513896
+          ],
+          [
+            126.6502,
+            37.4513921
+          ],
+          [
+            126.6497488,
+            37.4512165
+          ],
+          [
+            126.6495223,
+            37.4510872
+          ],
+          [
+            126.6492639,
+            37.4508414
+          ],
+          [
+            126.6492604,
+            37.450788
+          ],
+          [
+            126.6493347,
+            37.4506953
+          ],
+          [
+            126.649388,
+            37.4506846
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098539015",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098539016",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.649388,
+            37.4506846
+          ],
+          [
+            126.6495807,
+            37.4507037
+          ],
+          [
+            126.6499664,
+            37.4511027
+          ],
+          [
+            126.6501009,
+            37.4511487
+          ],
+          [
+            126.6501894,
+            37.4511406
+          ],
+          [
+            126.6502158,
+            37.4511292
+          ],
+          [
+            126.6503584,
+            37.4510672
+          ],
+          [
+            126.6505024,
+            37.4510052
+          ],
+          [
+            126.6506581,
+            37.4509379
+          ],
+          [
+            126.6507999,
+            37.4508765
+          ],
+          [
+            126.6510121,
+            37.4508836
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098539016",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098539017",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6495807,
+            37.4507037
+          ],
+          [
+            126.6496659,
+            37.450524
+          ],
+          [
+            126.6497761,
+            37.450369
+          ],
+          [
+            126.6498603,
+            37.4502457
+          ],
+          [
+            126.6499146,
+            37.450217
+          ],
+          [
+            126.6500783,
+            37.4501303
+          ],
+          [
+            126.6502425,
+            37.4500434
+          ],
+          [
+            126.6508017,
+            37.450809
+          ],
+          [
+            126.6507999,
+            37.4508765
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098539017",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098539018",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6496659,
+            37.450524
+          ],
+          [
+            126.6502158,
+            37.4511292
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098539018",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098539019",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6497761,
+            37.450369
+          ],
+          [
+            126.6503584,
+            37.4510672
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098539019",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098539020",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6499146,
+            37.450217
+          ],
+          [
+            126.6505024,
+            37.4510052
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098539020",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098539021",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6500783,
+            37.4501303
+          ],
+          [
+            126.6506581,
+            37.4509379
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098539021",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098546960",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6520961,
+            37.4469814
+          ],
+          [
+            126.6519965,
+            37.4469717
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098546960",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098546961",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6519965,
+            37.4469717
+          ],
+          [
+            126.6519826,
+            37.4470169
+          ],
+          [
+            126.6519333,
+            37.4470683
+          ],
+          [
+            126.6518671,
+            37.447083
+          ],
+          [
+            126.6517885,
+            37.4470597
+          ],
+          [
+            126.6516822,
+            37.4470059
+          ],
+          [
+            126.651616,
+            37.4469374
+          ],
+          [
+            126.6515405,
+            37.4468298
+          ],
+          [
+            126.6515066,
+            37.4467466
+          ],
+          [
+            126.6514897,
+            37.4466268
+          ],
+          [
+            126.6515081,
+            37.4465742
+          ],
+          [
+            126.6515544,
+            37.4465363
+          ],
+          [
+            126.6516437,
+            37.4465265
+          ],
+          [
+            126.6517223,
+            37.4465656
+          ],
+          [
+            126.6518209,
+            37.4466305
+          ],
+          [
+            126.6518779,
+            37.4466977
+          ],
+          [
+            126.6519272,
+            37.4467858
+          ],
+          [
+            126.6519734,
+            37.4468848
+          ],
+          [
+            126.6519965,
+            37.4469717
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098546961",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1098546962",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6516437,
+            37.4465265
+          ],
+          [
+            126.6516853,
+            37.4464886
+          ],
+          [
+            126.6516967,
+            37.446419
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1098546962",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1099883999",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6537419,
+            37.4524818
+          ],
+          [
+            126.6538125,
+            37.4523307
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1099883999",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1099884000",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6540629,
+            37.4525606
+          ],
+          [
+            126.654127,
+            37.4524063
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1099884000",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1099884017",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6544806,
+            37.4526633
+          ],
+          [
+            126.6545437,
+            37.4524885
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1099884017",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1099884018",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6544168,
+            37.452172
+          ],
+          [
+            126.6543535,
+            37.4523108
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1099884018",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1099890762",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6546599,
+            37.4517272
+          ],
+          [
+            126.6547552,
+            37.451942
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1099890762",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1099890768",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6551849,
+            37.4522709
+          ],
+          [
+            126.6551118,
+            37.4521022
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1099890768",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1099890770",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6554109,
+            37.4522091
+          ],
+          [
+            126.6553059,
+            37.4519855
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1099890770",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1099890771",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6553059,
+            37.4519855
+          ],
+          [
+            126.6552697,
+            37.4519005
+          ],
+          [
+            126.6553259,
+            37.4518846
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1099890771",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1215102701",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6506762340733,
+            37.445
+          ],
+          [
+            126.6508947,
+            37.4451865
+          ],
+          [
+            126.6510479,
+            37.4452473
+          ],
+          [
+            126.6512803,
+            37.4452986
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1215102701",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1215102702",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6511351,
+            37.4453438
+          ],
+          [
+            126.6507075,
+            37.4456684
+          ],
+          [
+            126.6504468,
+            37.4458802
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1215102702",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1215102703",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6504468,
+            37.4458802
+          ],
+          [
+            126.6503018,
+            37.4456144
+          ],
+          [
+            126.6501146,
+            37.4454725
+          ],
+          [
+            126.6498151,
+            37.4452981
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1215102703",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1215102704",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6500185,
+            37.4480135
+          ],
+          [
+            126.6501488,
+            37.4482741
+          ],
+          [
+            126.6501945,
+            37.4483325
+          ],
+          [
+            126.650244,
+            37.4483567
+          ],
+          [
+            126.6503505,
+            37.4483778
+          ],
+          [
+            126.6505577,
+            37.4483995
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1215102704",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1215102705",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6505577,
+            37.4483995
+          ],
+          [
+            126.6501818,
+            37.4486558
+          ],
+          [
+            126.6501298,
+            37.4486991
+          ],
+          [
+            126.6497772,
+            37.449048
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1215102705",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1215102706",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6497117,
+            37.44922
+          ],
+          [
+            126.6496591,
+            37.4488462
+          ],
+          [
+            126.6496299,
+            37.4487273
+          ],
+          [
+            126.6495792,
+            37.4486508
+          ],
+          [
+            126.6494694,
+            37.4485379
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1215102706",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1215102707",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6487251,
+            37.4484716
+          ],
+          [
+            126.6493908,
+            37.4486165
+          ],
+          [
+            126.6494938,
+            37.4486711
+          ],
+          [
+            126.6495341,
+            37.4487463
+          ],
+          [
+            126.6494386,
+            37.4491519
+          ],
+          [
+            126.6492713,
+            37.4494933
+          ],
+          [
+            126.6487972,
+            37.4503279
+          ],
+          [
+            126.6486966,
+            37.4504752
+          ],
+          [
+            126.6481338,
+            37.4514936
+          ],
+          [
+            126.648,
+            37.4517309631316
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1215102707",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1215102708",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6495341,
+            37.4487463
+          ],
+          [
+            126.6496299,
+            37.4487273
+          ],
+          [
+            126.6498514,
+            37.4487234
+          ],
+          [
+            126.6500215,
+            37.4487178
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1215102708",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1215102709",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6500215,
+            37.4487178
+          ],
+          [
+            126.6500406,
+            37.4487172
+          ],
+          [
+            126.6500918,
+            37.4486804
+          ],
+          [
+            126.6501027,
+            37.4486858
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1215102709",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1215102710",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6501027,
+            37.4486858
+          ],
+          [
+            126.6501298,
+            37.4486991
+          ],
+          [
+            126.6501493,
+            37.4487235
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1215102710",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1215117217",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6482129,
+            37.4518976
+          ],
+          [
+            126.648,
+            37.452304345128404
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1215117217",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1215117218",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6495475,
+            37.4496517
+          ],
+          [
+            126.649355,
+            37.4500629
+          ],
+          [
+            126.6488337,
+            37.4508644
+          ],
+          [
+            126.6486557,
+            37.4510138
+          ],
+          [
+            126.6486797,
+            37.4508134
+          ],
+          [
+            126.6492063,
+            37.4499801
+          ],
+          [
+            126.6495475,
+            37.4496517
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1215117218",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1215393150",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6498752,
+            37.4485853
+          ],
+          [
+            126.6498514,
+            37.4487234
+          ],
+          [
+            126.6498105,
+            37.4489603
+          ],
+          [
+            126.6497772,
+            37.449048
+          ],
+          [
+            126.6497117,
+            37.44922
+          ],
+          [
+            126.6495475,
+            37.4496517
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1215393150",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1215393151",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6486557,
+            37.4510138
+          ],
+          [
+            126.6482129,
+            37.4518976
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1215393151",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1223158572",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.648,
+            37.45301358629134
+          ],
+          [
+            126.6482567,
+            37.4533899
+          ],
+          [
+            126.64863727399936,
+            37.454
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1223158572",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1223158575",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6482129,
+            37.4518976
+          ],
+          [
+            126.6486647,
+            37.4518723
+          ],
+          [
+            126.6492031,
+            37.4518886
+          ],
+          [
+            126.6500416,
+            37.4519081
+          ],
+          [
+            126.6503815,
+            37.4519338
+          ],
+          [
+            126.6510362,
+            37.4519832
+          ],
+          [
+            126.6526557,
+            37.4522214
+          ],
+          [
+            126.6528817,
+            37.4522344
+          ],
+          [
+            126.65307,
+            37.45222
+          ],
+          [
+            126.6533313,
+            37.4521584
+          ],
+          [
+            126.6537646,
+            37.4520049
+          ],
+          [
+            126.6546599,
+            37.4517272
+          ],
+          [
+            126.6546715,
+            37.4517233
+          ],
+          [
+            126.6558634,
+            37.4514268
+          ],
+          [
+            126.6560988,
+            37.451364
+          ],
+          [
+            126.6564433,
+            37.4512721
+          ],
+          [
+            126.6564766,
+            37.4512632
+          ],
+          [
+            126.6569674,
+            37.4511411
+          ],
+          [
+            126.657759,
+            37.450929
+          ],
+          [
+            126.6579184,
+            37.4508863
+          ],
+          [
+            126.6583478,
+            37.4507712
+          ],
+          [
+            126.659,
+            37.45059644162234
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1223158575",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1390060991",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.65347560860333,
+            37.445
+          ],
+          [
+            126.6536338,
+            37.4452677
+          ],
+          [
+            126.65378,
+            37.445485
+          ],
+          [
+            126.6539782,
+            37.445826
+          ],
+          [
+            126.6546057,
+            37.4467792
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1390060991",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1416977807",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6498151,
+            37.4452981
+          ],
+          [
+            126.6501373,
+            37.4452022
+          ],
+          [
+            126.6502451,
+            37.4451009
+          ],
+          [
+            126.65030606974268,
+            37.445
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1416977807",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1546646094",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.6481582,
+            37.4469254
+          ],
+          [
+            126.6488257,
+            37.4450627
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1546646094",
+        "review_status": "VEHICLE_ACCESS_REVIEW",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "osm-way-1556825513",
+      "geometry": {
+        "type": "LineString",
+        "coordinates": [
+          [
+            126.648292,
+            37.4469539
+          ],
+          [
+            126.648,
+            37.44778598212227
+          ]
+        ]
+      },
+      "properties": {
+        "osm_way_id": "1556825513",
+        "review_status": "NON_VEHICLE_HIGHWAY",
+        "verification_status": "UNVERIFIED",
+        "routable": false,
+        "geometry_scope": "CLIPPED_TO_SOURCE_QUERY_BBOX_DISPLAY_ONLY"
+      }
+    }
+  ],
+  "source_query_bbox_wgs84": {
+    "west_lon": 126.648,
+    "south_lat": 37.445,
+    "east_lon": 126.659,
+    "north_lat": 37.454
+  },
+  "display_clip_bbox_wgs84": {
+    "west_lon": 126.648,
+    "south_lat": 37.445,
+    "east_lon": 126.659,
+    "north_lat": 37.454
+  },
+  "display_only": true
+}

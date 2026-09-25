@@ -1,0 +1,384 @@
+{
+  "type": "FeatureCollection",
+  "name": "inha-campus-osm-road-candidates",
+  "data_status": "CANDIDATE_ONLY",
+  "verification_status": "UNVERIFIED",
+  "source_sha256": "8eb03c576a7a924e3cb4ab263fba25245431d8d25881c86ee12e7b781b265a61",
+  "coordinate_frame": "WGS84 longitude, latitude",
+  "features": [
+    {
+      "type": "Feature",
+      "id": "436222334",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6536153,
+          37.4525904
+        ]
+      },
+      "properties": {
+        "osm_node_id": "436222334",
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"direction\": \"255\", \"highway\": \"speed_camera\", \"maxspeed\": \"70\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "436821486",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6722682,
+          37.4396855
+        ]
+      },
+      "properties": {
+        "osm_node_id": "436821486",
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"junction\": \"yes\", \"name\": \"학익소방사거리\", \"name:ko\": \"학익소방사거리\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "436821495",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6624964,
+          37.4408059
+        ]
+      },
+      "properties": {
+        "osm_node_id": "436821495",
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"junction\": \"yes\", \"name\": \"학산사거리\", \"name:en\": \"Haksan Crossroad\", \"name:ko\": \"학산사거리\", \"name:ko-Latn\": \"Haksansageori\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "436830040",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6504795,
+          37.4454029
+        ]
+      },
+      "properties": {
+        "osm_node_id": "436830040",
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"crossing\": \"no\", \"highway\": \"traffic_signals\", \"traffic_signals\": \"signal\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "436836503",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6498752,
+          37.4485853
+        ]
+      },
+      "properties": {
+        "osm_node_id": "436836503",
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"junction\": \"yes\", \"name\": \"비룡삼거리\", \"name:en\": \"Biryongsamgeori\", \"name:ko\": \"비룡삼거리\", \"name:ko-Latn\": \"Biryongsamgeori\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "436836610",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6499796,
+          37.4563619
+        ]
+      },
+      "properties": {
+        "osm_node_id": "436836610",
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"junction\": \"yes\", \"name\": \"용현사거리\", \"name:en\": \"Yonghyeon Crossroad\", \"name:ko\": \"용현사거리\", \"name:ko-Latn\": \"Yonghyeonsageori\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "436879748",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.667571,
+          37.4488826
+        ]
+      },
+      "properties": {
+        "osm_node_id": "436879748",
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"junction\": \"yes\", \"name\": \"제운사거리\", \"name:en\": \"Jeun Crossroad\", \"name:ko\": \"제운사거리\", \"name:ko-Latn\": \"Jeunsageori\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "2262335941",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6573682,
+          37.4504694
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2262335941",
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"entrance\": \"entrance\", \"wheelchair\": \"yes\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "2429042776",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6502649,
+          37.4453873
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2429042776",
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"crossing\": \"traffic_signals\", \"highway\": \"crossing\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "2429042941",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6721606,
+          37.4616964
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2429042941",
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"junction\": \"yes\", \"name\": \"도화IC\", \"name:en\": \"Dowha IC.\", \"name:ja\": \"道禾出入口\", \"name:ko\": \"도화IC\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "2429042945",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6717702,
+          37.4619871
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2429042945",
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"junction\": \"yes\", \"name\": \"도화IC\", \"name:en\": \"Dohwa IC.\", \"name:ja\": \"道禾出入口\", \"name:ko\": \"도화IC\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "2886789172",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6507206,
+          37.4454153
+        ]
+      },
+      "properties": {
+        "osm_node_id": "2886789172",
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"crossing\": \"traffic_signals\", \"highway\": \"crossing\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "4703015310",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.65511,
+          37.4437652
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4703015310",
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"junction\": \"yes\", \"name\": \"남부서사거리\", \"name:en\": \"Nambuseo crossroad\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "4741793209",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6564271,
+          37.4511471
+        ]
+      },
+      "properties": {
+        "osm_node_id": "4741793209",
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"barrier\": \"entrance\", \"name\": \"인하대학교 후문\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "8239087924",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6601466,
+          37.4543208
+        ]
+      },
+      "properties": {
+        "osm_node_id": "8239087924",
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"direction\": \"73\", \"highway\": \"speed_camera\", \"maxspeed\": \"70\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "11257934915",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6504632,
+          37.4455976
+        ]
+      },
+      "properties": {
+        "osm_node_id": "11257934915",
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"crossing\": \"traffic_signals\", \"highway\": \"crossing\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "11257934916",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6504708,
+          37.4452208
+        ]
+      },
+      "properties": {
+        "osm_node_id": "11257934916",
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"crossing\": \"traffic_signals\", \"highway\": \"crossing\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "11403267420",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6658101,
+          37.4490524
+        ]
+      },
+      "properties": {
+        "osm_node_id": "11403267420",
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"bus\": \"yes\", \"highway\": \"bus_stop\", \"name\": \"용남파출소\", \"public_transport\": \"stop_position\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "11403267421",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6631692,
+          37.4494719
+        ]
+      },
+      "properties": {
+        "osm_node_id": "11403267421",
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"bus\": \"yes\", \"highway\": \"bus_stop\", \"name\": \"학산소극장\", \"public_transport\": \"stop_position\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "11403267422",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.659551,
+          37.4504488
+        ]
+      },
+      "properties": {
+        "osm_node_id": "11403267422",
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"bus\": \"yes\", \"highway\": \"bus_stop\", \"name\": \"정석항공과학고\", \"public_transport\": \"stop_position\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "11403267423",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6560988,
+          37.451364
+        ]
+      },
+      "properties": {
+        "osm_node_id": "11403267423",
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"bus\": \"yes\", \"highway\": \"bus_stop\", \"name\": \"인하대후문\", \"public_transport\": \"stop_position\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "11403267424",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6503815,
+          37.4519338
+        ]
+      },
+      "properties": {
+        "osm_node_id": "11403267424",
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"bus\": \"yes\", \"highway\": \"bus_stop\", \"name\": \"용현고가교\", \"public_transport\": \"stop_position\"}"
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "11403267425",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          126.6489469,
+          37.4544964
+        ]
+      },
+      "properties": {
+        "osm_node_id": "11403267425",
+        "verification_status": "UNVERIFIED",
+        "tags_json": "{\"bus\": \"yes\", \"highway\": \"bus_stop\", \"name\": \"용현고개\", \"public_transport\": \"stop_position\"}"
+      }
+    }
+  ],
+  "source_query_bbox_wgs84": {
+    "west_lon": 126.648,
+    "south_lat": 37.445,
+    "east_lon": 126.659,
+    "north_lat": 37.454
+  }
+}

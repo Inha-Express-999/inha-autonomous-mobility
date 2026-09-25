@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "scenario_id": "synthetic-dispatch-greedy-vs-hungarian-v1",
+  "data_status": "SYNTHETIC_COST_MATRIX",
+  "vehicles": ["V01", "V02", "V03"],
+  "requests": [
+    {
+      "request_id": "R-MOBILITY",
+      "priority": 5.0,
+      "created_s": 0.0,
+      "costs": {"V01": 1.0, "V02": 2.0, "V03": null}
+    },
+    {
+      "request_id": "R-PASSENGER",
+      "priority": 3.0,
+      "created_s": 2.0,
+      "costs": {"V01": 1.1, "V02": 100.0, "V03": null}
+    },
+    {
+      "request_id": "R-CARGO",
+      "priority": 1.0,
+      "created_s": 3.0,
+      "costs": {"V01": null, "V02": 5.0, "V03": 3.0}
+    }
+  ]
+}
