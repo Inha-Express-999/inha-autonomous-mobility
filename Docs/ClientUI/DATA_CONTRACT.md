@@ -1,6 +1,6 @@
 # 클라이언트 데이터 계약 결정
 
-프로젝트 0.2.4.0 · 2026-09-25 작업본 · 클라이언트 projection 및 WebSocket alpha 계약
+프로젝트 0.3.0.0 · 2026-09-25 작업본 · 클라이언트 projection 및 WebSocket alpha 계약
 
 ## 범위와 권위
 
@@ -56,3 +56,33 @@ Networking의 IClientDataSource는 Start/Pump/Dispose와 ConnectionState, Snapsh
 FixtureScenario는 synthetic-ui-v1 지도와 6개의 합성 Landmark, 3대 차량, 2개 요청으로 만든 고정 예시다. PC projection을 모바일에서 숨기는 방식이 아니라, 생성 단계부터 요청 owner 기준으로 projection한다. 다른 구독자는 검색용 Landmark만 받는다. 모바일 Landmark.StopIds도 전달된 Stop에 맞게 축소한다. 이는 서버 인증 구현이나 실제 권한 검증 증빙은 아니다.
 
 재생 tick은 0.05초 단위이고 전체 snapshot은 최대 10Hz다. 부하로 건너뛴 중간 프레임은 몰아서 전달하지 않는다. 일시정지/완료 후에도 같은 tick·증가하는 seq로 heartbeat를 전달한다. 수신 중단은 클라이언트 상태를 보존하고 합성 시간은 계속 흐른다. 재개는 최신 전체 snapshot을 전달한다. Restart는 새 run·seq=0으로 시작하며 이전 run을 재사용하지 않는다. 합성 위치는 실제 CampusTerrain에 올리지 않는다.
+
+## 완료 요청의 모바일 차량 참조 (2026-09-26 보완)
+
+모바일 snapshot에서 활성 운송 상태가 아닌 요청의 `vehicleId`는 `null`로 투영한다.
+완료 요청은 계속 표시하되 이후 다른 요청을 운송하는 차량의 실시간 상태/경로는
+노출하지 않는다. Python 권위 요청 기록과 PC snapshot에는 과거 배정 ID를 유지한다.
+클라이언트 참조 정합성 검사를 완화하지 않으며 schema_version=3도 유지한다.
+
+## 관측 객체 식별자 (2026-09-26 작업본)
+
+SensorDetection의 선택 필드 `entityId`를 추가한다(null 또는 공백이 아닌 최대 128자).
+Unity는 실제 Raycast hit의 Rigidbody(없으면 해당 Collider)에만 임시 불투명 ID를
+부여한다. 같은 프로세스의 센서들이 관측한 같은 Physics 객체는 식별자를 공유하며,
+보이지 않는 객체를 탐색하거나 위치·속도를 읽어 ID를 생성하지 않는다. ID는 실제
+사람의 신원이나 캠퍼스 객체 권위 ID가 아니다. replay/프로세스 간 영속 ID로 사용하지 않는다.
+
+동일 Rigidbody의 복합 Collider는 같은 ID를 사용한다. Rigidbody가 없는 독립 Collider들은
+하나의 사람에 속하는지 확정할 수 없다. ID가 없는 과거 관측도 수신 가능하지만 Ray 수를
+사람 수로 간주하지 않는다. schema_version=3의 선택 필드 확장이며 새 클라이언트는
+업데이트된 서버와 함께 실행해야 한다(과거 strict 서버는 새 필드를 거부할 수 있다).
+
+## 센서 capture metadata (2026-09-26 작업본)
+
+SensorObservation은 선택 필드 observedTimeS, sensorPositionM, sensorHeadingRad를
+모두 함께 제공하거나 모두 생략한다. 시간은 Unity FixedUpdate 시뮬레이션 시각이며
+서버 수신 시각/UTC와 혼용하지 않는다. 위치는 센서 자신의 지도 좌표, heading은
+북쪽=0/시계방향 rad다. 다른 동적 객체의 Transform이 아니다. yaw-only 평면 계약이므로
+기울어진 센서는 invalid frame으로 표시한다. 거리 계산은 Transform scale과 무관한 m다.
+과거 프레임도 수신하되 metadata가 없으면 벡터 추적에 사용하지 않는다.
+새 선택 필드를 보내는 클라이언트는 업데이트된 서버와 함께 실행한다.

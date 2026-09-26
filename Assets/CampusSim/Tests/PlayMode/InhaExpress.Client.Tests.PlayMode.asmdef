@@ -1,6 +1,6 @@
 {
   "name": "InhaExpress.Client.Tests.PlayMode",
-  "references": ["InhaExpress.Client.Domain", "InhaExpress.Client.Networking", "InhaExpress.Client.Presentation", "InhaExpress.Client.PC", "Unity.ugui"],
+  "references": ["InhaExpress.Client.Domain", "InhaExpress.Client.Networking", "InhaExpress.Client.Presentation", "InhaExpress.Client.PC", "InhaExpress.Simulation", "Unity.ugui"],
   "optionalUnityReferences": ["TestAssemblies"],
   "autoReferenced": false
 }

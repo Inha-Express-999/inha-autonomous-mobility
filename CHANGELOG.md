@@ -1,4 +1,14 @@
 # 변경 이력
+## 0.3.0.0 — 2026-09-26 · 합성 보행자·Radar·관측 추적 및 구역 폐쇄
+
+- 차량 telemetry의 PC host 소유권과 actor 재생성 tick 연속성을 명시하고 모바일 완료 요청의 누락된 차량 참조를 정리했다.
+- Unity 전용 보행자 이동/population, Raycast Radar range-rate, 관측 대상 ID·취득 시각·센서 pose 전송과 가림·자기 차량 제외·미터 단위 검사를 추가했다.
+- Python Radar 접근 정지, 원형 TTC 계산 기반, 관측 보행자 중복 제거·운동 추정·역행 시각 거부, zone 상태 정책과 명시적 폐쇄/재개를 추가했다. 운동 추정과 zone 관측 정책은 완전한 자동 제어 연결 전 단계다.
+- 이유: 합성 시연에서 관측과 서비스 상태의 일관성을 확보하고 센서 기반 보행자·안전·혼잡 처리를 단계적으로 검증하기 위해서다.
+- 호환성/마이그레이션: 새 클라이언트의 추가 센서 필드는 이전 strict 서버에서 거부되므로 서버와 클라이언트를 함께 갱신한다. 이에 프로젝트 B를 증가시켰다. schema_version=3 유지; metadata 없는 이전 관측은 수신 가능하지만 운동 추정 대상에서 제외한다. safety 설정에 radar_approach_horizon_s가 필요하다. 새 zone 지도는 별도 합성 fixture다.
+- 검증: 커밋 준비 시 Python/MapData 전체 178개 및 Ruff 통과. 기존 실행 증거에 Unity EditMode 17/17, 이동 보행자·Radar·zone 폐쇄의 PlayMode 통합, 300명 population lifecycle 통과가 포함된다. 실행별 XML과 source hash는 artifacts/validation에 보존한다.
+- 미검증/한계: 이번 커밋 준비에서 Unity는 재실행하지 않았다. 기존 Unity 결과는 각 실행 당시 소스 기준이며 최신 전체 변경의 Player/Android/원본 씬 검증을 의미하지 않는다. 실제 캠퍼스 graph·Stop·zone, 관측 밀도 통합, full TTC/RRT·footprint·물리 제동, 성능·50-client 부하와 전체 MVP는 미완료다. Python 의존성 deprecation 및 기존 Unity allocation 경고가 남는다.
+
 ## 0.2.4.0 — 2026-09-26 · 센서 안전 분리와 합성 Physics 통합 검증
 
 - 센서 안전 정책·평가를 service에서 분리하고 다중 센서의 invalid/stale 검사 순서와 비정상 수신 시각 처리를 보완했다.

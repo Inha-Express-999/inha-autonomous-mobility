@@ -27,6 +27,7 @@ from campus_sim.domain import (
 from campus_sim.planning import NoRouteError, astar, node_for_stop
 from campus_sim.road_graph import RoadGraphDocument, load_road_graph
 from campus_sim.safety import SafetyPolicy, SensorSample, evaluate_sensor_safety
+from campus_sim.tracking import ObservedMotion, PedestrianMotionTracker
 
 EGO_LOCALIZATION_STALE_AFTER_S = 0.5
 EGO_ARRIVAL_RADIUS_M = 1.0  # Synthetic fixture threshold; calibrate from verified Stop geometry.
@@ -206,6 +207,74 @@ class MobilityService:
     safety_policy: SafetyPolicy = field(default_factory=SafetyPolicy.from_default_config)
     crowd_model: CrowdModelConfig = field(default_factory=CrowdModelConfig.from_default_config)
     planning_policy: PlanningPolicy = field(default_factory=PlanningPolicy.from_default_config)
+    closed_zone_ids: set[str] = field(default_factory=set)
+    sensor_trackers: dict[tuple[str, str], PedestrianMotionTracker] = field(default_factory=dict)
+    sensor_motion_estimates: dict[tuple[str, str], tuple[ObservedMotion, ...]] = field(default_factory=dict)
+
+    def set_explicit_zone_closure(self, zone_id: str, closed: bool) -> None:
+        """Scenario/operator boundary for explicit closure, not fabricated crowd density."""
+        if self.graph is None or zone_id not in {
+            zone for edge in self.graph.edges for zone in edge.zone_ids
+        }:
+            raise ValueError("unknown_graph_zone")
+        if not isinstance(closed, bool):
+            raise TypeError("closed must be boolean")
+        if closed:
+            self.closed_zone_ids.add(zone_id)
+        else:
+            self.closed_zone_ids.discard(zone_id)
+        self.route_duration_cache.clear()
+        for vehicle_id, runtime in self.vehicle_runtime.items():
+            if self._apply_zone_hold(runtime):
+                continue
+            if runtime.pose_source == "unity_localization":
+                self._refresh_sensor_safety(vehicle_id, runtime)
+            elif runtime.safety_reason == ReasonCode.ZONE_CLOSED.value:
+                runtime.safety_motion_state = None
+                runtime.safety_reason = ReasonCode.UNKNOWN.value
+
+    def _closed_edge_ids(self) -> set[str]:
+        if not self.closed_zone_ids:
+            return set()
+        return {
+            edge.id for edge in self.graph.edges
+            if self.closed_zone_ids.intersection(edge.zone_ids)
+        } if self.graph is not None else set()
+
+    def current_sensor_motion(self, vehicle_id: str, sensor_id: str) -> tuple[ObservedMotion, ...]:
+        """Fresh diagnostics only; estimates do not grant vehicle motion authority."""
+        key = (vehicle_id, sensor_id)
+        received_at = self.sensor_received_at_s.get(key)
+        if (received_at is None or self.ego_localization_is_stale(vehicle_id)
+                or not 0 <= self.now_s() - received_at <= self.safety_policy.sensor_stale_after_s):
+            return ()
+        return self.sensor_motion_estimates.get(key, ())
+
+    def _apply_zone_hold(self, runtime: VehicleRuntime) -> bool:
+        closed = self._closed_edge_ids()
+        blocked = bool(closed.intersection(runtime.route_edge_ids))
+        request = self.requests.get(runtime.request_id or "")
+        if closed and request is not None and request.status in {
+            RequestStatus.ASSIGNED, RequestStatus.PICKUP_SERVICE,
+        }:
+            try:
+                astar(self.graph, node_for_stop(self.graph, request.pickup_stop_id),
+                      node_for_stop(self.graph, request.dropoff_stop_id),
+                      service_type=request.service_type,
+                      requires_step_free=request.service_needs.requires_step_free,
+                      excluded_edge_ids=closed)
+            except NoRouteError:
+                blocked = True
+        if not blocked:
+            return False
+        runtime.safety_motion_state = "EMERGENCY_STOP"
+        runtime.safety_reason = ReasonCode.ZONE_CLOSED.value
+        runtime.sensor_clear_since_s = None
+        if runtime.pose_source != "unity_localization":
+            runtime.speed_mps = 0.0  # Synthetic stepper only; do not overwrite Physics speed.
+        if request is not None:
+            request.eta_s = None
+        return True
 
     @classmethod
     def synthetic_fixture(cls) -> MobilityService:
@@ -295,6 +364,12 @@ class MobilityService:
         ):
             return False
         if previous is not None and previous.session_id != observation.session_id:
+            self.sensor_trackers = {key: value for key, value in self.sensor_trackers.items()
+                                    if key[0] != observation.vehicle_id}
+            self.sensor_motion_estimates = {
+                key: value for key, value in self.sensor_motion_estimates.items()
+                if key[0] != observation.vehicle_id
+            }
             self.sensor_observations = {
                 key: frame
                 for key, frame in self.sensor_observations.items()
@@ -349,8 +424,14 @@ class MobilityService:
             )
             if active_streams >= MAX_SENSOR_STREAMS_PER_VEHICLE:
                 raise ValueError("sensor_stream_limit_exceeded")
+        elif (previous.session_id == observation.session_id
+              and previous.observed_time_s is not None and observation.observed_time_s is not None
+              and observation.observed_time_s <= previous.observed_time_s):
+            raise ValueError("non_monotonic_capture_time")
         self.sensor_observations[key] = observation.model_copy(deep=True)
         self.sensor_received_at_s[key] = self.now_s()
+        tracker = self.sensor_trackers.setdefault(key, PedestrianMotionTracker())
+        self.sensor_motion_estimates[key] = tracker.update(observation)
         runtime = self.vehicle_runtime.get(observation.vehicle_id)
         if runtime is not None and runtime.pose_source == "unity_localization":
             self._refresh_sensor_safety(observation.vehicle_id, runtime)
@@ -619,8 +700,10 @@ class MobilityService:
             + route_penalties_s[edge.id]
             for edge in self.graph.edges
         }
+        closed = self._closed_edge_ids()
         base = astar(self.graph, start, goal, service_type=service_type,
-                     requires_step_free=requires_step_free, edge_costs_s=edge_costs_s or None)
+                     requires_step_free=requires_step_free, edge_costs_s=edge_costs_s or None,
+                     excluded_edge_ids=closed)
         avoided = self.crowd_model.avoided_edge_ids(self.graph, now_s)
         if not avoided or not avoided.intersection(base.edge_ids):
             return base, route_penalties_s, ReasonCode.UNKNOWN
@@ -628,7 +711,7 @@ class MobilityService:
             alternative = astar(self.graph, start, goal, service_type=service_type,
                                 requires_step_free=requires_step_free,
                                 edge_costs_s=edge_costs_s or None,
-                                excluded_edge_ids=avoided)
+                                excluded_edge_ids=avoided | closed)
             zones = self.crowd_model.avoidance_zone_ids(self.graph, avoided)
             limit = self.crowd_model.detour_limit_s(zones, base.path_cost_s)
             if alternative.path_cost_s - base.path_cost_s <= limit:
@@ -640,7 +723,8 @@ class MobilityService:
         for edge_id, penalty in penalties.items():
             costs[edge_id] = costs.get(edge_id, edges[edge_id].cost_s()) + penalty
         result = astar(self.graph, start, goal, service_type=service_type,
-                       requires_step_free=requires_step_free, edge_costs_s=costs or None)
+                       requires_step_free=requires_step_free, edge_costs_s=costs or None,
+                       excluded_edge_ids=closed)
         merged = dict(route_penalties_s)
         for edge_id, penalty in penalties.items():
             merged[edge_id] = merged.get(edge_id, 0.0) + penalty
@@ -895,6 +979,8 @@ class MobilityService:
             return
         self.simulation_time_s = round(self.simulation_time_s + delta_s, 9)
         for vehicle_id, runtime in tuple(self.vehicle_runtime.items()):
+            if self._apply_zone_hold(runtime):
+                continue
             if runtime.pose_source == "unity_localization":
                 self._refresh_sensor_safety(vehicle_id, runtime)
                 self._maybe_replan_localized_route(vehicle_id, runtime)
@@ -1040,6 +1126,8 @@ class MobilityService:
 
     def _refresh_sensor_safety(self, vehicle_id: str, runtime: VehicleRuntime) -> None:
         """Select current-session observations and apply the independent safety decision."""
+        if self._apply_zone_hold(runtime):
+            return
         localization = self.ego_localizations.get(vehicle_id)
         samples = tuple(
             SensorSample(frame, self.sensor_received_at_s.get(key))
@@ -1065,7 +1153,8 @@ class MobilityService:
             if request.vehicle_id is None:
                 continue
             runtime = self.vehicle_runtime.get(request.vehicle_id)
-            if runtime is None or self.ego_localization_is_stale(request.vehicle_id):
+            if (runtime is None or self.ego_localization_is_stale(request.vehicle_id)
+                    or runtime.safety_reason == ReasonCode.ZONE_CLOSED.value):
                 request.eta_s = None
             elif request.status is RequestStatus.ASSIGNED:
                 pickup_duration = self._route_duration(runtime)

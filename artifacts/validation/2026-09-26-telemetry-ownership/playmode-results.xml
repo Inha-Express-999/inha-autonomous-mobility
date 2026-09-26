@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Passed" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-26 04:39:07Z" end-time="2026-09-26 04:39:46Z" duration="39.3273231">
+  <test-suite type="TestSuite" id="1008" name="unity-physics-integration-4105076504d74abbbe9c5419c3a1a36e" fullname="unity-physics-integration-4105076504d74abbbe9c5419c3a1a36e" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-26 04:39:07Z" end-time="2026-09-26 04:39:46Z" duration="39.327323" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1003" name="InhaExpress.Client.Tests.PlayMode.dll" fullname="C:/Users/Yeop/Documents/GitHub/inha-autonomous-mobility/tmp/unity-physics-integration-4105076504d74abbbe9c5419c3a1a36e/Library/ScriptAssemblies/InhaExpress.Client.Tests.PlayMode.dll" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-26 04:39:07Z" end-time="2026-09-26 04:39:46Z" duration="39.318064" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="2696" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1004" name="InhaExpress" fullname="InhaExpress" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-26 04:39:07Z" end-time="2026-09-26 04:39:46Z" duration="39.317561" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1005" name="Client" fullname="InhaExpress.Client" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-26 04:39:07Z" end-time="2026-09-26 04:39:46Z" duration="39.317385" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1006" name="Tests" fullname="InhaExpress.Client.Tests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-26 04:39:07Z" end-time="2026-09-26 04:39:46Z" duration="39.317191" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1001" name="VehicleServiceIntegrationTests" fullname="InhaExpress.Client.Tests.VehicleServiceIntegrationTests" classname="InhaExpress.Client.Tests.VehicleServiceIntegrationTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-26 04:39:07Z" end-time="2026-09-26 04:39:46Z" duration="39.316158" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1002" name="MobilePassengerAndOperatorCargoCompleteUsingPhysicsSensorStopAndRecovery" fullname="InhaExpress.Client.Tests.VehicleServiceIntegrationTests.MobilePassengerAndOperatorCargoCompleteUsingPhysicsSensorStopAndRecovery" methodname="MobilePassengerAndOperatorCargoCompleteUsingPhysicsSensorStopAndRecovery" classname="InhaExpress.Client.Tests.VehicleServiceIntegrationTests" runstate="Runnable" seed="435485467" result="Passed" start-time="2026-09-26 04:39:07Z" end-time="2026-09-26 04:39:46Z" duration="39.304483" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="Category" value="PythonIntegration" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Spawned Unity physics actor for server vehicle V01
+Discarding invalid server message: Missing referenced ID: V01
+Server connection ended; retrying: invalid server message: Missing referenced ID: V01
+Physics passenger/cargo completed: poseACK=352, sensorACK=351, rejectedSensor=0
+Saving results to: C:\Users\Yeop\Documents\GitHub\inha-autonomous-mobility\tmp\unity-physics-integration-4105076504d74abbbe9c5419c3a1a36e\results.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -1,0 +1,175 @@
+{
+  "schema_version": 1,
+  "map_id": "physics-zone-integration-3",
+  "map_version": "synthetic-physics-zone-integration-v1",
+  "data_status": "SYNTHETIC_FIXTURE",
+  "coordinate_frame": "SYNTHETIC_LOCAL_METERS",
+  "verification_status": "SYNTHETIC_FIXTURE",
+  "source_date": null,
+  "source_hash": null,
+  "origin_wgs84": null,
+  "source_description": "Hand-authored 0/4/8 metre straight-line Physics integration fixture. Test geometry, widths and speed are assumptions; no campus route or actual vehicle dimensions are represented. Explicit closure test variant: all edges belong to the synthetic test corridor; no real zone polygon is claimed.",
+  "nodes": [
+    {
+      "id": "n1",
+      "landmark_id": "fixture_landmark_1",
+      "stop_id": "fixture_stop_1",
+      "position_m": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "n2",
+      "landmark_id": "fixture_landmark_2",
+      "stop_id": "fixture_stop_2",
+      "position_m": {
+        "x": 4,
+        "y": 0
+      }
+    },
+    {
+      "id": "n3",
+      "landmark_id": "fixture_landmark_3",
+      "stop_id": "fixture_stop_3",
+      "position_m": {
+        "x": 8,
+        "y": 0
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "e12",
+      "from_node": "n1",
+      "to_node": "n2",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": 4,
+          "y": 0
+        }
+      ],
+      "length_m": 4,
+      "width_m": 4,
+      "allowed_speed_mps": 1,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [
+        "synthetic-test-corridor"
+      ],
+      "source": "synthetic-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "crowd_penalty_s": 0
+    },
+    {
+      "id": "e21",
+      "from_node": "n2",
+      "to_node": "n1",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 4,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": 0
+        }
+      ],
+      "length_m": 4,
+      "width_m": 4,
+      "allowed_speed_mps": 1,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [
+        "synthetic-test-corridor"
+      ],
+      "source": "synthetic-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "crowd_penalty_s": 0
+    },
+    {
+      "id": "e23",
+      "from_node": "n2",
+      "to_node": "n3",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 4,
+          "y": 0
+        },
+        {
+          "x": 8,
+          "y": 0
+        }
+      ],
+      "length_m": 4,
+      "width_m": 4,
+      "allowed_speed_mps": 1,
+      "crowd_penalty_s": 0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [
+        "synthetic-test-corridor"
+      ],
+      "source": "synthetic-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true
+    },
+    {
+      "id": "e32",
+      "from_node": "n3",
+      "to_node": "n2",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 8,
+          "y": 0
+        },
+        {
+          "x": 4,
+          "y": 0
+        }
+      ],
+      "length_m": 4,
+      "width_m": 4,
+      "allowed_speed_mps": 1,
+      "crowd_penalty_s": 0,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [
+        "synthetic-test-corridor"
+      ],
+      "source": "synthetic-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true
+    }
+  ]
+}

@@ -38,7 +38,7 @@ class ApiIntegrationTests(unittest.TestCase):
         self.assertEqual(set(app.state.service.vehicle_runtime), {"V01", "V02", "V03"})
         with TestClient(app) as client:
             health = client.get("/health").json()
-            self.assertEqual(health["project_version"], "0.2.4.0")
+            self.assertEqual(health["project_version"], "0.3.0.0")
             self.assertEqual(health["schema_version"], "3")
             self.assertEqual(health["map_version"], "synthetic-benchmark-11node-v1")
             self.assertEqual(health["map_data_status"], "SYNTHETIC_FIXTURE")
@@ -94,7 +94,7 @@ class ApiIntegrationTests(unittest.TestCase):
                     subscription = {
                         "type": "subscribe",
                         "schemaVersion": 3,
-                        "projectVersion": "0.2.4.0",
+                        "projectVersion": "0.3.0.0",
                         "role": role,
                     }
                     if subscriber_id is not None:
@@ -252,7 +252,7 @@ class ApiIntegrationTests(unittest.TestCase):
                 {
                     "type": "subscribe",
                     "schemaVersion": 3,
-                    "projectVersion": "0.2.4.0",
+                    "projectVersion": "0.3.0.0",
                     "role": "PC_Operator",
                 }
             )
@@ -288,7 +288,7 @@ class ApiIntegrationTests(unittest.TestCase):
                 {
                     "type": "subscribe",
                     "schemaVersion": 3,
-                    "projectVersion": "0.2.4.0",
+                    "projectVersion": "0.3.0.0",
                     "role": "PC_Operator",
                 }
             )
@@ -360,7 +360,7 @@ class ApiIntegrationTests(unittest.TestCase):
                 {
                     "type": "subscribe",
                     "schemaVersion": 3,
-                    "projectVersion": "0.2.4.0",
+                    "projectVersion": "0.3.0.0",
                     "role": "Mobile_Passenger",
                     "subscriberId": "sensor-injection-check",
                 }
@@ -394,7 +394,7 @@ class ApiIntegrationTests(unittest.TestCase):
                 {
                     "type": "subscribe",
                     "schemaVersion": 3,
-                    "projectVersion": "0.2.4.0",
+                    "projectVersion": "0.3.0.0",
                     "role": "PC_Operator",
                 }
             )
@@ -499,7 +499,7 @@ class ApiIntegrationTests(unittest.TestCase):
                 {
                     "type": "subscribe",
                     "schemaVersion": 3,
-                    "projectVersion": "0.2.4.0",
+                    "projectVersion": "0.3.0.0",
                     "role": "PC_Operator",
                 }
             )
@@ -565,7 +565,7 @@ class ApiIntegrationTests(unittest.TestCase):
                 {
                     "type": "subscribe",
                     "schemaVersion": 3,
-                    "projectVersion": "0.2.4.0",
+                    "projectVersion": "0.3.0.0",
                     "role": "Mobile_Passenger",
                     "subscriberId": "mobile-cargo-denied",
                 }

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Passed" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-26 04:47:30Z" end-time="2026-09-26 04:48:14Z" duration="43.9196377">
+  <test-suite type="TestSuite" id="1008" name="unity-physics-integration-fa1e350d0f064937b2aafdd85b935057" fullname="unity-physics-integration-fa1e350d0f064937b2aafdd85b935057" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-26 04:47:30Z" end-time="2026-09-26 04:48:14Z" duration="43.919638" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1003" name="InhaExpress.Client.Tests.PlayMode.dll" fullname="C:/Users/Yeop/Documents/GitHub/inha-autonomous-mobility/tmp/unity-physics-integration-fa1e350d0f064937b2aafdd85b935057/Library/ScriptAssemblies/InhaExpress.Client.Tests.PlayMode.dll" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-26 04:47:30Z" end-time="2026-09-26 04:48:14Z" duration="43.910824" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="16596" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1004" name="InhaExpress" fullname="InhaExpress" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-26 04:47:30Z" end-time="2026-09-26 04:48:14Z" duration="43.910333" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1005" name="Client" fullname="InhaExpress.Client" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-26 04:47:30Z" end-time="2026-09-26 04:48:14Z" duration="43.910158" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1006" name="Tests" fullname="InhaExpress.Client.Tests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-26 04:47:30Z" end-time="2026-09-26 04:48:14Z" duration="43.909963" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1001" name="VehicleServiceIntegrationTests" fullname="InhaExpress.Client.Tests.VehicleServiceIntegrationTests" classname="InhaExpress.Client.Tests.VehicleServiceIntegrationTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-26 04:47:30Z" end-time="2026-09-26 04:48:14Z" duration="43.908951" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1002" name="MobilePassengerAndOperatorCargoCompleteUsingPhysicsSensorStopAndRecovery" fullname="InhaExpress.Client.Tests.VehicleServiceIntegrationTests.MobilePassengerAndOperatorCargoCompleteUsingPhysicsSensorStopAndRecovery" methodname="MobilePassengerAndOperatorCargoCompleteUsingPhysicsSensorStopAndRecovery" classname="InhaExpress.Client.Tests.VehicleServiceIntegrationTests" runstate="Runnable" seed="110178636" result="Passed" start-time="2026-09-26 04:47:30Z" end-time="2026-09-26 04:48:14Z" duration="43.897418" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="Category" value="PythonIntegration" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Spawned Unity physics actor for server vehicle V01
+Spawned Unity physics actor for server vehicle V01
+Physics passenger/cargo completed: poseACK=391, sensorACK=390, rejectedSensor=0
+Saving results to: C:\Users\Yeop\Documents\GitHub\inha-autonomous-mobility\tmp\unity-physics-integration-fa1e350d0f064937b2aafdd85b935057\results.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

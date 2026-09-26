@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Passed" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-26 07:11:55Z" end-time="2026-09-26 07:12:33Z" duration="38.8006384">
+  <test-suite type="TestSuite" id="1008" name="unity-physics-integration-02ef36bd445a4494b1fce017a031884e" fullname="unity-physics-integration-02ef36bd445a4494b1fce017a031884e" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-26 07:11:55Z" end-time="2026-09-26 07:12:33Z" duration="38.800638" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1003" name="InhaExpress.Client.Tests.PlayMode.dll" fullname="C:/Users/Yeop/Documents/GitHub/inha-autonomous-mobility/tmp/unity-physics-integration-02ef36bd445a4494b1fce017a031884e/Library/ScriptAssemblies/InhaExpress.Client.Tests.PlayMode.dll" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-26 07:11:55Z" end-time="2026-09-26 07:12:33Z" duration="38.790786" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="21088" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1004" name="InhaExpress" fullname="InhaExpress" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-26 07:11:55Z" end-time="2026-09-26 07:12:33Z" duration="38.790248" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1005" name="Client" fullname="InhaExpress.Client" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-26 07:11:55Z" end-time="2026-09-26 07:12:33Z" duration="38.790072" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1006" name="Tests" fullname="InhaExpress.Client.Tests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-26 07:11:55Z" end-time="2026-09-26 07:12:33Z" duration="38.789878" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1001" name="VehicleServiceIntegrationTests" fullname="InhaExpress.Client.Tests.VehicleServiceIntegrationTests" classname="InhaExpress.Client.Tests.VehicleServiceIntegrationTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-26 07:11:55Z" end-time="2026-09-26 07:12:33Z" duration="38.788813" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1002" name="MobilePassengerAndOperatorCargoCompleteUsingPhysicsSensorStopAndRecovery" fullname="InhaExpress.Client.Tests.VehicleServiceIntegrationTests.MobilePassengerAndOperatorCargoCompleteUsingPhysicsSensorStopAndRecovery" methodname="MobilePassengerAndOperatorCargoCompleteUsingPhysicsSensorStopAndRecovery" classname="InhaExpress.Client.Tests.VehicleServiceIntegrationTests" runstate="Runnable" seed="26058944" result="Passed" start-time="2026-09-26 07:11:55Z" end-time="2026-09-26 07:12:33Z" duration="38.776045" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="Category" value="PythonIntegration" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Integration obstacle: Unity-owned synthetic pedestrian
+Spawned Unity physics actor for server vehicle V01
+Spawned Unity physics actor for server vehicle V01
+Physics passenger/cargo completed: poseACK=344, sensorACK=343, rejectedSensor=0
+Saving results to: C:\Users\Yeop\Documents\GitHub\inha-autonomous-mobility\tmp\unity-physics-integration-02ef36bd445a4494b1fce017a031884e\results.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

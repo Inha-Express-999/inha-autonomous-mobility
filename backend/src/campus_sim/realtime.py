@@ -507,6 +507,14 @@ def make_snapshot(
         )
 
     request_models: list[RequestView] = visible_requests
+    request_payloads = []
+    for item in request_models:
+        payload = _camelize(item.model_dump(mode="json"))
+        # A terminal mobile request retains service history, but no longer grants
+        # visibility of its former vehicle. Do not emit a dangling live reference.
+        if not operator and item.status.value not in ACTIVE_REQUEST_STATUSES:
+            payload["vehicleId"] = None
+        request_payloads.append(payload)
     return {
         "schemaVersion": SNAPSHOT_SCHEMA_VERSION,
         "projectVersion": PROJECT_VERSION,
@@ -518,7 +526,7 @@ def make_snapshot(
         "role": role,
         "subscriberId": subscriber_id,
         "vehicles": vehicles,
-        "requests": [_camelize(item.model_dump(mode="json")) for item in request_models],
+        "requests": request_payloads,
         "landmarks": landmarks,
         "stops": stops,
         "routes": [

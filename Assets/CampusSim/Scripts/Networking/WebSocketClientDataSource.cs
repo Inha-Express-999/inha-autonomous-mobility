@@ -308,6 +308,7 @@ namespace InhaExpress.Client.Networking
                         ["z"] = detection.LocalPositionM.Z
                     },
                     ["entityClass"] = detection.EntityClass.ToString(),
+                    ["entityId"] = detection.EntityId == null ? JValue.CreateNull() : new JValue(detection.EntityId),
                     ["relativeSpeedMps"] = detection.RelativeSpeedMps.HasValue
                         ? new JValue(detection.RelativeSpeedMps.Value)
                         : JValue.CreateNull()
@@ -324,6 +325,16 @@ namespace InhaExpress.Client.Networking
                 ["observedTick"] = observation.ObservedTick,
                 ["egoPoseTick"] = observation.EgoPoseTick,
                 ["valid"] = observation.Valid,
+                ["observedTimeS"] = observation.ObservedTimeS.HasValue
+                    ? new JValue(observation.ObservedTimeS.Value) : JValue.CreateNull(),
+                ["sensorPositionM"] = observation.SensorPositionM.HasValue ? new JObject
+                {
+                    ["x"] = observation.SensorPositionM.Value.X,
+                    ["y"] = observation.SensorPositionM.Value.Y,
+                    ["z"] = observation.SensorPositionM.Value.Z
+                } : JValue.CreateNull(),
+                ["sensorHeadingRad"] = observation.SensorHeadingRad.HasValue
+                    ? new JValue(observation.SensorHeadingRad.Value) : JValue.CreateNull(),
                 ["detections"] = detections
             }.ToString(Formatting.None);
             lock (telemetryLock)

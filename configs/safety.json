@@ -3,5 +3,6 @@
   "resume_clear_s": 1.0,
   "reaction_time_s": 0.2,
   "emergency_decel_mps2": 2.0,
-  "margin_m": 1.0
+  "margin_m": 1.0,
+  "radar_approach_horizon_s": 2.0
 }

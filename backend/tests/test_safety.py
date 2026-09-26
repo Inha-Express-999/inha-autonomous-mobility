@@ -3,6 +3,7 @@ from itertools import permutations
 import pytest
 
 from campus_sim.domain import EgoLocalization, MapPosition, ReasonCode, SensorObservation
+from campus_sim.realtime import make_snapshot
 from campus_sim.safety import SafetyPolicy, SensorSample, evaluate_sensor_safety
 from campus_sim.service import MobilityService
 
@@ -90,3 +91,54 @@ def test_service_applies_reset_when_second_stream_is_invalid_during_pose_handoff
     assert runtime.safety_reason == "SENSOR_INVALID"
     assert runtime.sensor_clear_since_s is None
     assert runtime.safety_motion_state == "EMERGENCY_STOP"
+
+
+def radar_sample(distance, rate, *, received_at=1.0):
+    frame = sample(distance=distance).observation.model_dump(by_alias=True)
+    frame["sensorType"] = "RADAR"
+    frame["detections"][0]["relativeSpeedMps"] = rate
+    return SensorSample(SensorObservation.model_validate(frame), received_at)
+
+
+@pytest.mark.parametrize("rate,stop", [(-5.0, True), (-4.5, True), (-4.0, False),
+                                       (0.0, False), (5.0, False), (None, False)])
+def test_radar_approach_can_stop_stationary_ego_outside_distance_gate(rate, stop):
+    decision = evaluate([radar_sample(10.0, rate)], speed=0.0)
+    assert (decision.reason == ReasonCode.OBSTACLE_STOP) is stop
+    if stop:
+        assert decision.motion_state == "EMERGENCY_STOP"
+        assert decision.clear_since_s is None
+
+
+def test_radar_approach_accounts_for_age_but_never_uses_expired_frames():
+    # (10 - 1) / 4 = 2.25 seconds at capture receipt; 0.26 seconds have elapsed.
+    assert evaluate([radar_sample(10, -4, received_at=0.74)], speed=0).reason == \
+        ReasonCode.OBSTACLE_STOP
+    assert evaluate([radar_sample(10, -4, received_at=0.69)], speed=0).reason == \
+        ReasonCode.SENSOR_DATA_STALE
+
+
+def test_radar_approach_does_not_replace_range_stop_or_recovery_hold():
+    assert evaluate([radar_sample(0.5, 3)], speed=0).reason == ReasonCode.OBSTACLE_STOP
+    stopped = evaluate([radar_sample(10, -5)], speed=0)
+    recovering = evaluate([radar_sample(10, 0)], speed=0, clear_since=stopped.clear_since_s)
+    assert recovering.reason == ReasonCode.SAFETY_RESUME_HOLD
+
+
+def test_validated_radar_ingress_revokes_snapshot_authority_before_range_gate():
+    service = MobilityService.synthetic_fixture()
+    runtime = service.vehicle_runtime["V01"]
+    service.record_ego_localization(EgoLocalization(
+        vehicle_id="V01", session_id="test-session", observed_tick=10,
+        map_version=service.graph.map_version,
+        position=MapPosition(x=runtime.x, y=runtime.y, z=0), heading_rad=0, speed_mps=0,
+    ))
+    frame = radar_sample(10, -5).observation.model_copy(
+        update={"map_version": service.graph.map_version},
+    )
+    assert service.record_sensor_observation(frame)
+    snapshot = make_snapshot(service, "PC_Operator", None, 1)
+    vehicle = next(item for item in snapshot["vehicles"] if item["id"] == "V01")
+    assert vehicle["motionState"] == "EMERGENCY_STOP"
+    assert vehicle["reason"] == "OBSTACLE_STOP"
+    assert runtime.sensor_clear_since_s is None

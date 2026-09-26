@@ -3,7 +3,11 @@ param(
     [ValidateRange(30, 1200)] [int]$TimeoutSeconds = 600,
     [string]$PythonPath = "python",
     [ValidateRange(1024, 65535)] [int]$Port = 18767,
-    [switch]$Player
+    [switch]$Player,
+    [switch]$Radar,
+    [switch]$Pedestrian,
+    [switch]$ZoneClosure,
+    [ValidatePattern('^[A-Za-z0-9_.]+$')] [string]$TestFilter
 )
 
 $ErrorActionPreference = "Stop"
@@ -19,7 +23,7 @@ if (-not (Test-Path -LiteralPath $unityExe -PathType Leaf)) {
 # A unique disposable project avoids locking or changing the user's open scene.
 # Production service/Physics components are copied; this is not full-project validation.
 $runRoot = Join-Path $repoRoot ("tmp/unity-physics-integration-" + [Guid]::NewGuid().ToString('N'))
-foreach ($relative in @('Assets/Domain', 'Assets/Networking', 'Assets/Presentation', 'Assets/Tests',
+foreach ($relative in @('Assets/Domain', 'Assets/Networking', 'Assets/Presentation', 'Assets/Simulation', 'Assets/Tests',
         'Packages', 'ProjectSettings')) {
     New-Item -ItemType Directory -Path (Join-Path $runRoot $relative) -Force | Out-Null
 }
@@ -44,6 +48,10 @@ foreach ($name in @('VehicleRouteFollower.cs', 'MapCoordinateConverter.cs', 'Wor
 }
 Copy-RecordedSource 'Assets/CampusSim/Tests/PlayMode/VehicleServiceIntegrationTests.cs' `
     'Assets/Tests/VehicleServiceIntegrationTests.cs'
+Copy-RecordedSource 'Assets/CampusSim/Scripts/Simulation/SyntheticPedestrianWalker.cs' 'Assets/Simulation/SyntheticPedestrianWalker.cs'
+Copy-RecordedSource 'Assets/CampusSim/Scripts/Simulation/InhaExpress.Simulation.asmdef' 'Assets/Simulation/InhaExpress.Simulation.asmdef'
+Copy-RecordedSource 'Assets/CampusSim/Scripts/Simulation/SyntheticPedestrianPopulation.cs' 'Assets/Simulation/SyntheticPedestrianPopulation.cs'
+Copy-RecordedSource 'Assets/CampusSim/Tests/PlayMode/SyntheticPedestrianPopulationTests.cs' 'Assets/Tests/SyntheticPedestrianPopulationTests.cs'
 Copy-RecordedSource 'ProjectSettings/ProjectVersion.txt' 'ProjectSettings/ProjectVersion.txt'
 Copy-RecordedSource 'ProjectSettings/TagManager.asset' 'ProjectSettings/TagManager.asset'
 if ($Player) {
@@ -59,6 +67,7 @@ foreach ($file in Get-ChildItem (Join-Path $repoRoot 'backend/src') -Recurse -Fi
     $sources[$relative] = (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash
 }
 foreach ($relative in @('maps/fixtures/physics-integration-3.json',
+        'maps/fixtures/physics-zone-integration-3.json',
         'AgentScripts/UnityPhysicsIntegration/server.py', 'configs/safety.json',
         'configs/planning.json', 'configs/crowd.json', 'configs/dispatch.json', 'VERSION')) {
     $sources[$relative] = (Get-FileHash -LiteralPath (Join-Path $repoRoot $relative) -Algorithm SHA256).Hash
@@ -67,7 +76,7 @@ foreach ($relative in @('maps/fixtures/physics-integration-3.json',
 @{ name = 'InhaExpress.Client.Presentation'; references = @('InhaExpress.Client.Domain', 'InhaExpress.Client.Networking') } |
     ConvertTo-Json | Set-Content (Join-Path $runRoot 'Assets/Presentation/Presentation.asmdef')
 @{ name = 'InhaExpress.Client.Tests.PlayMode';
-    references = @('InhaExpress.Client.Domain', 'InhaExpress.Client.Networking', 'InhaExpress.Client.Presentation');
+    references = @('InhaExpress.Client.Domain', 'InhaExpress.Client.Networking', 'InhaExpress.Client.Presentation', 'InhaExpress.Simulation');
     optionalUnityReferences = @('TestAssemblies'); autoReferenced = $false } |
     ConvertTo-Json | Set-Content (Join-Path $runRoot 'Assets/Tests/Tests.asmdef')
 @{ dependencies = @{
@@ -84,6 +93,7 @@ Write-Host "Unity Physics integration project and logs: $runRoot"
 $testPlatform = if ($Player) { 'StandaloneWindows64' } else { 'PlayMode' }
 $arguments = "-batchmode -nographics -projectPath `"$runRoot`" -runTests " +
     "-testPlatform $testPlatform -testResults `"$resultPath`" -logFile `"$logPath`""
+if ($TestFilter) { $arguments += " -testFilter $TestFilter" }
 $process = $null
 $server = $null
 $previousPythonPath = $env:PYTHONPATH
@@ -91,7 +101,13 @@ $previousUrl = $env:INHA_UNITY_E2E_URL
 $previousVersion = $env:INHA_UNITY_E2E_VERSION
 $previousTrace = $env:INHA_UNITY_E2E_TRACE
 $previousResults = $env:INHA_UNITY_E2E_RESULTS
+$previousRadar = $env:INHA_UNITY_E2E_RADAR
+$previousPedestrian = $env:INHA_UNITY_E2E_PEDESTRIAN
+$previousClosure = $env:INHA_UNITY_E2E_ZONE_CLOSURE
+$previousMap = $env:INHA_UNITY_E2E_MAP
 try {
+    $env:INHA_UNITY_E2E_ZONE_CLOSURE = if ($ZoneClosure) { '1' } else { '0' }
+    $expectedMap = if ($ZoneClosure) { 'synthetic-physics-zone-integration-v1' } else { 'synthetic-physics-integration-v1' }
     if (Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue) {
         throw "Port $Port is in use. Select another port."
     }
@@ -107,15 +123,18 @@ try {
         if ($server.HasExited) { throw "Integration server exited. See $runRoot/server.stderr.log" }
         try {
             $health = Invoke-RestMethod "http://127.0.0.1:$Port/health" -TimeoutSec 1
-            if ($health.map_version -eq 'synthetic-physics-integration-v1') { $healthy = $true; break }
+            if ($health.map_version -eq $expectedMap) { $healthy = $true; break }
         } catch { }
         Start-Sleep -Milliseconds 100
     }
     if (-not $healthy) { throw "Integration server startup timed out." }
     $env:INHA_UNITY_E2E_URL = "ws://127.0.0.1:$Port/v1/client/ws"
+    $env:INHA_UNITY_E2E_MAP = $expectedMap
     $env:INHA_UNITY_E2E_VERSION = (Get-Content (Join-Path $repoRoot 'VERSION') -Raw).Trim()
     $env:INHA_UNITY_E2E_TRACE = Join-Path $runRoot 'snapshot-trace.csv'
     $env:INHA_UNITY_E2E_RESULTS = $resultPath
+    $env:INHA_UNITY_E2E_RADAR = if ($Radar) { '1' } else { '0' }
+    $env:INHA_UNITY_E2E_PEDESTRIAN = if ($Pedestrian) { '1' } else { '0' }
     'tick,x,y,speed,motion,reason,requestStatus' | Set-Content $env:INHA_UNITY_E2E_TRACE
     $process = Start-Process -FilePath $unityExe -ArgumentList $arguments -WindowStyle Hidden -PassThru
     if (-not $process.WaitForExit($TimeoutSeconds * 1000)) {
@@ -151,4 +170,8 @@ try {
     $env:INHA_UNITY_E2E_VERSION = $previousVersion
     $env:INHA_UNITY_E2E_TRACE = $previousTrace
     $env:INHA_UNITY_E2E_RESULTS = $previousResults
+    $env:INHA_UNITY_E2E_RADAR = $previousRadar
+    $env:INHA_UNITY_E2E_PEDESTRIAN = $previousPedestrian
+    $env:INHA_UNITY_E2E_ZONE_CLOSURE = $previousClosure
+    $env:INHA_UNITY_E2E_MAP = $previousMap
 }

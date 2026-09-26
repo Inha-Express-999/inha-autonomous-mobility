@@ -41,3 +41,30 @@ Outputs include `results.xml`, `source-manifest.json`, `snapshot-trace.csv` and 
 logs. The CSV request-status column is the first request in the PC snapshot; after the
 passenger completes, cargo completion is asserted separately by its request ID in the
 test. Do not interpret that column as the active vehicle mission during the return trip.
+
+## Radar mode
+
+Pass `-Radar` to run the same isolated passenger/cargo/obstacle scenario with the
+Raycast Radar range-rate abstraction. Default remains LiDAR. `-Player -Radar` can
+build that variant, but do not infer Player verification from a PlayMode run.
+`relativeSpeedMps` is signed observed range change per second (negative approach),
+not Doppler or a complete relative velocity vector. Existing distance safety gate
+remains authoritative; this mode alone does not complete TTC/RRT safety.
+
+## Moving pedestrian variant
+
+Pass `-Pedestrian` to use a Unity-owned kinematic capsule actor instead of deleting
+the wall at the recovery step. It is initially paused on the vehicle path, then
+walks to a synthetic lateral waypoint and remains active. Completion requires its
+motion to finish and passenger/cargo service to complete. Python receives only
+sensor detections. This does not validate full pedestrian population dynamics.
+
+## Explicit zone closure variant
+
+Use `-ZoneClosure -TestFilter InhaExpress.Client.Tests.VehicleServiceIntegrationTests`.
+The runner selects `physics-zone-integration-3.json`, a separately versioned synthetic
+fixture whose edges have the configured test zone ID. Only this scenario enables
+POST `/test/closure/{closed}` on the loopback harness app. No closure endpoint is
+added to production `campus_sim.api`. The test closes the zone after motion begins,
+waits for ZONE_CLOSED and bounded follower braking, checks a held position, opens
+the zone and requires sensor clear hold before continuing the full service flow.

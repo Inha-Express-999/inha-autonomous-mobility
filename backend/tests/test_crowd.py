@@ -14,7 +14,7 @@ from campus_sim.domain import (
     SensorObservation,
     ServiceType,
 )
-from campus_sim.planning import astar
+from campus_sim.planning import NoRouteError, astar
 from campus_sim.realtime import make_snapshot
 from campus_sim.road_graph import load_road_graph
 from campus_sim.service import MobilityService
@@ -22,6 +22,85 @@ from campus_sim.service import MobilityService
 ROOT = Path(__file__).resolve().parents[2]
 GRAPH_PATH = ROOT / "maps/fixtures/campus-synthetic-6.json"
 TEST_ZONE_ID = "synthetic-test-corridor"
+
+
+def test_explicit_closure_excludes_zone_even_when_detour_is_expensive():
+    service = MobilityService.from_synthetic_graph(GRAPH_PATH)
+    service.graph = _graph_with_test_zone()
+    service.simulation_time_s = 1800
+    service.set_explicit_zone_closure(TEST_ZONE_ID, True)
+    route, _, _ = service._plan_route("n1", "n4", ServiceType.PASSENGER, False)
+    assert "e25" not in route.edge_ids
+    service.graph = service.graph.model_copy(update={"edges": [
+        edge.model_copy(update={"zone_ids": [TEST_ZONE_ID]}) for edge in service.graph.edges
+    ]})
+    with pytest.raises(NoRouteError):
+        service._plan_route("n1", "n4", ServiceType.PASSENGER, False)
+
+
+def test_active_synthetic_route_holds_until_explicit_closure_is_removed():
+    service = MobilityService.from_synthetic_graph(GRAPH_PATH)
+    service.graph = _graph_with_test_zone()
+    request = service.create_request(_make_request(service)).request
+    runtime = service.vehicle_runtime["V01"]
+    assert "e25" in runtime.route_edge_ids
+    service.advance(1)
+    before = runtime.x, runtime.y
+    service.set_explicit_zone_closure(TEST_ZONE_ID, True)
+    service.advance(2)
+    assert (runtime.x, runtime.y) == before
+    assert runtime.safety_reason == "ZONE_CLOSED"
+    assert request.eta_s is None
+    snapshot = make_snapshot(service, "PC_Operator", None, 1)
+    assert snapshot["vehicles"][0]["motionState"] == "EMERGENCY_STOP"
+    assert snapshot["vehicles"][0]["reason"] == "ZONE_CLOSED"
+    service.set_explicit_zone_closure(TEST_ZONE_ID, False)
+    service.advance(1)
+    assert (runtime.x, runtime.y) != before
+
+
+def test_unknown_zone_closure_is_rejected_without_changing_state():
+    service = MobilityService.from_synthetic_graph(GRAPH_PATH)
+    with pytest.raises(ValueError, match="unknown_graph_zone"):
+        service.set_explicit_zone_closure("unverified-biryong", True)
+    assert not service.closed_zone_ids
+
+
+def test_closed_route_keeps_localized_speed_measurement_and_sensor_cannot_restore_authority():
+    service = MobilityService.from_synthetic_graph(GRAPH_PATH)
+    service.graph = _graph_with_test_zone()
+    service.create_request(_make_request(service))
+    runtime = service.vehicle_runtime["V01"]
+    pose = EgoLocalization(vehicle_id="V01", session_id="closure-session", observed_tick=1,
+                           map_version=service.graph.map_version,
+                           position=MapPosition(x=runtime.x, y=runtime.y, z=0),
+                           heading_rad=0, speed_mps=1.2)
+    service.record_ego_localization(pose)
+    service.set_explicit_zone_closure(TEST_ZONE_ID, True)
+    frame = SensorObservation(vehicle_id="V01", session_id=pose.session_id,
+                              sensor_id="test-lidar", sensor_type="LIDAR_2D",
+                              observed_tick=1, ego_pose_tick=1, map_version=pose.map_version,
+                              valid=True, detections=[])
+    service.record_sensor_observation(frame)
+    assert runtime.speed_mps == 1.2
+    assert runtime.safety_reason == "ZONE_CLOSED"
+    assert runtime.safety_motion_state == "EMERGENCY_STOP"
+    service.set_explicit_zone_closure(TEST_ZONE_ID, False)
+    assert runtime.safety_reason == "SAFETY_RESUME_HOLD"
+
+
+def test_unreachable_future_dropoff_holds_pickup_without_crashing_eta_update():
+    service = MobilityService.from_synthetic_graph(GRAPH_PATH)
+    service.graph = _graph_with_test_zone()
+    request = service.create_request(_make_request(service)).request
+    service.graph = service.graph.model_copy(update={"edges": [
+        edge.model_copy(update={"zone_ids": [TEST_ZONE_ID]}) for edge in service.graph.edges
+    ]})
+    service.set_explicit_zone_closure(TEST_ZONE_ID, True)
+    service.advance(10)
+    assert request.eta_s is None
+    assert request.status.value == "ASSIGNED"
+    assert service.vehicle_runtime["V01"].safety_reason == "ZONE_CLOSED"
 
 
 def _graph_with_test_zone():

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="14" result="Passed" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-26 04:44:49Z" end-time="2026-09-26 04:44:49Z" duration="0.144875">
+  <test-suite type="TestSuite" id="1000" name="unity-prefabs-8bf3e1bf15d242a58a5f006af95639cc" fullname="unity-prefabs-8bf3e1bf15d242a58a5f006af95639cc" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-09-26 04:44:49Z" end-time="2026-09-26 04:44:49Z" duration="0.144875" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1017" name="InhaExpress.Client.Tests.EditMode.dll" fullname="C:/Users/Yeop/Documents/GitHub/inha-autonomous-mobility/tmp/unity-prefabs-8bf3e1bf15d242a58a5f006af95639cc/Library/ScriptAssemblies/InhaExpress.Client.Tests.EditMode.dll" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-09-26 04:44:49Z" end-time="2026-09-26 04:44:49Z" duration="0.135628" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="8620" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1018" name="InhaExpress" fullname="InhaExpress" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-09-26 04:44:49Z" end-time="2026-09-26 04:44:49Z" duration="0.135270" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1019" name="Client" fullname="InhaExpress.Client" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-09-26 04:44:49Z" end-time="2026-09-26 04:44:49Z" duration="0.135142" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1020" name="Tests" fullname="InhaExpress.Client.Tests" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-09-26 04:44:49Z" end-time="2026-09-26 04:44:49Z" duration="0.134966" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1001" name="VehicleActorSpawnerTests" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" testcasecount="14" result="Passed" start-time="2026-09-26 04:44:49Z" end-time="2026-09-26 04:44:49Z" duration="0.134111" total="14" passed="14" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1006" name="CompleteSnapshotRetiresOmittedActorAndAllowsFreshSpawn" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.CompleteSnapshotRetiresOmittedActorAndAllowsFreshSpawn" methodname="CompleteSnapshotRetiresOmittedActorAndAllowsFreshSpawn" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="1662133705" result="Passed" start-time="2026-09-26 04:44:49Z" end-time="2026-09-26 04:44:49Z" duration="0.062048" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Spawned Unity physics actor for server vehicle spawner-test-vehicle
+Spawned Unity physics actor for server vehicle spawner-test-vehicle
+]]></output>
+              </test-case>
+              <test-case id="1011" name="FixtureSnapshotDoesNotSpawnPhysicsActors" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.FixtureSnapshotDoesNotSpawnPhysicsActors" methodname="FixtureSnapshotDoesNotSpawnPhysicsActors" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="639038725" result="Passed" start-time="2026-09-26 04:44:49Z" end-time="2026-09-26 04:44:49Z" duration="0.006019" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1016" name="MissingRouteOrMapChangeClearsPreviouslyAcceptedRoute" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.MissingRouteOrMapChangeClearsPreviouslyAcceptedRoute" methodname="MissingRouteOrMapChangeClearsPreviouslyAcceptedRoute" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="1609485344" result="Passed" start-time="2026-09-26 04:44:49Z" end-time="2026-09-26 04:44:49Z" duration="0.011173" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Spawned Unity physics actor for server vehicle spawner-test-vehicle
+]]></output>
+              </test-case>
+              <test-case id="1010" name="NonDrivingSnapshotRevokesMotionWithoutDiscardingRouteProgress" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.NonDrivingSnapshotRevokesMotionWithoutDiscardingRouteProgress" methodname="NonDrivingSnapshotRevokesMotionWithoutDiscardingRouteProgress" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="773914428" result="Passed" start-time="2026-09-26 04:44:49Z" end-time="2026-09-26 04:44:49Z" duration="0.004413" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Spawned Unity physics actor for server vehicle spawner-test-vehicle
+]]></output>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1005" name="OriginalActorWrapperHasResolvedVisualAndMeasuredCollider" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.OriginalActorWrapperHasResolvedVisualAndMeasuredCollider" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-09-26 04:44:49Z" end-time="2026-09-26 04:44:49Z" duration="0.016352" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1002" name="OriginalActorWrapperHasResolvedVisualAndMeasuredCollider(&quot;VehicleActor_Default&quot;)" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.OriginalActorWrapperHasResolvedVisualAndMeasuredCollider(&quot;VehicleActor_Default&quot;)" methodname="OriginalActorWrapperHasResolvedVisualAndMeasuredCollider" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="1641339854" result="Passed" start-time="2026-09-26 04:44:49Z" end-time="2026-09-26 04:44:49Z" duration="0.007538" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1003" name="OriginalActorWrapperHasResolvedVisualAndMeasuredCollider(&quot;VehicleActor_Annyoung&quot;)" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.OriginalActorWrapperHasResolvedVisualAndMeasuredCollider(&quot;VehicleActor_Annyoung&quot;)" methodname="OriginalActorWrapperHasResolvedVisualAndMeasuredCollider" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="1457895731" result="Passed" start-time="2026-09-26 04:44:49Z" end-time="2026-09-26 04:44:49Z" duration="0.002214" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1004" name="OriginalActorWrapperHasResolvedVisualAndMeasuredCollider(&quot;VehicleActor_Induck&quot;)" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.OriginalActorWrapperHasResolvedVisualAndMeasuredCollider(&quot;VehicleActor_Induck&quot;)" methodname="OriginalActorWrapperHasResolvedVisualAndMeasuredCollider" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="2015098155" result="Passed" start-time="2026-09-26 04:44:49Z" end-time="2026-09-26 04:44:49Z" duration="0.002492" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="1007" name="RebindingSpawnerReplacesActorsEvenWhenRunIdIsUnchanged" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.RebindingSpawnerReplacesActorsEvenWhenRunIdIsUnchanged" methodname="RebindingSpawnerReplacesActorsEvenWhenRunIdIsUnchanged" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="1994066654" result="Passed" start-time="2026-09-26 04:44:49Z" end-time="2026-09-26 04:44:49Z" duration="0.005047" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Spawned Unity physics actor for server vehicle spawner-test-vehicle
+Spawned Unity physics actor for server vehicle spawner-test-vehicle
+]]></output>
+              </test-case>
+              <test-case id="1015" name="RejectedMapUpdateClearsPreviouslyAuthorizedRoute" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.RejectedMapUpdateClearsPreviouslyAuthorizedRoute" methodname="RejectedMapUpdateClearsPreviouslyAuthorizedRoute" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="900274225" result="Passed" start-time="2026-09-26 04:44:49Z" end-time="2026-09-26 04:44:49Z" duration="0.002117" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1008" name="ReporterRejectsUninitializedOrMobileRuntime" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.ReporterRejectsUninitializedOrMobileRuntime" methodname="ReporterRejectsUninitializedOrMobileRuntime" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="460045228" result="Passed" start-time="2026-09-26 04:44:49Z" end-time="2026-09-26 04:44:49Z" duration="0.002394" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1014" name="ReusedRouteIdWithChangedGeometryClearsRouteAndRevokesMotionAuthority" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.ReusedRouteIdWithChangedGeometryClearsRouteAndRevokesMotionAuthority" methodname="ReusedRouteIdWithChangedGeometryClearsRouteAndRevokesMotionAuthority" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="430911012" result="Passed" start-time="2026-09-26 04:44:49Z" end-time="2026-09-26 04:44:49Z" duration="0.001450" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1013" name="RouteFollowerRejectsNonSyntheticAndMismatchedMapVersions" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.RouteFollowerRejectsNonSyntheticAndMismatchedMapVersions" methodname="RouteFollowerRejectsNonSyntheticAndMismatchedMapVersions" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="820259020" result="Passed" start-time="2026-09-26 04:44:49Z" end-time="2026-09-26 04:44:49Z" duration="0.000911" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1009" name="ServerSnapshotSpawnsActorWithConvertedPoseAndReporterIdOnlyOnce" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.ServerSnapshotSpawnsActorWithConvertedPoseAndReporterIdOnlyOnce" methodname="ServerSnapshotSpawnsActorWithConvertedPoseAndReporterIdOnlyOnce" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="1973575730" result="Passed" start-time="2026-09-26 04:44:49Z" end-time="2026-09-26 04:44:49Z" duration="0.005373" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Spawned Unity physics actor for server vehicle spawner-test-vehicle
+]]></output>
+              </test-case>
+              <test-case id="1012" name="SnapshotWithDifferentMapVersionDoesNotSpawnOnCampusScene" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.SnapshotWithDifferentMapVersionDoesNotSpawnOnCampusScene" methodname="SnapshotWithDifferentMapVersionDoesNotSpawnOnCampusScene" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="1683020345" result="Passed" start-time="2026-09-26 04:44:49Z" end-time="2026-09-26 04:44:49Z" duration="0.000855" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:/Users/Yeop/AppData/LocalLow/DefaultCompany/unity-prefabs-8bf3e1bf15d242a58a5f006af95639cc\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

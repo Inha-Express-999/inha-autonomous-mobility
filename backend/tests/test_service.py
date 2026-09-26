@@ -78,7 +78,7 @@ class SnapshotCadenceWebSocket:
                 {
                     "type": "subscribe",
                     "schemaVersion": 3,
-                    "projectVersion": "0.2.4.0",
+                    "projectVersion": "0.3.0.0",
                     "role": "PC_Operator",
                 }
             )
@@ -1262,6 +1262,10 @@ class MobilityServiceTests(unittest.TestCase):
         current_owner = make_snapshot(self.service, "Mobile_Passenger", "passenger-2", 11)
         self.assertEqual(former_owner["vehicles"], [])
         self.assertEqual(former_owner["routes"], [])
+        self.assertIsNone(former_owner["requests"][0]["vehicleId"])
+        self.assertEqual(first.request.vehicle_id, "V01", "Projection must preserve server history")
+        operator = make_snapshot(self.service, "PC_Operator", None, 12)
+        self.assertEqual(operator["requests"][0]["vehicleId"], "V01")
         self.assertEqual(current_owner["vehicles"][0]["requestId"], second.request.id)
 
     def test_websocket_create_ack_and_snapshot_share_service_state(self) -> None:

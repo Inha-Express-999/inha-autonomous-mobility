@@ -1,6 +1,6 @@
 # Sensor-based safety gate prototype
 
-Project version **0.2.4.0** · 2026-09-25 working tree
+Project version **0.3.0.0** · 2026-09-25 working tree
 
 ## Implemented behavior
 
@@ -54,3 +54,88 @@ sensor rejection. The small synthetic shell and 3-stop map are test assumptions.
 This does not validate general occlusion/classification, TTC/RRT, dynamic braking,
 campus geometry or the original production scenes. See the service-physics-player
 artifacts and `AgentScripts/UnityPhysicsIntegration/README.md` for exact scope.
+
+## 2026-09-26 crossing TTC calculation primitive
+
+`campus_sim.collision.circle_time_to_collision` implements the section 9 equation
+`|r + u*t|^2 = R^2`, returning the earliest non-negative contact time, zero for
+current contact/overlap and infinity for no future contact. Position and relative
+velocity are 2D vectors in a common non-rotating frame; velocity is obstacle minus
+ego. R is a caller-supplied combined envelope radius including margin. The solver
+scales coordinates and rationalizes the entry root to reduce overflow/cancellation.
+Invalid non-finite inputs and negative radii are rejected, not interpreted as clear.
+
+`predict_circle_contact` requires an explicit horizon in (0, 2] seconds, retains
+later analytic contact only as diagnostic information and flags whether contact is
+inside that horizon. No collision inside the horizon is not a safety certification.
+No default vehicle/pedestrian dimensions are invented.
+
+22 tests passed for overlap, approach, recession, stationary cases, side crossing,
+tangency/near miss, point envelopes, horizon boundaries, invalid inputs, rotation,
+common scaling and checking the returned root on the envelope.
+
+This is a tested calculation primitive, **not an active TTC safety controller**.
+The current wire detection has scalar relative speed but no tracked relative
+velocity vector. Detection association, ego-motion/frame compensation, uncertainty,
+observation freshness, verified footprints and independent integration into the
+safety gate are still required. The existing distance gate remains unchanged.
+Circles do not validate rectangular swept bodies or physical braking performance.
+
+## 2026-09-26 Raycast Radar range-rate mode
+
+`VehicleRaycastSensorRig` now has an explicit sensor type and configurable FOV.
+Existing prefabs retain the LIDAR_2D/360-degree default. Radar mode merges ray hits
+into one nearest surface return per observed Collider, then estimates
+`relativeSpeedMps = (current range - previous range) / elapsed seconds`.
+Negative is approaching; positive is receding. Identity is obtained only from
+actual Physics hits, never an unobserved actor Transform/velocity. The integration
+runner's `-Radar` switch selects this mode in the isolated test shell.
+
+The first observation has no range-rate estimate. A missed scan, disabled rig,
+incomplete/overflow scan, or sample interval outside the synthetic 0.05–0.3 second
+window prevents bridging that interval. Current visible ranges become the next
+baseline after a complete scan. Histories are bounded by the current scan's hits.
+The estimate includes ego motion and changes in the visible surface; it is neither
+Doppler nor an object-center velocity vector. Multiple colliders on one object are
+not yet fused. No full crossing TTC is inferred from this scalar.
+
+Original-prefab EditMode checks plus a real Physics moving-target/visibility test
+passed 15/15. The test checks one return per collider, approaching rate, loss and
+reacquisition, and stale interval rejection. Runtime safety still uses the existing
+range stop gate; full radar noise/FOV/load characterization and sensor tracking for
+vector TTC remain incomplete.
+
+## 2026-09-26 Radar approach gate integration
+
+The pure safety evaluator now applies a second stop condition to valid, fresh,
+pose-matched RADAR detections inside the existing forward sector. For negative
+range rate, time to the configured margin is `(range - margin) / -range_rate`,
+clamped at zero. It stops when this time is within the configured approach horizon
+plus server receipt age. `configs/safety.json` sets the synthetic horizon to 2 s
+and rejects settings outside (0, 2]. This threshold is an assumption, not a measured
+vehicle braking parameter. Receipt age does not measure transport/acquisition delay.
+
+The result uses existing EMERGENCY_STOP/OBSTACLE_STOP authority. Invalid/stale
+observations and pose mismatch are checked first; the original stopping-distance
+gate still stops close obstacles even if a radar return is receding. Hazards reset
+the existing one-second clear hold. Missing range rate is not guessed and falls
+back to the distance check. No direct actor state enters Python.
+
+This is an additional conservative radial-approach stop, **not full crossing TTC**.
+It can stop for an approaching surface that later misses the vehicle, and it cannot
+recover lateral velocity from a scalar range rate. The circle TTC module remains
+separate until observation vector tracking and collision footprints are available.
+The previous Radar section's distance-only runtime statement describes the earlier
+verification; this addition now consumes relativeSpeedMps in runtime safety.
+
+## 2026-09-26 grouped actor sensor visibility
+
+Fixed Raycast self-filtering: the actor root is the rig's transform, not the scene's
+topmost grouping transform. Only ego descendants are filtered; sibling actors are
+observable. Actual EditMode Physics tests cover both pedestrian and vehicle layer
+classification under a shared parent, ignoring an ego child collider, and nearest
+wall occlusion without leaking hidden entity class. 17/17 tests passed; evidence is
+in `artifacts/validation/2026-09-26-sensor-occlusion/`.
+
+This validates tagged collider visibility only. Pedestrian motion/population,
+vector tracking, full scene/Player transport and crowd load remain incomplete.

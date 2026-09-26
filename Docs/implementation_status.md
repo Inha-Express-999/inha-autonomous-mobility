@@ -1,8 +1,8 @@
 # 구현 현황
 
-프로젝트 버전 **0.2.4.0** · 2026-09-25 작업본. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
+프로젝트 버전 **0.3.0.0** · 2026-09-26 작업본. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
 
-## 2026-09-26 추가 검증 및 책임 분리 (미커밋 작업본)
+## 2026-09-26 추가 검증 및 책임 분리 (v0.2.4.0)
 
 - 현재 전체 Python backend/MapData suite 111개가 통과했고 Ruff 검사도 통과했다. `tmp/backend-venv`의 Python 3.12 격리 환경에서 실행했으며 Starlette/httpx deprecation warning 1개가 남았다.
 - 안전 정책/판단을 `campus_sim.safety`로 분리했다. 서비스는 세션별 관측 선택·저장·결과 적용을 담당한다. 센서 순서에 따라 뒤쪽 invalid/stale frame이 재출발 hold 초기화를 누락하는 분기를 수정했다. [ADR 0001](ADR/0001-sensor-safety-boundary.md)을 따른다.
@@ -96,4 +96,105 @@
 4. 합성 preview에 V01 route-following alpha를 연결했다. 다음은 Unity Editor에서 씬 재임포트와 PlayMode를 통해 local Python server 연결·요청→Physics 이동→도착→요청 완료 흐름을 검증한다. 축·Collider·ground contact를 확인하고, 센서/TTC safety 계층이 연결되기 전까지는 실제 캠퍼스 이동을 활성화하지 않는다.
 5. M2 지도/접근성/비룡플라자 범위를 완료하는 동안 재사용 빈도가 높은 캠퍼스 오브젝트를 prefab/variant로 단계적으로 정리한 뒤 센서·안전, 다중 차량, 성능 실험을 진행한다.
 
-버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.2.4.0로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
+버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.3.0.0으로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
+
+## 2026-09-26 차량 telemetry 연결 소유권 (v0.2.4.0 이후 작업본)
+
+위치 reporter는 생성기의 PC runtime을 명시적으로 받고, 센서 rig도 같은 소유자를
+사용한다. 씬 전체 host 검색을 제거하고 다른 host로 재연결하면 기존 actor를 정리한다.
+PC·모바일 host가 공존하는 PlayMode 운송 테스트에서 위치 ACK 352회, 센서 ACK 351회,
+센서 거부 0회를 확인했다. 서버 인증/세션 보안 완료를 뜻하지 않는다.
+설계와 제한은 [ADR 0002](ADR/0002-explicit-vehicle-telemetry-owner.md)를 따른다.
+
+## 2026-09-26 fleet lifecycle and mobile completion
+
+PC full snapshots now retire omitted actors immediately and recreate externally
+destroyed actors when still present in the fleet. Ego/sensor tick allocation belongs
+to the runtime session, preventing duplicate ticks after actor recreation.
+Mobile terminal request projection clears the live vehicle reference while keeping
+server/PC assignment history. This fixes a WorldStateStore missing-V01 rejection
+and repeated reconnect after completion, which the earlier raw snapshot-event
+assertions did not catch. The test now checks the actual mobile store continues
+accepting snapshots while the former vehicle serves cargo.
+
+Verification: EditMode 14/14, Physics/Python PlayMode 1/1, Python/MapData 111/111 and
+Ruff passed. Final PlayMode accepted 391 pose/390 sensor frames with zero rejections;
+no missing-reference reconnect warning appeared. Evidence is in
+`artifacts/validation/2026-09-26-fleet-lifecycle/`. Allocation-lifetime warnings and
+transient sensor stale holds remain; no performance or full MVP claim is made.
+
+## 2026-09-26 Raycast Radar mode
+
+The sensor rig now supports Radar nearest-collider returns and signed range-rate
+estimation from consecutive visible hits, plus configurable FOV. Existing LiDAR
+prefabs keep their default behavior. Lost/invalid/expired observation baselines
+cannot produce a rate. No unobserved actor motion enters the estimate.
+
+Original prefab/Physics EditMode 15/15 and the Radar-mode Python/Unity PlayMode
+passenger/cargo/obstacle/recreation scenario 1/1 passed. Source hashes and raw results
+are in `artifacts/validation/2026-09-26-raycast-radar/`. This validates the Radar
+abstraction and existing range gate, not full TTC, Doppler, vector tracking or
+verified physical braking. Radar Player/original scene/performance remain untested.
+
+## 2026-09-26 Radar approach authority
+
+Fresh Radar range-rate now adds a configurable early approach stop to the existing
+range safety gate. It uses the existing OBSTACLE_STOP authority and clear hold;
+missing rate never invents velocity. Python/MapData 142 tests and Ruff passed.
+The real Physics/Python Radar scenario also passed, requiring a stop at x in [2,4]
+before obstacle removal, then passenger/cargo completion and actor recreation.
+Evidence: `artifacts/validation/2026-09-26-radar-approach-gate/`.
+This does not complete crossing TTC/vector tracking or full M4 safety.
+
+## 2026-09-26 Unity-owned moving pedestrian
+
+Added the independent `InhaExpress.Simulation` assembly and
+`SyntheticPedestrianWalker` with copied finite waypoint paths, fixed-step kinematic
+movement, pause/resume and endpoint completion. No networking dependency or hidden
+actor telemetry is introduced. See ADR 0003 for architecture and limitations.
+
+`RunUnityPhysicsIntegration.ps1 -Pedestrian` passed the real PlayMode service flow:
+vehicle stops for a pedestrian, the pedestrian walks laterally clear while staying
+active, server clear hold releases the vehicle, and passenger/cargo missions finish.
+Evidence: `artifacts/validation/2026-09-26-moving-pedestrian/`.
+This is one synthetic moving actor, not full pedestrian service/crowd behavior,
+real-map routing, animation or 300/1,000-agent performance validation.
+
+## 2026-09-26 reproducible population fixture
+
+`SyntheticPedestrianPopulation` adds validated deterministic lane placement,
+300-person generation, group pause and immediate retirement followed by cleanup.
+It remains in the Unity-only simulation assembly. Inputs are scenario assumptions;
+no Python perception receives the population's ground-truth positions.
+
+The filtered PlayMode lifecycle test passed: 300 capsules, actual Rigidbody motion,
+pause, identical respawn positions, and zero old colliders after cleanup. Evidence:
+`artifacts/validation/2026-09-26-population-300/`. This is population lifecycle
+verification only, not full 300-person crowd behavior or performance acceptance.
+Mutual avoidance, observed density/time-of-day demand, service lifecycle, rendering
+and combined load still remain.
+
+## 2026-09-26 explicit zone closure routing and authority
+
+Added internal graph-zone closure control. Closed edges are excluded from every
+planning branch including avoidance fallback; route-duration caches are invalidated.
+Affected active routes and unreachable future dropoffs hold with ZONE_CLOSED and
+unknown ETA. Sensor refresh cannot restore authority while closed, and measured
+Unity vehicle speed is preserved. Five added regression cases and the complete
+162-test Python/MapData suite passed; Ruff passed.
+
+Observed density/coverage is not fabricated or connected yet. Automatic safe egress,
+accessible alternative Stops, original map/UI integration and a dedicated Unity
+closure scenario remain open. See `Docs/zone_observation_policy.md`.
+
+## 2026-09-26 explicit closure in Unity Physics
+
+The dedicated `-ZoneClosure` PlayMode scenario passed using a separately versioned
+synthetic graph and test-only loopback closure input. After actual movement, server
+ZONE_CLOSED caused the follower to brake and hold; reopening entered sensor recovery
+hold, then the scenario completed passenger/cargo missions and telemetry recreation.
+Ruff passed. Evidence: `artifacts/validation/2026-09-26-zone-closure-physics/`.
+
+This resolves only the isolated Physics closure round trip. Observed-density input,
+real zone geometry, alternate accessible Stops, safe egress, original scene and
+performance gates remain incomplete.

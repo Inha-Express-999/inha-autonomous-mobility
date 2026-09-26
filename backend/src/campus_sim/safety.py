@@ -1,6 +1,6 @@
 """Sensor-only safety decisions, independent of service state and network transport.
 
-This conservative range gate is a synthetic prototype, not TTC or collision avoidance.
+Range and radar-approach gates are synthetic prototypes, not full crossing avoidance.
 """
 from __future__ import annotations
 
@@ -10,7 +10,7 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
-from campus_sim.domain import ReasonCode, SensorObservation
+from campus_sim.domain import ReasonCode, SensorObservation, SensorType
 
 
 @dataclass(frozen=True)
@@ -20,6 +20,7 @@ class SafetyPolicy:
     reaction_time_s: float
     emergency_decel_mps2: float
     margin_m: float
+    radar_approach_horizon_s: float = 2.0
 
     @classmethod
     def from_default_config(cls) -> SafetyPolicy:
@@ -39,6 +40,7 @@ class SafetyPolicy:
                 reaction_time_s=number("reaction_time_s"),
                 emergency_decel_mps2=number("emergency_decel_mps2"),
                 margin_m=number("margin_m"),
+                radar_approach_horizon_s=number("radar_approach_horizon_s"),
             )
         except (OSError, json.JSONDecodeError, KeyError, TypeError, ValueError) as error:
             raise ValueError(f"invalid safety config: {path}") from error
@@ -48,11 +50,14 @@ class SafetyPolicy:
             policy.reaction_time_s,
             policy.emergency_decel_mps2,
             policy.margin_m,
+            policy.radar_approach_horizon_s,
         )
         if any(not math.isfinite(value) or value < 0 for value in values_to_check):
             raise ValueError(f"safety config values must be finite and non-negative: {path}")
         if policy.sensor_stale_after_s == 0 or policy.emergency_decel_mps2 == 0:
             raise ValueError(f"safety freshness and deceleration must be positive: {path}")
+        if not 0 < policy.radar_approach_horizon_s <= 2.0:
+            raise ValueError(f"radar approach horizon must be in (0, 2] seconds: {path}")
         return policy
 
 
@@ -115,6 +120,19 @@ def evaluate_sensor_safety(
             local = detection.local_position_m
             if local.x > 0.0 and abs(local.y) <= local.x and local.x <= stopping_distance_m:
                 return SafetyDecision("EMERGENCY_STOP", ReasonCode.OBSTACLE_STOP)
+            rate = detection.relative_speed_mps
+            if (
+                sample.observation.sensor_type is SensorType.RADAR
+                and rate is not None and rate < 0.0
+                and local.x > 0.0 and abs(local.y) <= local.x
+            ):
+                # This is observed radial approach to the configured margin, not
+                # a reconstructed 2D velocity or proof of a crossing collision.
+                # Include receipt age conservatively within the freshness window.
+                age_s = now_s - sample.received_at_s
+                time_to_margin_s = max(0.0, (detection.range_m - policy.margin_m) / -rate)
+                if time_to_margin_s <= policy.radar_approach_horizon_s + age_s:
+                    return SafetyDecision("EMERGENCY_STOP", ReasonCode.OBSTACLE_STOP)
 
     if clear_since_s is None:
         clear_since_s = now_s

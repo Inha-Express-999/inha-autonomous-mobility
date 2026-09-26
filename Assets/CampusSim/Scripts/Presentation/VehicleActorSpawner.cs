@@ -29,16 +29,23 @@ namespace InhaExpress.Client.Presentation
 
         private readonly Dictionary<string, GameObject> actors = new Dictionary<string, GameObject>(StringComparer.Ordinal);
         private readonly Dictionary<string, LineRenderer> routeLines = new Dictionary<string, LineRenderer>(StringComparer.Ordinal);
+        private readonly HashSet<string> snapshotVehicleIds = new HashSet<string>(StringComparer.Ordinal);
+        private readonly List<string> retiredVehicleIds = new List<string>();
         private ClientRuntimeHost host;
         private string currentRunId;
         private Material runtimeRouteOverlayMaterial;
 
         public void Bind(ClientRuntimeHost runtime)
         {
-            if (runtime == null || runtime.Role != ClientRole.PC_Operator)
+            if (runtime == null || runtime.Store == null || runtime.Role != ClientRole.PC_Operator)
                 throw new ArgumentException("Vehicle actors can only be bound to the PC operator runtime.", nameof(runtime));
 
             if (host != null) host.Store.SnapshotChanged -= OnSnapshot;
+            if (host != runtime)
+            {
+                ClearActors();
+                currentRunId = null;
+            }
             host = runtime;
             host.Store.SnapshotChanged += OnSnapshot;
             if (host.Store.Current != null) OnSnapshot(host.Store.Current);
@@ -72,6 +79,21 @@ namespace InhaExpress.Client.Presentation
             {
                 ClearActors();
                 currentRunId = snapshot.RunId;
+            }
+
+            // Snapshots contain the complete PC fleet, not incremental vehicle updates.
+            // Retire omitted actors before Physics can emit another frame for them.
+            snapshotVehicleIds.Clear();
+            foreach (var vehicle in snapshot.Vehicles) snapshotVehicleIds.Add(vehicle.Id);
+            retiredVehicleIds.Clear();
+            foreach (var entry in actors)
+                if (!snapshotVehicleIds.Contains(entry.Key) || entry.Value == null)
+                    retiredVehicleIds.Add(entry.Key);
+            foreach (var id in retiredVehicleIds)
+            {
+                DestroyActor(actors[id]);
+                actors.Remove(id);
+                routeLines.Remove(id);
             }
 
             foreach (var vehicle in snapshot.Vehicles)
@@ -127,7 +149,7 @@ namespace InhaExpress.Client.Presentation
                 return null;
             }
 
-            reporter.Configure(vehicle.Id);
+            reporter.Configure(vehicle.Id, host);
             if (actor.GetComponent<VehicleRaycastSensorRig>() == null)
                 actor.AddComponent<VehicleRaycastSensorRig>();
             CreateRouteLine(vehicle.Id, actor);
@@ -240,6 +262,9 @@ namespace InhaExpress.Client.Presentation
         private static void DestroyActor(GameObject actor)
         {
             if (actor == null) return;
+            // Destroy is deferred in PlayMode; deactivate now to stop telemetry and
+            // remove colliders from subsequent scans within this frame.
+            actor.SetActive(false);
             if (Application.isPlaying) Destroy(actor);
             else DestroyImmediate(actor);
         }

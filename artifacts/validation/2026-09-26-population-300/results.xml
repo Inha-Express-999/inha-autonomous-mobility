@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Passed" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-26 07:15:27Z" end-time="2026-09-26 07:15:28Z" duration="0.3263332">
+  <test-suite type="TestSuite" id="1010" name="unity-physics-integration-7e4758ff511e413284cf615060e8e38e" fullname="unity-physics-integration-7e4758ff511e413284cf615060e8e38e" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-09-26 07:15:27Z" end-time="2026-09-26 07:15:28Z" duration="0.326333" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1005" name="InhaExpress.Client.Tests.PlayMode.dll" fullname="C:/Users/Yeop/Documents/GitHub/inha-autonomous-mobility/tmp/unity-physics-integration-7e4758ff511e413284cf615060e8e38e/Library/ScriptAssemblies/InhaExpress.Client.Tests.PlayMode.dll" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-09-26 07:15:27Z" end-time="2026-09-26 07:15:28Z" duration="0.317087" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="19108" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1006" name="InhaExpress" fullname="InhaExpress" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-09-26 07:15:27Z" end-time="2026-09-26 07:15:28Z" duration="0.316564" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1007" name="Client" fullname="InhaExpress.Client" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-09-26 07:15:27Z" end-time="2026-09-26 07:15:28Z" duration="0.314345" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1008" name="Tests" fullname="InhaExpress.Client.Tests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-09-26 07:15:27Z" end-time="2026-09-26 07:15:28Z" duration="0.313998" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1001" name="SyntheticPedestrianPopulationTests" fullname="InhaExpress.Client.Tests.SyntheticPedestrianPopulationTests" classname="InhaExpress.Client.Tests.SyntheticPedestrianPopulationTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-26 07:15:27Z" end-time="2026-09-26 07:15:28Z" duration="0.312807" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1002" name="ThreeHundredActorsMovePauseAndReplayWithoutGhostColliders" fullname="InhaExpress.Client.Tests.SyntheticPedestrianPopulationTests.ThreeHundredActorsMovePauseAndReplayWithoutGhostColliders" methodname="ThreeHundredActorsMovePauseAndReplayWithoutGhostColliders" classname="InhaExpress.Client.Tests.SyntheticPedestrianPopulationTests" runstate="Runnable" seed="308832548" result="Passed" start-time="2026-09-26 07:15:27Z" end-time="2026-09-26 07:15:28Z" duration="0.301128" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:\Users\Yeop\Documents\GitHub\inha-autonomous-mobility\tmp\unity-physics-integration-7e4758ff511e413284cf615060e8e38e\results.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

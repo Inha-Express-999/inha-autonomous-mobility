@@ -160,9 +160,10 @@ namespace InhaExpress.Client.Domain
         public MapPositionDto LocalPositionM { get; }
         public SensorEntityClass EntityClass { get; }
         public double? RelativeSpeedMps { get; }
+        public string EntityId { get; }
 
         public SensorDetectionDto(double rangeM, double bearingRad, MapPositionDto localPositionM,
-            SensorEntityClass entityClass, double? relativeSpeedMps = null)
+            SensorEntityClass entityClass, double? relativeSpeedMps = null, string entityId = null)
         {
             RangeM = DtoGuard.Finite(rangeM, nameof(rangeM));
             BearingRad = DtoGuard.Finite(bearingRad, nameof(bearingRad));
@@ -170,6 +171,9 @@ namespace InhaExpress.Client.Domain
                 throw new ArgumentOutOfRangeException(nameof(rangeM));
             LocalPositionM = localPositionM;
             EntityClass = DtoGuard.EnumValue(entityClass, nameof(entityClass));
+            EntityId = DtoGuard.OptionalId(entityId, nameof(entityId));
+            if (EntityId != null && EntityId.Length > 128)
+                throw new ArgumentOutOfRangeException(nameof(entityId));
             RelativeSpeedMps = relativeSpeedMps.HasValue
                 ? DtoGuard.Finite(relativeSpeedMps.Value, nameof(relativeSpeedMps))
                 : (double?)null;
@@ -196,10 +200,14 @@ namespace InhaExpress.Client.Domain
         public string MapVersion { get; }
         public bool Valid { get; }
         public ReadOnlyCollection<SensorDetectionDto> Detections { get; }
+        public double? ObservedTimeS { get; }
+        public MapPositionDto? SensorPositionM { get; }
+        public double? SensorHeadingRad { get; }
 
         public SensorObservationDto(string vehicleId, string sensorId, SensorType sensorType,
             long observedTick, long egoPoseTick, string mapVersion, bool valid,
-            IEnumerable<SensorDetectionDto> detections)
+            IEnumerable<SensorDetectionDto> detections, double? observedTimeS = null,
+            MapPositionDto? sensorPositionM = null, double? sensorHeadingRad = null)
         {
             VehicleId = DtoGuard.Text(vehicleId, nameof(vehicleId));
             SensorId = DtoGuard.Text(sensorId, nameof(sensorId));
@@ -211,6 +219,13 @@ namespace InhaExpress.Client.Domain
             MapVersion = DtoGuard.Text(mapVersion, nameof(mapVersion));
             Valid = valid;
             Detections = DtoGuard.Copy(detections, nameof(detections));
+            if (observedTimeS.HasValue != sensorPositionM.HasValue ||
+                observedTimeS.HasValue != sensorHeadingRad.HasValue)
+                throw new ArgumentException("Capture time and sensor pose must be supplied together.");
+            ObservedTimeS = DtoGuard.OptionalNumber(observedTimeS, nameof(observedTimeS));
+            SensorPositionM = sensorPositionM;
+            SensorHeadingRad = sensorHeadingRad.HasValue
+                ? DtoGuard.Finite(sensorHeadingRad.Value, nameof(sensorHeadingRad)) : (double?)null;
             if (Detections.Count > 64)
                 throw new ArgumentOutOfRangeException(nameof(detections), "At most 64 detections are supported.");
             if (SensorType == SensorType.LIDAR_2D)

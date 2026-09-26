@@ -85,6 +85,175 @@ namespace InhaExpress.Client.Tests
         }
 
         [Test]
+        [TestCase("Pedestrian", SensorEntityClass.PEDESTRIAN)]
+        [TestCase("Vehicle", SensorEntityClass.VEHICLE)]
+        public void SharedSceneParentDoesNotHideOtherActorsAndOcclusionHidesTheirClass(
+            string layerName, SensorEntityClass expectedClass)
+        {
+            var group = new GameObject("Grouped simulation actors");
+            try
+            {
+                group.transform.position = new Vector3(20000, 0, 20000);
+                var ego = new GameObject("Ego actor");
+                ego.transform.SetParent(group.transform, false);
+                ego.transform.localScale = Vector3.one * 2f;
+                var rig = ego.AddComponent<VehicleRaycastSensorRig>();
+                const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
+                typeof(VehicleRaycastSensorRig).GetMethod("Awake", flags).Invoke(rig, null);
+                typeof(VehicleRaycastSensorRig).GetField("fieldOfViewDegrees", flags).SetValue(rig, 1f);
+                var scan = typeof(VehicleRaycastSensorRig).GetMethod("Scan", flags);
+                var returns = (System.Collections.Generic.List<SensorDetectionDto>)
+                    typeof(VehicleRaycastSensorRig).GetField("detections", flags).GetValue(rig);
+                var nose = new GameObject("Ego child collider");
+                nose.transform.SetParent(ego.transform, false);
+                nose.transform.localPosition = Vector3.forward;
+                nose.AddComponent<BoxCollider>().size = new Vector3(2, 2, 0.2f);
+                var other = new GameObject("Observed actor");
+                other.transform.SetParent(group.transform, false);
+                other.transform.localPosition = Vector3.forward * 5;
+                other.layer = LayerMask.NameToLayer(layerName);
+                Assert.That(other.layer, Is.GreaterThanOrEqualTo(0));
+                other.AddComponent<BoxCollider>().size = new Vector3(2, 2, 1);
+                Physics.SyncTransforms();
+                Assert.That(scan.Invoke(rig, new object[] { 1.0 }), Is.True);
+                Assert.That(returns, Is.Not.Empty);
+                Assert.That(returns.TrueForAll(hit => hit.EntityClass == expectedClass && hit.RangeM > 4),
+                    Is.True, "Ignore only ego descendants, not siblings under the scene group.");
+                string observedId = returns[0].EntityId;
+                Assert.That(observedId, Is.Not.Null.And.Not.Empty);
+                Assert.That(returns.TrueForAll(hit => hit.EntityId == observedId), Is.True,
+                    "All rays hitting one observed object share an identity.");
+
+                var wall = new GameObject("Opaque occluder");
+                wall.transform.SetParent(group.transform, false);
+                wall.transform.localPosition = Vector3.forward * 3;
+                wall.AddComponent<BoxCollider>().size = new Vector3(4, 2, 1);
+                Physics.SyncTransforms();
+                scan.Invoke(rig, new object[] { 1.1 });
+                Assert.That(returns, Is.Not.Empty);
+                Assert.That(returns.TrueForAll(hit => hit.EntityClass == SensorEntityClass.STATIC_OBSTACLE
+                    && hit.RangeM < 3), Is.True, "Hidden actor classification must not leak through a wall.");
+                Assert.That(returns.TrueForAll(hit => hit.EntityId != observedId), Is.True,
+                    "Hidden actor identity must not leak through a wall.");
+                ego.transform.rotation = Quaternion.Euler(15f, 0f, 0f);
+                Assert.That(scan.Invoke(rig, new object[] { 1.2 }), Is.False,
+                    "A tilted sensor cannot silently supply yaw-only world coordinates.");
+                Assert.That(returns, Is.Empty);
+            }
+            finally { UnityEngine.Object.DestroyImmediate(group); }
+        }
+
+        [Test]
+        public void RadarEstimatesOnlyConsecutiveVisibleRangeChanges()
+        {
+            var sensor = new GameObject("Radar test sensor");
+            var target = new GameObject("Radar visible target");
+            try
+            {
+                sensor.transform.position = new Vector3(10000, 0, 10000);
+                var rig = sensor.AddComponent<VehicleRaycastSensorRig>();
+                const BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic;
+                typeof(VehicleRaycastSensorRig).GetField("sensorType", flags).SetValue(rig, SensorType.RADAR);
+                var scan = typeof(VehicleRaycastSensorRig).GetMethod("Scan", flags);
+                var returns = (System.Collections.Generic.List<SensorDetectionDto>)
+                    typeof(VehicleRaycastSensorRig).GetField("detections", flags).GetValue(rig);
+                target.AddComponent<BoxCollider>().size = new Vector3(2, 2, 1);
+                target.transform.position = sensor.transform.position + Vector3.forward * 10;
+                Physics.SyncTransforms();
+                Assert.That(scan.Invoke(rig, new object[] { 1.0 }), Is.True);
+                Assert.That(returns.Count, Is.EqualTo(1), "Multiple beams merge to one collider return.");
+                Assert.That(returns[0].RelativeSpeedMps, Is.Null);
+                target.transform.position -= Vector3.forward;
+                Physics.SyncTransforms();
+                scan.Invoke(rig, new object[] { 1.1 });
+                Assert.That(returns[0].RelativeSpeedMps.Value, Is.EqualTo(-10).Within(0.01));
+                target.SetActive(false);
+                Physics.SyncTransforms();
+                scan.Invoke(rig, new object[] { 1.2 });
+                Assert.That(returns, Is.Empty);
+                target.SetActive(true);
+                Physics.SyncTransforms();
+                scan.Invoke(rig, new object[] { 1.3 });
+                Assert.That(returns[0].RelativeSpeedMps, Is.Null, "No interpolation through missed observations.");
+                scan.Invoke(rig, new object[] { 2.0 });
+                Assert.That(returns[0].RelativeSpeedMps, Is.Null, "An expired baseline cannot estimate velocity.");
+            }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(sensor);
+                UnityEngine.Object.DestroyImmediate(target);
+            }
+        }
+
+        [Test]
+        public void CompleteSnapshotRetiresOmittedActorAndAllowsFreshSpawn()
+        {
+            BindHost(new WebSocketClientDataSource("ws://127.0.0.1:1/v1/client/ws",
+                ClientRole.PC_Operator, "0.2.4.0"));
+            var vehicle = new VehicleDto(VehicleId, new MapPositionDto(0, 0, 0),
+                0, 0, null, VehicleMissionState.IDLE, VehicleMotionState.WAITING_RESOURCE);
+            host.Store.ApplySnapshot(CreateSnapshot("fleet-run", 1, vehicle), 1.0);
+            var actor = GameObject.Find("Vehicle " + VehicleId);
+            Assert.That(actor, Is.Not.Null, "Idle vehicles remain part of the fleet.");
+            host.Store.ApplySnapshot(CreateSnapshot("fleet-run", 2), 2.0);
+            Assert.That(actor == null, Is.True, "Omitted actors must not keep reporting or blocking rays.");
+            Assert.That(CountActiveReporters(VehicleId), Is.Zero);
+            host.Store.ApplySnapshot(CreateSnapshot("fleet-run", 3, vehicle), 3.0);
+            Assert.That(CountActiveReporters(VehicleId), Is.EqualTo(1));
+            Assert.That(GameObject.Find("Vehicle " + VehicleId)
+                .GetComponent<VehicleEgoLocalizationReporter>().LatestObservedTick, Is.EqualTo(-1));
+        }
+
+        [Test]
+        public void RebindingSpawnerReplacesActorsEvenWhenRunIdIsUnchanged()
+        {
+            BindHost(new WebSocketClientDataSource("ws://127.0.0.1:1/v1/client/ws",
+                ClientRole.PC_Operator, "0.2.4.0"));
+            var vehicle = new VehicleDto(VehicleId, new MapPositionDto(0, 0, 0),
+                0, 0, null, VehicleMissionState.IDLE, VehicleMotionState.WAITING_RESOURCE);
+            host.Store.ApplySnapshot(CreateSnapshot("shared-run", 1, vehicle), 1.0);
+            var oldActor = GameObject.Find("Vehicle " + VehicleId);
+            Assert.That(oldActor.GetComponent<VehicleEgoLocalizationReporter>().Runtime, Is.SameAs(host));
+            var nextHostObject = new GameObject("Replacement PC host");
+            try
+            {
+                var nextHost = nextHostObject.AddComponent<ClientRuntimeHost>();
+                nextHost.Initialize(ClientRole.PC_Operator, new WebSocketClientDataSource(
+                    "ws://127.0.0.1:1/v1/client/ws", ClientRole.PC_Operator, "0.2.4.0"));
+                nextHost.Store.ApplySnapshot(CreateSnapshot("shared-run", 1, vehicle), 1.0);
+                spawner.Bind(nextHost);
+                Assert.That(oldActor == null, Is.True, "An old session's actor must be retired.");
+                var newActor = GameObject.Find("Vehicle " + VehicleId);
+                Assert.That(newActor.GetComponent<VehicleEgoLocalizationReporter>().Runtime, Is.SameAs(nextHost));
+                host.Store.ApplySnapshot(CreateSnapshot("old-host-update", 2), 2.0);
+                Assert.That(newActor != null, Is.True, "Old host snapshots must no longer affect actors.");
+            }
+            finally { UnityEngine.Object.DestroyImmediate(nextHostObject); }
+        }
+
+        [Test]
+        public void ReporterRejectsUninitializedOrMobileRuntime()
+        {
+            var actor = new GameObject("Unbound telemetry test");
+            var owner = new GameObject("Invalid telemetry owner");
+            try
+            {
+                var reporter = actor.AddComponent<VehicleEgoLocalizationReporter>();
+                var invalidHost = owner.AddComponent<ClientRuntimeHost>();
+                Assert.Throws<ArgumentException>(() => reporter.Configure(VehicleId, invalidHost));
+                invalidHost.Initialize(ClientRole.Mobile_Passenger,
+                    new FixtureClientDataSource(ClientRole.Mobile_Passenger, "0.2.4.0", "passenger"), "passenger");
+                Assert.Throws<ArgumentException>(() => reporter.Configure(VehicleId, invalidHost));
+                Assert.That(reporter.Runtime, Is.Null);
+            }
+            finally
+            {
+                UnityEngine.Object.DestroyImmediate(actor);
+                UnityEngine.Object.DestroyImmediate(owner);
+            }
+        }
+
+        [Test]
         public void ServerSnapshotSpawnsActorWithConvertedPoseAndReporterIdOnlyOnce()
         {
             BindHost(new WebSocketClientDataSource("ws://127.0.0.1:1/v1/client/ws",

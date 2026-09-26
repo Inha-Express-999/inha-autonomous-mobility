@@ -3,7 +3,7 @@ from __future__ import annotations
 import math
 from enum import StrEnum
 
-from pydantic import BaseModel, ConfigDict, Field, model_validator
+from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
 
 class ServiceType(StrEnum):
@@ -165,6 +165,14 @@ class SensorDetection(BaseModel):
     local_position_m: MapPosition
     entity_class: SensorEntityClass
     relative_speed_mps: float | None = Field(default=None, allow_inf_nan=False)
+    entity_id: str | None = Field(default=None, min_length=1, max_length=128)
+
+    @field_validator("entity_id")
+    @classmethod
+    def entity_id_is_nonblank(cls, value: str | None) -> str | None:
+        if value is not None and not value.strip():
+            raise ValueError("entity_id cannot be blank")
+        return value
 
     @model_validator(mode="after")
     def detection_geometry_matches_polar_values(self) -> SensorDetection:
@@ -197,9 +205,15 @@ class SensorObservation(BaseModel):
     ego_pose_tick: int = Field(ge=0)
     valid: bool
     detections: list[SensorDetection] = Field(max_length=64)
+    observed_time_s: float | None = Field(default=None, ge=0, allow_inf_nan=False)
+    sensor_position_m: MapPosition | None = None
+    sensor_heading_rad: float | None = Field(default=None, allow_inf_nan=False)
 
     @model_validator(mode="after")
     def radar_speed_is_sensor_specific(self) -> SensorObservation:
+        metadata = (self.observed_time_s, self.sensor_position_m, self.sensor_heading_rad)
+        if any(value is not None for value in metadata) and any(value is None for value in metadata):
+            raise ValueError("Sensor capture time and world pose must be provided together")
         if self.sensor_type is SensorType.LIDAR_2D and any(
             detection.relative_speed_mps is not None for detection in self.detections
         ):

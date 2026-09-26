@@ -1,3 +1,4 @@
+using System;
 using InhaExpress.Client.Domain;
 using InhaExpress.Client.Networking;
 using UnityEngine;
@@ -23,17 +24,24 @@ namespace InhaExpress.Client.Presentation
         private double previousReportAtS;
         private double nextReportAtS;
         private bool hasPreviousPosition;
-        private long observedTick;
+        private long observedTick = -1;
 
         public string VehicleId => vehicleId;
-        public long LatestObservedTick => observedTick - 1;
+        public long LatestObservedTick => observedTick;
+        public ClientRuntimeHost Runtime => runtime;
 
         private void Awake() => body = GetComponent<Rigidbody>();
 
-        public void Configure(string id)
+        public void Configure(string id, ClientRuntimeHost owner)
         {
+            if (owner == null || owner.Store == null || owner.Role != ClientRole.PC_Operator)
+                throw new ArgumentException("Ego telemetry requires an initialized PC operator runtime.", nameof(owner));
+            if (string.IsNullOrWhiteSpace(id))
+                throw new ArgumentException("A vehicle ID is required.", nameof(id));
+            runtime = owner;
+            if (body == null) body = GetComponent<Rigidbody>();
             vehicleId = string.IsNullOrWhiteSpace(id) ? null : id.Trim();
-            observedTick = 0;
+            observedTick = -1;
             hasPreviousPosition = false;
             previousReportAtS = 0.0;
             nextReportAtS = 0.0;
@@ -45,7 +53,6 @@ namespace InhaExpress.Client.Presentation
             double nowS = Time.realtimeSinceStartupAsDouble;
             if (nowS < nextReportAtS) return;
 
-            if (runtime == null) runtime = FindFirstObjectByType<ClientRuntimeHost>();
             if (runtime == null || runtime.Role != ClientRole.PC_Operator ||
                 runtime.Localization == null || runtime.Store?.Current == null)
                 return;
@@ -61,13 +68,15 @@ namespace InhaExpress.Client.Presentation
 
             var headingRad = body.rotation.eulerAngles.y * Mathf.Deg2Rad;
             var mapPosition = MapCoordinateConverter.FromUnity(position);
+            long nextTick = runtime.NextEgoTick(vehicleId);
             runtime.Localization.SendEgoLocalization(new EgoLocalizationDto(
                 vehicleId,
-                observedTick++,
+                nextTick,
                 runtime.Store.Current.MapVersion,
                 mapPosition,
                 headingRad,
                 speedMps));
+            observedTick = nextTick;
 
             previousReportedPosition = position;
             previousReportAtS = nowS;
