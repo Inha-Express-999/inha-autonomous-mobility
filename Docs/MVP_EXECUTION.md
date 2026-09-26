@@ -1,11 +1,99 @@
 # MVP implementation and verification ledger
 
-2026-09-26 · project version 0.3.1.0
+2026-09-26 · project version 0.3.2.0
 
 The objective remains a campus passenger/cargo simulation using Unity Physics
 and sensor observations with Python service/planning/control. A synthetic demo
 is an intermediate verification gate. AGENTS.md sections 14 and 16 define the
 full acceptance criteria; this ledger does not reduce that scope.
+
+## 2026-09-26 v0.3.2.0 admission checkpoint
+
+Optional resource admission now caps Python control speed using route/resource
+geometry, atomic exit-space grants and reaction/braking distance. At-rest heading
+alignment outside the expanded hold boundary is preserved. Python/MapData 349
+and Ruff pass. Latest isolated Unity PlayMode is **3/4 passed, 1 failed**: the
+vehicle stopped outside the corridor, but did not resume after exit release.
+This remains an unresolved integration issue, not completed M5 acceptance.
+Earlier occupancy-only success below refers to its historical source version.
+See `Docs/resource_admission.md` and
+`artifacts/validation/2026-09-26-resource-admission/`.
+
+## 2026-09-26 ego-to-resource occupancy integration (after v0.3.1.0)
+
+Connected optional resource occupancy tracking to accepted service ego reports
+and freshness checks. Oriented whole-body/rectangle overlap, bounded between-sample
+motion and repeated clear reports determine entry/exit. Stale/discontinuous/session
+changes retain occupancy and latch closures. Python/MapData 342 and Ruff pass.
+Isolated Unity PlayMode 4/4 passes, including production ego-report-driven entry,
+exit and one completed lease with no residual claims or tracker faults in the
+crossing scenario. This is observation integration, not permission-controlled
+entry or multi-vehicle avoidance. Stop-line braking, recovery, route resources and
+CBS remain open. Evidence: `artifacts/validation/2026-09-26-resource-occupancy/`.
+
+## 2026-09-26 resource reservation state machine (after v0.3.1.0)
+
+Added map-bound atomic multi-resource admission, explicit actual occupancy distinct
+from lease TTL, exit-space retention, deterministic priority/aging, fault closure
+and wait-cycle/timeout reporting. Occupied resources cannot be cancelled or reused
+on expiration. Unexpected occupancy is retained as a fault instead of ignored.
+The entry-permission query is not vehicle control authority. Service/Unity boundary
+geometry, stop-line braking, actual multi-vehicle execution and CBS are still open.
+Tests and limits: `Docs/resource_reservations.md` and
+`artifacts/validation/2026-09-26-reservations/`. This does not complete M5.
+
+## 2026-09-26 D* Lite and synthetic replan comparison (after v0.3.1.0)
+
+Added own fixed-topology D* Lite, common hard-constraint validation, moved-start
+repair and dynamic cost/closure/reopening snapshots. The service can select it in
+planning config while retaining AVOID detour limits and CLOSED exclusion. Goal/
+constraint/policy-phase caches are bounded and invalidated by graph content changes.
+The default remains A*. The new `replan-compare` CLI matched Dijkstra on all 600
+recorded events per algorithm, including 140 no-route states. In this small graph,
+A* p95 was 0.0587 ms versus D* Lite 0.1815 ms; no speedup is claimed. Source/result
+scope: `artifacts/validation/2026-09-26-dstar-lite/` and `Docs/dstar_lite.md`.
+Actual campus/observed crowd events, load, Unity and end-to-end T24/E3 gates remain.
+
+## 2026-09-26 mixed observed-object RRT candidates (after v0.3.1.0)
+
+RRT input capture now optionally accepts explicit dynamic observation bounds and
+currently tracked pedestrians. The shared timing conversion generates conservative
+short-horizon swept envelopes for geometric proposals. Missing motion remains a
+rejection. Time/policy/track changes invalidate candidates; timed assessment cannot
+weaken planning assumptions. Up to 128 fully footprint-checked shortcuts remove
+redundant stop/turn stages. A mixed static/pedestrian fixture detours; an obstructed
+narrow corridor fails without fallback. Full Python/MapData 298 and Ruff pass.
+The recorded candidate lasts about 12.365 s but only its first 1.9 s is assessed;
+it remains non-executable. Evidence: `artifacts/validation/2026-09-26-dynamic-rrt/`.
+Area coverage, live rejoin/arbitration, qualified assumptions and actual Unity
+detour execution remain mandatory before this can count as M4 completion.
+
+## 2026-09-26 observed motion to timed footprint (after v0.3.1.0)
+
+Connected sensor-return/track inputs to timed continuous footprint checks, with
+explicit delay and clock-rate uncertainty. Unity capture and server receipt clock
+origins are never subtracted. Full object diameter bounds surround observed
+surfaces, current identity/time/surface association is required, and the oldest
+capture age limits the shared prediction to at most two capture seconds.
+Local candidates can assess current service observations after fingerprint checks;
+changed inputs reject reuse. Python/MapData 286 tests and Ruff pass, with 43 focused
+adapter/candidate cases. Evidence: `artifacts/validation/2026-09-26-observed-trajectory/`.
+No new Unity run or execution authority: mixed dynamic RRT candidate generation,
+qualified timing/envelopes, area coverage, arbitration and actual detours remain.
+
+## 2026-09-26 LiDAR ray coverage inputs (after v0.3.1.0)
+
+Added optional measured HIT/MISS/INVALID samples per LiDAR ray, capture-bound
+validation and production WebSocket serialization/retention. Ordered hit samples
+must match detections; full buffers and external origin overlap cannot report
+clear rays. No free-space interpolation or RRT execution authority was added.
+Python/MapData 259 tests and Ruff pass; isolated PlayMode 4/4 covers occlusion,
+saturation, origin overlap, and actual sensor→Python control crossing with socket
+interruption and actor recreation. Full 64-hit frames exceeding 16 KiB were tested
+through Python WebSocket after increasing the bounded transport cap to 64 KiB.
+Evidence and per-execution source scope: `artifacts/validation/2026-09-26-lidar-rays/`.
+Remaining: area coverage assumptions/uncertainty, timed dynamic observation
+conversion, local trajectory arbitration/rejoin and real detour execution.
 
 ## 2026-09-26 observed crossing stop integration (after v0.3.0.0)
 

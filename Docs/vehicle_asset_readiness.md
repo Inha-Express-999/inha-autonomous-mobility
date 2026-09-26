@@ -1,6 +1,6 @@
 # Vehicle asset and physics shell readiness
 
-Project version: **0.3.1.0** · implementation status checked 2026-09-25
+Project version: **0.3.2.0** · implementation status checked 2026-09-25
 
 ## Existing vehicle visuals
 

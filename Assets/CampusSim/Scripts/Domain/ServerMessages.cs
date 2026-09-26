@@ -190,6 +190,26 @@ namespace InhaExpress.Client.Domain
         }
     }
 
+    public sealed class SensorRayDto
+    {
+        public double BearingRad { get; }
+        public string Outcome { get; }
+        public double? RangeM { get; }
+        public SensorRayDto(double bearingRad, string outcome, double? rangeM = null)
+        {
+            BearingRad = DtoGuard.Finite(bearingRad, nameof(bearingRad));
+            if (Math.Abs(BearingRad) > Math.PI ||
+                (outcome != "HIT" && outcome != "MISS" && outcome != "INVALID"))
+                throw new ArgumentException("Invalid ray bearing/outcome.");
+            if ((outcome == "INVALID") != !rangeM.HasValue)
+                throw new ArgumentException("Only INVALID rays omit range.");
+            if (rangeM.HasValue && DtoGuard.Finite(rangeM.Value, nameof(rangeM)) <= 0)
+                throw new ArgumentOutOfRangeException(nameof(rangeM));
+            Outcome = outcome;
+            RangeM = rangeM;
+        }
+    }
+
     public sealed class SensorObservationDto
     {
         public string VehicleId { get; }
@@ -203,11 +223,14 @@ namespace InhaExpress.Client.Domain
         public double? ObservedTimeS { get; }
         public MapPositionDto? SensorPositionM { get; }
         public double? SensorHeadingRad { get; }
+        public double? RayMaxRangeM { get; }
+        public ReadOnlyCollection<SensorRayDto> Rays { get; }
 
         public SensorObservationDto(string vehicleId, string sensorId, SensorType sensorType,
             long observedTick, long egoPoseTick, string mapVersion, bool valid,
             IEnumerable<SensorDetectionDto> detections, double? observedTimeS = null,
-            MapPositionDto? sensorPositionM = null, double? sensorHeadingRad = null)
+            MapPositionDto? sensorPositionM = null, double? sensorHeadingRad = null,
+            double? rayMaxRangeM = null, IEnumerable<SensorRayDto> rays = null)
         {
             VehicleId = DtoGuard.Text(vehicleId, nameof(vehicleId));
             SensorId = DtoGuard.Text(sensorId, nameof(sensorId));
@@ -232,6 +255,31 @@ namespace InhaExpress.Client.Domain
                 foreach (var detection in Detections)
                     if (detection.RelativeSpeedMps.HasValue)
                         throw new ArgumentException("LIDAR detections cannot include relative speed.");
+            Rays = DtoGuard.Copy(rays ?? new SensorRayDto[0], nameof(rays));
+            RayMaxRangeM = rayMaxRangeM;
+            if ((Rays.Count > 0) != rayMaxRangeM.HasValue || Rays.Count > 64)
+                throw new ArgumentException("Ray samples and range must be supplied together, at most 64.");
+            if (Rays.Count == 0) return;
+            if (SensorType != SensorType.LIDAR_2D || !ObservedTimeS.HasValue ||
+                DtoGuard.Finite(rayMaxRangeM.Value, nameof(rayMaxRangeM)) <= 0)
+                throw new ArgumentException("Ray samples require LiDAR, capture pose and positive range.");
+            double previous = double.NegativeInfinity;
+            int hitIndex = 0;
+            foreach (var ray in Rays)
+            {
+                if (ray.BearingRad <= previous || (ray.Outcome == "INVALID" && Valid) ||
+                    (ray.RangeM.HasValue && ray.RangeM.Value > rayMaxRangeM.Value + 1e-5) ||
+                    (ray.Outcome == "MISS" && Math.Abs(ray.RangeM.Value - rayMaxRangeM.Value) > 1e-5))
+                    throw new ArgumentException("Inconsistent ray sample.");
+                previous = ray.BearingRad;
+                if (ray.Outcome != "HIT") continue;
+                if (hitIndex >= Detections.Count ||
+                    Math.Abs(ray.RangeM.Value - Detections[hitIndex].RangeM) > 1e-5 ||
+                    Math.Abs(ray.BearingRad - Detections[hitIndex].BearingRad) > 1e-4)
+                    throw new ArgumentException("Ray HIT must match its ordered detection.");
+                hitIndex++;
+            }
+            if (hitIndex != Detections.Count) throw new ArgumentException("Unmatched LiDAR detection.");
         }
     }
 

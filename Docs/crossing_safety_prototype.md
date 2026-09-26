@@ -1,6 +1,6 @@
 # Observed-surface crossing stop prototype
 
-2026-09-26 · project v0.3.1.0
+2026-09-26 · project v0.3.2.0
 
 `MobilityService.crossing_policies[vehicle_id]` enables an additional independent
 safety gate for a vehicle with an explicitly supplied `CrossingPolicy`. There is

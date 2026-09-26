@@ -1,6 +1,40 @@
 # Local RRT and continuous footprint geometry
 
-2026-09-26 · project v0.3.1.0 · algorithm implementation, not live driving authority
+2026-09-26 · project v0.3.2.0 · algorithm implementation, not live driving authority
+
+## Subsequent working-tree integration: observed dynamic candidates
+
+`capture_local_input(..., dynamic_bounds=...)` now accepts mixed static returns
+and currently tracked pedestrians. It reuses `capture_motion_bounds`, including
+capture-delay and clock-rate bounds. Untracked/unknown/vehicle objects are still
+rejected rather than treated as stationary. No other actors' Ground Truth is read.
+
+For geometric RRT sampling, a predicted moving disc is enclosed by up to 64 discs
+along its short-horizon sweep. Each slab's midpoint disc includes half the slab's
+travel distance and the maximum uncertainty over the horizon, covering the full
+swept envelope rather than only sampled centers. Nominal slab length is 0.5 m;
+at the cap, the radius grows with longer slabs. This can reject feasible paths,
+but never grants permission to pass through a predicted envelope. Static returns
+remain bounded by full object diameter about the measured surface.
+
+The policy, tracked motions and current server-time anchor join the input
+fingerprint. Dynamic candidates must be recomputed after a time tick or any input
+change. A different policy cannot silently weaken their timed assessment. Geometry
+after the prediction horizon has no dynamic clearance claim.
+
+RRT path postprocessing now attempts at most 128 deterministic shortcuts. Each
+uses the same corridor and continuous turn/move/turn footprint checks. On budget
+exhaustion the previously checked suffix is retained. This removes redundant
+stop/turn stages without assuming that endpoint visibility makes a shortcut safe.
+
+The mixed-object fixture produces a seed-17 detour, then checks its first 1.9 s.
+Its full timed duration is about 12.365 s, so the whole trajectory is **not**
+validated. A narrow corridor blocked by the moving envelope returns no candidate.
+These are Python synthetic checks, not an executed Unity detour. Candidates remain
+non-executable pending area coverage, qualified timing/envelopes, rejoin and
+controller arbitration. Evidence: `artifacts/validation/2026-09-26-dynamic-rrt/`.
+
+## Original geometry and static planner baseline
 
 `swept_geometry.py` checks a centered planar rectangular vehicle against a disc
 over a whole motion interval. Both centers interpolate linearly on the same time

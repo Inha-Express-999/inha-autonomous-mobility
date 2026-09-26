@@ -37,7 +37,9 @@ namespace InhaExpress.Client.Presentation
         [SerializeField] private LayerMask vehicleLayers;
 
         private readonly RaycastHit[] hitBuffer = new RaycastHit[64];
+        private readonly Collider[] originOverlapBuffer = new Collider[64];
         private readonly List<SensorDetectionDto> detections = new List<SensorDetectionDto>(MaximumDetections);
+        private readonly List<SensorRayDto> rays = new List<SensorRayDto>(MaximumDetections);
         private readonly Dictionary<int, SensorDetectionDto> radarHits = new Dictionary<int, SensorDetectionDto>();
         private readonly Dictionary<int, double> previousRadarRanges = new Dictionary<int, double>();
         private double previousRadarScanAtS = double.NaN;
@@ -90,7 +92,8 @@ namespace InhaExpress.Client.Presentation
                 runtime.Store.Current.MapVersion,
                 scanComplete,
                 detections, Time.fixedTimeAsDouble, MapCoordinateConverter.FromUnity(origin.position),
-                origin.eulerAngles.y * Mathf.Deg2Rad);
+                origin.eulerAngles.y * Mathf.Deg2Rad,
+                rays.Count > 0 ? (double?)maxRangeM : null, rays);
             runtime.Sensors.SendSensorObservation(observation);
             observedTick = nextTick;
         }
@@ -98,6 +101,7 @@ namespace InhaExpress.Client.Presentation
         private bool Scan(double nowS)
         {
             detections.Clear();
+            rays.Clear();
             radarHits.Clear();
             bool complete = true;
             var origin = sensorOrigin != null ? sensorOrigin : transform;
@@ -112,6 +116,20 @@ namespace InhaExpress.Client.Presentation
             // The rig is on the actor root. A scene-level grouping parent may
             // also contain other vehicles/pedestrians and is not part of ego.
             Transform vehicleRoot = transform;
+            // Raycast can miss a collider containing its origin. Such a scan must
+            // never masquerade as a set of unobstructed rays. Ego shell is ignored.
+            int overlapCount = Physics.OverlapSphereNonAlloc(origin.position, 0.001f,
+                originOverlapBuffer, layerMask, QueryTriggerInteraction.Ignore);
+            bool originInvalid = overlapCount == originOverlapBuffer.Length;
+            for (int index = 0; index < overlapCount; index++)
+                if (originOverlapBuffer[index] != null &&
+                    !originOverlapBuffer[index].transform.IsChildOf(vehicleRoot)) originInvalid = true;
+            if (originInvalid)
+            {
+                previousRadarRanges.Clear();
+                previousRadarScanAtS = double.NaN;
+                return false;
+            }
             for (int beam = 0; beam < beamCount; beam++)
             {
                 float bearing = BeamBearing(beam);
@@ -124,15 +142,25 @@ namespace InhaExpress.Client.Presentation
                 if (hitCount == hitBuffer.Length)
                 {
                     complete = false;
+                    if (sensorType == SensorType.LIDAR_2D) rays.Add(new SensorRayDto(bearing, "INVALID"));
                     continue;
                 }
-                if (!TryNearestExternalHit(hitCount, vehicleRoot, out var hit)) continue;
+                if (!TryNearestExternalHit(hitCount, vehicleRoot, out var hit))
+                {
+                    if (sensorType == SensorType.LIDAR_2D) rays.Add(new SensorRayDto(bearing, "MISS", maxRangeM));
+                    continue;
+                }
 
                 Vector3 sensorLocal = Quaternion.Inverse(origin.rotation) * (hit.point - origin.position);
                 double forward = sensorLocal.z;
                 double left = -sensorLocal.x;
                 double horizontalRange = Math.Sqrt(forward * forward + left * left);
-                if (horizontalRange <= 0.01 || horizontalRange > maxRangeM) continue;
+                if (horizontalRange <= 0.01 || horizontalRange > maxRangeM)
+                {
+                    complete = false;
+                    if (sensorType == SensorType.LIDAR_2D) rays.Add(new SensorRayDto(bearing, "INVALID"));
+                    continue;
+                }
 
                 var detection = new SensorDetectionDto(
                     horizontalRange,
@@ -147,7 +175,11 @@ namespace InhaExpress.Client.Presentation
                     if (!radarHits.TryGetValue(id, out var nearest) || detection.RangeM < nearest.RangeM)
                         radarHits[id] = detection;
                 }
-                else detections.Add(detection);
+                else
+                {
+                    detections.Add(detection);
+                    rays.Add(new SensorRayDto(bearing, "HIT", horizontalRange));
+                }
             }
             if (sensorType == SensorType.RADAR)
             {
@@ -187,7 +219,9 @@ namespace InhaExpress.Client.Presentation
             float fov = fieldOfViewDegrees * Mathf.Deg2Rad;
             // A full revolution excludes the repeated last ray; a partial FOV includes both edges.
             float denominator = fieldOfViewDegrees >= 360f ? beamCount : beamCount - 1;
-            return -0.5f * fov + fov * beam / denominator;
+            // Avoid float rounding beyond the double precision contract's +/- pi bounds.
+            return Mathf.Clamp(-0.5f * fov + fov * beam / denominator,
+                (float)(-Math.PI + 1e-6), (float)(Math.PI - 1e-6));
         }
 
         private bool TryNearestExternalHit(int hitCount, Transform vehicleRoot, out RaycastHit nearest)

@@ -75,6 +75,10 @@ def make_control_command(service, vehicle_id):
             speed, yaw = steering_target(runtime.x, runtime.y, runtime.heading_rad, runtime.speed_mps,
                                          runtime.route_points[index + 1], runtime.route_speeds[index], policy)
             reason = "ROUTE_CONTROL"
+    if service.resource_admission is not None and (speed > 0 or yaw != 0):
+        speed, yaw, reservation_reason = service.resource_admission.limit(service, vehicle_id, speed, yaw, policy)
+        if reservation_reason is not None:
+            reason = reservation_reason
     validity = policy.command_valid_for_s
     if speed > 0 or yaw != 0:
         # A freshly issued command must not outlive the observations behind it.

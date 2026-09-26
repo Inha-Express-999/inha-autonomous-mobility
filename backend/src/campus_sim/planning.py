@@ -99,49 +99,11 @@ def _search(
     edge_costs_s: Mapping[str, float] | None,
     excluded_edge_ids: frozenset[str] | set[str],
 ) -> RouteResult:
-    node_by_id = {node.id: node for node in graph.nodes}
-    if start_node not in node_by_id:
-        raise ValueError(f"unknown start node: {start_node}")
-    if goal_node not in node_by_id:
-        raise ValueError(f"unknown goal node: {goal_node}")
-    if not vehicle_class.strip():
-        raise ValueError("vehicle_class must not be empty")
-    if vehicle_width_m is not None and (
-        not math.isfinite(vehicle_width_m) or vehicle_width_m <= 0
-    ):
-        raise ValueError("vehicle_width_m must be a finite positive value")
-    known_edge_ids = {edge.id for edge in graph.edges}
-    unknown_excluded = excluded_edge_ids.difference(known_edge_ids)
-    if unknown_excluded:
-        raise ValueError(f"edge exclusions reference unknown edges: {sorted(unknown_excluded)}")
-    if edge_costs_s is not None:
-        edge_by_id = {edge.id: edge for edge in graph.edges}
-        unknown_edges = set(edge_costs_s).difference(edge_by_id)
-        if unknown_edges:
-            raise ValueError(f"edge cost snapshot references unknown edges: {sorted(unknown_edges)}")
-        for edge_id, cost_s in edge_costs_s.items():
-            free_flow_s = edge_by_id[edge_id].length_m / edge_by_id[edge_id].allowed_speed_mps
-            if (
-                isinstance(cost_s, bool)
-                or not isinstance(cost_s, (int, float))
-                or not math.isfinite(cost_s)
-                or cost_s < free_flow_s - 1e-9
-            ):
-                raise ValueError(
-                    f"edge cost for {edge_id!r} must be finite and at least free-flow time"
-                )
-
-    adjacency: dict[str, list[RoadEdge]] = {node_id: [] for node_id in node_by_id}
-    for edge in graph.edges:
-        if edge.id in excluded_edge_ids or not edge.is_open or service_type not in edge.allowed_service_types:
-            continue
-        if vehicle_class not in edge.allowed_vehicle_classes:
-            continue
-        if vehicle_width_m is not None and edge.width_m < vehicle_width_m:
-            continue
-        if requires_step_free and not edge.step_free:
-            continue
-        adjacency[edge.from_node].append(edge)
+    node_by_id, adjacency = prepare_routing_snapshot(
+        graph, start_node, goal_node, service_type=service_type, vehicle_class=vehicle_class,
+        vehicle_width_m=vehicle_width_m, requires_step_free=requires_step_free,
+        edge_costs_s=edge_costs_s, excluded_edge_ids=excluded_edge_ids,
+    )
 
     max_speed = max(
         (edge.allowed_speed_mps for edges in adjacency.values() for edge in edges),
@@ -235,3 +197,58 @@ def node_for_stop(graph: RoadGraphDocument, stop_id: str) -> str:
         if node.stop_id == stop_id:
             return node.id
     raise ValueError(f"unknown stop id: {stop_id}")
+
+
+def prepare_routing_snapshot(
+    graph: RoadGraphDocument, start_node: str, goal_node: str, *,
+    service_type: ServiceType = ServiceType.PASSENGER,
+    vehicle_class: str = "CAMPUS_SHUTTLE", vehicle_width_m: float | None = None,
+    requires_step_free: bool = False, edge_costs_s: Mapping[str, float] | None = None,
+    excluded_edge_ids: frozenset[str] | set[str] = frozenset(),
+):
+    """Shared input validation and hard constraints for all global planners."""
+    node_by_id = {node.id: node for node in graph.nodes}
+    if start_node not in node_by_id:
+        raise ValueError(f"unknown start node: {start_node}")
+    if goal_node not in node_by_id:
+        raise ValueError(f"unknown goal node: {goal_node}")
+    if not vehicle_class.strip():
+        raise ValueError("vehicle_class must not be empty")
+    if vehicle_width_m is not None and (
+        not math.isfinite(vehicle_width_m) or vehicle_width_m <= 0
+    ):
+        raise ValueError("vehicle_width_m must be a finite positive value")
+    known_edge_ids = {edge.id for edge in graph.edges}
+    unknown_excluded = excluded_edge_ids.difference(known_edge_ids)
+    if unknown_excluded:
+        raise ValueError(f"edge exclusions reference unknown edges: {sorted(unknown_excluded)}")
+    if edge_costs_s is not None:
+        edge_by_id = {edge.id: edge for edge in graph.edges}
+        unknown_edges = set(edge_costs_s).difference(edge_by_id)
+        if unknown_edges:
+            raise ValueError(f"edge cost snapshot references unknown edges: {sorted(unknown_edges)}")
+        for edge_id, cost_s in edge_costs_s.items():
+            free_flow_s = edge_by_id[edge_id].length_m / edge_by_id[edge_id].allowed_speed_mps
+            if (
+                isinstance(cost_s, bool)
+                or not isinstance(cost_s, (int, float))
+                or not math.isfinite(cost_s)
+                or cost_s < free_flow_s - 1e-9
+            ):
+                raise ValueError(
+                    f"edge cost for {edge_id!r} must be finite and at least free-flow time"
+                )
+
+    adjacency: dict[str, list[RoadEdge]] = {node_id: [] for node_id in node_by_id}
+    for edge in graph.edges:
+        if edge.id in excluded_edge_ids or not edge.is_open or service_type not in edge.allowed_service_types:
+            continue
+        if vehicle_class not in edge.allowed_vehicle_classes:
+            continue
+        if vehicle_width_m is not None and edge.width_m < vehicle_width_m:
+            continue
+        if requires_step_free and not edge.step_free:
+            continue
+        adjacency[edge.from_node].append(edge)
+
+    return node_by_id, adjacency

@@ -9,6 +9,7 @@ from campus_sim.local_candidate import (
     inputs_still_current,
 )
 from campus_sim.local_rrt import RectCorridor
+from campus_sim.observed_trajectory import ObservationBounds
 from campus_sim.service import MobilityService
 from campus_sim.swept_geometry import BoxFootprint, Pose2
 from campus_sim.trajectory import MotionLimits
@@ -58,6 +59,18 @@ def test_actual_ingress_to_projected_obstacle_to_immutable_rrt_candidate():
     assert timed.sample(timed.duration_s).pose == candidate.poses[-1]
     assert timed.sample(timed.duration_s).speed_mps == 0
     assert service.vehicle_runtime["V01"].route_id is None  # Candidate never mutates authority.
+    assessed = candidate.assess_current_observations(
+        service, MotionLimits(1, 0.5, 2, 1, "synthetic limits"),
+        ObservationBounds(0.8, 1, 0.1, 0.2, 0.1, 0.3, 1, 0, "Synthetic equal-rate clocks and latency"),
+    )
+    assert assessed is not None
+    assert assessed.sweep.collision is False
+    assert not assessed.executable
+    service.local_planning_epoch = "replacement service"
+    assert candidate.assess_current_observations(
+        service, MotionLimits(1, 0.5, 2, 1, "synthetic limits"),
+        ObservationBounds(0.8, 1, 0.1, 0.2, 0.1, 0.3, 1, 0, "Synthetic equal-rate clocks and latency"),
+    ) is None
 
 
 @pytest.mark.parametrize("change", ["expiry", "clock_rollback", "pose", "frame", "route",

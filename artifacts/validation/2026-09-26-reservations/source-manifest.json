@@ -1,0 +1,7 @@
+{
+  "scope": "Python resource admission and occupancy state machine; no Physics integration",
+  "sources": {
+    "backend/tests/test_reservations.py": "148F643E63891148BE58AFD3CB374CC543A8F8B0F10C4089B42E4ED9B666949F",
+    "backend/src/campus_sim/reservations.py": "EA4B8063B165B74BF151782C9A88D2BBADE7D1F89F184BD311634F4149ED9D3C"
+  }
+}

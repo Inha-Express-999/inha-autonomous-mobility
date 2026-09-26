@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="4" result="Passed" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-26 09:36:25Z" end-time="2026-09-26 09:36:51Z" duration="25.4601681">
+  <test-suite type="TestSuite" id="1015" name="unity-physics-integration-962b094f8f6c40df96ce0283d77511e8" fullname="unity-physics-integration-962b094f8f6c40df96ce0283d77511e8" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-09-26 09:36:25Z" end-time="2026-09-26 09:36:51Z" duration="25.460168" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1010" name="InhaExpress.Client.Tests.PlayMode.dll" fullname="C:/Users/Yeop/Documents/GitHub/inha-autonomous-mobility/tmp/unity-physics-integration-962b094f8f6c40df96ce0283d77511e8/Library/ScriptAssemblies/InhaExpress.Client.Tests.PlayMode.dll" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-09-26 09:36:25Z" end-time="2026-09-26 09:36:51Z" duration="25.451154" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="4148" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1011" name="InhaExpress" fullname="InhaExpress" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-09-26 09:36:25Z" end-time="2026-09-26 09:36:51Z" duration="25.450630" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1012" name="Client" fullname="InhaExpress.Client" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-09-26 09:36:25Z" end-time="2026-09-26 09:36:51Z" duration="25.450380" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1013" name="Tests" fullname="InhaExpress.Client.Tests" runstate="Runnable" testcasecount="6" result="Passed" start-time="2026-09-26 09:36:25Z" end-time="2026-09-26 09:36:51Z" duration="25.450116" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1001" name="CrossingServiceIntegrationTests" fullname="InhaExpress.Client.Tests.CrossingServiceIntegrationTests" classname="InhaExpress.Client.Tests.CrossingServiceIntegrationTests" runstate="Runnable" testcasecount="4" result="Passed" start-time="2026-09-26 09:36:25Z" end-time="2026-09-26 09:36:51Z" duration="25.448916" total="4" passed="4" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1005" name="LateralLidarCrossingStopsOutsideForwardSectorAndCompletesPassenger" fullname="InhaExpress.Client.Tests.CrossingServiceIntegrationTests.LateralLidarCrossingStopsOutsideForwardSectorAndCompletesPassenger" methodname="LateralLidarCrossingStopsOutsideForwardSectorAndCompletesPassenger" classname="InhaExpress.Client.Tests.CrossingServiceIntegrationTests" runstate="Runnable" seed="1859841986" result="Passed" start-time="2026-09-26 09:36:25Z" end-time="2026-09-26 09:36:51Z" duration="25.426538" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Spawned Unity physics actor for server vehicle V01
+Python retained measured ray summary: {"frames":1,"rays":64,"hits":2,"misses":62}
+Ego-derived resource occupancy: {"enabled":true,"completed":1,"claims":0,"closed":0,"faults":0}
+Spawned Unity physics actor for server vehicle V01
+Recreated command actor: sequence 248 -> 250
+Crossing completed: pythonControl=True, sensorACK=223, rejected=0, sampledMinClearance=0.966m, stopForward=1.721, stopLateral=4.396
+]]></output>
+              </test-case>
+              <test-case id="1003" name="RayScanPreservesOcclusionAndMisses" fullname="InhaExpress.Client.Tests.CrossingServiceIntegrationTests.RayScanPreservesOcclusionAndMisses" methodname="RayScanPreservesOcclusionAndMisses" classname="InhaExpress.Client.Tests.CrossingServiceIntegrationTests" runstate="Runnable" seed="1653271908" result="Passed" start-time="2026-09-26 09:36:51Z" end-time="2026-09-26 09:36:51Z" duration="0.003071" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1004" name="SaturatedRayCannotReportMissOrValidFrame" fullname="InhaExpress.Client.Tests.CrossingServiceIntegrationTests.SaturatedRayCannotReportMissOrValidFrame" methodname="SaturatedRayCannotReportMissOrValidFrame" classname="InhaExpress.Client.Tests.CrossingServiceIntegrationTests" runstate="Runnable" seed="186128167" result="Passed" start-time="2026-09-26 09:36:51Z" end-time="2026-09-26 09:36:51Z" duration="0.002510" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1002" name="SensorInsideExternalColliderCannotClaimMisses" fullname="InhaExpress.Client.Tests.CrossingServiceIntegrationTests.SensorInsideExternalColliderCannotClaimMisses" methodname="SensorInsideExternalColliderCannotClaimMisses" classname="InhaExpress.Client.Tests.CrossingServiceIntegrationTests" runstate="Runnable" seed="1973815338" result="Passed" start-time="2026-09-26 09:36:51Z" end-time="2026-09-26 09:36:51Z" duration="0.001702" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:\Users\Yeop\Documents\GitHub\inha-autonomous-mobility\tmp\unity-physics-integration-962b094f8f6c40df96ce0283d77511e8\results.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

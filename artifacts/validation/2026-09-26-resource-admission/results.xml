@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="4" result="Failed(Child)" total="4" passed="3" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-26 09:52:55Z" end-time="2026-09-26 09:53:20Z" duration="25.4498926">
+  <test-suite type="TestSuite" id="1015" name="unity-physics-integration-4e5841a247e44ec3ab88afca58cca6d0" fullname="unity-physics-integration-4e5841a247e44ec3ab88afca58cca6d0" runstate="Runnable" testcasecount="6" result="Failed" site="Child" start-time="2026-09-26 09:52:55Z" end-time="2026-09-26 09:53:20Z" duration="25.449893" total="4" passed="3" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1010" name="InhaExpress.Client.Tests.PlayMode.dll" fullname="C:/Users/Yeop/Documents/GitHub/inha-autonomous-mobility/tmp/unity-physics-integration-4e5841a247e44ec3ab88afca58cca6d0/Library/ScriptAssemblies/InhaExpress.Client.Tests.PlayMode.dll" runstate="Runnable" testcasecount="6" result="Failed" site="Child" start-time="2026-09-26 09:52:55Z" end-time="2026-09-26 09:53:20Z" duration="25.441003" total="4" passed="3" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="19216" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1011" name="InhaExpress" fullname="InhaExpress" runstate="Runnable" testcasecount="6" result="Failed" site="Child" start-time="2026-09-26 09:52:55Z" end-time="2026-09-26 09:53:20Z" duration="25.440514" total="4" passed="3" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1012" name="Client" fullname="InhaExpress.Client" runstate="Runnable" testcasecount="6" result="Failed" site="Child" start-time="2026-09-26 09:52:55Z" end-time="2026-09-26 09:53:20Z" duration="25.440265" total="4" passed="3" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1013" name="Tests" fullname="InhaExpress.Client.Tests" runstate="Runnable" testcasecount="6" result="Failed" site="Child" start-time="2026-09-26 09:52:55Z" end-time="2026-09-26 09:53:20Z" duration="25.439992" total="4" passed="3" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1001" name="CrossingServiceIntegrationTests" fullname="InhaExpress.Client.Tests.CrossingServiceIntegrationTests" classname="InhaExpress.Client.Tests.CrossingServiceIntegrationTests" runstate="Runnable" testcasecount="4" result="Failed" site="Child" start-time="2026-09-26 09:52:55Z" end-time="2026-09-26 09:53:20Z" duration="25.438664" total="4" passed="3" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1005" name="LateralLidarCrossingStopsOutsideForwardSectorAndCompletesPassenger" fullname="InhaExpress.Client.Tests.CrossingServiceIntegrationTests.LateralLidarCrossingStopsOutsideForwardSectorAndCompletesPassenger" methodname="LateralLidarCrossingStopsOutsideForwardSectorAndCompletesPassenger" classname="InhaExpress.Client.Tests.CrossingServiceIntegrationTests" runstate="Runnable" seed="1601599729" result="Failed" start-time="2026-09-26 09:52:55Z" end-time="2026-09-26 09:53:20Z" duration="25.413785" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Vehicle never moved
+  Expected: True
+  But was:  False
+]]></message>
+                  <stack-trace><![CDATA[at InhaExpress.Client.Tests.CrossingServiceIntegrationTests+<Wait>d__13.MoveNext () [0x00149] in C:\Users\Yeop\Documents\GitHub\inha-autonomous-mobility\tmp\unity-physics-integration-4e5841a247e44ec3ab88afca58cca6d0\Assets\Tests\CrossingServiceIntegrationTests.cs:316
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@bd7f943e9647\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:44
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[Spawned Unity physics actor for server vehicle V01
+Python retained measured ray summary: {"frames":1,"rays":64,"hits":2,"misses":62}
+Resource admission held the body outside the corridor at x=0.588
+]]></output>
+              </test-case>
+              <test-case id="1003" name="RayScanPreservesOcclusionAndMisses" fullname="InhaExpress.Client.Tests.CrossingServiceIntegrationTests.RayScanPreservesOcclusionAndMisses" methodname="RayScanPreservesOcclusionAndMisses" classname="InhaExpress.Client.Tests.CrossingServiceIntegrationTests" runstate="Runnable" seed="445578463" result="Passed" start-time="2026-09-26 09:53:20Z" end-time="2026-09-26 09:53:20Z" duration="0.004607" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1004" name="SaturatedRayCannotReportMissOrValidFrame" fullname="InhaExpress.Client.Tests.CrossingServiceIntegrationTests.SaturatedRayCannotReportMissOrValidFrame" methodname="SaturatedRayCannotReportMissOrValidFrame" classname="InhaExpress.Client.Tests.CrossingServiceIntegrationTests" runstate="Runnable" seed="781624811" result="Passed" start-time="2026-09-26 09:53:20Z" end-time="2026-09-26 09:53:20Z" duration="0.003601" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1002" name="SensorInsideExternalColliderCannotClaimMisses" fullname="InhaExpress.Client.Tests.CrossingServiceIntegrationTests.SensorInsideExternalColliderCannotClaimMisses" methodname="SensorInsideExternalColliderCannotClaimMisses" classname="InhaExpress.Client.Tests.CrossingServiceIntegrationTests" runstate="Runnable" seed="716276404" result="Passed" start-time="2026-09-26 09:53:20Z" end-time="2026-09-26 09:53:20Z" duration="0.002127" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:\Users\Yeop\Documents\GitHub\inha-autonomous-mobility\tmp\unity-physics-integration-4e5841a247e44ec3ab88afca58cca6d0\results.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

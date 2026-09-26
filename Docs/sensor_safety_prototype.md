@@ -1,6 +1,6 @@
 # Sensor-based safety gate prototype
 
-Project version **0.3.1.0** · 2026-09-25 working tree
+Project version **0.3.2.0** · 2026-09-25 working tree
 
 ## Implemented behavior
 

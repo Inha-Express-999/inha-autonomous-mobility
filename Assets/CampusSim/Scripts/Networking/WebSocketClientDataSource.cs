@@ -336,7 +336,15 @@ namespace InhaExpress.Client.Networking
                 } : JValue.CreateNull(),
                 ["sensorHeadingRad"] = observation.SensorHeadingRad.HasValue
                     ? new JValue(observation.SensorHeadingRad.Value) : JValue.CreateNull(),
-                ["detections"] = detections
+                ["detections"] = detections,
+                ["rayMaxRangeM"] = observation.RayMaxRangeM.HasValue
+                    ? new JValue(observation.RayMaxRangeM.Value) : JValue.CreateNull(),
+                ["rays"] = new JArray(System.Linq.Enumerable.Select(observation.Rays, ray => new JObject
+                {
+                    ["bearingRad"] = ray.BearingRad,
+                    ["outcome"] = ray.Outcome,
+                    ["rangeM"] = ray.RangeM.HasValue ? new JValue(ray.RangeM.Value) : JValue.CreateNull()
+                }))
             }.ToString(Formatting.None);
             lock (telemetryLock)
             {

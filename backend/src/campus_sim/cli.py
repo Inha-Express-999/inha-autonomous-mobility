@@ -11,6 +11,7 @@ from campus_sim.evaluation import (
     compare_routes,
 )
 from campus_sim.planning import node_for_stop
+from campus_sim.replan_evaluation import compare_replans
 from campus_sim.road_graph import RoadGraphLoadError, load_road_graph
 
 
@@ -54,6 +55,11 @@ def main() -> None:
     )
     dispatch_compare.add_argument("--repetitions", type=_positive_integer, default=20)
     dispatch_compare.add_argument("--warmups", type=int, default=2)
+    replan_compare = subcommands.add_parser("replan-compare", help="Compare A* full replan and D* Lite")
+    replan_compare.add_argument("--map", default="maps/fixtures/campus-synthetic-benchmark-11.json")
+    replan_compare.add_argument("--seed", type=int, default=17)
+    replan_compare.add_argument("--repetitions", type=_positive_integer, default=20)
+    replan_compare.add_argument("--events", type=_positive_integer, default=30)
     args = parser.parse_args()
     if args.command == "serve":
         import uvicorn
@@ -65,6 +71,13 @@ def main() -> None:
         except (RoadGraphLoadError, ValueError) as error:
             parser.error(str(error))
         uvicorn.run(service_app, host=args.host, port=args.port, reload=False)
+    elif args.command == "replan-compare":
+        try:
+            report = compare_replans(load_road_graph(args.map), seed=args.seed,
+                                     repetitions=args.repetitions, event_count=args.events)
+        except (RoadGraphLoadError, ValueError) as error:
+            parser.error(str(error))
+        print(json.dumps(report, ensure_ascii=False, indent=2))
     elif args.command == "route-compare":
         if bool(args.start_stop) != bool(args.goal_stop):
             parser.error("--start-stop and --goal-stop must be supplied together")

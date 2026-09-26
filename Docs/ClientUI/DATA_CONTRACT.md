@@ -1,6 +1,6 @@
 # 클라이언트 데이터 계약 결정
 
-프로젝트 0.3.1.0 · 2026-09-25 작업본 · 클라이언트 projection 및 WebSocket alpha 계약
+프로젝트 0.3.2.0 · 2026-09-25 작업본 · 클라이언트 projection 및 WebSocket alpha 계약
 
 ## 범위와 권위
 
@@ -86,3 +86,11 @@ SensorObservation은 선택 필드 observedTimeS, sensorPositionM, sensorHeading
 기울어진 센서는 invalid frame으로 표시한다. 거리 계산은 Transform scale과 무관한 m다.
 과거 프레임도 수신하되 metadata가 없으면 벡터 추적에 사용하지 않는다.
 새 선택 필드를 보내는 클라이언트는 업데이트된 서버와 함께 실행한다.
+
+## LiDAR 광선별 결과 (2026-09-26 작업본)
+
+선택 필드 `rayMaxRangeM`과 `rays`는 함께 제공한다. 각 광선은 `bearingRad`,
+`outcome`(HIT/MISS/INVALID), `rangeM`을 담는다. INVALID의 거리는 null이며
+전체 frame도 invalid다. HIT는 순서대로 detection과 대응하고 MISS는 최대 검사
+거리까지 해당 광선에 적중이 없었다는 뜻이다. 광선 사이·가려진 영역·다른 높이의
+빈 공간을 보장하지 않는다. 상세 계약과 제한은 [LiDAR 관측 문서](../lidar_ray_observations.md)를 따른다.

@@ -6,12 +6,20 @@ must still be established before an actuator may consume a path.
 import hashlib
 import json
 import math
-from dataclasses import dataclass
+from dataclasses import asdict, dataclass, replace
 
 from campus_sim.domain import SensorEntityClass
 from campus_sim.local_rrt import DiscObstacle, RectCorridor, plan_rrt
+from campus_sim.observed_trajectory import (
+    ObservationBounds,
+    ObservedTrajectoryResult,
+    capture_motion_bounds,
+    check_observed_trajectory,
+)
+from campus_sim.safety import SensorSample
 from campus_sim.service import EGO_LOCALIZATION_STALE_AFTER_S, MobilityService
 from campus_sim.swept_geometry import BoxFootprint, Pose2
+from campus_sim.timed_collision import MovingDiscBound
 from campus_sim.trajectory import MotionLimits, TimedTrajectory, time_parameterize
 
 
@@ -25,6 +33,8 @@ class LocalPlanningInput:
     observed_obstacles: tuple[DiscObstacle, ...]
     object_diameter_bound_m: float
     bound_provenance: str
+    dynamic_bounds: ObservationBounds | None = None
+    prediction_horizon_s: float | None = None
 
 
 @dataclass(frozen=True)
@@ -39,6 +49,30 @@ class LocalCandidate:
     def timed_trajectory(self, limits: MotionLimits) -> TimedTrajectory:
         return time_parameterize(self.poses, limits)
 
+    def assess_current_observations(self, service: MobilityService, limits: MotionLimits,
+                                    bounds: ObservationBounds) -> ObservedTrajectoryResult | None:
+        """Recheck the immutable candidate against service-retained observations.
+
+        This synchronous assessment does not publish a route or grant execution.
+        Any sensor/mission/pose change requires a new candidate rather than reuse.
+        """
+        if not inputs_still_current(service, self.inputs):
+            return None
+        if self.inputs.dynamic_bounds is not None and bounds != self.inputs.dynamic_bounds:
+            return None  # Assessment cannot silently weaken the planning assumptions.
+        pose = service.ego_localizations[self.inputs.vehicle_id]
+        samples = tuple(SensorSample(frame, service.sensor_received_at_s.get(key),
+                                     service.sensor_motion_estimates.get(key, ()))
+                        for key, frame in service.sensor_observations.items()
+                        if key[0] == self.inputs.vehicle_id)
+        effective = replace(bounds, freshness_s=min(bounds.freshness_s,
+                                                    service.safety_policy.sensor_stale_after_s))
+        return check_observed_trajectory(
+            self.timed_trajectory(limits), self.footprint, samples, now_s=service.now_s(),
+            vehicle_id=pose.vehicle_id, session_id=pose.session_id, map_version=pose.map_version,
+            ego_pose_tick=pose.observed_tick, bounds=effective,
+        )
+
     @property
     def executable(self) -> bool:
         # Freshness is necessary, but never evidence of visibility/dynamic safety.
@@ -46,10 +80,13 @@ class LocalCandidate:
 
 
 def capture_local_input(service: MobilityService, vehicle_id: str, *, object_diameter_bound_m: float,
-                        bound_provenance: str) -> LocalPlanningInput | None:
+                        bound_provenance: str,
+                        dynamic_bounds: ObservationBounds | None = None) -> LocalPlanningInput | None:
     if (not math.isfinite(object_diameter_bound_m) or object_diameter_bound_m <= 0
             or not bound_provenance.strip()):
         raise ValueError("Observed object diameter bound and provenance are required")
+    if dynamic_bounds is not None and dynamic_bounds.static_diameter_m != object_diameter_bound_m:
+        raise ValueError("Static diameter must agree with the dynamic observation policy")
     now = service.now_s()
     runtime = service.vehicle_runtime.get(vehicle_id)
     pose = service.ego_localizations.get(vehicle_id)
@@ -78,10 +115,15 @@ def capture_local_input(service: MobilityService, vehicle_id: str, *, object_dia
                 or frame.sensor_position_m is None):
             return None
         # No freeze-in-place assumption for pedestrians, vehicles or unknown class.
-        if any(hit.entity_class is not SensorEntityClass.STATIC_OBSTACLE for hit in frame.detections):
+        if dynamic_bounds is None and any(
+            hit.entity_class is not SensorEntityClass.STATIC_OBSTACLE for hit in frame.detections
+        ):
             return None
         expires = min(expires, received + service.safety_policy.sensor_stale_after_s)
-        payloads.append((frame.model_dump(mode="json"), received))
+        payloads.append((frame.model_dump(mode="json"), received,
+                         [asdict(m) for m in service.sensor_motion_estimates.get(key, ())]))
+        if dynamic_bounds is not None:
+            continue
         sine, cosine = math.sin(frame.sensor_heading_rad), math.cos(frame.sensor_heading_rad)
         for hit in frame.detections:
             local, origin = hit.local_position_m, frame.sensor_position_m
@@ -89,6 +131,20 @@ def capture_local_input(service: MobilityService, vehicle_id: str, *, object_dia
             obstacles.append(DiscObstacle(origin.x + local.x * sine - local.y * cosine,
                                           origin.y + local.x * cosine + local.y * sine,
                                           object_diameter_bound_m))
+    prediction_horizon = None
+    if dynamic_bounds is not None:
+        samples = tuple(SensorSample(frame, service.sensor_received_at_s.get(key),
+                                     service.sensor_motion_estimates.get(key, ())) for key, frame in frames)
+        captured = capture_motion_bounds(samples, now_s=now, vehicle_id=vehicle_id,
+                                          session_id=pose.session_id, map_version=pose.map_version,
+                                          ego_pose_tick=pose.observed_tick, bounds=dynamic_bounds)
+        if captured.prediction_horizon_s <= 0:
+            return None
+        prediction_horizon = captured.prediction_horizon_s
+        obstacles = list(motion_sweep_discs(captured.obstacles, prediction_horizon))
+        expires = min(expires, now + prediction_horizon,
+                      *(service.sensor_received_at_s[key] + dynamic_bounds.freshness_s
+                        for key, _ in frames))
     request = service.requests.get(runtime.request_id or "")
     payload = {
         "epoch": service.local_planning_epoch, "pose": pose.model_dump(mode="json"),
@@ -99,11 +155,14 @@ def capture_local_input(service: MobilityService, vehicle_id: str, *, object_dia
         "closed_zones": sorted(service.closed_zone_ids),
         "safety": (runtime.safety_motion_state, runtime.safety_reason),
         "bounds": (object_diameter_bound_m, bound_provenance),
+        "dynamic_bounds": asdict(dynamic_bounds) if dynamic_bounds is not None else None,
+        "prediction_anchor_s": now if dynamic_bounds is not None else None,
     }
     digest = hashlib.sha256(json.dumps(payload, sort_keys=True, allow_nan=False).encode()).hexdigest()
     return LocalPlanningInput(vehicle_id, digest, now, expires,
                               Pose2(pose.position.x, pose.position.y, pose.heading_rad),
-                              tuple(obstacles), object_diameter_bound_m, bound_provenance)
+                              tuple(obstacles), object_diameter_bound_m, bound_provenance,
+                              dynamic_bounds, prediction_horizon)
 
 
 def inputs_still_current(service: MobilityService, inputs: LocalPlanningInput) -> bool:
@@ -111,7 +170,8 @@ def inputs_still_current(service: MobilityService, inputs: LocalPlanningInput) -
         return False
     current = capture_local_input(service, inputs.vehicle_id,
                                   object_diameter_bound_m=inputs.object_diameter_bound_m,
-                                  bound_provenance=inputs.bound_provenance)
+                                  bound_provenance=inputs.bound_provenance,
+                                  dynamic_bounds=inputs.dynamic_bounds)
     return current is not None and current.fingerprint == inputs.fingerprint
 
 
@@ -126,3 +186,27 @@ def compute_local_candidate(inputs: LocalPlanningInput, goal: Pose2, *, footprin
     if path is None:
         return None
     return LocalCandidate(inputs, path, footprint, corridor, corridor_provenance, seed)
+
+
+def motion_sweep_discs(obstacles: tuple[MovingDiscBound, ...], horizon_s: float) -> tuple[DiscObstacle, ...]:
+    """Cover each full moving-disc sweep by a bounded chain of enclosing discs.
+
+    Each slab uses its midpoint plus half travel distance and the largest error
+    over the whole horizon. This is a conservative geometric RRT proposal only;
+    timed assessment still follows, and later/unseen occupancy is unknown.
+    """
+    if not math.isfinite(horizon_s) or not 0 < horizon_s <= 2:
+        raise ValueError("A positive short prediction horizon is required")
+    result = []
+    for obstacle in obstacles:
+        distance = math.hypot(*obstacle.velocity_mps) * horizon_s
+        if not math.isfinite(distance):
+            raise ValueError("Unrepresentable motion sweep")
+        count = max(1, math.ceil(min(64, distance / 0.5)))
+        radius = (obstacle.radius_m + obstacle.position_uncertainty_m
+                  + obstacle.velocity_uncertainty_mps * horizon_s + distance / (2 * count))
+        for i in range(count):
+            t = horizon_s * (i + 0.5) / count
+            result.append(DiscObstacle(obstacle.position_m[0] + obstacle.velocity_mps[0] * t,
+                                       obstacle.position_m[1] + obstacle.velocity_mps[1] * t, radius))
+    return tuple(result)

@@ -1,4 +1,15 @@
 # 변경 이력
+
+## 0.3.2.0 — 2026-09-26 · 관측·재계획·예약 기능 작업 체크포인트
+
+- LiDAR ray별 HIT/MISS/INVALID 계약과 관측 운동 기반 시간 궤적 검사, 동적 RRT 후보를 추가했다. RRT 실행 권한은 부여하지 않는다.
+- 자체 D* Lite와 반복 재계획 비교, 자원 예약·ego 점유 추적 및 선택적 Python 속도 제한을 추가했다.
+- 이유: 센서 관측·경로 재계획·통로 예약의 합성 검증 기반을 확장하고 현재 작업을 보존한다.
+- 호환성/마이그레이션: 프로젝트 버전 0.3.2.0, schema_version=3과 map_version 유지. ray 필드는 선택적이며 새 payload는 갱신된 서버와 사용한다. 전역 경로 기본값은 A*다. 예약 gate는 선택적 합성 설정이다. 데이터 마이그레이션 없음.
+- 검증: `python -m pytest backend/tests AgentScripts/MapData -q -o cache_dir=tmp/pytest-cache` — 349 passed, 기존 deprecation 경고 1개. `python -m ruff check backend AgentScripts/MapData AgentScripts/UnityPhysicsIntegration` 및 `git diff --check` 통과.
+- Unity: `AgentScripts/RunUnityPhysicsIntegration.ps1 -PythonPath tmp/backend-venv/Scripts/python.exe -Crossing -PythonControl` — PlayMode 3/4 통과, 1개 실패. 통로 앞 정지는 확인했으나 출구 해제 후 재출발 대기에서 실패했다. 해당 기능의 통합 완료를 주장하지 않는다. 실행별 XML/소스 hash는 artifacts/validation에 보존했다.
+- 미검증/한계: 최신 Player/Android·원본 씬·실제 지도·다중 차량 Physics·CBS·RRT 실행·성능/부하 및 전체 MVP는 미완료다. 기존 Unity allocation 진단과 Python 의존성 경고가 남는다.
+
 ## 0.3.1.0 — 2026-09-26 · 횡단 안전·Python 제어 및 재접속 검증
 
 - 센서 관측 운동에 기반한 횡단 정지와 연속 footprint 충돌 검사, 자체 RRT 후보, 가감속/회전 시간 궤적 및 동적 장애물 prefix 검사를 추가했다. RRT 후보는 실행 불가 상태를 유지한다.

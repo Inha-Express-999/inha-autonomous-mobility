@@ -1,6 +1,6 @@
 # Timed local candidates and dynamic sweep
 
-2026-09-26 · project v0.3.1.0 · no live actuation
+2026-09-26 · project v0.3.2.0 · no live actuation
 
 `LocalCandidate.timed_trajectory(MotionLimits(...))` converts RRT pose stages to
 analytic stop-turn-translate timing. Limits and provenance are mandatory.

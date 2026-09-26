@@ -1,0 +1,68 @@
+{
+  "scope": "synthetic sensor ingress to diagnostic RRT candidate; not Unity execution",
+  "seed": 17,
+  "map_version": "synthetic-campus-6stop-v1",
+  "bounds": {
+    "static_diameter_m": 0.3,
+    "pedestrian_diameter_m": 0.6,
+    "position_error_m": 0.05,
+    "velocity_error_mps": 0.05,
+    "max_capture_to_receipt_s": 0.1,
+    "freshness_s": 0.3,
+    "capture_seconds_per_server_second": 1,
+    "clock_rate_error": 0,
+    "provenance": "Synthetic object, error, latency and equal-rate clock bounds"
+  },
+  "captured_at_s": 0.0,
+  "prediction_horizon_s": 1.9,
+  "planning_disc_count": 3,
+  "poses": [
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "heading_rad": 1.5707963267948966
+    },
+    {
+      "x": 0.0,
+      "y": 0.0,
+      "heading_rad": 0.9344727980029184
+    },
+    {
+      "x": 2.9056796260490043,
+      "y": 2.1468465428349672,
+      "heading_rad": 0.9344727980029184
+    },
+    {
+      "x": 2.9056796260490043,
+      "y": 2.1468465428349672,
+      "heading_rad": 2.1773506278218484
+    },
+    {
+      "x": 2.9056796260490043,
+      "y": 2.1468465428349672,
+      "heading_rad": 2.177350627821848
+    },
+    {
+      "x": 6,
+      "y": 0,
+      "heading_rad": 2.177350627821848
+    },
+    {
+      "x": 6,
+      "y": 0,
+      "heading_rad": 1.5707963267948966
+    }
+  ],
+  "timed_duration_s": 12.364634790488676,
+  "assessment": {
+    "sweep": {
+      "checked_duration_s": 1.9,
+      "collision": false,
+      "full_trajectory_checked": false
+    },
+    "reason": "observed_prefix_clear",
+    "oldest_capture_age_bound_s": 0.1
+  },
+  "executable": false,
+  "published_route_id": null
+}

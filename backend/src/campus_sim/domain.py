@@ -2,6 +2,8 @@ from __future__ import annotations
 
 import math
 from enum import StrEnum
+from itertools import pairwise
+from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator, model_validator
 
@@ -189,6 +191,20 @@ class SensorDetection(BaseModel):
         return self
 
 
+class SensorRay(BaseModel):
+    """One measured ray, never evidence about the space between rays."""
+    model_config = ConfigDict(alias_generator=_to_camel_case, populate_by_name=True, extra="forbid")
+    bearing_rad: float = Field(ge=-math.pi, le=math.pi, allow_inf_nan=False)
+    outcome: Literal["HIT", "MISS", "INVALID"]
+    range_m: float | None = Field(default=None, gt=0, allow_inf_nan=False)
+
+    @model_validator(mode="after")
+    def range_matches_outcome(self) -> SensorRay:
+        if (self.outcome == "INVALID") != (self.range_m is None):
+            raise ValueError("Only INVALID rays omit range")
+        return self
+
+
 class SensorObservation(BaseModel):
     model_config = ConfigDict(
         alias_generator=_to_camel_case,
@@ -208,6 +224,8 @@ class SensorObservation(BaseModel):
     observed_time_s: float | None = Field(default=None, ge=0, allow_inf_nan=False)
     sensor_position_m: MapPosition | None = None
     sensor_heading_rad: float | None = Field(default=None, allow_inf_nan=False)
+    ray_max_range_m: float | None = Field(default=None, gt=0, allow_inf_nan=False)
+    rays: list[SensorRay] = Field(default_factory=list, max_length=64)
 
     @model_validator(mode="after")
     def radar_speed_is_sensor_specific(self) -> SensorObservation:
@@ -218,6 +236,31 @@ class SensorObservation(BaseModel):
             detection.relative_speed_mps is not None for detection in self.detections
         ):
             raise ValueError("relative_speed_mps is only valid for radar detections")
+        if bool(self.rays) != (self.ray_max_range_m is not None):
+            raise ValueError("Ray samples and maximum range must be supplied together")
+        if self.rays:
+            if self.sensor_type is not SensorType.LIDAR_2D or self.observed_time_s is None:
+                raise ValueError("Ray samples require LiDAR and capture metadata")
+            bearings = [ray.bearing_rad for ray in self.rays]
+            if any(a >= b for a, b in pairwise(bearings)):
+                raise ValueError("Rays must have strictly increasing bearings")
+            hits = []
+            for ray in self.rays:
+                if ray.outcome == "INVALID":
+                    if self.valid:
+                        raise ValueError("Invalid ray invalidates the frame")
+                elif ray.range_m > self.ray_max_range_m + 1e-5:
+                    raise ValueError("Ray exceeds scan range")
+                elif ray.outcome == "MISS" and abs(ray.range_m - self.ray_max_range_m) > 1e-5:
+                    raise ValueError("Miss must report the full tested range")
+                if ray.outcome == "HIT":
+                    hits.append(ray)
+            if len(hits) != len(self.detections) or any(
+                abs(ray.range_m - hit.range_m) > 1e-5
+                or abs(ray.bearing_rad - hit.bearing_rad) > 1e-4
+                for ray, hit in zip(hits, self.detections)
+            ):
+                raise ValueError("Each LiDAR HIT must match one ordered detection")
         return self
 
 

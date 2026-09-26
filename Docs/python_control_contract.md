@@ -1,6 +1,6 @@
 # Python steering intent contract (synthetic alpha)
 
-2026-09-26 · project v0.3.1.0 · synthetic actuator PlayMode integration verified
+2026-09-26 · project v0.3.2.0 · synthetic actuator PlayMode integration verified
 
 `controller.py` computes forward speed/yaw-rate targets from ego localization,
 the active service route and its segment speed, and explicit `ControllerPolicy`

@@ -26,7 +26,10 @@ from campus_sim.domain import (
     Stop,
     Vehicle,
 )
+from campus_sim.dstar_lite import DStarLite
 from campus_sim.planning import NoRouteError, astar, node_for_stop
+from campus_sim.resource_admission import ResourceAdmission
+from campus_sim.resource_occupancy import ResourceOccupancyTracker
 from campus_sim.road_graph import RoadGraphDocument, load_road_graph
 from campus_sim.safety import SafetyPolicy, SensorSample, evaluate_sensor_safety
 from campus_sim.tracking import ObservedMotion, PedestrianMotionTracker
@@ -43,6 +46,7 @@ class PlanningPolicy:
     global_replan_interval_s: float
     improvement_ratio: float
     improvement_s: float
+    global_algorithm: str = "astar"
 
     @classmethod
     def from_default_config(cls) -> PlanningPolicy:
@@ -60,6 +64,7 @@ class PlanningPolicy:
                 global_replan_interval_s=number("global_replan_interval_s"),
                 improvement_ratio=number("improvement_ratio"),
                 improvement_s=number("improvement_s"),
+                global_algorithm=values.get("global_algorithm", "astar"),
             )
         except (OSError, json.JSONDecodeError, KeyError, TypeError, ValueError) as error:
             raise ValueError(f"invalid planning config: {path}") from error
@@ -70,6 +75,8 @@ class PlanningPolicy:
             or not 0 <= policy.improvement_ratio <= 1
             or not math.isfinite(policy.improvement_s)
             or policy.improvement_s < 0
+            or not isinstance(policy.global_algorithm, str)
+            or policy.global_algorithm not in {"astar", "dstar_lite"}
         ):
             raise ValueError(f"planning replan values are outside their valid range: {path}")
         return policy
@@ -211,6 +218,8 @@ class MobilityService:
     safety_policy: SafetyPolicy = field(default_factory=SafetyPolicy.from_default_config)
     crowd_model: CrowdModelConfig = field(default_factory=CrowdModelConfig.from_default_config)
     planning_policy: PlanningPolicy = field(default_factory=PlanningPolicy.from_default_config)
+    global_planners: dict[tuple[str, ServiceType, bool, str], DStarLite] = field(default_factory=dict)
+    planner_graph_signature: str | None = None
     closed_zone_ids: set[str] = field(default_factory=set)
     sensor_trackers: dict[tuple[str, str], PedestrianMotionTracker] = field(default_factory=dict)
     sensor_motion_estimates: dict[tuple[str, str], tuple[ObservedMotion, ...]] = field(default_factory=dict)
@@ -218,6 +227,8 @@ class MobilityService:
     local_planning_epoch: str = field(default_factory=lambda: str(uuid4()))
     control_policies: dict[str, ControllerPolicy] = field(default_factory=dict)
     control_sequences: dict[str, int] = field(default_factory=dict)
+    resource_occupancy: ResourceOccupancyTracker | None = None
+    resource_admission: ResourceAdmission | None = None
 
     def set_explicit_zone_closure(self, zone_id: str, closed: bool) -> None:
         """Scenario/operator boundary for explicit closure, not fabricated crowd density."""
@@ -397,6 +408,8 @@ class MobilityService:
         runtime.node_id = self._nearest_node(runtime.x, runtime.y)
         runtime.pose_source = "unity_localization"
         runtime.localization_received_at_s = self.now_s()
+        if self.resource_occupancy is not None:
+            self.resource_occupancy.observe(observation, self.now_s())
         self._update_localized_route_progress(runtime)
         self._refresh_sensor_safety(observation.vehicle_id, runtime)
         return True
@@ -690,6 +703,28 @@ class MobilityService:
         runtime.node_id = start
         request.eta_s = self._route_duration(runtime)
 
+    def _global_route(self, start, goal, service_type, requires_step_free, costs, excluded, phase):
+        """Keep separate incremental state for base, avoid and penalized searches."""
+        algorithm = self.planning_policy.global_algorithm
+        if algorithm == "astar":
+            return astar(self.graph, start, goal, service_type=service_type,
+                         requires_step_free=requires_step_free, edge_costs_s=costs,
+                         excluded_edge_ids=excluded)
+        if algorithm != "dstar_lite":
+            raise ValueError("Unsupported global planning algorithm")
+        signature = sha256(self.graph.model_dump_json().encode()).hexdigest()
+        if signature != self.planner_graph_signature:
+            self.global_planners.clear()
+            self.planner_graph_signature = signature
+        key = (goal, service_type, requires_step_free, phase)
+        if key not in self.global_planners:
+            if len(self.global_planners) >= 64:
+                self.global_planners.pop(next(iter(self.global_planners)))
+            self.global_planners[key] = DStarLite(self.graph, start, goal, service_type=service_type,
+                                                 requires_step_free=requires_step_free)
+        return self.global_planners[key].replan(start, edge_costs_s=costs,
+                                                excluded_edge_ids=excluded)
+
     def _plan_route(self, start: str, goal: str, service_type: ServiceType,
                     requires_step_free: bool):
         """Plan against synthetic crowd costs, preferring a bounded zone detour."""
@@ -709,17 +744,14 @@ class MobilityService:
             for edge in self.graph.edges
         }
         closed = self._closed_edge_ids()
-        base = astar(self.graph, start, goal, service_type=service_type,
-                     requires_step_free=requires_step_free, edge_costs_s=edge_costs_s or None,
-                     excluded_edge_ids=closed)
+        base = self._global_route(start, goal, service_type, requires_step_free,
+                                  edge_costs_s, closed, "base")
         avoided = self.crowd_model.avoided_edge_ids(self.graph, now_s)
         if not avoided or not avoided.intersection(base.edge_ids):
             return base, route_penalties_s, ReasonCode.UNKNOWN
         try:
-            alternative = astar(self.graph, start, goal, service_type=service_type,
-                                requires_step_free=requires_step_free,
-                                edge_costs_s=edge_costs_s or None,
-                                excluded_edge_ids=avoided | closed)
+            alternative = self._global_route(start, goal, service_type, requires_step_free,
+                                             edge_costs_s, avoided | closed, "avoid")
             zones = self.crowd_model.avoidance_zone_ids(self.graph, avoided)
             limit = self.crowd_model.detour_limit_s(zones, base.path_cost_s)
             if alternative.path_cost_s - base.path_cost_s <= limit:
@@ -730,9 +762,8 @@ class MobilityService:
         costs = dict(edge_costs_s)
         for edge_id, penalty in penalties.items():
             costs[edge_id] = costs.get(edge_id, edges[edge_id].cost_s()) + penalty
-        result = astar(self.graph, start, goal, service_type=service_type,
-                       requires_step_free=requires_step_free, edge_costs_s=costs or None,
-                       excluded_edge_ids=closed)
+        result = self._global_route(start, goal, service_type, requires_step_free,
+                                    costs, closed, "penalized")
         merged = dict(route_penalties_s)
         for edge_id, penalty in penalties.items():
             merged[edge_id] = merged.get(edge_id, 0.0) + penalty
@@ -986,6 +1017,8 @@ class MobilityService:
         if delta_s <= 0:
             return
         self.simulation_time_s = round(self.simulation_time_s + delta_s, 9)
+        if self.resource_occupancy is not None:
+            self.resource_occupancy.check_freshness(self.now_s())
         for vehicle_id, runtime in tuple(self.vehicle_runtime.items()):
             if self._apply_zone_hold(runtime):
                 continue
@@ -998,6 +1031,8 @@ class MobilityService:
                 self._advance_synthetic_runtime(vehicle_id, runtime, delta_s)
         self._update_request_etas()
         self._dispatch_queued_requests()
+        if self.resource_admission is not None:
+            self.resource_admission.sync(self)
 
     def _advance_synthetic_runtime(
         self, vehicle_id: str, runtime: VehicleRuntime, delta_s: float

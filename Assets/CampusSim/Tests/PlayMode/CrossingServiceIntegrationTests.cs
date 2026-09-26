@@ -20,12 +20,83 @@ namespace InhaExpress.Client.Tests
         private GameObject ego, pedestrian;
         private bool overlap;
         private float minimumClearance = float.PositiveInfinity;
+        [Serializable]
+        private sealed class RaySummary
+        {
+            public int rays = 0;
+            public int hits = 0;
+            public int misses = 0;
+        }
+        [Serializable]
+        private sealed class ReservationSummary
+        {
+            public bool enabled = false;
+            public int completed = 0;
+            public int claims = 0;
+            public int closed = 0;
+            public int faults = 0;
+        }
 
         [UnityTearDown]
         public IEnumerator Cleanup()
         {
             foreach (var item in objects) if (item != null) UnityEngine.Object.Destroy(item);
             objects.Clear();
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator SensorInsideExternalColliderCannotClaimMisses()
+        {
+            var rig = New("Inside collider rig").AddComponent<VehicleRaycastSensorRig>();
+            New("Containing obstacle").AddComponent<BoxCollider>();
+            Physics.SyncTransforms();
+            const BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Instance;
+            Assert.IsFalse((bool)typeof(VehicleRaycastSensorRig).GetMethod("Scan", flags).Invoke(rig, new object[] { 0.1 }));
+            var samples = (List<SensorRayDto>)typeof(VehicleRaycastSensorRig).GetField("rays", flags).GetValue(rig);
+            Assert.IsEmpty(samples);
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator RayScanPreservesOcclusionAndMisses()
+        {
+            var rig = New("Ray sample rig").AddComponent<VehicleRaycastSensorRig>();
+            foreach (float z in new[] { 3f, 5f })
+            {
+                var obstacle = New("Ray occluder");
+                obstacle.transform.position = new Vector3(0, 0, z);
+                obstacle.AddComponent<BoxCollider>();
+            }
+            Physics.SyncTransforms();
+            const BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Instance;
+            Assert.IsTrue((bool)typeof(VehicleRaycastSensorRig).GetMethod("Scan", flags).Invoke(rig, new object[] { 0.1 }));
+            var samples = (List<SensorRayDto>)typeof(VehicleRaycastSensorRig).GetField("rays", flags).GetValue(rig);
+            Assert.AreEqual(64, samples.Count);
+            Assert.AreEqual("HIT", samples[32].Outcome);
+            Assert.That(samples[32].RangeM.Value, Is.EqualTo(2.5).Within(0.001));
+            Assert.AreEqual("MISS", samples[16].Outcome);
+            Assert.AreEqual(30, samples[16].RangeM.Value);
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator SaturatedRayCannotReportMissOrValidFrame()
+        {
+            var rig = New("Saturated ray rig").AddComponent<VehicleRaycastSensorRig>();
+            for (int i = 0; i < 70; i++)
+            {
+                var obstacle = New("Buffer saturation obstacle");
+                obstacle.transform.position = new Vector3(0, 0, 2 + i * 0.2f);
+                obstacle.AddComponent<BoxCollider>().size = Vector3.one * 0.1f;
+            }
+            Physics.SyncTransforms();
+            const BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Instance;
+            Assert.IsFalse((bool)typeof(VehicleRaycastSensorRig).GetMethod("Scan", flags).Invoke(rig, new object[] { 0.1 }));
+            var samples = (List<SensorRayDto>)typeof(VehicleRaycastSensorRig).GetField("rays", flags).GetValue(rig);
+            Assert.AreEqual(64, samples.Count);
+            Assert.AreEqual("INVALID", samples[32].Outcome);
+            Assert.IsFalse(samples[32].RangeM.HasValue);
             yield return null;
         }
 
@@ -88,12 +159,40 @@ namespace InhaExpress.Client.Tests
             host.StartSource();
             mobileHost.StartSource();
             yield return Wait(() => accepted >= 3 && mobileHost.Store.Current != null, 20, "No connected telemetry");
+            using (var http = new HttpClient())
+            {
+                var rayCheck = http.GetStringAsync(url.Replace("ws://", "http://").Replace("/v1/client/ws", "/test/ray-summary"));
+                yield return Wait(() => rayCheck.IsCompleted, 5, "Ray ingress check timeout");
+                var counts = JsonUtility.FromJson<RaySummary>(rayCheck.Result);
+                Assert.AreEqual(64, counts.rays);
+                Assert.Greater(counts.hits, 0);
+                Assert.Greater(counts.misses, 0);
+                Debug.Log("Python retained measured ray summary: " + rayCheck.Result);
+            }
             ego = GameObject.Find("Vehicle V01");
             Assert.That(ego, Is.Not.Null);
             mobile.SendPassengerRequest(new PassengerRequestCommandDto(
                 "fixture_landmark_2", "fixture_landmark_3", new ServiceNeedsDto(false, 0, false)));
             yield return Wait(() => ack != null, 5, "Missing request ACK");
             Assert.That(ack.Accepted, Is.True);
+            if (pythonControl && Environment.GetEnvironmentVariable("INHA_UNITY_E2E_DISCONNECT") != "1")
+            {
+                var controlled = ego.GetComponent<VehicleCommandActuator>();
+                yield return Wait(() => ego.transform.position.x > 0.1f && controlled.SpeedMps < 0.01f,
+                    20, "Vehicle did not wait for the reserved exit space");
+                Assert.That(ego.transform.position.x + 0.2f, Is.LessThan(1f), "Body entered the ungranted corridor");
+                var heldPosition = ego.transform.position;
+                yield return new WaitForSeconds(0.25f);
+                Assert.That(Vector3.Distance(ego.transform.position, heldPosition), Is.LessThan(0.01f));
+                using (var client = new HttpClient())
+                {
+                    var endpoint = new UriBuilder(url) { Scheme = "http", Path = "/test/release-exit", Query = "" };
+                    var release = client.PostAsync(endpoint.Uri, null);
+                    yield return Wait(() => release.IsCompleted, 5, "Exit release timed out");
+                    using (var response = release.GetAwaiter().GetResult()) response.EnsureSuccessStatusCode();
+                }
+                Debug.Log($"Resource admission held the body outside the corridor at x={heldPosition.x:F3}");
+            }
             yield return Wait(() => latest?.SpeedMps > 0.4 && latest.Position.X > 0.5, 20, "Vehicle never moved");
             if (Environment.GetEnvironmentVariable("INHA_UNITY_E2E_DISCONNECT") == "1")
             {
@@ -157,6 +256,21 @@ namespace InhaExpress.Client.Tests
             Assert.That(overlap, Is.False, "Physics collider overlap observed");
             Assert.That(minimumClearance, Is.GreaterThan(0));
             Assert.That(rejected, Is.Zero);
+            if (pythonControl && Environment.GetEnvironmentVariable("INHA_UNITY_E2E_DISCONNECT") != "1")
+            {
+                using (var http = new HttpClient())
+                {
+                    var query = http.GetStringAsync(url.Replace("ws://", "http://").Replace("/v1/client/ws", "/test/reservation-summary"));
+                    yield return Wait(() => query.IsCompleted, 5, "Reservation observation check timeout");
+                    var summary = JsonUtility.FromJson<ReservationSummary>(query.Result);
+                    Assert.IsTrue(summary.enabled);
+                    Assert.AreEqual(1, summary.completed, "Full-body entry and confirmed exit required");
+                    Assert.AreEqual(0, summary.claims);
+                    Assert.AreEqual(0, summary.closed);
+                    Assert.AreEqual(0, summary.faults);
+                    Debug.Log("Ego-derived resource occupancy: " + query.Result);
+                }
+            }
             if (pythonControl)
             {
                 long lastControlSequence = actuator.LastSequence;

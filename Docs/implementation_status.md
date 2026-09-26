@@ -1,6 +1,43 @@
 # 구현 현황
 
-프로젝트 버전 **0.3.1.0** · 2026-09-26 작업본. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
+프로젝트 버전 **0.3.2.0** · 2026-09-26 작업본. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
+
+
+최신 v0.3.2.0 체크포인트: Python/MapData 349개와 Ruff 통과. 선택적 예약 속도 제한은 Unity 통로 앞 정지까지 확인했으나 출구 해제 후 재출발 테스트가 실패했다(PlayMode 3/4 통과). 예약 통합 및 전체 MVP는 미완료이며 상세 기록은 `MVP_EXECUTION.md`와 `resource_admission.md`를 따른다.
+최신 후속 작업본: 서버의 검증된 ego 위치 보고로 차체 전체의 자원 진입·이탈을 판정하는
+선택적 어댑터를 연결했다. stale·세션 변경·위치 불연속은 점유를 유지하고 폐쇄한다.
+Python/MapData **342개**, Ruff 및 격리 Unity PlayMode **4/4** 통과. 합성 차량 주행의
+예약 점유·이탈 반영까지 확인했으며, 예약 기반 진입/제동 명령과 다중 차량 경합은 미연결이다.
+`Docs/resource_occupancy.md`에 소스별 증거와 합성 가정·제한을 기록했다.
+
+최신 후속 작업본: 통로·출구 공간을 함께 확보하는 자원 예약 상태 관리와 실제 점유/
+예약 만료 분리, 고장 폐쇄·교착 보고를 추가했다. 전체 Python/MapData **331개** 및 Ruff
+통과. 아직 실제 위치 기반 진입·이탈 판정, 서비스 제어 권한, Unity 다중 차량 및 CBS와
+연결되지 않은 기반 구현이다. 상세 범위는 `Docs/resource_reservations.md`를 따른다.
+
+최신 후속 작업본: 자체 D* Lite와 서비스 선택 설정, 재계획 비교 CLI를 추가했다.
+비용 변경·폐쇄·재개·출발점 이동과 지도 변경 시 캐시 초기화를 검증했다. 합성 이벤트
+600건에서 A*/D* Lite의 비용·경로 없음 판정이 Dijkstra와 일치했다. 작은 지도에서는
+D* Lite가 더 느려 기본값은 A*를 유지한다. 전체 Python/MapData **316개** 및 Ruff 통과.
+실제 지도·관측 혼잡·Unity 통합 재검증과 전체 M3 완료는 별도 미완료 항목이다.
+
+최신 후속 작업본: 정적 관측과 추적된 보행자가 함께 있는 상태에서 RRT 후보 생성과
+시간별 충돌 검사를 연결했다. 단기 예상 이동 범위를 피하고, 좁은 통로가 막히면 후보를
+반환하지 않는다. 차체 이동·회전 검사를 통과한 연결만 사용해 불필요한 경로 꺾임을 줄였다.
+Python/MapData **298개** 및 Ruff 통과. 예제 전체 12.365초 중 관측으로 검사한 구간은
+1.9초뿐이며 주행 권한은 없다. 상세 근거는 `artifacts/validation/2026-09-26-dynamic-rrt/`.
+
+최신 후속 작업본: 센서 관측·추적 운동을 시간별 차량 footprint 검사에 연결했다.
+명시적인 지연·시계 진행률 오차를 경계에 반영하고, 낡거나 문맥이 다른 관측은 불명으로
+거부한다. 현재 후보의 입력 변경도 재검사한다. Python/MapData **286개** 및 Ruff 통과.
+이 계층은 Python 합성 검증이며 새로운 Unity 실행·RRT 주행 권한·전체 MVP 완료를
+뜻하지 않는다. `Docs/observed_trajectory_validation.md`와 해당 검증 artifact를 따른다.
+
+2026-09-26 후속 작업본: LiDAR 광선별 HIT/MISS/INVALID 계약과 왕복 수신을 추가했다.
+Python/MapData 259개 및 Ruff, 격리 Unity PlayMode 4/4(가림·포화·센서 원점 겹침·통신
+중단 포함 횡단 운송)을 검증했다. 64개 적중 프레임에 맞춰 메시지 상한을 64 KiB로
+조정하고 Python 왕복으로 별도 검증했다. 광선 사이 빈 공간과 RRT 실행은 아직 검증되지
+않았다. 상세 소스 범위는 `artifacts/validation/2026-09-26-lidar-rays/`를 따른다.
 
 ## 2026-09-26 추가 검증 및 책임 분리 (v0.2.4.0)
 
@@ -96,7 +133,7 @@
 4. 합성 preview에 V01 route-following alpha를 연결했다. 다음은 Unity Editor에서 씬 재임포트와 PlayMode를 통해 local Python server 연결·요청→Physics 이동→도착→요청 완료 흐름을 검증한다. 축·Collider·ground contact를 확인하고, 센서/TTC safety 계층이 연결되기 전까지는 실제 캠퍼스 이동을 활성화하지 않는다.
 5. M2 지도/접근성/비룡플라자 범위를 완료하는 동안 재사용 빈도가 높은 캠퍼스 오브젝트를 prefab/variant로 단계적으로 정리한 뒤 센서·안전, 다중 차량, 성능 실험을 진행한다.
 
-버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.3.1.0으로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
+버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.3.2.0으로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
 
 ## 2026-09-26 차량 telemetry 연결 소유권 (v0.2.4.0 이후 작업본)
 

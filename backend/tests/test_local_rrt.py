@@ -70,6 +70,13 @@ def test_blocked_corridor_and_invalid_start_never_return_unchecked_fallback():
                     corridor=corridor, obstacles=wall, seed=1) is None
 
 
+def test_checked_shortcuts_remove_open_space_stop_turn_zigzags():
+    start, goal = Pose2(0, 0, math.pi / 2), Pose2(6, 0, math.pi / 2)
+    path = plan_rrt(start, goal, footprint=BoxFootprint(0.4, 0.4),
+                    corridor=RectCorridor(-1, -3, 7, 3), obstacles=(), seed=17)
+    assert path == (start, goal)
+
+
 @pytest.mark.parametrize("bad", [-1, math.nan, math.inf])
 def test_invalid_geometry_is_rejected(bad):
     with pytest.raises(ValueError):

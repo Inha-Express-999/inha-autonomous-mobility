@@ -111,5 +111,23 @@ def plan_rrt(start: Pose2, goal: Pose2, *, footprint: BoxFootprint, corridor: Re
             for pose in chunk:
                 if pose != result[-1]:
                     result.append(pose)
-        return tuple(result)
+        # Random-tree zigzags would force a stop/turn at every short edge.
+        # Greedy shortcuts retain the same swept turn/move/turn checks and are
+        # bounded independently of tree size; untouched suffixes stay checked.
+        simplified = [start]
+        cursor, attempts = 0, 0
+        while cursor < len(result) - 1 and attempts < 128:
+            for target_index in range(len(result) - 1, cursor, -1):
+                attempts += 1
+                shortcut = connect(simplified[-1], result[target_index])
+                if shortcut is not None:
+                    for pose in shortcut:
+                        if pose != simplified[-1]:
+                            simplified.append(pose)
+                    cursor = target_index
+                    break
+                if attempts >= 128:
+                    break
+        simplified.extend(result[cursor + 1:])
+        return tuple(simplified)
     return None

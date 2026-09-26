@@ -25,7 +25,8 @@ from campus_sim.service import MobilityService
 PROJECT_VERSION = __version__
 SNAPSHOT_SCHEMA_VERSION = 3
 MAP_VERSION = "synthetic-service-v1"
-MAX_MESSAGE_BYTES = 16 * 1024
+# Bounded 64-return LiDAR frames include ray outcomes and observed object IDs.
+MAX_MESSAGE_BYTES = 64 * 1024
 SNAPSHOT_INTERVAL_S = 0.1
 ACTIVE_REQUEST_STATUSES = {"ASSIGNED", "PICKUP_SERVICE", "IN_TRANSIT", "DROPOFF_SERVICE"}
 OPERATOR_OWNER_ID = "pc-operator"
