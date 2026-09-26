@@ -22,6 +22,7 @@ namespace InhaExpress.Client.Presentation
         }
 
         [SerializeField] private string requiredMapVersion;
+        [SerializeField] private bool usePythonControl;
         [SerializeField, Min(0f)] private float spawnHeightOffsetM;
         [SerializeField] private GameObject routeOverlayPrefab;
         [SerializeField] private Material routeOverlayMaterial;
@@ -107,6 +108,26 @@ namespace InhaExpress.Client.Presentation
 
                 var follower = actor.GetComponent<VehicleRouteFollower>();
                 if (follower == null) follower = actor.AddComponent<VehicleRouteFollower>();
+                VehicleCommandActuator actuator = null;
+                if (usePythonControl)
+                {
+                    actuator = actor.GetComponent<VehicleCommandActuator>();
+                    if (actuator == null)
+                    {
+                        actuator = actor.AddComponent<VehicleCommandActuator>();
+                        actuator.Configure(vehicle.Id, snapshot.MapVersion, host.TelemetrySessionId,
+                            host.ControlSequences, snapshot.RunId);
+                    }
+                    follower.enabled = false;
+                    VehicleControlDto control = null;
+                    foreach (var item in snapshot.ControlCommands)
+                        if (item.VehicleId == vehicle.Id) { control = item; break; }
+                    var reporter = actor.GetComponent<VehicleEgoLocalizationReporter>();
+                    if (control == null || !host.TryGetPoseIssuedTime(vehicle.Id, control.EgoPoseTick, out double issuedAt))
+                        actuator.Revoke();
+                    else actuator.ApplyControl(control, vehicle.RouteId, reporter.LatestObservedTick,
+                        issuedAt, Time.realtimeSinceStartupAsDouble);
+                }
                 RouteDto matchingRoute = null;
                 if (vehicle.RouteId != null)
                     foreach (var route in snapshot.Routes)
@@ -119,6 +140,7 @@ namespace InhaExpress.Client.Presentation
                         Time.realtimeSinceStartupAsDouble))
                 {
                     follower.ClearRoute();
+                    actuator?.Revoke();
                     ClearRouteLine(vehicle.Id);
                     continue;
                 }
@@ -127,6 +149,7 @@ namespace InhaExpress.Client.Presentation
                 // while the authoritative snapshot explicitly grants the DRIVING state.
                 bool serverAllowsMotion = vehicle.MotionState == VehicleMotionState.DRIVING &&
                     vehicle.Reason != ReasonCode.STALE_LOCALIZATION;
+                if (actuator != null && !serverAllowsMotion) actuator.Revoke();
                 follower.SetMotionAuthorized(serverAllowsMotion);
                 UpdateRouteLine(vehicle.Id, actor, follower, serverAllowsMotion);
             }

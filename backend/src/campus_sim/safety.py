@@ -1,6 +1,6 @@
 """Sensor-only safety decisions, independent of service state and network transport.
 
-Range and radar-approach gates are synthetic prototypes, not full crossing avoidance.
+Range, radar-approach and explicitly bounded crossing gates are synthetic prototypes.
 """
 from __future__ import annotations
 
@@ -10,7 +10,9 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
+from campus_sim.crossing import CrossingPolicy, crossing_hazard
 from campus_sim.domain import ReasonCode, SensorObservation, SensorType
+from campus_sim.tracking import ObservedMotion
 
 
 @dataclass(frozen=True)
@@ -65,6 +67,7 @@ class SafetyPolicy:
 class SensorSample:
     observation: SensorObservation
     received_at_s: float | None
+    motions: tuple[ObservedMotion, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -82,6 +85,7 @@ def evaluate_sensor_safety(
     now_s: float,
     clear_since_s: float | None,
     policy: SafetyPolicy,
+    crossing_policy: CrossingPolicy | None = None,
 ) -> SafetyDecision:
     """Return motion authority and next recovery state without mutating observations.
 
@@ -133,6 +137,18 @@ def evaluate_sensor_safety(
                 time_to_margin_s = max(0.0, (detection.range_m - policy.margin_m) / -rate)
                 if time_to_margin_s <= policy.radar_approach_horizon_s + age_s:
                     return SafetyDecision("EMERGENCY_STOP", ReasonCode.OBSTACLE_STOP)
+
+    if crossing_policy is not None:
+        for sample in samples:
+            hazard = crossing_hazard(
+                sample.observation, sample.motions,
+                receipt_age_s=now_s - sample.received_at_s,
+                margin_m=policy.margin_m, policy=crossing_policy,
+            )
+            if hazard is None:
+                return stale
+            if hazard:
+                return SafetyDecision("EMERGENCY_STOP", ReasonCode.OBSTACLE_STOP)
 
     if clear_since_s is None:
         clear_since_s = now_s

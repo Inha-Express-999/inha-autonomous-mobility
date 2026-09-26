@@ -214,6 +214,142 @@ namespace InhaExpress.Client.Tests
             yield return null;
         }
 
+        [UnityTest]
+        public IEnumerator TerminalWaypointPreservesPhysicalBrakingTravel()
+        {
+            var actor = CreateActor(out var follower);
+            var route = CreateRoute("terminal-braking", 0.6);
+            follower.ApplyRoute(route, route.MapVersion, Time.realtimeSinceStartupAsDouble);
+            follower.SetMotionAuthorized(true);
+            float deadline = Time.realtimeSinceStartup + 4f;
+            while (follower.WaypointIndex < route.Polyline.Count && Time.realtimeSinceStartup < deadline)
+            {
+                follower.ApplyRoute(route, route.MapVersion, Time.realtimeSinceStartupAsDouble);
+                yield return new WaitForFixedUpdate();
+            }
+            Assert.That(follower.WaypointIndex, Is.EqualTo(route.Polyline.Count));
+            float remainingSpeed = follower.SpeedMps;
+            float startX = actor.transform.position.x;
+            Assert.That(remainingSpeed, Is.GreaterThan(0.1f), "Exercise residual momentum at terminal acceptance.");
+            while (follower.SpeedMps > 0 && Time.realtimeSinceStartup < deadline)
+            {
+                follower.ApplyRoute(route, route.MapVersion, Time.realtimeSinceStartupAsDouble);
+                yield return new WaitForFixedUpdate();
+            }
+            yield return new WaitForFixedUpdate();
+            float travel = actor.transform.position.x - startX;
+            Assert.That(travel, Is.GreaterThan(0.01f), "Decreasing a speed field without moving hides braking distance.");
+            Assert.That(travel, Is.EqualTo(remainingSpeed * remainingSpeed / 4f).Within(0.02f));
+            Assert.That(follower.SpeedMps, Is.Zero);
+        }
+
+        [UnityTest]
+        public IEnumerator ReverseRouteBrakesAlongExistingDirectionBeforeRotating()
+        {
+            var actor = CreateActor(out var follower);
+            var route = CreateRoute("forward-before-reverse", 5);
+            follower.ApplyRoute(route, route.MapVersion, Time.realtimeSinceStartupAsDouble);
+            follower.SetMotionAuthorized(true);
+            float deadline = Time.realtimeSinceStartup + 2f;
+            while (follower.SpeedMps < 0.5f && Time.realtimeSinceStartup < deadline)
+            {
+                follower.ApplyRoute(route, route.MapVersion, Time.realtimeSinceStartupAsDouble);
+                yield return new WaitForFixedUpdate();
+            }
+            float startX = actor.transform.position.x;
+            var rotation = actor.transform.rotation;
+            var reverse = new RouteDto("reverse", route.MapVersion, new[] {
+                new MapPositionDto(startX, 0, 0), new MapPositionDto(startX - 2, 0, 0)
+            });
+            Assert.That(follower.ApplyRoute(reverse, reverse.MapVersion, Time.realtimeSinceStartupAsDouble), Is.True);
+            float speedBefore = follower.SpeedMps;
+            yield return new WaitForFixedUpdate();
+            yield return new WaitForFixedUpdate();
+            Assert.That(actor.transform.position.x, Is.GreaterThan(startX), "Momentum cannot flip with the route.");
+            Assert.That(Quaternion.Angle(rotation, actor.transform.rotation), Is.LessThan(0.01f));
+            Assert.That(follower.SpeedMps, Is.InRange(speedBefore - 2f * Time.fixedDeltaTime * 3, speedBefore));
+            deadline = Time.realtimeSinceStartup + 5f;
+            while (actor.transform.position.x >= startX - 0.1f && Time.realtimeSinceStartup < deadline)
+            {
+                follower.ApplyRoute(reverse, reverse.MapVersion, Time.realtimeSinceStartupAsDouble);
+                yield return new WaitForFixedUpdate();
+            }
+            Assert.That(actor.transform.position.x, Is.LessThan(startX - 0.1f), "Resume after stopping and turning.");
+        }
+
+        [UnityTest]
+        public IEnumerator PythonCommandExpiryBrakesWithPhysicalTravelAndDisablesFollower()
+        {
+            var actor = CreateActor(out var follower);
+            var actuator = actor.AddComponent<VehicleCommandActuator>();
+            actuator.Configure("V01", "synthetic-control-test", "session");
+            Assert.That(follower.enabled, Is.False);
+            long sequence = 0;
+            double until = Time.realtimeSinceStartupAsDouble + 1.2;
+            while (Time.realtimeSinceStartupAsDouble < until)
+            {
+                double now = Time.realtimeSinceStartupAsDouble;
+                Assert.That(actuator.ApplyControl(Control(sequence, sequence), "route", sequence, now, now), Is.True);
+                sequence++;
+                yield return new WaitForFixedUpdate();
+            }
+            Assert.That(actuator.SpeedMps, Is.GreaterThan(0.4f));
+            while (actuator.CommandFresh) yield return new WaitForFixedUpdate();
+            float speed = actuator.SpeedMps;
+            float position = actor.transform.position.x;
+            yield return new WaitForSeconds(0.6f);
+            Assert.That(actuator.SpeedMps, Is.Zero);
+            Assert.That(actor.transform.position.x - position, Is.GreaterThan(0.01f));
+            Assert.That(actor.transform.position.x - position, Is.EqualTo(speed * speed / 4f).Within(0.025f));
+            double received = Time.realtimeSinceStartupAsDouble;
+            Assert.That(actuator.ApplyControl(Control(sequence - 1, sequence - 1), "route", sequence,
+                received, received), Is.False, "Replay cannot renew the command lease.");
+            Assert.That(actuator.CommandFresh, Is.False);
+        }
+
+        [UnityTest]
+        public IEnumerator PythonCommandRejectsWrongContextAndOldOrFuturePose()
+        {
+            var actor = CreateActor(out _);
+            var actuator = actor.AddComponent<VehicleCommandActuator>();
+            actuator.Configure("V01", "synthetic-control-test", "session");
+            double now = Time.realtimeSinceStartupAsDouble;
+            Assert.That(actuator.ApplyControl(Control(0, 10), "route", 10, now, now), Is.True);
+            Assert.That(actuator.ApplyControl(Control(1, 10, "other"), "route", 10, now, now), Is.False);
+            Assert.That(actuator.ApplyControl(Control(2, 11), "route", 10, now, now), Is.False);
+            Assert.That(actuator.ApplyControl(Control(3, 7), "route", 10, now, now), Is.False);
+            Assert.That(actuator.ApplyControl(Control(4, 10), "different-route", 10, now, now), Is.False);
+            Assert.That(actuator.ApplyControl(Control(5, 10), "route", 10, now, now + 0.21), Is.False);
+            Assert.That(actuator.CommandFresh, Is.False);
+            yield return new WaitForFixedUpdate();
+            Assert.That(actuator.SpeedMps, Is.Zero);
+        }
+
+        private static VehicleControlDto Control(long sequence, long pose, string session = "session") =>
+            new VehicleControlDto("V01", "synthetic-control-test", session, "route", sequence,
+                pose, 0.2, 1, 0, "ROUTE_CONTROL");
+
+        [UnityTest]
+        public IEnumerator RecreatedActuatorCannotReplayAcceptedCommands()
+        {
+            var history = new ControlSequenceGuard();
+            var first = CreateActor(out _).AddComponent<VehicleCommandActuator>();
+            first.Configure("V01", "synthetic-control-test", "session", history, "run-a");
+            double now = Time.realtimeSinceStartupAsDouble;
+            Assert.That(first.ApplyControl(Control(10, 10), "route", 10, now, now), Is.True);
+            Object.Destroy(first.gameObject);
+            yield return null;
+            var replacement = CreateActor(out _).AddComponent<VehicleCommandActuator>();
+            replacement.Configure("V01", "synthetic-control-test", "session", history, "run-a");
+            now = Time.realtimeSinceStartupAsDouble;
+            Assert.That(replacement.ApplyControl(Control(10, 10), "route", 10, now, now), Is.False);
+            Assert.That(replacement.ApplyControl(Control(9, 10), "route", 10, now, now), Is.False);
+            Assert.That(replacement.ApplyControl(Control(11, 10), "route", 10, now, now), Is.True);
+            var restarted = CreateActor(out _).AddComponent<VehicleCommandActuator>();
+            restarted.Configure("V01", "synthetic-control-test", "session", history, "run-b");
+            Assert.That(restarted.ApplyControl(Control(0, 10), "route", 10, now, now), Is.True);
+        }
+
         private GameObject CreateActor(out VehicleRouteFollower follower)
         {
             var actor = new GameObject("Route follower PlayMode test actor");

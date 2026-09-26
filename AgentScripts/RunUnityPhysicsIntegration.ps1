@@ -7,10 +7,21 @@ param(
     [switch]$Radar,
     [switch]$Pedestrian,
     [switch]$ZoneClosure,
+    [switch]$Crossing,
+    [switch]$PythonControl,
+    [switch]$Disconnect,
     [ValidatePattern('^[A-Za-z0-9_.]+$')] [string]$TestFilter
 )
 
 $ErrorActionPreference = "Stop"
+if ($Disconnect -and -not $PythonControl) { throw 'Disconnect requires PythonControl.' }
+if ($PythonControl -and -not $Crossing) {
+    throw 'PythonControl currently requires the dedicated Crossing scenario.'
+}
+if ($Crossing -and ($Radar -or $Pedestrian -or $ZoneClosure)) {
+    throw 'Crossing is a dedicated scenario; do not combine it with other scenario switches.'
+}
+if ($Crossing -and -not $TestFilter) { $TestFilter = 'InhaExpress.Client.Tests.CrossingServiceIntegrationTests' }
 $repoRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot ".."))
 $versionLine = Get-Content (Join-Path $repoRoot "ProjectSettings/ProjectVersion.txt") |
     Where-Object { $_ -match '^m_EditorVersion:' } | Select-Object -First 1
@@ -41,13 +52,15 @@ Get-ChildItem (Join-Path $repoRoot 'Assets/CampusSim/Scripts/Networking') -File 
     Where-Object { $_.Extension -in @('.cs', '.asmdef') } | ForEach-Object {
         Copy-RecordedSource "Assets/CampusSim/Scripts/Networking/$($_.Name)" "Assets/Networking/$($_.Name)"
     }
-foreach ($name in @('VehicleRouteFollower.cs', 'MapCoordinateConverter.cs', 'WorldStateStore.cs',
+foreach ($name in @('VehicleRouteFollower.cs', 'VehicleCommandActuator.cs', 'MapCoordinateConverter.cs', 'WorldStateStore.cs',
         'ClientRuntimeHost.cs', 'VehicleActorSpawner.cs', 'VehicleEgoLocalizationReporter.cs',
         'VehicleRaycastSensorRig.cs')) {
     Copy-RecordedSource "Assets/CampusSim/Scripts/Presentation/$name" "Assets/Presentation/$name"
 }
 Copy-RecordedSource 'Assets/CampusSim/Tests/PlayMode/VehicleServiceIntegrationTests.cs' `
     'Assets/Tests/VehicleServiceIntegrationTests.cs'
+Copy-RecordedSource 'Assets/CampusSim/Tests/PlayMode/CrossingServiceIntegrationTests.cs' `
+    'Assets/Tests/CrossingServiceIntegrationTests.cs'
 Copy-RecordedSource 'Assets/CampusSim/Scripts/Simulation/SyntheticPedestrianWalker.cs' 'Assets/Simulation/SyntheticPedestrianWalker.cs'
 Copy-RecordedSource 'Assets/CampusSim/Scripts/Simulation/InhaExpress.Simulation.asmdef' 'Assets/Simulation/InhaExpress.Simulation.asmdef'
 Copy-RecordedSource 'Assets/CampusSim/Scripts/Simulation/SyntheticPedestrianPopulation.cs' 'Assets/Simulation/SyntheticPedestrianPopulation.cs'
@@ -69,6 +82,7 @@ foreach ($file in Get-ChildItem (Join-Path $repoRoot 'backend/src') -Recurse -Fi
 foreach ($relative in @('maps/fixtures/physics-integration-3.json',
         'maps/fixtures/physics-zone-integration-3.json',
         'AgentScripts/UnityPhysicsIntegration/server.py', 'configs/safety.json',
+        'AgentScripts/UnityPhysicsIntegration/socket_fault.py',
         'configs/planning.json', 'configs/crowd.json', 'configs/dispatch.json', 'VERSION')) {
     $sources[$relative] = (Get-FileHash -LiteralPath (Join-Path $repoRoot $relative) -Algorithm SHA256).Hash
 }
@@ -105,7 +119,13 @@ $previousRadar = $env:INHA_UNITY_E2E_RADAR
 $previousPedestrian = $env:INHA_UNITY_E2E_PEDESTRIAN
 $previousClosure = $env:INHA_UNITY_E2E_ZONE_CLOSURE
 $previousMap = $env:INHA_UNITY_E2E_MAP
+$previousCrossing = $env:INHA_UNITY_E2E_CROSSING
+$previousPythonControl = $env:INHA_UNITY_E2E_PYTHON_CONTROL
+$previousDisconnect = $env:INHA_UNITY_E2E_DISCONNECT
 try {
+    $env:INHA_UNITY_E2E_DISCONNECT = if ($Disconnect) { '1' } else { '0' }
+    $env:INHA_UNITY_E2E_PYTHON_CONTROL = if ($PythonControl) { '1' } else { '0' }
+    $env:INHA_UNITY_E2E_CROSSING = if ($Crossing) { '1' } else { '0' }
     $env:INHA_UNITY_E2E_ZONE_CLOSURE = if ($ZoneClosure) { '1' } else { '0' }
     $expectedMap = if ($ZoneClosure) { 'synthetic-physics-zone-integration-v1' } else { 'synthetic-physics-integration-v1' }
     if (Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue) {
@@ -135,7 +155,10 @@ try {
     $env:INHA_UNITY_E2E_RESULTS = $resultPath
     $env:INHA_UNITY_E2E_RADAR = if ($Radar) { '1' } else { '0' }
     $env:INHA_UNITY_E2E_PEDESTRIAN = if ($Pedestrian) { '1' } else { '0' }
-    'tick,x,y,speed,motion,reason,requestStatus' | Set-Content $env:INHA_UNITY_E2E_TRACE
+    $traceHeader = if ($Crossing) { 'tick,egoX,pedestrianZ,speed,motion,reason,scenario' } else {
+        'tick,x,y,speed,motion,reason,requestStatus'
+    }
+    $traceHeader | Set-Content $env:INHA_UNITY_E2E_TRACE
     $process = Start-Process -FilePath $unityExe -ArgumentList $arguments -WindowStyle Hidden -PassThru
     if (-not $process.WaitForExit($TimeoutSeconds * 1000)) {
         throw "Unity Physics integration run timed out. See $logPath"
@@ -174,4 +197,7 @@ try {
     $env:INHA_UNITY_E2E_PEDESTRIAN = $previousPedestrian
     $env:INHA_UNITY_E2E_ZONE_CLOSURE = $previousClosure
     $env:INHA_UNITY_E2E_MAP = $previousMap
+    $env:INHA_UNITY_E2E_CROSSING = $previousCrossing
+    $env:INHA_UNITY_E2E_PYTHON_CONTROL = $previousPythonControl
+    $env:INHA_UNITY_E2E_DISCONNECT = $previousDisconnect
 }

@@ -1,6 +1,6 @@
 # 구현 현황
 
-프로젝트 버전 **0.3.0.0** · 2026-09-26 작업본. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
+프로젝트 버전 **0.3.1.0** · 2026-09-26 작업본. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
 
 ## 2026-09-26 추가 검증 및 책임 분리 (v0.2.4.0)
 
@@ -96,7 +96,7 @@
 4. 합성 preview에 V01 route-following alpha를 연결했다. 다음은 Unity Editor에서 씬 재임포트와 PlayMode를 통해 local Python server 연결·요청→Physics 이동→도착→요청 완료 흐름을 검증한다. 축·Collider·ground contact를 확인하고, 센서/TTC safety 계층이 연결되기 전까지는 실제 캠퍼스 이동을 활성화하지 않는다.
 5. M2 지도/접근성/비룡플라자 범위를 완료하는 동안 재사용 빈도가 높은 캠퍼스 오브젝트를 prefab/variant로 단계적으로 정리한 뒤 센서·안전, 다중 차량, 성능 실험을 진행한다.
 
-버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.3.0.0으로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
+버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.3.1.0으로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
 
 ## 2026-09-26 차량 telemetry 연결 소유권 (v0.2.4.0 이후 작업본)
 
@@ -198,3 +198,18 @@ Ruff passed. Evidence: `artifacts/validation/2026-09-26-zone-closure-physics/`.
 This resolves only the isolated Physics closure round trip. Observed-density input,
 real zone geometry, alternate accessible Stops, safe egress, original scene and
 performance gates remain incomplete.
+
+## 2026-09-26 제어·우회 알고리즘 후속 작업 현황
+
+v0.3.0.0 이후 작업본에서 센서 기반 횡단 정지, 연속 footprint 검사, 자체 RRT 후보,
+관측/세션/경로 변경 시 후보 무효화, 가감속·회전 시간표와 단기 동적 충돌 검사를
+추가했다. RRT 후보는 아직 실행 권한이 없으며 관측 범위·동적 인지·경로 재합류 및
+실제 우회 실행은 미완료다. Python 경로 속도/회전 명령→WebSocket→Unity actuator는
+명시적 합성 옵션에서 연결했고, 기존 follower와 동시 구동을 막았다.
+
+최신 증거: Python/MapData 242개와 Ruff 통과, actuator 포함 PlayMode 12/12,
+실제 PC socket 단절→제동/정지→재접속→센서 clear hold→횡단/승객 완료→actor 재생성
+통합 PlayMode 1/1 통과. 재접속 시 snapshot sequence가 0으로 초기화되어 수신 상태가
+거부되던 결함을 수정했다. 각 결과는 artifacts/validation의 개별 source hash 범위다.
+실제 서버 프로세스 재시작/메모리 복구·원본 씬·Player/Android·실지도·전체 부하 및
+MVP 완료를 의미하지 않는다. 자세한 현재 작업 순서와 제한은 Docs/MVP_EXECUTION.md 참고.

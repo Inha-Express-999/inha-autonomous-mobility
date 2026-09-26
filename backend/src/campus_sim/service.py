@@ -9,6 +9,8 @@ from pathlib import Path
 from time import monotonic
 from uuid import uuid4
 
+from campus_sim.controller import ControllerPolicy
+from campus_sim.crossing import CrossingPolicy
 from campus_sim.crowd import CrowdModelConfig
 from campus_sim.dispatch import minimum_cost_assignment
 from campus_sim.domain import (
@@ -182,6 +184,8 @@ class DispatchCandidate:
 @dataclass
 class MobilityService:
     """In-memory M0 service. It owns requests; Unity remains the physics authority."""
+    run_id: str = field(default_factory=lambda: "server-" + uuid4().hex)
+    snapshot_sequence: int = 0
 
     landmarks: dict[str, Landmark] = field(default_factory=dict)
     stops: dict[str, Stop] = field(default_factory=dict)
@@ -210,6 +214,10 @@ class MobilityService:
     closed_zone_ids: set[str] = field(default_factory=set)
     sensor_trackers: dict[tuple[str, str], PedestrianMotionTracker] = field(default_factory=dict)
     sensor_motion_estimates: dict[tuple[str, str], tuple[ObservedMotion, ...]] = field(default_factory=dict)
+    crossing_policies: dict[str, CrossingPolicy] = field(default_factory=dict)
+    local_planning_epoch: str = field(default_factory=lambda: str(uuid4()))
+    control_policies: dict[str, ControllerPolicy] = field(default_factory=dict)
+    control_sequences: dict[str, int] = field(default_factory=dict)
 
     def set_explicit_zone_closure(self, zone_id: str, closed: bool) -> None:
         """Scenario/operator boundary for explicit closure, not fabricated crowd density."""
@@ -1130,7 +1138,8 @@ class MobilityService:
             return
         localization = self.ego_localizations.get(vehicle_id)
         samples = tuple(
-            SensorSample(frame, self.sensor_received_at_s.get(key))
+            SensorSample(frame, self.sensor_received_at_s.get(key),
+                         self.sensor_motion_estimates.get(key, ()))
             for key, frame in self.sensor_observations.items()
             if key[0] == vehicle_id
             and localization is not None
@@ -1143,6 +1152,7 @@ class MobilityService:
             now_s=self.now_s(),
             clear_since_s=runtime.sensor_clear_since_s,
             policy=self.safety_policy,
+            crossing_policy=self.crossing_policies.get(vehicle_id),
         )
         runtime.safety_motion_state = decision.motion_state
         runtime.safety_reason = decision.reason.value

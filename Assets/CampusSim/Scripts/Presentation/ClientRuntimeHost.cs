@@ -15,6 +15,12 @@ namespace InhaExpress.Client.Presentation
     public sealed class ClientRuntimeHost : MonoBehaviour
     {
         private IClientDataSource source;
+        public ControlSequenceGuard ControlSequences { get; } = new ControlSequenceGuard();
+        private readonly Dictionary<(string Vehicle, long Tick), double> poseIssuedTimes =
+            new Dictionary<(string Vehicle, long Tick), double>();
+        public string TelemetrySessionId => (source as WebSocketClientDataSource)?.TelemetrySessionId;
+        public bool TryGetPoseIssuedTime(string vehicle, long tick, out double issuedAt) =>
+            poseIssuedTimes.TryGetValue((vehicle, tick), out issuedAt);
         private readonly Dictionary<string, long> egoTicks = new Dictionary<string, long>(StringComparer.Ordinal);
         private readonly Dictionary<(string Vehicle, string Sensor), long> sensorTicks =
             new Dictionary<(string Vehicle, string Sensor), long>();
@@ -25,6 +31,8 @@ namespace InhaExpress.Client.Presentation
             ValidateTelemetryOwner(vehicleId);
             egoTicks.TryGetValue(vehicleId, out long next);
             egoTicks[vehicleId] = checked(next + 1);
+            poseIssuedTimes[(vehicleId, next)] = Time.realtimeSinceStartupAsDouble;
+            poseIssuedTimes.Remove((vehicleId, next - 8));
             return next;
         }
 

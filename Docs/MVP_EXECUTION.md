@@ -1,11 +1,108 @@
 # MVP implementation and verification ledger
 
-2026-09-26 · working tree based on project version 0.3.0.0
+2026-09-26 · project version 0.3.1.0
 
 The objective remains a campus passenger/cargo simulation using Unity Physics
 and sensor observations with Python service/planning/control. A synthetic demo
 is an intermediate verification gate. AGENTS.md sections 14 and 16 define the
 full acceptance criteria; this ledger does not reduce that scope.
+
+## 2026-09-26 observed crossing stop integration (after v0.3.0.0)
+
+Added an explicitly configured per-vehicle observed-surface crossing gate to the
+authoritative safety evaluator. Lateral pedestrian motion can now revoke snapshot
+driving authority; missing estimates hold, and recovery uses the existing clear
+interval. Bounds/provenance are mandatory, with no guessed default vehicle shape.
+Python ingress/snapshot and geometry/recovery tests verify this connection.
+Unity crossing PlayMode 1/1 now verifies LiDAR→Python stop outside the forward
+sector→braking→clear hold→mobile passenger completion. 208 sensor ACKs accepted,
+zero rejected; sampled minimum clearance 0.752 m with no sampled collider overlap.
+Evidence: `artifacts/validation/2026-09-26-crossing-physics/`. Measured envelope/
+uncertainty calibration, continuous swept checks, Player/original scene execution
+and complete safety remain open. See `Docs/crossing_safety_prototype.md`.
+
+## 2026-09-26 terminal and turn braking corrections
+
+Fixed terminal acceptance hiding physical braking travel and route changes
+instantly redirecting residual velocity. The preview now keeps moving during
+bounded terminal braking and stops along its previous direction before a large
+turn. Follower PlayMode 9/9 passed, including two new physical movement regressions.
+The corrected follower also passed crossing integration PlayMode 1/1 (255 accepted
+sensor frames, zero rejected; no sampled overlap, sampled clearance 0.840 m).
+Evidence: `artifacts/validation/2026-09-26-follower-braking/`. Continuous swept-body
+collision and Python controller/dynamic model work remain incomplete.
+
+## 2026-09-26 swept geometry and local RRT
+
+Implemented continuous rectangular-footprint versus disc translation checks and
+conservative shortest-yaw sweep bounds. A seeded native RRT uses these checks for
+every stop/turn/translation stage inside an explicit rectangular corridor, with
+no unchecked fallback on failure. Twelve tests cover inter-endpoint collisions,
+rotating body corners, grazing, repeatable detour and blocked paths. These are
+algorithm components, not live driving authority: sensor coverage, dynamic timing,
+versioned plan arbitration, corridor provenance and Unity execution remain open.
+See `Docs/local_rrt_prototype.md`.
+
+## 2026-09-26 sensor-to-RRT input boundary
+
+Added immutable sensor-derived static obstacle bounds and RRT candidate inputs
+bound to server/map/session/ego/frame/route/mission revisions and receipt expiry.
+Candidates are rejected after any input revision, clock rollback, stale frame,
+renewed motion, zone closure or unknown/dynamic return. Sixteen tests cover actual
+ingress→candidate and stale-result rejection. Candidates explicitly remain
+non-executable: visibility coverage, dynamic timing, route rejoin and live control
+arbitration remain required. No active service route or motion authority is changed.
+
+## 2026-09-26 local timing and dynamic checks
+
+RRT candidates now expose acceleration/cruise/braking and bounded in-place yaw
+timing with explicit limits/provenance. Timed dynamic-disc sweeps include bounded
+acceleration chord error and uncertainty; prediction is capped at two seconds
+from observation. Results distinguish checked prefixes and expired predictions.
+Python/MapData 233 tests and Ruff passed. Clock calibration, coverage, command
+transport and actual Physics following remain open. See
+`Docs/local_trajectory_timing.md`.
+
+## 2026-09-26 Python route control intent
+
+Added explicit-policy Python speed/yaw targets, safety/service override and PC-only
+pose/session/sequence-bound control payloads with bounded validity. C# has a
+separate actuator-intent DTO and optional validated snapshot list. No Unity actuator
+consumes it yet. Full Python 240 tests preceded the final validity-budget fix;
+controller 8/8 and Ruff then passed. Domain compilation/follower PlayMode 9/9 passed.
+Receiver rejection, command timeout braking and actual Physics round trip remain
+the gates addressed by the following entry. See `Docs/python_control_contract.md`.
+
+## 2026-09-26 Python command actuator round trip
+
+Added opt-in command actuator with single-Rigidbody ownership, local pose-time
+expiry, binding/sequence rejection and bounded physical braking. Unity component
+tests 11/11 and Python-controlled crossing PlayMode 1/1 passed. The latter verifies
+actual command deserialization, legacy follower disabled, stop/recovery and mobile
+passenger completion (228 accepted sensor frames, zero rejected). Original scenes
+remain opt-out; timed RRT execution, full reconnect/replay qualification, real
+dynamics, Player/Android and complete MVP gates remain open. Evidence:
+`artifacts/validation/2026-09-26-python-actuator/`.
+
+## 2026-09-26 actuator lifecycle sequence guard
+
+Moved accepted-command history into a shared transport-host guard keyed by server
+run/map/session/vehicle. Recreated actors cannot refresh previously accepted
+commands. Component PlayMode 12/12 and actual Python-control crossing/recreation
+integration 1/1 passed. Full socket interruption/server restart and moving-actor
+recreation remain separate gates. Evidence:
+`artifacts/validation/2026-09-26-command-lifecycle/`.
+
+## 2026-09-26 actual socket interruption/recovery
+
+Injected PC socket closure and a 1.5 s reconnect rejection during motion. Found
+and fixed per-connection snapshot sequence reset: sequence now advances across
+clients/reconnects within the service, whose runId is instance-specific. Reconnect
+holds are therefore applied immediately instead of rejected as old snapshots.
+Same-service stop/hold/reconnect/fresh-sensor recovery/passenger completion and
+actor recreation passed PlayMode 1/1. Python/MapData 242 and Ruff passed. Actual
+server restart/lost-state recovery remains open. Before/after evidence:
+`artifacts/validation/2026-09-26-socket-recovery/`.
 
 | Gate | Current evidence | Remaining requirement |
 |---|---|---|

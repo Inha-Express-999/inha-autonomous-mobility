@@ -68,3 +68,30 @@ POST `/test/closure/{closed}` on the loopback harness app. No closure endpoint i
 added to production `campus_sim.api`. The test closes the zone after motion begins,
 waits for ZONE_CLOSED and bounded follower braking, checks a held position, opens
 the zone and requires sensor clear hold before continuing the full service flow.
+# Lateral crossing variant
+
+Use `-Crossing` for the dedicated LiDAR pedestrian crossing scenario. It selects
+`CrossingServiceIntegrationTests`, enables a test-shell-only crossing policy on
+the Python harness, and rejects combination with Radar/Pedestrian/ZoneClosure
+switches. Production API/configuration is unchanged. The test checks a stop
+outside the forward range sector, braking, clear hold, passenger completion and
+sampled collider clearance. Bounds are synthetic; this is not a full safety gate
+or a swept collision/performance certification. Evidence and limits are in
+`artifacts/validation/2026-09-26-crossing-physics/`.
+
+## Python command actuator variant
+
+Add `-PythonControl` to `-Crossing` to enable Python route steering and the opt-in
+Unity command actuator. The ordinary follower is disabled and the same crossing
+scenario verifies the new WebSocket field through actual passenger completion.
+The switch currently requires Crossing; original scenes are unchanged. Command
+expiry, replay/binding rejection and physical braking have separate component
+coverage in `RunUnityFollowerTests.ps1`. See `Docs/python_control_contract.md`.
+
+## Socket interruption variant
+
+Add `-Disconnect` to `-Crossing -PythonControl` to close the PC socket during
+motion and reject reconnect for 1.5 seconds. A test-only ASGI harness provides
+the fault endpoint; production API is unchanged. The scenario verifies expiry
+braking, stationary hold, same-session reconnect, fresh-sensor recovery and
+passenger completion. See `artifacts/validation/2026-09-26-socket-recovery/`.

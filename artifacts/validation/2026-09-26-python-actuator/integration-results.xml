@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Passed" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-26 08:28:45Z" end-time="2026-09-26 08:29:10Z" duration="25.8583583">
+  <test-suite type="TestSuite" id="1012" name="unity-physics-integration-f984d8c1872242d5a4ed68ea10ac52a4" fullname="unity-physics-integration-f984d8c1872242d5a4ed68ea10ac52a4" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-09-26 08:28:45Z" end-time="2026-09-26 08:29:10Z" duration="25.858358" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1007" name="InhaExpress.Client.Tests.PlayMode.dll" fullname="C:/Users/Yeop/Documents/GitHub/inha-autonomous-mobility/tmp/unity-physics-integration-f984d8c1872242d5a4ed68ea10ac52a4/Library/ScriptAssemblies/InhaExpress.Client.Tests.PlayMode.dll" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-09-26 08:28:45Z" end-time="2026-09-26 08:29:10Z" duration="25.845523" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="21932" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1008" name="InhaExpress" fullname="InhaExpress" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-09-26 08:28:45Z" end-time="2026-09-26 08:29:10Z" duration="25.844953" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1009" name="Client" fullname="InhaExpress.Client" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-09-26 08:28:45Z" end-time="2026-09-26 08:29:10Z" duration="25.844693" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1010" name="Tests" fullname="InhaExpress.Client.Tests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-09-26 08:28:45Z" end-time="2026-09-26 08:29:10Z" duration="25.844407" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1001" name="CrossingServiceIntegrationTests" fullname="InhaExpress.Client.Tests.CrossingServiceIntegrationTests" classname="InhaExpress.Client.Tests.CrossingServiceIntegrationTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-09-26 08:28:45Z" end-time="2026-09-26 08:29:10Z" duration="25.843101" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1002" name="LateralLidarCrossingStopsOutsideForwardSectorAndCompletesPassenger" fullname="InhaExpress.Client.Tests.CrossingServiceIntegrationTests.LateralLidarCrossingStopsOutsideForwardSectorAndCompletesPassenger" methodname="LateralLidarCrossingStopsOutsideForwardSectorAndCompletesPassenger" classname="InhaExpress.Client.Tests.CrossingServiceIntegrationTests" runstate="Runnable" seed="1809422829" result="Passed" start-time="2026-09-26 08:28:45Z" end-time="2026-09-26 08:29:10Z" duration="25.828420" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Spawned Unity physics actor for server vehicle V01
+Crossing completed: pythonControl=True, sensorACK=228, rejected=0, sampledMinClearance=0.945m, stopForward=1.742, stopLateral=4.556
+Saving results to: C:\Users\Yeop\Documents\GitHub\inha-autonomous-mobility\tmp\unity-physics-integration-f984d8c1872242d5a4ed68ea10ac52a4\results.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

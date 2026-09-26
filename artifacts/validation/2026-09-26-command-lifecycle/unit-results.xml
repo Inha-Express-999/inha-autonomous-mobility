@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="12" result="Passed" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-26 08:33:01Z" end-time="2026-09-26 08:33:17Z" duration="15.7619352">
+  <test-suite type="TestSuite" id="1019" name="unity-follower-f32ae5c72484405381dba44cb16da09f" fullname="unity-follower-f32ae5c72484405381dba44cb16da09f" runstate="Runnable" testcasecount="12" result="Passed" start-time="2026-09-26 08:33:01Z" end-time="2026-09-26 08:33:17Z" duration="15.761935" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1014" name="InhaExpress.Client.Tests.PlayMode.dll" fullname="C:/Users/Yeop/Documents/GitHub/inha-autonomous-mobility/tmp/unity-follower-f32ae5c72484405381dba44cb16da09f/Library/ScriptAssemblies/InhaExpress.Client.Tests.PlayMode.dll" runstate="Runnable" testcasecount="12" result="Passed" start-time="2026-09-26 08:33:01Z" end-time="2026-09-26 08:33:17Z" duration="15.752713" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="19808" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1015" name="InhaExpress" fullname="InhaExpress" runstate="Runnable" testcasecount="12" result="Passed" start-time="2026-09-26 08:33:01Z" end-time="2026-09-26 08:33:17Z" duration="15.752243" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1016" name="Client" fullname="InhaExpress.Client" runstate="Runnable" testcasecount="12" result="Passed" start-time="2026-09-26 08:33:01Z" end-time="2026-09-26 08:33:17Z" duration="15.752077" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1017" name="Tests" fullname="InhaExpress.Client.Tests" runstate="Runnable" testcasecount="12" result="Passed" start-time="2026-09-26 08:33:01Z" end-time="2026-09-26 08:33:17Z" duration="15.751892" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1001" name="VehicleRouteFollowerPlayModeTests" fullname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests" classname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests" runstate="Runnable" testcasecount="12" result="Passed" start-time="2026-09-26 08:33:01Z" end-time="2026-09-26 08:33:17Z" duration="15.750776" total="12" passed="12" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1004" name="FollowerHonorsServerSegmentSpeedLimit" fullname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests.FollowerHonorsServerSegmentSpeedLimit" methodname="FollowerHonorsServerSegmentSpeedLimit" classname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests" runstate="Runnable" seed="2045135783" result="Passed" start-time="2026-09-26 08:33:01Z" end-time="2026-09-26 08:33:02Z" duration="0.847380" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1003" name="FollowerMovesAlongSyntheticRouteAndStopsNearEndpoint" fullname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests.FollowerMovesAlongSyntheticRouteAndStopsNearEndpoint" methodname="FollowerMovesAlongSyntheticRouteAndStopsNearEndpoint" classname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests" runstate="Runnable" seed="671127142" result="Passed" start-time="2026-09-26 08:33:02Z" end-time="2026-09-26 08:33:03Z" duration="1.633500" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1002" name="HighServerSpeedStillHonorsLocalPreviewMaximum" fullname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests.HighServerSpeedStillHonorsLocalPreviewMaximum" methodname="HighServerSpeedStillHonorsLocalPreviewMaximum" classname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests" runstate="Runnable" seed="1540197360" result="Passed" start-time="2026-09-26 08:33:03Z" end-time="2026-09-26 08:33:06Z" duration="3.015734" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1005" name="NewFollowerAttachesToNearestRemainingRouteSegment" fullname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests.NewFollowerAttachesToNearestRemainingRouteSegment" methodname="NewFollowerAttachesToNearestRemainingRouteSegment" classname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests" runstate="Runnable" seed="2106171917" result="Passed" start-time="2026-09-26 08:33:06Z" end-time="2026-09-26 08:33:07Z" duration="0.319841" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1006" name="NewFollowerRejectsRouteOutsideAttachTolerance" fullname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests.NewFollowerRejectsRouteOutsideAttachTolerance" methodname="NewFollowerRejectsRouteOutsideAttachTolerance" classname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests" runstate="Runnable" seed="1420363597" result="Passed" start-time="2026-09-26 08:33:07Z" end-time="2026-09-26 08:33:07Z" duration="0.002114" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1011" name="PythonCommandExpiryBrakesWithPhysicalTravelAndDisablesFollower" fullname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests.PythonCommandExpiryBrakesWithPhysicalTravelAndDisablesFollower" methodname="PythonCommandExpiryBrakesWithPhysicalTravelAndDisablesFollower" classname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests" runstate="Runnable" seed="1821795247" result="Passed" start-time="2026-09-26 08:33:07Z" end-time="2026-09-26 08:33:09Z" duration="1.998854" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1012" name="PythonCommandRejectsWrongContextAndOldOrFuturePose" fullname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests.PythonCommandRejectsWrongContextAndOldOrFuturePose" methodname="PythonCommandRejectsWrongContextAndOldOrFuturePose" classname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests" runstate="Runnable" seed="1086161356" result="Passed" start-time="2026-09-26 08:33:09Z" end-time="2026-09-26 08:33:09Z" duration="0.018875" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1013" name="RecreatedActuatorCannotReplayAcceptedCommands" fullname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests.RecreatedActuatorCannotReplayAcceptedCommands" methodname="RecreatedActuatorCannotReplayAcceptedCommands" classname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests" runstate="Runnable" seed="333218289" result="Passed" start-time="2026-09-26 08:33:09Z" end-time="2026-09-26 08:33:09Z" duration="0.002738" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1010" name="ReverseRouteBrakesAlongExistingDirectionBeforeRotating" fullname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests.ReverseRouteBrakesAlongExistingDirectionBeforeRotating" methodname="ReverseRouteBrakesAlongExistingDirectionBeforeRotating" classname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests" runstate="Runnable" seed="1731179807" result="Passed" start-time="2026-09-26 08:33:09Z" end-time="2026-09-26 08:33:13Z" duration="4.015202" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1008" name="RevokedAuthorityStopsFreshSnapshotsAndResumesCurrentRoute" fullname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests.RevokedAuthorityStopsFreshSnapshotsAndResumesCurrentRoute" methodname="RevokedAuthorityStopsFreshSnapshotsAndResumesCurrentRoute" classname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests" runstate="Runnable" seed="1097336293" result="Passed" start-time="2026-09-26 08:33:13Z" end-time="2026-09-26 08:33:14Z" duration="1.120676" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1007" name="StaleRouteStopsFurtherRigidBodyMovement" fullname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests.StaleRouteStopsFurtherRigidBodyMovement" methodname="StaleRouteStopsFurtherRigidBodyMovement" classname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests" runstate="Runnable" seed="436200682" result="Passed" start-time="2026-09-26 08:33:14Z" end-time="2026-09-26 08:33:15Z" duration="1.069214" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1009" name="TerminalWaypointPreservesPhysicalBrakingTravel" fullname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests.TerminalWaypointPreservesPhysicalBrakingTravel" methodname="TerminalWaypointPreservesPhysicalBrakingTravel" classname="InhaExpress.Client.Tests.VehicleRouteFollowerPlayModeTests" runstate="Runnable" seed="1227618058" result="Passed" start-time="2026-09-26 08:33:15Z" end-time="2026-09-26 08:33:17Z" duration="1.689683" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:\Users\Yeop\Documents\GitHub\inha-autonomous-mobility\tmp\unity-follower-f32ae5c72484405381dba44cb16da09f\results.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

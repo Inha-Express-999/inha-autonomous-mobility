@@ -32,13 +32,28 @@ class ApiIntegrationTests(unittest.TestCase):
         self.assertGreaterEqual(self.service.now_s(), 0.1)
         self.assertLess(self.service.now_s(), 0.3)
 
+    def test_reconnected_socket_preserves_run_and_advances_snapshot_sequence(self) -> None:
+        subscription = {"type": "subscribe", "schemaVersion": 3,
+                        "projectVersion": "0.3.0.0", "role": "PC_Operator"}
+        snapshots = []
+        for _ in range(2):
+            with self.client.websocket_connect("/v1/client/ws") as socket:
+                socket.send_json(subscription)
+                connected = socket.receive_json()
+                snapshot = socket.receive_json()["snapshot"]
+                self.assertEqual(connected["runId"], self.service.run_id)
+                snapshots.append(snapshot)
+        self.assertEqual(snapshots[0]["runId"], snapshots[1]["runId"])
+        self.assertGreater(snapshots[1]["sequence"], snapshots[0]["sequence"])
+        self.assertNotEqual(MobilityService.synthetic_fixture().run_id, self.service.run_id)
+
     def test_app_can_start_from_an_alternate_synthetic_graph(self) -> None:
         benchmark_map = ROOT / "maps/fixtures/campus-synthetic-benchmark-11.json"
         app = create_app(map_path=benchmark_map)
         self.assertEqual(set(app.state.service.vehicle_runtime), {"V01", "V02", "V03"})
         with TestClient(app) as client:
             health = client.get("/health").json()
-            self.assertEqual(health["project_version"], "0.3.0.0")
+            self.assertEqual(health["project_version"], (ROOT / "VERSION").read_text().strip())
             self.assertEqual(health["schema_version"], "3")
             self.assertEqual(health["map_version"], "synthetic-benchmark-11node-v1")
             self.assertEqual(health["map_data_status"], "SYNTHETIC_FIXTURE")

@@ -1,6 +1,6 @@
 # 클라이언트 데이터 계약 결정
 
-프로젝트 0.3.0.0 · 2026-09-25 작업본 · 클라이언트 projection 및 WebSocket alpha 계약
+프로젝트 0.3.1.0 · 2026-09-25 작업본 · 클라이언트 projection 및 WebSocket alpha 계약
 
 ## 범위와 권위
 

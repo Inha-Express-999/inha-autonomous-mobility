@@ -1,4 +1,14 @@
 # 변경 이력
+## 0.3.1.0 — 2026-09-26 · 횡단 안전·Python 제어 및 재접속 검증
+
+- 센서 관측 운동에 기반한 횡단 정지와 연속 footprint 충돌 검사, 자체 RRT 후보, 가감속/회전 시간 궤적 및 동적 장애물 prefix 검사를 추가했다. RRT 후보는 실행 불가 상태를 유지한다.
+- 선택적 Python 속도/회전 명령과 Unity actuator를 연결하고 명령 만료 제동, actor 재생성 시 replay 거부, endpoint/반전 제동을 보완했다.
+- 실제 socket 중단 실험에서 발견한 재접속 snapshot 번호 초기화 결함을 수정했다. 서비스별 run ID와 연결 간 단조 증가 snapshot 번호를 사용한다.
+- 이유: 센서 기반 안전과 Python 제어의 합성 통합 범위를 확장하고 통신 중단 시 정지·회복을 검증하기 위해서다.
+- 호환성/마이그레이션: 프로젝트 버전 0.3.1.0. schema_version=3 및 map_version은 유지한다. controlCommands는 선택 필드이며 새 기능은 서버/클라이언트 동시 배포와 명시적 synthetic opt-in이 필요하다. 기존 씬은 opt-out이며 데이터 마이그레이션 없음.
+- 검증: Python/MapData 242개 및 Ruff 통과. Unity component PlayMode 12/12, socket 중단→제동→재접속→횡단 정지/회복→승객 완료→actor 재생성 통합 1/1 통과. 실행별 XML과 소스 hash는 artifacts/validation에 보존했다. 커밋 준비에서는 Python/Ruff와 diff 검사를 재실행하며 Unity 증거는 각 실행 당시 소스 기준이다.
+- 미검증/한계: 최신 기능의 Player/Android/원본 씬, 서버 프로세스 재시작, 관측 free-space 보장·RRT 실제 실행, 실지도·제원/동역학 검증, 연속 실제 Physics 충돌 판정, 성능/50-client 부하 및 전체 MVP는 미완료다. sampled clearance는 연속 충돌 안전 보장이 아니다. 기존 Python 의존성 deprecation 경고가 남는다.
+
 ## 0.3.0.0 — 2026-09-26 · 합성 보행자·Radar·관측 추적 및 구역 폐쇄
 
 - 차량 telemetry의 PC host 소유권과 actor 재생성 tick 연속성을 명시하고 모바일 완료 요청의 누락된 차량 참조를 정리했다.

@@ -205,7 +205,7 @@ namespace InhaExpress.Client.Presentation
             AdvancePassedWaypoints();
             if (waypointIndex >= routePoints.Length)
             {
-                speedMps = Mathf.MoveTowards(speedMps, 0f, brakingMps2 * deltaS);
+                ApplyKinematicBraking(deltaS);
                 return;
             }
 
@@ -215,15 +215,24 @@ namespace InhaExpress.Client.Presentation
             if (distance <= waypointRadiusM)
             {
                 waypointIndex++;
+                ApplyKinematicBraking(deltaS);
                 return;
             }
 
             Vector3 direction = offset / distance;
             Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
+            float angle = Quaternion.Angle(body.rotation, targetRotation);
+            if (angle > alignmentToleranceDeg && speedMps > 0f)
+            {
+                // A newly selected corner/reverse route cannot rotate the velocity
+                // vector instantaneously. Stop along the existing travel direction
+                // before rotating in place under this synthetic preview controller.
+                ApplyKinematicBraking(deltaS);
+                return;
+            }
             Quaternion nextRotation = Quaternion.RotateTowards(body.rotation, targetRotation, turnRateDegS * deltaS);
             body.MoveRotation(nextRotation);
 
-            float angle = Quaternion.Angle(body.rotation, targetRotation);
             int segmentIndex = Mathf.Max(0, waypointIndex - 1);
             float routeSpeedMps = segmentIndex < segmentSpeedsMps.Length
                 ? segmentSpeedsMps[segmentIndex]

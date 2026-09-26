@@ -30,6 +30,7 @@ namespace InhaExpress.Client.Networking
         private readonly string projectVersion;
         private readonly string subscriberId;
         private readonly string telemetrySessionId = Guid.NewGuid().ToString("N");
+        public string TelemetrySessionId => telemetrySessionId;
         private readonly CancellationTokenSource cancellation = new CancellationTokenSource();
         private readonly ConcurrentQueue<InboundMessage> inbound = new ConcurrentQueue<InboundMessage>();
         private readonly ConcurrentQueue<ConnectionFailure> failures = new ConcurrentQueue<ConnectionFailure>();

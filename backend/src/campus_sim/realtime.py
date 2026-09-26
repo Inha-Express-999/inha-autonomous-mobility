@@ -4,12 +4,12 @@ import asyncio
 import json
 import math
 from typing import Literal
-from uuid import uuid4
 
 from fastapi import WebSocket, WebSocketDisconnect
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from campus_sim import __version__
+from campus_sim.controller import make_control_command
 from campus_sim.domain import (
     CreateRequest,
     EgoLocalization,
@@ -25,7 +25,6 @@ from campus_sim.service import MobilityService
 PROJECT_VERSION = __version__
 SNAPSHOT_SCHEMA_VERSION = 3
 MAP_VERSION = "synthetic-service-v1"
-RUN_ID = "server-" + uuid4().hex
 MAX_MESSAGE_BYTES = 16 * 1024
 SNAPSHOT_INTERVAL_S = 0.1
 ACTIVE_REQUEST_STATUSES = {"ASSIGNED", "PICKUP_SERVICE", "IN_TRANSIT", "DROPOFF_SERVICE"}
@@ -130,20 +129,18 @@ async def serve_client_socket(websocket: WebSocket, service: MobilityService) ->
                 "type": "connected",
                 "schemaVersion": SNAPSHOT_SCHEMA_VERSION,
                 "projectVersion": PROJECT_VERSION,
-                "runId": RUN_ID,
+                "runId": service.run_id,
                 "authenticated": False,
             }
         )
-        sequence = 0
         loop = asyncio.get_running_loop()
         next_snapshot_at = loop.time() + SNAPSHOT_INTERVAL_S
         while True:
             delay_s = next_snapshot_at - loop.time()
             if delay_s <= 0:
                 await _send_snapshot(
-                    websocket, service, subscribe.role, subscribe.subscriber_id, sequence
+                    websocket, service, subscribe.role, subscribe.subscriber_id
                 )
-                sequence += 1
                 next_snapshot_at += SNAPSHOT_INTERVAL_S
                 if next_snapshot_at <= loop.time():
                     next_snapshot_at = loop.time() + SNAPSHOT_INTERVAL_S
@@ -152,9 +149,8 @@ async def serve_client_socket(websocket: WebSocket, service: MobilityService) ->
                 incoming = await asyncio.wait_for(websocket.receive_text(), timeout=delay_s)
             except TimeoutError:
                 await _send_snapshot(
-                    websocket, service, subscribe.role, subscribe.subscriber_id, sequence
+                    websocket, service, subscribe.role, subscribe.subscriber_id
                 )
-                sequence += 1
                 next_snapshot_at += SNAPSHOT_INTERVAL_S
                 if next_snapshot_at <= loop.time():
                     next_snapshot_at = loop.time() + SNAPSHOT_INTERVAL_S
@@ -404,6 +400,12 @@ def make_snapshot(
 ) -> dict:
     """Build the C# schema-v3 presentation DTO from current in-memory service state."""
     now_s = service.now_s()
+    controls = []
+    if role == "PC_Operator":
+        for vehicle_id in sorted(service.control_policies):
+            command = make_control_command(service, vehicle_id)
+            if command is not None:
+                controls.append(command)
     visible_requests = list(service.requests.values())
     if role == "Mobile_Passenger":
         visible_requests = [item for item in visible_requests if item.owner_id == subscriber_id]
@@ -519,13 +521,14 @@ def make_snapshot(
         "schemaVersion": SNAPSHOT_SCHEMA_VERSION,
         "projectVersion": PROJECT_VERSION,
         "mapVersion": service.graph.map_version if service.graph else MAP_VERSION,
-        "runId": RUN_ID,
+        "runId": service.run_id,
         "sequence": sequence,
         "simulationTick": int(now_s * 20),
         "simulationTimeS": now_s,
         "role": role,
         "subscriberId": subscriber_id,
         "vehicles": vehicles,
+        "controlCommands": controls,
         "requests": request_payloads,
         "landmarks": landmarks,
         "stops": stops,
@@ -553,8 +556,10 @@ async def _send_snapshot(
     service: MobilityService,
     role: str,
     subscriber_id: str | None,
-    sequence: int,
 ) -> None:
+    # Single service event loop: reserve before await; gaps across clients are valid.
+    sequence = service.snapshot_sequence
+    service.snapshot_sequence += 1
     await websocket.send_json(
         {
             "type": "snapshot",

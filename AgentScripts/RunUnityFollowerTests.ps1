@@ -30,7 +30,7 @@ Get-ChildItem (Join-Path $repoRoot 'Assets/CampusSim/Scripts/Domain') -File |
     Where-Object { $_.Extension -in @('.cs', '.asmdef') } | ForEach-Object {
         Copy-RecordedSource "Assets/CampusSim/Scripts/Domain/$($_.Name)" "Assets/Domain/$($_.Name)"
     }
-foreach ($name in @('VehicleRouteFollower.cs', 'MapCoordinateConverter.cs')) {
+foreach ($name in @('VehicleRouteFollower.cs', 'VehicleCommandActuator.cs', 'MapCoordinateConverter.cs')) {
     Copy-RecordedSource "Assets/CampusSim/Scripts/Presentation/$name" "Assets/Presentation/$name"
 }
 Copy-RecordedSource 'Assets/CampusSim/Tests/PlayMode/VehicleRouteFollowerPlayModeTests.cs' `
