@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "data_status": "SYNTHETIC_ASSUMPTIONS",
+  "map_version": "synthetic-campus-6stop-v1",
+  "charger_nodes": [
+    "n1",
+    "n6"
+  ],
+  "initial_wh": {
+    "V01": 600,
+    "V02": 600,
+    "V03": 600
+  },
+  "policy": {
+    "capacity_wh": 1000,
+    "wh_per_m": 0.08,
+    "auxiliary_w": 60,
+    "passenger_factor_each": 0.1,
+    "cargo_factor_per_kg": 0.002,
+    "max_speed_mps": 5,
+    "reserve_fraction": 0.15,
+    "provenance": "Synthetic experiment assumptions only; no measured battery, load, charger facility or consumption data."
+  }
+}

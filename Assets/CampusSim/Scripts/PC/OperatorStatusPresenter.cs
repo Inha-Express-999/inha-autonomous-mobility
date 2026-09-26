@@ -191,7 +191,7 @@ namespace InhaExpress.Client.PC
                 var vehicle = snapshot.Vehicles[0];
                 inspectorTitle.text = vehicle.Id.ToUpperInvariant();
                 inspectorBody.text = $"임무      {FixtureUiText.Mission(vehicle.MissionState)}\n운행      {FixtureUiText.Motion(vehicle.MotionState)}\n" +
-                    $"속도      {vehicle.SpeedMps:F1} m/s\n배터리    {vehicle.BatteryWh?.ToString("F0") ?? "미확인"} Wh\n" +
+                    $"속도      {vehicle.SpeedMps:F1} m/s\n배터리 추정 {vehicle.BatteryWh?.ToString("F0") ?? "미확인"} Wh\n" +
                     $"경로      {vehicle.RouteId ?? "미배정"}\n사유      {FixtureUiText.Reason(vehicle.Reason)}";
             }
             if (snapshot.Zones.Count > 0)
@@ -393,7 +393,7 @@ namespace InhaExpress.Client.PC
             text.AppendLine($"Tick {snapshot.SimulationTick} | seq {snapshot.Sequence} | t={snapshot.SimulationTimeS.ToString("F1", CultureInfo.InvariantCulture)} s");
             text.AppendLine($"Vehicles {snapshot.Vehicles.Count} | Requests {snapshot.Requests.Count} | Landmarks {snapshot.Landmarks.Count}");
             foreach (var vehicle in snapshot.Vehicles)
-                text.AppendLine($"\n{vehicle.Id}: {vehicle.MissionState} / {vehicle.MotionState}\n{vehicle.SpeedMps:F1} m/s | battery {vehicle.BatteryWh?.ToString("F0") ?? "unknown"} Wh | reason {vehicle.Reason}");
+                text.AppendLine($"\n{vehicle.Id}: {vehicle.MissionState} / {vehicle.MotionState}\n{vehicle.SpeedMps:F1} m/s | battery estimate {vehicle.BatteryWh?.ToString("F0") ?? "unknown"} Wh | reason {vehicle.Reason}");
             foreach (var request in snapshot.Requests)
                 text.AppendLine($"\n{request.Id}: {request.Status}\n{request.PickupLandmarkId} -> {request.DropoffLandmarkId}");
             foreach (var zone in snapshot.Zones)

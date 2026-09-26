@@ -105,3 +105,8 @@ PC와 모바일은 같은 판단을 표시하되 제어 명령과 sequence 발�
 배정된 차량만 참조한다. schema_version=3 alpha의 enum 확장이므로 새 서버와
 새 클라이언트를 함께 사용해야 하며, 과거 strict enum 클라이언트와의 협상은
 미구현이다. 상세는 [통로 대기 표시](../resource_wait_presentation.md)를 따른다.
+
+
+### 선택적 합성 에너지 모델 작업본
+
+`serve --energy-config configs/energy.synthetic.json`으로 설정한 서버는 기존 `batteryWh` 필드에 모델 추정 잔량을 제공한다. 오류·미설정에서는 null이다. PC 표기는 '배터리 추정'이며 실측 SOC가 아니다. 에너지 부족 지원 정지는 기존 `VEHICLE_FAILURE`를 사용하고, 기존 센서/지역 안전 판단이 우선한다. 새 enum/schema 변경은 없다. 충전 진행 UI·자동 충전 이동·전용 에너지 사유는 후속 범위다.

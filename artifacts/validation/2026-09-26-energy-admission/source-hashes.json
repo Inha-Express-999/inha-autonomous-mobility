@@ -1,0 +1,11 @@
+{
+  "backend/src/campus_sim/energy.py": "a0e7ad00e53b8404eb0310093c2f236e0257c5ee99c6ea0ceb3e8266fcb3977c",
+  "backend/src/campus_sim/service.py": "f0d935acdc75ccb291116e656cf720bd095f8817b9a54d6dd171e2e4fed02954",
+  "backend/src/campus_sim/realtime.py": "4f3799e37e20556555a036b64637cbd708f5cc04c541128b1a813fb94b52b1ab",
+  "backend/src/campus_sim/api.py": "c882654cba405a14490fac7fd2725a5c0c654aae4a8ab34942ccf24b483de1f4",
+  "backend/src/campus_sim/cli.py": "a9cbc81a1e1b3c1f3d16e5df5b5fbf2d9cddb2ee62967bc0dce29b60b9c33602",
+  "backend/src/campus_sim/dispatch_route_evaluation.py": "6f4a192054c505074364259855df9abbeea0100dfbb5a4fbeb4427c81983b93f",
+  "backend/tests/test_energy.py": "102918cc031766b1e9a4a4be0324aec5a2468df22ece732ab49e33dae1f2fc2b",
+  "configs/energy.synthetic.json": "95601522fd2b9185f9a22c39078ba30f26e104fdf3c7f583681f69fe98820fa8",
+  "Assets/CampusSim/Scripts/PC/OperatorStatusPresenter.cs": "2fb40f620c56623dd2de921b7fdd5d351dade31d18e7d6663b3df11f577fa6c5"
+}

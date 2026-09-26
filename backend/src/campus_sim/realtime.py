@@ -506,7 +506,8 @@ def make_snapshot(
                 "position": {"x": x, "y": y, "z": z},
                 "headingRad": heading,
                 "speedMps": runtime.speed_mps if runtime else 0.0,
-                "batteryWh": None,
+                "batteryWh": service.energy.remaining_wh.get(vehicle.id) if service.energy is not None
+                    and service.energy._known(service, vehicle.id) else None,
                 "missionState": runtime.mission_state if runtime else "IDLE",
                 "motionState": "REPLANNING" if localization_stale else
                     runtime.safety_motion_state if runtime and runtime.safety_motion_state else

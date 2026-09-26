@@ -38,7 +38,7 @@ def compare_coordination(scenario_path, *, repetitions=5):
         setup.append({"case": case["id"], "fingerprint": problem.fingerprint,
                       "preprocessing_s": perf_counter() - started})
         for repetition in range(repetitions):
-            for algorithm in ("priority", "cbs"):
+            for algorithm in ("priority", "cbs", "cbs-disjoint"):
                 result = solve_coordination(problem, algorithm=algorithm, limits=limits,
                                             priority_order=case.get("priority_order"))
                 success = result.status == "SUCCESS"
@@ -46,7 +46,7 @@ def compare_coordination(scenario_path, *, repetitions=5):
                 rows.append({"case": case["id"], "repetition": repetition, "algorithm": algorithm,
                     "status": result.status, "reason": result.reason, "fingerprint": result.fingerprint,
                     "elapsed_ms": result.elapsed_s * 1000, "ct_expanded": result.ct_expanded,
-                    "low_level_expanded": result.low_level_expanded, "low_level_calls": result.replans,
+                    "low_level_expanded": result.low_level_expanded, "low_level_calls": result.replans, "low_level_cache_hits": result.cache_hits,
                     "planned_conflicting_tokens": len(conflicts(result.paths)) if success else None,
                     "makespan_s": max(p.arrival for p in result.paths) * problem.quantum_s if success else None,
                     "sum_arrival_s": sum(p.arrival for p in result.paths) * problem.quantum_s if success else None,
@@ -58,7 +58,7 @@ def compare_coordination(scenario_path, *, repetitions=5):
                                "moves": [asdict(m) for m in p.moves]} for p in result.paths]})
     summaries = []
     for case in config["cases"]:
-        for algorithm in ("priority", "cbs"):
+        for algorithm in ("priority", "cbs", "cbs-disjoint"):
             selected = [r for r in rows if r["case"] == case["id"] and r["algorithm"] == algorithm]
             elapsed = sorted(r["elapsed_ms"] for r in selected)
             summaries.append({"case": case["id"], "algorithm": algorithm, "runs": len(selected),

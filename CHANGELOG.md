@@ -1,5 +1,13 @@
 # 변경 이력
 
+## 0.4.1.0 — 2026-09-26 · CBS·배차 비교와 합성 에너지 작업 체크포인트
+
+- 작업: disjoint CBS/제한된 캐시와 별도 프로세스 제안 worker, 서비스 경로 비용 기반 Greedy/Hungarian 비교, 선택적 합성 에너지 소비·배차 제한과 배터리 추정 표시를 추가했다. 충전 슬롯 lifecycle 초안 및 서비스 선택 연결을 작성 중 상태로 보존한다.
+- 이유: 알고리즘 비교 근거를 확장하고 에너지 제약 기반과 현재 작업 상태를 보존한다.
+- 호환성/마이그레이션: 선택적 기능 추가로 C를 증가시켰다. 에너지 설정은 명시적 opt-in이며 충전은 기본 비활성이다. schema_version=3 및 기존 map_version 유지, 데이터 마이그레이션 없음.
+- 검증: `python -m pytest backend/tests AgentScripts/MapData -q -o cache_dir=tmp/pytest-cache` — 456 passed, 기존 Starlette/httpx deprecation 경고 1개. `python -m ruff check backend AgentScripts/MapData AgentScripts/UnityPhysicsIntegration` 통과. 버전 동기화 후 동일 456개 재통과, `git diff --check` 통과.
+- 미검증/한계: 이번 준비에서 Unity Test Runner/Player/Android는 재실행하지 않았다. CBS worker는 실행 권한 없는 제안이며 RRT 실행도 미연결이다. 충전 초안은 전용 테스트·설정/API/CLI·자동 충전 이동 및 context 복구 검증이 없다. 실제 지도/Stop·인증·부하 성능과 전체 MVP는 미완료다. 기존 artifact 결과는 각 실행 소스에 한정한다.
+
 ## 0.4.0.0 — 2026-09-26 · 다중 차량 예약·대기 안내와 CBS 작업 체크포인트
 
 - 자원 경계의 표본 간 이동 여유, 정지 상태 회전, 예약 그룹의 완료 구간과 미래 재진입 점유 유지 판정을 보완했다.

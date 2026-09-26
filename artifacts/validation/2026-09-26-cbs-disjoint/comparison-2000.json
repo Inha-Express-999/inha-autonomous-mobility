@@ -1,0 +1,6065 @@
+{
+  "schema_version": 1,
+  "data_status": "SYNTHETIC_FIXTURE",
+  "map_version": "synthetic-physics-reservation-three-v1",
+  "python": "3.12.14",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "repetitions": 5,
+  "input": {
+    "schema_version": 1,
+    "data_status": "SYNTHETIC_FIXTURE",
+    "map": "../maps/fixtures/physics-reservation-8.json",
+    "quantum_s": 2,
+    "clearance_ticks": 1,
+    "provenance": "Synthetic graph travel rounded up to 2s slots and assumed 2s resource clearance; no measured vehicle timing or footprint guarantee.",
+    "limits": {
+      "ct_nodes": 2000,
+      "low_level_expansions": 50000
+    },
+    "edge_resources": {
+      "a_west": [
+        "west-junction"
+      ],
+      "west_a": [
+        "west-junction"
+      ],
+      "c_west": [
+        "west-junction"
+      ],
+      "west_c": [
+        "west-junction"
+      ],
+      "west_finish_b": [
+        "west-junction"
+      ],
+      "finish_b_west": [
+        "west-junction"
+      ],
+      "west_east": [
+        "corridor"
+      ],
+      "east_west": [
+        "corridor"
+      ],
+      "b_east": [
+        "east-junction"
+      ],
+      "east_b": [
+        "east-junction"
+      ],
+      "east_finish_a": [
+        "east-junction"
+      ],
+      "finish_a_east": [
+        "east-junction"
+      ],
+      "east_finish_c": [
+        "east-junction"
+      ],
+      "finish_c_east": [
+        "east-junction"
+      ]
+    },
+    "node_resources": {
+      "west": [
+        "west-junction",
+        "corridor"
+      ],
+      "east": [
+        "east-junction",
+        "corridor"
+      ]
+    },
+    "cases": [
+      {
+        "id": "mixed-three",
+        "horizon": 30,
+        "tasks": [
+          {
+            "vehicle_id": "V01",
+            "start": "a",
+            "goal": "finish_a"
+          },
+          {
+            "vehicle_id": "V02",
+            "start": "b",
+            "goal": "finish_b"
+          },
+          {
+            "vehicle_id": "V03",
+            "start": "c",
+            "goal": "finish_c",
+            "service_type": "CARGO"
+          }
+        ]
+      },
+      {
+        "id": "reverse-priority",
+        "horizon": 30,
+        "priority_order": [
+          "V03",
+          "V02",
+          "V01"
+        ],
+        "tasks": [
+          {
+            "vehicle_id": "V01",
+            "start": "a",
+            "goal": "finish_a"
+          },
+          {
+            "vehicle_id": "V02",
+            "start": "b",
+            "goal": "finish_b"
+          },
+          {
+            "vehicle_id": "V03",
+            "start": "c",
+            "goal": "finish_c",
+            "service_type": "CARGO"
+          }
+        ]
+      },
+      {
+        "id": "insufficient-horizon",
+        "horizon": 3,
+        "tasks": [
+          {
+            "vehicle_id": "V01",
+            "start": "a",
+            "goal": "finish_a"
+          },
+          {
+            "vehicle_id": "V02",
+            "start": "b",
+            "goal": "finish_b"
+          },
+          {
+            "vehicle_id": "V03",
+            "start": "c",
+            "goal": "finish_c",
+            "service_type": "CARGO"
+          }
+        ]
+      }
+    ]
+  },
+  "preprocessing": [
+    {
+      "case": "mixed-three",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "preprocessing_s": 0.001482799998484552
+    },
+    {
+      "case": "reverse-priority",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "preprocessing_s": 0.0015352999907918274
+    },
+    {
+      "case": "insufficient-horizon",
+      "fingerprint": "883d670af36700a0b5319e3a2e4a8cc2faa1a4fa308fd4974f36a3935cec57e8",
+      "preprocessing_s": 0.001526899985037744
+    }
+  ],
+  "summary": [
+    {
+      "case": "mixed-three",
+      "algorithm": "priority",
+      "runs": 5,
+      "successes": 5,
+      "budget_exceeded": 0,
+      "p50_ms": 3.242200007662177,
+      "p95_ms": 3.2447999983560294
+    },
+    {
+      "case": "mixed-three",
+      "algorithm": "cbs",
+      "runs": 5,
+      "successes": 0,
+      "budget_exceeded": 5,
+      "p50_ms": 2255.142599984538,
+      "p95_ms": 2290.8961000212003
+    },
+    {
+      "case": "mixed-three",
+      "algorithm": "cbs-disjoint",
+      "runs": 5,
+      "successes": 5,
+      "budget_exceeded": 0,
+      "p50_ms": 1076.9917000143323,
+      "p95_ms": 1087.3022000014316
+    },
+    {
+      "case": "reverse-priority",
+      "algorithm": "priority",
+      "runs": 5,
+      "successes": 5,
+      "budget_exceeded": 0,
+      "p50_ms": 3.7515999865718186,
+      "p95_ms": 4.064899985678494
+    },
+    {
+      "case": "reverse-priority",
+      "algorithm": "cbs",
+      "runs": 5,
+      "successes": 0,
+      "budget_exceeded": 5,
+      "p50_ms": 2253.6384999984875,
+      "p95_ms": 2298.196399991866
+    },
+    {
+      "case": "reverse-priority",
+      "algorithm": "cbs-disjoint",
+      "runs": 5,
+      "successes": 5,
+      "budget_exceeded": 0,
+      "p50_ms": 1089.5875999995042,
+      "p95_ms": 1102.9994999989867
+    },
+    {
+      "case": "insufficient-horizon",
+      "algorithm": "priority",
+      "runs": 5,
+      "successes": 0,
+      "budget_exceeded": 0,
+      "p50_ms": 0.03619998460635543,
+      "p95_ms": 0.05440000677481294
+    },
+    {
+      "case": "insufficient-horizon",
+      "algorithm": "cbs",
+      "runs": 5,
+      "successes": 0,
+      "budget_exceeded": 0,
+      "p50_ms": 0.03710002056322992,
+      "p95_ms": 0.04880002234131098
+    },
+    {
+      "case": "insufficient-horizon",
+      "algorithm": "cbs-disjoint",
+      "runs": 5,
+      "successes": 0,
+      "budget_exceeded": 0,
+      "p50_ms": 0.03960001049563289,
+      "p95_ms": 0.1466000103391707
+    }
+  ],
+  "rows": [
+    {
+      "case": "mixed-three",
+      "repetition": 0,
+      "algorithm": "priority",
+      "status": "SUCCESS",
+      "reason": "Finite time model only",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 3.244399995310232,
+      "ct_expanded": 0,
+      "low_level_expanded": 62,
+      "low_level_calls": 3,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": 0,
+      "makespan_s": 54,
+      "sum_arrival_s": 104,
+      "sum_wait_s": 40,
+      "mean_wait_s": 13.333333333333334,
+      "wait_stddev_s": 9.568466729604882,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": [
+        {
+          "vehicle": "V01",
+          "arrival_tick": 8,
+          "moves": [
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 0,
+              "arrive": 3,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 3,
+              "arrive": 5,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_a",
+              "depart": 5,
+              "arrive": 8,
+              "edge_id": "east_finish_a"
+            }
+          ]
+        },
+        {
+          "vehicle": "V02",
+          "arrival_tick": 17,
+          "moves": [
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 6,
+              "arrive": 7,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 7,
+              "arrive": 8,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 8,
+              "arrive": 9,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "east",
+              "depart": 9,
+              "arrive": 12,
+              "edge_id": "b_east"
+            },
+            {
+              "source": "east",
+              "target": "west",
+              "depart": 12,
+              "arrive": 14,
+              "edge_id": "east_west"
+            },
+            {
+              "source": "west",
+              "target": "finish_b",
+              "depart": 14,
+              "arrive": 17,
+              "edge_id": "west_finish_b"
+            }
+          ]
+        },
+        {
+          "vehicle": "V03",
+          "arrival_tick": 27,
+          "moves": [
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "west",
+              "depart": 5,
+              "arrive": 9,
+              "edge_id": "c_west"
+            },
+            {
+              "source": "west",
+              "target": "west",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "west",
+              "target": "a",
+              "depart": 10,
+              "arrive": 13,
+              "edge_id": "west_a"
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 13,
+              "arrive": 14,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 14,
+              "arrive": 15,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 15,
+              "arrive": 16,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 16,
+              "arrive": 17,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 17,
+              "arrive": 18,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 18,
+              "arrive": 21,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 21,
+              "arrive": 23,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_c",
+              "depart": 23,
+              "arrive": 27,
+              "edge_id": "east_finish_c"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "mixed-three",
+      "repetition": 0,
+      "algorithm": "cbs",
+      "status": "BUDGET_EXCEEDED",
+      "reason": "constraint_tree",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 2255.142599984538,
+      "ct_expanded": 2000,
+      "low_level_expanded": 30115,
+      "low_level_calls": 2307,
+      "low_level_cache_hits": 1620,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    },
+    {
+      "case": "mixed-three",
+      "repetition": 0,
+      "algorithm": "cbs-disjoint",
+      "status": "SUCCESS",
+      "reason": "Finite time model only",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 1087.3022000014316,
+      "ct_expanded": 666,
+      "low_level_expanded": 16286,
+      "low_level_calls": 1311,
+      "low_level_cache_hits": 43,
+      "planned_conflicting_tokens": 0,
+      "makespan_s": 48,
+      "sum_arrival_s": 94,
+      "sum_wait_s": 42,
+      "mean_wait_s": 14,
+      "wait_stddev_s": 13.366625103842281,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": [
+        {
+          "vehicle": "V01",
+          "arrival_tick": 8,
+          "moves": [
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 0,
+              "arrive": 3,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 3,
+              "arrive": 5,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_a",
+              "depart": 5,
+              "arrive": 8,
+              "edge_id": "east_finish_a"
+            }
+          ]
+        },
+        {
+          "vehicle": "V02",
+          "arrival_tick": 24,
+          "moves": [
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 6,
+              "arrive": 7,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 7,
+              "arrive": 8,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 8,
+              "arrive": 9,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 10,
+              "arrive": 11,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 11,
+              "arrive": 12,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 12,
+              "arrive": 13,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 13,
+              "arrive": 14,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 14,
+              "arrive": 15,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 15,
+              "arrive": 16,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "east",
+              "depart": 16,
+              "arrive": 19,
+              "edge_id": "b_east"
+            },
+            {
+              "source": "east",
+              "target": "west",
+              "depart": 19,
+              "arrive": 21,
+              "edge_id": "east_west"
+            },
+            {
+              "source": "west",
+              "target": "finish_b",
+              "depart": 21,
+              "arrive": 24,
+              "edge_id": "west_finish_b"
+            }
+          ]
+        },
+        {
+          "vehicle": "V03",
+          "arrival_tick": 15,
+          "moves": [
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "west",
+              "depart": 5,
+              "arrive": 9,
+              "edge_id": "c_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 9,
+              "arrive": 11,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_c",
+              "depart": 11,
+              "arrive": 15,
+              "edge_id": "east_finish_c"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "mixed-three",
+      "repetition": 1,
+      "algorithm": "priority",
+      "status": "SUCCESS",
+      "reason": "Finite time model only",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 3.2447999983560294,
+      "ct_expanded": 0,
+      "low_level_expanded": 62,
+      "low_level_calls": 3,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": 0,
+      "makespan_s": 54,
+      "sum_arrival_s": 104,
+      "sum_wait_s": 40,
+      "mean_wait_s": 13.333333333333334,
+      "wait_stddev_s": 9.568466729604882,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": [
+        {
+          "vehicle": "V01",
+          "arrival_tick": 8,
+          "moves": [
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 0,
+              "arrive": 3,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 3,
+              "arrive": 5,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_a",
+              "depart": 5,
+              "arrive": 8,
+              "edge_id": "east_finish_a"
+            }
+          ]
+        },
+        {
+          "vehicle": "V02",
+          "arrival_tick": 17,
+          "moves": [
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 6,
+              "arrive": 7,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 7,
+              "arrive": 8,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 8,
+              "arrive": 9,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "east",
+              "depart": 9,
+              "arrive": 12,
+              "edge_id": "b_east"
+            },
+            {
+              "source": "east",
+              "target": "west",
+              "depart": 12,
+              "arrive": 14,
+              "edge_id": "east_west"
+            },
+            {
+              "source": "west",
+              "target": "finish_b",
+              "depart": 14,
+              "arrive": 17,
+              "edge_id": "west_finish_b"
+            }
+          ]
+        },
+        {
+          "vehicle": "V03",
+          "arrival_tick": 27,
+          "moves": [
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "west",
+              "depart": 5,
+              "arrive": 9,
+              "edge_id": "c_west"
+            },
+            {
+              "source": "west",
+              "target": "west",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "west",
+              "target": "a",
+              "depart": 10,
+              "arrive": 13,
+              "edge_id": "west_a"
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 13,
+              "arrive": 14,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 14,
+              "arrive": 15,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 15,
+              "arrive": 16,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 16,
+              "arrive": 17,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 17,
+              "arrive": 18,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 18,
+              "arrive": 21,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 21,
+              "arrive": 23,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_c",
+              "depart": 23,
+              "arrive": 27,
+              "edge_id": "east_finish_c"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "mixed-three",
+      "repetition": 1,
+      "algorithm": "cbs",
+      "status": "BUDGET_EXCEEDED",
+      "reason": "constraint_tree",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 2290.8961000212003,
+      "ct_expanded": 2000,
+      "low_level_expanded": 30115,
+      "low_level_calls": 2307,
+      "low_level_cache_hits": 1620,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    },
+    {
+      "case": "mixed-three",
+      "repetition": 1,
+      "algorithm": "cbs-disjoint",
+      "status": "SUCCESS",
+      "reason": "Finite time model only",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 1076.9917000143323,
+      "ct_expanded": 666,
+      "low_level_expanded": 16286,
+      "low_level_calls": 1311,
+      "low_level_cache_hits": 43,
+      "planned_conflicting_tokens": 0,
+      "makespan_s": 48,
+      "sum_arrival_s": 94,
+      "sum_wait_s": 42,
+      "mean_wait_s": 14,
+      "wait_stddev_s": 13.366625103842281,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": [
+        {
+          "vehicle": "V01",
+          "arrival_tick": 8,
+          "moves": [
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 0,
+              "arrive": 3,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 3,
+              "arrive": 5,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_a",
+              "depart": 5,
+              "arrive": 8,
+              "edge_id": "east_finish_a"
+            }
+          ]
+        },
+        {
+          "vehicle": "V02",
+          "arrival_tick": 24,
+          "moves": [
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 6,
+              "arrive": 7,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 7,
+              "arrive": 8,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 8,
+              "arrive": 9,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 10,
+              "arrive": 11,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 11,
+              "arrive": 12,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 12,
+              "arrive": 13,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 13,
+              "arrive": 14,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 14,
+              "arrive": 15,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 15,
+              "arrive": 16,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "east",
+              "depart": 16,
+              "arrive": 19,
+              "edge_id": "b_east"
+            },
+            {
+              "source": "east",
+              "target": "west",
+              "depart": 19,
+              "arrive": 21,
+              "edge_id": "east_west"
+            },
+            {
+              "source": "west",
+              "target": "finish_b",
+              "depart": 21,
+              "arrive": 24,
+              "edge_id": "west_finish_b"
+            }
+          ]
+        },
+        {
+          "vehicle": "V03",
+          "arrival_tick": 15,
+          "moves": [
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "west",
+              "depart": 5,
+              "arrive": 9,
+              "edge_id": "c_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 9,
+              "arrive": 11,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_c",
+              "depart": 11,
+              "arrive": 15,
+              "edge_id": "east_finish_c"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "mixed-three",
+      "repetition": 2,
+      "algorithm": "priority",
+      "status": "SUCCESS",
+      "reason": "Finite time model only",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 3.1017000146675855,
+      "ct_expanded": 0,
+      "low_level_expanded": 62,
+      "low_level_calls": 3,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": 0,
+      "makespan_s": 54,
+      "sum_arrival_s": 104,
+      "sum_wait_s": 40,
+      "mean_wait_s": 13.333333333333334,
+      "wait_stddev_s": 9.568466729604882,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": [
+        {
+          "vehicle": "V01",
+          "arrival_tick": 8,
+          "moves": [
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 0,
+              "arrive": 3,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 3,
+              "arrive": 5,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_a",
+              "depart": 5,
+              "arrive": 8,
+              "edge_id": "east_finish_a"
+            }
+          ]
+        },
+        {
+          "vehicle": "V02",
+          "arrival_tick": 17,
+          "moves": [
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 6,
+              "arrive": 7,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 7,
+              "arrive": 8,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 8,
+              "arrive": 9,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "east",
+              "depart": 9,
+              "arrive": 12,
+              "edge_id": "b_east"
+            },
+            {
+              "source": "east",
+              "target": "west",
+              "depart": 12,
+              "arrive": 14,
+              "edge_id": "east_west"
+            },
+            {
+              "source": "west",
+              "target": "finish_b",
+              "depart": 14,
+              "arrive": 17,
+              "edge_id": "west_finish_b"
+            }
+          ]
+        },
+        {
+          "vehicle": "V03",
+          "arrival_tick": 27,
+          "moves": [
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "west",
+              "depart": 5,
+              "arrive": 9,
+              "edge_id": "c_west"
+            },
+            {
+              "source": "west",
+              "target": "west",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "west",
+              "target": "a",
+              "depart": 10,
+              "arrive": 13,
+              "edge_id": "west_a"
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 13,
+              "arrive": 14,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 14,
+              "arrive": 15,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 15,
+              "arrive": 16,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 16,
+              "arrive": 17,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 17,
+              "arrive": 18,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 18,
+              "arrive": 21,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 21,
+              "arrive": 23,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_c",
+              "depart": 23,
+              "arrive": 27,
+              "edge_id": "east_finish_c"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "mixed-three",
+      "repetition": 2,
+      "algorithm": "cbs",
+      "status": "BUDGET_EXCEEDED",
+      "reason": "constraint_tree",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 2251.592899992829,
+      "ct_expanded": 2000,
+      "low_level_expanded": 30115,
+      "low_level_calls": 2307,
+      "low_level_cache_hits": 1620,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    },
+    {
+      "case": "mixed-three",
+      "repetition": 2,
+      "algorithm": "cbs-disjoint",
+      "status": "SUCCESS",
+      "reason": "Finite time model only",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 1077.2772999771405,
+      "ct_expanded": 666,
+      "low_level_expanded": 16286,
+      "low_level_calls": 1311,
+      "low_level_cache_hits": 43,
+      "planned_conflicting_tokens": 0,
+      "makespan_s": 48,
+      "sum_arrival_s": 94,
+      "sum_wait_s": 42,
+      "mean_wait_s": 14,
+      "wait_stddev_s": 13.366625103842281,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": [
+        {
+          "vehicle": "V01",
+          "arrival_tick": 8,
+          "moves": [
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 0,
+              "arrive": 3,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 3,
+              "arrive": 5,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_a",
+              "depart": 5,
+              "arrive": 8,
+              "edge_id": "east_finish_a"
+            }
+          ]
+        },
+        {
+          "vehicle": "V02",
+          "arrival_tick": 24,
+          "moves": [
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 6,
+              "arrive": 7,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 7,
+              "arrive": 8,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 8,
+              "arrive": 9,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 10,
+              "arrive": 11,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 11,
+              "arrive": 12,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 12,
+              "arrive": 13,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 13,
+              "arrive": 14,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 14,
+              "arrive": 15,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 15,
+              "arrive": 16,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "east",
+              "depart": 16,
+              "arrive": 19,
+              "edge_id": "b_east"
+            },
+            {
+              "source": "east",
+              "target": "west",
+              "depart": 19,
+              "arrive": 21,
+              "edge_id": "east_west"
+            },
+            {
+              "source": "west",
+              "target": "finish_b",
+              "depart": 21,
+              "arrive": 24,
+              "edge_id": "west_finish_b"
+            }
+          ]
+        },
+        {
+          "vehicle": "V03",
+          "arrival_tick": 15,
+          "moves": [
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "west",
+              "depart": 5,
+              "arrive": 9,
+              "edge_id": "c_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 9,
+              "arrive": 11,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_c",
+              "depart": 11,
+              "arrive": 15,
+              "edge_id": "east_finish_c"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "mixed-three",
+      "repetition": 3,
+      "algorithm": "priority",
+      "status": "SUCCESS",
+      "reason": "Finite time model only",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 3.242200007662177,
+      "ct_expanded": 0,
+      "low_level_expanded": 62,
+      "low_level_calls": 3,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": 0,
+      "makespan_s": 54,
+      "sum_arrival_s": 104,
+      "sum_wait_s": 40,
+      "mean_wait_s": 13.333333333333334,
+      "wait_stddev_s": 9.568466729604882,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": [
+        {
+          "vehicle": "V01",
+          "arrival_tick": 8,
+          "moves": [
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 0,
+              "arrive": 3,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 3,
+              "arrive": 5,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_a",
+              "depart": 5,
+              "arrive": 8,
+              "edge_id": "east_finish_a"
+            }
+          ]
+        },
+        {
+          "vehicle": "V02",
+          "arrival_tick": 17,
+          "moves": [
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 6,
+              "arrive": 7,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 7,
+              "arrive": 8,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 8,
+              "arrive": 9,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "east",
+              "depart": 9,
+              "arrive": 12,
+              "edge_id": "b_east"
+            },
+            {
+              "source": "east",
+              "target": "west",
+              "depart": 12,
+              "arrive": 14,
+              "edge_id": "east_west"
+            },
+            {
+              "source": "west",
+              "target": "finish_b",
+              "depart": 14,
+              "arrive": 17,
+              "edge_id": "west_finish_b"
+            }
+          ]
+        },
+        {
+          "vehicle": "V03",
+          "arrival_tick": 27,
+          "moves": [
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "west",
+              "depart": 5,
+              "arrive": 9,
+              "edge_id": "c_west"
+            },
+            {
+              "source": "west",
+              "target": "west",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "west",
+              "target": "a",
+              "depart": 10,
+              "arrive": 13,
+              "edge_id": "west_a"
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 13,
+              "arrive": 14,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 14,
+              "arrive": 15,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 15,
+              "arrive": 16,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 16,
+              "arrive": 17,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 17,
+              "arrive": 18,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 18,
+              "arrive": 21,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 21,
+              "arrive": 23,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_c",
+              "depart": 23,
+              "arrive": 27,
+              "edge_id": "east_finish_c"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "mixed-three",
+      "repetition": 3,
+      "algorithm": "cbs",
+      "status": "BUDGET_EXCEEDED",
+      "reason": "constraint_tree",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 2262.0475000003353,
+      "ct_expanded": 2000,
+      "low_level_expanded": 30115,
+      "low_level_calls": 2307,
+      "low_level_cache_hits": 1620,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    },
+    {
+      "case": "mixed-three",
+      "repetition": 3,
+      "algorithm": "cbs-disjoint",
+      "status": "SUCCESS",
+      "reason": "Finite time model only",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 1065.6003000040073,
+      "ct_expanded": 666,
+      "low_level_expanded": 16286,
+      "low_level_calls": 1311,
+      "low_level_cache_hits": 43,
+      "planned_conflicting_tokens": 0,
+      "makespan_s": 48,
+      "sum_arrival_s": 94,
+      "sum_wait_s": 42,
+      "mean_wait_s": 14,
+      "wait_stddev_s": 13.366625103842281,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": [
+        {
+          "vehicle": "V01",
+          "arrival_tick": 8,
+          "moves": [
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 0,
+              "arrive": 3,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 3,
+              "arrive": 5,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_a",
+              "depart": 5,
+              "arrive": 8,
+              "edge_id": "east_finish_a"
+            }
+          ]
+        },
+        {
+          "vehicle": "V02",
+          "arrival_tick": 24,
+          "moves": [
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 6,
+              "arrive": 7,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 7,
+              "arrive": 8,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 8,
+              "arrive": 9,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 10,
+              "arrive": 11,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 11,
+              "arrive": 12,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 12,
+              "arrive": 13,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 13,
+              "arrive": 14,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 14,
+              "arrive": 15,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 15,
+              "arrive": 16,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "east",
+              "depart": 16,
+              "arrive": 19,
+              "edge_id": "b_east"
+            },
+            {
+              "source": "east",
+              "target": "west",
+              "depart": 19,
+              "arrive": 21,
+              "edge_id": "east_west"
+            },
+            {
+              "source": "west",
+              "target": "finish_b",
+              "depart": 21,
+              "arrive": 24,
+              "edge_id": "west_finish_b"
+            }
+          ]
+        },
+        {
+          "vehicle": "V03",
+          "arrival_tick": 15,
+          "moves": [
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "west",
+              "depart": 5,
+              "arrive": 9,
+              "edge_id": "c_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 9,
+              "arrive": 11,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_c",
+              "depart": 11,
+              "arrive": 15,
+              "edge_id": "east_finish_c"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "mixed-three",
+      "repetition": 4,
+      "algorithm": "priority",
+      "status": "SUCCESS",
+      "reason": "Finite time model only",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 3.1608999997843057,
+      "ct_expanded": 0,
+      "low_level_expanded": 62,
+      "low_level_calls": 3,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": 0,
+      "makespan_s": 54,
+      "sum_arrival_s": 104,
+      "sum_wait_s": 40,
+      "mean_wait_s": 13.333333333333334,
+      "wait_stddev_s": 9.568466729604882,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": [
+        {
+          "vehicle": "V01",
+          "arrival_tick": 8,
+          "moves": [
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 0,
+              "arrive": 3,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 3,
+              "arrive": 5,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_a",
+              "depart": 5,
+              "arrive": 8,
+              "edge_id": "east_finish_a"
+            }
+          ]
+        },
+        {
+          "vehicle": "V02",
+          "arrival_tick": 17,
+          "moves": [
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 6,
+              "arrive": 7,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 7,
+              "arrive": 8,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 8,
+              "arrive": 9,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "east",
+              "depart": 9,
+              "arrive": 12,
+              "edge_id": "b_east"
+            },
+            {
+              "source": "east",
+              "target": "west",
+              "depart": 12,
+              "arrive": 14,
+              "edge_id": "east_west"
+            },
+            {
+              "source": "west",
+              "target": "finish_b",
+              "depart": 14,
+              "arrive": 17,
+              "edge_id": "west_finish_b"
+            }
+          ]
+        },
+        {
+          "vehicle": "V03",
+          "arrival_tick": 27,
+          "moves": [
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "west",
+              "depart": 5,
+              "arrive": 9,
+              "edge_id": "c_west"
+            },
+            {
+              "source": "west",
+              "target": "west",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "west",
+              "target": "a",
+              "depart": 10,
+              "arrive": 13,
+              "edge_id": "west_a"
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 13,
+              "arrive": 14,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 14,
+              "arrive": 15,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 15,
+              "arrive": 16,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 16,
+              "arrive": 17,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 17,
+              "arrive": 18,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 18,
+              "arrive": 21,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 21,
+              "arrive": 23,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_c",
+              "depart": 23,
+              "arrive": 27,
+              "edge_id": "east_finish_c"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "mixed-three",
+      "repetition": 4,
+      "algorithm": "cbs",
+      "status": "BUDGET_EXCEEDED",
+      "reason": "constraint_tree",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 2228.503999998793,
+      "ct_expanded": 2000,
+      "low_level_expanded": 30115,
+      "low_level_calls": 2307,
+      "low_level_cache_hits": 1620,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    },
+    {
+      "case": "mixed-three",
+      "repetition": 4,
+      "algorithm": "cbs-disjoint",
+      "status": "SUCCESS",
+      "reason": "Finite time model only",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 1065.8977999992203,
+      "ct_expanded": 666,
+      "low_level_expanded": 16286,
+      "low_level_calls": 1311,
+      "low_level_cache_hits": 43,
+      "planned_conflicting_tokens": 0,
+      "makespan_s": 48,
+      "sum_arrival_s": 94,
+      "sum_wait_s": 42,
+      "mean_wait_s": 14,
+      "wait_stddev_s": 13.366625103842281,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": [
+        {
+          "vehicle": "V01",
+          "arrival_tick": 8,
+          "moves": [
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 0,
+              "arrive": 3,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 3,
+              "arrive": 5,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_a",
+              "depart": 5,
+              "arrive": 8,
+              "edge_id": "east_finish_a"
+            }
+          ]
+        },
+        {
+          "vehicle": "V02",
+          "arrival_tick": 24,
+          "moves": [
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 6,
+              "arrive": 7,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 7,
+              "arrive": 8,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 8,
+              "arrive": 9,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 10,
+              "arrive": 11,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 11,
+              "arrive": 12,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 12,
+              "arrive": 13,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 13,
+              "arrive": 14,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 14,
+              "arrive": 15,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 15,
+              "arrive": 16,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "east",
+              "depart": 16,
+              "arrive": 19,
+              "edge_id": "b_east"
+            },
+            {
+              "source": "east",
+              "target": "west",
+              "depart": 19,
+              "arrive": 21,
+              "edge_id": "east_west"
+            },
+            {
+              "source": "west",
+              "target": "finish_b",
+              "depart": 21,
+              "arrive": 24,
+              "edge_id": "west_finish_b"
+            }
+          ]
+        },
+        {
+          "vehicle": "V03",
+          "arrival_tick": 15,
+          "moves": [
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "west",
+              "depart": 5,
+              "arrive": 9,
+              "edge_id": "c_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 9,
+              "arrive": 11,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_c",
+              "depart": 11,
+              "arrive": 15,
+              "edge_id": "east_finish_c"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "reverse-priority",
+      "repetition": 0,
+      "algorithm": "priority",
+      "status": "SUCCESS",
+      "reason": "Finite time model only",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 3.7002000026404858,
+      "ct_expanded": 0,
+      "low_level_expanded": 71,
+      "low_level_calls": 3,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": 0,
+      "makespan_s": 56,
+      "sum_arrival_s": 114,
+      "sum_wait_s": 50,
+      "mean_wait_s": 16.666666666666668,
+      "wait_stddev_s": 12.036980056845191,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": [
+        {
+          "vehicle": "V03",
+          "arrival_tick": 10,
+          "moves": [
+            {
+              "source": "c",
+              "target": "west",
+              "depart": 0,
+              "arrive": 4,
+              "edge_id": "c_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 4,
+              "arrive": 6,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_c",
+              "depart": 6,
+              "arrive": 10,
+              "edge_id": "east_finish_c"
+            }
+          ]
+        },
+        {
+          "vehicle": "V02",
+          "arrival_tick": 19,
+          "moves": [
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 6,
+              "arrive": 7,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 7,
+              "arrive": 8,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 8,
+              "arrive": 9,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 10,
+              "arrive": 11,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "east",
+              "depart": 11,
+              "arrive": 14,
+              "edge_id": "b_east"
+            },
+            {
+              "source": "east",
+              "target": "west",
+              "depart": 14,
+              "arrive": 16,
+              "edge_id": "east_west"
+            },
+            {
+              "source": "west",
+              "target": "finish_b",
+              "depart": 16,
+              "arrive": 19,
+              "edge_id": "west_finish_b"
+            }
+          ]
+        },
+        {
+          "vehicle": "V01",
+          "arrival_tick": 28,
+          "moves": [
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 6,
+              "arrive": 9,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "west",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "west",
+              "target": "west",
+              "depart": 10,
+              "arrive": 11,
+              "edge_id": null
+            },
+            {
+              "source": "west",
+              "target": "west",
+              "depart": 11,
+              "arrive": 12,
+              "edge_id": null
+            },
+            {
+              "source": "west",
+              "target": "a",
+              "depart": 12,
+              "arrive": 15,
+              "edge_id": "west_a"
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 15,
+              "arrive": 16,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 16,
+              "arrive": 17,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 17,
+              "arrive": 18,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 18,
+              "arrive": 19,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 19,
+              "arrive": 20,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 20,
+              "arrive": 23,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 23,
+              "arrive": 25,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_a",
+              "depart": 25,
+              "arrive": 28,
+              "edge_id": "east_finish_a"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "reverse-priority",
+      "repetition": 0,
+      "algorithm": "cbs",
+      "status": "BUDGET_EXCEEDED",
+      "reason": "constraint_tree",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 2253.6384999984875,
+      "ct_expanded": 2000,
+      "low_level_expanded": 30115,
+      "low_level_calls": 2307,
+      "low_level_cache_hits": 1620,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    },
+    {
+      "case": "reverse-priority",
+      "repetition": 0,
+      "algorithm": "cbs-disjoint",
+      "status": "SUCCESS",
+      "reason": "Finite time model only",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 1089.5875999995042,
+      "ct_expanded": 666,
+      "low_level_expanded": 16286,
+      "low_level_calls": 1311,
+      "low_level_cache_hits": 43,
+      "planned_conflicting_tokens": 0,
+      "makespan_s": 48,
+      "sum_arrival_s": 94,
+      "sum_wait_s": 42,
+      "mean_wait_s": 14,
+      "wait_stddev_s": 13.366625103842281,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": [
+        {
+          "vehicle": "V01",
+          "arrival_tick": 8,
+          "moves": [
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 0,
+              "arrive": 3,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 3,
+              "arrive": 5,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_a",
+              "depart": 5,
+              "arrive": 8,
+              "edge_id": "east_finish_a"
+            }
+          ]
+        },
+        {
+          "vehicle": "V02",
+          "arrival_tick": 24,
+          "moves": [
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 6,
+              "arrive": 7,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 7,
+              "arrive": 8,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 8,
+              "arrive": 9,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 10,
+              "arrive": 11,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 11,
+              "arrive": 12,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 12,
+              "arrive": 13,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 13,
+              "arrive": 14,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 14,
+              "arrive": 15,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 15,
+              "arrive": 16,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "east",
+              "depart": 16,
+              "arrive": 19,
+              "edge_id": "b_east"
+            },
+            {
+              "source": "east",
+              "target": "west",
+              "depart": 19,
+              "arrive": 21,
+              "edge_id": "east_west"
+            },
+            {
+              "source": "west",
+              "target": "finish_b",
+              "depart": 21,
+              "arrive": 24,
+              "edge_id": "west_finish_b"
+            }
+          ]
+        },
+        {
+          "vehicle": "V03",
+          "arrival_tick": 15,
+          "moves": [
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "west",
+              "depart": 5,
+              "arrive": 9,
+              "edge_id": "c_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 9,
+              "arrive": 11,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_c",
+              "depart": 11,
+              "arrive": 15,
+              "edge_id": "east_finish_c"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "reverse-priority",
+      "repetition": 1,
+      "algorithm": "priority",
+      "status": "SUCCESS",
+      "reason": "Finite time model only",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 3.4776999964378774,
+      "ct_expanded": 0,
+      "low_level_expanded": 71,
+      "low_level_calls": 3,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": 0,
+      "makespan_s": 56,
+      "sum_arrival_s": 114,
+      "sum_wait_s": 50,
+      "mean_wait_s": 16.666666666666668,
+      "wait_stddev_s": 12.036980056845191,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": [
+        {
+          "vehicle": "V03",
+          "arrival_tick": 10,
+          "moves": [
+            {
+              "source": "c",
+              "target": "west",
+              "depart": 0,
+              "arrive": 4,
+              "edge_id": "c_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 4,
+              "arrive": 6,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_c",
+              "depart": 6,
+              "arrive": 10,
+              "edge_id": "east_finish_c"
+            }
+          ]
+        },
+        {
+          "vehicle": "V02",
+          "arrival_tick": 19,
+          "moves": [
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 6,
+              "arrive": 7,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 7,
+              "arrive": 8,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 8,
+              "arrive": 9,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 10,
+              "arrive": 11,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "east",
+              "depart": 11,
+              "arrive": 14,
+              "edge_id": "b_east"
+            },
+            {
+              "source": "east",
+              "target": "west",
+              "depart": 14,
+              "arrive": 16,
+              "edge_id": "east_west"
+            },
+            {
+              "source": "west",
+              "target": "finish_b",
+              "depart": 16,
+              "arrive": 19,
+              "edge_id": "west_finish_b"
+            }
+          ]
+        },
+        {
+          "vehicle": "V01",
+          "arrival_tick": 28,
+          "moves": [
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 6,
+              "arrive": 9,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "west",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "west",
+              "target": "west",
+              "depart": 10,
+              "arrive": 11,
+              "edge_id": null
+            },
+            {
+              "source": "west",
+              "target": "west",
+              "depart": 11,
+              "arrive": 12,
+              "edge_id": null
+            },
+            {
+              "source": "west",
+              "target": "a",
+              "depart": 12,
+              "arrive": 15,
+              "edge_id": "west_a"
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 15,
+              "arrive": 16,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 16,
+              "arrive": 17,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 17,
+              "arrive": 18,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 18,
+              "arrive": 19,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 19,
+              "arrive": 20,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 20,
+              "arrive": 23,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 23,
+              "arrive": 25,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_a",
+              "depart": 25,
+              "arrive": 28,
+              "edge_id": "east_finish_a"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "reverse-priority",
+      "repetition": 1,
+      "algorithm": "cbs",
+      "status": "BUDGET_EXCEEDED",
+      "reason": "constraint_tree",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 2298.196399991866,
+      "ct_expanded": 2000,
+      "low_level_expanded": 30115,
+      "low_level_calls": 2307,
+      "low_level_cache_hits": 1620,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    },
+    {
+      "case": "reverse-priority",
+      "repetition": 1,
+      "algorithm": "cbs-disjoint",
+      "status": "SUCCESS",
+      "reason": "Finite time model only",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 1102.9994999989867,
+      "ct_expanded": 666,
+      "low_level_expanded": 16286,
+      "low_level_calls": 1311,
+      "low_level_cache_hits": 43,
+      "planned_conflicting_tokens": 0,
+      "makespan_s": 48,
+      "sum_arrival_s": 94,
+      "sum_wait_s": 42,
+      "mean_wait_s": 14,
+      "wait_stddev_s": 13.366625103842281,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": [
+        {
+          "vehicle": "V01",
+          "arrival_tick": 8,
+          "moves": [
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 0,
+              "arrive": 3,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 3,
+              "arrive": 5,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_a",
+              "depart": 5,
+              "arrive": 8,
+              "edge_id": "east_finish_a"
+            }
+          ]
+        },
+        {
+          "vehicle": "V02",
+          "arrival_tick": 24,
+          "moves": [
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 6,
+              "arrive": 7,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 7,
+              "arrive": 8,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 8,
+              "arrive": 9,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 10,
+              "arrive": 11,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 11,
+              "arrive": 12,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 12,
+              "arrive": 13,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 13,
+              "arrive": 14,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 14,
+              "arrive": 15,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 15,
+              "arrive": 16,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "east",
+              "depart": 16,
+              "arrive": 19,
+              "edge_id": "b_east"
+            },
+            {
+              "source": "east",
+              "target": "west",
+              "depart": 19,
+              "arrive": 21,
+              "edge_id": "east_west"
+            },
+            {
+              "source": "west",
+              "target": "finish_b",
+              "depart": 21,
+              "arrive": 24,
+              "edge_id": "west_finish_b"
+            }
+          ]
+        },
+        {
+          "vehicle": "V03",
+          "arrival_tick": 15,
+          "moves": [
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "west",
+              "depart": 5,
+              "arrive": 9,
+              "edge_id": "c_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 9,
+              "arrive": 11,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_c",
+              "depart": 11,
+              "arrive": 15,
+              "edge_id": "east_finish_c"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "reverse-priority",
+      "repetition": 2,
+      "algorithm": "priority",
+      "status": "SUCCESS",
+      "reason": "Finite time model only",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 3.7515999865718186,
+      "ct_expanded": 0,
+      "low_level_expanded": 71,
+      "low_level_calls": 3,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": 0,
+      "makespan_s": 56,
+      "sum_arrival_s": 114,
+      "sum_wait_s": 50,
+      "mean_wait_s": 16.666666666666668,
+      "wait_stddev_s": 12.036980056845191,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": [
+        {
+          "vehicle": "V03",
+          "arrival_tick": 10,
+          "moves": [
+            {
+              "source": "c",
+              "target": "west",
+              "depart": 0,
+              "arrive": 4,
+              "edge_id": "c_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 4,
+              "arrive": 6,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_c",
+              "depart": 6,
+              "arrive": 10,
+              "edge_id": "east_finish_c"
+            }
+          ]
+        },
+        {
+          "vehicle": "V02",
+          "arrival_tick": 19,
+          "moves": [
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 6,
+              "arrive": 7,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 7,
+              "arrive": 8,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 8,
+              "arrive": 9,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 10,
+              "arrive": 11,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "east",
+              "depart": 11,
+              "arrive": 14,
+              "edge_id": "b_east"
+            },
+            {
+              "source": "east",
+              "target": "west",
+              "depart": 14,
+              "arrive": 16,
+              "edge_id": "east_west"
+            },
+            {
+              "source": "west",
+              "target": "finish_b",
+              "depart": 16,
+              "arrive": 19,
+              "edge_id": "west_finish_b"
+            }
+          ]
+        },
+        {
+          "vehicle": "V01",
+          "arrival_tick": 28,
+          "moves": [
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 6,
+              "arrive": 9,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "west",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "west",
+              "target": "west",
+              "depart": 10,
+              "arrive": 11,
+              "edge_id": null
+            },
+            {
+              "source": "west",
+              "target": "west",
+              "depart": 11,
+              "arrive": 12,
+              "edge_id": null
+            },
+            {
+              "source": "west",
+              "target": "a",
+              "depart": 12,
+              "arrive": 15,
+              "edge_id": "west_a"
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 15,
+              "arrive": 16,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 16,
+              "arrive": 17,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 17,
+              "arrive": 18,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 18,
+              "arrive": 19,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 19,
+              "arrive": 20,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 20,
+              "arrive": 23,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 23,
+              "arrive": 25,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_a",
+              "depart": 25,
+              "arrive": 28,
+              "edge_id": "east_finish_a"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "reverse-priority",
+      "repetition": 2,
+      "algorithm": "cbs",
+      "status": "BUDGET_EXCEEDED",
+      "reason": "constraint_tree",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 2250.7693999796174,
+      "ct_expanded": 2000,
+      "low_level_expanded": 30115,
+      "low_level_calls": 2307,
+      "low_level_cache_hits": 1620,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    },
+    {
+      "case": "reverse-priority",
+      "repetition": 2,
+      "algorithm": "cbs-disjoint",
+      "status": "SUCCESS",
+      "reason": "Finite time model only",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 1097.8597000066657,
+      "ct_expanded": 666,
+      "low_level_expanded": 16286,
+      "low_level_calls": 1311,
+      "low_level_cache_hits": 43,
+      "planned_conflicting_tokens": 0,
+      "makespan_s": 48,
+      "sum_arrival_s": 94,
+      "sum_wait_s": 42,
+      "mean_wait_s": 14,
+      "wait_stddev_s": 13.366625103842281,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": [
+        {
+          "vehicle": "V01",
+          "arrival_tick": 8,
+          "moves": [
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 0,
+              "arrive": 3,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 3,
+              "arrive": 5,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_a",
+              "depart": 5,
+              "arrive": 8,
+              "edge_id": "east_finish_a"
+            }
+          ]
+        },
+        {
+          "vehicle": "V02",
+          "arrival_tick": 24,
+          "moves": [
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 6,
+              "arrive": 7,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 7,
+              "arrive": 8,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 8,
+              "arrive": 9,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 10,
+              "arrive": 11,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 11,
+              "arrive": 12,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 12,
+              "arrive": 13,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 13,
+              "arrive": 14,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 14,
+              "arrive": 15,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 15,
+              "arrive": 16,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "east",
+              "depart": 16,
+              "arrive": 19,
+              "edge_id": "b_east"
+            },
+            {
+              "source": "east",
+              "target": "west",
+              "depart": 19,
+              "arrive": 21,
+              "edge_id": "east_west"
+            },
+            {
+              "source": "west",
+              "target": "finish_b",
+              "depart": 21,
+              "arrive": 24,
+              "edge_id": "west_finish_b"
+            }
+          ]
+        },
+        {
+          "vehicle": "V03",
+          "arrival_tick": 15,
+          "moves": [
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "west",
+              "depart": 5,
+              "arrive": 9,
+              "edge_id": "c_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 9,
+              "arrive": 11,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_c",
+              "depart": 11,
+              "arrive": 15,
+              "edge_id": "east_finish_c"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "reverse-priority",
+      "repetition": 3,
+      "algorithm": "priority",
+      "status": "SUCCESS",
+      "reason": "Finite time model only",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 3.945700009353459,
+      "ct_expanded": 0,
+      "low_level_expanded": 71,
+      "low_level_calls": 3,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": 0,
+      "makespan_s": 56,
+      "sum_arrival_s": 114,
+      "sum_wait_s": 50,
+      "mean_wait_s": 16.666666666666668,
+      "wait_stddev_s": 12.036980056845191,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": [
+        {
+          "vehicle": "V03",
+          "arrival_tick": 10,
+          "moves": [
+            {
+              "source": "c",
+              "target": "west",
+              "depart": 0,
+              "arrive": 4,
+              "edge_id": "c_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 4,
+              "arrive": 6,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_c",
+              "depart": 6,
+              "arrive": 10,
+              "edge_id": "east_finish_c"
+            }
+          ]
+        },
+        {
+          "vehicle": "V02",
+          "arrival_tick": 19,
+          "moves": [
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 6,
+              "arrive": 7,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 7,
+              "arrive": 8,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 8,
+              "arrive": 9,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 10,
+              "arrive": 11,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "east",
+              "depart": 11,
+              "arrive": 14,
+              "edge_id": "b_east"
+            },
+            {
+              "source": "east",
+              "target": "west",
+              "depart": 14,
+              "arrive": 16,
+              "edge_id": "east_west"
+            },
+            {
+              "source": "west",
+              "target": "finish_b",
+              "depart": 16,
+              "arrive": 19,
+              "edge_id": "west_finish_b"
+            }
+          ]
+        },
+        {
+          "vehicle": "V01",
+          "arrival_tick": 28,
+          "moves": [
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 6,
+              "arrive": 9,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "west",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "west",
+              "target": "west",
+              "depart": 10,
+              "arrive": 11,
+              "edge_id": null
+            },
+            {
+              "source": "west",
+              "target": "west",
+              "depart": 11,
+              "arrive": 12,
+              "edge_id": null
+            },
+            {
+              "source": "west",
+              "target": "a",
+              "depart": 12,
+              "arrive": 15,
+              "edge_id": "west_a"
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 15,
+              "arrive": 16,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 16,
+              "arrive": 17,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 17,
+              "arrive": 18,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 18,
+              "arrive": 19,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 19,
+              "arrive": 20,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 20,
+              "arrive": 23,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 23,
+              "arrive": 25,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_a",
+              "depart": 25,
+              "arrive": 28,
+              "edge_id": "east_finish_a"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "reverse-priority",
+      "repetition": 3,
+      "algorithm": "cbs",
+      "status": "BUDGET_EXCEEDED",
+      "reason": "constraint_tree",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 2265.544800000498,
+      "ct_expanded": 2000,
+      "low_level_expanded": 30115,
+      "low_level_calls": 2307,
+      "low_level_cache_hits": 1620,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    },
+    {
+      "case": "reverse-priority",
+      "repetition": 3,
+      "algorithm": "cbs-disjoint",
+      "status": "SUCCESS",
+      "reason": "Finite time model only",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 1064.872299990384,
+      "ct_expanded": 666,
+      "low_level_expanded": 16286,
+      "low_level_calls": 1311,
+      "low_level_cache_hits": 43,
+      "planned_conflicting_tokens": 0,
+      "makespan_s": 48,
+      "sum_arrival_s": 94,
+      "sum_wait_s": 42,
+      "mean_wait_s": 14,
+      "wait_stddev_s": 13.366625103842281,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": [
+        {
+          "vehicle": "V01",
+          "arrival_tick": 8,
+          "moves": [
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 0,
+              "arrive": 3,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 3,
+              "arrive": 5,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_a",
+              "depart": 5,
+              "arrive": 8,
+              "edge_id": "east_finish_a"
+            }
+          ]
+        },
+        {
+          "vehicle": "V02",
+          "arrival_tick": 24,
+          "moves": [
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 6,
+              "arrive": 7,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 7,
+              "arrive": 8,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 8,
+              "arrive": 9,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 10,
+              "arrive": 11,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 11,
+              "arrive": 12,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 12,
+              "arrive": 13,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 13,
+              "arrive": 14,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 14,
+              "arrive": 15,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 15,
+              "arrive": 16,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "east",
+              "depart": 16,
+              "arrive": 19,
+              "edge_id": "b_east"
+            },
+            {
+              "source": "east",
+              "target": "west",
+              "depart": 19,
+              "arrive": 21,
+              "edge_id": "east_west"
+            },
+            {
+              "source": "west",
+              "target": "finish_b",
+              "depart": 21,
+              "arrive": 24,
+              "edge_id": "west_finish_b"
+            }
+          ]
+        },
+        {
+          "vehicle": "V03",
+          "arrival_tick": 15,
+          "moves": [
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "west",
+              "depart": 5,
+              "arrive": 9,
+              "edge_id": "c_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 9,
+              "arrive": 11,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_c",
+              "depart": 11,
+              "arrive": 15,
+              "edge_id": "east_finish_c"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "reverse-priority",
+      "repetition": 4,
+      "algorithm": "priority",
+      "status": "SUCCESS",
+      "reason": "Finite time model only",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 4.064899985678494,
+      "ct_expanded": 0,
+      "low_level_expanded": 71,
+      "low_level_calls": 3,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": 0,
+      "makespan_s": 56,
+      "sum_arrival_s": 114,
+      "sum_wait_s": 50,
+      "mean_wait_s": 16.666666666666668,
+      "wait_stddev_s": 12.036980056845191,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": [
+        {
+          "vehicle": "V03",
+          "arrival_tick": 10,
+          "moves": [
+            {
+              "source": "c",
+              "target": "west",
+              "depart": 0,
+              "arrive": 4,
+              "edge_id": "c_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 4,
+              "arrive": 6,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_c",
+              "depart": 6,
+              "arrive": 10,
+              "edge_id": "east_finish_c"
+            }
+          ]
+        },
+        {
+          "vehicle": "V02",
+          "arrival_tick": 19,
+          "moves": [
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 6,
+              "arrive": 7,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 7,
+              "arrive": 8,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 8,
+              "arrive": 9,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 10,
+              "arrive": 11,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "east",
+              "depart": 11,
+              "arrive": 14,
+              "edge_id": "b_east"
+            },
+            {
+              "source": "east",
+              "target": "west",
+              "depart": 14,
+              "arrive": 16,
+              "edge_id": "east_west"
+            },
+            {
+              "source": "west",
+              "target": "finish_b",
+              "depart": 16,
+              "arrive": 19,
+              "edge_id": "west_finish_b"
+            }
+          ]
+        },
+        {
+          "vehicle": "V01",
+          "arrival_tick": 28,
+          "moves": [
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 6,
+              "arrive": 9,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "west",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "west",
+              "target": "west",
+              "depart": 10,
+              "arrive": 11,
+              "edge_id": null
+            },
+            {
+              "source": "west",
+              "target": "west",
+              "depart": 11,
+              "arrive": 12,
+              "edge_id": null
+            },
+            {
+              "source": "west",
+              "target": "a",
+              "depart": 12,
+              "arrive": 15,
+              "edge_id": "west_a"
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 15,
+              "arrive": 16,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 16,
+              "arrive": 17,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 17,
+              "arrive": 18,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 18,
+              "arrive": 19,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "a",
+              "depart": 19,
+              "arrive": 20,
+              "edge_id": null
+            },
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 20,
+              "arrive": 23,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 23,
+              "arrive": 25,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_a",
+              "depart": 25,
+              "arrive": 28,
+              "edge_id": "east_finish_a"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "reverse-priority",
+      "repetition": 4,
+      "algorithm": "cbs",
+      "status": "BUDGET_EXCEEDED",
+      "reason": "constraint_tree",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 2229.787900025258,
+      "ct_expanded": 2000,
+      "low_level_expanded": 30115,
+      "low_level_calls": 2307,
+      "low_level_cache_hits": 1620,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    },
+    {
+      "case": "reverse-priority",
+      "repetition": 4,
+      "algorithm": "cbs-disjoint",
+      "status": "SUCCESS",
+      "reason": "Finite time model only",
+      "fingerprint": "8bbd2d0a8f626e94a9bc5493f7fcde94e0174b295fd4fc45b3a5077e52d9d2ee",
+      "elapsed_ms": 1066.9837000023108,
+      "ct_expanded": 666,
+      "low_level_expanded": 16286,
+      "low_level_calls": 1311,
+      "low_level_cache_hits": 43,
+      "planned_conflicting_tokens": 0,
+      "makespan_s": 48,
+      "sum_arrival_s": 94,
+      "sum_wait_s": 42,
+      "mean_wait_s": 14,
+      "wait_stddev_s": 13.366625103842281,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": [
+        {
+          "vehicle": "V01",
+          "arrival_tick": 8,
+          "moves": [
+            {
+              "source": "a",
+              "target": "west",
+              "depart": 0,
+              "arrive": 3,
+              "edge_id": "a_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 3,
+              "arrive": 5,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_a",
+              "depart": 5,
+              "arrive": 8,
+              "edge_id": "east_finish_a"
+            }
+          ]
+        },
+        {
+          "vehicle": "V02",
+          "arrival_tick": 24,
+          "moves": [
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 5,
+              "arrive": 6,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 6,
+              "arrive": 7,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 7,
+              "arrive": 8,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 8,
+              "arrive": 9,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 9,
+              "arrive": 10,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 10,
+              "arrive": 11,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 11,
+              "arrive": 12,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 12,
+              "arrive": 13,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 13,
+              "arrive": 14,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 14,
+              "arrive": 15,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "b",
+              "depart": 15,
+              "arrive": 16,
+              "edge_id": null
+            },
+            {
+              "source": "b",
+              "target": "east",
+              "depart": 16,
+              "arrive": 19,
+              "edge_id": "b_east"
+            },
+            {
+              "source": "east",
+              "target": "west",
+              "depart": 19,
+              "arrive": 21,
+              "edge_id": "east_west"
+            },
+            {
+              "source": "west",
+              "target": "finish_b",
+              "depart": 21,
+              "arrive": 24,
+              "edge_id": "west_finish_b"
+            }
+          ]
+        },
+        {
+          "vehicle": "V03",
+          "arrival_tick": 15,
+          "moves": [
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 0,
+              "arrive": 1,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 1,
+              "arrive": 2,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 2,
+              "arrive": 3,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 3,
+              "arrive": 4,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "c",
+              "depart": 4,
+              "arrive": 5,
+              "edge_id": null
+            },
+            {
+              "source": "c",
+              "target": "west",
+              "depart": 5,
+              "arrive": 9,
+              "edge_id": "c_west"
+            },
+            {
+              "source": "west",
+              "target": "east",
+              "depart": 9,
+              "arrive": 11,
+              "edge_id": "west_east"
+            },
+            {
+              "source": "east",
+              "target": "finish_c",
+              "depart": 11,
+              "arrive": 15,
+              "edge_id": "east_finish_c"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "case": "insufficient-horizon",
+      "repetition": 0,
+      "algorithm": "priority",
+      "status": "PRIORITY_ORDER_FAILED",
+      "reason": "No route under earlier reservations within horizon",
+      "fingerprint": "883d670af36700a0b5319e3a2e4a8cc2faa1a4fa308fd4974f36a3935cec57e8",
+      "elapsed_ms": 0.05440000677481294,
+      "ct_expanded": 0,
+      "low_level_expanded": 1,
+      "low_level_calls": 1,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    },
+    {
+      "case": "insufficient-horizon",
+      "repetition": 0,
+      "algorithm": "cbs",
+      "status": "NO_SOLUTION_WITHIN_HORIZON",
+      "reason": "Individual task infeasible",
+      "fingerprint": "883d670af36700a0b5319e3a2e4a8cc2faa1a4fa308fd4974f36a3935cec57e8",
+      "elapsed_ms": 0.04420001641847193,
+      "ct_expanded": 0,
+      "low_level_expanded": 1,
+      "low_level_calls": 1,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    },
+    {
+      "case": "insufficient-horizon",
+      "repetition": 0,
+      "algorithm": "cbs-disjoint",
+      "status": "NO_SOLUTION_WITHIN_HORIZON",
+      "reason": "Individual task infeasible",
+      "fingerprint": "883d670af36700a0b5319e3a2e4a8cc2faa1a4fa308fd4974f36a3935cec57e8",
+      "elapsed_ms": 0.03960001049563289,
+      "ct_expanded": 0,
+      "low_level_expanded": 1,
+      "low_level_calls": 1,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    },
+    {
+      "case": "insufficient-horizon",
+      "repetition": 1,
+      "algorithm": "priority",
+      "status": "PRIORITY_ORDER_FAILED",
+      "reason": "No route under earlier reservations within horizon",
+      "fingerprint": "883d670af36700a0b5319e3a2e4a8cc2faa1a4fa308fd4974f36a3935cec57e8",
+      "elapsed_ms": 0.03500000457279384,
+      "ct_expanded": 0,
+      "low_level_expanded": 1,
+      "low_level_calls": 1,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    },
+    {
+      "case": "insufficient-horizon",
+      "repetition": 1,
+      "algorithm": "cbs",
+      "status": "NO_SOLUTION_WITHIN_HORIZON",
+      "reason": "Individual task infeasible",
+      "fingerprint": "883d670af36700a0b5319e3a2e4a8cc2faa1a4fa308fd4974f36a3935cec57e8",
+      "elapsed_ms": 0.04880002234131098,
+      "ct_expanded": 0,
+      "low_level_expanded": 1,
+      "low_level_calls": 1,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    },
+    {
+      "case": "insufficient-horizon",
+      "repetition": 1,
+      "algorithm": "cbs-disjoint",
+      "status": "NO_SOLUTION_WITHIN_HORIZON",
+      "reason": "Individual task infeasible",
+      "fingerprint": "883d670af36700a0b5319e3a2e4a8cc2faa1a4fa308fd4974f36a3935cec57e8",
+      "elapsed_ms": 0.039700011257082224,
+      "ct_expanded": 0,
+      "low_level_expanded": 1,
+      "low_level_calls": 1,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    },
+    {
+      "case": "insufficient-horizon",
+      "repetition": 2,
+      "algorithm": "priority",
+      "status": "PRIORITY_ORDER_FAILED",
+      "reason": "No route under earlier reservations within horizon",
+      "fingerprint": "883d670af36700a0b5319e3a2e4a8cc2faa1a4fa308fd4974f36a3935cec57e8",
+      "elapsed_ms": 0.03779999678954482,
+      "ct_expanded": 0,
+      "low_level_expanded": 1,
+      "low_level_calls": 1,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    },
+    {
+      "case": "insufficient-horizon",
+      "repetition": 2,
+      "algorithm": "cbs",
+      "status": "NO_SOLUTION_WITHIN_HORIZON",
+      "reason": "Individual task infeasible",
+      "fingerprint": "883d670af36700a0b5319e3a2e4a8cc2faa1a4fa308fd4974f36a3935cec57e8",
+      "elapsed_ms": 0.03710002056322992,
+      "ct_expanded": 0,
+      "low_level_expanded": 1,
+      "low_level_calls": 1,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    },
+    {
+      "case": "insufficient-horizon",
+      "repetition": 2,
+      "algorithm": "cbs-disjoint",
+      "status": "NO_SOLUTION_WITHIN_HORIZON",
+      "reason": "Individual task infeasible",
+      "fingerprint": "883d670af36700a0b5319e3a2e4a8cc2faa1a4fa308fd4974f36a3935cec57e8",
+      "elapsed_ms": 0.03679998917505145,
+      "ct_expanded": 0,
+      "low_level_expanded": 1,
+      "low_level_calls": 1,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    },
+    {
+      "case": "insufficient-horizon",
+      "repetition": 3,
+      "algorithm": "priority",
+      "status": "PRIORITY_ORDER_FAILED",
+      "reason": "No route under earlier reservations within horizon",
+      "fingerprint": "883d670af36700a0b5319e3a2e4a8cc2faa1a4fa308fd4974f36a3935cec57e8",
+      "elapsed_ms": 0.03619998460635543,
+      "ct_expanded": 0,
+      "low_level_expanded": 1,
+      "low_level_calls": 1,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    },
+    {
+      "case": "insufficient-horizon",
+      "repetition": 3,
+      "algorithm": "cbs",
+      "status": "NO_SOLUTION_WITHIN_HORIZON",
+      "reason": "Individual task infeasible",
+      "fingerprint": "883d670af36700a0b5319e3a2e4a8cc2faa1a4fa308fd4974f36a3935cec57e8",
+      "elapsed_ms": 0.036699988413602114,
+      "ct_expanded": 0,
+      "low_level_expanded": 1,
+      "low_level_calls": 1,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    },
+    {
+      "case": "insufficient-horizon",
+      "repetition": 3,
+      "algorithm": "cbs-disjoint",
+      "status": "NO_SOLUTION_WITHIN_HORIZON",
+      "reason": "Individual task infeasible",
+      "fingerprint": "883d670af36700a0b5319e3a2e4a8cc2faa1a4fa308fd4974f36a3935cec57e8",
+      "elapsed_ms": 0.035900011425837874,
+      "ct_expanded": 0,
+      "low_level_expanded": 1,
+      "low_level_calls": 1,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    },
+    {
+      "case": "insufficient-horizon",
+      "repetition": 4,
+      "algorithm": "priority",
+      "status": "PRIORITY_ORDER_FAILED",
+      "reason": "No route under earlier reservations within horizon",
+      "fingerprint": "883d670af36700a0b5319e3a2e4a8cc2faa1a4fa308fd4974f36a3935cec57e8",
+      "elapsed_ms": 0.03539997851476073,
+      "ct_expanded": 0,
+      "low_level_expanded": 1,
+      "low_level_calls": 1,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    },
+    {
+      "case": "insufficient-horizon",
+      "repetition": 4,
+      "algorithm": "cbs",
+      "status": "NO_SOLUTION_WITHIN_HORIZON",
+      "reason": "Individual task infeasible",
+      "fingerprint": "883d670af36700a0b5319e3a2e4a8cc2faa1a4fa308fd4974f36a3935cec57e8",
+      "elapsed_ms": 0.035699980799108744,
+      "ct_expanded": 0,
+      "low_level_expanded": 1,
+      "low_level_calls": 1,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    },
+    {
+      "case": "insufficient-horizon",
+      "repetition": 4,
+      "algorithm": "cbs-disjoint",
+      "status": "NO_SOLUTION_WITHIN_HORIZON",
+      "reason": "Individual task infeasible",
+      "fingerprint": "883d670af36700a0b5319e3a2e4a8cc2faa1a4fa308fd4974f36a3935cec57e8",
+      "elapsed_ms": 0.1466000103391707,
+      "ct_expanded": 0,
+      "low_level_expanded": 1,
+      "low_level_calls": 1,
+      "low_level_cache_hits": 0,
+      "planned_conflicting_tokens": null,
+      "makespan_s": null,
+      "sum_arrival_s": null,
+      "sum_wait_s": null,
+      "mean_wait_s": null,
+      "wait_stddev_s": null,
+      "physical_conflicts": null,
+      "executable": false,
+      "paths": []
+    }
+  ],
+  "limits": "Finite quantized plan only; no actuator authority, actual conflicts, live lease expiry, continuous footprint, deadlock recovery, sensor delay or performance guarantee. Priority is offline fixed-order reservation, not the live ResourceReservations manager. Timings cover solve calls; validation/Dijkstra preprocessing is reported separately."
+}

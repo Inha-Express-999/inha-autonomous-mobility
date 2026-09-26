@@ -10,6 +10,7 @@ import heapq
 import itertools
 import json
 import math
+from collections import OrderedDict
 from dataclasses import asdict, dataclass, field
 from time import perf_counter
 
@@ -88,6 +89,7 @@ class _Budget:
     ct_expanded: int = 0
     low_level_expanded: int = 0
     replans: int = 0
+    cache_hits: int = 0
     start: float = field(default_factory=perf_counter)
 
     def step(self, *, high=False):
@@ -110,13 +112,14 @@ class CoordinationResult:
     ct_expanded: int
     low_level_expanded: int
     replans: int
+    cache_hits: int
     elapsed_s: float
     executable: bool = False
 
 
 class CoordinationProblem:
     def __init__(self, graph, tasks, *, quantum_s: float, horizon: int,
-                 edge_resources=None, node_resources=None, clearance_ticks: int = 0, provenance: str):
+                 edge_resources=None, node_resources=None, clearance_ticks: int = 0, provenance: str, preparation_deadline_s: float | None = None):
         if (not graph.map_version.startswith("synthetic-") or isinstance(quantum_s, bool)
                 or not isinstance(quantum_s, (int, float)) or not math.isfinite(quantum_s) or quantum_s <= 0
                 or type(horizon) is not int or not 1 <= horizon <= 10000
@@ -135,12 +138,16 @@ class CoordinationProblem:
         self.edge_resources = self._overlay(edge_resources or {}, {e.id for e in graph.edges})
         self.node_resources = self._overlay(node_resources or {}, {n.id for n in graph.nodes})
         self.adjacency, self.heuristic = {}, {}
+        if preparation_deadline_s is not None and not math.isfinite(preparation_deadline_s):
+            raise ValueError("Finite preparation deadline required")
         for task in tasks:
             _, adjacency = prepare_routing_snapshot(graph, task.start, task.goal, **task.options())
             self.adjacency[task.vehicle_id] = {node: tuple(sorted(edges, key=lambda e: e.id))
                                                for node, edges in adjacency.items()}
             heuristic = {}
             for node in adjacency:
+                if preparation_deadline_s is not None and perf_counter() >= preparation_deadline_s:
+                    raise TimeoutError("coordination_preparation_deadline")
                 try:
                     # Existing verified Dijkstra supplies an admissible lower bound
                     # for the new time-expanded A*; quantized edges round upward.
@@ -189,9 +196,14 @@ class CoordinationProblem:
     def parking_claims(self, goal, arrival):
         return set().union(*(self.node_claims(goal, t) for t in range(arrival, self.horizon + 1)))
 
-    def low_level(self, task, forbidden, budget):
+    def low_level(self, task, forbidden, budget, required=frozenset()):
         budget.replans += 1
-        initial = (task.start, 0)
+        # Positive occupancy constraints distinguish otherwise equal node/time
+        # states. A token can be supplied by an earlier transit/clearance claim.
+        required = frozenset(required)
+        if required & forbidden:
+            return None
+        initial = (task.start, 0, frozenset(required & self.node_claims(task.start, 0)))
         if self.node_claims(task.start, 0) & forbidden or math.isinf(self.heuristic[task.vehicle_id][task.start]):
             return None
         counter = itertools.count()
@@ -200,8 +212,9 @@ class CoordinationProblem:
         while heap:
             budget.step()
             _, tick, _, state = heapq.heappop(heap)
-            node, _ = state
-            if node == task.goal and not self.parking_claims(node, tick) & forbidden:
+            node, _, fulfilled = state
+            parking = self.parking_claims(node, tick) if node == task.goal else set()
+            if node == task.goal and not parking & forbidden and required <= fulfilled | parking:
                 moves = []
                 while parent[state] is not None:
                     previous, move = parent[state]
@@ -217,10 +230,15 @@ class CoordinationProblem:
                             tick + max(1, math.ceil(edge.cost_s() / self.quantum_s)), edge.id)
                            for edge in self.adjacency[task.vehicle_id][node])
             for move in actions:
-                next_state = (move.target, move.arrive)
+                claims = self.move_claims(move)
+                completed = fulfilled | (required & claims)
+                next_state = (move.target, move.arrive, frozenset(completed))
+                # A later action cannot supply a token strictly before its departure.
+                if any(c.tick < move.arrive and c not in completed for c in required):
+                    continue
                 h = self.heuristic[task.vehicle_id][move.target]
                 if (move.arrive + h > self.horizon or next_state in parent
-                        or self.move_claims(move) & forbidden):
+                        or claims & forbidden):
                     continue
                 parent[next_state] = (state, move)
                 heapq.heappush(heap, (move.arrive + h, move.arrive, next(counter), next_state))
@@ -236,8 +254,8 @@ def conflicts(paths):
 
 
 def solve_coordination(problem, *, algorithm="cbs", limits=None, priority_order=None):
-    if algorithm not in {"cbs", "priority"}:
-        raise ValueError("Expected cbs or priority")
+    if algorithm not in {"cbs", "cbs-disjoint", "priority"}:
+        raise ValueError("Expected cbs, cbs-disjoint or priority")
     tasks = {a.vehicle_id: a for a in problem.tasks}
     order = tuple(priority_order) if priority_order is not None else tuple(tasks)
     if len(order) != len(tasks) or set(order) != set(tasks):
@@ -246,13 +264,30 @@ def solve_coordination(problem, *, algorithm="cbs", limits=None, priority_order=
 
     def result(status, reason, paths=()):
         return CoordinationResult(algorithm, status, reason, problem.fingerprint, tuple(paths),
-            budget.ct_expanded, budget.low_level_expanded, budget.replans, perf_counter() - budget.start)
+            budget.ct_expanded, budget.low_level_expanded, budget.replans, budget.cache_hits, perf_counter() - budget.start)
+
+    # Per-solve LRU: sibling CT nodes often have identical single-agent
+    # constraints. Never reuse across problems, and cap memory independently
+    # of a caller's search limits. Cached failure is valid only for this horizon.
+    cache = OrderedDict()
+
+    def low_level(task, forbidden, required=frozenset()):
+        key = (task.vehicle_id, frozenset(forbidden), frozenset(required))
+        if key in cache:
+            budget.cache_hits += 1
+            cache.move_to_end(key)
+            return cache[key]
+        path = problem.low_level(task, key[1], budget, key[2])
+        cache[key] = path
+        if len(cache) > 4096:
+            cache.popitem(last=False)
+        return path
 
     try:
         if algorithm == "priority":
             paths, reserved = [], set()
             for vehicle in order:
-                path = problem.low_level(tasks[vehicle], reserved, budget)
+                path = low_level(tasks[vehicle], reserved)
                 if path is None:
                     return result("PRIORITY_ORDER_FAILED", "No route under earlier reservations within horizon")
                 paths.append(path)
@@ -260,12 +295,12 @@ def solve_coordination(problem, *, algorithm="cbs", limits=None, priority_order=
             return result("SUCCESS", "Finite time model only", paths)
         paths = {}
         for vehicle, task in tasks.items():
-            path = problem.low_level(task, frozenset(), budget)
+            path = low_level(task, frozenset())
             if path is None:
                 return result("NO_SOLUTION_WITHIN_HORIZON", "Individual task infeasible")
             paths[vehicle] = path
         counter = itertools.count()
-        root = tuple((vehicle, frozenset()) for vehicle in tasks)
+        root = tuple((vehicle, frozenset(), frozenset()) for vehicle in tasks)
         heap = [(sum(p.arrival for p in paths.values()), len(conflicts(paths.values())), next(counter), root, paths)]
         seen = {root}
         while heap:
@@ -275,19 +310,34 @@ def solve_coordination(problem, *, algorithm="cbs", limits=None, priority_order=
             if not collisions:
                 return result("SUCCESS", "Finite time model only", [paths[v] for v in tasks])
             claim, first, second = collisions[0]
-            for vehicle in (first, second):
-                child = dict(constraints)
-                child[vehicle] = child[vehicle] | {claim}
-                key = tuple(child.items())
-                if key in seen:
+            forbidden = {v: neg for v, neg, _ in constraints}
+            required = {v: pos for v, _, pos in constraints}
+            branches = []
+            if algorithm == "cbs-disjoint":
+                # The two branches partition solutions on whether 'first' uses
+                # this exact token. In the positive branch every other vehicle
+                # must avoid it, not merely the other member of this collision.
+                branches.append(({**forbidden, first: forbidden[first] | {claim}}, required))
+                branches.append(({v: neg | {claim} if v != first else neg for v, neg in forbidden.items()},
+                                 {**required, first: required[first] | {claim}}))
+            else:
+                branches.extend(({**forbidden, v: forbidden[v] | {claim}}, required) for v in (first, second))
+            for negative, positive in branches:
+                key = tuple((v, negative[v], positive[v]) for v in tasks)
+                if key in seen or any(negative[v] & positive[v] for v in tasks):
                     continue
                 seen.add(key)
-                path = problem.low_level(tasks[vehicle], child[vehicle], budget)
-                if path is None:
-                    continue
-                replacement = {**paths, vehicle: path}
-                heapq.heappush(heap, (sum(p.arrival for p in replacement.values()), len(conflicts(replacement.values())),
-                                     next(counter), key, replacement))
+                replacement = dict(paths)
+                for vehicle, task in tasks.items():
+                    old = paths[vehicle]
+                    if old.claims & negative[vehicle] or not positive[vehicle] <= old.claims:
+                        path = low_level(task, negative[vehicle], positive[vehicle])
+                        if path is None:
+                            break
+                        replacement[vehicle] = path
+                else:
+                    heapq.heappush(heap, (sum(p.arrival for p in replacement.values()), len(conflicts(replacement.values())),
+                                         next(counter), key, replacement))
         return result("NO_SOLUTION_WITHIN_HORIZON", "Constraint tree exhausted")
     except _LimitReached as error:
         return result("BUDGET_EXCEEDED", str(error))

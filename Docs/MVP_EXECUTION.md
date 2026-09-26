@@ -1,11 +1,32 @@
 # MVP implementation and verification ledger
 
-2026-09-26 · project version 0.4.0.0
+2026-09-26 · project version 0.4.1.0
+
+## v0.4.1.0 커밋 체크포인트 (2026-09-26)
+
+Python/MapData 456개와 Ruff 통과. 합성 세 차량 운송 검증 기반 위에 disjoint CBS 비교/별도 프로세스 제안, 경로 비용 배차 비교 및 합성 에너지 제한을 추가했다. CBS/RRT 제안은 실제 주행 권한이 없다. 전체 MVP는 미완료이며 M2 실제 지도·Stop 승인, M3/M4 관측 기반 통합과 회피 실행, M5 충전/허브·CBS 실행, M6 재현·성능·단말 검증이 남는다.
+
+`charging.py`와 선택적 service hook은 작성 중 상태를 보존한 것으로 기본 비활성이다. 전용 충전 테스트·설정/API/CLI 및 자동 충전 이동이 없으며, context 중단 뒤 큐 복구와 완료 상태 유지도 미검증이다. 전체 기존 회귀 테스트 통과를 충전 기능 검증으로 해석하지 않는다. 이번 커밋 준비에서는 Unity를 재실행하지 않았다.
+
 
 The objective remains a campus passenger/cargo simulation using Unity Physics
 and sensor observations with Python service/planning/control. A synthetic demo
 is an intermediate verification gate. AGENTS.md sections 14 and 16 define the
 full acceptance criteria; this ledger does not reduce that scope.
+
+## 2026-09-26 disjoint CBS offline comparison (v0.4.1.0 checkpoint)
+
+Added required/forbidden-token disjoint splitting and positive-history time-expanded
+A*, plus per-solve bounded single-agent caching. Existing CBS and fixed priority
+remain comparison baselines. Strict CT=500 still fails both CBS variants. At the
+same CT=2,000 / LL=50,000 limits, disjoint CBS solves each three-vehicle case 5/5
+at CT=666; standard CBS exceeds CT=2,000 in 5/5. Sum arrival is 94s vs priority
+104/114s; makespan 48s vs 54/56s. Stopped waiting is 42s vs 40/50s, so not every
+metric improves. Solve p50 is about 1.08s, much slower than priority (~3–4ms).
+Tests include 160 independent exhaustive start/goal comparisons, multi-tick/shared
+resource serial bounds and failed budgets. No live leases or actuator authority
+are issued by these plans; T25/E4/M5 integration remains incomplete. Evidence:
+`artifacts/validation/2026-09-26-cbs-disjoint/`; details `Docs/cbs_coordination.md`.
 
 ## 2026-09-26 shared PC/passenger resource-wait presentation
 
@@ -508,3 +529,23 @@ no new Unity run is claimed for this change. Full TTC actuation remains pending.
 ## 2026-09-26 v0.4.0.0 커밋 검증
 
 Python/MapData 374개 및 Ruff 통과. 오프라인 CBS/우선순위 예약 비교 기반과 유한 시간 충돌 모델을 추가했다. 작은 그래프의 독립 전수 탐색 비교는 통과했지만 세 차량 통로 비교에서 CBS는 CT 500개 한도를 초과했다. 실행 권한과 live reservation 연동은 없다. 상세는 [CBS 작업 체크포인트](cbs_coordination.md)를 따른다. Unity는 이번 커밋 준비에서 재실행하지 않았으며 기존 실행별 소스 hash/XML을 보존한다. 전체 MVP 완료가 아니다.
+
+
+CBS 작업본 검증: 전체 Python/MapData 397개 통과 후 disjoint 탐색 한도 검사 두 경우를 추가했고, 해당 coordination 테스트 40개가 통과했다. Ruff 및 diff 검사 통과. 이번 단계에서는 Unity를 재실행하지 않았다.
+
+
+## 2026-09-26 서비스 연결 CBS 프로세스 작업본
+
+선택적 ServiceCoordination은 서비스 요청·정차 ego 입력에서 합성 계획을 별도 프로세스로 계산하고, 한 실행/한 최신 대기로 작업 수를 제한한다. 지도·요청·경로·세션·pose·센서 유효성·점유 context가 바뀌거나 결과가 오래되면 폐기한다. 서비스 tick 및 API 종료에 연결했다. 실제 프로세스 계산 중 시계와 stale 센서 정지, 세 차량 임무 proposal과 invalid 센서 폐기를 검증했다. 경로/예약 실행 권한은 부여하지 않으며 이미 진입한 자원과 AVOID 정책은 미결합이다. 자세한 범위와 한계는 `Docs/coordination_worker.md`, 실행 증거는 `artifacts/validation/2026-09-26-coordination-worker/`를 따른다. 전체 MVP는 미완료다.
+
+서비스 연결 worker 최종 회귀: Python/MapData **425개 통과**, Ruff 및 diff 검사 통과. 실제 spawn 프로세스 검사 2개 포함. Unity는 이번 단계에서 재실행하지 않았다.
+
+
+## 2026-09-26 경로 기반 배차 비교 작업본
+
+서비스와 평가가 동일 `dispatch_candidates`를 사용하며, 실제 Greedy/Hungarian 배차·batch·공정성 정책을 같은 합성 snapshot에서 비교한다. 5개 사례×2개 방식×20회 실행 결과와 경로별 비용 근거를 기록했다. 같은 요청 3건에서는 비용 245→205초, 공차 거리 760→560m다. 포화 사례는 미배정 요청이 달라 개선으로 단정하지 않는다. 전체 Python/MapData 434개, Ruff 및 diff 검사 통과. 상세는 `dispatch_route_comparison.md`, 증거는 `artifacts/validation/2026-09-26-route-dispatch/`다. 합성 경로 비용 비교는 추가됐으나 실제 캠퍼스/Physics 완료·에너지·충전·허브 및 E2/T23/M5 전체 검증은 남는다.
+
+
+## 2026-09-26 합성 에너지 배차 제한 작업본
+
+명시적 energy 설정 opt-in을 추가했다. Greedy/Hungarian 공통 후보에서 픽업·적재 운송·충전 복귀·서비스·15% 예비량을 검사한다. 합성 segment/승인 ego 변위와 보조전력으로 모델 잔량을 차감하고, 수행 중 부족/충전 경로 상실은 요청과 위치를 보존한 채 지원 정지한다. 기존 batteryWh와 PC '배터리 추정' 표기를 사용한다. 전체 회귀 455개 이후 제어 속도 상한 반영을 포함한 에너지 22개 검사를 통과했다. Ruff/diff 통과, Unity 미실행. `energy_admission.md` 및 `artifacts/validation/2026-09-26-energy-admission/`를 따른다. 자동 충전 이동/대기열·허브·실제 제원/Physics 검증과 전체 MVP는 남는다.

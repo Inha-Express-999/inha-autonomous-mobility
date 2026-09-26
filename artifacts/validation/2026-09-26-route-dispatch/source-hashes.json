@@ -1,0 +1,12 @@
+{
+  "backend/src/campus_sim/service.py": "f7c4ad41a8c0f67ccba1f68fdad8795bd2c31e3d259d592c770de430400a8822",
+  "backend/src/campus_sim/dispatch.py": "cbd4e45fbd337fab83fc9fe3d6380e1691ddcc7b9e3dc233eb80671dce8c69df",
+  "backend/src/campus_sim/dispatch_route_evaluation.py": "31f7dda3fba3085eee5c7f5619703ef202254adce222174b6ce93e23a229c4c2",
+  "backend/src/campus_sim/cli.py": "6974827510cc6d6a87a5a982305abaaa0c05a6d6fb9cccfd6edc8b459b1e61d6",
+  "backend/tests/test_dispatch_route_evaluation.py": "686d01554d75be647b53f9eb9bd6fe10ec9379287359a754043a92040a8d53b9",
+  "configs/dispatch_route_benchmark.json": "9dab7bc73f522cb19bd326e51b172efe26bd272f91761fc8425d08c742c9234b",
+  "configs/dispatch.json": "877c4bfcaf0621ec3b0e588ff0d2ae049eb2e760b13a2a99e2ffd1f3768c4ca6",
+  "configs/planning.json": "23a519edc1773fdfa19b1e9b2a21305bb7fa97fd98e59ae10f7ce3e89ef1c402",
+  "configs/crowd.json": "64a428af1a188675d3cfe225603da753858d4519d2a0ef770fc04038893a6b0e",
+  "maps/fixtures/campus-synthetic-6.json": "1a9aa7421d93df9e8478fd7c8737e07f6fef60360300340a0c092247d4947c28"
+}

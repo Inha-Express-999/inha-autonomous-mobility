@@ -6,6 +6,7 @@ from fastapi import FastAPI, HTTPException, WebSocket, status
 
 from campus_sim import __version__
 from campus_sim.domain import CommandAck, CreateRequest, Landmark, RequestView
+from campus_sim.energy import EnergyFleet
 from campus_sim.realtime import serve_client_socket
 from campus_sim.service import MobilityService
 
@@ -14,6 +15,7 @@ def create_app(
     service: MobilityService | None = None,
     *,
     map_path: str | Path | None = None,
+    energy_config_path: str | Path | None = None,
 ) -> FastAPI:
     if service is not None and map_path is not None:
         raise ValueError("provide a service instance or map_path, not both")
@@ -22,6 +24,16 @@ def create_app(
         if map_path is not None
         else MobilityService.synthetic_fleet_fixture()
     )
+
+    if energy_config_path is not None:
+        if service_instance.energy is not None:
+            raise ValueError("energy model already configured")
+        energy = EnergyFleet.from_config(energy_config_path)
+        if (service_instance.graph is None or energy.map_version != service_instance.graph.map_version
+                or not energy.charger_nodes <= {n.id for n in service_instance.graph.nodes}
+                or not set(service_instance.vehicle_runtime) <= energy.policies.keys()):
+            raise ValueError("energy map, charger or active fleet mismatch")
+        service_instance.energy = energy
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
@@ -32,7 +44,11 @@ def create_app(
             yield
         finally:
             stop_event.set()
-            await clock_task
+            try:
+                await clock_task
+            finally:
+                if service_instance.coordination is not None:
+                    await service_instance.coordination.close()
 
     app = FastAPI(
         title="Inha Autonomous Mobility API",
@@ -52,6 +68,7 @@ def create_app(
             "status": "ok",
             "project_version": __version__,
             "schema_version": "3",
+            "energy_model_status": "SYNTHETIC_MODEL" if app.state.service.energy is not None else "DISABLED",
             "map_version": graph.map_version if graph is not None else None,
             "map_data_status": graph.data_status if graph is not None else None,
             "node_count": len(graph.nodes) if graph is not None else 0,

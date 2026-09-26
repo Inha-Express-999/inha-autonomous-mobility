@@ -1,0 +1,179 @@
+{
+  "schema_version": 1,
+  "data_status": "SYNTHETIC_ROUTE_DISPATCH",
+  "map": "../maps/fixtures/campus-synthetic-6.json",
+  "cases": [
+    {
+      "id": "same_tick",
+      "now_s": 620,
+      "vehicle_nodes": {
+        "V01": "n1",
+        "V02": "n4",
+        "V03": "n6"
+      },
+      "requests": [
+        {
+          "id": "R1",
+          "service_type": "PASSENGER",
+          "pickup_node": "n2",
+          "dropoff_node": "n6"
+        },
+        {
+          "id": "R2",
+          "service_type": "PASSENGER",
+          "pickup_node": "n1",
+          "dropoff_node": "n6"
+        },
+        {
+          "id": "R3",
+          "service_type": "CARGO",
+          "party_size": 0,
+          "cargo_kg": 5,
+          "pickup_node": "n5",
+          "dropoff_node": "n4"
+        }
+      ]
+    },
+    {
+      "id": "mobility_deadline",
+      "now_s": 620,
+      "vehicle_nodes": {
+        "V01": "n1",
+        "V02": "n4",
+        "V03": "n6"
+      },
+      "requests": [
+        {
+          "id": "R1",
+          "service_type": "PASSENGER",
+          "pickup_node": "n2",
+          "dropoff_node": "n6"
+        },
+        {
+          "id": "R2",
+          "service_type": "PASSENGER",
+          "pickup_node": "n1",
+          "dropoff_node": "n6",
+          "service_needs": {
+            "requires_step_free": true,
+            "wheelchair_slots": 1
+          },
+          "latest_arrival_s": 750
+        },
+        {
+          "id": "R3",
+          "service_type": "CARGO",
+          "party_size": 0,
+          "cargo_kg": 5,
+          "pickup_node": "n5",
+          "dropoff_node": "n4"
+        }
+      ]
+    },
+    {
+      "id": "aged_cargo_fairness",
+      "now_s": 620,
+      "vehicle_nodes": {
+        "V01": "n1",
+        "V02": "n4",
+        "V03": "n6"
+      },
+      "requests": [
+        {
+          "id": "R1",
+          "service_type": "PASSENGER",
+          "pickup_node": "n2",
+          "dropoff_node": "n6"
+        },
+        {
+          "id": "R2",
+          "service_type": "PASSENGER",
+          "pickup_node": "n1",
+          "dropoff_node": "n6"
+        },
+        {
+          "id": "R3",
+          "service_type": "CARGO",
+          "party_size": 0,
+          "cargo_kg": 5,
+          "pickup_node": "n5",
+          "dropoff_node": "n4",
+          "created_s": 0
+        }
+      ],
+      "assignments_since_fairness": 2
+    },
+    {
+      "id": "closed_after_queue",
+      "now_s": 620,
+      "vehicle_nodes": {
+        "V01": "n1",
+        "V02": "n4",
+        "V03": "n6"
+      },
+      "requests": [
+        {
+          "id": "R1",
+          "service_type": "PASSENGER",
+          "pickup_node": "n2",
+          "dropoff_node": "n6"
+        },
+        {
+          "id": "R2",
+          "service_type": "PASSENGER",
+          "pickup_node": "n1",
+          "dropoff_node": "n6"
+        },
+        {
+          "id": "R3",
+          "service_type": "CARGO",
+          "party_size": 0,
+          "cargo_kg": 5,
+          "pickup_node": "n5",
+          "dropoff_node": "n4"
+        }
+      ],
+      "closed_edge_ids": [
+        "e12",
+        "e21"
+      ]
+    },
+    {
+      "id": "more_requests_than_vehicles",
+      "now_s": 620,
+      "vehicle_nodes": {
+        "V01": "n1",
+        "V02": "n4",
+        "V03": "n6"
+      },
+      "requests": [
+        {
+          "id": "R1",
+          "service_type": "PASSENGER",
+          "pickup_node": "n2",
+          "dropoff_node": "n6"
+        },
+        {
+          "id": "R2",
+          "service_type": "PASSENGER",
+          "pickup_node": "n1",
+          "dropoff_node": "n6"
+        },
+        {
+          "id": "R3",
+          "service_type": "CARGO",
+          "party_size": 0,
+          "cargo_kg": 5,
+          "pickup_node": "n5",
+          "dropoff_node": "n4"
+        },
+        {
+          "id": "R4",
+          "service_type": "PASSENGER",
+          "pickup_node": "n3",
+          "dropoff_node": "n4"
+        }
+      ]
+    }
+  ]
+}

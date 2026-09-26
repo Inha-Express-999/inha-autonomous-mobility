@@ -9,7 +9,9 @@ from pathlib import Path
 from time import monotonic
 from uuid import uuid4
 
+from campus_sim.charging import ChargingStations
 from campus_sim.controller import ControllerPolicy
+from campus_sim.coordination_runtime import ServiceCoordination
 from campus_sim.crossing import CrossingPolicy
 from campus_sim.crowd import CrowdModelConfig
 from campus_sim.dispatch import minimum_cost_assignment
@@ -27,6 +29,7 @@ from campus_sim.domain import (
     Vehicle,
 )
 from campus_sim.dstar_lite import DStarLite
+from campus_sim.energy import EnergyFleet
 from campus_sim.planning import NoRouteError, astar, node_for_stop
 from campus_sim.resource_admission import ResourceAdmission
 from campus_sim.resource_occupancy import ResourceOccupancyTracker
@@ -186,6 +189,9 @@ class DispatchCandidate:
     vehicle_id: str
     request: RequestView
     cost_s: float
+    trip_duration_s: float
+    lateness_s: float
+    completion_time_s: float
 
 
 @dataclass
@@ -229,6 +235,9 @@ class MobilityService:
     control_sequences: dict[str, int] = field(default_factory=dict)
     resource_occupancy: ResourceOccupancyTracker | None = None
     resource_admission: ResourceAdmission | None = None
+    coordination: ServiceCoordination | None = None
+    energy: EnergyFleet | None = None
+    charging: ChargingStations | None = None
 
     def set_explicit_zone_closure(self, zone_id: str, closed: bool) -> None:
         """Scenario/operator boundary for explicit closure, not fabricated crowd density."""
@@ -382,6 +391,8 @@ class MobilityService:
             and observation.observed_tick <= previous.observed_tick
         ):
             return False
+        if self.energy is not None:
+            self.energy.observe_ego(self, observation)
         if previous is not None and previous.session_id != observation.session_id:
             self.sensor_trackers = {key: value for key, value in self.sensor_trackers.items()
                                     if key[0] != observation.vehicle_id}
@@ -1028,14 +1039,33 @@ class MobilityService:
             if runtime.pose_source == "unity_localization":
                 self._refresh_sensor_safety(vehicle_id, runtime)
                 self._maybe_replan_localized_route(vehicle_id, runtime)
+                if self.energy is not None:
+                    self._refresh_sensor_safety(vehicle_id, runtime)
                 self._advance_localized_runtime(vehicle_id, runtime, delta_s)
             else:
                 self._maybe_replan_synthetic_route(runtime)
+                if self.energy is not None and self.energy.hold(self, vehicle_id):
+                    runtime.safety_motion_state, runtime.safety_reason = "EMERGENCY_STOP", "VEHICLE_FAILURE"
+                    runtime.speed_mps = 0
+                    continue
+                if self.energy is not None and runtime.safety_reason == "VEHICLE_FAILURE":
+                    runtime.safety_motion_state, runtime.safety_reason = None, "UNKNOWN"
                 self._advance_synthetic_runtime(vehicle_id, runtime, delta_s)
+        if self.energy is not None:
+            for vehicle_id, runtime in self.vehicle_runtime.items():
+                self.energy.consume(vehicle_id, seconds=delta_s)
+                if self.energy.hold(self, vehicle_id) and runtime.safety_motion_state is None:
+                    runtime.safety_motion_state, runtime.safety_reason = "EMERGENCY_STOP", "VEHICLE_FAILURE"
+                    if runtime.pose_source != "unity_localization":
+                        runtime.speed_mps = 0
+        if self.charging is not None:
+            self.charging.tick(self)
         self._update_request_etas()
         self._dispatch_queued_requests()
         if self.resource_admission is not None:
             self.resource_admission.sync(self)
+        if self.coordination is not None:
+            self.coordination.tick(self)
 
     def _advance_synthetic_runtime(
         self, vehicle_id: str, runtime: VehicleRuntime, delta_s: float
@@ -1095,7 +1125,12 @@ class MobilityService:
                 runtime.speed_mps = 0.0
                 break
             runtime.speed_mps = runtime.route_speeds[0]
-            moved, consumed = self._move_along_route(runtime, remaining)
+            def meter(distance):
+                if self.energy is not None:
+                    current = self.requests.get(runtime.request_id or "")
+                    loaded = current if current is not None and current.status == RequestStatus.IN_TRANSIT else None
+                    self.energy.consume(vehicle_id, distance_m=distance, request=loaded)
+            moved, consumed = self._move_along_route(runtime, remaining, meter)
             remaining -= consumed
             if moved and len(runtime.route_points) < 2:
                 runtime.node_id = self._nearest_node(runtime.x, runtime.y)
@@ -1195,6 +1230,8 @@ class MobilityService:
         runtime.safety_motion_state = decision.motion_state
         runtime.safety_reason = decision.reason.value
         runtime.sensor_clear_since_s = decision.clear_since_s
+        if self.energy is not None and runtime.safety_motion_state is None and self.energy.hold(self, vehicle_id):
+            runtime.safety_motion_state, runtime.safety_reason = "EMERGENCY_STOP", "VEHICLE_FAILURE"
 
     def _update_request_etas(self) -> None:
         for request in self.requests.values():
@@ -1202,7 +1239,7 @@ class MobilityService:
                 continue
             runtime = self.vehicle_runtime.get(request.vehicle_id)
             if (runtime is None or self.ego_localization_is_stale(request.vehicle_id)
-                    or runtime.safety_reason == ReasonCode.ZONE_CLOSED.value):
+                    or runtime.safety_reason == ReasonCode.ZONE_CLOSED.value) or self.energy is not None and self.energy.hold(self, request.vehicle_id):
                 request.eta_s = None
             elif request.status is RequestStatus.ASSIGNED:
                 pickup_duration = self._route_duration(runtime)
@@ -1230,7 +1267,7 @@ class MobilityService:
                 request.eta_s = 0.0
 
     @staticmethod
-    def _move_along_route(runtime: VehicleRuntime, delta_s: float) -> tuple[bool, float]:
+    def _move_along_route(runtime: VehicleRuntime, delta_s: float, meter=None) -> tuple[bool, float]:
         if delta_s <= 0:
             return False, 0.0
         consumed_s = 0.0
@@ -1252,12 +1289,16 @@ class MobilityService:
             remaining_s = delta_s - consumed_s
             if remaining_s < segment_time:
                 ratio = (remaining_s * speed) / segment
+                if meter is not None:
+                    meter(remaining_s * speed)
                 runtime.x = ax + (bx - ax) * ratio
                 runtime.y = ay + (by - ay) * ratio
                 runtime.route_points[0] = (runtime.x, runtime.y)
                 consumed_s = delta_s
                 break
             runtime.x, runtime.y = bx, by
+            if meter is not None:
+                meter(segment)
             consumed_s += segment_time
             runtime.route_points.pop(0)
             runtime.route_speeds.pop(0)
@@ -1284,6 +1325,65 @@ class MobilityService:
             runtime.y - node.position_m.y,
         ) > EGO_ARRIVAL_RADIUS_M
 
+    def dispatch_candidates(self, idle_vehicle_ids: set[str]) -> list[DispatchCandidate]:
+        """Shared route-derived cost snapshot used by production dispatch and evaluation."""
+        pairs: list[DispatchCandidate] = []
+        for request in self.requests.values():
+            if request.status is not RequestStatus.QUEUED:
+                continue
+            for vehicle_id in idle_vehicle_ids:
+                vehicle = self.vehicles[vehicle_id]
+                runtime = self.vehicle_runtime[vehicle_id]
+                if not self._request_can_vehicle_serve(vehicle, request):
+                    continue
+                try:
+                    pickup_node = node_for_stop(self.graph, request.pickup_stop_id or "")
+                    dropoff_node = node_for_stop(self.graph, request.dropoff_stop_id or "")
+                    pickup_duration = self._route_duration_between_nodes(
+                        runtime.node_id,
+                        pickup_node,
+                        service_type=request.service_type,
+                        requires_step_free=request.service_needs.requires_step_free,
+                    )
+                    trip_duration = self._route_duration_between_nodes(
+                        pickup_node,
+                        dropoff_node,
+                        service_type=request.service_type,
+                        requires_step_free=request.service_needs.requires_step_free,
+                    )
+                except ValueError:
+                    continue
+                if self.energy is not None and not self.energy.assess(self, vehicle_id, request).allowed:
+                    continue
+                completion_time_s = (
+                    self.now_s()
+                    + pickup_duration
+                    + self.dispatch_priority_policy.pickup_service_s
+                    + trip_duration
+                    + self.dispatch_priority_policy.dropoff_service_s
+                )
+                lateness_s = (
+                    max(0.0, completion_time_s - request.latest_arrival_s)
+                    if request.latest_arrival_s is not None
+                    else 0.0
+                )
+                # Energy feasibility is an optional hard gate above; conversion to a
+                # ranking penalty and scarce-vehicle policy are not configured.
+                dispatch_cost_s = pickup_duration + 0.5 * trip_duration + 2.0 * lateness_s
+                pairs.append(DispatchCandidate(
+                    request_priority=self._queued_request_priority(request, runtime),
+                    pickup_duration_s=pickup_duration,
+                    created_s=request.created_s,
+                    request_id=request.id,
+                    vehicle_id=vehicle_id,
+                    request=request,
+                    cost_s=dispatch_cost_s,
+                    trip_duration_s=trip_duration,
+                    lateness_s=lateness_s,
+                    completion_time_s=completion_time_s,
+                ))
+        return pairs
+
     def _dispatch_queued_requests(self) -> None:
         """Greedily match feasible request/vehicle pairs with aging fairness."""
         idle_vehicle_ids = {
@@ -1294,56 +1394,7 @@ class MobilityService:
         }
         policy = self.dispatch_priority_policy
         while idle_vehicle_ids:
-            pairs: list[DispatchCandidate] = []
-            for request in self.requests.values():
-                if request.status is not RequestStatus.QUEUED:
-                    continue
-                for vehicle_id in idle_vehicle_ids:
-                    vehicle = self.vehicles[vehicle_id]
-                    runtime = self.vehicle_runtime[vehicle_id]
-                    if not self._request_can_vehicle_serve(vehicle, request):
-                        continue
-                    try:
-                        pickup_node = node_for_stop(self.graph, request.pickup_stop_id or "")
-                        dropoff_node = node_for_stop(self.graph, request.dropoff_stop_id or "")
-                        pickup_duration = self._route_duration_between_nodes(
-                            runtime.node_id,
-                            pickup_node,
-                            service_type=request.service_type,
-                            requires_step_free=request.service_needs.requires_step_free,
-                        )
-                        trip_duration = self._route_duration_between_nodes(
-                            pickup_node,
-                            dropoff_node,
-                            service_type=request.service_type,
-                            requires_step_free=request.service_needs.requires_step_free,
-                        )
-                    except ValueError:
-                        continue
-                    completion_time_s = (
-                        self.now_s()
-                        + pickup_duration
-                        + self.dispatch_priority_policy.pickup_service_s
-                        + trip_duration
-                        + self.dispatch_priority_policy.dropoff_service_s
-                    )
-                    lateness_s = (
-                        max(0.0, completion_time_s - request.latest_arrival_s)
-                        if request.latest_arrival_s is not None
-                        else 0.0
-                    )
-                    # Battery/energy and rare-vehicle penalties cannot be scored yet:
-                    # the current Vehicle contract has no battery or fleet scarcity model.
-                    dispatch_cost_s = pickup_duration + 0.5 * trip_duration + 2.0 * lateness_s
-                    pairs.append(DispatchCandidate(
-                        request_priority=self._queued_request_priority(request, runtime),
-                        pickup_duration_s=pickup_duration,
-                        created_s=request.created_s,
-                        request_id=request.id,
-                        vehicle_id=vehicle_id,
-                        request=request,
-                        cost_s=dispatch_cost_s,
-                    ))
+            pairs = self.dispatch_candidates(idle_vehicle_ids)
             if not pairs:
                 return
 
