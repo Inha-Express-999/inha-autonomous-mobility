@@ -34,6 +34,7 @@ def main() -> None:
     serve.add_argument("--host", default="127.0.0.1")
     serve.add_argument("--port", type=int, default=8765)
     serve.add_argument("--energy-config", help="Opt in to explicit synthetic battery assumptions")
+    serve.add_argument("--charging-config", help="Opt in to synthetic parked charging; requires matching energy model")
     serve.add_argument("--map", default="maps/fixtures/campus-synthetic-6.json")
     compare = subcommands.add_parser(
         "route-compare", help="Compare Dijkstra and A* on a versioned road graph"
@@ -76,7 +77,8 @@ def main() -> None:
         from campus_sim.api import create_app
 
         try:
-            service_app = create_app(map_path=args.map, energy_config_path=args.energy_config)
+            service_app = create_app(map_path=args.map, energy_config_path=args.energy_config,
+                                     charging_config_path=args.charging_config)
         except (RoadGraphLoadError, OSError, KeyError, TypeError, ValueError) as error:
             parser.error(str(error))
         uvicorn.run(service_app, host=args.host, port=args.port, reload=False)

@@ -5,6 +5,7 @@ from pathlib import Path
 from fastapi import FastAPI, HTTPException, WebSocket, status
 
 from campus_sim import __version__
+from campus_sim.charging import ChargingStations
 from campus_sim.domain import CommandAck, CreateRequest, Landmark, RequestView
 from campus_sim.energy import EnergyFleet
 from campus_sim.realtime import serve_client_socket
@@ -16,6 +17,7 @@ def create_app(
     *,
     map_path: str | Path | None = None,
     energy_config_path: str | Path | None = None,
+    charging_config_path: str | Path | None = None,
 ) -> FastAPI:
     if service is not None and map_path is not None:
         raise ValueError("provide a service instance or map_path, not both")
@@ -34,6 +36,13 @@ def create_app(
                 or not set(service_instance.vehicle_runtime) <= energy.policies.keys()):
             raise ValueError("energy map, charger or active fleet mismatch")
         service_instance.energy = energy
+
+    if charging_config_path is not None:
+        if service_instance.charging is not None:
+            raise ValueError("charging stations already configured")
+        charging = ChargingStations.from_config(charging_config_path)
+        charging.validate(service_instance)
+        service_instance.charging = charging
 
     @asynccontextmanager
     async def lifespan(app: FastAPI):
@@ -69,6 +78,7 @@ def create_app(
             "project_version": __version__,
             "schema_version": "3",
             "energy_model_status": "SYNTHETIC_MODEL" if app.state.service.energy is not None else "DISABLED",
+            "charging_status": "SYNTHETIC_PARKED_ONLY" if app.state.service.charging is not None else "DISABLED",
             "map_version": graph.map_version if graph is not None else None,
             "map_data_status": graph.data_status if graph is not None else None,
             "node_count": len(graph.nodes) if graph is not None else 0,

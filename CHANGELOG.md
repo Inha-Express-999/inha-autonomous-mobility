@@ -1,5 +1,13 @@
 # 변경 이력
 
+## 0.4.2.0 — 2026-09-26 · 합성 정차 충전 슬롯 관리
+
+- 작업: 충전 완료와 중단 상태 분리, FIFO 대기 복구, 독점 전력 적립, 갱신 공백/역행 시각 처리 및 위치 확인 후 슬롯 해제를 보완했다. 선택적 `--charging-config`, 합성 n1/n6 충전 설정과 health 표시를 추가했다.
+- 이유: 배터리 부족 차량의 충전 후 배차 복귀와 충전 슬롯 상태의 일관성을 검증하기 위해서다.
+- 호환성/마이그레이션: 기능 추가로 C를 증가시켰다. 충전은 기본 비활성이며 일치하는 합성 에너지 모델을 명시적으로 설정해야 한다. schema_version=3 및 map_version 유지. 데이터 마이그레이션 없음.
+- 검증: `python -m pytest backend/tests AgentScripts/MapData -q -o cache_dir=tmp/pytest-cache` — 467 passed, 기존 Starlette/httpx deprecation 경고 1개. 충전 전용 11개는 충전→배차→운송 완료→슬롯 해제를 포함한다. `python -m ruff check backend AgentScripts/MapData AgentScripts/UnityPhysicsIntegration` 및 `git diff --check` 통과.
+- 미검증/한계: 충전소 자동 이동, 물리 dock/통로 예약 통합, 운영자 복구와 충전 상세 UI는 미완료다. Unity/Player/Android는 이번 변경에서 실행하지 않았다. 합성 제원이며 실제 시설 승인 또는 M5/전체 MVP 완료를 의미하지 않는다.
+
 ## 0.4.1.0 — 2026-09-26 · CBS·배차 비교와 합성 에너지 작업 체크포인트
 
 - 작업: disjoint CBS/제한된 캐시와 별도 프로세스 제안 worker, 서비스 경로 비용 기반 Greedy/Hungarian 비교, 선택적 합성 에너지 소비·배차 제한과 배터리 추정 표시를 추가했다. 충전 슬롯 lifecycle 초안 및 서비스 선택 연결을 작성 중 상태로 보존한다.

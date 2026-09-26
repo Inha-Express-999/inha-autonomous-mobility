@@ -1,6 +1,6 @@
 # MVP implementation and verification ledger
 
-2026-09-26 · project version 0.4.1.0
+2026-09-26 · project version 0.4.2.0
 
 ## v0.4.1.0 커밋 체크포인트 (2026-09-26)
 
@@ -549,3 +549,7 @@ CBS 작업본 검증: 전체 Python/MapData 397개 통과 후 disjoint 탐색 �
 ## 2026-09-26 합성 에너지 배차 제한 작업본
 
 명시적 energy 설정 opt-in을 추가했다. Greedy/Hungarian 공통 후보에서 픽업·적재 운송·충전 복귀·서비스·15% 예비량을 검사한다. 합성 segment/승인 ego 변위와 보조전력으로 모델 잔량을 차감하고, 수행 중 부족/충전 경로 상실은 요청과 위치를 보존한 채 지원 정지한다. 기존 batteryWh와 PC '배터리 추정' 표기를 사용한다. 전체 회귀 455개 이후 제어 속도 상한 반영을 포함한 에너지 22개 검사를 통과했다. Ruff/diff 통과, Unity 미실행. `energy_admission.md` 및 `artifacts/validation/2026-09-26-energy-admission/`를 따른다. 자동 충전 이동/대기열·허브·실제 제원/Physics 검증과 전체 MVP는 남는다.
+
+## 2026-09-26 충전 슬롯 후속 작업 (v0.4.2.0)
+
+충전 완료와 일시 중단 상태를 분리하고 중단된 FIFO 큐 복구, 독점 전력 적립, 긴 갱신 공백/역행 시간 처리, 위치 확인 후 슬롯 해제를 연결했다. 선택적 `--charging-config`와 합성 n1/n6 설정을 추가했다. 전용 11개와 전체 Python/MapData 467개 및 Ruff 통과. 잔량 부족→정차 충전→대기 승객 배차→운송 완료→슬롯 해제 서비스 흐름을 검증했다. 자동 충전 이동·물리 dock/예약 통합·Unity/Player 및 전체 M5는 미완료다. 상세는 `Docs/charging_lifecycle.md`, 증거는 `artifacts/validation/2026-09-26-charging-lifecycle/`를 따른다.

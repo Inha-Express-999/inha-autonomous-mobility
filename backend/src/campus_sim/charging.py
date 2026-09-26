@@ -37,6 +37,7 @@ class ChargingVisit:
     session: str
     state: str = "QUEUED"
     entered: bool = False
+    completed: bool = False
     previous_credit_s: float | None = None
     outside_since_s: float | None = None
     supplied_wh: float = 0.0
@@ -150,19 +151,33 @@ class ChargingStations:
     def tick(self, service):
         now = service.now_s()
         if self.last_tick_s is not None and now <= self.last_tick_s:
+            if now < self.last_tick_s:
+                for visit in self.visits.values():
+                    visit.previous_credit_s = visit.outside_since_s = None
             return  # Snapshot reads/retries cannot credit the same elapsed time twice.
+        gap = None if self.last_tick_s is None else now - self.last_tick_s
         self.last_tick_s = now
+        for visit in self.visits.values():
+            if gap is not None and gap > self.stations[visit.station].max_credit_step_s:
+                visit.previous_credit_s = visit.outside_since_s = None
         try:
             self.validate(service)
         except ValueError:
             for visit in self.visits.values():
-                visit.previous_credit_s = None
+                visit.previous_credit_s = visit.outside_since_s = None
+                service.vehicles[visit.vehicle].available = False
                 self._state(service, visit, "PAUSED_CONTEXT")
             return
         self._automatic_parked_requests(service)
         # FIFO reservations are allocated before arrival; they grant no route or motion authority.
         for visit in sorted(self.visits.values(), key=lambda v: (v.queued_s, v.vehicle)):
-            if visit.station not in self.owners and visit.state == "QUEUED":
+            if visit.vehicle in self.owners.values():
+                continue
+            if not self._fresh(service, visit):
+                self._state(service, visit, "PAUSED_CONTEXT")
+                continue
+            self._state(service, visit, "QUEUED")
+            if visit.station not in self.owners:
                 self.owners[visit.station] = visit.vehicle
                 self._state(service, visit, "RESERVED")
         for station_id, vehicle in list(self.owners.items()):
@@ -170,9 +185,17 @@ class ChargingStations:
             runtime = service.vehicle_runtime[vehicle]
             if not self._fresh(service, visit):
                 visit.previous_credit_s = visit.outside_since_s = None
+                service.vehicles[vehicle].available = False
                 self._state(service, visit, "PAUSED_CONTEXT")
                 continue
             distance = self._distance(service, vehicle, station)
+            if distance <= station.arrival_radius_m:
+                visit.entered = True
+            if visit.completed:
+                self._state(service, visit, "COMPLETE")
+                if runtime.request_id is None and runtime.route_id is None:
+                    service.vehicles[vehicle].available = True
+                    runtime.mission_state = "IDLE"
             if distance > station.release_radius_m and visit.entered:
                 visit.previous_credit_s = None
                 if visit.outside_since_s is None:
@@ -189,12 +212,12 @@ class ChargingStations:
             if (distance > station.arrival_radius_m or runtime.speed_mps > .01
                     or runtime.request_id is not None or runtime.route_id is not None):
                 visit.previous_credit_s = None
-                if visit.state != "COMPLETE":
+                if not visit.completed:
                     self._state(service, visit, "WAITING_AT_DOCK")
                 continue
             visit.entered = True
             target = service.energy.policies[vehicle].capacity_wh * station.target_fraction
-            if visit.state == "COMPLETE":
+            if visit.completed:
                 continue  # Do not restart charging automatically while waiting to exit.
             runtime.mission_state = "CHARGING"
             previous = visit.previous_credit_s
@@ -206,6 +229,7 @@ class ChargingStations:
                 service.energy.remaining_wh[vehicle] += accepted
                 visit.supplied_wh += accepted
             if service.energy.remaining_wh[vehicle] + 1e-9 >= target:
+                visit.completed = True
                 self._state(service, visit, "COMPLETE")
                 visit.previous_credit_s = None
                 runtime.mission_state = "IDLE"

@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "data_status": "SYNTHETIC_ASSUMPTIONS",
+  "map_version": "synthetic-campus-6stop-v1",
+  "auto_start_fraction": 0.2,
+  "stations": [
+    {
+      "id": "synthetic-dock-1",
+      "node_id": "n1",
+      "power_w": 1000,
+      "efficiency": 0.9,
+      "target_fraction": 0.8,
+      "arrival_radius_m": 0.1,
+      "release_radius_m": 0.3,
+      "release_hold_s": 0.5,
+      "max_credit_step_s": 0.5,
+      "provenance": "Synthetic test station; not a verified campus facility or measured charger."
+    },
+    {
+      "id": "synthetic-dock-6",
+      "node_id": "n6",
+      "power_w": 1000,
+      "efficiency": 0.9,
+      "target_fraction": 0.8,
+      "arrival_radius_m": 0.1,
+      "release_radius_m": 0.3,
+      "release_hold_s": 0.5,
+      "max_credit_step_s": 0.5,
+      "provenance": "Synthetic test station; not a verified campus facility or measured charger."
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "backend/src/campus_sim/charging.py": "e39c884a11f416e128fa60d98b72347e7c2ad51e3044eb1a7a15897bff7bafdc",
+  "backend/src/campus_sim/service.py": "375708cfae35f42a83ebdfa427c1df1dbea01db7d0928883c0c8544dbfbe02b7",
+  "backend/src/campus_sim/api.py": "dba7f75d609eae99846c350fc4f0fe8a0f76cfb1f94fba4c6c3dbcb0d2786494",
+  "backend/src/campus_sim/cli.py": "bbc91161b72fecd628809b214639c9317bb6e8f1ae8ea38590bd5807fd952eb8",
+  "backend/tests/test_charging.py": "074bf9ca8ca6b1c304fb9407700e6be0c11f4e6dbef6f5a0fcd3675cdc9b4e2f",
+  "configs/charging.synthetic.json": "3f541c89f709e4c4b3cae53bf220c32daf0c99e3141ae1a6fc0ef333af091ea6"
+}

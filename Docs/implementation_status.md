@@ -1,6 +1,6 @@
 # 구현 현황
 
-프로젝트 버전 **0.4.1.0** · 2026-09-26 작업본. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
+프로젝트 버전 **0.4.2.0** · 2026-09-26 작업본. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
 
 ## v0.4.1.0 커밋 체크포인트 (2026-09-26)
 
@@ -140,7 +140,7 @@ Python/MapData 259개 및 Ruff, 격리 Unity PlayMode 4/4(가림·포화·센서
 4. 합성 preview에 V01 route-following alpha를 연결했다. 다음은 Unity Editor에서 씬 재임포트와 PlayMode를 통해 local Python server 연결·요청→Physics 이동→도착→요청 완료 흐름을 검증한다. 축·Collider·ground contact를 확인하고, 센서/TTC safety 계층이 연결되기 전까지는 실제 캠퍼스 이동을 활성화하지 않는다.
 5. M2 지도/접근성/비룡플라자 범위를 완료하는 동안 재사용 빈도가 높은 캠퍼스 오브젝트를 prefab/variant로 단계적으로 정리한 뒤 센서·안전, 다중 차량, 성능 실험을 진행한다.
 
-버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.4.1.0으로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
+버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.4.2.0으로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
 
 ## 2026-09-26 차량 telemetry 연결 소유권 (v0.2.4.0 이후 작업본)
 
@@ -287,3 +287,7 @@ CBS 작업본 검증: 전체 Python/MapData 397개 통과 후 disjoint 탐색 �
 ## 2026-09-26 합성 에너지 배차 제한 작업본
 
 명시적 energy 설정 opt-in을 추가했다. Greedy/Hungarian 공통 후보에서 픽업·적재 운송·충전 복귀·서비스·15% 예비량을 검사한다. 합성 segment/승인 ego 변위와 보조전력으로 모델 잔량을 차감하고, 수행 중 부족/충전 경로 상실은 요청과 위치를 보존한 채 지원 정지한다. 기존 batteryWh와 PC '배터리 추정' 표기를 사용한다. 전체 회귀 455개 이후 제어 속도 상한 반영을 포함한 에너지 22개 검사를 통과했다. Ruff/diff 통과, Unity 미실행. `energy_admission.md` 및 `artifacts/validation/2026-09-26-energy-admission/`를 따른다. 자동 충전 이동/대기열·허브·실제 제원/Physics 검증과 전체 MVP는 남는다.
+
+## 2026-09-26 충전 슬롯 후속 작업 (v0.4.2.0)
+
+충전 완료와 일시 중단 상태를 분리하고 중단된 FIFO 큐 복구, 독점 전력 적립, 긴 갱신 공백/역행 시간 처리, 위치 확인 후 슬롯 해제를 연결했다. 선택적 `--charging-config`와 합성 n1/n6 설정을 추가했다. 전용 11개와 전체 Python/MapData 467개 및 Ruff 통과. 잔량 부족→정차 충전→대기 승객 배차→운송 완료→슬롯 해제 서비스 흐름을 검증했다. 자동 충전 이동·물리 dock/예약 통합·Unity/Player 및 전체 M5는 미완료다. 상세는 `Docs/charging_lifecycle.md`, 증거는 `artifacts/validation/2026-09-26-charging-lifecycle/`를 따른다.
