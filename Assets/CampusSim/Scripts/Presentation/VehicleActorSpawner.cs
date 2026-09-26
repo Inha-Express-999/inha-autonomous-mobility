@@ -197,9 +197,7 @@ namespace InhaExpress.Client.Presentation
             bool serverAllowsMotion)
         {
             if (!routeLines.TryGetValue(vehicleId, out var line) || line == null) return;
-            int firstRoutePoint = Mathf.Clamp(follower.WaypointIndex, 0, follower.RoutePointCount);
-            int remainingPointCount = follower.RoutePointCount - firstRoutePoint;
-            int pointCount = remainingPointCount > 0 ? remainingPointCount + 1 : 0;
+            int pointCount = follower.RoutePointCount;
             if (line.sharedMaterial == null || pointCount < 2)
             {
                 line.positionCount = 0;
@@ -208,10 +206,10 @@ namespace InhaExpress.Client.Presentation
 
             const float lineLiftM = 0.12f;
             line.positionCount = pointCount;
-            line.SetPosition(0, actor.transform.position + Vector3.up * lineLiftM);
-            for (int index = 0; index < remainingPointCount; index++)
-                line.SetPosition(index + 1,
-                    follower.GetRoutePoint(firstRoutePoint + index) + Vector3.up * lineLiftM);
+            // The route line represents immutable server geometry. Actor motion and
+            // resume progress must not replace its first point or truncate its prefix.
+            for (int index = 0; index < pointCount; index++)
+                line.SetPosition(index, follower.GetRoutePoint(index) + Vector3.up * lineLiftM);
 
             Color color = serverAllowsMotion
                 ? new Color(0.10f, 0.72f, 0.91f, 0.95f)

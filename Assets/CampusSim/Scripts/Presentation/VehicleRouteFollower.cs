@@ -63,6 +63,9 @@ namespace InhaExpress.Client.Presentation
         /// <summary>Accept only complete route updates whose version matches a synthetic map.</summary>
         public bool ApplyRoute(RouteDto route, string snapshotMapVersion, double receivedAtS)
         {
+            // Authoring/EditMode callers can apply a route before Awake has run.
+            if (body == null) body = GetComponent<Rigidbody>();
+            if (body == null) return RejectRoute();
             if (route == null || string.IsNullOrWhiteSpace(snapshotMapVersion) ||
                 !snapshotMapVersion.StartsWith(SyntheticMapPrefix, StringComparison.Ordinal) ||
                 !string.Equals(route.MapVersion, snapshotMapVersion, StringComparison.Ordinal) ||
@@ -225,7 +228,8 @@ namespace InhaExpress.Client.Presentation
             float routeSpeedMps = segmentIndex < segmentSpeedsMps.Length
                 ? segmentSpeedsMps[segmentIndex]
                 : maxSpeedMps;
-            float desiredSpeed = Mathf.Min(routeSpeedMps, Mathf.Sqrt(2f * brakingMps2 * distance));
+            float desiredSpeed = Mathf.Min(Mathf.Min(maxSpeedMps, routeSpeedMps),
+                Mathf.Sqrt(2f * brakingMps2 * distance));
             if (angle > alignmentToleranceDeg) desiredSpeed = 0f;
             float rate = desiredSpeed < speedMps ? brakingMps2 : accelerationMps2;
             speedMps = Mathf.MoveTowards(speedMps, desiredSpeed, rate * deltaS);

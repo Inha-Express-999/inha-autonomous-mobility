@@ -1,6 +1,6 @@
 # Python 서버 M0 기반
 
-프로젝트 0.2.3.0 · 문서 정합화 2026-09-25 · 서버 구현 범위는 0.1.6.0 기반
+프로젝트 0.2.4.0 · 문서 정합화 2026-09-25 · 서버 구현 범위는 0.1.6.0 기반
 
 `backend/`는 Unity 표현 계층과 분리된 Python 서비스의 시작점이다. `campus-sim serve --map <path>`로 경로 그래프 fixture를 선택할 수 있으며, 현재 loader가 허용하는 것은 합성 fixture뿐이다. 실제 지도 승인 데이터와 Unity Physics 실행은 포함하지 않는다. SensorObservation 입력 경계와 제한된 synthetic localization safety gate는 구현 중이며 RRT는 포함하지 않는다. `/v1/client/ws`는 schema-v3 snapshot, 모바일 승객 명령, PC 운영자의 승객/화물 명령과 localization을 Unity에 전달한다.
 

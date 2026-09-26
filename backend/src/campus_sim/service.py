@@ -26,6 +26,7 @@ from campus_sim.domain import (
 )
 from campus_sim.planning import NoRouteError, astar, node_for_stop
 from campus_sim.road_graph import RoadGraphDocument, load_road_graph
+from campus_sim.safety import SafetyPolicy, SensorSample, evaluate_sensor_safety
 
 EGO_LOCALIZATION_STALE_AFTER_S = 0.5
 EGO_ARRIVAL_RADIUS_M = 1.0  # Synthetic fixture threshold; calibrate from verified Stop geometry.
@@ -68,49 +69,6 @@ class PlanningPolicy:
             or policy.improvement_s < 0
         ):
             raise ValueError(f"planning replan values are outside their valid range: {path}")
-        return policy
-
-
-@dataclass(frozen=True)
-class SafetyPolicy:
-    sensor_stale_after_s: float
-    resume_clear_s: float
-    reaction_time_s: float
-    emergency_decel_mps2: float
-    margin_m: float
-
-    @classmethod
-    def from_default_config(cls) -> SafetyPolicy:
-        path = Path(__file__).resolve().parents[3] / "configs" / "safety.json"
-        try:
-            values = json.loads(path.read_text(encoding="utf-8"))
-
-            def number(name: str) -> float:
-                value = values[name]
-                if isinstance(value, bool) or not isinstance(value, (int, float)):
-                    raise TypeError(f"safety config value must be numeric: {name}")
-                return float(value)
-
-            policy = cls(
-                sensor_stale_after_s=number("sensor_stale_after_s"),
-                resume_clear_s=number("resume_clear_s"),
-                reaction_time_s=number("reaction_time_s"),
-                emergency_decel_mps2=number("emergency_decel_mps2"),
-                margin_m=number("margin_m"),
-            )
-        except (OSError, json.JSONDecodeError, KeyError, TypeError, ValueError) as error:
-            raise ValueError(f"invalid safety config: {path}") from error
-        values_to_check = (
-            policy.sensor_stale_after_s,
-            policy.resume_clear_s,
-            policy.reaction_time_s,
-            policy.emergency_decel_mps2,
-            policy.margin_m,
-        )
-        if any(not math.isfinite(value) or value < 0 for value in values_to_check):
-            raise ValueError(f"safety config values must be finite and non-negative: {path}")
-        if policy.sensor_stale_after_s == 0 or policy.emergency_decel_mps2 == 0:
-            raise ValueError(f"safety freshness and deceleration must be positive: {path}")
         return policy
 
 
@@ -1081,65 +1039,26 @@ class MobilityService:
             runtime.service_remaining_s = self.dispatch_priority_policy.dropoff_service_s
 
     def _refresh_sensor_safety(self, vehicle_id: str, runtime: VehicleRuntime) -> None:
-        """Fail closed on stale/invalid frames and close forward hazards before motion."""
+        """Select current-session observations and apply the independent safety decision."""
         localization = self.ego_localizations.get(vehicle_id)
-        frames = [
-            (key, frame)
+        samples = tuple(
+            SensorSample(frame, self.sensor_received_at_s.get(key))
             for key, frame in self.sensor_observations.items()
             if key[0] == vehicle_id
             and localization is not None
             and frame.session_id == localization.session_id
-        ]
-        if not frames:
-            runtime.safety_motion_state = "REPLANNING"
-            runtime.safety_reason = ReasonCode.SENSOR_DATA_STALE.value
-            runtime.sensor_clear_since_s = None
-            return
-
-        for key, frame in frames:
-            received_at = self.sensor_received_at_s.get(key)
-            if (
-                received_at is None
-                or self.now_s() - received_at > self.safety_policy.sensor_stale_after_s
-            ):
-                runtime.safety_motion_state = "REPLANNING"
-                runtime.safety_reason = ReasonCode.SENSOR_DATA_STALE.value
-                runtime.sensor_clear_since_s = None
-                return
-            if not frame.valid:
-                runtime.safety_motion_state = "EMERGENCY_STOP"
-                runtime.safety_reason = ReasonCode.SENSOR_INVALID.value
-                runtime.sensor_clear_since_s = None
-                return
-            if frame.ego_pose_tick != localization.observed_tick:
-                runtime.safety_motion_state = "REPLANNING"
-                runtime.safety_reason = ReasonCode.SENSOR_DATA_STALE.value
-                return
-
-        speed = max(0.0, runtime.speed_mps)
-        stopping_distance_m = (
-            speed * self.safety_policy.reaction_time_s
-            + speed * speed / (2.0 * self.safety_policy.emergency_decel_mps2)
-            + self.safety_policy.margin_m
         )
-        for _, frame in frames:
-            for detection in frame.detections:
-                local = detection.local_position_m
-                # Conservative 90-degree forward sector; no path/footprint association yet.
-                if local.x > 0.0 and abs(local.y) <= local.x and local.x <= stopping_distance_m:
-                    runtime.safety_motion_state = "EMERGENCY_STOP"
-                    runtime.safety_reason = ReasonCode.OBSTACLE_STOP.value
-                    runtime.sensor_clear_since_s = None
-                    return
-
-        if runtime.sensor_clear_since_s is None:
-            runtime.sensor_clear_since_s = self.now_s()
-        if self.now_s() - runtime.sensor_clear_since_s < self.safety_policy.resume_clear_s:
-            runtime.safety_motion_state = "EMERGENCY_STOP"
-            runtime.safety_reason = ReasonCode.SAFETY_RESUME_HOLD.value
-            return
-        runtime.safety_motion_state = None
-        runtime.safety_reason = ReasonCode.UNKNOWN.value
+        decision = evaluate_sensor_safety(
+            samples,
+            expected_pose_tick=localization.observed_tick if localization is not None else None,
+            speed_mps=runtime.speed_mps,
+            now_s=self.now_s(),
+            clear_since_s=runtime.sensor_clear_since_s,
+            policy=self.safety_policy,
+        )
+        runtime.safety_motion_state = decision.motion_state
+        runtime.safety_reason = decision.reason.value
+        runtime.sensor_clear_since_s = decision.clear_since_s
 
     def _update_request_etas(self) -> None:
         for request in self.requests.values():

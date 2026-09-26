@@ -1,4 +1,14 @@
 # 변경 이력
+## 0.2.4.0 — 2026-09-26 · 센서 안전 분리와 합성 Physics 통합 검증
+
+- 센서 안전 정책·평가를 service에서 분리하고 다중 센서의 invalid/stale 검사 순서와 비정상 수신 시각 처리를 보완했다.
+- Unity follower의 로컬 속도 상한과 Awake 이전 Rigidbody 확인을 보완하고, 경로 표시를 서버의 불변 전체 polyline과 일치시켰다.
+- 격리된 Unity follower·원본 차량 prefab·Python 연동 테스트 실행기와 합성 3-node fixture, 검증 artifact 및 MVP 단계 기록을 추가했다.
+- 이유: 서비스 책임을 분리하고 실제 Unity Physics/Raycast/WebSocket 왕복으로 합성 운송 흐름을 검증하기 위해서다.
+- 호환성/마이그레이션: 프로젝트 버전 0.2.4.0; schema_version=3 및 기존 map_version 유지. 새 지도는 테스트 전용 합성 fixture다. 데이터 마이그레이션 없음.
+- 검증: Python/MapData 111개 및 Ruff 통과. Unity follower PlayMode 7/7, 원본 prefab EditMode 11/11, 승객·화물/장애물 정지·재출발 통합 시나리오의 PlayMode와 Windows 테스트 Player 통과. T03 110 OD × 20회 경로 비용 일치. 실행별 소스 hash와 XML은 artifacts/validation에 보존했다.
+- 한계: Player/follower 증거는 각 실행 당시 소스 기준이며 후속 Rigidbody 초기화·경로 표시 수정은 prefab EditMode에서 검증했다. 원본 전체 씬/Android/다중 Physics 차량/실제 지도/성능·부하/완전한 안전 기능은 미검증이다. Player allocation-lifetime 및 Python 의존성 deprecation 경고가 남는다. 전체 MVP는 미완료다.
+
 ## 0.2.3.0 — 2026-09-25 · 합성 운송·센서·배차 기반 확장
 
 - 합성 RoadGraph의 경로 비교와 요청→픽업→하차 흐름을 확장하고 3대 차량의 Greedy/Hungarian 배차, 시간대 혼잡 prior와 우회 정책을 추가했다. 배차 비교 artifact의 비용행렬은 수기 합성값이다.

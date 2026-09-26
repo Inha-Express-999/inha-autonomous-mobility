@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="11" result="Passed" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-09-26 04:34:23Z" end-time="2026-09-26 04:34:23Z" duration="0.113303">
+  <test-suite type="TestSuite" id="1000" name="unity-prefabs-8bf3e1bf15d242a58a5f006af95639cc" fullname="unity-prefabs-8bf3e1bf15d242a58a5f006af95639cc" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-09-26 04:34:23Z" end-time="2026-09-26 04:34:23Z" duration="0.113303" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1014" name="InhaExpress.Client.Tests.EditMode.dll" fullname="C:/Users/Yeop/Documents/GitHub/inha-autonomous-mobility/tmp/unity-prefabs-8bf3e1bf15d242a58a5f006af95639cc/Library/ScriptAssemblies/InhaExpress.Client.Tests.EditMode.dll" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-09-26 04:34:23Z" end-time="2026-09-26 04:34:23Z" duration="0.104174" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="16968" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1015" name="InhaExpress" fullname="InhaExpress" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-09-26 04:34:23Z" end-time="2026-09-26 04:34:23Z" duration="0.103861" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1016" name="Client" fullname="InhaExpress.Client" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-09-26 04:34:23Z" end-time="2026-09-26 04:34:23Z" duration="0.103749" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1017" name="Tests" fullname="InhaExpress.Client.Tests" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-09-26 04:34:23Z" end-time="2026-09-26 04:34:23Z" duration="0.103603" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1001" name="VehicleActorSpawnerTests" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" testcasecount="11" result="Passed" start-time="2026-09-26 04:34:23Z" end-time="2026-09-26 04:34:23Z" duration="0.102890" total="11" passed="11" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1008" name="FixtureSnapshotDoesNotSpawnPhysicsActors" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.FixtureSnapshotDoesNotSpawnPhysicsActors" methodname="FixtureSnapshotDoesNotSpawnPhysicsActors" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="997293589" result="Passed" start-time="2026-09-26 04:34:23Z" end-time="2026-09-26 04:34:23Z" duration="0.040497" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1013" name="MissingRouteOrMapChangeClearsPreviouslyAcceptedRoute" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.MissingRouteOrMapChangeClearsPreviouslyAcceptedRoute" methodname="MissingRouteOrMapChangeClearsPreviouslyAcceptedRoute" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="272059060" result="Passed" start-time="2026-09-26 04:34:23Z" end-time="2026-09-26 04:34:23Z" duration="0.024538" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Spawned Unity physics actor for server vehicle spawner-test-vehicle
+]]></output>
+              </test-case>
+              <test-case id="1007" name="NonDrivingSnapshotRevokesMotionWithoutDiscardingRouteProgress" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.NonDrivingSnapshotRevokesMotionWithoutDiscardingRouteProgress" methodname="NonDrivingSnapshotRevokesMotionWithoutDiscardingRouteProgress" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="162051030" result="Passed" start-time="2026-09-26 04:34:23Z" end-time="2026-09-26 04:34:23Z" duration="0.003805" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Spawned Unity physics actor for server vehicle spawner-test-vehicle
+]]></output>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1005" name="OriginalActorWrapperHasResolvedVisualAndMeasuredCollider" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.OriginalActorWrapperHasResolvedVisualAndMeasuredCollider" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-09-26 04:34:23Z" end-time="2026-09-26 04:34:23Z" duration="0.012131" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1002" name="OriginalActorWrapperHasResolvedVisualAndMeasuredCollider(&quot;VehicleActor_Default&quot;)" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.OriginalActorWrapperHasResolvedVisualAndMeasuredCollider(&quot;VehicleActor_Default&quot;)" methodname="OriginalActorWrapperHasResolvedVisualAndMeasuredCollider" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="1517978408" result="Passed" start-time="2026-09-26 04:34:23Z" end-time="2026-09-26 04:34:23Z" duration="0.006535" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1003" name="OriginalActorWrapperHasResolvedVisualAndMeasuredCollider(&quot;VehicleActor_Annyoung&quot;)" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.OriginalActorWrapperHasResolvedVisualAndMeasuredCollider(&quot;VehicleActor_Annyoung&quot;)" methodname="OriginalActorWrapperHasResolvedVisualAndMeasuredCollider" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="1248207597" result="Passed" start-time="2026-09-26 04:34:23Z" end-time="2026-09-26 04:34:23Z" duration="0.001936" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1004" name="OriginalActorWrapperHasResolvedVisualAndMeasuredCollider(&quot;VehicleActor_Induck&quot;)" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.OriginalActorWrapperHasResolvedVisualAndMeasuredCollider(&quot;VehicleActor_Induck&quot;)" methodname="OriginalActorWrapperHasResolvedVisualAndMeasuredCollider" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="524169360" result="Passed" start-time="2026-09-26 04:34:23Z" end-time="2026-09-26 04:34:23Z" duration="0.001365" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="1012" name="RejectedMapUpdateClearsPreviouslyAuthorizedRoute" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.RejectedMapUpdateClearsPreviouslyAuthorizedRoute" methodname="RejectedMapUpdateClearsPreviouslyAuthorizedRoute" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="1914157910" result="Passed" start-time="2026-09-26 04:34:23Z" end-time="2026-09-26 04:34:23Z" duration="0.000917" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1011" name="ReusedRouteIdWithChangedGeometryClearsRouteAndRevokesMotionAuthority" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.ReusedRouteIdWithChangedGeometryClearsRouteAndRevokesMotionAuthority" methodname="ReusedRouteIdWithChangedGeometryClearsRouteAndRevokesMotionAuthority" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="1244010513" result="Passed" start-time="2026-09-26 04:34:23Z" end-time="2026-09-26 04:34:23Z" duration="0.000752" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1010" name="RouteFollowerRejectsNonSyntheticAndMismatchedMapVersions" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.RouteFollowerRejectsNonSyntheticAndMismatchedMapVersions" methodname="RouteFollowerRejectsNonSyntheticAndMismatchedMapVersions" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="1999443894" result="Passed" start-time="2026-09-26 04:34:23Z" end-time="2026-09-26 04:34:23Z" duration="0.000749" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1006" name="ServerSnapshotSpawnsActorWithConvertedPoseAndReporterIdOnlyOnce" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.ServerSnapshotSpawnsActorWithConvertedPoseAndReporterIdOnlyOnce" methodname="ServerSnapshotSpawnsActorWithConvertedPoseAndReporterIdOnlyOnce" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="2107316124" result="Passed" start-time="2026-09-26 04:34:23Z" end-time="2026-09-26 04:34:23Z" duration="0.004202" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Spawned Unity physics actor for server vehicle spawner-test-vehicle
+]]></output>
+              </test-case>
+              <test-case id="1009" name="SnapshotWithDifferentMapVersionDoesNotSpawnOnCampusScene" fullname="InhaExpress.Client.Tests.VehicleActorSpawnerTests.SnapshotWithDifferentMapVersionDoesNotSpawnOnCampusScene" methodname="SnapshotWithDifferentMapVersionDoesNotSpawnOnCampusScene" classname="InhaExpress.Client.Tests.VehicleActorSpawnerTests" runstate="Runnable" seed="1109569275" result="Passed" start-time="2026-09-26 04:34:23Z" end-time="2026-09-26 04:34:23Z" duration="0.000654" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:/Users/Yeop/AppData/LocalLow/DefaultCompany/unity-prefabs-8bf3e1bf15d242a58a5f006af95639cc\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

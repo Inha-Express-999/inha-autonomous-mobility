@@ -78,7 +78,7 @@ class SnapshotCadenceWebSocket:
                 {
                     "type": "subscribe",
                     "schemaVersion": 3,
-                    "projectVersion": "0.2.3.0",
+                    "projectVersion": "0.2.4.0",
                     "role": "PC_Operator",
                 }
             )

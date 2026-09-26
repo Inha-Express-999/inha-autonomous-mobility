@@ -1,0 +1,5888 @@
+{
+  "schema_version": 1,
+  "map_id": "campus-synthetic-benchmark-11",
+  "map_version": "synthetic-benchmark-11node-v1",
+  "data_status": "SYNTHETIC_FIXTURE",
+  "coordinate_frame": "SYNTHETIC_LOCAL_METERS",
+  "verification_status": "SYNTHETIC_FIXTURE",
+  "source_description": "Deterministic synthetic grid graph for the T03 100 origin-destination benchmark only; coordinates and connections do not represent Inha University campus routes.",
+  "source_date": null,
+  "source_hash": null,
+  "origin_wgs84": null,
+  "comparison": {
+    "service_type": "PASSENGER",
+    "vehicle_class": "CAMPUS_SHUTTLE",
+    "vehicle_width_m": null,
+    "requires_step_free": false,
+    "cost_formula": "length_m / allowed_speed_mps + crowd + zone + expected_wait",
+    "heuristic": "euclidean_distance / maximum_open_edge_speed",
+    "timings_note": "Per-route planner elapsed_ns samples; p50/p95 use nearest-rank percentiles. Synthetic fixture timings are not campus performance evidence.",
+    "repetitions": 20,
+    "warmups": 2,
+    "pair_records_note": "Per-pair route details and elapsed_ns come from the first measured repetition; aggregate timing statistics include all measured repetitions."
+  },
+  "summary": {
+    "pair_count": 110,
+    "reachable_pair_count": 110,
+    "both_unreachable_pair_count": 0,
+    "reachability_mismatch_pair_count": 0,
+    "route_outcome_match_count": 110,
+    "path_cost_match_count": 110,
+    "astar_lower_expansion_pair_count": 97,
+    "mean_expanded_nodes": {
+      "dijkstra": 5.5,
+      "astar": 2.827272727272727
+    }
+  },
+  "pairs": [
+    {
+      "start_node": "n01",
+      "goal_node": "n02",
+      "start_stop_id": "benchmark_stop_01",
+      "goal_stop_id": "benchmark_stop_02",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n01",
+          "n02"
+        ],
+        "stop_ids": [
+          "benchmark_stop_01",
+          "benchmark_stop_02"
+        ],
+        "edge_ids": [
+          "e001_n01_n02"
+        ],
+        "path_cost_s": 20.0,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 3,
+        "peak_open_set_size": 2,
+        "elapsed_ns": 5200
+      },
+      "astar": {
+        "node_ids": [
+          "n01",
+          "n02"
+        ],
+        "stop_ids": [
+          "benchmark_stop_01",
+          "benchmark_stop_02"
+        ],
+        "edge_ids": [
+          "e001_n01_n02"
+        ],
+        "path_cost_s": 20.0,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 3,
+        "peak_open_set_size": 2,
+        "elapsed_ns": 4700
+      }
+    },
+    {
+      "start_node": "n01",
+      "goal_node": "n03",
+      "start_stop_id": "benchmark_stop_01",
+      "goal_stop_id": "benchmark_stop_03",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n01",
+          "n02",
+          "n03"
+        ],
+        "stop_ids": [
+          "benchmark_stop_01",
+          "benchmark_stop_02",
+          "benchmark_stop_03"
+        ],
+        "edge_ids": [
+          "e001_n01_n02",
+          "e005_n02_n03"
+        ],
+        "path_cost_s": 37.333333333,
+        "path_length_m": 160.0,
+        "expanded_nodes": 4,
+        "generated_nodes": 9,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 11300
+      },
+      "astar": {
+        "node_ids": [
+          "n01",
+          "n02",
+          "n03"
+        ],
+        "stop_ids": [
+          "benchmark_stop_01",
+          "benchmark_stop_02",
+          "benchmark_stop_03"
+        ],
+        "edge_ids": [
+          "e001_n01_n02",
+          "e005_n02_n03"
+        ],
+        "path_cost_s": 37.333333333,
+        "path_length_m": 160.0,
+        "expanded_nodes": 2,
+        "generated_nodes": 5,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 6400
+      }
+    },
+    {
+      "start_node": "n01",
+      "goal_node": "n04",
+      "start_stop_id": "benchmark_stop_01",
+      "goal_stop_id": "benchmark_stop_04",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n01",
+          "n02",
+          "n03",
+          "n04"
+        ],
+        "stop_ids": [
+          "benchmark_stop_01",
+          "benchmark_stop_02",
+          "benchmark_stop_03",
+          "benchmark_stop_04"
+        ],
+        "edge_ids": [
+          "e001_n01_n02",
+          "e005_n02_n03",
+          "e009_n03_n04"
+        ],
+        "path_cost_s": 53.333333333,
+        "path_length_m": 240.0,
+        "expanded_nodes": 6,
+        "generated_nodes": 10,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 14300
+      },
+      "astar": {
+        "node_ids": [
+          "n01",
+          "n02",
+          "n03",
+          "n04"
+        ],
+        "stop_ids": [
+          "benchmark_stop_01",
+          "benchmark_stop_02",
+          "benchmark_stop_03",
+          "benchmark_stop_04"
+        ],
+        "edge_ids": [
+          "e001_n01_n02",
+          "e005_n02_n03",
+          "e009_n03_n04"
+        ],
+        "path_cost_s": 53.333333333,
+        "path_length_m": 240.0,
+        "expanded_nodes": 3,
+        "generated_nodes": 7,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 9200
+      }
+    },
+    {
+      "start_node": "n01",
+      "goal_node": "n05",
+      "start_stop_id": "benchmark_stop_01",
+      "goal_stop_id": "benchmark_stop_05",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n01",
+          "n05"
+        ],
+        "stop_ids": [
+          "benchmark_stop_01",
+          "benchmark_stop_05"
+        ],
+        "edge_ids": [
+          "e003_n01_n05"
+        ],
+        "path_cost_s": 20.0399556,
+        "path_length_m": 90.199778,
+        "expanded_nodes": 2,
+        "generated_nodes": 5,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 4800
+      },
+      "astar": {
+        "node_ids": [
+          "n01",
+          "n05"
+        ],
+        "stop_ids": [
+          "benchmark_stop_01",
+          "benchmark_stop_05"
+        ],
+        "edge_ids": [
+          "e003_n01_n05"
+        ],
+        "path_cost_s": 20.0399556,
+        "path_length_m": 90.199778,
+        "expanded_nodes": 1,
+        "generated_nodes": 3,
+        "peak_open_set_size": 2,
+        "elapsed_ns": 3600
+      }
+    },
+    {
+      "start_node": "n01",
+      "goal_node": "n06",
+      "start_stop_id": "benchmark_stop_01",
+      "goal_stop_id": "benchmark_stop_06",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n01",
+          "n05",
+          "n06"
+        ],
+        "stop_ids": [
+          "benchmark_stop_01",
+          "benchmark_stop_05",
+          "benchmark_stop_06"
+        ],
+        "edge_ids": [
+          "e003_n01_n05",
+          "e017_n05_n06"
+        ],
+        "path_cost_s": 33.373288933,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 3,
+        "generated_nodes": 7,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 8000
+      },
+      "astar": {
+        "node_ids": [
+          "n01",
+          "n05",
+          "n06"
+        ],
+        "stop_ids": [
+          "benchmark_stop_01",
+          "benchmark_stop_05",
+          "benchmark_stop_06"
+        ],
+        "edge_ids": [
+          "e003_n01_n05",
+          "e017_n05_n06"
+        ],
+        "path_cost_s": 33.373288933,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 2,
+        "generated_nodes": 6,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 7200
+      }
+    },
+    {
+      "start_node": "n01",
+      "goal_node": "n07",
+      "start_stop_id": "benchmark_stop_01",
+      "goal_stop_id": "benchmark_stop_07",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n01",
+          "n05",
+          "n06",
+          "n07"
+        ],
+        "stop_ids": [
+          "benchmark_stop_01",
+          "benchmark_stop_05",
+          "benchmark_stop_06",
+          "benchmark_stop_07"
+        ],
+        "edge_ids": [
+          "e003_n01_n05",
+          "e017_n05_n06",
+          "e021_n06_n07"
+        ],
+        "path_cost_s": 53.373288933,
+        "path_length_m": 250.199778,
+        "expanded_nodes": 7,
+        "generated_nodes": 10,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 15900
+      },
+      "astar": {
+        "node_ids": [
+          "n01",
+          "n05",
+          "n06",
+          "n07"
+        ],
+        "stop_ids": [
+          "benchmark_stop_01",
+          "benchmark_stop_05",
+          "benchmark_stop_06",
+          "benchmark_stop_07"
+        ],
+        "edge_ids": [
+          "e003_n01_n05",
+          "e017_n05_n06",
+          "e021_n06_n07"
+        ],
+        "path_cost_s": 53.373288933,
+        "path_length_m": 250.199778,
+        "expanded_nodes": 5,
+        "generated_nodes": 9,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 14800
+      }
+    },
+    {
+      "start_node": "n01",
+      "goal_node": "n08",
+      "start_stop_id": "benchmark_stop_01",
+      "goal_stop_id": "benchmark_stop_08",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n01",
+          "n05",
+          "n06",
+          "n07",
+          "n08"
+        ],
+        "stop_ids": [
+          "benchmark_stop_01",
+          "benchmark_stop_05",
+          "benchmark_stop_06",
+          "benchmark_stop_07",
+          "benchmark_stop_08"
+        ],
+        "edge_ids": [
+          "e003_n01_n05",
+          "e017_n05_n06",
+          "e021_n06_n07",
+          "e025_n07_n08"
+        ],
+        "path_cost_s": 73.373288933,
+        "path_length_m": 330.199778,
+        "expanded_nodes": 10,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 21200
+      },
+      "astar": {
+        "node_ids": [
+          "n01",
+          "n05",
+          "n06",
+          "n07",
+          "n08"
+        ],
+        "stop_ids": [
+          "benchmark_stop_01",
+          "benchmark_stop_05",
+          "benchmark_stop_06",
+          "benchmark_stop_07",
+          "benchmark_stop_08"
+        ],
+        "edge_ids": [
+          "e003_n01_n05",
+          "e017_n05_n06",
+          "e021_n06_n07",
+          "e025_n07_n08"
+        ],
+        "path_cost_s": 73.373288933,
+        "path_length_m": 330.199778,
+        "expanded_nodes": 7,
+        "generated_nodes": 11,
+        "peak_open_set_size": 7,
+        "elapsed_ns": 19400
+      }
+    },
+    {
+      "start_node": "n01",
+      "goal_node": "n09",
+      "start_stop_id": "benchmark_stop_01",
+      "goal_stop_id": "benchmark_stop_09",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n01",
+          "n05",
+          "n09"
+        ],
+        "stop_ids": [
+          "benchmark_stop_01",
+          "benchmark_stop_05",
+          "benchmark_stop_09"
+        ],
+        "edge_ids": [
+          "e003_n01_n05",
+          "e019_n05_n09"
+        ],
+        "path_cost_s": 44.5899001,
+        "path_length_m": 180.399556,
+        "expanded_nodes": 5,
+        "generated_nodes": 9,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 12300
+      },
+      "astar": {
+        "node_ids": [
+          "n01",
+          "n05",
+          "n09"
+        ],
+        "stop_ids": [
+          "benchmark_stop_01",
+          "benchmark_stop_05",
+          "benchmark_stop_09"
+        ],
+        "edge_ids": [
+          "e003_n01_n05",
+          "e019_n05_n09"
+        ],
+        "path_cost_s": 44.5899001,
+        "path_length_m": 180.399556,
+        "expanded_nodes": 2,
+        "generated_nodes": 6,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 7300
+      }
+    },
+    {
+      "start_node": "n01",
+      "goal_node": "n10",
+      "start_stop_id": "benchmark_stop_01",
+      "goal_stop_id": "benchmark_stop_10",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n01",
+          "n05",
+          "n06",
+          "n10"
+        ],
+        "stop_ids": [
+          "benchmark_stop_01",
+          "benchmark_stop_05",
+          "benchmark_stop_06",
+          "benchmark_stop_10"
+        ],
+        "edge_ids": [
+          "e003_n01_n05",
+          "e017_n05_n06",
+          "e023_n06_n10"
+        ],
+        "path_cost_s": 54.373288933,
+        "path_length_m": 260.199778,
+        "expanded_nodes": 8,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 18600
+      },
+      "astar": {
+        "node_ids": [
+          "n01",
+          "n05",
+          "n06",
+          "n10"
+        ],
+        "stop_ids": [
+          "benchmark_stop_01",
+          "benchmark_stop_05",
+          "benchmark_stop_06",
+          "benchmark_stop_10"
+        ],
+        "edge_ids": [
+          "e003_n01_n05",
+          "e017_n05_n06",
+          "e023_n06_n10"
+        ],
+        "path_cost_s": 54.373288933,
+        "path_length_m": 260.199778,
+        "expanded_nodes": 4,
+        "generated_nodes": 9,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 11800
+      }
+    },
+    {
+      "start_node": "n01",
+      "goal_node": "n11",
+      "start_stop_id": "benchmark_stop_01",
+      "goal_stop_id": "benchmark_stop_11",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n01",
+          "n05",
+          "n06",
+          "n10",
+          "n11"
+        ],
+        "stop_ids": [
+          "benchmark_stop_01",
+          "benchmark_stop_05",
+          "benchmark_stop_06",
+          "benchmark_stop_10",
+          "benchmark_stop_11"
+        ],
+        "edge_ids": [
+          "e003_n01_n05",
+          "e017_n05_n06",
+          "e023_n06_n10",
+          "e033_n10_n11"
+        ],
+        "path_cost_s": 70.373288933,
+        "path_length_m": 340.199778,
+        "expanded_nodes": 9,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 19700
+      },
+      "astar": {
+        "node_ids": [
+          "n01",
+          "n05",
+          "n06",
+          "n10",
+          "n11"
+        ],
+        "stop_ids": [
+          "benchmark_stop_01",
+          "benchmark_stop_05",
+          "benchmark_stop_06",
+          "benchmark_stop_10",
+          "benchmark_stop_11"
+        ],
+        "edge_ids": [
+          "e003_n01_n05",
+          "e017_n05_n06",
+          "e023_n06_n10",
+          "e033_n10_n11"
+        ],
+        "path_cost_s": 70.373288933,
+        "path_length_m": 340.199778,
+        "expanded_nodes": 7,
+        "generated_nodes": 11,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 18100
+      }
+    },
+    {
+      "start_node": "n02",
+      "goal_node": "n01",
+      "start_stop_id": "benchmark_stop_02",
+      "goal_stop_id": "benchmark_stop_01",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n02",
+          "n01"
+        ],
+        "stop_ids": [
+          "benchmark_stop_02",
+          "benchmark_stop_01"
+        ],
+        "edge_ids": [
+          "e002_n02_n01"
+        ],
+        "path_cost_s": 20.0,
+        "path_length_m": 80.0,
+        "expanded_nodes": 2,
+        "generated_nodes": 6,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 6300
+      },
+      "astar": {
+        "node_ids": [
+          "n02",
+          "n01"
+        ],
+        "stop_ids": [
+          "benchmark_stop_02",
+          "benchmark_stop_01"
+        ],
+        "edge_ids": [
+          "e002_n02_n01"
+        ],
+        "path_cost_s": 20.0,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 4,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 4600
+      }
+    },
+    {
+      "start_node": "n02",
+      "goal_node": "n03",
+      "start_stop_id": "benchmark_stop_02",
+      "goal_stop_id": "benchmark_stop_03",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n02",
+          "n03"
+        ],
+        "stop_ids": [
+          "benchmark_stop_02",
+          "benchmark_stop_03"
+        ],
+        "edge_ids": [
+          "e005_n02_n03"
+        ],
+        "path_cost_s": 17.333333333,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 4,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 3900
+      },
+      "astar": {
+        "node_ids": [
+          "n02",
+          "n03"
+        ],
+        "stop_ids": [
+          "benchmark_stop_02",
+          "benchmark_stop_03"
+        ],
+        "edge_ids": [
+          "e005_n02_n03"
+        ],
+        "path_cost_s": 17.333333333,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 4,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 4600
+      }
+    },
+    {
+      "start_node": "n02",
+      "goal_node": "n04",
+      "start_stop_id": "benchmark_stop_02",
+      "goal_stop_id": "benchmark_stop_04",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n02",
+          "n03",
+          "n04"
+        ],
+        "stop_ids": [
+          "benchmark_stop_02",
+          "benchmark_stop_03",
+          "benchmark_stop_04"
+        ],
+        "edge_ids": [
+          "e005_n02_n03",
+          "e009_n03_n04"
+        ],
+        "path_cost_s": 33.333333333,
+        "path_length_m": 160.0,
+        "expanded_nodes": 4,
+        "generated_nodes": 8,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 9800
+      },
+      "astar": {
+        "node_ids": [
+          "n02",
+          "n03",
+          "n04"
+        ],
+        "stop_ids": [
+          "benchmark_stop_02",
+          "benchmark_stop_03",
+          "benchmark_stop_04"
+        ],
+        "edge_ids": [
+          "e005_n02_n03",
+          "e009_n03_n04"
+        ],
+        "path_cost_s": 33.333333333,
+        "path_length_m": 160.0,
+        "expanded_nodes": 2,
+        "generated_nodes": 6,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 7400
+      }
+    },
+    {
+      "start_node": "n02",
+      "goal_node": "n05",
+      "start_stop_id": "benchmark_stop_02",
+      "goal_stop_id": "benchmark_stop_05",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n02",
+          "n01",
+          "n05"
+        ],
+        "stop_ids": [
+          "benchmark_stop_02",
+          "benchmark_stop_01",
+          "benchmark_stop_05"
+        ],
+        "edge_ids": [
+          "e002_n02_n01",
+          "e003_n01_n05"
+        ],
+        "path_cost_s": 40.0399556,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 6,
+        "generated_nodes": 10,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 13600
+      },
+      "astar": {
+        "node_ids": [
+          "n02",
+          "n01",
+          "n05"
+        ],
+        "stop_ids": [
+          "benchmark_stop_02",
+          "benchmark_stop_01",
+          "benchmark_stop_05"
+        ],
+        "edge_ids": [
+          "e002_n02_n01",
+          "e003_n01_n05"
+        ],
+        "path_cost_s": 40.0399556,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 2,
+        "generated_nodes": 5,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 6400
+      }
+    },
+    {
+      "start_node": "n02",
+      "goal_node": "n06",
+      "start_stop_id": "benchmark_stop_02",
+      "goal_stop_id": "benchmark_stop_06",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n02",
+          "n06"
+        ],
+        "stop_ids": [
+          "benchmark_stop_02",
+          "benchmark_stop_06"
+        ],
+        "edge_ids": [
+          "e007_n02_n06"
+        ],
+        "path_cost_s": 28.5,
+        "path_length_m": 90.0,
+        "expanded_nodes": 3,
+        "generated_nodes": 7,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 7400
+      },
+      "astar": {
+        "node_ids": [
+          "n02",
+          "n06"
+        ],
+        "stop_ids": [
+          "benchmark_stop_02",
+          "benchmark_stop_06"
+        ],
+        "edge_ids": [
+          "e007_n02_n06"
+        ],
+        "path_cost_s": 28.5,
+        "path_length_m": 90.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 4,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 4600
+      }
+    },
+    {
+      "start_node": "n02",
+      "goal_node": "n07",
+      "start_stop_id": "benchmark_stop_02",
+      "goal_stop_id": "benchmark_stop_07",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n02",
+          "n03",
+          "n07"
+        ],
+        "stop_ids": [
+          "benchmark_stop_02",
+          "benchmark_stop_03",
+          "benchmark_stop_07"
+        ],
+        "edge_ids": [
+          "e005_n02_n03",
+          "e011_n03_n07"
+        ],
+        "path_cost_s": 34.366629667,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 5,
+        "generated_nodes": 9,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 10900
+      },
+      "astar": {
+        "node_ids": [
+          "n02",
+          "n03",
+          "n07"
+        ],
+        "stop_ids": [
+          "benchmark_stop_02",
+          "benchmark_stop_03",
+          "benchmark_stop_07"
+        ],
+        "edge_ids": [
+          "e005_n02_n03",
+          "e011_n03_n07"
+        ],
+        "path_cost_s": 34.366629667,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 2,
+        "generated_nodes": 6,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 7400
+      }
+    },
+    {
+      "start_node": "n02",
+      "goal_node": "n08",
+      "start_stop_id": "benchmark_stop_02",
+      "goal_stop_id": "benchmark_stop_08",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n02",
+          "n03",
+          "n07",
+          "n08"
+        ],
+        "stop_ids": [
+          "benchmark_stop_02",
+          "benchmark_stop_03",
+          "benchmark_stop_07",
+          "benchmark_stop_08"
+        ],
+        "edge_ids": [
+          "e005_n02_n03",
+          "e011_n03_n07",
+          "e025_n07_n08"
+        ],
+        "path_cost_s": 54.366629667,
+        "path_length_m": 250.199778,
+        "expanded_nodes": 8,
+        "generated_nodes": 11,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 17000
+      },
+      "astar": {
+        "node_ids": [
+          "n02",
+          "n03",
+          "n07",
+          "n08"
+        ],
+        "stop_ids": [
+          "benchmark_stop_02",
+          "benchmark_stop_03",
+          "benchmark_stop_07",
+          "benchmark_stop_08"
+        ],
+        "edge_ids": [
+          "e005_n02_n03",
+          "e011_n03_n07",
+          "e025_n07_n08"
+        ],
+        "path_cost_s": 54.366629667,
+        "path_length_m": 250.199778,
+        "expanded_nodes": 4,
+        "generated_nodes": 9,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 12200
+      }
+    },
+    {
+      "start_node": "n02",
+      "goal_node": "n09",
+      "start_stop_id": "benchmark_stop_02",
+      "goal_stop_id": "benchmark_stop_09",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n02",
+          "n01",
+          "n05",
+          "n09"
+        ],
+        "stop_ids": [
+          "benchmark_stop_02",
+          "benchmark_stop_01",
+          "benchmark_stop_05",
+          "benchmark_stop_09"
+        ],
+        "edge_ids": [
+          "e002_n02_n01",
+          "e003_n01_n05",
+          "e019_n05_n09"
+        ],
+        "path_cost_s": 64.5899001,
+        "path_length_m": 260.399556,
+        "expanded_nodes": 10,
+        "generated_nodes": 11,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 19800
+      },
+      "astar": {
+        "node_ids": [
+          "n02",
+          "n01",
+          "n05",
+          "n09"
+        ],
+        "stop_ids": [
+          "benchmark_stop_02",
+          "benchmark_stop_01",
+          "benchmark_stop_05",
+          "benchmark_stop_09"
+        ],
+        "edge_ids": [
+          "e002_n02_n01",
+          "e003_n01_n05",
+          "e019_n05_n09"
+        ],
+        "path_cost_s": 64.5899001,
+        "path_length_m": 260.399556,
+        "expanded_nodes": 6,
+        "generated_nodes": 10,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 17300
+      }
+    },
+    {
+      "start_node": "n02",
+      "goal_node": "n10",
+      "start_stop_id": "benchmark_stop_02",
+      "goal_stop_id": "benchmark_stop_10",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n02",
+          "n06",
+          "n10"
+        ],
+        "stop_ids": [
+          "benchmark_stop_02",
+          "benchmark_stop_06",
+          "benchmark_stop_10"
+        ],
+        "edge_ids": [
+          "e007_n02_n06",
+          "e023_n06_n10"
+        ],
+        "path_cost_s": 49.5,
+        "path_length_m": 180.0,
+        "expanded_nodes": 7,
+        "generated_nodes": 11,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 15700
+      },
+      "astar": {
+        "node_ids": [
+          "n02",
+          "n06",
+          "n10"
+        ],
+        "stop_ids": [
+          "benchmark_stop_02",
+          "benchmark_stop_06",
+          "benchmark_stop_10"
+        ],
+        "edge_ids": [
+          "e007_n02_n06",
+          "e023_n06_n10"
+        ],
+        "path_cost_s": 49.5,
+        "path_length_m": 180.0,
+        "expanded_nodes": 2,
+        "generated_nodes": 7,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 8300
+      }
+    },
+    {
+      "start_node": "n02",
+      "goal_node": "n11",
+      "start_stop_id": "benchmark_stop_02",
+      "goal_stop_id": "benchmark_stop_11",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n02",
+          "n03",
+          "n07",
+          "n11"
+        ],
+        "stop_ids": [
+          "benchmark_stop_02",
+          "benchmark_stop_03",
+          "benchmark_stop_07",
+          "benchmark_stop_11"
+        ],
+        "edge_ids": [
+          "e005_n02_n03",
+          "e011_n03_n07",
+          "e027_n07_n11"
+        ],
+        "path_cost_s": 54.406585267,
+        "path_length_m": 260.399556,
+        "expanded_nodes": 9,
+        "generated_nodes": 11,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 18200
+      },
+      "astar": {
+        "node_ids": [
+          "n02",
+          "n03",
+          "n07",
+          "n11"
+        ],
+        "stop_ids": [
+          "benchmark_stop_02",
+          "benchmark_stop_03",
+          "benchmark_stop_07",
+          "benchmark_stop_11"
+        ],
+        "edge_ids": [
+          "e005_n02_n03",
+          "e011_n03_n07",
+          "e027_n07_n11"
+        ],
+        "path_cost_s": 54.406585267,
+        "path_length_m": 260.399556,
+        "expanded_nodes": 4,
+        "generated_nodes": 10,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 13200
+      }
+    },
+    {
+      "start_node": "n03",
+      "goal_node": "n01",
+      "start_stop_id": "benchmark_stop_03",
+      "goal_stop_id": "benchmark_stop_01",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n03",
+          "n02",
+          "n01"
+        ],
+        "stop_ids": [
+          "benchmark_stop_03",
+          "benchmark_stop_02",
+          "benchmark_stop_01"
+        ],
+        "edge_ids": [
+          "e006_n03_n02",
+          "e002_n02_n01"
+        ],
+        "path_cost_s": 37.333333333,
+        "path_length_m": 160.0,
+        "expanded_nodes": 7,
+        "generated_nodes": 11,
+        "peak_open_set_size": 7,
+        "elapsed_ns": 16500
+      },
+      "astar": {
+        "node_ids": [
+          "n03",
+          "n02",
+          "n01"
+        ],
+        "stop_ids": [
+          "benchmark_stop_03",
+          "benchmark_stop_02",
+          "benchmark_stop_01"
+        ],
+        "edge_ids": [
+          "e006_n03_n02",
+          "e002_n02_n01"
+        ],
+        "path_cost_s": 37.333333333,
+        "path_length_m": 160.0,
+        "expanded_nodes": 2,
+        "generated_nodes": 6,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 7300
+      }
+    },
+    {
+      "start_node": "n03",
+      "goal_node": "n02",
+      "start_stop_id": "benchmark_stop_03",
+      "goal_stop_id": "benchmark_stop_02",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n03",
+          "n02"
+        ],
+        "stop_ids": [
+          "benchmark_stop_03",
+          "benchmark_stop_02"
+        ],
+        "edge_ids": [
+          "e006_n03_n02"
+        ],
+        "path_cost_s": 17.333333333,
+        "path_length_m": 80.0,
+        "expanded_nodes": 3,
+        "generated_nodes": 8,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 8700
+      },
+      "astar": {
+        "node_ids": [
+          "n03",
+          "n02"
+        ],
+        "stop_ids": [
+          "benchmark_stop_03",
+          "benchmark_stop_02"
+        ],
+        "edge_ids": [
+          "e006_n03_n02"
+        ],
+        "path_cost_s": 17.333333333,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 4,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 4400
+      }
+    },
+    {
+      "start_node": "n03",
+      "goal_node": "n04",
+      "start_stop_id": "benchmark_stop_03",
+      "goal_stop_id": "benchmark_stop_04",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n03",
+          "n04"
+        ],
+        "stop_ids": [
+          "benchmark_stop_03",
+          "benchmark_stop_04"
+        ],
+        "edge_ids": [
+          "e009_n03_n04"
+        ],
+        "path_cost_s": 16.0,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 4,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 3600
+      },
+      "astar": {
+        "node_ids": [
+          "n03",
+          "n04"
+        ],
+        "stop_ids": [
+          "benchmark_stop_03",
+          "benchmark_stop_04"
+        ],
+        "edge_ids": [
+          "e009_n03_n04"
+        ],
+        "path_cost_s": 16.0,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 4,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 4500
+      }
+    },
+    {
+      "start_node": "n03",
+      "goal_node": "n05",
+      "start_stop_id": "benchmark_stop_03",
+      "goal_stop_id": "benchmark_stop_05",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n03",
+          "n07",
+          "n06",
+          "n05"
+        ],
+        "stop_ids": [
+          "benchmark_stop_03",
+          "benchmark_stop_07",
+          "benchmark_stop_06",
+          "benchmark_stop_05"
+        ],
+        "edge_ids": [
+          "e011_n03_n07",
+          "e022_n07_n06",
+          "e018_n06_n05"
+        ],
+        "path_cost_s": 50.366629667,
+        "path_length_m": 250.199778,
+        "expanded_nodes": 8,
+        "generated_nodes": 11,
+        "peak_open_set_size": 7,
+        "elapsed_ns": 18100
+      },
+      "astar": {
+        "node_ids": [
+          "n03",
+          "n07",
+          "n06",
+          "n05"
+        ],
+        "stop_ids": [
+          "benchmark_stop_03",
+          "benchmark_stop_07",
+          "benchmark_stop_06",
+          "benchmark_stop_05"
+        ],
+        "edge_ids": [
+          "e011_n03_n07",
+          "e022_n07_n06",
+          "e018_n06_n05"
+        ],
+        "path_cost_s": 50.366629667,
+        "path_length_m": 250.199778,
+        "expanded_nodes": 4,
+        "generated_nodes": 10,
+        "peak_open_set_size": 7,
+        "elapsed_ns": 13900
+      }
+    },
+    {
+      "start_node": "n03",
+      "goal_node": "n06",
+      "start_stop_id": "benchmark_stop_03",
+      "goal_stop_id": "benchmark_stop_06",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n03",
+          "n07",
+          "n06"
+        ],
+        "stop_ids": [
+          "benchmark_stop_03",
+          "benchmark_stop_07",
+          "benchmark_stop_06"
+        ],
+        "edge_ids": [
+          "e011_n03_n07",
+          "e022_n07_n06"
+        ],
+        "path_cost_s": 37.033296333,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 4,
+        "generated_nodes": 9,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 10700
+      },
+      "astar": {
+        "node_ids": [
+          "n03",
+          "n07",
+          "n06"
+        ],
+        "stop_ids": [
+          "benchmark_stop_03",
+          "benchmark_stop_07",
+          "benchmark_stop_06"
+        ],
+        "edge_ids": [
+          "e011_n03_n07",
+          "e022_n07_n06"
+        ],
+        "path_cost_s": 37.033296333,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 3,
+        "generated_nodes": 8,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 10300
+      }
+    },
+    {
+      "start_node": "n03",
+      "goal_node": "n07",
+      "start_stop_id": "benchmark_stop_03",
+      "goal_stop_id": "benchmark_stop_07",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n03",
+          "n07"
+        ],
+        "stop_ids": [
+          "benchmark_stop_03",
+          "benchmark_stop_07"
+        ],
+        "edge_ids": [
+          "e011_n03_n07"
+        ],
+        "path_cost_s": 17.033296333,
+        "path_length_m": 90.199778,
+        "expanded_nodes": 2,
+        "generated_nodes": 6,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 6100
+      },
+      "astar": {
+        "node_ids": [
+          "n03",
+          "n07"
+        ],
+        "stop_ids": [
+          "benchmark_stop_03",
+          "benchmark_stop_07"
+        ],
+        "edge_ids": [
+          "e011_n03_n07"
+        ],
+        "path_cost_s": 17.033296333,
+        "path_length_m": 90.199778,
+        "expanded_nodes": 1,
+        "generated_nodes": 4,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 4600
+      }
+    },
+    {
+      "start_node": "n03",
+      "goal_node": "n08",
+      "start_stop_id": "benchmark_stop_03",
+      "goal_stop_id": "benchmark_stop_08",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n03",
+          "n07",
+          "n08"
+        ],
+        "stop_ids": [
+          "benchmark_stop_03",
+          "benchmark_stop_07",
+          "benchmark_stop_08"
+        ],
+        "edge_ids": [
+          "e011_n03_n07",
+          "e025_n07_n08"
+        ],
+        "path_cost_s": 37.033296333,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 5,
+        "generated_nodes": 10,
+        "peak_open_set_size": 7,
+        "elapsed_ns": 13200
+      },
+      "astar": {
+        "node_ids": [
+          "n03",
+          "n07",
+          "n08"
+        ],
+        "stop_ids": [
+          "benchmark_stop_03",
+          "benchmark_stop_07",
+          "benchmark_stop_08"
+        ],
+        "edge_ids": [
+          "e011_n03_n07",
+          "e025_n07_n08"
+        ],
+        "path_cost_s": 37.033296333,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 3,
+        "generated_nodes": 8,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 10200
+      }
+    },
+    {
+      "start_node": "n03",
+      "goal_node": "n09",
+      "start_stop_id": "benchmark_stop_03",
+      "goal_stop_id": "benchmark_stop_09",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n03",
+          "n07",
+          "n06",
+          "n05",
+          "n09"
+        ],
+        "stop_ids": [
+          "benchmark_stop_03",
+          "benchmark_stop_07",
+          "benchmark_stop_06",
+          "benchmark_stop_05",
+          "benchmark_stop_09"
+        ],
+        "edge_ids": [
+          "e011_n03_n07",
+          "e022_n07_n06",
+          "e018_n06_n05",
+          "e019_n05_n09"
+        ],
+        "path_cost_s": 74.916574167,
+        "path_length_m": 340.399556,
+        "expanded_nodes": 10,
+        "generated_nodes": 11,
+        "peak_open_set_size": 7,
+        "elapsed_ns": 21200
+      },
+      "astar": {
+        "node_ids": [
+          "n03",
+          "n07",
+          "n06",
+          "n05",
+          "n09"
+        ],
+        "stop_ids": [
+          "benchmark_stop_03",
+          "benchmark_stop_07",
+          "benchmark_stop_06",
+          "benchmark_stop_05",
+          "benchmark_stop_09"
+        ],
+        "edge_ids": [
+          "e011_n03_n07",
+          "e022_n07_n06",
+          "e018_n06_n05",
+          "e019_n05_n09"
+        ],
+        "path_cost_s": 74.916574167,
+        "path_length_m": 340.399556,
+        "expanded_nodes": 9,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 21200
+      }
+    },
+    {
+      "start_node": "n03",
+      "goal_node": "n10",
+      "start_stop_id": "benchmark_stop_03",
+      "goal_stop_id": "benchmark_stop_10",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n03",
+          "n07",
+          "n11",
+          "n10"
+        ],
+        "stop_ids": [
+          "benchmark_stop_03",
+          "benchmark_stop_07",
+          "benchmark_stop_11",
+          "benchmark_stop_10"
+        ],
+        "edge_ids": [
+          "e011_n03_n07",
+          "e027_n07_n11",
+          "e034_n11_n10"
+        ],
+        "path_cost_s": 53.073251933,
+        "path_length_m": 260.399556,
+        "expanded_nodes": 9,
+        "generated_nodes": 11,
+        "peak_open_set_size": 7,
+        "elapsed_ns": 19600
+      },
+      "astar": {
+        "node_ids": [
+          "n03",
+          "n07",
+          "n11",
+          "n10"
+        ],
+        "stop_ids": [
+          "benchmark_stop_03",
+          "benchmark_stop_07",
+          "benchmark_stop_11",
+          "benchmark_stop_10"
+        ],
+        "edge_ids": [
+          "e011_n03_n07",
+          "e027_n07_n11",
+          "e034_n11_n10"
+        ],
+        "path_cost_s": 53.073251933,
+        "path_length_m": 260.399556,
+        "expanded_nodes": 5,
+        "generated_nodes": 10,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 14000
+      }
+    },
+    {
+      "start_node": "n03",
+      "goal_node": "n11",
+      "start_stop_id": "benchmark_stop_03",
+      "goal_stop_id": "benchmark_stop_11",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n03",
+          "n07",
+          "n11"
+        ],
+        "stop_ids": [
+          "benchmark_stop_03",
+          "benchmark_stop_07",
+          "benchmark_stop_11"
+        ],
+        "edge_ids": [
+          "e011_n03_n07",
+          "e027_n07_n11"
+        ],
+        "path_cost_s": 37.073251933,
+        "path_length_m": 180.399556,
+        "expanded_nodes": 6,
+        "generated_nodes": 11,
+        "peak_open_set_size": 7,
+        "elapsed_ns": 15100
+      },
+      "astar": {
+        "node_ids": [
+          "n03",
+          "n07",
+          "n11"
+        ],
+        "stop_ids": [
+          "benchmark_stop_03",
+          "benchmark_stop_07",
+          "benchmark_stop_11"
+        ],
+        "edge_ids": [
+          "e011_n03_n07",
+          "e027_n07_n11"
+        ],
+        "path_cost_s": 37.073251933,
+        "path_length_m": 180.399556,
+        "expanded_nodes": 2,
+        "generated_nodes": 7,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 8300
+      }
+    },
+    {
+      "start_node": "n04",
+      "goal_node": "n01",
+      "start_stop_id": "benchmark_stop_04",
+      "goal_stop_id": "benchmark_stop_01",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n04",
+          "n03",
+          "n02",
+          "n01"
+        ],
+        "stop_ids": [
+          "benchmark_stop_04",
+          "benchmark_stop_03",
+          "benchmark_stop_02",
+          "benchmark_stop_01"
+        ],
+        "edge_ids": [
+          "e010_n04_n03",
+          "e006_n03_n02",
+          "e002_n02_n01"
+        ],
+        "path_cost_s": 53.333333333,
+        "path_length_m": 240.0,
+        "expanded_nodes": 7,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 16200
+      },
+      "astar": {
+        "node_ids": [
+          "n04",
+          "n03",
+          "n02",
+          "n01"
+        ],
+        "stop_ids": [
+          "benchmark_stop_04",
+          "benchmark_stop_03",
+          "benchmark_stop_02",
+          "benchmark_stop_01"
+        ],
+        "edge_ids": [
+          "e010_n04_n03",
+          "e006_n03_n02",
+          "e002_n02_n01"
+        ],
+        "path_cost_s": 53.333333333,
+        "path_length_m": 240.0,
+        "expanded_nodes": 3,
+        "generated_nodes": 8,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 10400
+      }
+    },
+    {
+      "start_node": "n04",
+      "goal_node": "n02",
+      "start_stop_id": "benchmark_stop_04",
+      "goal_stop_id": "benchmark_stop_02",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n04",
+          "n03",
+          "n02"
+        ],
+        "stop_ids": [
+          "benchmark_stop_04",
+          "benchmark_stop_03",
+          "benchmark_stop_02"
+        ],
+        "edge_ids": [
+          "e010_n04_n03",
+          "e006_n03_n02"
+        ],
+        "path_cost_s": 33.333333333,
+        "path_length_m": 160.0,
+        "expanded_nodes": 4,
+        "generated_nodes": 9,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 10200
+      },
+      "astar": {
+        "node_ids": [
+          "n04",
+          "n03",
+          "n02"
+        ],
+        "stop_ids": [
+          "benchmark_stop_04",
+          "benchmark_stop_03",
+          "benchmark_stop_02"
+        ],
+        "edge_ids": [
+          "e010_n04_n03",
+          "e006_n03_n02"
+        ],
+        "path_cost_s": 33.333333333,
+        "path_length_m": 160.0,
+        "expanded_nodes": 2,
+        "generated_nodes": 6,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 6900
+      }
+    },
+    {
+      "start_node": "n04",
+      "goal_node": "n03",
+      "start_stop_id": "benchmark_stop_04",
+      "goal_stop_id": "benchmark_stop_03",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n04",
+          "n03"
+        ],
+        "stop_ids": [
+          "benchmark_stop_04",
+          "benchmark_stop_03"
+        ],
+        "edge_ids": [
+          "e010_n04_n03"
+        ],
+        "path_cost_s": 16.0,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 4,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 3600
+      },
+      "astar": {
+        "node_ids": [
+          "n04",
+          "n03"
+        ],
+        "stop_ids": [
+          "benchmark_stop_04",
+          "benchmark_stop_03"
+        ],
+        "edge_ids": [
+          "e010_n04_n03"
+        ],
+        "path_cost_s": 16.0,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 4,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 4700
+      }
+    },
+    {
+      "start_node": "n04",
+      "goal_node": "n05",
+      "start_stop_id": "benchmark_stop_04",
+      "goal_stop_id": "benchmark_stop_05",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n04",
+          "n03",
+          "n07",
+          "n06",
+          "n05"
+        ],
+        "stop_ids": [
+          "benchmark_stop_04",
+          "benchmark_stop_03",
+          "benchmark_stop_07",
+          "benchmark_stop_06",
+          "benchmark_stop_05"
+        ],
+        "edge_ids": [
+          "e010_n04_n03",
+          "e011_n03_n07",
+          "e022_n07_n06",
+          "e018_n06_n05"
+        ],
+        "path_cost_s": 66.366629667,
+        "path_length_m": 330.199778,
+        "expanded_nodes": 8,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 17000
+      },
+      "astar": {
+        "node_ids": [
+          "n04",
+          "n03",
+          "n07",
+          "n06",
+          "n05"
+        ],
+        "stop_ids": [
+          "benchmark_stop_04",
+          "benchmark_stop_03",
+          "benchmark_stop_07",
+          "benchmark_stop_06",
+          "benchmark_stop_05"
+        ],
+        "edge_ids": [
+          "e010_n04_n03",
+          "e011_n03_n07",
+          "e022_n07_n06",
+          "e018_n06_n05"
+        ],
+        "path_cost_s": 66.366629667,
+        "path_length_m": 330.199778,
+        "expanded_nodes": 6,
+        "generated_nodes": 11,
+        "peak_open_set_size": 7,
+        "elapsed_ns": 17600
+      }
+    },
+    {
+      "start_node": "n04",
+      "goal_node": "n06",
+      "start_stop_id": "benchmark_stop_04",
+      "goal_stop_id": "benchmark_stop_06",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n04",
+          "n03",
+          "n07",
+          "n06"
+        ],
+        "stop_ids": [
+          "benchmark_stop_04",
+          "benchmark_stop_03",
+          "benchmark_stop_07",
+          "benchmark_stop_06"
+        ],
+        "edge_ids": [
+          "e010_n04_n03",
+          "e011_n03_n07",
+          "e022_n07_n06"
+        ],
+        "path_cost_s": 53.033296333,
+        "path_length_m": 250.199778,
+        "expanded_nodes": 5,
+        "generated_nodes": 10,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 11700
+      },
+      "astar": {
+        "node_ids": [
+          "n04",
+          "n03",
+          "n07",
+          "n06"
+        ],
+        "stop_ids": [
+          "benchmark_stop_04",
+          "benchmark_stop_03",
+          "benchmark_stop_07",
+          "benchmark_stop_06"
+        ],
+        "edge_ids": [
+          "e010_n04_n03",
+          "e011_n03_n07",
+          "e022_n07_n06"
+        ],
+        "path_cost_s": 53.033296333,
+        "path_length_m": 250.199778,
+        "expanded_nodes": 5,
+        "generated_nodes": 10,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 13800
+      }
+    },
+    {
+      "start_node": "n04",
+      "goal_node": "n07",
+      "start_stop_id": "benchmark_stop_04",
+      "goal_stop_id": "benchmark_stop_07",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n04",
+          "n03",
+          "n07"
+        ],
+        "stop_ids": [
+          "benchmark_stop_04",
+          "benchmark_stop_03",
+          "benchmark_stop_07"
+        ],
+        "edge_ids": [
+          "e010_n04_n03",
+          "e011_n03_n07"
+        ],
+        "path_cost_s": 33.033296333,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 3,
+        "generated_nodes": 7,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 7600
+      },
+      "astar": {
+        "node_ids": [
+          "n04",
+          "n03",
+          "n07"
+        ],
+        "stop_ids": [
+          "benchmark_stop_04",
+          "benchmark_stop_03",
+          "benchmark_stop_07"
+        ],
+        "edge_ids": [
+          "e010_n04_n03",
+          "e011_n03_n07"
+        ],
+        "path_cost_s": 33.033296333,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 2,
+        "generated_nodes": 6,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 7000
+      }
+    },
+    {
+      "start_node": "n04",
+      "goal_node": "n08",
+      "start_stop_id": "benchmark_stop_04",
+      "goal_stop_id": "benchmark_stop_08",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n04",
+          "n08"
+        ],
+        "stop_ids": [
+          "benchmark_stop_04",
+          "benchmark_stop_08"
+        ],
+        "edge_ids": [
+          "e015_n04_n08"
+        ],
+        "path_cost_s": 24.0,
+        "path_length_m": 90.0,
+        "expanded_nodes": 2,
+        "generated_nodes": 6,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 5600
+      },
+      "astar": {
+        "node_ids": [
+          "n04",
+          "n08"
+        ],
+        "stop_ids": [
+          "benchmark_stop_04",
+          "benchmark_stop_08"
+        ],
+        "edge_ids": [
+          "e015_n04_n08"
+        ],
+        "path_cost_s": 24.0,
+        "path_length_m": 90.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 4,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 4500
+      }
+    },
+    {
+      "start_node": "n04",
+      "goal_node": "n09",
+      "start_stop_id": "benchmark_stop_04",
+      "goal_stop_id": "benchmark_stop_09",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n04",
+          "n08",
+          "n09"
+        ],
+        "stop_ids": [
+          "benchmark_stop_04",
+          "benchmark_stop_08",
+          "benchmark_stop_09"
+        ],
+        "edge_ids": [
+          "e015_n04_n08",
+          "e029_n08_n09"
+        ],
+        "path_cost_s": 70.720018667,
+        "path_length_m": 346.320112,
+        "expanded_nodes": 10,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 26800
+      },
+      "astar": {
+        "node_ids": [
+          "n04",
+          "n08",
+          "n09"
+        ],
+        "stop_ids": [
+          "benchmark_stop_04",
+          "benchmark_stop_08",
+          "benchmark_stop_09"
+        ],
+        "edge_ids": [
+          "e015_n04_n08",
+          "e029_n08_n09"
+        ],
+        "path_cost_s": 70.720018667,
+        "path_length_m": 346.320112,
+        "expanded_nodes": 5,
+        "generated_nodes": 10,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 17700
+      }
+    },
+    {
+      "start_node": "n04",
+      "goal_node": "n10",
+      "start_stop_id": "benchmark_stop_04",
+      "goal_stop_id": "benchmark_stop_10",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n04",
+          "n03",
+          "n07",
+          "n11",
+          "n10"
+        ],
+        "stop_ids": [
+          "benchmark_stop_04",
+          "benchmark_stop_03",
+          "benchmark_stop_07",
+          "benchmark_stop_11",
+          "benchmark_stop_10"
+        ],
+        "edge_ids": [
+          "e010_n04_n03",
+          "e011_n03_n07",
+          "e027_n07_n11",
+          "e034_n11_n10"
+        ],
+        "path_cost_s": 69.073251933,
+        "path_length_m": 340.399556,
+        "expanded_nodes": 9,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 20200
+      },
+      "astar": {
+        "node_ids": [
+          "n04",
+          "n03",
+          "n07",
+          "n11",
+          "n10"
+        ],
+        "stop_ids": [
+          "benchmark_stop_04",
+          "benchmark_stop_03",
+          "benchmark_stop_07",
+          "benchmark_stop_11",
+          "benchmark_stop_10"
+        ],
+        "edge_ids": [
+          "e010_n04_n03",
+          "e011_n03_n07",
+          "e027_n07_n11",
+          "e034_n11_n10"
+        ],
+        "path_cost_s": 69.073251933,
+        "path_length_m": 340.399556,
+        "expanded_nodes": 7,
+        "generated_nodes": 11,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 18400
+      }
+    },
+    {
+      "start_node": "n04",
+      "goal_node": "n11",
+      "start_stop_id": "benchmark_stop_04",
+      "goal_stop_id": "benchmark_stop_11",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n04",
+          "n03",
+          "n07",
+          "n11"
+        ],
+        "stop_ids": [
+          "benchmark_stop_04",
+          "benchmark_stop_03",
+          "benchmark_stop_07",
+          "benchmark_stop_11"
+        ],
+        "edge_ids": [
+          "e010_n04_n03",
+          "e011_n03_n07",
+          "e027_n07_n11"
+        ],
+        "path_cost_s": 53.073251933,
+        "path_length_m": 260.399556,
+        "expanded_nodes": 6,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 14400
+      },
+      "astar": {
+        "node_ids": [
+          "n04",
+          "n03",
+          "n07",
+          "n11"
+        ],
+        "stop_ids": [
+          "benchmark_stop_04",
+          "benchmark_stop_03",
+          "benchmark_stop_07",
+          "benchmark_stop_11"
+        ],
+        "edge_ids": [
+          "e010_n04_n03",
+          "e011_n03_n07",
+          "e027_n07_n11"
+        ],
+        "path_cost_s": 53.073251933,
+        "path_length_m": 260.399556,
+        "expanded_nodes": 4,
+        "generated_nodes": 9,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 13100
+      }
+    },
+    {
+      "start_node": "n05",
+      "goal_node": "n01",
+      "start_stop_id": "benchmark_stop_05",
+      "goal_stop_id": "benchmark_stop_01",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n05",
+          "n01"
+        ],
+        "stop_ids": [
+          "benchmark_stop_05",
+          "benchmark_stop_01"
+        ],
+        "edge_ids": [
+          "e004_n05_n01"
+        ],
+        "path_cost_s": 20.0399556,
+        "path_length_m": 90.199778,
+        "expanded_nodes": 2,
+        "generated_nodes": 8,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 7800
+      },
+      "astar": {
+        "node_ids": [
+          "n05",
+          "n01"
+        ],
+        "stop_ids": [
+          "benchmark_stop_05",
+          "benchmark_stop_01"
+        ],
+        "edge_ids": [
+          "e004_n05_n01"
+        ],
+        "path_cost_s": 20.0399556,
+        "path_length_m": 90.199778,
+        "expanded_nodes": 1,
+        "generated_nodes": 5,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 5700
+      }
+    },
+    {
+      "start_node": "n05",
+      "goal_node": "n02",
+      "start_stop_id": "benchmark_stop_05",
+      "goal_stop_id": "benchmark_stop_02",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n05",
+          "n01",
+          "n02"
+        ],
+        "stop_ids": [
+          "benchmark_stop_05",
+          "benchmark_stop_01",
+          "benchmark_stop_02"
+        ],
+        "edge_ids": [
+          "e004_n05_n01",
+          "e001_n01_n02"
+        ],
+        "path_cost_s": 40.0399556,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 6,
+        "generated_nodes": 11,
+        "peak_open_set_size": 8,
+        "elapsed_ns": 15500
+      },
+      "astar": {
+        "node_ids": [
+          "n05",
+          "n01",
+          "n02"
+        ],
+        "stop_ids": [
+          "benchmark_stop_05",
+          "benchmark_stop_01",
+          "benchmark_stop_02"
+        ],
+        "edge_ids": [
+          "e004_n05_n01",
+          "e001_n01_n02"
+        ],
+        "path_cost_s": 40.0399556,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 3,
+        "generated_nodes": 8,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 10800
+      }
+    },
+    {
+      "start_node": "n05",
+      "goal_node": "n03",
+      "start_stop_id": "benchmark_stop_05",
+      "goal_stop_id": "benchmark_stop_03",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n05",
+          "n06",
+          "n07",
+          "n03"
+        ],
+        "stop_ids": [
+          "benchmark_stop_05",
+          "benchmark_stop_06",
+          "benchmark_stop_07",
+          "benchmark_stop_03"
+        ],
+        "edge_ids": [
+          "e017_n05_n06",
+          "e021_n06_n07",
+          "e012_n07_n03"
+        ],
+        "path_cost_s": 50.366629667,
+        "path_length_m": 250.199778,
+        "expanded_nodes": 8,
+        "generated_nodes": 11,
+        "peak_open_set_size": 8,
+        "elapsed_ns": 18600
+      },
+      "astar": {
+        "node_ids": [
+          "n05",
+          "n06",
+          "n07",
+          "n03"
+        ],
+        "stop_ids": [
+          "benchmark_stop_05",
+          "benchmark_stop_06",
+          "benchmark_stop_07",
+          "benchmark_stop_03"
+        ],
+        "edge_ids": [
+          "e017_n05_n06",
+          "e021_n06_n07",
+          "e012_n07_n03"
+        ],
+        "path_cost_s": 50.366629667,
+        "path_length_m": 250.199778,
+        "expanded_nodes": 4,
+        "generated_nodes": 11,
+        "peak_open_set_size": 8,
+        "elapsed_ns": 14100
+      }
+    },
+    {
+      "start_node": "n05",
+      "goal_node": "n04",
+      "start_stop_id": "benchmark_stop_05",
+      "goal_stop_id": "benchmark_stop_04",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n05",
+          "n06",
+          "n07",
+          "n03",
+          "n04"
+        ],
+        "stop_ids": [
+          "benchmark_stop_05",
+          "benchmark_stop_06",
+          "benchmark_stop_07",
+          "benchmark_stop_03",
+          "benchmark_stop_04"
+        ],
+        "edge_ids": [
+          "e017_n05_n06",
+          "e021_n06_n07",
+          "e012_n07_n03",
+          "e009_n03_n04"
+        ],
+        "path_cost_s": 66.366629667,
+        "path_length_m": 330.199778,
+        "expanded_nodes": 10,
+        "generated_nodes": 11,
+        "peak_open_set_size": 8,
+        "elapsed_ns": 21200
+      },
+      "astar": {
+        "node_ids": [
+          "n05",
+          "n06",
+          "n07",
+          "n03",
+          "n04"
+        ],
+        "stop_ids": [
+          "benchmark_stop_05",
+          "benchmark_stop_06",
+          "benchmark_stop_07",
+          "benchmark_stop_03",
+          "benchmark_stop_04"
+        ],
+        "edge_ids": [
+          "e017_n05_n06",
+          "e021_n06_n07",
+          "e012_n07_n03",
+          "e009_n03_n04"
+        ],
+        "path_cost_s": 66.366629667,
+        "path_length_m": 330.199778,
+        "expanded_nodes": 5,
+        "generated_nodes": 11,
+        "peak_open_set_size": 8,
+        "elapsed_ns": 16800
+      }
+    },
+    {
+      "start_node": "n05",
+      "goal_node": "n06",
+      "start_stop_id": "benchmark_stop_05",
+      "goal_stop_id": "benchmark_stop_06",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n05",
+          "n06"
+        ],
+        "stop_ids": [
+          "benchmark_stop_05",
+          "benchmark_stop_06"
+        ],
+        "edge_ids": [
+          "e017_n05_n06"
+        ],
+        "path_cost_s": 13.333333333,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 5,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 4800
+      },
+      "astar": {
+        "node_ids": [
+          "n05",
+          "n06"
+        ],
+        "stop_ids": [
+          "benchmark_stop_05",
+          "benchmark_stop_06"
+        ],
+        "edge_ids": [
+          "e017_n05_n06"
+        ],
+        "path_cost_s": 13.333333333,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 5,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 5600
+      }
+    },
+    {
+      "start_node": "n05",
+      "goal_node": "n07",
+      "start_stop_id": "benchmark_stop_05",
+      "goal_stop_id": "benchmark_stop_07",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n05",
+          "n06",
+          "n07"
+        ],
+        "stop_ids": [
+          "benchmark_stop_05",
+          "benchmark_stop_06",
+          "benchmark_stop_07"
+        ],
+        "edge_ids": [
+          "e017_n05_n06",
+          "e021_n06_n07"
+        ],
+        "path_cost_s": 33.333333333,
+        "path_length_m": 160.0,
+        "expanded_nodes": 4,
+        "generated_nodes": 9,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 11000
+      },
+      "astar": {
+        "node_ids": [
+          "n05",
+          "n06",
+          "n07"
+        ],
+        "stop_ids": [
+          "benchmark_stop_05",
+          "benchmark_stop_06",
+          "benchmark_stop_07"
+        ],
+        "edge_ids": [
+          "e017_n05_n06",
+          "e021_n06_n07"
+        ],
+        "path_cost_s": 33.333333333,
+        "path_length_m": 160.0,
+        "expanded_nodes": 2,
+        "generated_nodes": 8,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 9600
+      }
+    },
+    {
+      "start_node": "n05",
+      "goal_node": "n08",
+      "start_stop_id": "benchmark_stop_05",
+      "goal_stop_id": "benchmark_stop_08",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n05",
+          "n06",
+          "n07",
+          "n08"
+        ],
+        "stop_ids": [
+          "benchmark_stop_05",
+          "benchmark_stop_06",
+          "benchmark_stop_07",
+          "benchmark_stop_08"
+        ],
+        "edge_ids": [
+          "e017_n05_n06",
+          "e021_n06_n07",
+          "e025_n07_n08"
+        ],
+        "path_cost_s": 53.333333333,
+        "path_length_m": 240.0,
+        "expanded_nodes": 9,
+        "generated_nodes": 11,
+        "peak_open_set_size": 8,
+        "elapsed_ns": 20200
+      },
+      "astar": {
+        "node_ids": [
+          "n05",
+          "n06",
+          "n07",
+          "n08"
+        ],
+        "stop_ids": [
+          "benchmark_stop_05",
+          "benchmark_stop_06",
+          "benchmark_stop_07",
+          "benchmark_stop_08"
+        ],
+        "edge_ids": [
+          "e017_n05_n06",
+          "e021_n06_n07",
+          "e025_n07_n08"
+        ],
+        "path_cost_s": 53.333333333,
+        "path_length_m": 240.0,
+        "expanded_nodes": 3,
+        "generated_nodes": 11,
+        "peak_open_set_size": 8,
+        "elapsed_ns": 13000
+      }
+    },
+    {
+      "start_node": "n05",
+      "goal_node": "n09",
+      "start_stop_id": "benchmark_stop_05",
+      "goal_stop_id": "benchmark_stop_09",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n05",
+          "n09"
+        ],
+        "stop_ids": [
+          "benchmark_stop_05",
+          "benchmark_stop_09"
+        ],
+        "edge_ids": [
+          "e019_n05_n09"
+        ],
+        "path_cost_s": 24.5499445,
+        "path_length_m": 90.199778,
+        "expanded_nodes": 3,
+        "generated_nodes": 8,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 9800
+      },
+      "astar": {
+        "node_ids": [
+          "n05",
+          "n09"
+        ],
+        "stop_ids": [
+          "benchmark_stop_05",
+          "benchmark_stop_09"
+        ],
+        "edge_ids": [
+          "e019_n05_n09"
+        ],
+        "path_cost_s": 24.5499445,
+        "path_length_m": 90.199778,
+        "expanded_nodes": 1,
+        "generated_nodes": 5,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 6300
+      }
+    },
+    {
+      "start_node": "n05",
+      "goal_node": "n10",
+      "start_stop_id": "benchmark_stop_05",
+      "goal_stop_id": "benchmark_stop_10",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n05",
+          "n06",
+          "n10"
+        ],
+        "stop_ids": [
+          "benchmark_stop_05",
+          "benchmark_stop_06",
+          "benchmark_stop_10"
+        ],
+        "edge_ids": [
+          "e017_n05_n06",
+          "e023_n06_n10"
+        ],
+        "path_cost_s": 34.333333333,
+        "path_length_m": 170.0,
+        "expanded_nodes": 5,
+        "generated_nodes": 11,
+        "peak_open_set_size": 8,
+        "elapsed_ns": 15200
+      },
+      "astar": {
+        "node_ids": [
+          "n05",
+          "n06",
+          "n10"
+        ],
+        "stop_ids": [
+          "benchmark_stop_05",
+          "benchmark_stop_06",
+          "benchmark_stop_10"
+        ],
+        "edge_ids": [
+          "e017_n05_n06",
+          "e023_n06_n10"
+        ],
+        "path_cost_s": 34.333333333,
+        "path_length_m": 170.0,
+        "expanded_nodes": 2,
+        "generated_nodes": 8,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 9700
+      }
+    },
+    {
+      "start_node": "n05",
+      "goal_node": "n11",
+      "start_stop_id": "benchmark_stop_05",
+      "goal_stop_id": "benchmark_stop_11",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n05",
+          "n06",
+          "n10",
+          "n11"
+        ],
+        "stop_ids": [
+          "benchmark_stop_05",
+          "benchmark_stop_06",
+          "benchmark_stop_10",
+          "benchmark_stop_11"
+        ],
+        "edge_ids": [
+          "e017_n05_n06",
+          "e023_n06_n10",
+          "e033_n10_n11"
+        ],
+        "path_cost_s": 50.333333333,
+        "path_length_m": 250.0,
+        "expanded_nodes": 7,
+        "generated_nodes": 11,
+        "peak_open_set_size": 8,
+        "elapsed_ns": 17400
+      },
+      "astar": {
+        "node_ids": [
+          "n05",
+          "n06",
+          "n10",
+          "n11"
+        ],
+        "stop_ids": [
+          "benchmark_stop_05",
+          "benchmark_stop_06",
+          "benchmark_stop_10",
+          "benchmark_stop_11"
+        ],
+        "edge_ids": [
+          "e017_n05_n06",
+          "e023_n06_n10",
+          "e033_n10_n11"
+        ],
+        "path_cost_s": 50.333333333,
+        "path_length_m": 250.0,
+        "expanded_nodes": 4,
+        "generated_nodes": 11,
+        "peak_open_set_size": 7,
+        "elapsed_ns": 15300
+      }
+    },
+    {
+      "start_node": "n06",
+      "goal_node": "n01",
+      "start_stop_id": "benchmark_stop_06",
+      "goal_stop_id": "benchmark_stop_01",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n06",
+          "n05",
+          "n01"
+        ],
+        "stop_ids": [
+          "benchmark_stop_06",
+          "benchmark_stop_05",
+          "benchmark_stop_01"
+        ],
+        "edge_ids": [
+          "e018_n06_n05",
+          "e004_n05_n01"
+        ],
+        "path_cost_s": 33.373288933,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 5,
+        "generated_nodes": 11,
+        "peak_open_set_size": 8,
+        "elapsed_ns": 13500
+      },
+      "astar": {
+        "node_ids": [
+          "n06",
+          "n05",
+          "n01"
+        ],
+        "stop_ids": [
+          "benchmark_stop_06",
+          "benchmark_stop_05",
+          "benchmark_stop_01"
+        ],
+        "edge_ids": [
+          "e018_n06_n05",
+          "e004_n05_n01"
+        ],
+        "path_cost_s": 33.373288933,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 2,
+        "generated_nodes": 8,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 9300
+      }
+    },
+    {
+      "start_node": "n06",
+      "goal_node": "n02",
+      "start_stop_id": "benchmark_stop_06",
+      "goal_stop_id": "benchmark_stop_02",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n06",
+          "n02"
+        ],
+        "stop_ids": [
+          "benchmark_stop_06",
+          "benchmark_stop_02"
+        ],
+        "edge_ids": [
+          "e008_n06_n02"
+        ],
+        "path_cost_s": 28.5,
+        "path_length_m": 90.0,
+        "expanded_nodes": 4,
+        "generated_nodes": 11,
+        "peak_open_set_size": 8,
+        "elapsed_ns": 12000
+      },
+      "astar": {
+        "node_ids": [
+          "n06",
+          "n02"
+        ],
+        "stop_ids": [
+          "benchmark_stop_06",
+          "benchmark_stop_02"
+        ],
+        "edge_ids": [
+          "e008_n06_n02"
+        ],
+        "path_cost_s": 28.5,
+        "path_length_m": 90.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 5,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 5600
+      }
+    },
+    {
+      "start_node": "n06",
+      "goal_node": "n03",
+      "start_stop_id": "benchmark_stop_06",
+      "goal_stop_id": "benchmark_stop_03",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n06",
+          "n07",
+          "n03"
+        ],
+        "stop_ids": [
+          "benchmark_stop_06",
+          "benchmark_stop_07",
+          "benchmark_stop_03"
+        ],
+        "edge_ids": [
+          "e021_n06_n07",
+          "e012_n07_n03"
+        ],
+        "path_cost_s": 37.033296333,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 7,
+        "generated_nodes": 11,
+        "peak_open_set_size": 8,
+        "elapsed_ns": 15300
+      },
+      "astar": {
+        "node_ids": [
+          "n06",
+          "n07",
+          "n03"
+        ],
+        "stop_ids": [
+          "benchmark_stop_06",
+          "benchmark_stop_07",
+          "benchmark_stop_03"
+        ],
+        "edge_ids": [
+          "e021_n06_n07",
+          "e012_n07_n03"
+        ],
+        "path_cost_s": 37.033296333,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 2,
+        "generated_nodes": 8,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 9000
+      }
+    },
+    {
+      "start_node": "n06",
+      "goal_node": "n04",
+      "start_stop_id": "benchmark_stop_06",
+      "goal_stop_id": "benchmark_stop_04",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n06",
+          "n07",
+          "n03",
+          "n04"
+        ],
+        "stop_ids": [
+          "benchmark_stop_06",
+          "benchmark_stop_07",
+          "benchmark_stop_03",
+          "benchmark_stop_04"
+        ],
+        "edge_ids": [
+          "e021_n06_n07",
+          "e012_n07_n03",
+          "e009_n03_n04"
+        ],
+        "path_cost_s": 53.033296333,
+        "path_length_m": 250.199778,
+        "expanded_nodes": 10,
+        "generated_nodes": 11,
+        "peak_open_set_size": 8,
+        "elapsed_ns": 20600
+      },
+      "astar": {
+        "node_ids": [
+          "n06",
+          "n07",
+          "n03",
+          "n04"
+        ],
+        "stop_ids": [
+          "benchmark_stop_06",
+          "benchmark_stop_07",
+          "benchmark_stop_03",
+          "benchmark_stop_04"
+        ],
+        "edge_ids": [
+          "e021_n06_n07",
+          "e012_n07_n03",
+          "e009_n03_n04"
+        ],
+        "path_cost_s": 53.033296333,
+        "path_length_m": 250.199778,
+        "expanded_nodes": 3,
+        "generated_nodes": 9,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 11700
+      }
+    },
+    {
+      "start_node": "n06",
+      "goal_node": "n05",
+      "start_stop_id": "benchmark_stop_06",
+      "goal_stop_id": "benchmark_stop_05",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n06",
+          "n05"
+        ],
+        "stop_ids": [
+          "benchmark_stop_06",
+          "benchmark_stop_05"
+        ],
+        "edge_ids": [
+          "e018_n06_n05"
+        ],
+        "path_cost_s": 13.333333333,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 5,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 4800
+      },
+      "astar": {
+        "node_ids": [
+          "n06",
+          "n05"
+        ],
+        "stop_ids": [
+          "benchmark_stop_06",
+          "benchmark_stop_05"
+        ],
+        "edge_ids": [
+          "e018_n06_n05"
+        ],
+        "path_cost_s": 13.333333333,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 5,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 5800
+      }
+    },
+    {
+      "start_node": "n06",
+      "goal_node": "n07",
+      "start_stop_id": "benchmark_stop_06",
+      "goal_stop_id": "benchmark_stop_07",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n06",
+          "n07"
+        ],
+        "stop_ids": [
+          "benchmark_stop_06",
+          "benchmark_stop_07"
+        ],
+        "edge_ids": [
+          "e021_n06_n07"
+        ],
+        "path_cost_s": 20.0,
+        "path_length_m": 80.0,
+        "expanded_nodes": 2,
+        "generated_nodes": 8,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 7900
+      },
+      "astar": {
+        "node_ids": [
+          "n06",
+          "n07"
+        ],
+        "stop_ids": [
+          "benchmark_stop_06",
+          "benchmark_stop_07"
+        ],
+        "edge_ids": [
+          "e021_n06_n07"
+        ],
+        "path_cost_s": 20.0,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 5,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 5500
+      }
+    },
+    {
+      "start_node": "n06",
+      "goal_node": "n08",
+      "start_stop_id": "benchmark_stop_06",
+      "goal_stop_id": "benchmark_stop_08",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n06",
+          "n07",
+          "n08"
+        ],
+        "stop_ids": [
+          "benchmark_stop_06",
+          "benchmark_stop_07",
+          "benchmark_stop_08"
+        ],
+        "edge_ids": [
+          "e021_n06_n07",
+          "e025_n07_n08"
+        ],
+        "path_cost_s": 40.0,
+        "path_length_m": 160.0,
+        "expanded_nodes": 9,
+        "generated_nodes": 11,
+        "peak_open_set_size": 8,
+        "elapsed_ns": 19000
+      },
+      "astar": {
+        "node_ids": [
+          "n06",
+          "n07",
+          "n08"
+        ],
+        "stop_ids": [
+          "benchmark_stop_06",
+          "benchmark_stop_07",
+          "benchmark_stop_08"
+        ],
+        "edge_ids": [
+          "e021_n06_n07",
+          "e025_n07_n08"
+        ],
+        "path_cost_s": 40.0,
+        "path_length_m": 160.0,
+        "expanded_nodes": 2,
+        "generated_nodes": 8,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 9500
+      }
+    },
+    {
+      "start_node": "n06",
+      "goal_node": "n09",
+      "start_stop_id": "benchmark_stop_06",
+      "goal_stop_id": "benchmark_stop_09",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n06",
+          "n05",
+          "n09"
+        ],
+        "stop_ids": [
+          "benchmark_stop_06",
+          "benchmark_stop_05",
+          "benchmark_stop_09"
+        ],
+        "edge_ids": [
+          "e018_n06_n05",
+          "e019_n05_n09"
+        ],
+        "path_cost_s": 37.883277833,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 8,
+        "generated_nodes": 11,
+        "peak_open_set_size": 8,
+        "elapsed_ns": 18000
+      },
+      "astar": {
+        "node_ids": [
+          "n06",
+          "n05",
+          "n09"
+        ],
+        "stop_ids": [
+          "benchmark_stop_06",
+          "benchmark_stop_05",
+          "benchmark_stop_09"
+        ],
+        "edge_ids": [
+          "e018_n06_n05",
+          "e019_n05_n09"
+        ],
+        "path_cost_s": 37.883277833,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 3,
+        "generated_nodes": 9,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 10900
+      }
+    },
+    {
+      "start_node": "n06",
+      "goal_node": "n10",
+      "start_stop_id": "benchmark_stop_06",
+      "goal_stop_id": "benchmark_stop_10",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n06",
+          "n10"
+        ],
+        "stop_ids": [
+          "benchmark_stop_06",
+          "benchmark_stop_10"
+        ],
+        "edge_ids": [
+          "e023_n06_n10"
+        ],
+        "path_cost_s": 21.0,
+        "path_length_m": 90.0,
+        "expanded_nodes": 3,
+        "generated_nodes": 11,
+        "peak_open_set_size": 8,
+        "elapsed_ns": 10500
+      },
+      "astar": {
+        "node_ids": [
+          "n06",
+          "n10"
+        ],
+        "stop_ids": [
+          "benchmark_stop_06",
+          "benchmark_stop_10"
+        ],
+        "edge_ids": [
+          "e023_n06_n10"
+        ],
+        "path_cost_s": 21.0,
+        "path_length_m": 90.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 5,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 5700
+      }
+    },
+    {
+      "start_node": "n06",
+      "goal_node": "n11",
+      "start_stop_id": "benchmark_stop_06",
+      "goal_stop_id": "benchmark_stop_11",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n06",
+          "n10",
+          "n11"
+        ],
+        "stop_ids": [
+          "benchmark_stop_06",
+          "benchmark_stop_10",
+          "benchmark_stop_11"
+        ],
+        "edge_ids": [
+          "e023_n06_n10",
+          "e033_n10_n11"
+        ],
+        "path_cost_s": 37.0,
+        "path_length_m": 170.0,
+        "expanded_nodes": 6,
+        "generated_nodes": 11,
+        "peak_open_set_size": 8,
+        "elapsed_ns": 14800
+      },
+      "astar": {
+        "node_ids": [
+          "n06",
+          "n10",
+          "n11"
+        ],
+        "stop_ids": [
+          "benchmark_stop_06",
+          "benchmark_stop_10",
+          "benchmark_stop_11"
+        ],
+        "edge_ids": [
+          "e023_n06_n10",
+          "e033_n10_n11"
+        ],
+        "path_cost_s": 37.0,
+        "path_length_m": 170.0,
+        "expanded_nodes": 3,
+        "generated_nodes": 9,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 11500
+      }
+    },
+    {
+      "start_node": "n07",
+      "goal_node": "n01",
+      "start_stop_id": "benchmark_stop_07",
+      "goal_stop_id": "benchmark_stop_01",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n07",
+          "n06",
+          "n05",
+          "n01"
+        ],
+        "stop_ids": [
+          "benchmark_stop_07",
+          "benchmark_stop_06",
+          "benchmark_stop_05",
+          "benchmark_stop_01"
+        ],
+        "edge_ids": [
+          "e022_n07_n06",
+          "e018_n06_n05",
+          "e004_n05_n01"
+        ],
+        "path_cost_s": 53.373288933,
+        "path_length_m": 250.199778,
+        "expanded_nodes": 9,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 19900
+      },
+      "astar": {
+        "node_ids": [
+          "n07",
+          "n06",
+          "n05",
+          "n01"
+        ],
+        "stop_ids": [
+          "benchmark_stop_07",
+          "benchmark_stop_06",
+          "benchmark_stop_05",
+          "benchmark_stop_01"
+        ],
+        "edge_ids": [
+          "e022_n07_n06",
+          "e018_n06_n05",
+          "e004_n05_n01"
+        ],
+        "path_cost_s": 53.373288933,
+        "path_length_m": 250.199778,
+        "expanded_nodes": 5,
+        "generated_nodes": 11,
+        "peak_open_set_size": 8,
+        "elapsed_ns": 17200
+      }
+    },
+    {
+      "start_node": "n07",
+      "goal_node": "n02",
+      "start_stop_id": "benchmark_stop_07",
+      "goal_stop_id": "benchmark_stop_02",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n07",
+          "n03",
+          "n02"
+        ],
+        "stop_ids": [
+          "benchmark_stop_07",
+          "benchmark_stop_03",
+          "benchmark_stop_02"
+        ],
+        "edge_ids": [
+          "e012_n07_n03",
+          "e006_n03_n02"
+        ],
+        "path_cost_s": 34.366629667,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 7,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 15900
+      },
+      "astar": {
+        "node_ids": [
+          "n07",
+          "n03",
+          "n02"
+        ],
+        "stop_ids": [
+          "benchmark_stop_07",
+          "benchmark_stop_03",
+          "benchmark_stop_02"
+        ],
+        "edge_ids": [
+          "e012_n07_n03",
+          "e006_n03_n02"
+        ],
+        "path_cost_s": 34.366629667,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 2,
+        "generated_nodes": 7,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 8100
+      }
+    },
+    {
+      "start_node": "n07",
+      "goal_node": "n03",
+      "start_stop_id": "benchmark_stop_07",
+      "goal_stop_id": "benchmark_stop_03",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n07",
+          "n03"
+        ],
+        "stop_ids": [
+          "benchmark_stop_07",
+          "benchmark_stop_03"
+        ],
+        "edge_ids": [
+          "e012_n07_n03"
+        ],
+        "path_cost_s": 17.033296333,
+        "path_length_m": 90.199778,
+        "expanded_nodes": 1,
+        "generated_nodes": 5,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 4400
+      },
+      "astar": {
+        "node_ids": [
+          "n07",
+          "n03"
+        ],
+        "stop_ids": [
+          "benchmark_stop_07",
+          "benchmark_stop_03"
+        ],
+        "edge_ids": [
+          "e012_n07_n03"
+        ],
+        "path_cost_s": 17.033296333,
+        "path_length_m": 90.199778,
+        "expanded_nodes": 1,
+        "generated_nodes": 5,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 5300
+      }
+    },
+    {
+      "start_node": "n07",
+      "goal_node": "n04",
+      "start_stop_id": "benchmark_stop_07",
+      "goal_stop_id": "benchmark_stop_04",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n07",
+          "n03",
+          "n04"
+        ],
+        "stop_ids": [
+          "benchmark_stop_07",
+          "benchmark_stop_03",
+          "benchmark_stop_04"
+        ],
+        "edge_ids": [
+          "e012_n07_n03",
+          "e009_n03_n04"
+        ],
+        "path_cost_s": 33.033296333,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 5,
+        "generated_nodes": 10,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 12300
+      },
+      "astar": {
+        "node_ids": [
+          "n07",
+          "n03",
+          "n04"
+        ],
+        "stop_ids": [
+          "benchmark_stop_07",
+          "benchmark_stop_03",
+          "benchmark_stop_04"
+        ],
+        "edge_ids": [
+          "e012_n07_n03",
+          "e009_n03_n04"
+        ],
+        "path_cost_s": 33.033296333,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 2,
+        "generated_nodes": 7,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 8200
+      }
+    },
+    {
+      "start_node": "n07",
+      "goal_node": "n05",
+      "start_stop_id": "benchmark_stop_07",
+      "goal_stop_id": "benchmark_stop_05",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n07",
+          "n06",
+          "n05"
+        ],
+        "stop_ids": [
+          "benchmark_stop_07",
+          "benchmark_stop_06",
+          "benchmark_stop_05"
+        ],
+        "edge_ids": [
+          "e022_n07_n06",
+          "e018_n06_n05"
+        ],
+        "path_cost_s": 33.333333333,
+        "path_length_m": 160.0,
+        "expanded_nodes": 6,
+        "generated_nodes": 10,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 13300
+      },
+      "astar": {
+        "node_ids": [
+          "n07",
+          "n06",
+          "n05"
+        ],
+        "stop_ids": [
+          "benchmark_stop_07",
+          "benchmark_stop_06",
+          "benchmark_stop_05"
+        ],
+        "edge_ids": [
+          "e022_n07_n06",
+          "e018_n06_n05"
+        ],
+        "path_cost_s": 33.333333333,
+        "path_length_m": 160.0,
+        "expanded_nodes": 2,
+        "generated_nodes": 8,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 8800
+      }
+    },
+    {
+      "start_node": "n07",
+      "goal_node": "n06",
+      "start_stop_id": "benchmark_stop_07",
+      "goal_stop_id": "benchmark_stop_06",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n07",
+          "n06"
+        ],
+        "stop_ids": [
+          "benchmark_stop_07",
+          "benchmark_stop_06"
+        ],
+        "edge_ids": [
+          "e022_n07_n06"
+        ],
+        "path_cost_s": 20.0,
+        "path_length_m": 80.0,
+        "expanded_nodes": 2,
+        "generated_nodes": 7,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 6600
+      },
+      "astar": {
+        "node_ids": [
+          "n07",
+          "n06"
+        ],
+        "stop_ids": [
+          "benchmark_stop_07",
+          "benchmark_stop_06"
+        ],
+        "edge_ids": [
+          "e022_n07_n06"
+        ],
+        "path_cost_s": 20.0,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 5,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 5500
+      }
+    },
+    {
+      "start_node": "n07",
+      "goal_node": "n08",
+      "start_stop_id": "benchmark_stop_07",
+      "goal_stop_id": "benchmark_stop_08",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n07",
+          "n08"
+        ],
+        "stop_ids": [
+          "benchmark_stop_07",
+          "benchmark_stop_08"
+        ],
+        "edge_ids": [
+          "e025_n07_n08"
+        ],
+        "path_cost_s": 20.0,
+        "path_length_m": 80.0,
+        "expanded_nodes": 3,
+        "generated_nodes": 9,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 9100
+      },
+      "astar": {
+        "node_ids": [
+          "n07",
+          "n08"
+        ],
+        "stop_ids": [
+          "benchmark_stop_07",
+          "benchmark_stop_08"
+        ],
+        "edge_ids": [
+          "e025_n07_n08"
+        ],
+        "path_cost_s": 20.0,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 5,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 5500
+      }
+    },
+    {
+      "start_node": "n07",
+      "goal_node": "n09",
+      "start_stop_id": "benchmark_stop_07",
+      "goal_stop_id": "benchmark_stop_09",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n07",
+          "n06",
+          "n05",
+          "n09"
+        ],
+        "stop_ids": [
+          "benchmark_stop_07",
+          "benchmark_stop_06",
+          "benchmark_stop_05",
+          "benchmark_stop_09"
+        ],
+        "edge_ids": [
+          "e022_n07_n06",
+          "e018_n06_n05",
+          "e019_n05_n09"
+        ],
+        "path_cost_s": 57.883277833,
+        "path_length_m": 250.199778,
+        "expanded_nodes": 10,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 20200
+      },
+      "astar": {
+        "node_ids": [
+          "n07",
+          "n06",
+          "n05",
+          "n09"
+        ],
+        "stop_ids": [
+          "benchmark_stop_07",
+          "benchmark_stop_06",
+          "benchmark_stop_05",
+          "benchmark_stop_09"
+        ],
+        "edge_ids": [
+          "e022_n07_n06",
+          "e018_n06_n05",
+          "e019_n05_n09"
+        ],
+        "path_cost_s": 57.883277833,
+        "path_length_m": 250.199778,
+        "expanded_nodes": 6,
+        "generated_nodes": 11,
+        "peak_open_set_size": 8,
+        "elapsed_ns": 18600
+      }
+    },
+    {
+      "start_node": "n07",
+      "goal_node": "n10",
+      "start_stop_id": "benchmark_stop_07",
+      "goal_stop_id": "benchmark_stop_10",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n07",
+          "n11",
+          "n10"
+        ],
+        "stop_ids": [
+          "benchmark_stop_07",
+          "benchmark_stop_11",
+          "benchmark_stop_10"
+        ],
+        "edge_ids": [
+          "e027_n07_n11",
+          "e034_n11_n10"
+        ],
+        "path_cost_s": 36.0399556,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 8,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 17400
+      },
+      "astar": {
+        "node_ids": [
+          "n07",
+          "n11",
+          "n10"
+        ],
+        "stop_ids": [
+          "benchmark_stop_07",
+          "benchmark_stop_11",
+          "benchmark_stop_10"
+        ],
+        "edge_ids": [
+          "e027_n07_n11",
+          "e034_n11_n10"
+        ],
+        "path_cost_s": 36.0399556,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 3,
+        "generated_nodes": 8,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 10200
+      }
+    },
+    {
+      "start_node": "n07",
+      "goal_node": "n11",
+      "start_stop_id": "benchmark_stop_07",
+      "goal_stop_id": "benchmark_stop_11",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n07",
+          "n11"
+        ],
+        "stop_ids": [
+          "benchmark_stop_07",
+          "benchmark_stop_11"
+        ],
+        "edge_ids": [
+          "e027_n07_n11"
+        ],
+        "path_cost_s": 20.0399556,
+        "path_length_m": 90.199778,
+        "expanded_nodes": 4,
+        "generated_nodes": 10,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 10600
+      },
+      "astar": {
+        "node_ids": [
+          "n07",
+          "n11"
+        ],
+        "stop_ids": [
+          "benchmark_stop_07",
+          "benchmark_stop_11"
+        ],
+        "edge_ids": [
+          "e027_n07_n11"
+        ],
+        "path_cost_s": 20.0399556,
+        "path_length_m": 90.199778,
+        "expanded_nodes": 1,
+        "generated_nodes": 5,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 5500
+      }
+    },
+    {
+      "start_node": "n08",
+      "goal_node": "n01",
+      "start_stop_id": "benchmark_stop_08",
+      "goal_stop_id": "benchmark_stop_01",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n08",
+          "n07",
+          "n06",
+          "n05",
+          "n01"
+        ],
+        "stop_ids": [
+          "benchmark_stop_08",
+          "benchmark_stop_07",
+          "benchmark_stop_06",
+          "benchmark_stop_05",
+          "benchmark_stop_01"
+        ],
+        "edge_ids": [
+          "e026_n08_n07",
+          "e022_n07_n06",
+          "e018_n06_n05",
+          "e004_n05_n01"
+        ],
+        "path_cost_s": 73.373288933,
+        "path_length_m": 330.199778,
+        "expanded_nodes": 10,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 21200
+      },
+      "astar": {
+        "node_ids": [
+          "n08",
+          "n07",
+          "n06",
+          "n05",
+          "n01"
+        ],
+        "stop_ids": [
+          "benchmark_stop_08",
+          "benchmark_stop_07",
+          "benchmark_stop_06",
+          "benchmark_stop_05",
+          "benchmark_stop_01"
+        ],
+        "edge_ids": [
+          "e026_n08_n07",
+          "e022_n07_n06",
+          "e018_n06_n05",
+          "e004_n05_n01"
+        ],
+        "path_cost_s": 73.373288933,
+        "path_length_m": 330.199778,
+        "expanded_nodes": 7,
+        "generated_nodes": 11,
+        "peak_open_set_size": 7,
+        "elapsed_ns": 19100
+      }
+    },
+    {
+      "start_node": "n08",
+      "goal_node": "n02",
+      "start_stop_id": "benchmark_stop_08",
+      "goal_stop_id": "benchmark_stop_02",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n08",
+          "n07",
+          "n03",
+          "n02"
+        ],
+        "stop_ids": [
+          "benchmark_stop_08",
+          "benchmark_stop_07",
+          "benchmark_stop_03",
+          "benchmark_stop_02"
+        ],
+        "edge_ids": [
+          "e026_n08_n07",
+          "e012_n07_n03",
+          "e006_n03_n02"
+        ],
+        "path_cost_s": 54.366629667,
+        "path_length_m": 250.199778,
+        "expanded_nodes": 8,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 17800
+      },
+      "astar": {
+        "node_ids": [
+          "n08",
+          "n07",
+          "n03",
+          "n02"
+        ],
+        "stop_ids": [
+          "benchmark_stop_08",
+          "benchmark_stop_07",
+          "benchmark_stop_03",
+          "benchmark_stop_02"
+        ],
+        "edge_ids": [
+          "e026_n08_n07",
+          "e012_n07_n03",
+          "e006_n03_n02"
+        ],
+        "path_cost_s": 54.366629667,
+        "path_length_m": 250.199778,
+        "expanded_nodes": 4,
+        "generated_nodes": 9,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 11900
+      }
+    },
+    {
+      "start_node": "n08",
+      "goal_node": "n03",
+      "start_stop_id": "benchmark_stop_08",
+      "goal_stop_id": "benchmark_stop_03",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n08",
+          "n07",
+          "n03"
+        ],
+        "stop_ids": [
+          "benchmark_stop_08",
+          "benchmark_stop_07",
+          "benchmark_stop_03"
+        ],
+        "edge_ids": [
+          "e026_n08_n07",
+          "e012_n07_n03"
+        ],
+        "path_cost_s": 37.033296333,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 3,
+        "generated_nodes": 8,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 8200
+      },
+      "astar": {
+        "node_ids": [
+          "n08",
+          "n07",
+          "n03"
+        ],
+        "stop_ids": [
+          "benchmark_stop_08",
+          "benchmark_stop_07",
+          "benchmark_stop_03"
+        ],
+        "edge_ids": [
+          "e026_n08_n07",
+          "e012_n07_n03"
+        ],
+        "path_cost_s": 37.033296333,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 2,
+        "generated_nodes": 7,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 8000
+      }
+    },
+    {
+      "start_node": "n08",
+      "goal_node": "n04",
+      "start_stop_id": "benchmark_stop_08",
+      "goal_stop_id": "benchmark_stop_04",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n08",
+          "n04"
+        ],
+        "stop_ids": [
+          "benchmark_stop_08",
+          "benchmark_stop_04"
+        ],
+        "edge_ids": [
+          "e016_n08_n04"
+        ],
+        "path_cost_s": 24.0,
+        "path_length_m": 90.0,
+        "expanded_nodes": 2,
+        "generated_nodes": 7,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 6700
+      },
+      "astar": {
+        "node_ids": [
+          "n08",
+          "n04"
+        ],
+        "stop_ids": [
+          "benchmark_stop_08",
+          "benchmark_stop_04"
+        ],
+        "edge_ids": [
+          "e016_n08_n04"
+        ],
+        "path_cost_s": 24.0,
+        "path_length_m": 90.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 4,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 4500
+      }
+    },
+    {
+      "start_node": "n08",
+      "goal_node": "n05",
+      "start_stop_id": "benchmark_stop_08",
+      "goal_stop_id": "benchmark_stop_05",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n08",
+          "n07",
+          "n06",
+          "n05"
+        ],
+        "stop_ids": [
+          "benchmark_stop_08",
+          "benchmark_stop_07",
+          "benchmark_stop_06",
+          "benchmark_stop_05"
+        ],
+        "edge_ids": [
+          "e026_n08_n07",
+          "e022_n07_n06",
+          "e018_n06_n05"
+        ],
+        "path_cost_s": 53.333333333,
+        "path_length_m": 240.0,
+        "expanded_nodes": 7,
+        "generated_nodes": 10,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 15200
+      },
+      "astar": {
+        "node_ids": [
+          "n08",
+          "n07",
+          "n06",
+          "n05"
+        ],
+        "stop_ids": [
+          "benchmark_stop_08",
+          "benchmark_stop_07",
+          "benchmark_stop_06",
+          "benchmark_stop_05"
+        ],
+        "edge_ids": [
+          "e026_n08_n07",
+          "e022_n07_n06",
+          "e018_n06_n05"
+        ],
+        "path_cost_s": 53.333333333,
+        "path_length_m": 240.0,
+        "expanded_nodes": 3,
+        "generated_nodes": 10,
+        "peak_open_set_size": 7,
+        "elapsed_ns": 11400
+      }
+    },
+    {
+      "start_node": "n08",
+      "goal_node": "n06",
+      "start_stop_id": "benchmark_stop_08",
+      "goal_stop_id": "benchmark_stop_06",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n08",
+          "n07",
+          "n06"
+        ],
+        "stop_ids": [
+          "benchmark_stop_08",
+          "benchmark_stop_07",
+          "benchmark_stop_06"
+        ],
+        "edge_ids": [
+          "e026_n08_n07",
+          "e022_n07_n06"
+        ],
+        "path_cost_s": 40.0,
+        "path_length_m": 160.0,
+        "expanded_nodes": 4,
+        "generated_nodes": 9,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 10300
+      },
+      "astar": {
+        "node_ids": [
+          "n08",
+          "n07",
+          "n06"
+        ],
+        "stop_ids": [
+          "benchmark_stop_08",
+          "benchmark_stop_07",
+          "benchmark_stop_06"
+        ],
+        "edge_ids": [
+          "e026_n08_n07",
+          "e022_n07_n06"
+        ],
+        "path_cost_s": 40.0,
+        "path_length_m": 160.0,
+        "expanded_nodes": 2,
+        "generated_nodes": 7,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 8200
+      }
+    },
+    {
+      "start_node": "n08",
+      "goal_node": "n07",
+      "start_stop_id": "benchmark_stop_08",
+      "goal_stop_id": "benchmark_stop_07",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n08",
+          "n07"
+        ],
+        "stop_ids": [
+          "benchmark_stop_08",
+          "benchmark_stop_07"
+        ],
+        "edge_ids": [
+          "e026_n08_n07"
+        ],
+        "path_cost_s": 20.0,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 4,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 3800
+      },
+      "astar": {
+        "node_ids": [
+          "n08",
+          "n07"
+        ],
+        "stop_ids": [
+          "benchmark_stop_08",
+          "benchmark_stop_07"
+        ],
+        "edge_ids": [
+          "e026_n08_n07"
+        ],
+        "path_cost_s": 20.0,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 4,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 5000
+      }
+    },
+    {
+      "start_node": "n08",
+      "goal_node": "n09",
+      "start_stop_id": "benchmark_stop_08",
+      "goal_stop_id": "benchmark_stop_09",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n08",
+          "n09"
+        ],
+        "stop_ids": [
+          "benchmark_stop_08",
+          "benchmark_stop_09"
+        ],
+        "edge_ids": [
+          "e029_n08_n09"
+        ],
+        "path_cost_s": 46.720018667,
+        "path_length_m": 256.320112,
+        "expanded_nodes": 6,
+        "generated_nodes": 10,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 14400
+      },
+      "astar": {
+        "node_ids": [
+          "n08",
+          "n09"
+        ],
+        "stop_ids": [
+          "benchmark_stop_08",
+          "benchmark_stop_09"
+        ],
+        "edge_ids": [
+          "e029_n08_n09"
+        ],
+        "path_cost_s": 46.720018667,
+        "path_length_m": 256.320112,
+        "expanded_nodes": 1,
+        "generated_nodes": 4,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 4700
+      }
+    },
+    {
+      "start_node": "n08",
+      "goal_node": "n10",
+      "start_stop_id": "benchmark_stop_08",
+      "goal_stop_id": "benchmark_stop_10",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n08",
+          "n07",
+          "n11",
+          "n10"
+        ],
+        "stop_ids": [
+          "benchmark_stop_08",
+          "benchmark_stop_07",
+          "benchmark_stop_11",
+          "benchmark_stop_10"
+        ],
+        "edge_ids": [
+          "e026_n08_n07",
+          "e027_n07_n11",
+          "e034_n11_n10"
+        ],
+        "path_cost_s": 56.0399556,
+        "path_length_m": 250.199778,
+        "expanded_nodes": 9,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 18700
+      },
+      "astar": {
+        "node_ids": [
+          "n08",
+          "n07",
+          "n11",
+          "n10"
+        ],
+        "stop_ids": [
+          "benchmark_stop_08",
+          "benchmark_stop_07",
+          "benchmark_stop_11",
+          "benchmark_stop_10"
+        ],
+        "edge_ids": [
+          "e026_n08_n07",
+          "e027_n07_n11",
+          "e034_n11_n10"
+        ],
+        "path_cost_s": 56.0399556,
+        "path_length_m": 250.199778,
+        "expanded_nodes": 4,
+        "generated_nodes": 10,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 13000
+      }
+    },
+    {
+      "start_node": "n08",
+      "goal_node": "n11",
+      "start_stop_id": "benchmark_stop_08",
+      "goal_stop_id": "benchmark_stop_11",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n08",
+          "n07",
+          "n11"
+        ],
+        "stop_ids": [
+          "benchmark_stop_08",
+          "benchmark_stop_07",
+          "benchmark_stop_11"
+        ],
+        "edge_ids": [
+          "e026_n08_n07",
+          "e027_n07_n11"
+        ],
+        "path_cost_s": 40.0399556,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 5,
+        "generated_nodes": 10,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 12400
+      },
+      "astar": {
+        "node_ids": [
+          "n08",
+          "n07",
+          "n11"
+        ],
+        "stop_ids": [
+          "benchmark_stop_08",
+          "benchmark_stop_07",
+          "benchmark_stop_11"
+        ],
+        "edge_ids": [
+          "e026_n08_n07",
+          "e027_n07_n11"
+        ],
+        "path_cost_s": 40.0399556,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 2,
+        "generated_nodes": 7,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 7900
+      }
+    },
+    {
+      "start_node": "n09",
+      "goal_node": "n01",
+      "start_stop_id": "benchmark_stop_09",
+      "goal_stop_id": "benchmark_stop_01",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n09",
+          "n05",
+          "n01"
+        ],
+        "stop_ids": [
+          "benchmark_stop_09",
+          "benchmark_stop_05",
+          "benchmark_stop_01"
+        ],
+        "edge_ids": [
+          "e020_n09_n05",
+          "e004_n05_n01"
+        ],
+        "path_cost_s": 44.5899001,
+        "path_length_m": 180.399556,
+        "expanded_nodes": 5,
+        "generated_nodes": 10,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 12600
+      },
+      "astar": {
+        "node_ids": [
+          "n09",
+          "n05",
+          "n01"
+        ],
+        "stop_ids": [
+          "benchmark_stop_09",
+          "benchmark_stop_05",
+          "benchmark_stop_01"
+        ],
+        "edge_ids": [
+          "e020_n09_n05",
+          "e004_n05_n01"
+        ],
+        "path_cost_s": 44.5899001,
+        "path_length_m": 180.399556,
+        "expanded_nodes": 2,
+        "generated_nodes": 7,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 8400
+      }
+    },
+    {
+      "start_node": "n09",
+      "goal_node": "n02",
+      "start_stop_id": "benchmark_stop_09",
+      "goal_stop_id": "benchmark_stop_02",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n09",
+          "n05",
+          "n01",
+          "n02"
+        ],
+        "stop_ids": [
+          "benchmark_stop_09",
+          "benchmark_stop_05",
+          "benchmark_stop_01",
+          "benchmark_stop_02"
+        ],
+        "edge_ids": [
+          "e020_n09_n05",
+          "e004_n05_n01",
+          "e001_n01_n02"
+        ],
+        "path_cost_s": 64.5899001,
+        "path_length_m": 260.399556,
+        "expanded_nodes": 8,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 17400
+      },
+      "astar": {
+        "node_ids": [
+          "n09",
+          "n05",
+          "n01",
+          "n02"
+        ],
+        "stop_ids": [
+          "benchmark_stop_09",
+          "benchmark_stop_05",
+          "benchmark_stop_01",
+          "benchmark_stop_02"
+        ],
+        "edge_ids": [
+          "e020_n09_n05",
+          "e004_n05_n01",
+          "e001_n01_n02"
+        ],
+        "path_cost_s": 64.5899001,
+        "path_length_m": 260.399556,
+        "expanded_nodes": 5,
+        "generated_nodes": 10,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 14400
+      }
+    },
+    {
+      "start_node": "n09",
+      "goal_node": "n03",
+      "start_stop_id": "benchmark_stop_09",
+      "goal_stop_id": "benchmark_stop_03",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n09",
+          "n05",
+          "n06",
+          "n07",
+          "n03"
+        ],
+        "stop_ids": [
+          "benchmark_stop_09",
+          "benchmark_stop_05",
+          "benchmark_stop_06",
+          "benchmark_stop_07",
+          "benchmark_stop_03"
+        ],
+        "edge_ids": [
+          "e020_n09_n05",
+          "e017_n05_n06",
+          "e021_n06_n07",
+          "e012_n07_n03"
+        ],
+        "path_cost_s": 74.916574167,
+        "path_length_m": 340.399556,
+        "expanded_nodes": 10,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 20000
+      },
+      "astar": {
+        "node_ids": [
+          "n09",
+          "n05",
+          "n06",
+          "n07",
+          "n03"
+        ],
+        "stop_ids": [
+          "benchmark_stop_09",
+          "benchmark_stop_05",
+          "benchmark_stop_06",
+          "benchmark_stop_07",
+          "benchmark_stop_03"
+        ],
+        "edge_ids": [
+          "e020_n09_n05",
+          "e017_n05_n06",
+          "e021_n06_n07",
+          "e012_n07_n03"
+        ],
+        "path_cost_s": 74.916574167,
+        "path_length_m": 340.399556,
+        "expanded_nodes": 8,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 20500
+      }
+    },
+    {
+      "start_node": "n09",
+      "goal_node": "n04",
+      "start_stop_id": "benchmark_stop_09",
+      "goal_stop_id": "benchmark_stop_04",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n09",
+          "n08",
+          "n04"
+        ],
+        "stop_ids": [
+          "benchmark_stop_09",
+          "benchmark_stop_08",
+          "benchmark_stop_04"
+        ],
+        "edge_ids": [
+          "e030_n09_n08",
+          "e016_n08_n04"
+        ],
+        "path_cost_s": 70.720018667,
+        "path_length_m": 346.320112,
+        "expanded_nodes": 9,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 18400
+      },
+      "astar": {
+        "node_ids": [
+          "n09",
+          "n08",
+          "n04"
+        ],
+        "stop_ids": [
+          "benchmark_stop_09",
+          "benchmark_stop_08",
+          "benchmark_stop_04"
+        ],
+        "edge_ids": [
+          "e030_n09_n08",
+          "e016_n08_n04"
+        ],
+        "path_cost_s": 70.720018667,
+        "path_length_m": 346.320112,
+        "expanded_nodes": 5,
+        "generated_nodes": 10,
+        "peak_open_set_size": 7,
+        "elapsed_ns": 15600
+      }
+    },
+    {
+      "start_node": "n09",
+      "goal_node": "n05",
+      "start_stop_id": "benchmark_stop_09",
+      "goal_stop_id": "benchmark_stop_05",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n09",
+          "n05"
+        ],
+        "stop_ids": [
+          "benchmark_stop_09",
+          "benchmark_stop_05"
+        ],
+        "edge_ids": [
+          "e020_n09_n05"
+        ],
+        "path_cost_s": 24.5499445,
+        "path_length_m": 90.199778,
+        "expanded_nodes": 1,
+        "generated_nodes": 4,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 3700
+      },
+      "astar": {
+        "node_ids": [
+          "n09",
+          "n05"
+        ],
+        "stop_ids": [
+          "benchmark_stop_09",
+          "benchmark_stop_05"
+        ],
+        "edge_ids": [
+          "e020_n09_n05"
+        ],
+        "path_cost_s": 24.5499445,
+        "path_length_m": 90.199778,
+        "expanded_nodes": 1,
+        "generated_nodes": 4,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 4500
+      }
+    },
+    {
+      "start_node": "n09",
+      "goal_node": "n06",
+      "start_stop_id": "benchmark_stop_09",
+      "goal_stop_id": "benchmark_stop_06",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n09",
+          "n05",
+          "n06"
+        ],
+        "stop_ids": [
+          "benchmark_stop_09",
+          "benchmark_stop_05",
+          "benchmark_stop_06"
+        ],
+        "edge_ids": [
+          "e020_n09_n05",
+          "e017_n05_n06"
+        ],
+        "path_cost_s": 37.883277833,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 3,
+        "generated_nodes": 8,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 8300
+      },
+      "astar": {
+        "node_ids": [
+          "n09",
+          "n05",
+          "n06"
+        ],
+        "stop_ids": [
+          "benchmark_stop_09",
+          "benchmark_stop_05",
+          "benchmark_stop_06"
+        ],
+        "edge_ids": [
+          "e020_n09_n05",
+          "e017_n05_n06"
+        ],
+        "path_cost_s": 37.883277833,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 2,
+        "generated_nodes": 7,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 7800
+      }
+    },
+    {
+      "start_node": "n09",
+      "goal_node": "n07",
+      "start_stop_id": "benchmark_stop_09",
+      "goal_stop_id": "benchmark_stop_07",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n09",
+          "n05",
+          "n06",
+          "n07"
+        ],
+        "stop_ids": [
+          "benchmark_stop_09",
+          "benchmark_stop_05",
+          "benchmark_stop_06",
+          "benchmark_stop_07"
+        ],
+        "edge_ids": [
+          "e020_n09_n05",
+          "e017_n05_n06",
+          "e021_n06_n07"
+        ],
+        "path_cost_s": 57.883277833,
+        "path_length_m": 250.199778,
+        "expanded_nodes": 7,
+        "generated_nodes": 10,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 15000
+      },
+      "astar": {
+        "node_ids": [
+          "n09",
+          "n05",
+          "n06",
+          "n07"
+        ],
+        "stop_ids": [
+          "benchmark_stop_09",
+          "benchmark_stop_05",
+          "benchmark_stop_06",
+          "benchmark_stop_07"
+        ],
+        "edge_ids": [
+          "e020_n09_n05",
+          "e017_n05_n06",
+          "e021_n06_n07"
+        ],
+        "path_cost_s": 57.883277833,
+        "path_length_m": 250.199778,
+        "expanded_nodes": 5,
+        "generated_nodes": 10,
+        "peak_open_set_size": 7,
+        "elapsed_ns": 14400
+      }
+    },
+    {
+      "start_node": "n09",
+      "goal_node": "n08",
+      "start_stop_id": "benchmark_stop_09",
+      "goal_stop_id": "benchmark_stop_08",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n09",
+          "n08"
+        ],
+        "stop_ids": [
+          "benchmark_stop_09",
+          "benchmark_stop_08"
+        ],
+        "edge_ids": [
+          "e030_n09_n08"
+        ],
+        "path_cost_s": 46.720018667,
+        "path_length_m": 256.320112,
+        "expanded_nodes": 6,
+        "generated_nodes": 10,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 13000
+      },
+      "astar": {
+        "node_ids": [
+          "n09",
+          "n08"
+        ],
+        "stop_ids": [
+          "benchmark_stop_09",
+          "benchmark_stop_08"
+        ],
+        "edge_ids": [
+          "e030_n09_n08"
+        ],
+        "path_cost_s": 46.720018667,
+        "path_length_m": 256.320112,
+        "expanded_nodes": 1,
+        "generated_nodes": 4,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 4700
+      }
+    },
+    {
+      "start_node": "n09",
+      "goal_node": "n10",
+      "start_stop_id": "benchmark_stop_09",
+      "goal_stop_id": "benchmark_stop_10",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n09",
+          "n10"
+        ],
+        "stop_ids": [
+          "benchmark_stop_09",
+          "benchmark_stop_10"
+        ],
+        "edge_ids": [
+          "e031_n09_n10"
+        ],
+        "path_cost_s": 26.0,
+        "path_length_m": 80.0,
+        "expanded_nodes": 2,
+        "generated_nodes": 7,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 6600
+      },
+      "astar": {
+        "node_ids": [
+          "n09",
+          "n10"
+        ],
+        "stop_ids": [
+          "benchmark_stop_09",
+          "benchmark_stop_10"
+        ],
+        "edge_ids": [
+          "e031_n09_n10"
+        ],
+        "path_cost_s": 26.0,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 4,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 4500
+      }
+    },
+    {
+      "start_node": "n09",
+      "goal_node": "n11",
+      "start_stop_id": "benchmark_stop_09",
+      "goal_stop_id": "benchmark_stop_11",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n09",
+          "n10",
+          "n11"
+        ],
+        "stop_ids": [
+          "benchmark_stop_09",
+          "benchmark_stop_10",
+          "benchmark_stop_11"
+        ],
+        "edge_ids": [
+          "e031_n09_n10",
+          "e033_n10_n11"
+        ],
+        "path_cost_s": 42.0,
+        "path_length_m": 160.0,
+        "expanded_nodes": 4,
+        "generated_nodes": 10,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 15400
+      },
+      "astar": {
+        "node_ids": [
+          "n09",
+          "n10",
+          "n11"
+        ],
+        "stop_ids": [
+          "benchmark_stop_09",
+          "benchmark_stop_10",
+          "benchmark_stop_11"
+        ],
+        "edge_ids": [
+          "e031_n09_n10",
+          "e033_n10_n11"
+        ],
+        "path_cost_s": 42.0,
+        "path_length_m": 160.0,
+        "expanded_nodes": 2,
+        "generated_nodes": 6,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 7200
+      }
+    },
+    {
+      "start_node": "n10",
+      "goal_node": "n01",
+      "start_stop_id": "benchmark_stop_10",
+      "goal_stop_id": "benchmark_stop_01",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n10",
+          "n06",
+          "n05",
+          "n01"
+        ],
+        "stop_ids": [
+          "benchmark_stop_10",
+          "benchmark_stop_06",
+          "benchmark_stop_05",
+          "benchmark_stop_01"
+        ],
+        "edge_ids": [
+          "e024_n10_n06",
+          "e018_n06_n05",
+          "e004_n05_n01"
+        ],
+        "path_cost_s": 54.373288933,
+        "path_length_m": 260.199778,
+        "expanded_nodes": 8,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 17600
+      },
+      "astar": {
+        "node_ids": [
+          "n10",
+          "n06",
+          "n05",
+          "n01"
+        ],
+        "stop_ids": [
+          "benchmark_stop_10",
+          "benchmark_stop_06",
+          "benchmark_stop_05",
+          "benchmark_stop_01"
+        ],
+        "edge_ids": [
+          "e024_n10_n06",
+          "e018_n06_n05",
+          "e004_n05_n01"
+        ],
+        "path_cost_s": 54.373288933,
+        "path_length_m": 260.199778,
+        "expanded_nodes": 3,
+        "generated_nodes": 9,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 10800
+      }
+    },
+    {
+      "start_node": "n10",
+      "goal_node": "n02",
+      "start_stop_id": "benchmark_stop_10",
+      "goal_stop_id": "benchmark_stop_02",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n10",
+          "n06",
+          "n02"
+        ],
+        "stop_ids": [
+          "benchmark_stop_10",
+          "benchmark_stop_06",
+          "benchmark_stop_02"
+        ],
+        "edge_ids": [
+          "e024_n10_n06",
+          "e008_n06_n02"
+        ],
+        "path_cost_s": 49.5,
+        "path_length_m": 180.0,
+        "expanded_nodes": 6,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 14000
+      },
+      "astar": {
+        "node_ids": [
+          "n10",
+          "n06",
+          "n02"
+        ],
+        "stop_ids": [
+          "benchmark_stop_10",
+          "benchmark_stop_06",
+          "benchmark_stop_02"
+        ],
+        "edge_ids": [
+          "e024_n10_n06",
+          "e008_n06_n02"
+        ],
+        "path_cost_s": 49.5,
+        "path_length_m": 180.0,
+        "expanded_nodes": 3,
+        "generated_nodes": 7,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 9700
+      }
+    },
+    {
+      "start_node": "n10",
+      "goal_node": "n03",
+      "start_stop_id": "benchmark_stop_10",
+      "goal_stop_id": "benchmark_stop_03",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n10",
+          "n11",
+          "n07",
+          "n03"
+        ],
+        "stop_ids": [
+          "benchmark_stop_10",
+          "benchmark_stop_11",
+          "benchmark_stop_07",
+          "benchmark_stop_03"
+        ],
+        "edge_ids": [
+          "e033_n10_n11",
+          "e028_n11_n07",
+          "e012_n07_n03"
+        ],
+        "path_cost_s": 53.073251933,
+        "path_length_m": 260.399556,
+        "expanded_nodes": 7,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 15400
+      },
+      "astar": {
+        "node_ids": [
+          "n10",
+          "n11",
+          "n07",
+          "n03"
+        ],
+        "stop_ids": [
+          "benchmark_stop_10",
+          "benchmark_stop_11",
+          "benchmark_stop_07",
+          "benchmark_stop_03"
+        ],
+        "edge_ids": [
+          "e033_n10_n11",
+          "e028_n11_n07",
+          "e012_n07_n03"
+        ],
+        "path_cost_s": 53.073251933,
+        "path_length_m": 260.399556,
+        "expanded_nodes": 4,
+        "generated_nodes": 9,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 12800
+      }
+    },
+    {
+      "start_node": "n10",
+      "goal_node": "n04",
+      "start_stop_id": "benchmark_stop_10",
+      "goal_stop_id": "benchmark_stop_04",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n10",
+          "n11",
+          "n07",
+          "n03",
+          "n04"
+        ],
+        "stop_ids": [
+          "benchmark_stop_10",
+          "benchmark_stop_11",
+          "benchmark_stop_07",
+          "benchmark_stop_03",
+          "benchmark_stop_04"
+        ],
+        "edge_ids": [
+          "e033_n10_n11",
+          "e028_n11_n07",
+          "e012_n07_n03",
+          "e009_n03_n04"
+        ],
+        "path_cost_s": 69.073251933,
+        "path_length_m": 340.399556,
+        "expanded_nodes": 10,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 19800
+      },
+      "astar": {
+        "node_ids": [
+          "n10",
+          "n11",
+          "n07",
+          "n03",
+          "n04"
+        ],
+        "stop_ids": [
+          "benchmark_stop_10",
+          "benchmark_stop_11",
+          "benchmark_stop_07",
+          "benchmark_stop_03",
+          "benchmark_stop_04"
+        ],
+        "edge_ids": [
+          "e033_n10_n11",
+          "e028_n11_n07",
+          "e012_n07_n03",
+          "e009_n03_n04"
+        ],
+        "path_cost_s": 69.073251933,
+        "path_length_m": 340.399556,
+        "expanded_nodes": 5,
+        "generated_nodes": 10,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 14000
+      }
+    },
+    {
+      "start_node": "n10",
+      "goal_node": "n05",
+      "start_stop_id": "benchmark_stop_10",
+      "goal_stop_id": "benchmark_stop_05",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n10",
+          "n06",
+          "n05"
+        ],
+        "stop_ids": [
+          "benchmark_stop_10",
+          "benchmark_stop_06",
+          "benchmark_stop_05"
+        ],
+        "edge_ids": [
+          "e024_n10_n06",
+          "e018_n06_n05"
+        ],
+        "path_cost_s": 34.333333333,
+        "path_length_m": 170.0,
+        "expanded_nodes": 4,
+        "generated_nodes": 8,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 9300
+      },
+      "astar": {
+        "node_ids": [
+          "n10",
+          "n06",
+          "n05"
+        ],
+        "stop_ids": [
+          "benchmark_stop_10",
+          "benchmark_stop_06",
+          "benchmark_stop_05"
+        ],
+        "edge_ids": [
+          "e024_n10_n06",
+          "e018_n06_n05"
+        ],
+        "path_cost_s": 34.333333333,
+        "path_length_m": 170.0,
+        "expanded_nodes": 2,
+        "generated_nodes": 7,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 9900
+      }
+    },
+    {
+      "start_node": "n10",
+      "goal_node": "n06",
+      "start_stop_id": "benchmark_stop_10",
+      "goal_stop_id": "benchmark_stop_06",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n10",
+          "n06"
+        ],
+        "stop_ids": [
+          "benchmark_stop_10",
+          "benchmark_stop_06"
+        ],
+        "edge_ids": [
+          "e024_n10_n06"
+        ],
+        "path_cost_s": 21.0,
+        "path_length_m": 90.0,
+        "expanded_nodes": 2,
+        "generated_nodes": 5,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 4900
+      },
+      "astar": {
+        "node_ids": [
+          "n10",
+          "n06"
+        ],
+        "stop_ids": [
+          "benchmark_stop_10",
+          "benchmark_stop_06"
+        ],
+        "edge_ids": [
+          "e024_n10_n06"
+        ],
+        "path_cost_s": 21.0,
+        "path_length_m": 90.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 4,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 4300
+      }
+    },
+    {
+      "start_node": "n10",
+      "goal_node": "n07",
+      "start_stop_id": "benchmark_stop_10",
+      "goal_stop_id": "benchmark_stop_07",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n10",
+          "n11",
+          "n07"
+        ],
+        "stop_ids": [
+          "benchmark_stop_10",
+          "benchmark_stop_11",
+          "benchmark_stop_07"
+        ],
+        "edge_ids": [
+          "e033_n10_n11",
+          "e028_n11_n07"
+        ],
+        "path_cost_s": 36.0399556,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 5,
+        "generated_nodes": 10,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 11600
+      },
+      "astar": {
+        "node_ids": [
+          "n10",
+          "n11",
+          "n07"
+        ],
+        "stop_ids": [
+          "benchmark_stop_10",
+          "benchmark_stop_11",
+          "benchmark_stop_07"
+        ],
+        "edge_ids": [
+          "e033_n10_n11",
+          "e028_n11_n07"
+        ],
+        "path_cost_s": 36.0399556,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 3,
+        "generated_nodes": 7,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 8800
+      }
+    },
+    {
+      "start_node": "n10",
+      "goal_node": "n08",
+      "start_stop_id": "benchmark_stop_10",
+      "goal_stop_id": "benchmark_stop_08",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n10",
+          "n11",
+          "n07",
+          "n08"
+        ],
+        "stop_ids": [
+          "benchmark_stop_10",
+          "benchmark_stop_11",
+          "benchmark_stop_07",
+          "benchmark_stop_08"
+        ],
+        "edge_ids": [
+          "e033_n10_n11",
+          "e028_n11_n07",
+          "e025_n07_n08"
+        ],
+        "path_cost_s": 56.0399556,
+        "path_length_m": 250.199778,
+        "expanded_nodes": 9,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 18100
+      },
+      "astar": {
+        "node_ids": [
+          "n10",
+          "n11",
+          "n07",
+          "n08"
+        ],
+        "stop_ids": [
+          "benchmark_stop_10",
+          "benchmark_stop_11",
+          "benchmark_stop_07",
+          "benchmark_stop_08"
+        ],
+        "edge_ids": [
+          "e033_n10_n11",
+          "e028_n11_n07",
+          "e025_n07_n08"
+        ],
+        "path_cost_s": 56.0399556,
+        "path_length_m": 250.199778,
+        "expanded_nodes": 4,
+        "generated_nodes": 9,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 11800
+      }
+    },
+    {
+      "start_node": "n10",
+      "goal_node": "n09",
+      "start_stop_id": "benchmark_stop_10",
+      "goal_stop_id": "benchmark_stop_09",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n10",
+          "n09"
+        ],
+        "stop_ids": [
+          "benchmark_stop_10",
+          "benchmark_stop_09"
+        ],
+        "edge_ids": [
+          "e032_n10_n09"
+        ],
+        "path_cost_s": 26.0,
+        "path_length_m": 80.0,
+        "expanded_nodes": 3,
+        "generated_nodes": 7,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 7200
+      },
+      "astar": {
+        "node_ids": [
+          "n10",
+          "n09"
+        ],
+        "stop_ids": [
+          "benchmark_stop_10",
+          "benchmark_stop_09"
+        ],
+        "edge_ids": [
+          "e032_n10_n09"
+        ],
+        "path_cost_s": 26.0,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 4,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 4300
+      }
+    },
+    {
+      "start_node": "n10",
+      "goal_node": "n11",
+      "start_stop_id": "benchmark_stop_10",
+      "goal_stop_id": "benchmark_stop_11",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n10",
+          "n11"
+        ],
+        "stop_ids": [
+          "benchmark_stop_10",
+          "benchmark_stop_11"
+        ],
+        "edge_ids": [
+          "e033_n10_n11"
+        ],
+        "path_cost_s": 16.0,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 4,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 3600
+      },
+      "astar": {
+        "node_ids": [
+          "n10",
+          "n11"
+        ],
+        "stop_ids": [
+          "benchmark_stop_10",
+          "benchmark_stop_11"
+        ],
+        "edge_ids": [
+          "e033_n10_n11"
+        ],
+        "path_cost_s": 16.0,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 4,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 4300
+      }
+    },
+    {
+      "start_node": "n11",
+      "goal_node": "n01",
+      "start_stop_id": "benchmark_stop_11",
+      "goal_stop_id": "benchmark_stop_01",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n11",
+          "n10",
+          "n06",
+          "n05",
+          "n01"
+        ],
+        "stop_ids": [
+          "benchmark_stop_11",
+          "benchmark_stop_10",
+          "benchmark_stop_06",
+          "benchmark_stop_05",
+          "benchmark_stop_01"
+        ],
+        "edge_ids": [
+          "e034_n11_n10",
+          "e024_n10_n06",
+          "e018_n06_n05",
+          "e004_n05_n01"
+        ],
+        "path_cost_s": 70.373288933,
+        "path_length_m": 340.199778,
+        "expanded_nodes": 10,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 26700
+      },
+      "astar": {
+        "node_ids": [
+          "n11",
+          "n10",
+          "n06",
+          "n05",
+          "n01"
+        ],
+        "stop_ids": [
+          "benchmark_stop_11",
+          "benchmark_stop_10",
+          "benchmark_stop_06",
+          "benchmark_stop_05",
+          "benchmark_stop_01"
+        ],
+        "edge_ids": [
+          "e034_n11_n10",
+          "e024_n10_n06",
+          "e018_n06_n05",
+          "e004_n05_n01"
+        ],
+        "path_cost_s": 70.373288933,
+        "path_length_m": 340.199778,
+        "expanded_nodes": 7,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 18500
+      }
+    },
+    {
+      "start_node": "n11",
+      "goal_node": "n02",
+      "start_stop_id": "benchmark_stop_11",
+      "goal_stop_id": "benchmark_stop_02",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n11",
+          "n07",
+          "n03",
+          "n02"
+        ],
+        "stop_ids": [
+          "benchmark_stop_11",
+          "benchmark_stop_07",
+          "benchmark_stop_03",
+          "benchmark_stop_02"
+        ],
+        "edge_ids": [
+          "e028_n11_n07",
+          "e012_n07_n03",
+          "e006_n03_n02"
+        ],
+        "path_cost_s": 54.406585267,
+        "path_length_m": 260.399556,
+        "expanded_nodes": 9,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 18000
+      },
+      "astar": {
+        "node_ids": [
+          "n11",
+          "n07",
+          "n03",
+          "n02"
+        ],
+        "stop_ids": [
+          "benchmark_stop_11",
+          "benchmark_stop_07",
+          "benchmark_stop_03",
+          "benchmark_stop_02"
+        ],
+        "edge_ids": [
+          "e028_n11_n07",
+          "e012_n07_n03",
+          "e006_n03_n02"
+        ],
+        "path_cost_s": 54.406585267,
+        "path_length_m": 260.399556,
+        "expanded_nodes": 5,
+        "generated_nodes": 10,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 14700
+      }
+    },
+    {
+      "start_node": "n11",
+      "goal_node": "n03",
+      "start_stop_id": "benchmark_stop_11",
+      "goal_stop_id": "benchmark_stop_03",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n11",
+          "n07",
+          "n03"
+        ],
+        "stop_ids": [
+          "benchmark_stop_11",
+          "benchmark_stop_07",
+          "benchmark_stop_03"
+        ],
+        "edge_ids": [
+          "e028_n11_n07",
+          "e012_n07_n03"
+        ],
+        "path_cost_s": 37.073251933,
+        "path_length_m": 180.399556,
+        "expanded_nodes": 4,
+        "generated_nodes": 9,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 9800
+      },
+      "astar": {
+        "node_ids": [
+          "n11",
+          "n07",
+          "n03"
+        ],
+        "stop_ids": [
+          "benchmark_stop_11",
+          "benchmark_stop_07",
+          "benchmark_stop_03"
+        ],
+        "edge_ids": [
+          "e028_n11_n07",
+          "e012_n07_n03"
+        ],
+        "path_cost_s": 37.073251933,
+        "path_length_m": 180.399556,
+        "expanded_nodes": 2,
+        "generated_nodes": 6,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 7100
+      }
+    },
+    {
+      "start_node": "n11",
+      "goal_node": "n04",
+      "start_stop_id": "benchmark_stop_11",
+      "goal_stop_id": "benchmark_stop_04",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n11",
+          "n07",
+          "n03",
+          "n04"
+        ],
+        "stop_ids": [
+          "benchmark_stop_11",
+          "benchmark_stop_07",
+          "benchmark_stop_03",
+          "benchmark_stop_04"
+        ],
+        "edge_ids": [
+          "e028_n11_n07",
+          "e012_n07_n03",
+          "e009_n03_n04"
+        ],
+        "path_cost_s": 53.073251933,
+        "path_length_m": 260.399556,
+        "expanded_nodes": 8,
+        "generated_nodes": 11,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 16600
+      },
+      "astar": {
+        "node_ids": [
+          "n11",
+          "n07",
+          "n03",
+          "n04"
+        ],
+        "stop_ids": [
+          "benchmark_stop_11",
+          "benchmark_stop_07",
+          "benchmark_stop_03",
+          "benchmark_stop_04"
+        ],
+        "edge_ids": [
+          "e028_n11_n07",
+          "e012_n07_n03",
+          "e009_n03_n04"
+        ],
+        "path_cost_s": 53.073251933,
+        "path_length_m": 260.399556,
+        "expanded_nodes": 3,
+        "generated_nodes": 8,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 9800
+      }
+    },
+    {
+      "start_node": "n11",
+      "goal_node": "n05",
+      "start_stop_id": "benchmark_stop_11",
+      "goal_stop_id": "benchmark_stop_05",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n11",
+          "n10",
+          "n06",
+          "n05"
+        ],
+        "stop_ids": [
+          "benchmark_stop_11",
+          "benchmark_stop_10",
+          "benchmark_stop_06",
+          "benchmark_stop_05"
+        ],
+        "edge_ids": [
+          "e034_n11_n10",
+          "e024_n10_n06",
+          "e018_n06_n05"
+        ],
+        "path_cost_s": 50.333333333,
+        "path_length_m": 250.0,
+        "expanded_nodes": 7,
+        "generated_nodes": 10,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 14500
+      },
+      "astar": {
+        "node_ids": [
+          "n11",
+          "n10",
+          "n06",
+          "n05"
+        ],
+        "stop_ids": [
+          "benchmark_stop_11",
+          "benchmark_stop_10",
+          "benchmark_stop_06",
+          "benchmark_stop_05"
+        ],
+        "edge_ids": [
+          "e034_n11_n10",
+          "e024_n10_n06",
+          "e018_n06_n05"
+        ],
+        "path_cost_s": 50.333333333,
+        "path_length_m": 250.0,
+        "expanded_nodes": 4,
+        "generated_nodes": 9,
+        "peak_open_set_size": 5,
+        "elapsed_ns": 12000
+      }
+    },
+    {
+      "start_node": "n11",
+      "goal_node": "n06",
+      "start_stop_id": "benchmark_stop_11",
+      "goal_stop_id": "benchmark_stop_06",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n11",
+          "n10",
+          "n06"
+        ],
+        "stop_ids": [
+          "benchmark_stop_11",
+          "benchmark_stop_10",
+          "benchmark_stop_06"
+        ],
+        "edge_ids": [
+          "e034_n11_n10",
+          "e024_n10_n06"
+        ],
+        "path_cost_s": 37.0,
+        "path_length_m": 170.0,
+        "expanded_nodes": 3,
+        "generated_nodes": 7,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 7500
+      },
+      "astar": {
+        "node_ids": [
+          "n11",
+          "n10",
+          "n06"
+        ],
+        "stop_ids": [
+          "benchmark_stop_11",
+          "benchmark_stop_10",
+          "benchmark_stop_06"
+        ],
+        "edge_ids": [
+          "e034_n11_n10",
+          "e024_n10_n06"
+        ],
+        "path_cost_s": 37.0,
+        "path_length_m": 170.0,
+        "expanded_nodes": 3,
+        "generated_nodes": 7,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 9000
+      }
+    },
+    {
+      "start_node": "n11",
+      "goal_node": "n07",
+      "start_stop_id": "benchmark_stop_11",
+      "goal_stop_id": "benchmark_stop_07",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n11",
+          "n07"
+        ],
+        "stop_ids": [
+          "benchmark_stop_11",
+          "benchmark_stop_07"
+        ],
+        "edge_ids": [
+          "e028_n11_n07"
+        ],
+        "path_cost_s": 20.0399556,
+        "path_length_m": 90.199778,
+        "expanded_nodes": 2,
+        "generated_nodes": 5,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 5100
+      },
+      "astar": {
+        "node_ids": [
+          "n11",
+          "n07"
+        ],
+        "stop_ids": [
+          "benchmark_stop_11",
+          "benchmark_stop_07"
+        ],
+        "edge_ids": [
+          "e028_n11_n07"
+        ],
+        "path_cost_s": 20.0399556,
+        "path_length_m": 90.199778,
+        "expanded_nodes": 1,
+        "generated_nodes": 3,
+        "peak_open_set_size": 2,
+        "elapsed_ns": 3700
+      }
+    },
+    {
+      "start_node": "n11",
+      "goal_node": "n08",
+      "start_stop_id": "benchmark_stop_11",
+      "goal_stop_id": "benchmark_stop_08",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n11",
+          "n07",
+          "n08"
+        ],
+        "stop_ids": [
+          "benchmark_stop_11",
+          "benchmark_stop_07",
+          "benchmark_stop_08"
+        ],
+        "edge_ids": [
+          "e028_n11_n07",
+          "e025_n07_n08"
+        ],
+        "path_cost_s": 40.0399556,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 5,
+        "generated_nodes": 10,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 12100
+      },
+      "astar": {
+        "node_ids": [
+          "n11",
+          "n07",
+          "n08"
+        ],
+        "stop_ids": [
+          "benchmark_stop_11",
+          "benchmark_stop_07",
+          "benchmark_stop_08"
+        ],
+        "edge_ids": [
+          "e028_n11_n07",
+          "e025_n07_n08"
+        ],
+        "path_cost_s": 40.0399556,
+        "path_length_m": 170.199778,
+        "expanded_nodes": 2,
+        "generated_nodes": 6,
+        "peak_open_set_size": 4,
+        "elapsed_ns": 7000
+      }
+    },
+    {
+      "start_node": "n11",
+      "goal_node": "n09",
+      "start_stop_id": "benchmark_stop_11",
+      "goal_stop_id": "benchmark_stop_09",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n11",
+          "n10",
+          "n09"
+        ],
+        "stop_ids": [
+          "benchmark_stop_11",
+          "benchmark_stop_10",
+          "benchmark_stop_09"
+        ],
+        "edge_ids": [
+          "e034_n11_n10",
+          "e032_n10_n09"
+        ],
+        "path_cost_s": 42.0,
+        "path_length_m": 160.0,
+        "expanded_nodes": 6,
+        "generated_nodes": 10,
+        "peak_open_set_size": 6,
+        "elapsed_ns": 13400
+      },
+      "astar": {
+        "node_ids": [
+          "n11",
+          "n10",
+          "n09"
+        ],
+        "stop_ids": [
+          "benchmark_stop_11",
+          "benchmark_stop_10",
+          "benchmark_stop_09"
+        ],
+        "edge_ids": [
+          "e034_n11_n10",
+          "e032_n10_n09"
+        ],
+        "path_cost_s": 42.0,
+        "path_length_m": 160.0,
+        "expanded_nodes": 2,
+        "generated_nodes": 5,
+        "peak_open_set_size": 3,
+        "elapsed_ns": 6100
+      }
+    },
+    {
+      "start_node": "n11",
+      "goal_node": "n10",
+      "start_stop_id": "benchmark_stop_11",
+      "goal_stop_id": "benchmark_stop_10",
+      "route_outcome_match": true,
+      "path_cost_match": true,
+      "dijkstra": {
+        "node_ids": [
+          "n11",
+          "n10"
+        ],
+        "stop_ids": [
+          "benchmark_stop_11",
+          "benchmark_stop_10"
+        ],
+        "edge_ids": [
+          "e034_n11_n10"
+        ],
+        "path_cost_s": 16.0,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 3,
+        "peak_open_set_size": 2,
+        "elapsed_ns": 3100
+      },
+      "astar": {
+        "node_ids": [
+          "n11",
+          "n10"
+        ],
+        "stop_ids": [
+          "benchmark_stop_11",
+          "benchmark_stop_10"
+        ],
+        "edge_ids": [
+          "e034_n11_n10"
+        ],
+        "path_cost_s": 16.0,
+        "path_length_m": 80.0,
+        "expanded_nodes": 1,
+        "generated_nodes": 3,
+        "peak_open_set_size": 2,
+        "elapsed_ns": 3500
+      }
+    }
+  ],
+  "input_validation": {
+    "contract": "RoadGraphDocument",
+    "topology_and_geometry_validated": true,
+    "node_count": 11,
+    "edge_count": 34,
+    "geometry_point_count": 102,
+    "edge_endpoint_checks": 34
+  },
+  "measurement": {
+    "pair_count": 110,
+    "repetitions": 20,
+    "warmups": 2,
+    "path_outcomes_match_all_repetitions": true,
+    "matching_repetitions": 20,
+    "duration_ns": {
+      "dijkstra": {
+        "sample_count": 2200,
+        "mean": 13485.954545454546,
+        "min": 2900,
+        "p50": 13700,
+        "p95": 21400,
+        "max": 136900
+      },
+      "astar": {
+        "sample_count": 2200,
+        "mean": 9781.272727272728,
+        "min": 3500,
+        "p50": 8700,
+        "p95": 19000,
+        "max": 71000
+      }
+    }
+  }
+}

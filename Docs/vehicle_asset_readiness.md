@@ -1,6 +1,6 @@
 # Vehicle asset and physics shell readiness
 
-Project version: **0.2.3.0** · implementation status checked 2026-09-25
+Project version: **0.2.4.0** · implementation status checked 2026-09-25
 
 ## Existing vehicle visuals
 
@@ -55,3 +55,19 @@ The request begins at V01's synthetic start node and targets the second fixture 
 In Edit Mode, use `InhaExpress > Vehicles > Create Physics Actor Prefabs`. The authoring script refuses to overwrite an existing actor prefab, measures each current source renderer again, and saves nested prefab instances so source visuals remain shared.
 
 Next, run the preview scene through Unity Editor Play Mode against the local API and verify the full request→route→Rigidbody movement→localization→arrival→completion cycle. Check actor forward/up axes and the synthetic ground offset. Keep the root actor at unit scale and do not promote renderer bounds to an approved RoadGraph footprint without separate vehicle-clearance validation. Implement sensor-based braking and dynamic-object safety before enabling movement on any real campus map.
+
+## 2026-09-26 original prefab EditMode gate
+
+Unity 6000.3.21f1 passed 11/11 selected EditMode tests using the original three
+vehicle wrappers and their resolved visual dependencies in an isolated project.
+Tests cover unit roots, kinematic bodies, renderer/BoxCollider bound agreement,
+missing scripts, route authority, and immutable full server route rendering.
+ApplyRoute now resolves Rigidbody before Awake when necessary. Held-color checks
+allow the LineRenderer's 8-bit channel precision. Evidence and source hashes:
+`artifacts/validation/2026-09-26-prefab-editmode/`.
+
+Run with `AgentScripts/RunUnityPrefabTests.ps1 -PythonPath <python-with-backend-dev>`.
+This does not verify forward axes, ground contact, vehicle dynamics, original scene
+Player behavior, Android, or rendering performance. Earlier Player/follower artifacts
+remain evidence for their recorded source hashes; the subsequent Rigidbody lookup
+and route display changes were checked by this EditMode run.

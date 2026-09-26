@@ -1,6 +1,6 @@
 # Sensor-based safety gate prototype
 
-Project version **0.2.3.0** · 2026-09-25 working tree
+Project version **0.2.4.0** · 2026-09-25 working tree
 
 ## Implemented behavior
 
@@ -29,3 +29,28 @@ The reaction time, emergency deceleration, and margin are initial assumptions co
 Python tests cover no-frame, invalid-frame, stale-frame, close forward obstacle, ego-pose/sensor-tick synchronization, 1-second clear recovery, and an end-to-end synthetic request whose vehicle returns to `DRIVING` only after the sensor-clear hold. A PlayMode regression case covers bounded kinematic deceleration and resume, but Unity Test Runner execution is pending. C# source compilation and loopback WebSocket smoke verify the updated reason enum and transport; they do not execute Unity Physics or the follower in PlayMode.
 
 The current deceleration change has not yet been compiled by Unity. A PlayMode batch run was attempted in an isolated project copy, but Unity did not reach the test runner: the Licensing Client channel `LicenseClient-Yeop` was refused and the log reported `com.unity.editor.headless` not found. No PlayMode result file was produced. The original Editor process and project were left running/unchanged.
+
+## 2026-09-26 working-tree update
+
+The decision and SafetyPolicy now live in `campus_sim.safety`; service orchestration
+selects current-session observations and applies the immutable decision. All streams
+are checked for freshness/validity before pose handoff to prevent insertion order
+from retaining a satisfied clear hold across another stream's invalid data.
+
+Current Python/MapData verification passed 111 tests and Ruff. Current C# transport
+smoke passed. An isolated Unity 6000.3.21f1 PlayMode run passed 7/7 follower Physics
+tests after correcting Rigidbody setup/heading in the tests and enforcing the local
+speed cap in the follower. This supersedes the earlier follower execution limitation
+only; sensor Physics and end-to-end server/Unity service remain unverified.
+See `artifacts/validation/2026-09-26-follower-playmode/` for results and source hashes.
+
+## Subsequent 2026-09-26 Physics service execution
+
+A real Raycast wall-observation/stop/recovery case now passed in isolated PlayMode
+and an actual headless Windows test Player connected to the production Python
+server. Mobile passenger and PC cargo missions completed through Rigidbody movement
+and ego localization; 322 pose and 322 sensor ACKs were accepted in Player with no
+sensor rejection. The small synthetic shell and 3-stop map are test assumptions.
+This does not validate general occlusion/classification, TTC/RRT, dynamic braking,
+campus geometry or the original production scenes. See the service-physics-player
+artifacts and `AgentScripts/UnityPhysicsIntegration/README.md` for exact scope.

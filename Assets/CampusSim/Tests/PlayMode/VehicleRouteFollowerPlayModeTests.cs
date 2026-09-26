@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Collections.Generic;
 using InhaExpress.Client.Domain;
 using InhaExpress.Client.Presentation;
 using NUnit.Framework;
@@ -9,6 +10,35 @@ namespace InhaExpress.Client.Tests
 {
     public sealed class VehicleRouteFollowerPlayModeTests
     {
+        private readonly List<GameObject> actors = new List<GameObject>();
+
+        [UnityTearDown]
+        public IEnumerator RemoveActorsEvenAfterFailedAssertion()
+        {
+            foreach (var actor in actors)
+                if (actor != null) Object.Destroy(actor);
+            actors.Clear();
+            yield return null;
+        }
+
+        [UnityTest]
+        public IEnumerator HighServerSpeedStillHonorsLocalPreviewMaximum()
+        {
+            var actor = CreateActor(out var follower);
+            var route = CreateRoute("local-speed-cap", 10.0, 5.0);
+            Assert.That(follower.ApplyRoute(route, route.MapVersion, Time.realtimeSinceStartupAsDouble), Is.True);
+            follower.SetMotionAuthorized(true);
+            float until = Time.realtimeSinceStartup + 3f;
+            while (Time.realtimeSinceStartup < until)
+            {
+                follower.ApplyRoute(route, route.MapVersion, Time.realtimeSinceStartupAsDouble);
+                yield return new WaitForFixedUpdate();
+                Assert.That(follower.SpeedMps, Is.LessThanOrEqualTo(1.0001f));
+            }
+            Assert.That(actor.transform.position.x, Is.GreaterThan(0.5f));
+            Assert.That(follower.SpeedMps, Is.GreaterThan(0.9f));
+        }
+
         [UnityTest]
         public IEnumerator FollowerMovesAlongSyntheticRouteAndStopsNearEndpoint()
         {
@@ -68,7 +98,7 @@ namespace InhaExpress.Client.Tests
         public IEnumerator NewFollowerAttachesToNearestRemainingRouteSegment()
         {
             var actor = CreateActor(out var follower);
-            actor.transform.position = new Vector3(1.3f, 0f, 0f);
+            actor.GetComponent<Rigidbody>().position = new Vector3(1.3f, 0f, 0f);
             var route = new RouteDto("resume-route", "synthetic-route-test-v1", new[]
             {
                 new MapPositionDto(0.0, 0.0, 0.0),
@@ -95,7 +125,7 @@ namespace InhaExpress.Client.Tests
         public IEnumerator NewFollowerRejectsRouteOutsideAttachTolerance()
         {
             var actor = CreateActor(out var follower);
-            actor.transform.position = new Vector3(10f, 0f, 0f);
+            actor.GetComponent<Rigidbody>().position = new Vector3(10f, 0f, 0f);
             var route = CreateRoute("detached-route", 2.0, 0.2);
 
             Assert.That(follower.ApplyRoute(route, route.MapVersion, Time.realtimeSinceStartupAsDouble), Is.False);
@@ -146,6 +176,7 @@ namespace InhaExpress.Client.Tests
             }
 
             float speedAtRevocation = follower.SpeedMps;
+            Assert.That(speedAtRevocation, Is.GreaterThan(0.05f), "Brake a moving actor.");
             follower.SetMotionAuthorized(false);
             yield return new WaitForFixedUpdate();
             Vector3 heldPosition = actor.transform.position;
@@ -183,9 +214,13 @@ namespace InhaExpress.Client.Tests
             yield return null;
         }
 
-        private static GameObject CreateActor(out VehicleRouteFollower follower)
+        private GameObject CreateActor(out VehicleRouteFollower follower)
         {
             var actor = new GameObject("Route follower PlayMode test actor");
+            actors.Add(actor);
+            // These route tests use eastbound geometry; alignment is not the condition
+            // under test. Set the initial pose before creating the Physics body.
+            actor.transform.rotation = Quaternion.Euler(0f, 90f, 0f);
             var body = actor.AddComponent<Rigidbody>();
             body.isKinematic = true;
             body.useGravity = false;
