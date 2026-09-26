@@ -4,6 +4,7 @@ import argparse
 import json
 from pathlib import Path
 
+from campus_sim.coordination_evaluation import compare_coordination
 from campus_sim.domain import ServiceType
 from campus_sim.evaluation import (
     all_ordered_pairs,
@@ -60,6 +61,9 @@ def main() -> None:
     replan_compare.add_argument("--seed", type=int, default=17)
     replan_compare.add_argument("--repetitions", type=_positive_integer, default=20)
     replan_compare.add_argument("--events", type=_positive_integer, default=30)
+    coordination_compare = subcommands.add_parser("coordination-compare", help="Compare offline priority reservation and CBS")
+    coordination_compare.add_argument("--scenario", default="configs/coordination_benchmark.json")
+    coordination_compare.add_argument("--repetitions", type=_positive_integer, default=5)
     args = parser.parse_args()
     if args.command == "serve":
         import uvicorn
@@ -71,6 +75,12 @@ def main() -> None:
         except (RoadGraphLoadError, ValueError) as error:
             parser.error(str(error))
         uvicorn.run(service_app, host=args.host, port=args.port, reload=False)
+    elif args.command == "coordination-compare":
+        try:
+            report = compare_coordination(args.scenario, repetitions=args.repetitions)
+        except (OSError, ValueError, TypeError, KeyError) as error:
+            parser.error(str(error))
+        print(json.dumps(report, ensure_ascii=False, indent=2))
     elif args.command == "replan-compare":
         try:
             report = compare_replans(load_road_graph(args.map), seed=args.seed,

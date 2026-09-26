@@ -10,18 +10,27 @@ param(
     [switch]$Crossing,
     [switch]$PythonControl,
     [switch]$Disconnect,
+    [switch]$Reservations,
+    [switch]$ReservationFault,
+    [switch]$FleetThree,
     [ValidatePattern('^[A-Za-z0-9_.]+$')] [string]$TestFilter
 )
 
 $ErrorActionPreference = "Stop"
 if ($Disconnect -and -not $PythonControl) { throw 'Disconnect requires PythonControl.' }
-if ($PythonControl -and -not $Crossing) {
+if ($ReservationFault -and -not $Reservations) { throw 'ReservationFault requires Reservations.' }
+if ($FleetThree -and -not $Reservations) { throw 'FleetThree requires Reservations.' }
+if ($Reservations -and ($Crossing -or $Radar -or $Pedestrian -or $ZoneClosure -or $Disconnect)) {
+    throw 'Reservations is a dedicated scenario.'
+}
+if ($PythonControl -and -not ($Crossing -or $Reservations)) {
     throw 'PythonControl currently requires the dedicated Crossing scenario.'
 }
 if ($Crossing -and ($Radar -or $Pedestrian -or $ZoneClosure)) {
     throw 'Crossing is a dedicated scenario; do not combine it with other scenario switches.'
 }
 if ($Crossing -and -not $TestFilter) { $TestFilter = 'InhaExpress.Client.Tests.CrossingServiceIntegrationTests' }
+if ($Reservations -and -not $TestFilter) { $TestFilter = 'InhaExpress.Client.Tests.ReservationServiceIntegrationTests' }
 $repoRoot = [IO.Path]::GetFullPath((Join-Path $PSScriptRoot ".."))
 $versionLine = Get-Content (Join-Path $repoRoot "ProjectSettings/ProjectVersion.txt") |
     Where-Object { $_ -match '^m_EditorVersion:' } | Select-Object -First 1
@@ -61,6 +70,8 @@ Copy-RecordedSource 'Assets/CampusSim/Tests/PlayMode/VehicleServiceIntegrationTe
     'Assets/Tests/VehicleServiceIntegrationTests.cs'
 Copy-RecordedSource 'Assets/CampusSim/Tests/PlayMode/CrossingServiceIntegrationTests.cs' `
     'Assets/Tests/CrossingServiceIntegrationTests.cs'
+Copy-RecordedSource 'Assets/CampusSim/Tests/PlayMode/ReservationServiceIntegrationTests.cs' `
+    'Assets/Tests/ReservationServiceIntegrationTests.cs'
 Copy-RecordedSource 'Assets/CampusSim/Scripts/Simulation/SyntheticPedestrianWalker.cs' 'Assets/Simulation/SyntheticPedestrianWalker.cs'
 Copy-RecordedSource 'Assets/CampusSim/Scripts/Simulation/InhaExpress.Simulation.asmdef' 'Assets/Simulation/InhaExpress.Simulation.asmdef'
 Copy-RecordedSource 'Assets/CampusSim/Scripts/Simulation/SyntheticPedestrianPopulation.cs' 'Assets/Simulation/SyntheticPedestrianPopulation.cs'
@@ -81,6 +92,8 @@ foreach ($file in Get-ChildItem (Join-Path $repoRoot 'backend/src') -Recurse -Fi
 }
 foreach ($relative in @('maps/fixtures/physics-integration-3.json',
         'maps/fixtures/physics-zone-integration-3.json',
+        'maps/fixtures/physics-reservation-6.json', 'AgentScripts/UnityPhysicsIntegration/reservation_scenario.py',
+        'maps/fixtures/physics-reservation-8.json',
         'AgentScripts/UnityPhysicsIntegration/server.py', 'configs/safety.json',
         'AgentScripts/UnityPhysicsIntegration/socket_fault.py',
         'configs/planning.json', 'configs/crowd.json', 'configs/dispatch.json', 'VERSION')) {
@@ -122,12 +135,20 @@ $previousMap = $env:INHA_UNITY_E2E_MAP
 $previousCrossing = $env:INHA_UNITY_E2E_CROSSING
 $previousPythonControl = $env:INHA_UNITY_E2E_PYTHON_CONTROL
 $previousDisconnect = $env:INHA_UNITY_E2E_DISCONNECT
+$previousReservations = $env:INHA_UNITY_E2E_RESERVATIONS
+$previousReservationFault = $env:INHA_UNITY_E2E_RESERVATION_FAULT
+$previousFleetThree = $env:INHA_UNITY_E2E_FLEET_THREE
 try {
+    $env:INHA_UNITY_E2E_FLEET_THREE = if ($FleetThree) { '1' } else { '0' }
+    $env:INHA_UNITY_E2E_RESERVATIONS = if ($Reservations) { '1' } else { '0' }
+    $env:INHA_UNITY_E2E_RESERVATION_FAULT = if ($ReservationFault) { '1' } else { '0' }
     $env:INHA_UNITY_E2E_DISCONNECT = if ($Disconnect) { '1' } else { '0' }
     $env:INHA_UNITY_E2E_PYTHON_CONTROL = if ($PythonControl) { '1' } else { '0' }
     $env:INHA_UNITY_E2E_CROSSING = if ($Crossing) { '1' } else { '0' }
     $env:INHA_UNITY_E2E_ZONE_CLOSURE = if ($ZoneClosure) { '1' } else { '0' }
     $expectedMap = if ($ZoneClosure) { 'synthetic-physics-zone-integration-v1' } else { 'synthetic-physics-integration-v1' }
+    if ($Reservations) { $expectedMap = 'synthetic-physics-reservation-v1' }
+    if ($FleetThree) { $expectedMap = 'synthetic-physics-reservation-three-v1' }
     if (Get-NetTCPConnection -LocalPort $Port -State Listen -ErrorAction SilentlyContinue) {
         throw "Port $Port is in use. Select another port."
     }
@@ -158,6 +179,7 @@ try {
     $traceHeader = if ($Crossing) { 'tick,egoX,pedestrianZ,speed,motion,reason,scenario' } else {
         'tick,x,y,speed,motion,reason,requestStatus'
     }
+    if ($Reservations) { $traceHeader = 'tick,vehicle,x,y,speed,motion,reason' }
     $traceHeader | Set-Content $env:INHA_UNITY_E2E_TRACE
     $process = Start-Process -FilePath $unityExe -ArgumentList $arguments -WindowStyle Hidden -PassThru
     if (-not $process.WaitForExit($TimeoutSeconds * 1000)) {
@@ -200,4 +222,7 @@ try {
     $env:INHA_UNITY_E2E_CROSSING = $previousCrossing
     $env:INHA_UNITY_E2E_PYTHON_CONTROL = $previousPythonControl
     $env:INHA_UNITY_E2E_DISCONNECT = $previousDisconnect
+    $env:INHA_UNITY_E2E_RESERVATIONS = $previousReservations
+    $env:INHA_UNITY_E2E_RESERVATION_FAULT = $previousReservationFault
+    $env:INHA_UNITY_E2E_FLEET_THREE = $previousFleetThree
 }

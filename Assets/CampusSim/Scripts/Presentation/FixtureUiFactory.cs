@@ -105,6 +105,9 @@ namespace InhaExpress.Client.Presentation
                 case Domain.ReasonCode.SENSOR_INVALID: return "센서 관측 무효";
                 case Domain.ReasonCode.OBSTACLE_STOP: return "전방 장애물 정지";
                 case Domain.ReasonCode.SAFETY_RESUME_HOLD: return "안전 재확인 중";
+                case Domain.ReasonCode.STALE_LOCALIZATION: return "차량 위치 정보 지연";
+                case Domain.ReasonCode.RESOURCE_WAIT: return "통로 진입 순서 대기";
+                case Domain.ReasonCode.RESOURCE_STATE_UNAVAILABLE: return "통로 상태 확인 필요";
                 default: return reason.ToString();
             }
         }

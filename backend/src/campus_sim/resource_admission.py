@@ -94,6 +94,12 @@ class ResourceAdmission:
             upcoming = self.upcoming(vehicle, runtime)
             resources = set().union(*(self.groups[name] for name in upcoming)) if upcoming else set()
             owned = {r for r, t in book.claims.items() if book.leases[t].request.vehicle_id == vehicle}
+            # Keep the original atomic group's completed legs satisfied while
+            # traversing its remaining resources; do not reserve the cleared
+            # entrance behind us again just because an exit references the group.
+            completed_legs = set().union(*(lease.exited for lease in book.leases.values()
+                if lease.request.vehicle_id == vehicle))
+            resources -= completed_legs - upcoming.keys()
             resources -= owned
             if not resources or any(r.vehicle_id == vehicle for r in book.pending.values()):
                 continue
@@ -121,17 +127,26 @@ class ResourceAdmission:
         capped = speed
         deceleration = min(self.policy.braking_mps2, controller_policy.braking_mps2)
         reaction = max(self.policy.reaction_s, controller_policy.command_valid_for_s)
+        occupancy_policy = monitor.policies[vehicle]
+        # The occupancy tracker encloses any motion between valid samples by a
+        # midpoint disc. Wait outside that same envelope, not merely outside the
+        # instantaneous body: otherwise a valid delayed sample can latch an
+        # unplanned-entry closure while the vehicle is obeying its hold line.
+        sample_margin = occupancy_policy.max_speed_mps * occupancy_policy.max_sample_gap_s / 2
         blocked = False
         rotation_allowed = True
         for name, distance in self.upcoming(vehicle, runtime).items():
             # A pre-entry grant must remain valid through the reaction/braking window.
             future = now + reaction + max(speed, runtime.speed_mps) / deceleration
-            if all(monitor.book.entry_allowed(monitor.book.claims.get(member, ""), vehicle, member,
+            lease = monitor.book.leases.get(monitor.book.claims.get(name, ""))
+            completed = lease.exited if lease is not None and lease.request.vehicle_id == vehicle else set()
+            if all((member != name and member in completed and member not in monitor.book.closed)
+                   or monitor.book.entry_allowed(monitor.book.claims.get(member, ""), vehicle, member,
                                               now_s=future, map_version=service.graph.map_version)
                    for member in self.groups[name]):
                 continue
             blocked = True
-            available = max(0, distance - self.policy.stop_margin_m)
+            available = max(0, distance - sample_margin - self.policy.stop_margin_m)
             safe_speed = math.sqrt((deceleration * reaction)**2 + 2 * deceleration * available) - deceleration * reaction
             # Avoid an asymptotic crawl at the hold line.
             if safe_speed < 0.02:

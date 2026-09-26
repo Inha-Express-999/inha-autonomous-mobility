@@ -1,0 +1,7 @@
+{
+  "backend/src/campus_sim/coordination.py": "329283127999b4d1bf41894c16fbe0e34d1ef8727b425ceb773cb1f4d66d28f6",
+  "backend/src/campus_sim/coordination_evaluation.py": "254ab70bf0a475c4a3aa42dd8007ad0cf8976f6edd458f4e1fcdcdd611d1f625",
+  "backend/tests/test_coordination.py": "544337fbff596dbe01f35417bbd3088e4af6af944551bb454f38b2b207681565",
+  "configs/coordination_benchmark.json": "12d2c9c95b4296c7db22f775daed3ef197320693c4d85dcc745ad718b484e3a5",
+  "maps/fixtures/physics-reservation-8.json": "27e836f21ee3eb11f4af63fb21f2988eebce9c07bf545542023692c03f40efef"
+}

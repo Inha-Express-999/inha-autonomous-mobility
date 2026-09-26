@@ -43,7 +43,8 @@ def steering_target(x, y, heading, measured_speed, target, segment_speed, policy
     return target_speed, yaw
 
 
-def make_control_command(service, vehicle_id):
+def evaluate_control_intent(service, vehicle_id):
+    """Evaluate the same decision for every role without issuing a command sequence."""
     from campus_sim.service import EGO_LOCALIZATION_STALE_AFTER_S
 
     policy = service.control_policies.get(vehicle_id)
@@ -75,7 +76,7 @@ def make_control_command(service, vehicle_id):
             speed, yaw = steering_target(runtime.x, runtime.y, runtime.heading_rad, runtime.speed_mps,
                                          runtime.route_points[index + 1], runtime.route_speeds[index], policy)
             reason = "ROUTE_CONTROL"
-    if service.resource_admission is not None and (speed > 0 or yaw != 0):
+    if service.resource_admission is not None and reason == "ROUTE_CONTROL":
         speed, yaw, reservation_reason = service.resource_admission.limit(service, vehicle_id, speed, yaw, policy)
         if reservation_reason is not None:
             reason = reservation_reason
@@ -94,11 +95,18 @@ def make_control_command(service, vehicle_id):
             reason = "SENSOR_DATA_STALE"
         else:
             validity = min(validity, remaining)
-    service.control_sequences[vehicle_id] = service.control_sequences.get(vehicle_id, -1) + 1
     return {
         "vehicleId": vehicle_id, "mapVersion": service.graph.map_version,
         "sessionId": pose.session_id, "routeId": runtime.route_id,
-        "sequence": service.control_sequences[vehicle_id], "egoPoseTick": pose.observed_tick,
+        "egoPoseTick": pose.observed_tick,
         "validForS": validity,
         "targetSpeedMps": speed, "yawRateRadps": yaw, "reason": reason,
     }
+
+
+def make_control_command(service, vehicle_id, *, intent=None):
+    intent = evaluate_control_intent(service, vehicle_id) if intent is None else intent
+    if intent is None:
+        return None
+    service.control_sequences[vehicle_id] = service.control_sequences.get(vehicle_id, -1) + 1
+    return {**intent, "sequence": service.control_sequences[vehicle_id]}

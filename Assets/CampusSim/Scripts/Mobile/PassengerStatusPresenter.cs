@@ -328,6 +328,13 @@ namespace InhaExpress.Client.Mobile
         {
             foreach (var vehicle in snapshot.Vehicles)
             {
+                if (vehicle.Id != request.VehicleId) continue;
+                if (vehicle.Reason == ReasonCode.STALE_LOCALIZATION)
+                    return "차량 위치 정보가 지연되어 운행을 보류하고 있습니다.";
+                if (vehicle.Reason == ReasonCode.RESOURCE_WAIT)
+                    return "통로 진입 순서를 기다리고 있습니다. 대기 시간을 포함한 도착 시간은 아직 확인되지 않았습니다.";
+                if (vehicle.Reason == ReasonCode.RESOURCE_STATE_UNAVAILABLE)
+                    return "통로 상태 확인이 필요해 운행을 보류하고 있습니다. 도착 시간은 아직 확인되지 않았습니다.";
                 if (vehicle.Reason == ReasonCode.SENSOR_DATA_STALE)
                     return "센서 관측이 오래되어 안전 확인을 위해 정차했습니다.";
                 if (vehicle.Reason == ReasonCode.SENSOR_INVALID)

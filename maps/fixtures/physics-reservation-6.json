@@ -1,0 +1,380 @@
+{
+  "schema_version": 1,
+  "map_id": "physics-reservation-6",
+  "map_version": "synthetic-physics-reservation-v1",
+  "data_status": "SYNTHETIC_FIXTURE",
+  "coordinate_frame": "SYNTHETIC_LOCAL_METERS",
+  "verification_status": "SYNTHETIC_FIXTURE",
+  "source_date": null,
+  "source_hash": null,
+  "origin_wgs84": null,
+  "source_description": "Hand-authored opposing two-vehicle corridor with separate staging and exit branches. All geometry and shell assumptions are synthetic; no campus route approval.",
+  "nodes": [
+    {
+      "id": "a",
+      "landmark_id": "reservation_a",
+      "stop_id": "stop_a",
+      "position_m": {
+        "x": -4,
+        "y": -3
+      }
+    },
+    {
+      "id": "west",
+      "landmark_id": "reservation_west",
+      "stop_id": "stop_west",
+      "position_m": {
+        "x": 0,
+        "y": 0
+      }
+    },
+    {
+      "id": "east",
+      "landmark_id": "reservation_east",
+      "stop_id": "stop_east",
+      "position_m": {
+        "x": 4,
+        "y": 0
+      }
+    },
+    {
+      "id": "finish_a",
+      "landmark_id": "reservation_finish_a",
+      "stop_id": "stop_finish_a",
+      "position_m": {
+        "x": 8,
+        "y": -3
+      }
+    },
+    {
+      "id": "finish_b",
+      "landmark_id": "reservation_finish_b",
+      "stop_id": "stop_finish_b",
+      "position_m": {
+        "x": -4,
+        "y": 3
+      }
+    },
+    {
+      "id": "b",
+      "landmark_id": "reservation_b",
+      "stop_id": "stop_b",
+      "position_m": {
+        "x": 8,
+        "y": 3
+      }
+    }
+  ],
+  "edges": [
+    {
+      "id": "a_west",
+      "from_node": "a",
+      "to_node": "west",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": -4,
+          "y": -3
+        },
+        {
+          "x": 0,
+          "y": 0
+        }
+      ],
+      "length_m": 5.0,
+      "width_m": 4,
+      "allowed_speed_mps": 1,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "crowd_penalty_s": 0
+    },
+    {
+      "id": "west_a",
+      "from_node": "west",
+      "to_node": "a",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -4,
+          "y": -3
+        }
+      ],
+      "length_m": 5.0,
+      "width_m": 4,
+      "allowed_speed_mps": 1,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "crowd_penalty_s": 0
+    },
+    {
+      "id": "west_east",
+      "from_node": "west",
+      "to_node": "east",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": 4,
+          "y": 0
+        }
+      ],
+      "length_m": 4.0,
+      "width_m": 4,
+      "allowed_speed_mps": 1,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "crowd_penalty_s": 0
+    },
+    {
+      "id": "east_west",
+      "from_node": "east",
+      "to_node": "west",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 4,
+          "y": 0
+        },
+        {
+          "x": 0,
+          "y": 0
+        }
+      ],
+      "length_m": 4.0,
+      "width_m": 4,
+      "allowed_speed_mps": 1,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "crowd_penalty_s": 0
+    },
+    {
+      "id": "east_finish_a",
+      "from_node": "east",
+      "to_node": "finish_a",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 4,
+          "y": 0
+        },
+        {
+          "x": 8,
+          "y": -3
+        }
+      ],
+      "length_m": 5.0,
+      "width_m": 4,
+      "allowed_speed_mps": 1,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "crowd_penalty_s": 0
+    },
+    {
+      "id": "finish_a_east",
+      "from_node": "finish_a",
+      "to_node": "east",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 8,
+          "y": -3
+        },
+        {
+          "x": 4,
+          "y": 0
+        }
+      ],
+      "length_m": 5.0,
+      "width_m": 4,
+      "allowed_speed_mps": 1,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "crowd_penalty_s": 0
+    },
+    {
+      "id": "b_east",
+      "from_node": "b",
+      "to_node": "east",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 8,
+          "y": 3
+        },
+        {
+          "x": 4,
+          "y": 0
+        }
+      ],
+      "length_m": 5.0,
+      "width_m": 4,
+      "allowed_speed_mps": 1,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "crowd_penalty_s": 0
+    },
+    {
+      "id": "east_b",
+      "from_node": "east",
+      "to_node": "b",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 4,
+          "y": 0
+        },
+        {
+          "x": 8,
+          "y": 3
+        }
+      ],
+      "length_m": 5.0,
+      "width_m": 4,
+      "allowed_speed_mps": 1,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "crowd_penalty_s": 0
+    },
+    {
+      "id": "west_finish_b",
+      "from_node": "west",
+      "to_node": "finish_b",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": 0,
+          "y": 0
+        },
+        {
+          "x": -4,
+          "y": 3
+        }
+      ],
+      "length_m": 5.0,
+      "width_m": 4,
+      "allowed_speed_mps": 1,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "crowd_penalty_s": 0
+    },
+    {
+      "id": "finish_b_west",
+      "from_node": "finish_b",
+      "to_node": "west",
+      "key": "0",
+      "geometry_m": [
+        {
+          "x": -4,
+          "y": 3
+        },
+        {
+          "x": 0,
+          "y": 0
+        }
+      ],
+      "length_m": 5.0,
+      "width_m": 4,
+      "allowed_speed_mps": 1,
+      "allowed_service_types": [
+        "PASSENGER",
+        "CARGO"
+      ],
+      "allowed_vehicle_classes": [
+        "CAMPUS_SHUTTLE"
+      ],
+      "zone_ids": [],
+      "source": "synthetic-fixture",
+      "verification_status": "SYNTHETIC",
+      "step_free": true,
+      "crowd_penalty_s": 0
+    }
+  ]
+}

@@ -88,7 +88,7 @@ class ResourceOccupancyTracker:
         self.faults[vehicle] = reason
         return False
 
-    def observe(self, observation: EgoLocalization, now_s: float) -> bool:
+    def observe(self, observation: EgoLocalization, now_s: float, *, retain_resource_ids=frozenset()) -> bool:
         vehicle = observation.vehicle_id
         if vehicle not in self.policies:
             return False
@@ -99,6 +99,8 @@ class ResourceOccupancyTracker:
         if observation.map_version != self.book.map_version:
             return self._fault(vehicle, "map_mismatch", now_s)
         policy = self.policies[vehicle]
+        if not set(retain_resource_ids) <= self.regions.keys():
+            raise ValueError("Unknown retained route resource")
         pose = Pose2(observation.position.x, observation.position.y, observation.heading_rad)
         current = {name for name, region in self.regions.items()
                    if footprint_overlaps_region(pose, policy.footprint, region, policy.position_error_m)}
@@ -149,7 +151,8 @@ class ResourceOccupancyTracker:
             active = {r for r in lease.request.resource_ids if self.book.claims.get(r) == token}
             owned.update(active)
             self.book.report_occupancy(token, vehicle, held & active, now_s=now_s,
-                                       map_version=self.book.map_version)
+                                       map_version=self.book.map_version,
+                                       retain_ids=set(retain_resource_ids) & active)
         self.book.report_unplanned_occupancy(vehicle, held - owned, now_s=now_s,
                                              map_version=self.book.map_version)
         self.previous[vehicle] = (observation.model_copy(deep=True), now_s)

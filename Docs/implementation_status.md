@@ -1,9 +1,9 @@
 # 구현 현황
 
-프로젝트 버전 **0.3.2.0** · 2026-09-26 작업본. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
+프로젝트 버전 **0.4.0.0** · 2026-09-26 작업본. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
 
 
-최신 v0.3.2.0 체크포인트: Python/MapData 349개와 Ruff 통과. 선택적 예약 속도 제한은 Unity 통로 앞 정지까지 확인했으나 출구 해제 후 재출발 테스트가 실패했다(PlayMode 3/4 통과). 예약 통합 및 전체 MVP는 미완료이며 상세 기록은 `MVP_EXECUTION.md`와 `resource_admission.md`를 따른다.
+최신 작업본(v0.3.2.0 이후): PC·승객 snapshot에 통로 대기/상태 확인 사유와 대기 중 ETA 미확인을 연결했다. 접근·정렬 제어와 실제 속도를 보존하며, 모바일 조회는 제어 명령 번호를 발급하지 않는다. Python/MapData 359개, Ruff, 격리 Unity 클라이언트 EditMode 23/23 및 PC·모바일 동시 접속 세 차량 Physics PlayMode 1/1 통과. 새 사유 enum은 갱신된 클라이언트가 필요하다. 실제 UI 화면·단말·50세션·CBS·에너지/허브·실제 지도와 전체 MVP는 미완료다. 상세는 `MVP_EXECUTION.md`를 따른다.
 최신 후속 작업본: 서버의 검증된 ego 위치 보고로 차체 전체의 자원 진입·이탈을 판정하는
 선택적 어댑터를 연결했다. stale·세션 변경·위치 불연속은 점유를 유지하고 폐쇄한다.
 Python/MapData **342개**, Ruff 및 격리 Unity PlayMode **4/4** 통과. 합성 차량 주행의
@@ -133,7 +133,7 @@ Python/MapData 259개 및 Ruff, 격리 Unity PlayMode 4/4(가림·포화·센서
 4. 합성 preview에 V01 route-following alpha를 연결했다. 다음은 Unity Editor에서 씬 재임포트와 PlayMode를 통해 local Python server 연결·요청→Physics 이동→도착→요청 완료 흐름을 검증한다. 축·Collider·ground contact를 확인하고, 센서/TTC safety 계층이 연결되기 전까지는 실제 캠퍼스 이동을 활성화하지 않는다.
 5. M2 지도/접근성/비룡플라자 범위를 완료하는 동안 재사용 빈도가 높은 캠퍼스 오브젝트를 prefab/variant로 단계적으로 정리한 뒤 센서·안전, 다중 차량, 성능 실험을 진행한다.
 
-버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.3.2.0으로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
+버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.4.0.0으로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
 
 ## 2026-09-26 차량 telemetry 연결 소유권 (v0.2.4.0 이후 작업본)
 
@@ -250,3 +250,8 @@ v0.3.0.0 이후 작업본에서 센서 기반 횡단 정지, 연속 footprint �
 거부되던 결함을 수정했다. 각 결과는 artifacts/validation의 개별 source hash 범위다.
 실제 서버 프로세스 재시작/메모리 복구·원본 씬·Player/Android·실지도·전체 부하 및
 MVP 완료를 의미하지 않는다. 자세한 현재 작업 순서와 제한은 Docs/MVP_EXECUTION.md 참고.
+
+
+## 2026-09-26 v0.4.0.0 커밋 검증
+
+Python/MapData 374개 및 Ruff 통과. 오프라인 CBS/우선순위 예약 비교 기반과 유한 시간 충돌 모델을 추가했다. 작은 그래프의 독립 전수 탐색 비교는 통과했지만 세 차량 통로 비교에서 CBS는 CT 500개 한도를 초과했다. 실행 권한과 live reservation 연동은 없다. 상세는 [CBS 작업 체크포인트](cbs_coordination.md)를 따른다. Unity는 이번 커밋 준비에서 재실행하지 않았으며 기존 실행별 소스 hash/XML을 보존한다. 전체 MVP 완료가 아니다.

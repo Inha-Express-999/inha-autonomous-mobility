@@ -94,3 +94,14 @@ SensorObservation은 선택 필드 observedTimeS, sensorPositionM, sensorHeading
 전체 frame도 invalid다. HIT는 순서대로 detection과 대응하고 MISS는 최대 검사
 거리까지 해당 광선에 적중이 없었다는 뜻이다. 광선 사이·가려진 영역·다른 높이의
 빈 공간을 보장하지 않는다. 상세 계약과 제한은 [LiDAR 관측 문서](../lidar_ray_observations.md)를 따른다.
+
+## 통로 대기 표시 (2026-09-26 작업본)
+
+차량 reason에 `RESOURCE_WAIT`와 `RESOURCE_STATE_UNAVAILABLE`를 추가했다.
+접근/제자리 정렬 명령이 유효하면 DRIVING, 정지 명령 후 감속 중에는 YIELDING,
+정지 후에는 WAITING_RESOURCE다. 실측 속도를 0으로 덮어쓰지 않는다.
+PC와 모바일은 같은 판단을 표시하되 제어 명령과 sequence 발급은 PC에만 제공한다.
+통로·안전·위치 정보 대기 중 활성 요청의 `etaS`는 null이다. 승객 안내는 요청에
+배정된 차량만 참조한다. schema_version=3 alpha의 enum 확장이므로 새 서버와
+새 클라이언트를 함께 사용해야 하며, 과거 strict enum 클라이언트와의 협상은
+미구현이다. 상세는 [통로 대기 표시](../resource_wait_presentation.md)를 따른다.

@@ -1,11 +1,68 @@
 # MVP implementation and verification ledger
 
-2026-09-26 · project version 0.3.2.0
+2026-09-26 · project version 0.4.0.0
 
 The objective remains a campus passenger/cargo simulation using Unity Physics
 and sensor observations with Python service/planning/control. A synthetic demo
 is an intermediate verification gate. AGENTS.md sections 14 and 16 define the
 full acceptance criteria; this ledger does not reduce that scope.
+
+## 2026-09-26 shared PC/passenger resource-wait presentation
+
+Separated control-intent evaluation from PC command sequencing. Both roles now
+receive resource wait/readiness reasons, preserving approach/alignment authority
+and measured braking speed; stopped holds project WAITING_RESOURCE. Unknown hold
+duration suppresses active-request ETA in snapshots. Passenger guidance selects
+its own assigned vehicle and includes corridor/state/localization explanations.
+Python/MapData 359, Ruff, isolated Unity client EditMode 23/23 and three-vehicle
+PC plus mobile Physics PlayMode 1/1 pass. Matching updated alpha clients are
+required for the added reason enums; old-client negotiation and visual/device/load
+verification remain open. Evidence: `artifacts/validation/2026-09-26-resource-presentation/`.
+
+## 2026-09-26 three active Physics vehicles, passenger and cargo
+
+Added a separate eight-node synthetic staging/exit graph and `-FleetThree` mode.
+Actual V01/V02/V03 actors execute two passenger missions and one 5 kg synthetic
+cargo mission through the same production service, dispatch, planner and resource
+admission pipeline. Normal PlayMode 1/1 passes: all three requests complete on
+separate vehicles, all reservations release, no sampled pairwise body overlap or
+dual corridor occupancy. Sensor ACKs=3138, rejected=0. A pre-entry blocked lease
+expires before any entry, then cargo reacquires and completes after other traffic.
+Three-vehicle internal fault PlayMode 1/1 also passes: moving V03 fully inside the
+corridor brakes and remains stopped beyond TTL, with both other vehicles waiting
+and no reassignment. Expected stale sensor inputs from V03 are rejected.
+Ruff and whitespace checks pass; no Python production algorithm change or full
+Python rerun in this step (previous 355-test result remains historical).
+M5 remains incomplete: general deadlock recovery/CBS, energy/hubs, real-map
+approval, UI explanations and performance/load remain separate gates. Evidence:
+`artifacts/validation/2026-09-26-three-vehicle-service/`.
+
+## 2026-09-26 opposing Physics fleet and internal telemetry loss
+
+Added a dedicated six-node synthetic map and actual V01/V02 Rigidbody actors
+using production service/dispatch/control, ego telemetry and LiDAR ingress.
+Atomic corridor/both-exit reservations serialize opposing traffic. Fixed completed
+entrance re-requesting and premature release of a future exit after possible
+between-sample occupancy. Physical occupancy and retained route claims are distinct.
+Python/MapData 355 and Ruff pass. Isolated Unity PlayMode normal 1/1 and internal
+telemetry-loss 1/1 pass: both normal missions complete without sampled overlap or
+dual corridor occupancy; a faulted internal actor brakes and remains in place
+beyond the lease TTL, preventing reassignment. No fault recovery is claimed.
+M5/T10 remains partial (three vehicles, deadlock recovery, CBS, real map and load
+remain open). Evidence: `artifacts/validation/2026-09-26-fleet-reservations/`.
+
+## 2026-09-26 resource admission release/resume correction
+
+Aligned the admission stop envelope with occupancy's maximum between-sample
+motion bound. Waiting no longer latches a synthetic unplanned-entry closure.
+The tracker keeps its conservative fault/closure behavior. Python/MapData 353
+and Ruff pass; isolated Unity PlayMode 4/4 passes. Actual V01 holds outside the
+corridor, resumes after explicit exit release, completes the pedestrian/passenger
+scenario and releases its reservation with no residual claims/closures/faults.
+The exit blocker remains an abstract fixture, not another Physics vehicle.
+The earlier v0.3.2.0 failure below is historical and superseded within this scope.
+No multi-vehicle, Player, campus map or full MVP completion is claimed. Evidence:
+`artifacts/validation/2026-09-26-resource-admission-resume/`.
 
 ## 2026-09-26 v0.3.2.0 admission checkpoint
 
@@ -446,3 +503,8 @@ Tracking/API tests: 28 passed, with the existing dependency deprecation warning;
 Ruff passed. Added cases include a late old tick, a higher tick with regressed
 capture time and an invalid delayed frame. This is Python regression evidence;
 no new Unity run is claimed for this change. Full TTC actuation remains pending.
+
+
+## 2026-09-26 v0.4.0.0 커밋 검증
+
+Python/MapData 374개 및 Ruff 통과. 오프라인 CBS/우선순위 예약 비교 기반과 유한 시간 충돌 모델을 추가했다. 작은 그래프의 독립 전수 탐색 비교는 통과했지만 세 차량 통로 비교에서 CBS는 CT 500개 한도를 초과했다. 실행 권한과 live reservation 연동은 없다. 상세는 [CBS 작업 체크포인트](cbs_coordination.md)를 따른다. Unity는 이번 커밋 준비에서 재실행하지 않았으며 기존 실행별 소스 hash/XML을 보존한다. 전체 MVP 완료가 아니다.

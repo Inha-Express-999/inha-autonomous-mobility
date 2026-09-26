@@ -146,16 +146,18 @@ class ResourceReservations:
         return result
 
     def report_occupancy(self, token: str, vehicle_id: str, occupied_ids, *, now_s: float,
-                         map_version: str) -> None:
+                         map_version: str, retain_ids=frozenset()) -> None:
         """Replace this lease's ego occupancy using a validated boundary observation.
 
         New entry requires a live grant. Exit is an explicit observed transition,
         never inferred from TTL. Occupied resources cannot be cancelled/reassigned.
         """
         occupied = set(occupied_ids)
+        retained = set(retain_ids)
         lease = self.leases[token]
         if (vehicle_id != lease.request.vehicle_id or map_version != self.map_version
-                or not occupied <= lease.request.resource_ids or occupied.intersection(lease.exited)):
+                or not occupied <= lease.request.resource_ids or occupied.intersection(lease.exited)
+                or not retained <= lease.request.resource_ids or retained.intersection(lease.exited)):
             raise ValueError("Occupancy context mismatch or re-entry after release")
         self._time(now_s)
         unauthorized = ((occupied and not lease.entered and now_s >= lease.expires_at_s)
@@ -165,7 +167,10 @@ class ResourceReservations:
             # unauthorized. Close the affected resources and retain the occupant.
             self.closed.update(occupied)
             self._event("UNAUTHORIZED_ENTRY", lease.request, token)
-        exited = lease.occupied - occupied
+        # A conservative possible entry near a future route leg is not evidence
+        # that the planned traversal already finished. Keep its reservation even
+        # while physical occupancy is currently empty, until the route passes it.
+        exited = (lease.entered - occupied - lease.exited) - retained
         lease.entered.update(occupied)
         lease.exited.update(exited)
         lease.occupied = occupied

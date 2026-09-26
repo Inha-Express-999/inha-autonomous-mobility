@@ -62,9 +62,9 @@ def test_speed_cap_respects_reaction_plus_braking_distance_and_never_accelerates
     block_exit(gate.monitor.book)
     gate.sync(service)
     runtime = service.vehicle_runtime["V01"]
-    runtime.x = runtime.route_progress_m = 2.3
+    runtime.x = runtime.route_progress_m = 1.8
     speed, _, _ = gate.limit(service, "V01", 1, 0, CONTROL)
-    distance = 3 - gate.monitor.policies["V01"].footprint.radius_m - runtime.x - 0.1
+    distance = 3 - gate.monitor.policies["V01"].footprint.radius_m - runtime.x - 0.1 - 0.5
     assert 0 < speed < 1
     assert speed * 0.4 + speed**2 / (2 * 2) == pytest.approx(distance)
     assert gate.limit(service, "V01", 0.01, 0, CONTROL)[0] <= 0.01
@@ -120,3 +120,84 @@ def test_fault_cannot_be_overridden_by_an_existing_grant():
     gate.monitor.check_freshness(1)
     service.simulation_time_s = 1
     assert gate.limit(service, "V01", 1, 0, CONTROL) == (0, 0, "RESOURCE_STATE_UNAVAILABLE")
+
+
+@pytest.mark.parametrize("gap", [0.1, 0.2, 0.5])
+def test_hold_line_and_occupancy_envelope_allow_release_and_resume(gap):
+    service, gate = setup()
+    monitor, book = gate.monitor, gate.monitor.book
+    blocker = block_exit(book)
+    runtime = service.vehicle_runtime["V01"]
+    # A stationary body at the old instantaneous hold line falsely occupied the
+    # corridor under the tracker's valid between-sample motion envelope.
+    runtime.x = runtime.route_progress_m = 2.12
+    gate.sync(service)
+    assert gate.limit(service, "V01", 1, 0, CONTROL)[0] == 0
+    # Install a fresh observed starting position, then hold through valid gaps.
+    monitor.previous.clear()
+    for tick in range(4):
+        service.simulation_time_s = tick * gap
+        monitor.observe(EgoLocalization(vehicle_id="V01", session_id="s", observed_tick=tick,
+            map_version=book.map_version, position=MapPosition(x=runtime.x, y=0, z=0),
+            heading_rad=math.pi / 2, speed_mps=0), service.now_s())
+        gate.sync(service)
+    assert not book.closed
+    assert not monitor.held["V01"]
+    assert not monitor.faults
+    book.report_occupancy(blocker.token, "V02", set(), now_s=service.now_s(), map_version=book.map_version)
+    gate.sync(service)
+    assert gate.limit(service, "V01", 1, 0, CONTROL) == (1, 0, None)
+
+
+def test_old_body_only_hold_position_latches_unplanned_entry():
+    _service, gate = setup()
+    monitor = gate.monitor
+    monitor.previous.clear()
+    for tick in range(2):
+        monitor.observe(EgoLocalization(vehicle_id="V01", session_id="s", observed_tick=tick,
+            map_version=monitor.book.map_version, position=MapPosition(x=2.592, y=0, z=0),
+            heading_rad=math.pi / 2, speed_mps=0), tick * 0.2)
+    assert monitor.book.closed == {"corridor"}
+    assert monitor.book.unplanned_occupancy["V01"] == {"corridor"}
+
+
+def test_exit_group_retains_completed_entrance_without_reclaim_or_stop():
+    service, gate = setup()
+    gate.groups["exit"] = frozenset({"corridor", "exit"})
+    gate.sync(service)
+    book = gate.monitor.book
+    token = book.claims["corridor"]
+    book.report_occupancy(token, "V01", {"corridor"}, now_s=0, map_version=book.map_version)
+    book.report_occupancy(token, "V01", {"exit"}, now_s=0, map_version=book.map_version)
+    runtime = service.vehicle_runtime["V01"]
+    runtime.x = runtime.route_progress_m = 6
+    gate.sync(service)
+    assert not book.pending
+    assert "corridor" not in book.claims
+    assert gate.limit(service, "V01", 1, 0, CONTROL) == (1, 0, None)
+    # Closing a completed leg still invalidates the group; never bypass faults.
+    book.close("corridor", now_s=0)
+    assert gate.limit(service, "V01", 1, 0, CONTROL)[0] == 0
+
+
+def test_future_exit_possible_touch_then_clear_keeps_original_atomic_grant():
+    service, gate = setup()
+    gate.groups["exit"] = frozenset({"corridor", "exit"})
+    gate.sync(service)
+    book = gate.monitor.book
+    token = book.claims["exit"]
+    # A wide between-sample envelope touches the future exit before the body
+    # arrives; a following short-gap observation is clear while still approaching.
+    book.report_occupancy(token, "V01", {"corridor", "exit"}, now_s=0,
+                          map_version=book.map_version, retain_ids={"corridor", "exit"})
+    book.report_occupancy(token, "V01", {"corridor"}, now_s=0,
+                          map_version=book.map_version, retain_ids={"corridor", "exit"})
+    assert book.leases[token].occupied == {"corridor"}
+    assert not book.leases[token].exited
+    gate.sync(service)
+    assert book.claims["exit"] == token
+    assert len(book.leases) == 1
+    # Passing the complete route and observing both clear releases them exactly once.
+    book.report_occupancy(token, "V01", set(), now_s=0, map_version=book.map_version)
+    assert not book.claims
+    assert sum(e.kind == "COMPLETED" for e in book.events) == 1

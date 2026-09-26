@@ -1,5 +1,17 @@
 # 변경 이력
 
+## 0.4.0.0 — 2026-09-26 · 다중 차량 예약·대기 안내와 CBS 작업 체크포인트
+
+- 자원 경계의 표본 간 이동 여유, 정지 상태 회전, 예약 그룹의 완료 구간과 미래 재진입 점유 유지 판정을 보완했다.
+- 합성 두/세 차량 승객·화물 운송, 점유 중 telemetry 중단 검증과 PC/모바일 자원 대기 사유·ETA 미확인 표시를 추가했다.
+- 오프라인 유한 시간 CBS 및 고정 우선순위 예약 비교 CLI/fixture/독립 전수 탐색 테스트를 추가했다. CBS는 실행 권한이 없는 작업 체크포인트다.
+- 이유: 다중 차량 자원 경합의 합성 통합을 검증하고 현재 구현 및 한계를 보존한다.
+- 호환성/마이그레이션: 새 RESOURCE_WAIT/RESOURCE_STATE_UNAVAILABLE enum은 이전 strict 클라이언트와 호환되지 않아 B를 증가시켰다. 서버와 PC/모바일을 함께 갱신해야 한다. schema_version=3과 map_version은 유지하며 호환성 협상은 미구현이다. 데이터 마이그레이션 없음.
+- 검증: `python -m pytest backend/tests AgentScripts/MapData -q -o cache_dir=tmp/pytest-cache` — 374 passed, 기존 deprecation 경고 1개. `python -m ruff check backend AgentScripts/MapData AgentScripts/UnityPhysicsIntegration` 및 `git diff --check` 통과.
+- CBS 비교: `campus-sim coordination-compare --scenario configs/coordination_benchmark.json --repetitions 5`와 같은 평가 함수를 실행했다. 두 통로 사례에서 우선순위 방식 각 5/5 성공, CBS 각 5/5 탐색 한도 초과. 짧은 horizon 사례는 양쪽 모두 성공 없음. artifacts/validation/2026-09-26-cbs에 결과와 hash를 보존한다.
+- Unity: 기존 격리 client EditMode 23/23, PC+모바일 세 차량 Physics 1/1, 두/세 차량 정상 및 점유 중 중단 시나리오의 실행별 XML/hash를 보존했다. 이번 커밋 준비에서 Unity를 재실행하지 않았다. 각 기록은 해당 실행 소스에 한정한다.
+- 미검증/한계: CBS live 제어·일반 교착 복구·RRT 실행·실제 지도/Stop·최신 Player/Android·원본 씬·성능/50-client 부하와 전체 MVP는 미완료다. 기존 Unity allocation 진단과 Python 의존성 경고가 남는다.
+
 ## 0.3.2.0 — 2026-09-26 · 관측·재계획·예약 기능 작업 체크포인트
 
 - LiDAR ray별 HIT/MISS/INVALID 계약과 관측 운동 기반 시간 궤적 검사, 동적 RRT 후보를 추가했다. RRT 실행 권한은 부여하지 않는다.

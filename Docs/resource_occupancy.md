@@ -60,5 +60,6 @@ Artifacts: `artifacts/validation/2026-09-26-resource-occupancy/`.
 ## Subsequent admission checkpoint
 
 The evidence above is the historical occupancy-only run. v0.3.2.0 adds optional
-admission control; its latest integration still fails to resume after exit
-release. See `resource_admission.md` and the current MVP ledger.
+admission control. The initial restart failure is fixed in the subsequent working
+tree by including the occupancy sampling envelope in the admission hold distance.
+The latest isolated integration passes; see `resource_admission.md` and the MVP ledger.

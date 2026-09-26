@@ -52,3 +52,11 @@ between corridor exit and entering a reserved bay, existing-holder precedence,
 deterministic priority/aging, closure/reopening, unauthorized occupancy, deadlock
 timeouts, map/vehicle mismatch and detached grant snapshots. Evidence is retained
 in `artifacts/validation/2026-09-26-reservations/`.
+
+## Planned traversal and physical occupancy
+
+`report_occupancy` now accepts explicit `retain_ids` for route resources still
+ahead. A possible early touch followed by a clear sample leaves the physical
+occupancy empty but retains its claim until route progress also proves passage.
+This avoids repeated early release/reacquisition while turning toward an exit.
+Defaults preserve standalone occupancy-only behavior. See `fleet_resource_physics.md`.

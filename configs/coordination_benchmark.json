@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "data_status": "SYNTHETIC_FIXTURE",
+  "map": "../maps/fixtures/physics-reservation-8.json",
+  "quantum_s": 2,
+  "clearance_ticks": 1,
+  "provenance": "Synthetic graph travel rounded up to 2s slots and assumed 2s resource clearance; no measured vehicle timing or footprint guarantee.",
+  "limits": {"ct_nodes": 500, "low_level_expansions": 50000},
+  "edge_resources": {
+    "a_west": ["west-junction"], "west_a": ["west-junction"],
+    "c_west": ["west-junction"], "west_c": ["west-junction"],
+    "west_finish_b": ["west-junction"], "finish_b_west": ["west-junction"],
+    "west_east": ["corridor"], "east_west": ["corridor"],
+    "b_east": ["east-junction"], "east_b": ["east-junction"],
+    "east_finish_a": ["east-junction"], "finish_a_east": ["east-junction"],
+    "east_finish_c": ["east-junction"], "finish_c_east": ["east-junction"]
+  },
+  "node_resources": {"west": ["west-junction", "corridor"], "east": ["east-junction", "corridor"]},
+  "cases": [
+    {"id": "mixed-three", "horizon": 30, "tasks": [
+      {"vehicle_id": "V01", "start": "a", "goal": "finish_a"},
+      {"vehicle_id": "V02", "start": "b", "goal": "finish_b"},
+      {"vehicle_id": "V03", "start": "c", "goal": "finish_c", "service_type": "CARGO"}
+    ]},
+    {"id": "reverse-priority", "horizon": 30, "priority_order": ["V03", "V02", "V01"], "tasks": [
+      {"vehicle_id": "V01", "start": "a", "goal": "finish_a"},
+      {"vehicle_id": "V02", "start": "b", "goal": "finish_b"},
+      {"vehicle_id": "V03", "start": "c", "goal": "finish_c", "service_type": "CARGO"}
+    ]},
+    {"id": "insufficient-horizon", "horizon": 3, "tasks": [
+      {"vehicle_id": "V01", "start": "a", "goal": "finish_a"},
+      {"vehicle_id": "V02", "start": "b", "goal": "finish_b"},
+      {"vehicle_id": "V03", "start": "c", "goal": "finish_c", "service_type": "CARGO"}
+    ]}
+  ]
+}

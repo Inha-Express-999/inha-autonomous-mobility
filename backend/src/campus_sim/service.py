@@ -408,9 +408,12 @@ class MobilityService:
         runtime.node_id = self._nearest_node(runtime.x, runtime.y)
         runtime.pose_source = "unity_localization"
         runtime.localization_received_at_s = self.now_s()
-        if self.resource_occupancy is not None:
-            self.resource_occupancy.observe(observation, self.now_s())
         self._update_localized_route_progress(runtime)
+        if self.resource_occupancy is not None:
+            retained = (self.resource_admission.upcoming(observation.vehicle_id, runtime).keys()
+                        if self.resource_admission is not None
+                        and observation.vehicle_id in self.resource_occupancy.policies else frozenset())
+            self.resource_occupancy.observe(observation, self.now_s(), retain_resource_ids=retained)
         self._refresh_sensor_safety(observation.vehicle_id, runtime)
         return True
 

@@ -9,7 +9,7 @@ from fastapi import WebSocket, WebSocketDisconnect
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
 from campus_sim import __version__
-from campus_sim.controller import make_control_command
+from campus_sim.controller import evaluate_control_intent, make_control_command
 from campus_sim.domain import (
     CreateRequest,
     EgoLocalization,
@@ -402,9 +402,11 @@ def make_snapshot(
     """Build the C# schema-v3 presentation DTO from current in-memory service state."""
     now_s = service.now_s()
     controls = []
+    intents = {vehicle_id: evaluate_control_intent(service, vehicle_id)
+               for vehicle_id in sorted(service.control_policies)}
     if role == "PC_Operator":
         for vehicle_id in sorted(service.control_policies):
-            command = make_control_command(service, vehicle_id)
+            command = make_control_command(service, vehicle_id, intent=intents[vehicle_id])
             if command is not None:
                 controls.append(command)
     visible_requests = list(service.requests.values())
@@ -470,6 +472,7 @@ def make_snapshot(
         if request.vehicle_id is not None and request.status.value in ACTIVE_REQUEST_STATUSES
     }
     vehicles = []
+    uncertain_eta_vehicles = set()
     for vehicle in visible_vehicles:
         runtime = service.vehicle_runtime.get(vehicle.id)
         request = requests_by_vehicle.get(vehicle.id)
@@ -477,6 +480,19 @@ def make_snapshot(
         y = runtime.y if runtime else 0.0
         z = runtime.z if runtime else 0.0
         localization_stale = service.ego_localization_is_stale(vehicle.id)
+        intent = intents.get(vehicle.id)
+        resource_reason = (intent["reason"] if intent and intent["reason"] in
+                           {"RESOURCE_WAIT", "RESOURCE_STATE_UNAVAILABLE"} else None)
+        resource_motion = None
+        if localization_stale or runtime and runtime.safety_motion_state:
+            uncertain_eta_vehicles.add(vehicle.id)
+        if resource_reason:
+            uncertain_eta_vehicles.add(vehicle.id)
+            # While approaching the hold line or aligning at rest the actuator
+            # must retain its bounded command. Do not revoke a positive intent
+            # merely because its passenger-facing reason says resource wait.
+            resource_motion = ("DRIVING" if intent["targetSpeedMps"] > 0 or intent["yawRateRadps"] != 0
+                               else "YIELDING" if runtime.speed_mps > 0.01 else "WAITING_RESOURCE")
         next_point = runtime.route_points[1] if runtime and len(runtime.route_points) > 1 else None
         heading = (
             runtime.heading_rad
@@ -494,6 +510,7 @@ def make_snapshot(
                 "missionState": runtime.mission_state if runtime else "IDLE",
                 "motionState": "REPLANNING" if localization_stale else
                     runtime.safety_motion_state if runtime and runtime.safety_motion_state else
+                    resource_motion if resource_motion else
                     "DRIVING" if runtime and (
                         runtime.speed_mps > 0
                         or runtime.pose_source == "unity_localization"
@@ -503,6 +520,7 @@ def make_snapshot(
                     ) else "WAITING_RESOURCE",
                 "reason": "STALE_LOCALIZATION" if localization_stale else
                     runtime.safety_reason if runtime and runtime.safety_motion_state else
+                    resource_reason if resource_reason else
                     runtime.route_reason if runtime and request and runtime.route_id else "UNKNOWN",
                 "requestId": request.id if request else None,
                 "routeId": runtime.route_id if runtime else None,
@@ -513,6 +531,8 @@ def make_snapshot(
     request_payloads = []
     for item in request_models:
         payload = _camelize(item.model_dump(mode="json"))
+        if item.vehicle_id in uncertain_eta_vehicles and item.status.value in ACTIVE_REQUEST_STATUSES:
+            payload["etaS"] = None  # No bounded wait duration is available yet.
         # A terminal mobile request retains service history, but no longer grants
         # visibility of its former vehicle. Do not emit a dangling live reference.
         if not operator and item.status.value not in ACTIVE_REQUEST_STATUSES:

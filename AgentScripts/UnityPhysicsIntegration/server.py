@@ -18,6 +18,10 @@ from campus_sim.swept_geometry import BoxFootprint
 ROOT = Path(__file__).resolve().parents[2]
 closure_scenario = os.environ.get("INHA_UNITY_E2E_ZONE_CLOSURE") == "1"
 fixture = "physics-zone-integration-3.json" if closure_scenario else "physics-integration-3.json"
+if os.environ.get("INHA_UNITY_E2E_RESERVATIONS") == "1":
+    fixture = "physics-reservation-6.json"
+    if os.environ.get("INHA_UNITY_E2E_FLEET_THREE") == "1":
+        fixture = "physics-reservation-8.json"
 service = MobilityService.from_synthetic_graph(ROOT / "maps/fixtures" / fixture)
 if os.environ.get("INHA_UNITY_E2E_PYTHON_CONTROL") == "1":
     service.control_policies["V01"] = ControllerPolicy(
@@ -30,6 +34,10 @@ if os.environ.get("INHA_UNITY_E2E_CROSSING") == "1":
         provenance="Synthetic test: centered 0.4m square shell, default 1m capsule; assumed errors",
     )
 app = create_app(service)
+if os.environ.get("INHA_UNITY_E2E_RESERVATIONS") == "1":
+    from reservation_scenario import configure
+
+    configure(app, service, three=os.environ.get("INHA_UNITY_E2E_FLEET_THREE") == "1")
 
 if (os.environ.get("INHA_UNITY_E2E_CROSSING") == "1"
         and os.environ.get("INHA_UNITY_E2E_PYTHON_CONTROL") == "1"

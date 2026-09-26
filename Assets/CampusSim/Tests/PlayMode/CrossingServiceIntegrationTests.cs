@@ -178,7 +178,7 @@ namespace InhaExpress.Client.Tests
             if (pythonControl && Environment.GetEnvironmentVariable("INHA_UNITY_E2E_DISCONNECT") != "1")
             {
                 var controlled = ego.GetComponent<VehicleCommandActuator>();
-                yield return Wait(() => ego.transform.position.x > 0.1f && controlled.SpeedMps < 0.01f,
+                yield return Wait(() => ego.transform.position.x > 0.02f && controlled.SpeedMps < 0.01f,
                     20, "Vehicle did not wait for the reserved exit space");
                 Assert.That(ego.transform.position.x + 0.2f, Is.LessThan(1f), "Body entered the ungranted corridor");
                 var heldPosition = ego.transform.position;
@@ -186,6 +186,13 @@ namespace InhaExpress.Client.Tests
                 Assert.That(Vector3.Distance(ego.transform.position, heldPosition), Is.LessThan(0.01f));
                 using (var client = new HttpClient())
                 {
+                    var status = client.GetStringAsync(new UriBuilder(url)
+                        { Scheme = "http", Path = "/test/reservation-summary", Query = "" }.Uri);
+                    yield return Wait(() => status.IsCompleted, 5, "Reservation hold status timed out");
+                    var held = JsonUtility.FromJson<ReservationSummary>(status.GetAwaiter().GetResult());
+                    Assert.AreEqual(0, held.closed, "Waiting outside must not latch an unplanned-entry closure");
+                    Assert.AreEqual(0, held.faults);
+                    Assert.AreEqual(1, held.claims, "Only the explicit exit blocker may own a resource");
                     var endpoint = new UriBuilder(url) { Scheme = "http", Path = "/test/release-exit", Query = "" };
                     var release = client.PostAsync(endpoint.Uri, null);
                     yield return Wait(() => release.IsCompleted, 5, "Exit release timed out");

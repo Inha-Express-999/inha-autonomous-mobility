@@ -194,6 +194,30 @@ namespace InhaExpress.Client.Tests
             StringAssert.Contains("Observed unknown | EMA unknown | prior", OperatorStatusPresenter.Describe(Snapshot(420)));
         }
 
+        [TestCase(ReasonCode.RESOURCE_WAIT, "진입 순서")]
+        [TestCase(ReasonCode.RESOURCE_STATE_UNAVAILABLE, "상태 확인")]
+        [TestCase(ReasonCode.STALE_LOCALIZATION, "위치 정보")]
+        public void LivePassengerGuidanceUsesOnlyItsAssignedVehicle(ReasonCode reason, string expected)
+        {
+            var original = Snapshot(420);
+            var request = original.Requests[0];
+            var own = new VehicleDto(request.VehicleId, new MapPositionDto(0, 0, 0), 0, 0, null,
+                VehicleMissionState.TO_DROPOFF, VehicleMotionState.WAITING_RESOURCE, request.Id, reason: reason);
+            var unrelated = new VehicleDto("unrelated", new MapPositionDto(10, 0, 0), 0, 0, null,
+                VehicleMissionState.IDLE, VehicleMotionState.EMERGENCY_STOP, reason: ReasonCode.SENSOR_INVALID);
+            var snapshot = new WorldSnapshotDto(original.SchemaVersion, original.ProjectVersion,
+                original.MapVersion, original.RunId, original.Sequence, original.SimulationTick,
+                original.SimulationTimeS, original.Role, original.SubscriberId,
+                new[] { unrelated, own }, original.Requests, original.Landmarks, original.Stops,
+                original.Routes, original.Zones);
+            var guidance = typeof(PassengerStatusPresenter).GetMethod("Guidance",
+                System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+            string message = (string)guidance.Invoke(null, new object[] { snapshot, request });
+            StringAssert.Contains(expected, message);
+            StringAssert.DoesNotContain("센서 관측이 유효하지", message);
+            StringAssert.Contains(expected, FixtureUiText.Reason(reason));
+        }
+
         private static WorldSnapshotDto Snapshot(long tick) => FixtureScenario.Create(
             ClientRole.PC_Operator, null, Version, "run", tick, tick);
         private static FixtureClientDataSource Source() => new FixtureClientDataSource(
