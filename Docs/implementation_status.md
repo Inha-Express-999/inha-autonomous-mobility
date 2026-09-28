@@ -1,6 +1,6 @@
 # 구현 현황
 
-프로젝트 버전 **0.4.2.0** · 2026-09-26 작업본. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
+프로젝트 버전 **0.4.2.1** · 2026-09-28 문서 갱신. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
 
 ## v0.4.1.0 커밋 체크포인트 (2026-09-26)
 
@@ -140,7 +140,7 @@ Python/MapData 259개 및 Ruff, 격리 Unity PlayMode 4/4(가림·포화·센서
 4. 합성 preview에 V01 route-following alpha를 연결했다. 다음은 Unity Editor에서 씬 재임포트와 PlayMode를 통해 local Python server 연결·요청→Physics 이동→도착→요청 완료 흐름을 검증한다. 축·Collider·ground contact를 확인하고, 센서/TTC safety 계층이 연결되기 전까지는 실제 캠퍼스 이동을 활성화하지 않는다.
 5. M2 지도/접근성/비룡플라자 범위를 완료하는 동안 재사용 빈도가 높은 캠퍼스 오브젝트를 prefab/variant로 단계적으로 정리한 뒤 센서·안전, 다중 차량, 성능 실험을 진행한다.
 
-버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.4.2.0으로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
+버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.4.2.1으로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
 
 ## 2026-09-26 차량 telemetry 연결 소유권 (v0.2.4.0 이후 작업본)
 
