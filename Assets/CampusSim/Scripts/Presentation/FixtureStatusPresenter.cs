@@ -92,9 +92,9 @@ namespace InhaExpress.Client.Presentation
             canvas.sortingOrder = 100;
             var scaler = viewRoot.GetComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            scaler.referenceResolution = Role == ClientRole.Mobile_Passenger ? new Vector2(390, 844) : new Vector2(1440, 900);
+            scaler.referenceResolution = Role == ClientRole.Mobile_Passenger ? new Vector2(390, 844) : new Vector2(1920, 1080);
             scaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
-            scaler.matchWidthOrHeight = Role == ClientRole.Mobile_Passenger ? 0.5f : 0f;
+            scaler.matchWidthOrHeight = 0.5f;
             FixtureUiFactory.EnsureEventSystem(viewRoot.transform);
 
             var safe = FixtureUiFactory.Rect(viewRoot.transform, "Safe Area", Vector2.zero, Vector2.one,
@@ -111,7 +111,7 @@ namespace InhaExpress.Client.Presentation
         {
             var bar = FixtureUiFactory.Panel(safe, "Top Bar", new Vector2(0, 1), Vector2.one,
                 new Vector2(12, -64), new Vector2(-12, -10), FixtureUiPalette.Surface);
-            var brand = FixtureUiFactory.Text(bar, "Brand", "INHA  EXPRESS", 20, FixtureUiPalette.Ink,
+            var brand = FixtureUiFactory.Text(bar, "Brand", "INHA  EXPRESS", 20, FixtureUiPalette.Navy,
                 TextAnchor.MiddleLeft, FontStyle.Bold);
             ((RectTransform)brand.transform).offsetMin = new Vector2(16, 0);
             ((RectTransform)brand.transform).offsetMax = new Vector2(-250, 0);
@@ -198,9 +198,11 @@ namespace InhaExpress.Client.Presentation
             sourceBadge.text = fixture ? "FIXTURE" : "PYTHON SERVER";
             sourceBadge.color = fixture ? FixtureUiPalette.Amber : FixtureUiPalette.Blue;
             connectionText.text = stale ? "● 상태 지연" : "● " + ConnectionLabel(Host.ConnectionState);
-            connectionText.color = stale ? FixtureUiPalette.Red : FixtureUiPalette.Green;
-            connectionPill.color = stale ? new Color(0.85f, 0.34f, 0.34f, 0.12f) :
-                new Color(0.11f, 0.61f, 0.41f, 0.12f);
+            Color stateColor = stale || Host.ConnectionState == ConnectionState.Disconnected
+                ? FixtureUiPalette.Red : Host.ConnectionState == ConnectionState.Connected
+                    ? FixtureUiPalette.Green : FixtureUiPalette.Amber;
+            connectionText.color = stateColor;
+            connectionPill.color = FixtureUiPalette.Tint(stateColor, 0.12f);
             pauseButtonText.text = paused ? "계속" : "일시정지";
             if (fixture) deliveryButtonText.text = Host.Fixture.DeliveryEnabled ? "연결 끊기" : "다시 연결";
         }

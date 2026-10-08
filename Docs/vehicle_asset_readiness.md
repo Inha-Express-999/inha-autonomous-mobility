@@ -22,7 +22,7 @@ The wrappers deliberately have a **kinematic Rigidbody, gravity disabled, interp
 
 ## PC operator actor spawn and pose reporting
 
-`PC_Operator.unity` retains an explicit V01→`VehicleActor_Default` binding and an empty required `mapVersion` guard. It does not display or move actors while the server uses the synthetic graph. The separate `RoadGraphSyntheticPreview.unity` contains the matching exact `synthetic-campus-6stop-v1` binding and a PC WebSocket bootstrap configured for `ws://127.0.0.1:8765/v1/client/ws`; it is the only scene where this follower can be enabled. Open that scene in Unity Editor and enter Play Mode after starting the local server. Its bootstrap uses the same scene as its already-loaded world and role scene, leaving the synthetic ground/graph visible while binding the actor spawner.
+`PC_Operator.unity` retains an explicit V01→`VehicleActor_Default` binding and an empty required `mapVersion` guard. It does not display or move actors while the server uses the synthetic graph. The synthetic preview scene and its dedicated build profile were removed on 2026-10-08 at user request. PC_Bootstrap loads CampusTerrain, where synthetic map actors remain blocked until a validated campus coordinate and routing contract is available. The optional authoring command remains a developer tool; it does not recreate the scene automatically.
 
 Start the server from the repository root in PowerShell:
 

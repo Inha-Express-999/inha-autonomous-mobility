@@ -73,7 +73,7 @@ namespace InhaExpress.Client.Mobile
             progressText = FixtureUiFactory.Text(sheet, "Progress", "●  ○  ○  ○", 15,
                 FixtureUiPalette.Blue, TextAnchor.MiddleCenter, FontStyle.Bold);
             SetRect(progressText, 18, -250, -18, -214);
-            reasonText = FixtureUiFactory.Text(sheet, "Reason", "Fixture 경로를 준비하는 중입니다.", 13,
+            reasonText = FixtureUiFactory.Text(sheet, "Reason", "서버의 요청 상태를 기다리는 중입니다.", 13,
                 FixtureUiPalette.Ink, TextAnchor.UpperLeft);
             SetRect(reasonText, 18, -330, -18, -262);
             var warning = FixtureUiFactory.Panel(sheet, "Fixture Notice", Vector2.zero, new Vector2(1, 0),
@@ -94,7 +94,7 @@ namespace InhaExpress.Client.Mobile
             dropoffButton.onClick.AddListener(() => CycleLandmark(false));
             var accessButton = FixtureUiFactory.Button(requestControls, "Step Free", "계단 없는 승하차: 아니요",
                 FixtureUiPalette.Ink, out stepFreeChoice);
-            SetFormButtonRect(accessButton, -490, -450);
+            SetFormButtonRect(accessButton, -490, -446);
             accessButton.onClick.AddListener(ToggleStepFree);
             createRequestButton = FixtureUiFactory.Button(requestControls, "Create Request", "차량 요청",
                 FixtureUiPalette.Blue, out _);
@@ -111,7 +111,9 @@ namespace InhaExpress.Client.Mobile
 
         protected override void RenderSnapshot(WorldSnapshotDto snapshot)
         {
-            mapHint.text = $"{snapshot.MapVersion}  ·  project {snapshot.ProjectVersion}";
+            mapHint.text = snapshot.MapVersion.StartsWith("synthetic-", System.StringComparison.Ordinal)
+                ? "데모 서비스 · 실제 캠퍼스 경로 미연결"
+                : "캠퍼스 지도 · 앱 " + snapshot.ProjectVersion;
             UpdateLandmarkChoices(snapshot.Landmarks);
             activeRequest = null;
             foreach (var candidate in snapshot.Requests)
@@ -131,10 +133,12 @@ namespace InhaExpress.Client.Mobile
             {
                 statusLabel.text = "활성 요청 없음";
                 statusTitle.text = "목적지를 선택하세요";
-                routeText.text = "이 Fixture 사용자에게 연결된 요청이 없습니다";
+                routeText.text = "현재 진행 중인 내 요청이 없습니다";
                 etaValue.text = "—";
                 vehicleText.text = "미배정";
-                reasonText.text = "현재는 검색 가능한 Fixture 거점만 선택할 수 있습니다.";
+                reasonText.text = Host.Fixture != null
+                    ? "데모 데이터의 거점을 확인할 수 있습니다."
+                    : "등록된 출발지와 목적지를 선택해 요청을 보내세요.";
                 progressText.text = "○  ○  ○  ○";
                 return;
             }
@@ -272,7 +276,7 @@ namespace InhaExpress.Client.Mobile
         private static Button BuildChoiceButton(Transform parent, string name, float bottom, out Text label)
         {
             var button = FixtureUiFactory.Button(parent, name, "거점 선택", FixtureUiPalette.Ink, out label);
-            SetFormButtonRect(button, bottom, bottom + 40);
+            SetFormButtonRect(button, bottom, bottom + 44);
             return button;
         }
 

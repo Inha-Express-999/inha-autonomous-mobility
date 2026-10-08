@@ -1,0 +1,37 @@
+{
+  "result": "completed",
+  "project_version": "0.4.2.0",
+  "python": "3.14.4",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "logical_cpu_count": 12,
+  "websockets": "17.1",
+  "clients": 50,
+  "snapshots_per_client": 10,
+  "requests_per_client": 0,
+  "accepted_requests": 0,
+  "command_ack_ms_p95": null,
+  "mobile_request_projection_valid": null,
+  "request_status_counts": {},
+  "received_snapshots": 500,
+  "interval_samples": 450,
+  "snapshot_interval_ms_p50": 95.44,
+  "snapshot_interval_ms_p95": 111.06,
+  "connect_ms_p95": 1.98,
+  "excess_client_rejected": true,
+  "slots_reclaimed": true,
+  "clock": {
+    "ticks": 28,
+    "sample_count": 28,
+    "lag_ms_p95": 12.586,
+    "work_ms_p95": 0.063
+  },
+  "elapsed_s": 1.47,
+  "scope": "localhost, one Python process, mobile snapshots without requests, without Unity",
+  "source_sha256": {
+    "AgentScripts/LoadTest/ws_snapshot_load.py": "138b044a4d7dea6444048637e19c59c6cff72437948ae12469c9140b18a366d5",
+    "backend/src/campus_sim/api.py": "3842ded3fe6ab3466db653095b958edd1fc9aa9909a2bafd04099c6703d9e29a",
+    "backend/src/campus_sim/realtime.py": "7306807a889e9c32204f5658697867b453501c6a4ed16bc28bd41e79ad275688",
+    "backend/src/campus_sim/service.py": "262e55bba3f3652acd9fdc9cd0eea17c476132804ad16d44ed4422a688f62d9a",
+    "configs/crowd.json": "6c95c8bfc81b15dc4624e2f3128db899b672376bb31670cf279f3bccb4393cbb"
+  }
+}

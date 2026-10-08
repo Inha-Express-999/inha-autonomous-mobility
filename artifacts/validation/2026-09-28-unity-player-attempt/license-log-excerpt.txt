@@ -1,0 +1,35 @@
+[Licensing::Module] Licensing is not yet initialized.
+[Licensing::IpcConnector] Connection to channel LicenseClient-sy refused
+[Licensing::Module] Timed-out after 60.04s, waiting for channel: "LicenseClient-sy"
+[Licensing::Module] Error: Licensing initialization failed after 74.84s
+[Licensing::Module] Licensing is initialized (took 2.47s).
+[Licensing::Module] Error: The connection with the Unity Licensing Client has been lost. Attempting to reconnect.
+[Licensing::IpcConnector] Connection to channel LicenseClient-sy refused
+[Licensing::Module] Successfully launched the LicensingClient (PId: 25656)
+[Licensing::IpcConnector] Connection to channel LicenseClient-sy refused
+[Licensing::Module] Timed-out after 60.01s, waiting for channel: "LicenseClient-sy"
+[Licensing::Module] The re-connection attempt was UN-successful.
+[Licensing::Module] Error: 'com.unity.editor.headless' was not found.
+[Licensing::Module] Error: The connection with the Unity Licensing Client has been lost. Attempting to reconnect.
+[Licensing::IpcConnector] Connection to channel LicenseClient-sy refused
+[Licensing::Module] Successfully launched the LicensingClient (PId: 28468)
+[Licensing::IpcConnector] Connection to channel LicenseClient-sy refused
+[Licensing::Module] Timed-out after 60.01s, waiting for channel: "LicenseClient-sy"
+[Licensing::Module] The re-connection attempt was UN-successful.
+[Licensing::Module] Error: 'com.unity.editor.headless' was not found.
+[Licensing::Module] Error: The connection with the Unity Licensing Client has been lost. Attempting to reconnect.
+[Licensing::IpcConnector] Connection to channel LicenseClient-sy refused
+[Licensing::Module] Successfully launched the LicensingClient (PId: 29080)
+[Licensing::IpcConnector] Connection to channel LicenseClient-sy refused
+[Licensing::Module] Timed-out after 60.01s, waiting for channel: "LicenseClient-sy"
+[Licensing::Module] The re-connection attempt was UN-successful.
+[Package Manager] Unknown entitlement status [0] for package [com.unity.nuget.newtonsoft-json]
+[Package Manager] Unknown entitlement status [0] for package [com.unity.test-framework]
+[Package Manager] Unknown entitlement status [0] for package [com.unity.modules.physics]
+[Package Manager] The following packages were not registered because your license doesn't allow it.
+  com.unity.nuget.newtonsoft-json@3.2.2
+  com.unity.test-framework@1.6.0
+  com.unity.modules.physics@1.0.0
+[Licensing::Module] Error: The connection with the Unity Licensing Client has been lost. Attempting to reconnect.
+[Licensing::IpcConnector] Connection to channel LicenseClient-sy refused
+[Licensing::Module] Successfully launched the LicensingClient (PId: 32756)

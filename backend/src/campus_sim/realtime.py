@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import json
 import math
+from contextlib import suppress
 from typing import Literal
 
 from fastapi import WebSocket, WebSocketDisconnect
@@ -28,6 +29,7 @@ MAP_VERSION = "synthetic-service-v1"
 # Bounded 64-return LiDAR frames include ray outcomes and observed object IDs.
 MAX_MESSAGE_BYTES = 64 * 1024
 SNAPSHOT_INTERVAL_S = 0.1
+CLIENT_SEND_TIMEOUT_S = 1.0
 ACTIVE_REQUEST_STATUSES = {"ASSIGNED", "PICKUP_SERVICE", "IN_TRANSIT", "DROPOFF_SERVICE"}
 OPERATOR_OWNER_ID = "pc-operator"
 
@@ -125,7 +127,8 @@ async def serve_client_socket(websocket: WebSocket, service: MobilityService) ->
             await websocket.close(code=1008)
             return
 
-        await websocket.send_json(
+        await _send_bounded(
+            websocket,
             {
                 "type": "connected",
                 "schemaVersion": SNAPSHOT_SCHEMA_VERSION,
@@ -165,6 +168,10 @@ async def serve_client_socket(websocket: WebSocket, service: MobilityService) ->
             )
             if should_close:
                 return
+    except TimeoutError:
+        with suppress(WebSocketDisconnect, TimeoutError, RuntimeError):
+            await asyncio.wait_for(websocket.close(code=1013), timeout=1.0)
+        return
     except WebSocketDisconnect:
         return
 
@@ -189,7 +196,7 @@ async def handle_client_message(
     message_type = payload.get("type")
     command_type = message_type if isinstance(message_type, str) and len(message_type) <= 32 else "unknown"
     if message_type == "ping":
-        await websocket.send_json({"type": "pong"})
+        await _send_bounded(websocket, {"type": "pong"})
         return False
     if message_type == "ego_localization":
         try:
@@ -217,7 +224,7 @@ async def handle_client_message(
                     error_code = "stale_observation"
             except ValueError as error:
                 error_code = str(error)
-        await websocket.send_json(
+        await _send_bounded(websocket,
             {
                 "type": "ego_localization_ack",
                 "vehicleId": command.vehicle_id,
@@ -248,7 +255,7 @@ async def handle_client_message(
                     error_code = "stale_observation"
             except ValueError as error:
                 error_code = str(error)
-        await websocket.send_json(
+        await _send_bounded(websocket,
             {
                 "type": "sensor_observation_ack",
                 "vehicleId": observation.vehicle_id,
@@ -383,7 +390,8 @@ async def _send_command_ack(
     error_code: str | None = None,
     error_message: str | None = None,
 ) -> None:
-    await websocket.send_json(
+    await _send_bounded(
+        websocket,
         {
             "type": "command_ack",
             "messageId": message_id,
@@ -424,8 +432,8 @@ def make_snapshot(
     operator = role == "PC_Operator"
     landmarks = []
     stops = []
-    node_by_landmark = {
-        node.landmark_id: node for node in service.graph.nodes
+    node_by_stop = {
+        node.stop_id: node for node in service.graph.nodes if node.stop_id is not None
     } if service.graph is not None else {}
     for landmark in service.landmarks.values():
         stop_ids = landmark.stop_ids if operator else [
@@ -442,9 +450,11 @@ def make_snapshot(
         )
         for stop_id in stop_ids:
             stop = service.stops[stop_id]
-            node = node_by_landmark.get(landmark.id)
-            x = node.position_m.x if node else 0.0
-            y = node.position_m.y if node else 0.0
+            node = node_by_stop.get(stop_id)
+            if node is None:
+                raise ValueError(f"snapshot stop {stop_id!r} has no graph node")
+            x = node.position_m.x
+            y = node.position_m.y
             stops.append(
                 {
                     "id": stop.id,
@@ -582,11 +592,12 @@ async def _send_snapshot(
     # Single service event loop: reserve before await; gaps across clients are valid.
     sequence = service.snapshot_sequence
     service.snapshot_sequence += 1
-    await websocket.send_json(
+    await _send_bounded(
+        websocket,
         {
             "type": "snapshot",
             "snapshot": make_snapshot(service, role, subscriber_id, sequence),
-        }
+        },
     )
 
 
@@ -599,4 +610,8 @@ def _camelize(value):
 
 
 async def _send_error(websocket: WebSocket, code: str) -> None:
-    await websocket.send_json({"type": "error", "code": code})
+    await _send_bounded(websocket, {"type": "error", "code": code})
+
+
+async def _send_bounded(websocket: WebSocket, payload: dict) -> None:
+    await asyncio.wait_for(websocket.send_json(payload), timeout=CLIENT_SEND_TIMEOUT_S)

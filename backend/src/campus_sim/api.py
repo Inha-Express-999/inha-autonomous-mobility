@@ -3,12 +3,13 @@ from contextlib import asynccontextmanager
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException, WebSocket, status
+from fastapi.responses import HTMLResponse
 
 from campus_sim import __version__
 from campus_sim.charging import ChargingStations
 from campus_sim.domain import CommandAck, CreateRequest, Landmark, RequestView
 from campus_sim.energy import EnergyFleet
-from campus_sim.realtime import serve_client_socket
+from campus_sim.realtime import make_snapshot, serve_client_socket
 from campus_sim.service import MobilityService
 
 
@@ -18,7 +19,11 @@ def create_app(
     map_path: str | Path | None = None,
     energy_config_path: str | Path | None = None,
     charging_config_path: str | Path | None = None,
+    max_ws_clients: int = 50,
+    minimal_demo: bool = False,
 ) -> FastAPI:
+    if max_ws_clients < 1:
+        raise ValueError("max_ws_clients must be positive")
     if service is not None and map_path is not None:
         raise ValueError("provide a service instance or map_path, not both")
     service_instance = service or (
@@ -65,10 +70,21 @@ def create_app(
         lifespan=lifespan,
     )
     app.state.service = service_instance
+    app.state.active_ws_clients = 0
+    app.state.max_ws_clients = max_ws_clients
 
     @app.websocket("/v1/client/ws")
     async def client_socket(websocket: WebSocket) -> None:
-        await serve_client_socket(websocket, app.state.service)
+        if app.state.active_ws_clients >= app.state.max_ws_clients:
+            await websocket.accept()
+            await websocket.send_json({"type": "error", "code": "connection_limit_reached"})
+            await websocket.close(code=1013)
+            return
+        app.state.active_ws_clients += 1
+        try:
+            await serve_client_socket(websocket, app.state.service)
+        finally:
+            app.state.active_ws_clients -= 1
 
     @app.get("/health")
     async def health() -> dict[str, object]:
@@ -78,16 +94,46 @@ def create_app(
             "project_version": __version__,
             "schema_version": "3",
             "energy_model_status": "SYNTHETIC_MODEL" if app.state.service.energy is not None else "DISABLED",
-            "charging_status": "SYNTHETIC_PARKED_ONLY" if app.state.service.charging is not None else "DISABLED",
+            "charging_status": "SYNTHETIC_GRAPH_TRAVEL" if app.state.service.charging is not None else "DISABLED",
             "map_version": graph.map_version if graph is not None else None,
             "map_data_status": graph.data_status if graph is not None else None,
             "node_count": len(graph.nodes) if graph is not None else 0,
             "edge_count": len(graph.edges) if graph is not None else 0,
+            "active_ws_clients": app.state.active_ws_clients,
+            "max_ws_clients": app.state.max_ws_clients,
+            "clock": app.state.service.clock_telemetry(),
         }
 
     @app.get("/v1/landmarks", response_model=list[Landmark])
     async def list_landmarks() -> list[Landmark]:
         return list(app.state.service.landmarks.values())
+
+    if minimal_demo:
+        if service_instance.graph is None or not service_instance.graph.map_version.startswith("synthetic-"):
+            raise ValueError("Minimal demo requires a synthetic graph")
+
+        @app.get("/demo", response_class=HTMLResponse)
+        async def minimal_demo_page() -> HTMLResponse:
+            html = Path(__file__).with_name("minimal_demo.html").read_text(encoding="utf-8")
+            return HTMLResponse(html)
+
+        @app.get("/v1/demo/state")
+        async def minimal_demo_state() -> dict[str, object]:
+            graph = app.state.service.graph
+            return {
+                "nodes": [
+                    {"id": node.id, "landmarkId": node.landmark_id,
+                     "x": node.position_m.x, "y": node.position_m.y}
+                    for node in graph.nodes
+                ],
+                "edges": [
+                    {"id": edge.id, "points": [
+                        {"x": point.x, "y": point.y} for point in edge.geometry_m
+                    ]}
+                    for edge in graph.edges
+                ],
+                "snapshot": make_snapshot(app.state.service, "PC_Operator", None, 0),
+            }
 
     @app.post("/v1/requests", response_model=CommandAck, status_code=status.HTTP_201_CREATED)
     async def create_request(command: CreateRequest) -> CommandAck:

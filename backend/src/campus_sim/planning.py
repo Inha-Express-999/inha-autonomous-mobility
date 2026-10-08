@@ -181,7 +181,8 @@ def _search(
     return RouteResult(
         algorithm=algorithm,
         node_ids=node_ids,
-        stop_ids=tuple(stop_by_node[node_id] for node_id in node_ids),
+        stop_ids=tuple(stop_by_node[node_id] for node_id in node_ids
+                       if stop_by_node[node_id] is not None),
         edge_ids=edge_ids,
         path_cost_s=g_score[goal_node],
         path_length_m=sum(edge.length_m for edge in route_edges),
@@ -193,8 +194,10 @@ def _search(
 
 
 def node_for_stop(graph: RoadGraphDocument, stop_id: str) -> str:
+    if not isinstance(stop_id, str) or not stop_id:
+        raise ValueError(f"unknown stop id: {stop_id}")
     for node in graph.nodes:
-        if node.stop_id == stop_id:
+        if node.stop_id is not None and node.stop_id == stop_id:
             return node.id
     raise ValueError(f"unknown stop id: {stop_id}")
 

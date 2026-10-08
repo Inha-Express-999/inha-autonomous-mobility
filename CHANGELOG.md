@@ -1,5 +1,14 @@
 # 변경 이력
 
+## 0.4.3.0 — 2026-10-08 · 원격 병합 및 MVP 작업 통합
+
+- 작업: 원격 0.4.2.1 실험 보고를 fast-forward로 반영하고 기존 서버·지도 조사·클라이언트 작업을 보존했다. 구현 현황 문서 충돌은 양쪽 기록을 유지해 해결했다. 합성 그래프 충전 이동, 서버 clock/연결 제한 및 브라우저 시연, 지도 검토 패키지·현장 조사 batch 도구와 회귀 테스트를 포함한다.
+- 클라이언트: CampusTerrain 직접 Additive 로딩·역할별 서버 연결, 주소 입력·저장, 모바일 구독 ID, 공통 UI 색상·rounded surface·Pretendard 폰트와 최소 터치 영역을 반영했다. 에디터 PC_Bootstrap의 Python 개발 서버 자동 시작/소유 프로세스 종료 도구와 실제 캠퍼스 smoke 메뉴를 추가했다. 사용자 지시에 따라 CampusWorld 및 합성 RoadGraphSyntheticPreview 씬·meta와 합성 전용 빌드 프로필을 삭제하고 관련 안내·테스트를 정리했다. 재사용 navigation prefab·합성 fixture·명시적 opt-in authoring 도구는 유지한다.
+- 이유: pull로 들어온 실험 근거와 진행 중인 MVP 작업을 충돌 없이 하나의 검토 가능한 체크포인트로 남긴다. 기본 crowd 설정은 disabled이며 비룡플라자 우회·혼잡 기능은 MVP 이후 범위를 유지한다.
+- 호환성/마이그레이션: 기능 추가로 C를 증가시켜 0.4.3.0으로 동기화했다. schema_version=3 및 기존 map_version 유지, 데이터 마이그레이션 없음. 삭제한 합성 씬/프로필 실행 경로는 사용할 수 없으며 브라우저 시연 또는 실제 PC/Mobile Bootstrap을 사용한다. 에디터 자동 서버는 LAN 수신·메모리 서비스이며 인증 구현을 의미하지 않는다.
+- 검증: `python -m pytest backend/tests AgentScripts/MapData -q -p no:cacheprovider --basetemp=tmp/pytest-merge-final-20261008` — 511 passed, 기존 Starlette deprecation warning 1개. `python -m ruff check backend/src backend/tests AgentScripts/MapData AgentScripts/UnityPhysicsIntegration AgentScripts/RunEditorServer.py AgentScripts/RunMinimalDemo.py AgentScripts/LoadTest` — 통과. `AgentScripts/RunUnityClientTests.ps1 -TimeoutSeconds 180` — 격리 Unity EditMode 31/31 통과, 새 에디터 서버 코드 포함. 실행 증거는 artifacts/validation/2026-10-08-merge에 보존한다.
+- 미검증/한계: 실제 Campus Bootstrap smoke는 90초 snapshot timeout으로 실패했다. 에디터 서버 자동 시작/재사용/종료 전체 lifecycle, 실제 지도·Stop·차량 물리·Player/Android·LAN·복합 성능 및 전체 MVP는 미완료다. 이전 sandbox Unity 시도는 라이선스 IPC timeout이었으며 최신 격리 실행 통과와 구분한다. 폰트/rounded UI의 실제 메모리·batch·FPS는 미측정이다. push하지 않는다.
+
 ## 0.4.2.1 — 2026-09-28 · 사용자 실행 실험 보고서
 
 - 작업/이유: 서버 검증 및 E1~E4 알고리즘 비교의 사용자 제공 결과를 `Docs/Experiments/2026-09-28-algorithm-report.md`에 정리했다. 수치·측정 범위·실패 사례·재현 명령·자료 누락을 기록한다.

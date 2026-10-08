@@ -68,7 +68,7 @@ def test_production_algorithms_share_scenario_and_partial_cost_comparisons_are_f
     report = compare_route_dispatch(CONFIG, repetitions=2)
     first = report["cases"][0]
     assert first["same_served_requests"] and first["cost_reduction_s_same_requests"] == 40
-    assert [s["total_cost_s"] for s in first["summary"]] == [245, 205]
+    assert [s["total_cost_s"] for s in first["summary"]] == [203, 163]
     assert all(s["deterministic_assignments"] for case in report["cases"] for s in case["summary"])
     saturated = next(c for c in report["cases"] if c["id"] == "more_requests_than_vehicles")
     assert not saturated["same_served_requests"] and saturated["cost_reduction_s_same_requests"] is None

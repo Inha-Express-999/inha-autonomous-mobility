@@ -16,17 +16,7 @@ campus-sim serve --map maps/fixtures/campus-synthetic-benchmark-11.json
 
 Unity Bootstrap Inspector에서 `useFixture`를 해제하면 WebSocket transport를 선택한다. PC Editor/Player는 기본 loopback 주소를 사용할 수 있다. 모바일 기기는 `serverWebSocketUrl`에 PC의 LAN IP를 지정해야 한다. 현재 endpoint는 인증·TLS가 없는 synthetic alpha이므로 신뢰 네트워크에서만 사용한다. `passengerSubscriberId`는 인증 수단이 아니다.
 
-Unity Build Profiles에 `Synthetic Preview - Windows` 개발용 프로필을 추가했다. 이 프로필은 `RoadGraphSyntheticPreview` 한 장면만 시작 씬으로 빌드하며, PC 운영 UI에서 승객/화물 요청을 만들고 local Python 서버와 합성 V01/V02/V03 차량 follower의 상태를 관찰하기 위한 것이다. Windows/Android 기본 프로필은 변경하지 않았다. Profile asset의 Unity Editor 인식 및 실제 Player 빌드는 아직 확인되지 않았고, profile을 사용할 Unity batch test는 Licensing Client 초기화 문제로 시작되지 않았다. 실제 지도 운행·안전 동작을 제공하는 빌드가 아니다.
-
-프로필로 Player를 빌드한 뒤 아래 launcher를 실행하면 Python 서버를 loopback `127.0.0.1:8765`에서 시작하고 `/health`에서 synthetic mapVersion을 확인한 다음 Player를 연다. Player를 종료하면 launcher가 자신이 시작한 서버 프로세스만 종료하며 로그는 임시 폴더에 남긴다. 포트가 이미 사용 중이면 다른 서버에 접속하거나 종료하지 않고 실행을 거부한다.
-
-```powershell
-.\AgentScripts\RunSyntheticPreview.ps1 `
-  -PythonPath ".\.venv\Scripts\python.exe" `
-  -UnityPlayerPath ".\Build\InhaSyntheticPreview.exe"
-```
-
-`-PythonPath`에는 `backend[dev]` 의존성을 설치한 Python 실행 파일을 전달한다. Player 빌드 경로는 사용자가 Build Profiles 창에서 지정한 출력 경로와 일치시킨다. 이 launcher는 합성 데이터 전용이며 외부 인터페이스에 서버를 공개하지 않는다.
+2026-10-08 사용자 지시에 따라 합성 preview 씬과 전용 빌드 프로필을 삭제했다. 현재 Unity 실행은 PC_Bootstrap/Mobile_Bootstrap을 사용한다. 에디터 서버 자동 실행은 [로컬 서버 안내](EDITOR_LOCAL_SERVER.md), 브라우저 합성 시연은 [시연 안내](MINIMAL_DEMO.md)를 따른다.
 
 ## 현재 API
 

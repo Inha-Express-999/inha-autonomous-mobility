@@ -2,9 +2,11 @@ from __future__ import annotations
 
 import asyncio
 import json
+import tempfile
 import unittest
 from dataclasses import replace
 from itertools import pairwise
+from pathlib import Path
 from unittest.mock import patch
 
 from fastapi import WebSocketDisconnect
@@ -89,6 +91,36 @@ class SnapshotCadenceWebSocket:
         self.messages.append(message)
         if message["type"] == "snapshot":
             self.snapshot_times.append(asyncio.get_running_loop().time())
+
+
+class SlowSnapshotWebSocket:
+    def __init__(self, blocked_type: str = "snapshot") -> None:
+        self.subscribed = False
+        self.blocked_type = blocked_type
+        self.snapshot_attempts = 0
+        self.close_code: int | None = None
+
+    async def accept(self) -> None:
+        pass
+
+    async def receive_text(self) -> str:
+        if not self.subscribed:
+            self.subscribed = True
+            return json.dumps({
+                "type": "subscribe", "schemaVersion": 3,
+                "projectVersion": "0.4.2.0", "role": "PC_Operator",
+            })
+        await asyncio.Future()
+        raise AssertionError("unreachable")
+
+    async def send_json(self, message: dict) -> None:
+        if message["type"] == "snapshot":
+            self.snapshot_attempts += 1
+        if message["type"] == self.blocked_type:
+            await asyncio.Future()
+
+    async def close(self, code: int) -> None:
+        self.close_code = code
 
 
 class MobilityServiceTests(unittest.TestCase):
@@ -237,6 +269,41 @@ class MobilityServiceTests(unittest.TestCase):
 
         self.assertEqual(self.service.requests, {})
         self.assertTrue(self.service.vehicles["V01"].available)
+
+    def test_request_uses_reachable_alternative_stop_for_same_landmark(self) -> None:
+        source = Path(__file__).resolve().parents[2] / "maps/fixtures/campus-synthetic-6.json"
+        graph_data = json.loads(source.read_text(encoding="utf-8"))
+        graph_data["nodes"][4]["landmark_id"] = "fixture_landmark_1"
+        graph_data["edges"] = [edge for edge in graph_data["edges"] if edge["id"] != "e12"]
+        with tempfile.TemporaryDirectory() as directory:
+            graph_path = Path(directory) / "multi-stop-synthetic.json"
+            graph_path.write_text(json.dumps(graph_data), encoding="utf-8")
+            service = MobilityService.from_synthetic_graph(graph_path)
+
+        self.assertEqual(
+            service.landmarks["fixture_landmark_1"].stop_ids,
+            ["fixture_stop_1", "fixture_stop_5"],
+        )
+        runtime = service.vehicle_runtime["V01"]
+        runtime.node_id = "n6"
+        runtime.x, runtime.y = 240.0, 120.0
+        command = CreateRequest(
+            command_id="alternate-stop",
+            owner_id="test-passenger",
+            service_type=ServiceType.PASSENGER,
+            pickup_landmark_id="fixture_landmark_1",
+            dropoff_landmark_id="fixture_landmark_4",
+        )
+
+        ack = service.create_request(command)
+
+        self.assertEqual(ack.request.pickup_stop_id, "fixture_stop_5")
+        self.assertEqual(ack.request.dropoff_stop_id, "fixture_stop_4")
+        self.assertEqual(ack.request.status, RequestStatus.ASSIGNED)
+        snapshot = make_snapshot(service, "PC_Operator", None, 1)
+        stops = {item["id"]: item["position"] for item in snapshot["stops"]}
+        self.assertEqual(stops["fixture_stop_1"], {"x": 0.0, "y": 0.0, "z": 0.0})
+        self.assertEqual(stops["fixture_stop_5"], {"x": 100.0, "y": 120.0, "z": 0.0})
 
     def test_fixed_clock_advances_without_snapshot_requests(self) -> None:
         async def run_until_three_ticks() -> None:
@@ -821,6 +888,20 @@ class MobilityServiceTests(unittest.TestCase):
         self.assertTrue(all(interval >= 0.075 for interval in intervals))
         self.assertTrue(all(interval < 0.2 for interval in intervals))
 
+    def test_slow_snapshot_client_is_closed_after_bounded_send(self) -> None:
+        socket = SlowSnapshotWebSocket()
+        with patch("campus_sim.realtime.CLIENT_SEND_TIMEOUT_S", 0.02):
+            asyncio.run(serve_client_socket(socket, self.service))
+        self.assertEqual(socket.snapshot_attempts, 1)
+        self.assertEqual(socket.close_code, 1013)
+
+    def test_slow_connected_client_is_closed_before_snapshot(self) -> None:
+        socket = SlowSnapshotWebSocket(blocked_type="connected")
+        with patch("campus_sim.realtime.CLIENT_SEND_TIMEOUT_S", 0.02):
+            asyncio.run(serve_client_socket(socket, self.service))
+        self.assertEqual(socket.snapshot_attempts, 0)
+        self.assertEqual(socket.close_code, 1013)
+
     def test_step_free_routing_avoids_non_step_free_short_edge(self) -> None:
         command = passenger_command(
             self.service,
@@ -1067,6 +1148,30 @@ class MobilityServiceTests(unittest.TestCase):
             {wheelchair.status, passenger.status, cargo.status},
             {RequestStatus.COMPLETED},
         )
+        self.assertTrue(all(vehicle.available for vehicle in fleet.vehicles.values()))
+
+    def test_fifty_queued_passenger_requests_eventually_complete_without_duplicate_assignment(self) -> None:
+        fleet = MobilityService.synthetic_fleet_fixture()
+        requests = [
+            fleet.create_request(passenger_command(
+                fleet, f"queue-command-{index}", owner_id=f"queue-passenger-{index}"
+            )).request
+            for index in range(50)
+        ]
+        self.assertEqual(len({request.id for request in requests}), 50)
+        for _ in range(1200):
+            fleet.advance(1.0)
+            active = [
+                request.vehicle_id for request in requests
+                if request.status in {
+                    RequestStatus.ASSIGNED, RequestStatus.PICKUP_SERVICE,
+                    RequestStatus.IN_TRANSIT, RequestStatus.DROPOFF_SERVICE,
+                }
+            ]
+            self.assertEqual(len(active), len(set(active)))
+            if all(request.status is RequestStatus.COMPLETED for request in requests):
+                break
+        self.assertTrue(all(request.status is RequestStatus.COMPLETED for request in requests))
         self.assertTrue(all(vehicle.available for vehicle in fleet.vehicles.values()))
 
     def test_synthetic_fleet_dispatches_queued_work_to_newly_available_compatible_vehicle(self) -> None:

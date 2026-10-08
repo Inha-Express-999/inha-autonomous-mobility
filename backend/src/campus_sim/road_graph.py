@@ -32,9 +32,15 @@ class RoadNode(BaseModel):
     model_config = ConfigDict(extra="forbid", frozen=True)
 
     id: str = Field(min_length=1)
-    landmark_id: str = Field(min_length=1)
-    stop_id: str = Field(min_length=1)
+    landmark_id: str | None = Field(default=None, min_length=1)
+    stop_id: str | None = Field(default=None, min_length=1)
     position_m: Point2D
+
+    @model_validator(mode="after")
+    def require_stop_and_landmark_together(self) -> RoadNode:
+        if (self.landmark_id is None) != (self.stop_id is None):
+            raise ValueError("road node landmark_id and stop_id must both be set or both omitted")
+        return self
 
 
 class RoadEdge(BaseModel):
@@ -121,7 +127,7 @@ class RoadGraphDocument(BaseModel):
         node_by_id = {node.id: node for node in self.nodes}
         if len(node_by_id) != len(self.nodes):
             raise ValueError("node ids must be unique")
-        stop_ids = [node.stop_id for node in self.nodes]
+        stop_ids = [node.stop_id for node in self.nodes if node.stop_id is not None]
         if len(stop_ids) != len(set(stop_ids)):
             raise ValueError("stop ids must be unique")
         edge_ids = [edge.id for edge in self.edges]

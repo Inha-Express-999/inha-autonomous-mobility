@@ -3,6 +3,7 @@ from __future__ import annotations
 import asyncio
 import json
 import math
+from collections import deque
 from dataclasses import dataclass, field
 from hashlib import sha256
 from pathlib import Path
@@ -212,6 +213,9 @@ class MobilityService:
     sensor_observations: dict[tuple[str, str], SensorObservation] = field(default_factory=dict)
     sensor_received_at_s: dict[tuple[str, str], float] = field(default_factory=dict)
     last_advance_clock: float = field(default_factory=monotonic)
+    clock_tick_count: int = 0
+    clock_lag_ms: deque[float] = field(default_factory=lambda: deque(maxlen=1024))
+    clock_work_ms: deque[float] = field(default_factory=lambda: deque(maxlen=1024))
     simulation_time_s: float = 0.0
     route_counter: int = 0
     assignments_since_fairness: int = 0
@@ -325,12 +329,17 @@ class MobilityService:
             "fixture_landmark_6": "하이테크",
         }
         for node in service.graph.nodes:
-            landmark = Landmark(
-                id=node.landmark_id,
-                name=fixture_names.get(node.landmark_id, node.landmark_id),
-                stop_ids=[node.stop_id],
-            )
-            service.landmarks[landmark.id] = landmark
+            if node.landmark_id is None or node.stop_id is None:
+                continue
+            landmark = service.landmarks.get(node.landmark_id)
+            if landmark is None:
+                landmark = Landmark(
+                    id=node.landmark_id,
+                    name=fixture_names.get(node.landmark_id, node.landmark_id),
+                    stop_ids=[],
+                )
+                service.landmarks[landmark.id] = landmark
+            landmark.stop_ids.append(node.stop_id)
             service.stops[node.stop_id] = Stop(
                 id=node.stop_id,
                 landmark_id=node.landmark_id,
@@ -494,8 +503,27 @@ class MobilityService:
                 pass
             if stop_event.is_set():
                 break
+            started = loop.time()
             self.advance(fixed_dt_s)
+            self.clock_lag_ms.append(max(0.0, started - next_tick) * 1000)
+            self.clock_work_ms.append((loop.time() - started) * 1000)
+            self.clock_tick_count += 1
             next_tick += fixed_dt_s
+
+    def clock_telemetry(self) -> dict[str, float | int | None]:
+        """Bounded process-local timing samples; excludes sensor and Unity execution."""
+        def p95(samples: deque[float]) -> float | None:
+            if not samples:
+                return None
+            ordered = sorted(samples)
+            return round(ordered[math.ceil(len(ordered) * 0.95) - 1], 3)
+
+        return {
+            "ticks": self.clock_tick_count,
+            "sample_count": len(self.clock_work_ms),
+            "lag_ms_p95": p95(self.clock_lag_ms),
+            "work_ms_p95": p95(self.clock_work_ms),
+        }
 
     def create_request(self, command: CreateRequest) -> CommandAck:
         cache_key = self._command_cache_key("create", command.owner_id, command.command_id)
@@ -504,8 +532,15 @@ class MobilityService:
         if cached is not None:
             return cached
 
-        pickup = self._select_stop(command.pickup_landmark_id, command.service_needs.requires_step_free)
-        dropoff = self._select_stop(command.dropoff_landmark_id, command.service_needs.requires_step_free)
+        if not any(self._vehicle_can_serve(vehicle, command) for vehicle in self.vehicles.values()):
+            raise ValueError("no vehicle can satisfy the request capacity requirements")
+        active_compatible = [
+            candidate for candidate in self.vehicles.values()
+            if candidate.id in self.vehicle_runtime and self._vehicle_can_serve(candidate, command)
+        ]
+        if not active_compatible:
+            raise ValueError("no active synthetic vehicle supports this request type")
+        pickup, dropoff = self._select_stop_pair(command, active_compatible)
         request = RequestView(
             id=f"req-{uuid4().hex[:12]}",
             owner_id=command.owner_id,
@@ -521,23 +556,6 @@ class MobilityService:
             cargo_kg=command.cargo_kg,
             latest_arrival_s=command.latest_arrival_s,
         )
-        if not any(self._vehicle_can_serve(vehicle, command) for vehicle in self.vehicles.values()):
-            raise ValueError("no vehicle can satisfy the request capacity requirements")
-        if not any(
-            vehicle.id in self.vehicle_runtime and self._vehicle_can_serve(vehicle, command)
-            for vehicle in self.vehicles.values()
-        ):
-            raise ValueError("no active synthetic vehicle supports this request type")
-        self._route_duration_between_stops(
-            request.pickup_stop_id or "",
-            request.dropoff_stop_id or "",
-            service_type=request.service_type,
-            requires_step_free=request.service_needs.requires_step_free,
-        )
-        active_compatible = [
-            candidate for candidate in self.vehicles.values()
-            if candidate.id in self.vehicle_runtime and self._vehicle_can_serve(candidate, command)
-        ]
         stale_available = any(
             candidate.available
             and self.ego_localization_is_stale(candidate.id)
@@ -616,7 +634,7 @@ class MobilityService:
     def requests_for_owner(self, owner_id: str) -> list[RequestView]:
         return [request for request in self.requests.values() if request.owner_id == owner_id]
 
-    def _select_stop(self, landmark_id: str, requires_step_free: bool) -> Stop:
+    def _candidate_stops(self, landmark_id: str, requires_step_free: bool) -> list[Stop]:
         landmark = self.landmarks.get(landmark_id)
         if landmark is None:
             raise ValueError("unknown landmark")
@@ -625,7 +643,60 @@ class MobilityService:
             candidates = [stop for stop in candidates if stop.step_free_access]
         if not candidates:
             raise ValueError(ReasonCode.NO_ACCESSIBLE_ALTERNATIVE.value)
-        return candidates[0]
+        return candidates
+
+    def _select_stop_pair(
+        self, command: CreateRequest, compatible_vehicles: list[Vehicle]
+    ) -> tuple[Stop, Stop]:
+        """Choose a routable synthetic Stop pair before creating a request."""
+        if self.graph is None:
+            raise ValueError("synthetic route graph is unavailable")
+        needs_step_free = command.service_needs.requires_step_free
+        pickups = self._candidate_stops(command.pickup_landmark_id, needs_step_free)
+        dropoffs = self._candidate_stops(command.dropoff_landmark_id, needs_step_free)
+        feasible: list[tuple[bool, bool, float, int, int, Stop, Stop]] = []
+        has_trip_route = False
+        for pickup_index, pickup in enumerate(pickups):
+            for dropoff_index, dropoff in enumerate(dropoffs):
+                try:
+                    trip_s = self._route_duration_between_stops(
+                        pickup.id, dropoff.id,
+                        service_type=command.service_type,
+                        requires_step_free=needs_step_free,
+                    )
+                except ValueError as error:
+                    if str(error) != "dropoff_route_unavailable":
+                        raise
+                    continue
+                has_trip_route = True
+                pickup_node = node_for_stop(self.graph, pickup.id)
+                approaches: list[tuple[bool, bool, float]] = []
+                for vehicle in compatible_vehicles:
+                    try:
+                        approach_s = self._route_duration_between_nodes(
+                            self.vehicle_runtime[vehicle.id].node_id,
+                            pickup_node,
+                            service_type=command.service_type,
+                            requires_step_free=needs_step_free,
+                        )
+                    except ValueError as error:
+                        if str(error) != "dropoff_route_unavailable":
+                            raise
+                        continue
+                    approaches.append((
+                        self.ego_localization_is_stale(vehicle.id),
+                        not vehicle.available,
+                        approach_s + trip_s,
+                    ))
+                if approaches:
+                    stale, busy, duration_s = min(approaches)
+                    feasible.append((stale, busy, duration_s, pickup_index,
+                                     dropoff_index, pickup, dropoff))
+        if not feasible:
+            raise ValueError("pickup_route_unavailable" if has_trip_route
+                             else "dropoff_route_unavailable")
+        _, _, _, _, _, pickup, dropoff = min(feasible, key=lambda item: item[:5])
+        return pickup, dropoff
 
     @staticmethod
     def _vehicle_can_serve(vehicle: Vehicle, command: CreateRequest) -> bool:
@@ -741,14 +812,19 @@ class MobilityService:
 
     def _plan_route(self, start: str, goal: str, service_type: ServiceType,
                     requires_step_free: bool):
-        """Plan against synthetic crowd costs, preferring a bounded zone detour."""
+        """Plan with optional synthetic crowd costs and bounded zone detours."""
         if self.graph is None:
             raise ValueError("synthetic route graph is unavailable")
         now_s = float(int(self.simulation_time_s))
-        _, crowd_penalties_s = self.crowd_model.edge_cost_snapshot_s(self.graph, now_s)
+        crowd_enabled = self.crowd_model.enabled
+        crowd_penalties_s = (
+            self.crowd_model.edge_cost_snapshot_s(self.graph, now_s)[1]
+            if crowd_enabled else {}
+        )
         edges = {edge.id: edge for edge in self.graph.edges}
         route_penalties_s = {
-            edge.id: edge.crowd_penalty_s + edge.zone_penalty_s + edge.expected_wait_s
+            edge.id: (edge.crowd_penalty_s + edge.zone_penalty_s if crowd_enabled else 0.0)
+            + edge.expected_wait_s
             + crowd_penalties_s.get(edge.id, 0.0)
             for edge in self.graph.edges
         }
@@ -760,7 +836,7 @@ class MobilityService:
         closed = self._closed_edge_ids()
         base = self._global_route(start, goal, service_type, requires_step_free,
                                   edge_costs_s, closed, "base")
-        avoided = self.crowd_model.avoided_edge_ids(self.graph, now_s)
+        avoided = self.crowd_model.avoided_edge_ids(self.graph, now_s) if crowd_enabled else set()
         if not avoided or not avoided.intersection(base.edge_ids):
             return base, route_penalties_s, ReasonCode.UNKNOWN
         try:
@@ -831,10 +907,30 @@ class MobilityService:
     ) -> float:
         if self.graph is None:
             raise ValueError("synthetic route graph is unavailable")
+        return self._route_duration_between_nodes(
+            node_for_stop(self.graph, start_stop_id),
+            node_for_stop(self.graph, goal_stop_id),
+            service_type=service_type,
+            requires_step_free=requires_step_free,
+        )
+
+    def _route_duration_between_nodes(
+        self,
+        start_node: str,
+        goal_node: str,
+        *,
+        service_type: ServiceType,
+        requires_step_free: bool,
+    ) -> float:
+        if self.graph is None:
+            raise ValueError("synthetic route graph is unavailable")
+        known_nodes = {node.id for node in self.graph.nodes}
+        if start_node not in known_nodes or goal_node not in known_nodes:
+            raise ValueError("route node is unavailable")
         cache_key = (
             self.graph.map_version,
-            start_stop_id,
-            goal_stop_id,
+            start_node,
+            goal_node,
             service_type,
             requires_step_free,
             int(self.simulation_time_s),
@@ -842,8 +938,6 @@ class MobilityService:
         cached_duration = self.route_duration_cache.get(cache_key)
         if cached_duration is not None:
             return cached_duration
-        start_node = node_for_stop(self.graph, start_stop_id)
-        goal_node = node_for_stop(self.graph, goal_stop_id)
         if start_node == goal_node:
             return 0.0
         try:
@@ -1070,6 +1164,23 @@ class MobilityService:
     def _advance_synthetic_runtime(
         self, vehicle_id: str, runtime: VehicleRuntime, delta_s: float
     ) -> None:
+        if self.charging is not None and vehicle_id in self.charging.visits:
+            visit = self.charging.visits[vehicle_id]
+            if runtime.mission_state == "TO_CHARGER" and runtime.route_id is not None:
+                if (self.charging.owners.get(visit.station) != vehicle_id
+                        or not self.charging._fresh(self, visit)):
+                    runtime.speed_mps = 0.0
+                    return
+                self._move_along_route(runtime, delta_s, lambda distance: self.energy.consume(
+                    vehicle_id, distance_m=distance))
+                if len(runtime.route_points) < 2:
+                    runtime.node_id = self.charging.stations[visit.station].node_id
+                    runtime.route_points = []
+                    runtime.route_speeds = []
+                    runtime.route_edge_ids = []
+                    runtime.route_id = None
+                    runtime.speed_mps = 0.0
+                return
         remaining = delta_s
         while remaining > 1e-9:
             if runtime.service_remaining_s > 0:
@@ -1571,29 +1682,6 @@ class MobilityService:
             urgency = max(0.0, min(2.0, 1.0 - slack_s / policy.deadline_window_s))
             deadline_priority = policy.deadline_weight * urgency
         return base + wait_s / policy.aging_interval_s + deadline_priority
-
-    def _route_duration_between_nodes(
-        self,
-        start_node: str,
-        goal_node: str,
-        *,
-        service_type: ServiceType,
-        requires_step_free: bool,
-    ) -> float:
-        if self.graph is None:
-            raise ValueError("synthetic route graph is unavailable")
-        nodes_by_id = {node.id: node for node in self.graph.nodes}
-        try:
-            start_stop_id = nodes_by_id[start_node].stop_id
-            goal_stop_id = nodes_by_id[goal_node].stop_id
-        except KeyError as error:
-            raise ValueError("route node is unavailable") from error
-        return self._route_duration_between_stops(
-            start_stop_id,
-            goal_stop_id,
-            service_type=service_type,
-            requires_step_free=requires_step_free,
-        )
 
     @staticmethod
     def _request_can_vehicle_serve(vehicle: Vehicle, request: RequestView) -> bool:

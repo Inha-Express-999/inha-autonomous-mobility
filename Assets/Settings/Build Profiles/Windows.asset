@@ -23,8 +23,6 @@ MonoBehaviour:
   - m_enabled: 1
     m_path: Assets/CampusSim/Scenes/PC_Bootstrap.unity
   - m_enabled: 1
-    m_path: Assets/CampusSim/Scenes/CampusWorld.unity
-  - m_enabled: 1
     m_path: Assets/CampusSim/Scenes/CampusTerrain.unity
   - m_enabled: 1
     m_path: Assets/CampusSim/Scenes/PC_Operator.unity

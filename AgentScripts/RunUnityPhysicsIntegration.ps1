@@ -182,8 +182,15 @@ try {
     if ($Reservations) { $traceHeader = 'tick,vehicle,x,y,speed,motion,reason' }
     $traceHeader | Set-Content $env:INHA_UNITY_E2E_TRACE
     $process = Start-Process -FilePath $unityExe -ArgumentList $arguments -WindowStyle Hidden -PassThru
-    if (-not $process.WaitForExit($TimeoutSeconds * 1000)) {
-        throw "Unity Physics integration run timed out. See $logPath"
+    $editorWait = [Diagnostics.Stopwatch]::StartNew()
+    while (-not $process.WaitForExit(1000)) {
+        if ((Test-Path -LiteralPath $logPath) -and
+            (Select-String -LiteralPath $logPath -Pattern "The following packages were not registered because your license doesn't allow it" -Quiet)) {
+            throw "Unity license did not permit required test packages. See $logPath"
+        }
+        if ($editorWait.Elapsed.TotalSeconds -ge $TimeoutSeconds) {
+            throw "Unity Physics integration run timed out. See $logPath"
+        }
     }
     if ($Player) {
         $playerExe = Join-Path $runRoot 'TestPlayer/Integration.exe'

@@ -71,7 +71,7 @@ namespace InhaExpress.Client.PC
                 new Vector2(348, 118), new Vector2(-376, -16), new Color(0.89f, 0.94f, 0.98f, 0.18f));
             var tag = FixtureUiFactory.Panel(map, "Map Tag", new Vector2(0, 1), new Vector2(0, 1),
                 new Vector2(18, -55), new Vector2(180, -18), FixtureUiPalette.Surface);
-            FixtureUiFactory.Text(tag, "Text", "합성 지도 · SERVER", 11, FixtureUiPalette.Blue,
+            FixtureUiFactory.Text(tag, "Text", "CAMPUS TERRAIN · SERVER", 11, FixtureUiPalette.Blue,
                 TextAnchor.MiddleCenter, FontStyle.Bold);
             mapCaption = FixtureUiFactory.Text(map, "Caption", "첫 Snapshot을 기다리는 중", 13,
                 FixtureUiPalette.Ink, TextAnchor.LowerLeft, FontStyle.Bold);
@@ -200,9 +200,14 @@ namespace InhaExpress.Client.PC
                 zoneTitle.text = $"ZONE · {FixtureUiText.Zone(zone.Status)}";
                 zoneBody.text = $"관측 밀도     {Value(zone.ObservedDensity)}\n" +
                     $"EMA 밀도      {Value(zone.EmaDensity)}\n예측 밀도     {Value(zone.PriorDensity)}\n" +
-                    $"사유          {FixtureUiText.Reason(zone.Reason)}\n\n이 Fixture에서 관측값과 EMA는 미확인 상태입니다.";
+                    $"사유          {FixtureUiText.Reason(zone.Reason)}";
             }
-            mapCaption.text = $"run  {snapshot.RunId}\nmap  {snapshot.MapVersion}   ·   schema {snapshot.SchemaVersion}";
+            bool syntheticServerOnCampus = Host?.Fixture == null &&
+                snapshot.MapVersion.StartsWith("synthetic-", System.StringComparison.Ordinal);
+            mapCaption.text = syntheticServerOnCampus
+                ? $"서버 합성 지도 {snapshot.MapVersion}: CampusTerrain 좌표와 미연결\n" +
+                  "요청·상태만 표시하며 차량/경로는 배치하지 않습니다."
+                : $"run  {snapshot.RunId}\nmap  {snapshot.MapVersion}   ·   schema {snapshot.SchemaVersion}";
             timelineText.text = Timeline(snapshot);
         }
 

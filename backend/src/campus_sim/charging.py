@@ -1,9 +1,12 @@
-"""Synthetic charging-slot lifecycle; movement and route authority remain separate."""
+"""Synthetic charging-slot lifecycle and bounded graph travel; no Unity motion authority."""
 import json
 import math
 from collections import deque
 from dataclasses import dataclass
 from pathlib import Path
+
+from campus_sim.domain import ServiceType
+from campus_sim.planning import NoRouteError
 
 
 @dataclass(frozen=True)
@@ -123,6 +126,9 @@ class ChargingStations:
 
     def cancel(self, service, vehicle):
         visit = self.visits[vehicle]
+        runtime = service.vehicle_runtime[vehicle]
+        if runtime.route_id is not None:
+            raise ValueError("Charging travel must stop at a graph node before cancellation")
         if self.owners.get(visit.station) == vehicle:
             # Never free an occupied or unobserved dock because of a UI cancellation.
             if (not self._fresh(service, visit) or visit.entered
@@ -144,9 +150,70 @@ class ChargingStations:
                 continue
             if service.energy.remaining_wh[vehicle] > service.energy.policies[vehicle].capacity_wh * self.auto_start_fraction:
                 continue
-            at_dock = [s for s in self.stations.values() if self._distance(service, vehicle, s) <= s.arrival_radius_m]
-            if at_dock:
-                self.request(service, vehicle, min(at_dock, key=lambda s: s.id).id)
+            candidates = []
+            for station in self.stations.values():
+                if self._distance(service, vehicle, station) <= station.arrival_radius_m:
+                    candidates.append((0.0, station.id))
+                    continue
+                route = self._travel_route(service, vehicle, station)
+                if route is not None:
+                    candidates.append((route[2], station.id))
+            if candidates:
+                self.request(service, vehicle, min(candidates)[1])
+
+    def _travel_route(self, service, vehicle, station):
+        """Return an energy-feasible synthetic graph route from a stopped node."""
+        runtime = service.vehicle_runtime[vehicle]
+        if runtime.pose_source != "synthetic":
+            return None
+        origin = next((n for n in service.graph.nodes if n.id == runtime.node_id), None)
+        if origin is None or math.hypot(runtime.x-origin.position_m.x, runtime.y-origin.position_m.y) > .01:
+            return None
+        try:
+            route, _, _ = service._plan_route(runtime.node_id, station.node_id, ServiceType.PASSENGER, False)
+        except (NoRouteError, ValueError):
+            return None
+        edges = {edge.id: edge for edge in service.graph.edges}
+        policy = service.energy.policies[vehicle]
+        distance = duration = 0.0
+        for edge_id in route.edge_ids:
+            edge = edges[edge_id]
+            length = sum(math.hypot(b.x-a.x, b.y-a.y) for a, b in zip(edge.geometry_m, edge.geometry_m[1:]))
+            distance += length
+            duration += length / min(5.0, edge.allowed_speed_mps, policy.max_speed_mps)
+        required = policy.energy(distance, duration) + policy.capacity_wh * policy.reserve_fraction
+        if service.energy.remaining_wh[vehicle] + 1e-9 < required:
+            return None
+        return route, duration, required
+
+    def _start_synthetic_travel(self, service, visit, station):
+        runtime = service.vehicle_runtime[visit.vehicle]
+        if runtime.route_id is not None or self._distance(service, visit.vehicle, station) <= station.arrival_radius_m:
+            return
+        planned = self._travel_route(service, visit.vehicle, station)
+        if planned is None:
+            return
+        route, _, _ = planned
+        edges = {edge.id: edge for edge in service.graph.edges}
+        points = [(runtime.x, runtime.y)]
+        speeds = []
+        edge_ids = []
+        policy = service.energy.policies[visit.vehicle]
+        for edge_id in route.edge_ids:
+            edge = edges[edge_id]
+            points.extend((point.x, point.y) for point in edge.geometry_m[1:])
+            speeds.extend([min(5.0, edge.allowed_speed_mps, policy.max_speed_mps)] * (len(edge.geometry_m)-1))
+            edge_ids.extend([edge_id] * (len(edge.geometry_m)-1))
+        if not speeds:
+            return
+        service.route_counter += 1
+        runtime.route_points, runtime.route_speeds, runtime.route_edge_ids = points, speeds, edge_ids
+        runtime.route_snapshot_points, runtime.route_snapshot_speeds = points.copy(), speeds.copy()
+        runtime.route_snapshot_edge_ids = edge_ids.copy()
+        runtime.route_id = f"synthetic-charge-route-{service.route_counter}"
+        runtime.mission_state = "TO_CHARGER"
+        runtime.speed_mps = speeds[0]
+        self._state(service, visit, "TRAVELING")
 
     def tick(self, service):
         now = service.now_s()
@@ -176,10 +243,28 @@ class ChargingStations:
             if not self._fresh(service, visit):
                 self._state(service, visit, "PAUSED_CONTEXT")
                 continue
-            self._state(service, visit, "QUEUED")
-            if visit.station not in self.owners:
-                self.owners[visit.station] = visit.vehicle
-                self._state(service, visit, "RESERVED")
+            if visit.station in self.owners:
+                if visit.state != "SUPPORT_REQUIRED":
+                    self._state(service, visit, "QUEUED")
+                continue
+            station = self.stations[visit.station]
+            runtime = service.vehicle_runtime[visit.vehicle]
+            if (runtime.pose_source == "synthetic"
+                    and self._distance(service, visit.vehicle, station) > station.arrival_radius_m
+                    and self._travel_route(service, visit.vehicle, station) is None):
+                self._state(service, visit, "SUPPORT_REQUIRED")
+                runtime.mission_state = "OUT_OF_SERVICE"
+                runtime.safety_motion_state = "EMERGENCY_STOP"
+                runtime.safety_reason = "CHARGER_UNREACHABLE"
+                runtime.speed_mps = 0.0
+                continue
+            if runtime.safety_reason == "CHARGER_UNREACHABLE":
+                runtime.safety_motion_state = None
+                runtime.safety_reason = "UNKNOWN"
+                runtime.mission_state = "TO_CHARGER"
+            self.owners[visit.station] = visit.vehicle
+            self._state(service, visit, "RESERVED")
+            self._start_synthetic_travel(service, visit, station)
         for station_id, vehicle in list(self.owners.items()):
             visit, station = self.visits[vehicle], self.stations[station_id]
             runtime = service.vehicle_runtime[vehicle]
@@ -213,7 +298,7 @@ class ChargingStations:
                     or runtime.request_id is not None or runtime.route_id is not None):
                 visit.previous_credit_s = None
                 if not visit.completed:
-                    self._state(service, visit, "WAITING_AT_DOCK")
+                    self._state(service, visit, "TRAVELING" if runtime.route_id is not None else "WAITING_AT_DOCK")
                 continue
             visit.entered = True
             target = service.energy.policies[vehicle].capacity_wh * station.target_fraction

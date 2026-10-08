@@ -12,6 +12,7 @@ from campus_sim.evaluation import (
     compare_dispatch_assignments,
     compare_routes,
 )
+from campus_sim.map_validation import inspect_map
 from campus_sim.planning import node_for_stop
 from campus_sim.replan_evaluation import compare_replans
 from campus_sim.road_graph import RoadGraphLoadError, load_road_graph
@@ -36,6 +37,15 @@ def main() -> None:
     serve.add_argument("--energy-config", help="Opt in to explicit synthetic battery assumptions")
     serve.add_argument("--charging-config", help="Opt in to synthetic parked charging; requires matching energy model")
     serve.add_argument("--map", default="maps/fixtures/campus-synthetic-6.json")
+    serve.add_argument("--minimal-demo", action="store_true", help="Expose a local synthetic trip demo at /demo")
+    validate_map = subcommands.add_parser(
+        "validate-map", help="Inspect a map input without granting campus routing authority"
+    )
+    validate_map.add_argument("--map", required=True)
+    validate_map.add_argument(
+        "--allow-synthetic", action="store_true",
+        help="Exit successfully for a structurally valid synthetic fixture only",
+    )
     compare = subcommands.add_parser(
         "route-compare", help="Compare Dijkstra and A* on a versioned road graph"
     )
@@ -71,14 +81,22 @@ def main() -> None:
     route_dispatch.add_argument("--scenario", default="configs/dispatch_route_benchmark.json")
     route_dispatch.add_argument("--repetitions", type=_positive_integer, default=20)
     args = parser.parse_args()
-    if args.command == "serve":
+    if args.command == "validate-map":
+        report = inspect_map(args.map)
+        print(json.dumps(report, ensure_ascii=False, indent=2))
+        if not report["mvp_map_ready"] and not (
+            args.allow_synthetic and report["road_graph_contract_valid"]
+        ):
+            raise SystemExit(2)
+    elif args.command == "serve":
         import uvicorn
 
         from campus_sim.api import create_app
 
         try:
             service_app = create_app(map_path=args.map, energy_config_path=args.energy_config,
-                                     charging_config_path=args.charging_config)
+                                     charging_config_path=args.charging_config,
+                                     minimal_demo=args.minimal_demo)
         except (RoadGraphLoadError, OSError, KeyError, TypeError, ValueError) as error:
             parser.error(str(error))
         uvicorn.run(service_app, host=args.host, port=args.port, reload=False)

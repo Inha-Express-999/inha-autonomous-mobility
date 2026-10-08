@@ -24,8 +24,25 @@ GRAPH_PATH = ROOT / "maps/fixtures/campus-synthetic-6.json"
 TEST_ZONE_ID = "synthetic-test-corridor"
 
 
-def test_explicit_closure_excludes_zone_even_when_detour_is_expensive():
+def _service_with_crowd() -> MobilityService:
     service = MobilityService.from_synthetic_graph(GRAPH_PATH)
+    service.crowd_model = service.crowd_model.model_copy(update={"enabled": True})
+    return service
+
+
+def test_mvp_default_disables_crowd_zone_routing() -> None:
+    service = MobilityService.from_synthetic_graph(GRAPH_PATH)
+    assert service.crowd_model.enabled is False
+    service.graph = _graph_with_test_zone()
+    service.simulation_time_s = 900.0
+    route, penalties, reason = service._plan_route("n1", "n4", ServiceType.PASSENGER, False)
+    assert reason == "UNKNOWN"
+    assert penalties["e25"] == pytest.approx(0.0)
+    assert route.path_cost_s > 0
+
+
+def test_explicit_closure_excludes_zone_even_when_detour_is_expensive():
+    service = _service_with_crowd()
     service.graph = _graph_with_test_zone()
     service.simulation_time_s = 1800
     service.set_explicit_zone_closure(TEST_ZONE_ID, True)
@@ -39,7 +56,7 @@ def test_explicit_closure_excludes_zone_even_when_detour_is_expensive():
 
 
 def test_active_synthetic_route_holds_until_explicit_closure_is_removed():
-    service = MobilityService.from_synthetic_graph(GRAPH_PATH)
+    service = _service_with_crowd()
     service.graph = _graph_with_test_zone()
     request = service.create_request(_make_request(service)).request
     runtime = service.vehicle_runtime["V01"]
@@ -60,14 +77,14 @@ def test_active_synthetic_route_holds_until_explicit_closure_is_removed():
 
 
 def test_unknown_zone_closure_is_rejected_without_changing_state():
-    service = MobilityService.from_synthetic_graph(GRAPH_PATH)
+    service = _service_with_crowd()
     with pytest.raises(ValueError, match="unknown_graph_zone"):
         service.set_explicit_zone_closure("unverified-biryong", True)
     assert not service.closed_zone_ids
 
 
 def test_closed_route_keeps_localized_speed_measurement_and_sensor_cannot_restore_authority():
-    service = MobilityService.from_synthetic_graph(GRAPH_PATH)
+    service = _service_with_crowd()
     service.graph = _graph_with_test_zone()
     service.create_request(_make_request(service))
     runtime = service.vehicle_runtime["V01"]
@@ -90,7 +107,7 @@ def test_closed_route_keeps_localized_speed_measurement_and_sensor_cannot_restor
 
 
 def test_unreachable_future_dropoff_holds_pickup_without_crashing_eta_update():
-    service = MobilityService.from_synthetic_graph(GRAPH_PATH)
+    service = _service_with_crowd()
     service.graph = _graph_with_test_zone()
     request = service.create_request(_make_request(service)).request
     service.graph = service.graph.model_copy(update={"edges": [
@@ -185,7 +202,7 @@ def test_peak_crowd_prior_changes_only_tagged_edge_cost_and_route() -> None:
 
 
 def test_service_applies_synthetic_crowd_prior_to_assigned_route_and_speed() -> None:
-    off_peak = MobilityService.from_synthetic_graph(GRAPH_PATH)
+    off_peak = _service_with_crowd()
     assert off_peak.graph is not None
     off_peak.graph = _graph_with_test_zone()
     off_peak.create_request(_make_request(off_peak))
@@ -193,7 +210,7 @@ def test_service_applies_synthetic_crowd_prior_to_assigned_route_and_speed() -> 
     assert any(abs(y - 120.0) < 1e-6 for _, y in off_peak_runtime.route_points)
     off_peak_route_duration = off_peak._route_duration(off_peak_runtime)
 
-    caution = MobilityService.from_synthetic_graph(GRAPH_PATH)
+    caution = _service_with_crowd()
     assert caution.graph is not None
     caution.graph = _graph_with_test_zone()
     _disable_peak_avoidance(caution)
@@ -203,7 +220,7 @@ def test_service_applies_synthetic_crowd_prior_to_assigned_route_and_speed() -> 
     assert any(abs(y - 120.0) < 1e-6 for _, y in caution_runtime.route_points)
     assert caution._route_duration(caution_runtime) > off_peak_route_duration
 
-    peak = MobilityService.from_synthetic_graph(GRAPH_PATH)
+    peak = _service_with_crowd()
     assert peak.graph is not None
     peak.graph = _graph_with_test_zone()
     peak.simulation_time_s = 1_800.0
@@ -213,7 +230,7 @@ def test_service_applies_synthetic_crowd_prior_to_assigned_route_and_speed() -> 
 
 
 def test_synthetic_route_replans_at_peak_only_after_material_eta_improvement() -> None:
-    service = MobilityService.from_synthetic_graph(GRAPH_PATH)
+    service = _service_with_crowd()
     assert service.graph is not None
     service.graph = _graph_with_test_zone()
     _disable_peak_avoidance(service, penalty_s_per_density_m=5.0)
@@ -236,7 +253,7 @@ def test_synthetic_route_replans_at_peak_only_after_material_eta_improvement() -
 
 
 def test_service_avoids_synthetic_zone_within_detour_budget_and_reports_reason() -> None:
-    service = MobilityService.from_synthetic_graph(GRAPH_PATH)
+    service = _service_with_crowd()
     assert service.graph is not None
     service.graph = _graph_with_test_zone()
     service.simulation_time_s = 900.0
@@ -249,7 +266,7 @@ def test_service_avoids_synthetic_zone_within_detour_budget_and_reports_reason()
 
 
 def test_service_penalizes_zone_when_detour_exceeds_budget() -> None:
-    service = MobilityService.from_synthetic_graph(GRAPH_PATH)
+    service = _service_with_crowd()
     assert service.graph is not None
     service.graph = _graph_with_test_zone()
     zone = service.crowd_model.zones[TEST_ZONE_ID].model_copy(
@@ -268,7 +285,7 @@ def test_service_penalizes_zone_when_detour_exceeds_budget() -> None:
 
 
 def test_service_route_cost_matches_capped_speed_and_edge_delays() -> None:
-    service = MobilityService.from_synthetic_graph(GRAPH_PATH)
+    service = _service_with_crowd()
     assert service.graph is not None
     service.graph = service.graph.model_copy(update={
         "edges": [
@@ -304,7 +321,7 @@ def test_service_route_cost_matches_capped_speed_and_edge_delays() -> None:
 
 
 def test_snapshot_keeps_route_geometry_immutable_while_runtime_progresses() -> None:
-    service = MobilityService.from_synthetic_graph(GRAPH_PATH)
+    service = _service_with_crowd()
     assert service.graph is not None
     service.graph = _graph_with_test_zone()
     service.create_request(_make_request(service))
@@ -324,7 +341,7 @@ def test_snapshot_keeps_route_geometry_immutable_while_runtime_progresses() -> N
 
 
 def test_localized_actual_speed_survives_route_and_cost_profile_refresh() -> None:
-    service = MobilityService.from_synthetic_graph(GRAPH_PATH)
+    service = _service_with_crowd()
     assert service.graph is not None
     created = service.create_request(_make_request(service))
     assert created.request is not None
@@ -348,7 +365,7 @@ def test_localized_actual_speed_survives_route_and_cost_profile_refresh() -> Non
 
 
 def test_localized_route_replans_only_at_fresh_stopped_graph_node() -> None:
-    service = MobilityService.from_synthetic_graph(GRAPH_PATH)
+    service = _service_with_crowd()
     assert service.graph is not None
     service.graph = _graph_with_test_zone()
     _disable_peak_avoidance(service, penalty_s_per_density_m=5.0)

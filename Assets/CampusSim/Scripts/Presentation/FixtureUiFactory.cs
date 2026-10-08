@@ -8,16 +8,26 @@ namespace InhaExpress.Client.Presentation
 {
     public static class FixtureUiPalette
     {
-        public static readonly Color Ink = Hex("172033");
-        public static readonly Color Muted = Hex("6E7787");
-        public static readonly Color Canvas = Hex("F4F6FA", 0.96f);
+        public static readonly Color Ink = Hex("16233B");
+        public static readonly Color Muted = Hex("6C7A90");
+        public static readonly Color Canvas = Hex("F4F7FB", 0.96f);
         public static readonly Color Surface = Hex("FFFFFF");
-        public static readonly Color Line = Hex("E4E8F0");
-        public static readonly Color Blue = Hex("2864DC");
-        public static readonly Color Green = Hex("1C9B68");
-        public static readonly Color Amber = Hex("E39B22");
-        public static readonly Color Red = Hex("D95757");
+        public static readonly Color Line = Hex("DDE5F0");
+        public static readonly Color Blue = Hex("1677FF");
+        public static readonly Color BluePressed = Hex("0B63E5");
+        public static readonly Color BlueTint = Hex("EAF3FF");
+        public static readonly Color Disabled = Hex("C7D1DE");
+        public static readonly Color Navy = Hex("10244A");
+        public static readonly Color Green = Hex("18B86A");
+        public static readonly Color Amber = Hex("F4A41D");
+        public static readonly Color Red = Hex("F04444");
         public static readonly Color MapGlass = Hex("EAF0F7", 0.84f);
+
+        public static Color Tint(Color color, float alpha)
+        {
+            color.a = alpha;
+            return color;
+        }
 
         private static Color Hex(string value, float alpha = 1f)
         {
@@ -141,7 +151,49 @@ namespace InhaExpress.Client.Presentation
     public static class FixtureUiFactory
     {
         private static Font cachedFont;
+        private static Sprite roundedSprite;
+        private static Texture2D roundedTexture;
         public static Font Font => cachedFont != null ? cachedFont : cachedFont = CreateFont();
+
+        private static Sprite RoundedSprite
+        {
+            get
+            {
+                if (roundedSprite != null) return roundedSprite;
+                const int size = 64;
+                const float radius = 16f;
+                roundedTexture = new Texture2D(size, size, TextureFormat.RGBA32, false)
+                {
+                    name = "Campus UI Rounded Surface", filterMode = FilterMode.Bilinear,
+                    wrapMode = TextureWrapMode.Clamp, hideFlags = HideFlags.HideAndDontSave
+                };
+                var pixels = new Color[size * size];
+                for (int y = 0; y < size; y++)
+                    for (int x = 0; x < size; x++)
+                    {
+                        var point = new Vector2(x + 0.5f, y + 0.5f);
+                        var center = new Vector2(Mathf.Clamp(point.x, radius, size - radius),
+                            Mathf.Clamp(point.y, radius, size - radius));
+                        pixels[y * size + x] = new Color(1, 1, 1,
+                            Mathf.Clamp01(radius + 0.5f - Vector2.Distance(point, center)));
+                    }
+                roundedTexture.SetPixels(pixels);
+                roundedTexture.Apply(false, true);
+                roundedSprite = Sprite.Create(roundedTexture, new UnityEngine.Rect(0, 0, size, size),
+                    new Vector2(.5f, .5f), 100, 0, SpriteMeshType.FullRect, new Vector4(radius, radius, radius, radius));
+                roundedSprite.hideFlags = HideFlags.HideAndDontSave;
+                return roundedSprite;
+            }
+        }
+
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.SubsystemRegistration)]
+        private static void ResetRoundedSurface()
+        {
+            if (roundedSprite != null) Object.Destroy(roundedSprite);
+            if (roundedTexture != null) Object.Destroy(roundedTexture);
+            roundedSprite = null;
+            roundedTexture = null;
+        }
 
         public static RectTransform Rect(Transform parent, string name, Vector2 anchorMin,
             Vector2 anchorMax, Vector2 offsetMin, Vector2 offsetMax)
@@ -157,10 +209,12 @@ namespace InhaExpress.Client.Presentation
         }
 
         public static RectTransform Panel(Transform parent, string name, Vector2 anchorMin,
-            Vector2 anchorMax, Vector2 offsetMin, Vector2 offsetMax, Color color)
+            Vector2 anchorMax, Vector2 offsetMin, Vector2 offsetMax, Color color, bool rounded = true)
         {
             var rect = Rect(parent, name, anchorMin, anchorMax, offsetMin, offsetMax);
-            rect.gameObject.AddComponent<Image>().color = color;
+            var image = rect.gameObject.AddComponent<Image>();
+            image.color = color;
+            if (rounded) { image.sprite = RoundedSprite; image.type = Image.Type.Sliced; }
             return rect;
         }
 
@@ -186,12 +240,19 @@ namespace InhaExpress.Client.Presentation
         {
             var rect = Rect(parent, name, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
             var image = rect.gameObject.AddComponent<Image>();
-            image.color = background;
+            image.sprite = RoundedSprite;
+            image.type = Image.Type.Sliced;
+            // Selectable's tint multiplies Image.color; keep the base white so
+            // the design token is displayed once in every interaction state.
+            image.color = Color.white;
             var button = rect.gameObject.AddComponent<Button>();
             var colors = button.colors;
             colors.normalColor = background;
             colors.highlightedColor = Color.Lerp(background, Color.white, 0.12f);
-            colors.pressedColor = Color.Lerp(background, Color.black, 0.12f);
+            colors.pressedColor = background == FixtureUiPalette.Blue
+                ? FixtureUiPalette.BluePressed : Color.Lerp(background, Color.black, 0.12f);
+            colors.selectedColor = background;
+            colors.disabledColor = FixtureUiPalette.Disabled;
             button.colors = colors;
             labelText = Text(rect, "Label", label, 15, Color.white, TextAnchor.MiddleCenter, FontStyle.Bold);
             return button;
@@ -206,10 +267,16 @@ namespace InhaExpress.Client.Presentation
 
         private static Font CreateFont()
         {
+            var bundled = Resources.Load<Font>("CampusUI/Pretendard-Regular");
+            if (bundled != null) return bundled;
             string[] paths = Font.GetPathsToOSFonts();
-            foreach (var name in new[] { "Malgun Gothic", "Noto Sans CJK KR", "Apple SD Gothic Neo", "sans-serif", "Arial" })
-                if (System.Array.Exists(paths, path => path.IndexOf(name, System.StringComparison.OrdinalIgnoreCase) >= 0))
-                    return Font.CreateDynamicFontFromOSFont(name, 18);
+            // OS font file names do not always contain their display/family name
+            // (e.g. malgun.ttf is the Malgun Gothic family on Windows).
+            string[] names = { "Pretendard", "Malgun Gothic", "Noto Sans CJK KR", "Apple SD Gothic Neo" };
+            string[] fileHints = { "Pretendard", "malgun", "NotoSansCJK", "AppleSDGothicNeo" };
+            for (int i = 0; i < names.Length; i++)
+                if (System.Array.Exists(paths, path => path.IndexOf(fileHints[i], System.StringComparison.OrdinalIgnoreCase) >= 0))
+                    return Font.CreateDynamicFontFromOSFont(names[i], 18);
             return Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         }
     }

@@ -1,6 +1,30 @@
 # 구현 현황
 
-프로젝트 버전 **0.4.2.1** · 2026-09-28 문서 갱신. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
+프로젝트 버전 **0.4.3.0** · 2026-10-08 통합 작업. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
+
+2026-10-08 현재: 원격 0.4.2.1 실험 보고를 병합하고 서버·지도 조사·UI 후속 작업을 통합했다. 사용자 지시에 따라 CampusWorld와 RoadGraphSyntheticPreview 씬·meta 및 합성 전용 빌드 프로필을 삭제했다. 실제 실행은 CampusTerrain + PC/Mobile 역할 씬이며 합성 브라우저 시연은 유지한다. 에디터 전용 서버 자동 시작 도구를 추가했다. 최신 병합 검증은 Python/MapData 511개 및 격리 Unity 클라이언트 31/31, Ruff 통과다. 실제 PC Campus Bootstrap은 snapshot timeout으로 실패했으며 Player/Android·실제 지도 운송과 전체 MVP는 미완료다. 증거는 `artifacts/validation/2026-10-08-merge`를 따른다. 아래 날짜별 기록은 당시 상태이며 현재 삭제한 씬의 실행 안내로 해석하지 않는다.
+
+2026-09-28 PC Bootstrap 서버 파이프라인: `PC_Bootstrap`은 `CampusTerrain`과 `PC_Operator`를 Additive 로드하고 단일 `ClientRuntimeHost`에서 `WebSocketClientDataSource`를 시작하도록 `useFixture=false`로 설정했다. 기본 접속 주소는 `ws://127.0.0.1:8765/v1/client/ws`다. PC 관제는 서버 snapshot의 차량·요청·거점 상태를 표시하고 출발/목적 선택과 승객·화물 요청 command/ACK를 사용한다. 현재 Python의 `synthetic-campus-6stop-v1`은 `CampusTerrain`과 좌표 계약이 없어 `PC_Operator`의 `VehicleActorSpawner.requiredMapVersion`을 비워 차량/경로 배치를 차단한다. 화면에도 이 미연결 상태를 표시한다. 따라서 이 변경은 PC 연결·요청·상태 파이프라인이며 캠퍼스 지도 운행 시연 완료가 아니다. 현재 Unity Editor/Player 실행은 라이선스 환경 문제로 미검증이다.
+
+2026-09-28 씬 로딩 정리: PC/Mobile Bootstrap이 실제 캠퍼스 구현 씬 `CampusTerrain`과 역할 씬을 직접 Additive 로드하도록 경로·빌드 프로필·scaffolder를 정리했다. 기존 `CampusWorld` 파일은 보존했으나 활성 빌드 경로에서 제외했다. Unity Editor/Player 재실행 검증은 라이선스 IPC/패키지 등록 문제로 아직 미완료다.
+
+2026-09-28 최소 시연 경로: [출발지·목적지 브라우저 시연](MINIMAL_DEMO.md)을 추가했다. 브라우저 전용 3거점 localhost smoke에서 요청→배차→완료를 확인했고, 기본 실행은 Unity PC 합성 미리보기 씬과 일치하는 6거점 지도를 사용한다. C# source WebSocket smoke는 PC·모바일 연결과 요청·상태 수신을 확인했지만 Unity 현재 소스 Player와 모바일 단말, 실제 캠퍼스 지도 승인·물리 주행은 이 결과에 포함되지 않는다.
+
+2026-09-28 MVP 범위 변경: 비룡플라자 우회와 시간대/관측 혼잡구역 기능은 MVP 이후로 연기했다. `configs/crowd.json`의 기본값은 `enabled=false`이며 서비스는 혼잡·zone 비용과 자동 우회를 적용하지 않는다. 기존 합성 실험은 명시적으로 활성화해 별도 검증한다. 명시적 도로 폐쇄와 센서 안전 정지는 유지한다.
+
+2026-09-28 미커밋 작업: 선택적 합성 충전 설정에서 낮은 잔량의 정차 차량이 그래프 노드에 있을 때 충전소까지의 방향 경로와 예비량을 검사하고, FIFO 슬롯을 확보한 뒤 합성 경로를 주행하도록 연결했다. 이동 중에는 충전하지 않으며, 세션 변경 시 이동을 멈추고 이동 중 취소를 거부한다. 현재 작업본의 Python/MapData 506개와 Ruff가 통과했다. 이 경로는 synthetic pose 적분만 다루며 Unity localization/Physics dock, 충전 구역 충돌 조정, 실제 충전 설비 검증은 남아 있다.
+
+## 2026-09-28 작업 중: 합성 다중 Stop 선택
+
+합성 RoadGraph에서 같은 랜드마크가 여러 Stop을 가리킬 때 모두 보존하고, 요청 생성 전에 접근성 플래그와 승하차 구간·차량의 픽업 접근 경로를 검사해 가능한 조합을 선택한다. 첫 Stop이 막힌 경우 다른 Stop으로 배정되는 회귀 사례를 추가했다. 이는 합성 차량 경로의 선택만 다루며 실제 Stop 위치, 출입구 보행 연결, 통행 권한·폭·경사 검증 또는 T15 전체 완료를 뜻하지 않는다. 현재 작업 트리의 변경이며 아래 과거 커밋 검증 수치와 구분한다.
+
+도로망의 경유·교차 노드는 Landmark/Stop 참조 없이 표현할 수 있게 했다. 두 참조는 함께 있거나 함께 없어야 하며, 경유 노드는 경로의 node 목록에는 남고 Stop 목록에는 들어가지 않는다. 서비스의 구간 비용 계산도 경유 노드에서 직접 출발할 수 있다. 다중 Stop snapshot은 각 Stop의 고유 그래프 노드 좌표를 사용하며 참조가 없으면 오류로 처리한다. 이 계약 검증은 합성 그래프에 한정된다. 실제 지도용 CRS·출처·통행/보행 검증과 승인된 RoadGraph 로더는 아직 없다.
+
+`campus-sim validate-map --map <path>` 초기 CLI는 입력 상태·현재 RoadGraph 구조 검사 결과를 JSON으로 보고한다. 합성 fixture는 구조가 유효해도 MVP 지도 준비 상태를 `false`로 표시하며 기본 실행은 실패 코드 2로 끝난다. 합성 개발 검사에만 `--allow-synthetic`을 명시한다. OSM 후보, 자기 선언 `VERIFIED`, 미지원 지도 디렉터리는 통과시키지 않는다. 이는 실제 지도 패키지의 출처·CRS·보행망·Stop 승인 검증기가 아니며 실제 지도 로더도 아직 없다.
+
+후속으로 [검토 패키지 초안 계약](MapResearch/M2_REVIEW_PACKAGE.md)을 추가했다. 디렉터리 입력에서 manifest의 파일 경로·SHA-256·지도 버전, 차량/보행 그래프의 기본 polyline/참조, Landmark↔Stop↔보행 양방향 연결, 차량 Stop 간 방향 경로를 검사한다. 필수 시설 key 11개의 누락·중복도 보고한다. 선택 입력한 zone은 polygon과 폐쇄 edge 목록의 기하 일치 및 대기 Stop의 경계 밖 배치를 검사한다. 세 개 이상의 비공선 기준점으로 선언한 투영 미터 좌표계·WGS84 원점·차량 그래프 좌표의 수치적 일치도 검사한다. 사용자 지시에 따라 비룡플라자 우회와 혼잡구역은 MVP 이후로 이관했으며 `zones.items=[]`를 허용한다. 이 검사는 제출 기록의 구조 확인이므로 통과해도 `mvp_map_ready=false`다. 현장 근거 진위·원본 자료에서의 좌표 변환 재현·공식 시설 위치/출입구 검증과 실제 지도 runtime 로더는 계속 미완료다.
+
+
 
 ## v0.4.1.0 커밋 체크포인트 (2026-09-26)
 
@@ -90,7 +114,7 @@ Python/MapData 259개 및 Ruff, 격리 Unity PlayMode 4/4(가림·포화·센서
 
 2026-09-24에 열린 `CampusTerrain`에서 `CampusEntranceInventory.Export`와 `CampusFacilityCoverage.Export`를 다시 실행했다. 최신 authoring 인벤토리는 14 landmark, 27 present draft portal, 1 missing role(인하대역 accessible), 27 approach mesh이며 28개 role record 중 `route_validated=true`는 0개다. 접근로 메시가 있는 27개는 pedestrian exclusion=true, 누락 role은 unknown이다. 대표 시설 추출은 관중석 way `1203054818`을 비건물 시각 구조물로 분리한 뒤 25개 OSM 건물 부품 중 16개 unassigned를 기록한다. 이 추출은 씬 authoring 상태만 나타내며 전체 공식 시설 식별, 연결 보행 경로, 차량 Stop 승인이나 접근성 검증이 아니다. 2026-09-18 계획 로그의 20개 unassigned와 차이가 있어 과거 로그는 이력으로 남기고 최신 scene export를 현황으로 사용한다. 저장 OSM 원본에서 이 16개 미연결 way를 XML로 대조한 결과 13개는 이름 후보가 있고 `218188170`, `219982954`, `797050851` 세 개는 이름 태그가 없다. 관중석은 건물/Landmark/Stop 분류가 아니며 시각 프리팹의 형태·접근성은 미검증이다. 세부 근거와 다음 확인은 [OSM 시설 대조표](MapResearch/OSM_FACILITY_RECONCILIATION.md)에 기록했다.
 
-필수 랜드마크 목록과 대표 시설 전체 대조, service_needs별 Stop 선택, 접근 가능한 보행 연결, 차량 통행 그래프, 비룡플라자 경계/대체 지점은 M2 종료 조건이다. 생활관 1·2·3은 현재 일부 형상·도로가 시각화 초안이며 차량 Stop이 아니다. 지도 데이터 세부 현황과 다음 검증은 [Docs/MapResearch/PLAN.md](MapResearch/PLAN.md)에 기록한다.
+필수 랜드마크 목록과 대표 시설 전체 대조, service_needs별 Stop 선택, 접근 가능한 보행 연결, 차량 통행 그래프는 MVP의 M2 종료 조건이다. 비룡플라자 경계/대체 지점은 MVP 이후로 이관했다. 생활관 1·2·3은 현재 일부 형상·도로가 시각화 초안이며 차량 Stop이 아니다. 지도 데이터 세부 현황과 다음 검증은 [Docs/MapResearch/PLAN.md](MapResearch/PLAN.md)에 기록한다.
 
 ## 클라이언트·Python 기반의 한계
 
@@ -138,9 +162,9 @@ Python/MapData 259개 및 Ruff, 격리 Unity PlayMode 4/4(가림·포화·센서
 2. 개발 의존성은 `backend[dev]`에 선언됐지만 재현 가능한 lockfile은 없다. 호환 버전을 고정할 필요성을 검토하고 CI 또는 표준 환경에서 pytest/Ruff/T03 검증을 재현한다. 임시 Python 3.12.14 환경에서 전체 suite 44개와 Ruff가 통과했다.
 3. M1의 synthetic passenger/cargo 요청→완료와 HTTP/ASGI 경계는 검증됐다. 다음은 Unity Player 실행·씬 수명주기 및 차량 프리팹의 축·크기·Collider를 확인한다.
 4. 합성 preview에 V01 route-following alpha를 연결했다. 다음은 Unity Editor에서 씬 재임포트와 PlayMode를 통해 local Python server 연결·요청→Physics 이동→도착→요청 완료 흐름을 검증한다. 축·Collider·ground contact를 확인하고, 센서/TTC safety 계층이 연결되기 전까지는 실제 캠퍼스 이동을 활성화하지 않는다.
-5. M2 지도/접근성/비룡플라자 범위를 완료하는 동안 재사용 빈도가 높은 캠퍼스 오브젝트를 prefab/variant로 단계적으로 정리한 뒤 센서·안전, 다중 차량, 성능 실험을 진행한다.
+5. M2 지도/접근성 범위를 완료하는 동안 재사용 빈도가 높은 캠퍼스 오브젝트를 prefab/variant로 단계적으로 정리한 뒤 센서·안전, 다중 차량, 성능 실험을 진행한다. 비룡플라자·혼잡구역은 MVP 이후에 구현한다.
 
-버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.4.2.1으로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
+버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.4.3.0으로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
 
 ## 2026-09-26 차량 telemetry 연결 소유권 (v0.2.4.0 이후 작업본)
 

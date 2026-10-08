@@ -448,7 +448,7 @@ def _serialize_result(result: RouteResult | None) -> dict[str, Any] | None:
     }
 
 
-def _stop_for_node(graph: RoadGraphDocument, node_id: str) -> str:
+def _stop_for_node(graph: RoadGraphDocument, node_id: str) -> str | None:
     for node in graph.nodes:
         if node.id == node_id:
             return node.stop_id

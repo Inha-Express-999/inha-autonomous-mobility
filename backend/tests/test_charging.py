@@ -173,6 +173,92 @@ def test_moving_or_off_dock_vehicle_receives_no_power():
     assert s.energy.remaining_wh["V01"] == pytest.approx(20.1)
 
 
+def test_synthetic_low_energy_vehicle_drives_to_reserved_charger_before_credit():
+    s = setup(balance=20, auto=.25)
+    runtime = s.vehicle_runtime["V01"]
+    runtime.x, runtime.node_id = 4, "n2"
+    s.advance(.1)
+    assert s.charging.owners == {"dock": "V01"}
+    assert runtime.mission_state == "TO_CHARGER"
+    assert runtime.route_id is not None
+    assert s.charging.visits["V01"].state == "TRAVELING"
+    with pytest.raises(ValueError, match="must stop at a graph node"):
+        s.charging.cancel(s, "V01")
+    assert s.energy.remaining_wh["V01"] < 20
+    before = s.energy.remaining_wh["V01"]
+    s.advance(2)
+    assert runtime.x == pytest.approx(2)
+    assert s.energy.remaining_wh["V01"] < before
+    s.advance(2)
+    assert runtime.x == pytest.approx(0)
+    assert runtime.route_id is None
+    before = s.energy.remaining_wh["V01"]
+    s.advance(.1)
+    assert s.energy.remaining_wh["V01"] > before
+
+
+def test_charger_travel_pauses_on_session_change():
+    s = setup(balance=20, auto=.25)
+    runtime = s.vehicle_runtime["V01"]
+    runtime.x, runtime.node_id = 4, "n2"
+    s.advance(.1)
+    s.run_id = "replacement"
+    s.advance(1)
+    assert runtime.x == 4
+    assert runtime.speed_mps == 0
+    assert s.charging.visits["V01"].state == "PAUSED_CONTEXT"
+
+
+def test_automatic_charger_travel_requires_energy_above_reserve():
+    s = setup(balance=15.2, auto=.25)
+    runtime = s.vehicle_runtime["V01"]
+    runtime.x, runtime.node_id = 4, "n2"
+    s.advance(.1)
+    assert not s.charging.visits
+    assert runtime.x == 4
+    assert runtime.route_id is None
+
+
+def test_waiting_vehicle_starts_only_after_previous_dock_exit():
+    s = setup(balance=79.9, auto=.25, fleet=True)
+    s.energy.remaining_wh["V02"] = 20
+    waiting = s.vehicle_runtime["V02"]
+    waiting.x, waiting.node_id = 100, "n2"
+    s.charging.request(s, "V01", "dock")
+    s.advance(.1)
+    assert s.charging.owners == {"dock": "V01"}
+    assert s.charging.visits["V02"].state == "QUEUED"
+    assert waiting.route_id is None and waiting.x == 100
+    s.advance(.2)
+    assert s.charging.visits["V01"].completed
+    s.vehicle_runtime["V01"].x = 1
+    for _ in range(6):
+        s.advance(.1)
+    assert s.charging.owners == {"dock": "V02"}
+    assert waiting.route_id is not None
+    assert waiting.x == 100
+    s.advance(1)
+    assert waiting.x == pytest.approx(95)
+
+
+def test_queued_vehicle_without_remaining_travel_energy_does_not_block_dock():
+    s = setup(balance=79.9, auto=.25, fleet=True)
+    s.energy.remaining_wh["V02"] = 20
+    s.energy.remaining_wh["V03"] = 20
+    waiting = s.vehicle_runtime["V02"]
+    waiting.x, waiting.node_id = 100, "n2"
+    s.charging.request(s, "V01", "dock")
+    s.advance(.1)
+    assert "V02" in s.charging.visits
+    s.energy.remaining_wh["V02"] = 15.2
+    s.vehicle_runtime["V01"].x = 1
+    for _ in range(6):
+        s.advance(.1)
+    assert s.charging.owners == {"dock": "V03"}
+    assert s.charging.visits["V02"].state == "SUPPORT_REQUIRED"
+    assert waiting.route_id is None and waiting.x == 100
+
+
 def test_localization_staleness_pauses_without_crediting_unobserved_time():
     from campus_sim.domain import EgoLocalization, MapPosition
     s = setup()
@@ -194,7 +280,7 @@ def test_localization_staleness_pauses_without_crediting_unobserved_time():
     assert s.energy.remaining_wh["V01"] == pytest.approx(before + .1)
 
 
-def test_configuration_requires_energy_and_matching_map_and_reports_parked_only():
+def test_configuration_requires_energy_and_matching_map_and_reports_synthetic_travel():
     from fastapi.testclient import TestClient
 
     from campus_sim.api import create_app
@@ -203,7 +289,7 @@ def test_configuration_requires_energy_and_matching_map_and_reports_parked_only(
         create_app(charging_config_path=config)
     app = create_app(energy_config_path=ROOT / "configs/energy.synthetic.json", charging_config_path=config)
     with TestClient(app) as client:
-        assert client.get("/health").json()["charging_status"] == "SYNTHETIC_PARKED_ONLY"
+        assert client.get("/health").json()["charging_status"] == "SYNTHETIC_GRAPH_TRAVEL"
     with pytest.raises(ValueError, match="already configured"):
         create_app(service=app.state.service, charging_config_path=config)
     other = setup()

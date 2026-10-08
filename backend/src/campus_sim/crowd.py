@@ -34,6 +34,7 @@ class CrowdModelConfig(BaseModel):
 
     schema_version: Literal[1]
     profile_status: Literal["SYNTHETIC_ASSUMPTION"]
+    enabled: bool
     timezone: Literal["Asia/Seoul"]
     start_time: time
     transition_times: list[time] = Field(min_length=1)

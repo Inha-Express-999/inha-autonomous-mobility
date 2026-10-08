@@ -31,6 +31,11 @@ class ApiIntegrationTests(unittest.TestCase):
         time.sleep(0.13)
         self.assertGreaterEqual(self.service.now_s(), 0.1)
         self.assertLess(self.service.now_s(), 0.3)
+        clock = self.client.get("/health").json()["clock"]
+        self.assertGreaterEqual(clock["ticks"], 2)
+        self.assertEqual(clock["sample_count"], clock["ticks"])
+        self.assertGreaterEqual(clock["lag_ms_p95"], 0)
+        self.assertGreaterEqual(clock["work_ms_p95"], 0)
 
     def test_reconnected_socket_preserves_run_and_advances_snapshot_sequence(self) -> None:
         subscription = {"type": "subscribe", "schemaVersion": 3,
@@ -79,6 +84,31 @@ class ApiIntegrationTests(unittest.TestCase):
     def test_default_app_uses_the_three_vehicle_synthetic_fleet(self) -> None:
         app = create_app()
         self.assertEqual(set(app.state.service.vehicle_runtime), {"V01", "V02", "V03"})
+        self.assertEqual(app.state.max_ws_clients, 50)
+
+    def test_websocket_capacity_rejects_excess_and_reclaims_slots(self) -> None:
+        app = create_app(MobilityService.synthetic_fixture(), max_ws_clients=2)
+        subscription = {"type": "subscribe", "schemaVersion": 3,
+                        "projectVersion": "0.4.2.0", "role": "PC_Operator"}
+        with TestClient(app) as client:
+            with (client.websocket_connect("/v1/client/ws") as first,
+                  client.websocket_connect("/v1/client/ws") as second):
+                for socket in (first, second):
+                    socket.send_json(subscription)
+                    self.assertEqual(socket.receive_json()["type"], "connected")
+                self.assertEqual(client.get("/health").json()["active_ws_clients"], 2)
+                with client.websocket_connect("/v1/client/ws") as excess:
+                    self.assertEqual(excess.receive_json(), {
+                        "type": "error", "code": "connection_limit_reached"
+                    })
+                    with self.assertRaises(WebSocketDisconnect) as closed:
+                        excess.receive_json()
+                    self.assertEqual(closed.exception.code, 1013)
+                self.assertEqual(client.get("/health").json()["active_ws_clients"], 2)
+            self.assertEqual(client.get("/health").json()["active_ws_clients"], 0)
+            with client.websocket_connect("/v1/client/ws") as reopened:
+                reopened.send_json(subscription)
+                self.assertEqual(reopened.receive_json()["type"], "connected")
 
     def test_default_websocket_assigns_three_clients_to_compatible_vehicles(self) -> None:
         app = create_app()

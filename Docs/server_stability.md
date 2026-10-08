@@ -1,5 +1,13 @@
 # 서버·클라이언트 프로토타입 검증 및 안정성 메모
 
+2026-09-28 작업 중: FastAPI 인스턴스마다 WebSocket 동시 접속 상한을 기본 50개로 설정했다. 상한 도달 시 `connection_limit_reached` 오류와 close code 1013을 반환하고, 연결 종료 후 슬롯을 회수한다. `/health`는 현재 접속 수와 상한을 표시한다. 이는 단일 프로세스의 입장 제한이며 50개 연결에서 10Hz snapshot 지연·메모리·tick p95 목표를 달성했다는 측정은 아니다. `subscriberId` 인증과 다중 프로세스 공통 제한도 미구현이다.
+
+[50개 localhost WebSocket 실행](../artifacts/validation/2026-09-28-ws-50/README.md)에서는 빈 구독과 연결별 승객 요청 1건을 각각 측정했다. 요청 실행에서 50건 ACK 수락, 각 모바일의 자기 요청만 표시, 총 500개 snapshot 수신을 확인했다. ACK 지연 p95는 19.79ms, 수신 간격 p95는 110.57ms였다. Python clock 실행 지연 p95 13.034ms와 `advance` 작업 p95 0.154ms는 각각 29 tick의 짧은 표본이다. Unity/모바일 LAN·센서·운송 완료 및 전체 부하 목표는 아직 검증하지 않았다.
+
+WebSocket 송신에는 1초 제한을 적용했다. 전송이 끝나지 않는 클라이언트는 close code 1013으로 종료해 연결 슬롯을 회수하도록 합성 slow-socket 회귀 테스트에서 확인했다. 이는 현재 연결의 backpressure 상한이며 실제 LAN 지연 분포·재접속 정책 검증은 남아 있다.
+
+합성 Python fleet에서 50개 승객 요청을 접수하고 1초 단위로 1,100 tick 진행한 회귀 검사에서는 50건이 모두 완료됐으며 동시에 활성인 요청끼리 차량을 중복 배정하지 않았다. 이는 Python 합성 운송의 큐 처리 검사다. [현재 Unity Windows Player 재검증 시도](../artifacts/validation/2026-09-28-unity-player-attempt/README.md)는 Editor 라이선스 IPC/패키지 등록 실패로 테스트 실행 전에 중단됐으므로 현재 소스의 Player 결과는 없다.
+
 프로젝트 버전 **0.3.2.0** · 2026-09-25 작업본
 
 ## 검증 범위

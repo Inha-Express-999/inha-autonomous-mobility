@@ -328,7 +328,7 @@ namespace InhaExpress.Client.Networking
                 ["valid"] = observation.Valid,
                 ["observedTimeS"] = observation.ObservedTimeS.HasValue
                     ? new JValue(observation.ObservedTimeS.Value) : JValue.CreateNull(),
-                ["sensorPositionM"] = observation.SensorPositionM.HasValue ? new JObject
+                ["sensorPositionM"] = observation.SensorPositionM.HasValue ? (JToken)new JObject
                 {
                     ["x"] = observation.SensorPositionM.Value.X,
                     ["y"] = observation.SensorPositionM.Value.Y,

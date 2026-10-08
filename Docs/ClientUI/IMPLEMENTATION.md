@@ -1,8 +1,20 @@
 # 클라이언트 명세 적용 및 검증 계획
 
+2026-10-08 작업 트리 추가: PC·모바일 Bootstrap 모두 실제 `CampusTerrain`과 역할 씬을 직접 로드하고 WebSocket 연결 모드를 사용한다. 시작 화면에서 같은 Python 서버의 `ws://<PC LAN IP>:8765/v1/client/ws` 주소를 입력할 수 있으며 주소는 기기에 저장한다. 주소 입력 완료와 연결 성공은 별개이고 연결 상태는 기존 transport 결과를 표시한다. 모바일 승객 구독 ID는 최초 실행 시 생성해 기기에 보존한다. 이는 요청 소유권 구독 식별자이며 인증을 구현한 것은 아니다. 같은 PC에서 테스트할 때는 `ws://127.0.0.1:8765/v1/client/ws`를 사용한다. 서버는 LAN 접근 가능한 listen 주소와 방화벽 설정이 필요하다.
+
+공통 UI 컬러는 UI_DESIGN_SYSTEM.md의 Primary·Neutral·Semantic 토큰을 적용하고 버튼 상태 tint의 중복 곱셈을 제거했다. 공통 카드·버튼은 공유 64×64 9-slice sprite로 16단위 rounded surface를 사용하며 연결 중/재연결은 Warning, 연결됨은 Success, 단절/지연은 Danger와 상태 문자로 표현한다. PC Canvas 기준은 1920×1080, match=0.5다. 모바일 선택 버튼은 44단위 이상이며 기존 논리 좌표 390×844와 Safe Area를 유지한다. 1080×2400 기준의 전체 레이아웃·모바일 Bottom Sheet 개편 및 Android 키보드/터치 검증은 남는다.
+
+공식 Pretendard Regular 원본을 `Assets/CampusSim/UI/Fonts/Resources/CampusUI/`에 포함하고 Resources font를 우선 사용한다. OFL 라이선스와 고정 source commit·SHA-256은 같은 폴더에 보존한다. 기존 OS 한국어 폰트 fallback도 유지한다. 격리 Unity 테스트에서 실제 bundled Font 선택과 한국어 UI 글리프를 확인했다. 추가 glyph atlas·batch·단말 메모리 비용은 측정 전이며 설정만으로 성능 개선을 주장하지 않는다.
+
+`InhaExpress/Validation/Run Campus PC Connection Smoke`와 Mobile 메뉴는 실제 Bootstrap/Terrain/역할 씬 연결 검증을 제공한다. 저장하지 않은 씬이나 Play/compile 상태에서는 실행하지 않으며, 별도 loopback 서버 `127.0.0.1:18776`을 사용하고 테스트 뒤 앱의 기존 주소·승객 ID·활성 씬을 복구한다. 이 메뉴는 격리 Editor에서 컴파일됐지만 현재 열린 프로젝트의 MCP Refresh가 시간 초과여서 실제 씬 실행·캡처 결과는 아직 없다.
+
+실제 캠퍼스 승인 graph와 좌표·Stop 계약이 없으므로 서버의 합성 차량/경로를 실제 Terrain에 배치하지 않는다. 3인 협업 경계와 다음 인수 순서는 [MVP_TEAM_ROLES.md](../MVP_TEAM_ROLES.md)에 기록했다.
+
+현재 `PC_Bootstrap` 실행 경로는 `CampusTerrain` + `PC_Operator` Additive 로딩, PC 전용 WebSocket 세션, snapshot 저장소, 운영자 요청 UI·ACK를 연결한다. Python 서버가 합성 지도일 때 실제 CampusTerrain 좌표로 차량을 배치하지 않으며 화면에 지도 미연결을 표시한다. 실제 지도 RoadGraph와 Unity 좌표·Stop 계약을 검증하고 `VehicleActorSpawner.requiredMapVersion` 및 차량 prefab을 설정해야 3D 주행을 연결할 수 있다. 현재 소스의 Editor/Player 검증은 보류 중이다.
+
 원 작성 기준 **0.1.5.0** · 2026-09-22 · 현재 checkout 기준 상태는 [구현 현황](../implementation_status.md)을 따른다.
 
-현재 화면은 PC 관제 대시보드와 모바일 승객 하단 시트 형태의 한국어 uGUI fixture 화면이다. Fixture·Zone·Stop·ETA·ID 등 기술 용어는 영어를 유지한다. 실제 요청 command/ack, 선택/검색, 지도 차량·경로 overlay는 아직 없으므로 아래 화면별 전체 인수 항목은 완료되지 않았다. 아래 표는 기능 인수 기준이며 구현 여부 표가 아니다. 부분 구현과 검증 범위는 [구현 현황](../implementation_status.md)에서 확인한다. [재생 범위와 실행 방법](FIXTURE_REPLAY.md)을 참고한다.
+현재 화면은 PC 관제 대시보드와 모바일 승객 하단 시트 형태의 한국어 uGUI다. Fixture·Zone·Stop·ETA·ID 등 기술 용어는 영어를 유지한다. PC의 서버 요청 command/ACK와 합성 미리보기의 차량·경로 표시는 부분 구현됐지만, 기본 `PC_Bootstrap`의 실제 캠퍼스 지도에서는 좌표 계약이 없어 차량·경로 배치를 차단한다. 검색과 실제 지도 기반 전체 인수 항목도 완료되지 않았다. 아래 표는 기능 인수 기준이며 구현 여부 표가 아니다. 부분 구현과 검증 범위는 [구현 현황](../implementation_status.md)에서 확인한다. [재생 범위와 실행 방법](FIXTURE_REPLAY.md)을 참고한다.
 
 새 UI 시각 설계 참고: [공통 디자인 시스템](../../UI_DESIGN_SYSTEM.md), [PC 클라이언트 디자인](../../PC_CLIENT_DESIGN.md), [모바일 클라이언트 디자인](../../MOBILE_CLIENT_DESIGN.md). 이 문서들은 시각/레이아웃 제안이며 기능 인수, 서버 계약, 구현 완료의 근거가 아니다. 세부 검토 결과:
 
@@ -18,7 +30,7 @@
 ## 제작 순서와 역할
 
 1. [지도 계획](../MapResearch/PLAN.md)의 최신 재검수 항목을 해결한다. 허브 접지·위치, 자연스러운 도로 경사·필수 거점 연결, 불필요한 교외 도로 제거, 운동장 선, 풀, 주요 건물 외형·재질, 인경호 보도를 확인한다. 이 기준이 충족되기 전 UI 단계 완료를 선언하지 않는다.
-2. 공통 `CampusWorld`와 PC 가로 `PC_Operator`, 모바일 세로 `Mobile_Passenger`를 Additive 구성한다. 앱당 네트워크 세션·상태 저장소·EventSystem은 하나만 둔다. UI/카메라/품질과 역할별 표시를 분리한다.
+2. 공통 월드 구현 씬 `CampusTerrain`과 PC 가로 `PC_Operator`, 모바일 세로 `Mobile_Passenger`를 Bootstrap에서 직접 Additive 구성한다. 내용 없는 `CampusWorld` 중간 씬은 활성 로딩 경로에서 제외한다. 앱당 네트워크 세션·상태 저장소·EventSystem은 하나만 둔다. UI/카메라/품질과 역할별 표시를 분리한다.
 3. UI 목업과 검색·선택·필터·화면 전환·카메라·품질 설정 등 일부 기능을 구현한다. 목업에는 **데모 데이터** 상태를 표시하고 실서버 연결 표시와 혼동하지 않는다. fixture 제공자를 추후 서버 제공자로 교체할 수 있게 분리한다. 목업의 상태 전이는 배차 알고리즘이나 가짜 실운행으로 구현하지 않는다.
 4. 기존 Python 서비스 기반을 실제 지도·경로·상태 전이·배차·보행자·혼잡·안전·Stop 결정·ETA를 관리하는 권위 서버로 확장한다. 기존 M0~M6 검증을 생략하지 않는다.
 5. 동일 run/map/tick의 PC·모바일을 연결해 §34 동시 시연 흐름과 단절·실패·취소를 검증한다. 실제 기기에서 UI ≥30 FPS를 측정하고 기준 장비와 품질을 기록한다.

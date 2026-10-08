@@ -23,8 +23,14 @@ foreach ($directory in @('Domain', 'Networking', 'Presentation', 'PC', 'Mobile')
     }
 }
 foreach ($relative in @('Assets/CampusSim/Tests/EditMode/FixtureClientTests.cs',
+        'Assets/CampusSim/Editor/ClientCampusSmokeValidation.cs',
+        'Assets/CampusSim/Editor/LocalDevelopmentServer.cs',
         'Assets/CampusSim/Tests/EditMode/InhaExpress.Client.Tests.EditMode.asmdef',
         'ProjectSettings/ProjectVersion.txt', 'ProjectSettings/TagManager.asset')) {
+    Copy-RecordedSource $relative
+}
+foreach ($file in Get-ChildItem (Join-Path $repoRoot 'Assets/CampusSim/UI/Fonts') -File -Recurse) {
+    $relative = [IO.Path]::GetRelativePath($repoRoot, $file.FullName).Replace('\', '/');
     Copy-RecordedSource $relative
 }
 New-Item -ItemType Directory -Path (Join-Path $runRoot 'Packages') -Force | Out-Null

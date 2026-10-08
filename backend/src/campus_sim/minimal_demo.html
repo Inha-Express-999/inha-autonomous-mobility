@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ko">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>캠퍼스 운송 최소 시연</title>
+<style>
+  :root{font-family:system-ui,sans-serif;color:#15233c;background:#eef3f9}
+  body{max-width:960px;margin:24px auto;padding:0 16px}
+  h1{font-size:1.55rem;margin-bottom:4px} p{color:#53637a}
+  .card{background:white;border-radius:16px;padding:20px;box-shadow:0 5px 24px #17315318;margin:16px 0}
+  .controls{display:flex;align-items:end;gap:12px;flex-wrap:wrap}
+  label{display:grid;gap:6px;font-weight:650} select,button{font:inherit;padding:10px 14px;border-radius:9px;border:1px solid #b8c6d9}
+  select{min-width:170px;background:white} button{background:#185abc;color:white;border:0;cursor:pointer;font-weight:700}
+  button:disabled{opacity:.5;cursor:default} canvas{display:block;width:100%;height:380px}
+  #status{font-size:1.15rem;font-weight:700} #detail{font-variant-numeric:tabular-nums}
+  .note{font-size:.88rem}
+</style>
+<h1>출발지 → 목적지 최소 시연</h1>
+<p>Python 서버의 합성 지도·요청·배차·경로 결과를 표시합니다.</p>
+<div class="card controls">
+  <label>출발지 <select id="pickup"></select></label>
+  <label>목적지 <select id="dropoff"></select></label>
+  <button id="start" disabled>시연 시작</button>
+</div>
+<div class="card"><canvas id="map" width="900" height="380" aria-label="합성 경로와 차량 위치"></canvas></div>
+<div class="card"><div id="status">서버 연결 중…</div><p id="detail">—</p></div>
+<p class="note">짧은 합성 경로의 시연입니다. 실제 캠퍼스 지도, Unity Physics 주행 또는 안전 검증 결과가 아닙니다.</p>
+<script>
+const pickup=document.getElementById('pickup'),dropoff=document.getElementById('dropoff');
+const start=document.getElementById('start'),status=document.getElementById('status');
+const detail=document.getElementById('detail'),canvas=document.getElementById('map'),ctx=canvas.getContext('2d');
+let landmarks=[],requestId=null,busy=false,lastState=null;
+const labels={QUEUED:'차량 배정 대기',ASSIGNED:'차량이 출발지로 이동 중',PICKUP_SERVICE:'승차 처리 중',
+  IN_TRANSIT:'목적지로 이동 중',DROPOFF_SERVICE:'하차 처리 중',COMPLETED:'운송 완료',
+  REJECTED:'요청 거부',FAILED:'운송 실패',CANCELLED:'취소됨'};
+function name(id){return landmarks.find(x=>x.id===id)?.name||id||'—'}
+function choices(){
+  for(const [select,selected] of [[pickup,pickup.value],[dropoff,dropoff.value]]){
+    select.replaceChildren();
+    for(const item of landmarks){const option=new Option(item.name,item.id);select.add(option)}
+    if(landmarks.some(x=>x.id===selected))select.value=selected;
+  }
+  if(!dropoff.value||dropoff.value===pickup.value)dropoff.selectedIndex=landmarks.length>1?1:0;
+  start.disabled=busy||landmarks.length<2||pickup.value===dropoff.value;
+}
+function draw(state){
+  const {nodes,edges,snapshot}=state;ctx.clearRect(0,0,canvas.width,canvas.height);
+  if(!nodes.length)return;
+  const xs=nodes.map(x=>x.x),ys=nodes.map(x=>x.y),loX=Math.min(...xs),hiX=Math.max(...xs),loY=Math.min(...ys),hiY=Math.max(...ys);
+  const spanX=Math.max(1,hiX-loX),spanY=Math.max(1,hiY-loY),scale=Math.min(740/spanX,260/spanY);
+  const pos=p=>({x:canvas.width/2+(p.x-(loX+hiX)/2)*scale,y:canvas.height/2-(p.y-(loY+hiY)/2)*scale});
+  ctx.lineCap='round';ctx.lineJoin='round';ctx.lineWidth=8;ctx.strokeStyle='#cbd5e4';
+  for(const edge of edges){ctx.beginPath();edge.points.forEach((p,i)=>{const q=pos(p);i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y)});ctx.stroke()}
+  for(const route of snapshot.routes){ctx.beginPath();ctx.lineWidth=5;ctx.strokeStyle='#1b7fd6';
+    route.polyline.forEach((p,i)=>{const q=pos(p);i?ctx.lineTo(q.x,q.y):ctx.moveTo(q.x,q.y)});ctx.stroke()}
+  ctx.textAlign='center';ctx.font='bold 16px system-ui';
+  for(const node of nodes){const q=pos(node);ctx.beginPath();ctx.arc(q.x,q.y,11,0,Math.PI*2);ctx.fillStyle='#fff';ctx.fill();
+    ctx.lineWidth=3;ctx.strokeStyle='#254f89';ctx.stroke();ctx.fillStyle='#15233c';ctx.fillText(name(node.landmarkId),q.x,q.y-20)}
+  for(const vehicle of snapshot.vehicles){const q=pos(vehicle.position);ctx.beginPath();ctx.arc(q.x,q.y,14,0,Math.PI*2);
+    ctx.fillStyle=vehicle.motionState==='DRIVING'?'#00a884':'#eb9830';ctx.fill();ctx.fillStyle='#fff';
+    ctx.font='bold 11px system-ui';ctx.fillText(vehicle.id,q.x,q.y+4)}
+}
+async function refresh(){
+  try{
+    const response=await fetch('/v1/demo/state',{cache:'no-store'});if(!response.ok)throw Error('서버 상태 '+response.status);
+    const state=await response.json();lastState=state;
+    const next=state.snapshot.landmarks;if(JSON.stringify(next)!==JSON.stringify(landmarks)){landmarks=next;choices()}
+    draw(state);
+    const request=state.snapshot.requests.find(x=>x.id===requestId);
+    if(request){status.textContent=labels[request.status]||request.status;
+      detail.textContent=`${name(request.pickupLandmarkId)} → ${name(request.dropoffLandmarkId)} · 차량 ${request.vehicleId||'대기'} · ETA ${request.etaS==null?'확인 중':Math.ceil(request.etaS)+'초'}`;
+      if(['COMPLETED','FAILED','CANCELLED','REJECTED'].includes(request.status)){busy=false;choices()}
+    }else if(!busy){status.textContent='출발지와 목적지를 선택하세요';detail.textContent=`차량 ${state.snapshot.vehicles.length}대 대기 중`}
+  }catch(error){status.textContent='서버 연결을 확인하세요';detail.textContent=error.message;start.disabled=true}
+}
+start.addEventListener('click',async()=>{
+  if(busy||pickup.value===dropoff.value)return;busy=true;choices();status.textContent='요청 접수 중…';
+  try{const response=await fetch('/v1/requests',{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({command_id:crypto.randomUUID(),owner_id:'minimal-demo',service_type:'PASSENGER',
+      pickup_landmark_id:pickup.value,dropoff_landmark_id:dropoff.value,party_size:1})});
+    const result=await response.json();if(!response.ok)throw Error(result.detail||'요청 실패');
+    requestId=result.request.id;await refresh();
+  }catch(error){busy=false;status.textContent='요청 실패';detail.textContent=error.message;choices()}
+});
+pickup.addEventListener('change',choices);dropoff.addEventListener('change',choices);
+refresh();setInterval(refresh,250);
+</script>
+</html>

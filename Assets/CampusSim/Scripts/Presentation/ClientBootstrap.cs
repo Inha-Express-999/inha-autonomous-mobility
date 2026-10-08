@@ -9,12 +9,15 @@ namespace InhaExpress.Client.Presentation
 {
     public sealed class ClientBootstrap : MonoBehaviour
     {
-        [SerializeField] private string worldScenePath = "Assets/CampusSim/Scenes/CampusWorld.unity";
+        [SerializeField] private string worldScenePath = "Assets/CampusSim/Scenes/CampusTerrain.unity";
         [SerializeField] private string roleScenePath;
         [SerializeField] private ClientRole clientRole;
         [SerializeField] private bool useFixture = true;
         [SerializeField] private string serverWebSocketUrl = "ws://127.0.0.1:8765/v1/client/ws";
         [SerializeField] private string passengerSubscriberId;
+        [SerializeField] private bool promptForServerAddress;
+        private const string ServerAddressKey = "CampusSim.ServerWebSocketUrl";
+        private const string PassengerIdentityKey = "CampusSim.PassengerSubscriberId";
 
         private static ClientBootstrap instance;
         private bool isLoading;
@@ -36,6 +39,8 @@ namespace InhaExpress.Client.Presentation
             }
             instance = this;
             DontDestroyOnLoad(gameObject);
+            if (clientRole == ClientRole.Mobile_Passenger)
+                Screen.orientation = ScreenOrientation.Portrait;
         }
 
         private IEnumerator Start()
@@ -46,6 +51,35 @@ namespace InhaExpress.Client.Presentation
             }
 
             isLoading = true;
+            if (!useFixture)
+            {
+                serverWebSocketUrl = PlayerPrefs.GetString(ServerAddressKey, serverWebSocketUrl);
+                if (promptForServerAddress)
+                {
+                    var panelRoot = new GameObject("Client Connection Setup");
+                    panelRoot.transform.SetParent(transform, false);
+                    var panel = panelRoot.AddComponent<ClientConnectionPanel>();
+                    panel.Initialize(serverWebSocketUrl);
+                    yield return new WaitUntil(() => panel.Submitted);
+                    serverWebSocketUrl = panel.Endpoint;
+                    PlayerPrefs.SetString(ServerAddressKey, serverWebSocketUrl);
+                    PlayerPrefs.Save();
+                    // Remove the temporary EventSystem before role UI is created.
+                    panelRoot.SetActive(false);
+                    Destroy(panelRoot);
+                    yield return null;
+                }
+                if (clientRole == ClientRole.Mobile_Passenger && string.IsNullOrWhiteSpace(passengerSubscriberId))
+                {
+                    passengerSubscriberId = PlayerPrefs.GetString(PassengerIdentityKey, "");
+                    if (string.IsNullOrWhiteSpace(passengerSubscriberId))
+                    {
+                        passengerSubscriberId = "passenger-" + Guid.NewGuid().ToString("N");
+                        PlayerPrefs.SetString(PassengerIdentityKey, passengerSubscriberId);
+                        PlayerPrefs.Save();
+                    }
+                }
+            }
             yield return LoadAdditiveSceneIfNeeded(worldScenePath);
             yield return LoadAdditiveSceneIfNeeded(roleScenePath);
             string subscriber = clientRole == ClientRole.Mobile_Passenger

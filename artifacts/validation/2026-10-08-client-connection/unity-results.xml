@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="30" result="Passed" total="30" passed="30" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.5042599">
+  <test-suite type="TestSuite" id="1000" name="unity-client-tests-ff55bcb77b6243b8bb6c8f7afc90a35f" fullname="unity-client-tests-ff55bcb77b6243b8bb6c8f7afc90a35f" runstate="Runnable" testcasecount="30" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.504260" total="30" passed="30" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1036" name="InhaExpress.Client.Tests.EditMode.dll" fullname="C:/Users/sy/Documents/GitHub/inha-autonomous-mobility/tmp/unity-client-tests-ff55bcb77b6243b8bb6c8f7afc90a35f/Library/ScriptAssemblies/InhaExpress.Client.Tests.EditMode.dll" runstate="Runnable" testcasecount="30" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.495256" total="30" passed="30" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="15064" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1037" name="InhaExpress" fullname="InhaExpress" runstate="Runnable" testcasecount="30" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.494940" total="30" passed="30" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1038" name="Client" fullname="InhaExpress.Client" runstate="Runnable" testcasecount="30" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.494786" total="30" passed="30" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1039" name="Tests" fullname="InhaExpress.Client.Tests" runstate="Runnable" testcasecount="30" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.494569" total="30" passed="30" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1001" name="FixtureClientTests" fullname="InhaExpress.Client.Tests.FixtureClientTests" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" testcasecount="30" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.493852" total="30" passed="30" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1023" name="AnotherSubscriberGetsNoPrivateState" fullname="InhaExpress.Client.Tests.FixtureClientTests.AnotherSubscriberGetsNoPrivateState" methodname="AnotherSubscriberGetsNoPrivateState" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="962379036" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.023022" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1027" name="CoarseAndFinePumpsReachIdenticalRecordedStateWithoutCatchupFlood" fullname="InhaExpress.Client.Tests.FixtureClientTests.CoarseAndFinePumpsReachIdenticalRecordedStateWithoutCatchupFlood" methodname="CoarseAndFinePumpsReachIdenticalRecordedStateWithoutCatchupFlood" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="26581294" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.021999" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1028" name="CompletedReplayContinuesHeartbeats" fullname="InhaExpress.Client.Tests.FixtureClientTests.CompletedReplayContinuesHeartbeats" methodname="CompletedReplayContinuesHeartbeats" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="1798064775" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.004462" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1009" name="ConnectionSetupValidatesAddressWithoutClaimingTransportSuccess" fullname="InhaExpress.Client.Tests.FixtureClientTests.ConnectionSetupValidatesAddressWithoutClaimingTransportSuccess" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" testcasecount="7" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.249686" total="7" passed="7" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1002" name="ConnectionSetupValidatesAddressWithoutClaimingTransportSuccess(&quot;ws://192.168.0.10:8765/v1/client/ws&quot;,True)" fullname="InhaExpress.Client.Tests.FixtureClientTests.ConnectionSetupValidatesAddressWithoutClaimingTransportSuccess(&quot;ws://192.168.0.10:8765/v1/client/ws&quot;,True)" methodname="ConnectionSetupValidatesAddressWithoutClaimingTransportSuccess" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="1762721306" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.229363" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1003" name="ConnectionSetupValidatesAddressWithoutClaimingTransportSuccess(&quot;  wss://campus.example/v1/client/ws  &quot;,True)" fullname="InhaExpress.Client.Tests.FixtureClientTests.ConnectionSetupValidatesAddressWithoutClaimingTransportSuccess(&quot;  wss://campus.example/v1/client/ws  &quot;,True)" methodname="ConnectionSetupValidatesAddressWithoutClaimingTransportSuccess" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="373801211" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.003026" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1004" name="ConnectionSetupValidatesAddressWithoutClaimingTransportSuccess(&quot;ws://[::1]:8765/v1/client/ws&quot;,True)" fullname="InhaExpress.Client.Tests.FixtureClientTests.ConnectionSetupValidatesAddressWithoutClaimingTransportSuccess(&quot;ws://[::1]:8765/v1/client/ws&quot;,True)" methodname="ConnectionSetupValidatesAddressWithoutClaimingTransportSuccess" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="1737661839" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.006692" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1005" name="ConnectionSetupValidatesAddressWithoutClaimingTransportSuccess(&quot;http://192.168.0.10:8765/v1/client/ws&quot;,False)" fullname="InhaExpress.Client.Tests.FixtureClientTests.ConnectionSetupValidatesAddressWithoutClaimingTransportSuccess(&quot;http://192.168.0.10:8765/v1/client/ws&quot;,False)" methodname="ConnectionSetupValidatesAddressWithoutClaimingTransportSuccess" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="890840914" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.002449" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1006" name="ConnectionSetupValidatesAddressWithoutClaimingTransportSuccess(&quot;&quot;,False)" fullname="InhaExpress.Client.Tests.FixtureClientTests.ConnectionSetupValidatesAddressWithoutClaimingTransportSuccess(&quot;&quot;,False)" methodname="ConnectionSetupValidatesAddressWithoutClaimingTransportSuccess" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="556661114" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.002025" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1007" name="ConnectionSetupValidatesAddressWithoutClaimingTransportSuccess(&quot;ws://user:secret@campus.example/v1/client/ws&quot;,False)" fullname="InhaExpress.Client.Tests.FixtureClientTests.ConnectionSetupValidatesAddressWithoutClaimingTransportSuccess(&quot;ws://user:secret@campus.example/v1/client/ws&quot;,False)" methodname="ConnectionSetupValidatesAddressWithoutClaimingTransportSuccess" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="425695216" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.001810" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1008" name="ConnectionSetupValidatesAddressWithoutClaimingTransportSuccess(&quot;ws://campus.example/v1/client/ws#fragment&quot;,False)" fullname="InhaExpress.Client.Tests.FixtureClientTests.ConnectionSetupValidatesAddressWithoutClaimingTransportSuccess(&quot;ws://campus.example/v1/client/ws#fragment&quot;,False)" methodname="ConnectionSetupValidatesAddressWithoutClaimingTransportSuccess" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="713036853" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.001668" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="1025" name="DeliveryInterruptionFreezesClientButNotReplayAndRestoresFullSnapshot" fullname="InhaExpress.Client.Tests.FixtureClientTests.DeliveryInterruptionFreezesClientButNotReplayAndRestoresFullSnapshot" methodname="DeliveryInterruptionFreezesClientButNotReplayAndRestoresFullSnapshot" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="428408130" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.001207" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1013" name="EveryRecordedTickIsAValidCompleteSnapshot" fullname="InhaExpress.Client.Tests.FixtureClientTests.EveryRecordedTickIsAValidCompleteSnapshot" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.158539" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1011" name="EveryRecordedTickIsAValidCompleteSnapshot(PC_Operator)" fullname="InhaExpress.Client.Tests.FixtureClientTests.EveryRecordedTickIsAValidCompleteSnapshot(PC_Operator)" methodname="EveryRecordedTickIsAValidCompleteSnapshot" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="943258094" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.069440" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1012" name="EveryRecordedTickIsAValidCompleteSnapshot(Mobile_Passenger)" fullname="InhaExpress.Client.Tests.FixtureClientTests.EveryRecordedTickIsAValidCompleteSnapshot(Mobile_Passenger)" methodname="EveryRecordedTickIsAValidCompleteSnapshot" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="1837276702" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.086584" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="1029" name="InvalidClocksAndDisposedUseAreRejected" fullname="InhaExpress.Client.Tests.FixtureClientTests.InvalidClocksAndDisposedUseAreRejected" methodname="InvalidClocksAndDisposedUseAreRejected" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="1671330744" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.002162" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1035" name="LivePassengerGuidanceUsesOnlyItsAssignedVehicle" fullname="InhaExpress.Client.Tests.FixtureClientTests.LivePassengerGuidanceUsesOnlyItsAssignedVehicle" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.007415" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1032" name="LivePassengerGuidanceUsesOnlyItsAssignedVehicle(RESOURCE_WAIT,&quot;진입 순서&quot;)" fullname="InhaExpress.Client.Tests.FixtureClientTests.LivePassengerGuidanceUsesOnlyItsAssignedVehicle(RESOURCE_WAIT,&quot;진입 순서&quot;)" methodname="LivePassengerGuidanceUsesOnlyItsAssignedVehicle" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="1749827167" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.005816" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1033" name="LivePassengerGuidanceUsesOnlyItsAssignedVehicle(RESOURCE_STATE_UNAVAILABLE,&quot;상태 확인&quot;)" fullname="InhaExpress.Client.Tests.FixtureClientTests.LivePassengerGuidanceUsesOnlyItsAssignedVehicle(RESOURCE_STATE_UNAVAILABLE,&quot;상태 확인&quot;)" methodname="LivePassengerGuidanceUsesOnlyItsAssignedVehicle" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="1514062049" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.000264" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1034" name="LivePassengerGuidanceUsesOnlyItsAssignedVehicle(STALE_LOCALIZATION,&quot;위치 정보&quot;)" fullname="InhaExpress.Client.Tests.FixtureClientTests.LivePassengerGuidanceUsesOnlyItsAssignedVehicle(STALE_LOCALIZATION,&quot;위치 정보&quot;)" methodname="LivePassengerGuidanceUsesOnlyItsAssignedVehicle" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="530232441" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.000359" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+              </test-suite>
+              <test-case id="1031" name="OperatorTextKeepsUnknownObservationsSeparateFromPrior" fullname="InhaExpress.Client.Tests.FixtureClientTests.OperatorTextKeepsUnknownObservationsSeparateFromPrior" methodname="OperatorTextKeepsUnknownObservationsSeparateFromPrior" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="616501204" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.002122" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1030" name="PassengerGuidanceRequiresMatchingStateAndReason" fullname="InhaExpress.Client.Tests.FixtureClientTests.PassengerGuidanceRequiresMatchingStateAndReason" methodname="PassengerGuidanceRequiresMatchingStateAndReason" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="782687447" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.001458" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1024" name="PauseKeepsHeartbeatFreshAtTheSameTick" fullname="InhaExpress.Client.Tests.FixtureClientTests.PauseKeepsHeartbeatFreshAtTheSameTick" methodname="PauseKeepsHeartbeatFreshAtTheSameTick" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="1898156514" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.000867" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1026" name="RestartCreatesNewRunAndRetiresOldRun" fullname="InhaExpress.Client.Tests.FixtureClientTests.RestartCreatesNewRunAndRetiresOldRun" methodname="RestartCreatesNewRunAndRetiresOldRun" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="1833526241" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.001157" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1010" name="RoleProjectionAtSameTickPreservesOwnVehicleAndRequest" fullname="InhaExpress.Client.Tests.FixtureClientTests.RoleProjectionAtSameTickPreservesOwnVehicleAndRequest" methodname="RoleProjectionAtSameTickPreservesOwnVehicleAndRequest" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="1841072629" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.000823" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-suite type="ParameterizedMethod" id="1022" name="TimelineHasExplicitServiceStages" fullname="InhaExpress.Client.Tests.FixtureClientTests.TimelineHasExplicitServiceStages" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" testcasecount="8" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.006314" total="8" passed="8" failed="0" inconclusive="0" skipped="0" asserts="0">
+                <properties />
+                <test-case id="1014" name="TimelineHasExplicitServiceStages(0,CREATED)" fullname="InhaExpress.Client.Tests.FixtureClientTests.TimelineHasExplicitServiceStages(0,CREATED)" methodname="TimelineHasExplicitServiceStages" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="153679949" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.000423" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1015" name="TimelineHasExplicitServiceStages(20,VALIDATED)" fullname="InhaExpress.Client.Tests.FixtureClientTests.TimelineHasExplicitServiceStages(20,VALIDATED)" methodname="TimelineHasExplicitServiceStages" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="113692475" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.000187" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1016" name="TimelineHasExplicitServiceStages(40,QUEUED)" fullname="InhaExpress.Client.Tests.FixtureClientTests.TimelineHasExplicitServiceStages(40,QUEUED)" methodname="TimelineHasExplicitServiceStages" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="337823366" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.000155" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1017" name="TimelineHasExplicitServiceStages(60,ASSIGNED)" fullname="InhaExpress.Client.Tests.FixtureClientTests.TimelineHasExplicitServiceStages(60,ASSIGNED)" methodname="TimelineHasExplicitServiceStages" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="1527084211" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.000161" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1018" name="TimelineHasExplicitServiceStages(200,PICKUP_SERVICE)" fullname="InhaExpress.Client.Tests.FixtureClientTests.TimelineHasExplicitServiceStages(200,PICKUP_SERVICE)" methodname="TimelineHasExplicitServiceStages" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="2064413791" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.000162" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1019" name="TimelineHasExplicitServiceStages(260,IN_TRANSIT)" fullname="InhaExpress.Client.Tests.FixtureClientTests.TimelineHasExplicitServiceStages(260,IN_TRANSIT)" methodname="TimelineHasExplicitServiceStages" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="730269363" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.000227" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1020" name="TimelineHasExplicitServiceStages(800,DROPOFF_SERVICE)" fullname="InhaExpress.Client.Tests.FixtureClientTests.TimelineHasExplicitServiceStages(800,DROPOFF_SERVICE)" methodname="TimelineHasExplicitServiceStages" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="302612481" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.000158" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                </test-case>
+                <test-case id="1021" name="TimelineHasExplicitServiceStages(880,COMPLETED)" fullname="InhaExpress.Client.Tests.FixtureClientTests.TimelineHasExplicitServiceStages(880,COMPLETED)" methodname="TimelineHasExplicitServiceStages" classname="InhaExpress.Client.Tests.FixtureClientTests" runstate="Runnable" seed="1316895553" result="Passed" start-time="2026-10-08 03:09:31Z" end-time="2026-10-08 03:09:31Z" duration="0.000147" asserts="0">
+                  <properties>
+                    <property name="retryIteration" value="0" />
+                    <property name="repeatIteration" value="0" />
+                  </properties>
+                  <output><![CDATA[Saving results to: C:\Users\sy\Documents\GitHub\inha-autonomous-mobility\tmp\unity-client-tests-ff55bcb77b6243b8bb6c8f7afc90a35f\results.xml
+]]></output>
+                </test-case>
+              </test-suite>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

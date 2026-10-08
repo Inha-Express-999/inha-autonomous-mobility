@@ -1,9 +1,15 @@
 # AGENTS.md
 
+2026-10-08 현재 씬 로딩: PC/Mobile Bootstrap은 공통 월드의 실제 구현 씬 `CampusTerrain.unity`를 직접 Additive 로드한 뒤 각 역할 씬을 로드한다. 사용자 지시에 따라 중간 씬 `CampusWorld.unity`와 meta는 삭제했다. 아래의 `CampusWorld` 표현은 공통 월드의 설계상 역할을 뜻하며 추가 중간 씬 로드를 요구하지 않는다. 에디터 PC_Bootstrap Play 시 로컬 Python 개발 서버를 자동 시작하며 사용법은 `Docs/EDITOR_LOCAL_SERVER.md`를 따른다.
+
+## MVP 범위 변경 (2026-09-28 사용자 지시)
+
+MVP 구현·완료 판정에서는 비룡플라자 우회와 시간대/관측 혼잡구역 기능을 비활성화한다. 기존 합성 실험 코드와 테스트는 명시적으로 활성화할 때만 유지하며, 기본 서비스 설정 `configs/crowd.json`의 `enabled=false`를 사용한다. M2의 비룡플라자 zone geometry/우회 승인, M3의 혼잡·heatmap·동적 비용 및 관련 T04~T06/T17/T24·혼잡 실험은 MVP 완료 이후 작업으로 이관한다. 아래 과거 설계의 “필수” 표현과 단계 표는 이 범위 변경을 우선 적용해 읽는다. MVP에서는 실제 지도·Stop/접근성, 차량 Physics·센서 안전, 요청/배차/제어, PC·모바일 서버 연동과 기본 검증을 우선한다. 명시적 폐쇄와 안전 정지는 혼잡 정책과 별개로 유지한다.
+
 ## 0. 프로젝트와 작업 규칙
 
 **제목:** 실제 캠퍼스 지도 기반 승객·물류 통합 자율주행 운송 서비스 시뮬레이션  
-**문서:** v0.4.2.1 · 2026-09-28 · 요구사항/설계/구현/검증 통합본
+**문서:** v0.4.3.0 · 2026-10-08 · 요구사항/설계/구현/검증 통합본
 **대상:** 개발자와 AI 코딩 에이전트. 구현 완료 보고서가 아니다.
 
 Unity가 캠퍼스의 동적 Ground Truth·Physics·차량/보행자/장애물 실제 상태와 Raycast 기반 센서 관측을 생성하고, Python이 정밀지도·요청·배차·전역 경로·센서 관측 기반 지역 계획/안전 판단/제어를 수행한다. Unity PC 관제와 모바일 승객 클라이언트는 같은 서비스를 역할에 맞게 표시·입력한다. 핵심은 **혼잡·접근성·안전과 센서 기반 인지를 고려한 승객 이동과 배송**, 그리고 **Baseline 알고리즘과 개선 알고리즘의 정량 비교**다.
@@ -40,7 +46,7 @@ Unity가 캠퍼스의 동적 Ground Truth·Physics·차량/보행자/장애물 �
 
 1. 작업 전 기존 코드·Git 변경·버전·테스트를 조사한다. 사용자 코드를 무단 교체하지 않는다. **신규 알고리즘 작업은 현재 구현 기준선을 보존한 채 §16의 M1 이후 미완료 항목을 우선한다.**
 2. 기본 아키텍처는 **Unity 동적 시뮬레이션 Ground Truth/Physics + Python 서비스·계획·제어 + WebSocket**이다. Python은 보행자·타 차량·동적 장애물의 실제 Transform을 직접 받지 않고 ego localization과 센서 관측으로만 동적 환경을 인지한다. 기존 ROS2 구현이 존재하면 유지하고 어댑터로 연결한다.
-3. **09:00/10:30/12:00/13:30/15:00 전후 혼잡과 비룡플라자 앞 우회**는 필수다. 사용자 관찰이지 공식 시간표/실측 통계가 아니다.
+3. **09:00/10:30/12:00/13:30/15:00 전후 혼잡과 비룡플라자 앞 우회**는 MVP 이후 구현한다. 사용자 관찰이지 공식 시간표/실측 통계가 아니다.
 4. 안전·통행·접근성·차량 능력은 강제 제약이다. 급한 요청도 위반할 수 없다. RRT보다 감속·정지를 먼저 처리한다.
 5. 좌표·도로 폭·경사·차량 제원·성능·IOSS 인정 여부를 추측해 확정하지 않는다. 합성 가정과 측정값을 구분한다.
 6. Dijkstra/A*/D* Lite, Greedy/Hungarian, Reservation/CBS, RRT/TTC의 구현·비교 범위를 이 문서에 따른다. 핵심 알고리즘은 자체 구현을 우선하고 외부 라이브러리는 검증/참고용으로 분리한다. MCP는 선택적 Editor 자동화에만 사용하며 런타임 자율주행 판단에는 LLM을 넣지 않는다.
@@ -86,7 +92,7 @@ Unity가 캠퍼스의 동적 Ground Truth·Physics·차량/보행자/장애물 �
 
 커밋과 원격 저장소 반영은 별도 작업이다. 사용자가 커밋을 요청했거나 현재 작업에서 커밋이 명시적으로 승인된 경우 로컬 커밋과 해당 주석 태그까지 만든다. **push는 사용자가 직접 진행하므로 에이전트는 push하지 않으며, push 권한·자격 증명·승인을 요청하지 않는다.** 작업 완료 보고에는 로컬 커밋/태그가 생성됐는지와 원격 반영 여부를 구분해 적는다.
 
-기존 문서 v1.0~v1.2는 네 자리 규칙 도입 전 문서 개정 번호이며 완성/공개 버전이 아니다. 2026-09-17 맵 수정 전 체크포인트를 `0.1.0.0`으로 재설정한 이력은 유지하되, 이후 클라이언트 구조·DTO·fixture·uGUI 구현, 알고리즘 비교 설계 보완과 커밋별 버전/description 관리 규칙을 반영해 현재 문서 기준은 **`0.4.2.1`**이다. 과거 버전은 소급 변경하지 않는다.
+기존 문서 v1.0~v1.2는 네 자리 규칙 도입 전 문서 개정 번호이며 완성/공개 버전이 아니다. 2026-09-17 맵 수정 전 체크포인트를 `0.1.0.0`으로 재설정한 이력은 유지하되, 이후 클라이언트 구조·DTO·fixture·uGUI 구현, 알고리즘 비교 설계 보완과 커밋별 버전/description 관리 규칙을 반영해 현재 문서 기준은 **`0.4.3.0`**이다. 과거 버전은 소급 변경하지 않는다.
 
 저장소 루트 `VERSION`을 단일 원본으로 두고 문서 머리말·Python 서버의 프로젝트 버전·Unity PC/모바일 앱의 프로젝트 표시 버전·릴리스 태그를 같은 릴리스에서 일치시킨다. Unity PC와 모바일은 동일 프로젝트 버전을 사용하고 플랫폼·빌드 식별자는 별도 기록한다. `CHANGELOG.md`에 버전·날짜·변경 이유·호환성/마이그레이션·검증 결과를 기록한다. 문서만 바꾸는 경우에도 해당 변경 수준에 맞게 증가시키되 과거 빌드의 버전은 소급 변경하지 않는다. 현재 문서는 이 관리 체계의 구현 요구사항이며 VERSION/앱이 이미 갱신되었다고 가정하지 않는다.
 
@@ -203,7 +209,7 @@ Unity Y 회전: heading_rad*180/π
 
 왕복 오차≤0.01 m와 기준점 3개의 Unity 축/축척을 검사한다. 이는 실제 지도 정확도 보장이 아니다. 길이/면적은 투영 좌표에서 계산한다.
 
-`biryong_plaza_front`는 **비룡플라자 앞**이다. polygon·진입 edge·경계 밖 대기/대체 거점을 사람이 확인한다. 이름만으로 좌표를 만들지 않으며 geometry 누락 시 실제 지도 검증을 실패시킨다.
+`biryong_plaza_front`는 **비룡플라자 앞**이다. MVP 이후 이 정책을 활성화할 때 polygon·진입 edge·경계 밖 대기/대체 거점을 사람이 확인한다. 이름만으로 좌표를 만들지 않는다. MVP 지도 검토에는 해당 zone의 geometry를 요구하지 않는다.
 
 이동지원은 장애인/비장애인 이분법이나 진단명이 아닌 `service_needs`의 `requires_step_free`, `wheelchair_slots`, `boarding_assistance`로 표현한다. **승하차장↔출입구의 보행 접근**도 검사하고 대체 거점 접근 실패를 성공으로 세지 않는다. 계단은 모든 차량에 금지하며 보행 접근성과 차량 통행성을 구분한다.
 
@@ -785,7 +791,7 @@ A* + Hungarian + D* Lite + CBS
 
 ## 15. 실행 계약·개발 품질
 
-아래 CLI는 목표 실행 계약이다. 현재 `serve`와 합성 graph의 `route-compare` 초기 구현이 있다. `validate-map`, 전체 시뮬레이션 `run`, scenario 기반 `serve`, `evaluate`, `replay`는 아직 구현되었다고 가정하지 않는다. 개발 의존성도 선언한다.
+아래 CLI는 목표 실행 계약이다. 현재 `serve`와 합성 graph의 `route-compare` 초기 구현이 있다. `validate-map`은 합성 RoadGraph 구조, 검토 패키지 파일 동일성·기본 참조/보행 연결·좌표 기준점 수치 일치 검사, 미승인 지도 거부를 지원하며 실제 지도 근거·현장 좌표 정확도·시설 커버리지 승인 검증은 미구현이다. 전체 시뮬레이션 `run`, scenario 기반 `serve`, `evaluate`, `replay`도 아직 구현되었다고 가정하지 않는다. 개발 의존성도 선언한다.
 
 ```bash
 python -m pip install -e "./backend[dev]"
@@ -814,8 +820,8 @@ Python 타입/예외·C# 모델/화면 책임을 분리하고 정책 숫자는 c
 |---|---|---|
 | M0 | 기존 코드 조사, VERSION/CHANGELOG·Unity 버전 관리·계약·CLI·합성 fixture·공통 CampusWorld/Bootstrap/Additive/DTO 기반 | 현재 구현된 클라이언트/fixture 구조 회귀 테스트, 버전/계약 일치 확인 |
 | M1 | 차량 1대·RoadGraph·Dijkstra Baseline·A*·승객/배송 최소 수직 흐름 | T01/T03, Dijkstra=A* Path Cost 검증, 탐색량/시간 기록, 요청→완료 최소 흐름 |
-| M2 | 실제 지도/보정·랜드마크 목록/Stop·대표 시설 커버리지·비룡플라자 | T14/T19, 최소 6개 거점 fixture에서 전체 필수 목록으로 확장·출처/검증 기록 |
-| M3 | 다섯 시간대·인구/예측·heatmap·우회·A* Full Replan Baseline·D* Lite | T04~T06/T24, 동적 edge 변경에서 재탐색 비교 |
+| M2 | 실제 지도/보정·랜드마크 목록/Stop·대표 시설 커버리지 | T14/T19 중 비룡플라자 정책 외 항목, 최소 6개 거점 fixture에서 전체 필수 목록으로 확장·출처/검증 기록 |
+| MVP 이후 M3 | 다섯 시간대·인구/예측·heatmap·비룡플라자 우회·A* Full Replan Baseline·D* Lite | T04~T06/T24, 동적 edge 변경에서 재탐색 비교 |
 | M4 | Unity Raycast LiDAR/Radar SensorRig·SensorObservation·난입·제동·RRT·재출발 | T07~T09/T21, Python Ground Truth 동적 Transform 직접 참조 없음 |
 | M5 | 차량 3대·service_needs/Stop 결정·Greedy/Hungarian 배차·허브/재배치·충전·Reservation/CBS | T02/T10~T12/T15/T20/T23/T25, 중복 배정·승객 중복 집계 없음, 알고리즘 비교 결과 기록 |
 | M5a | 실제 Python WebSocket 서버 통합·Mobile/PC 권위 상태 연결·승객 3D UI·센서 입력 계약·최대 50 세션 기반 | T16~T18/T22 일부, fixture가 아닌 실제 서버로 호출→완료·판단 안내·재접속·세션 격리 |
@@ -838,16 +844,16 @@ Python 타입/예외·C# 모델/화면 책임을 분리하고 정책 숫자는 c
 6. LiDAR/Radar SensorRig
 7. TTC / Safety
 8. RRT Local Planning
-9. 혼잡/비룡플라자 + A* Replan / D* Lite
-10. 차량 3대 + Greedy / Hungarian
-11. Reservation / CBS
-12. 보행자 300명 / 허브 재배치 / PC·Mobile 통합
-13. E1~E4 및 성능/부하/재현 실험
+9. 차량 3대 + Greedy / Hungarian
+10. Reservation / CBS
+11. 보행자 300명 / 허브 재배치 / PC·Mobile 통합
+12. 혼잡구역 제외 기본 시나리오의 성능/부하/재현 실험
+13. MVP 이후: 혼잡/비룡플라자 + A* Replan / D* Lite 및 관련 E 실험
 ```
 
 UI 목업 완료를 M1~M6 알고리즘·안전·통신 검증 완료로 간주하지 않는다. 실제 배차·ETA·Stop·자율주행 판단을 모바일/PC UI에 임시로 재구현하지 않고 Python 권위 상태를 연결한다. Unity Simulation World의 Physics·SensorRig·차량 actuator 적용은 클라이언트 표현이 아니라 시뮬레이션 환경 책임이다.
 
-시연은 비혼잡 기본 운송→Dijkstra/A* 비교→이동지원→10:30 혼잡/우회 및 A* Replan/D* Lite→난입 제동/RRT→Greedy/Hungarian 다중 배차→Reservation/CBS 경합→동일 seed 통합 비교 순서로 구성한다. 화면만 성공하고 로그가 없으면 완료가 아니다.
+MVP 시연은 기본 운송→Dijkstra/A* 비교→이동지원→난입 제동/RRT→Greedy/Hungarian 다중 배차→Reservation/CBS 경합→동일 seed 통합 비교 순서로 구성한다. 혼잡/비룡플라자 우회와 A* Replan/D* Lite 비교는 MVP 이후 시연한다. 화면만 성공하고 로그가 없으면 완료가 아니다.
 
 에이전트는 git status/코드를 읽고 요구사항 ID·최소 변경을 정한다. 정책/계약 변경은 ADR에 남기고 단위/통합·lint/타입·Unity 검사를 실행한다. 불가능한 검사는 미실행으로 보고한다.
 

@@ -1,0 +1,18 @@
+{
+    "success": false,
+    "scope": "",
+    "role": "PC",
+    "editorVersion": "",
+    "appVersion": "",
+    "mapVersion": "",
+    "runId": "",
+    "error": "System.TimeoutException: Campus Bootstrap did not reach a valid server snapshot within 90 seconds.\r\n  at ClientCampusSmokeValidation.Poll () [0x0001f] in C:\\Users\\sy\\Documents\\GitHub\\inha-autonomous-mobility\\Assets\\CampusSim\\Editor\\ClientCampusSmokeValidation.cs:99 ",
+    "sequence": 0,
+    "tick": 0,
+    "screenWidth": 0,
+    "screenHeight": 0,
+    "runtimeHosts": 0,
+    "eventSystems": 0,
+    "vehicles": 0,
+    "requests": 0
+}

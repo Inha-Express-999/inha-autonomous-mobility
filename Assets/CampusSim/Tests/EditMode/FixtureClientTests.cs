@@ -13,6 +13,40 @@ namespace InhaExpress.Client.Tests
         private const string Version = "0.1.5.0";
 
         [Test]
+        public void SharedUiFontUsesBundledPretendardWithKoreanGlyphs()
+        {
+            var bundled = UnityEngine.Resources.Load<UnityEngine.Font>("CampusUI/Pretendard-Regular");
+            Assert.That(bundled, Is.Not.Null);
+            Assert.That(FixtureUiFactory.Font, Is.SameAs(bundled));
+            foreach (char glyph in "인하캠퍼스승객차량호출접근성")
+                Assert.That(bundled.HasCharacter(glyph), Is.True, "Missing Korean UI glyph: " + glyph);
+        }
+
+        [TestCase("ws://192.168.0.10:8765/v1/client/ws", true)]
+        [TestCase("  wss://campus.example/v1/client/ws  ", true)]
+        [TestCase("ws://[::1]:8765/v1/client/ws", true)]
+        [TestCase("http://192.168.0.10:8765/v1/client/ws", false)]
+        [TestCase("", false)]
+        [TestCase("ws://user:secret@campus.example/v1/client/ws", false)]
+        [TestCase("ws://campus.example/v1/client/ws#fragment", false)]
+        public void ConnectionSetupValidatesAddressWithoutClaimingTransportSuccess(string endpoint, bool accepted)
+        {
+            var root = new UnityEngine.GameObject("Connection Test");
+            try
+            {
+                var panel = root.AddComponent<ClientConnectionPanel>();
+                panel.Initialize(endpoint);
+                Assert.That(panel.Submitted, Is.False);
+                var button = root.GetComponentInChildren<UnityEngine.UI.Button>();
+                Assert.That(((UnityEngine.RectTransform)button.transform).sizeDelta.y, Is.GreaterThanOrEqualTo(44));
+                button.onClick.Invoke();
+                Assert.That(panel.Submitted, Is.EqualTo(accepted));
+                Assert.That(panel.Endpoint, accepted ? Is.EqualTo(endpoint.Trim()) : Is.Null);
+            }
+            finally { UnityEngine.Object.DestroyImmediate(root); }
+        }
+
+        [Test]
         public void RoleProjectionAtSameTickPreservesOwnVehicleAndRequest()
         {
             var pc = Snapshot(500);

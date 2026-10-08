@@ -135,7 +135,9 @@ class DStarLite:
                 raise NoRouteError("D* Lite extraction encountered a cycle")
             route.append(edge)
             nodes.append(edge.to_node)
-        return RouteResult("dstar_lite", tuple(nodes), tuple(self.nodes[n].stop_id for n in nodes),
+        return RouteResult("dstar_lite", tuple(nodes),
+                           tuple(self.nodes[n].stop_id for n in nodes
+                                 if self.nodes[n].stop_id is not None),
                            tuple(e.id for e in route), sum(self.costs[e.id] for e in route),
                            sum(e.length_m for e in route), self.expanded_nodes, self.generated_nodes,
                            self.peak_open_set_size, perf_counter_ns() - started)

@@ -1,6 +1,7 @@
 {
   "schema_version": 1,
   "profile_status": "SYNTHETIC_ASSUMPTION",
+  "enabled": false,
   "timezone": "Asia/Seoul",
   "start_time": "08:30:00",
   "transition_times": ["09:00:00", "10:30:00", "12:00:00", "13:30:00", "15:00:00"],
