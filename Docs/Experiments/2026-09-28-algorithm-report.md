@@ -2,6 +2,7 @@
 
 - 프로젝트: 인하철도999 — 인하대학교 교내 자율주행 운송 서비스 시뮬레이션
 - 정리일: 2026-09-28
+- 후속 기록: 2026-09-30 Unity Editor 수동 연결 확인(§3.3, 작업 기준 버전 0.4.2.1)
 - 대상 버전: 0.4.2.0
 - 기준 브랜치: `codex/server-client-prototype`
 - 보고서 작성 시 확인한 커밋: `37c3df09cc35f4e5afeaab28dded493bbd98f223`
@@ -63,6 +64,22 @@ python -m pytest backend/tests AgentScripts/MapData -q -p no:cacheprovider
 | 최종 ETA | 0 |
 
 HTTP 응답으로 합성 운송 완료를 확인했다. 접속자 부재는 사용자가 따른 실행 절차에 근거하며 별도 연결 수 로그는 없다. 이번 수동 검증에서 전체 상태 전이별 시각이나 실제 차량 이동 궤적은 수집하지 않았다. 이전 0.2.2.0의 WebSocket 수동 테스트는 별도 이력이며 이번 버전의 실시간 Unity 연동 검증으로 합산하지 않는다.
+
+### 3.3 Unity Editor 수동 연결 확인 — 2026-09-30 후속 기록
+
+0.4.2.1 작업본에서 사용자가 Python 서버와 Unity의 `RoadGraphSyntheticPreview` 씬을 같은 PC에서 실행했다. 이는 위 0.4.2.0 알고리즘 측정과 별도인 수동 확인이며, 근거는 사용자가 전달한 서버 로그·화면·관찰 진술이다.
+
+| 확인 항목 | 관찰 결과 |
+|---|---|
+| WebSocket 접속 | 서버 로그에 `/v1/client/ws [accepted]`, `connection open` 출력 |
+| 상태 수신 및 요청 | 화면에 `PYTHON SERVER`, `연결됨`, 요청 접수 안내와 요청 목록 표시 |
+| 운송 상태 | 후속 화면에 V01 `주행 중`, 1.0m/s 및 첫 요청 `운행 완료` 표시 |
+| 취소 반영 | 일부 요청이 `요청 취소`로 표시됨 |
+| 화면 전환 | 처음에는 Unity로 돌아올 때 잠깐 빨간 상태 지연이 보인다고 보고했고, 이후 다른 창에 다녀와도 잘 동작하는 것 같다고 보고함 |
+
+원자료 화면은 대화 첨부 `codex-clipboard-e3a684c8-5b16-4312-a225-2df2bb23384a.png`, `codex-clipboard-66ade171-347c-4db6-b3ef-1651db079adf.png`, `codex-clipboard-1ec37c45-7c58-466e-9621-cc882fb3648e.png`다. 서버 snapshot의 상태 표시와 적어도 한 건의 완료 표시는 확인됐으나, 실제 차량 모델의 연속 이동 영상·Unity Physics trace·전체 요청 완료 기록은 제공되지 않았다. 화면 전환의 정확한 지속시간·반복 횟수·지연 분포도 측정하지 않았다.
+
+2026-09-30 디스크 확인 시 `ProjectSettings/ProjectSettings.asset`의 `runInBackground` 값은 여전히 `0`이었다. 설정 변경 안내 이후 관찰이 개선됐다는 사실만으로 해당 옵션의 저장 또는 문제 원인 해소를 확정하지 않는다. Play 종료 상태에서 설정 저장 여부와 재실행 후 동작을 추가 확인해야 한다. 이번 후속 기록에서는 Unity 설정 파일을 수정하거나 자동 테스트를 재실행하지 않았다.
 
 ## 4. E1 — Dijkstra와 A* 전역 경로 비교
 
