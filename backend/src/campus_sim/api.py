@@ -1,3 +1,6 @@
+import asyncio
+from contextlib import asynccontextmanager, suppress
+
 from fastapi import FastAPI, HTTPException, status
 
 from campus_sim.domain import CommandAck, CreateRequest, Landmark, RequestView
@@ -5,8 +8,23 @@ from campus_sim.service import MobilityService
 
 
 def create_app(service: MobilityService | None = None) -> FastAPI:
-    app = FastAPI(title="Inha Autonomous Mobility API", version="0.2.1.1")
-    app.state.service = service or MobilityService.synthetic_fixture()
+    @asynccontextmanager
+    async def lifespan(app: FastAPI):
+        async def advance():
+            while True:
+                app.state.service.step()
+                await asyncio.sleep(0.1)
+
+        task = asyncio.create_task(advance())
+        try:
+            yield
+        finally:
+            task.cancel()
+            with suppress(asyncio.CancelledError):
+                await task
+
+    app = FastAPI(title="Inha Autonomous Mobility API", version="0.2.2.0", lifespan=lifespan)
+    app.state.service = service or MobilityService.from_osm_map()
 
     @app.get("/health")
     def health() -> dict[str, str]:
@@ -15,6 +33,10 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
     @app.get("/v1/landmarks", response_model=list[Landmark])
     def list_landmarks() -> list[Landmark]:
         return list(app.state.service.landmarks.values())
+
+    @app.get("/v1/debug/virtual-state")
+    def virtual_state() -> dict:
+        return app.state.service.virtual_state()
 
     @app.post("/v1/requests", response_model=CommandAck, status_code=status.HTTP_201_CREATED)
     def create_request(command: CreateRequest) -> CommandAck:

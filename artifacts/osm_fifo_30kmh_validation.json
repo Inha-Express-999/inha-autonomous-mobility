@@ -1,0 +1,207 @@
+{
+  "kind": "development_validation_summary",
+  "date": "2026-10-15",
+  "project_version": "0.2.2.0",
+  "working_tree_uncommitted": true,
+  "geometry_source": "cached_osm_and_unity_centerlines",
+  "routing_mode": "osm_geometry_simulation",
+  "operationally_verified": false,
+  "vehicle_count": 1,
+  "battery_model": false,
+  "map_version": "inha-osm-unity-v1",
+  "map_manifest_sha256": "bfdf207d9849b4f766bfc27ef27f73dabe045660d09ac6a6e3fd9d0e23dff041",
+  "requirements_lock_sha256": "d90fb57f6a24b55b89525dc3e3ebdb822c2314c5a5cc7325f32f466d0a377952",
+  "code_sha256": {
+    "service.py": "5862ff546c5ab2dee6102568561a797b3305791b5f2390f0662b9fce84a78e7e",
+    "dispatch.py": "088684147ff07d4973783ecb260c19e2ef4b8b409392adc0004344ceaeab944c",
+    "planning.py": "ba13e3c90ea5003aca007be14e0a2fb218e29087e0a7486a29078b775133e11f",
+    "map_builder.py": "ee6fa0de8006a50ec5706fb9d028173b9b556974b48b2d8a24af3919784795c4",
+    "map_data.py": "533124a983b457fa3f531ba366a3e41febb092c5e21dd0209291572a99e212ca",
+    "map_coordinates.py": "d55b0ed8d511b71a7991d0c92c58147b4953edfc635dbce681c9ae5e2e327df1"
+  },
+  "first_trip": {
+    "pickup_distance_m": 0,
+    "delivery_distance_m": 513.2231283674445,
+    "return_distance_m": 179.18335072144976,
+    "pickup_duration_s": 0.0,
+    "delivery_duration_s": 61.58677540409334,
+    "return_duration_s": 21.50200208657397,
+    "returns_at_s": 83.08877749066731,
+    "delivery_edge_ids": [
+      [
+        "split:481241683_0:4:0.617567128481",
+        "osm:4741759495",
+        "481241683_0:4:0:r"
+      ],
+      [
+        "osm:4741759495",
+        "osm:4741759434",
+        "481241689_0:0:0:f"
+      ],
+      [
+        "osm:4741759434",
+        "osm:4741759435",
+        "481241658_0:2:0:f"
+      ],
+      [
+        "osm:4741759435",
+        "osm:4741759436",
+        "481241658_0:3:0:f"
+      ],
+      [
+        "osm:4741759436",
+        "osm:4741759437",
+        "481241658_0:4:0:f"
+      ],
+      [
+        "osm:4741759437",
+        "osm:4741759438",
+        "481241658_0:5:0:f"
+      ],
+      [
+        "osm:4741759438",
+        "osm:4741759508",
+        "481241658_0:6:0:f"
+      ],
+      [
+        "osm:4741759508",
+        "split:481241692_0:0:0.389486496264",
+        "481241692_0:0:1:r"
+      ],
+      [
+        "split:481241692_0:0:0.389486496264",
+        "osm:4741759506",
+        "481241692_0:0:0:r"
+      ],
+      [
+        "osm:4741759506",
+        "osm:4741759499",
+        "481241685_0:1:0:f"
+      ],
+      [
+        "osm:4741759499",
+        "split:481241685_0:2:0.674809737286",
+        "481241685_0:2:0:f"
+      ]
+    ],
+    "return_edge_ids": [
+      [
+        "split:481241685_0:2:0.674809737286",
+        "osm:4741759500",
+        "481241685_0:2:1:f"
+      ],
+      [
+        "osm:4741759500",
+        "osm:4741759501",
+        "481241685_0:3:0:f"
+      ],
+      [
+        "osm:4741759501",
+        "osm:10058056498",
+        "481241685_0:4:0:f"
+      ],
+      [
+        "osm:10058056498",
+        "osm:10058056499",
+        "1098491076_0:0:0:f"
+      ],
+      [
+        "osm:10058056499",
+        "osm:4741759502",
+        "1098491076_0:1:0:f"
+      ],
+      [
+        "osm:4741759502",
+        "osm:4741759493",
+        "1098491076_0:2:0:f"
+      ],
+      [
+        "osm:4741759493",
+        "osm:10058056497",
+        "481241683_0:2:0:f"
+      ],
+      [
+        "osm:10058056497",
+        "osm:4741759495",
+        "481241683_0:3:0:f"
+      ],
+      [
+        "osm:4741759495",
+        "split:481241683_0:4:0.617567128481",
+        "481241683_0:4:0:f"
+      ]
+    ]
+  },
+  "events": [
+    {
+      "time_s": 0.0,
+      "request_statuses": [
+        "IN_TRANSIT",
+        "QUEUED",
+        "QUEUED"
+      ],
+      "vehicle_available": false
+    },
+    {
+      "time_s": 61.58677540409334,
+      "request_statuses": [
+        "COMPLETED",
+        "QUEUED",
+        "QUEUED"
+      ],
+      "vehicle_available": false
+    },
+    {
+      "time_s": 83.08877749066731,
+      "request_statuses": [
+        "COMPLETED",
+        "IN_TRANSIT",
+        "QUEUED"
+      ],
+      "vehicle_available": false
+    },
+    {
+      "time_s": 166.17755498133462,
+      "request_statuses": [
+        "COMPLETED",
+        "COMPLETED",
+        "IN_TRANSIT"
+      ],
+      "vehicle_available": false
+    },
+    {
+      "time_s": 249.26633247200195,
+      "request_statuses": [
+        "COMPLETED",
+        "COMPLETED",
+        "COMPLETED"
+      ],
+      "vehicle_available": true
+    }
+  ],
+  "test_result": {
+    "python": "3.14.4",
+    "pytest_passed": 61,
+    "ruff": "passed",
+    "format_check": "passed",
+    "warning": "Starlette httpx TestClient deprecation"
+  },
+  "limitations": [
+    "OSM topology and Unity road centerlines are source geometry, not approved vehicle access.",
+    "Missing access permission is a simulation assumption only; explicit restrictions remain excluded.",
+    "Speed is a configured 30 km/h (8.333333333333334 m/s) assumption, never an observed speed or legal limit.",
+    "OSM missing oneway follows the simulation bidirectional assumption; explicit oneway is preserved.",
+    "Road widths remain unknown; visual mesh widths are not measurements.",
+    "Length is horizontal AEQD distance; Terrain height, slopes and physical driving are not modeled.",
+    "Stops are projections of Unity general entrance candidates onto existing road segments within 35 m.",
+    "Entrance-to-stop gap is straight-line separation, not a validated pedestrian route.",
+    "No step-free access is certified; requests requiring it are rejected.",
+    "Vehicle capacity is synthetic; one request at a time, no battery or boarding/dwell time.",
+    "Only roads present in the original campus.json are covered; exterior roads are not auto-enabled."
+  ],
+  "speed_assumption_kmh": 30,
+  "speed_assumption_mps": 8.333333333333334,
+  "connection_audit_sha256": "7bc8e3f6c535abb0b7ccf4d8513a21f34328d3495ecf5468cddbfb8949aa1c44",
+  "cost_snapshot_id": "configured-speed-10dc4e070c3a",
+  "earlier_2mps_record": "artifacts/osm_fifo_map_validation.json"
+}

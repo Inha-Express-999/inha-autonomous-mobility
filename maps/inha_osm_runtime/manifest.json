@@ -1,0 +1,103 @@
+{
+  "schema_version": 1,
+  "build_project_version": "0.2.2.0",
+  "map_version": "inha-osm-unity-v2",
+  "geometry_source": "cached_osm_and_unity_centerlines",
+  "synthetic_geometry": false,
+  "routing_mode": "osm_geometry_simulation",
+  "operationally_verified": false,
+  "crs": "+proj=aeqd +lat_0=37.4506 +lon_0=126.6535 +datum=WGS84 +units=m +no_defs",
+  "origin_wgs84_lon_lat": [
+    126.6535,
+    37.4506
+  ],
+  "unity_coordinate_system": "legacy formula from AgentScripts/prepare_campus.py; north-aligned X east/Z north",
+  "assumptions": [
+    "OSM topology and Unity road centerlines are source geometry, not approved vehicle access.",
+    "Missing access permission is a simulation assumption only; explicit restrictions remain excluded.",
+    "Speed is a configured 30 km/h (8.333333333333334 m/s) assumption, never an observed speed or legal limit.",
+    "OSM missing oneway follows the simulation bidirectional assumption; explicit oneway is preserved.",
+    "Road widths remain unknown; visual mesh widths are not measurements.",
+    "Length is horizontal AEQD distance; Terrain height, slopes and physical driving are not modeled.",
+    "Stops are projections of Unity general entrance candidates onto existing road segments within 35 m.",
+    "Entrance-to-stop gap is straight-line separation, not a validated pedestrian route.",
+    "No step-free access is certified; requests requiring it are rejected.",
+    "Three synthetic vehicles; one request each; no boarding/dwell time or multi-vehicle collision coordination.",
+    "Only original campus centerlines and explicitly pinned extension corridor intervals are enabled; no whole-network expansion.",
+    "Battery capacity, energy rates and charge power are synthetic configurable assumptions, not vehicle measurements.",
+    "Three independent ideal 1000 W home charging ports at main_gate; no charger travel beyond the planned return.",
+    "Standby vehicles power down: no idle drain. Auxiliary power is applied throughout travel; charging power is net stored power.",
+    "All legs including home return plus 15 percent capacity reserve are required before dispatch; load correction applies to delivery only."
+  ],
+  "home_stop_id": "main_gate_road_candidate",
+  "sources": {
+    "osm": {
+      "path": "Assets/InhaCampus/Source/campus.osm",
+      "sha256": "8eb03c576a7a924e3cb4ab263fba25245431d8d25881c86ee12e7b781b265a61"
+    },
+    "unity": {
+      "path": "Assets/InhaCampus/Source/campus.json",
+      "sha256": "a7d6b6b4049291b38e3325e1295667708d587b9f611c85beab8f7ca76e03241a"
+    },
+    "entrances": {
+      "path": "Docs/MapResearch/Iterations/EntranceInventory/entrances.csv",
+      "sha256": "00cedbe3f9b42ea2fba8a27ce0a883a266d300fa84c985333e81e13f5182ba15"
+    },
+    "policy": {
+      "path": "configs/osm_runtime.json",
+      "sha256": "7ca28b99bc9d791e37036bc8117717682af170adbd607ebe1ac82d645c165091"
+    },
+    "attribution": {
+      "path": "Assets/InhaCampus/Source/ATTRIBUTION.txt",
+      "sha256": "a79c52ce29908ed9effa2b207b494332fb69d3b2fb2b37b251b681999bc62df5"
+    },
+    "builder": {
+      "path": "backend/src/campus_sim/map_builder.py",
+      "sha256": "8ec0564f9e369ee81524c601a203793f0e94a430949a459e26bfe8f24428e42e"
+    },
+    "coordinate_adapter": {
+      "path": "backend/src/campus_sim/map_coordinates.py",
+      "sha256": "1b8dde8bf4cbadcc907f1609bbd0e2194205180ee75f980c9f6cfee7408dd318"
+    },
+    "project_version": {
+      "path": "VERSION",
+      "sha256": "fbd16eb45f1b5849779c3fa73fe7f916aa6f3d87f1c9ada41c62dbf82a3f3427"
+    },
+    "expanded_osm": {
+      "path": "Docs/MapResearch/2026-09-17/expanded_campus.osm",
+      "sha256": "cf400f997d72d4d42f057adf6ce5b54861c9d5dcdc28d944c2934ffa1a4e84ca"
+    },
+    "unity_scoped": {
+      "path": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "sha256": "82dcdb354e8aa4d6cd9a79f15235159b5dbf599fcce5ceb2ae6898b853cb9ab7"
+    },
+    "unity_restored": {
+      "path": "Assets/CampusSim/Data/road_connections_restored.json",
+      "sha256": "120aecff2c50ea3aea45620615f5905b166f2f4fe39423550d0c2efc1295044e"
+    },
+    "unity_extensions": {
+      "path": "Assets/CampusSim/Data/road_extensions.json",
+      "sha256": "11d36a651c467d0249cf0e660c8e8ed032f4f73ccd3a5054b665b4490b97209f"
+    },
+    "extension_builder": {
+      "path": "backend/src/campus_sim/map_extension.py",
+      "sha256": "9fa704e9b9e55fa83d323e79ced0d5b456125090f9a018ce27112efed397b365"
+    },
+    "osm_reader": {
+      "path": "backend/src/campus_sim/osm_roads.py",
+      "sha256": "dff13616b40e9b385add0a871e637c6db6c7dcf7069eb6f9a1cae062023cda78"
+    },
+    "unity_coverage": {
+      "path": "backend/src/campus_sim/unity_coverage.py",
+      "sha256": "10f70328d90111f445dcf1dce37202d7140375912919e7bd4c173af9d794faed"
+    }
+  },
+  "files": {
+    "graph.json": "df7dd600768e62c2b8d6a986732a44871cd95af7b081a472f175217e971d78cc",
+    "stops.json": "4543db0326177442a39a0676fa733b00a06cb4d6103adecd390d3f5c5b627ba6",
+    "landmarks.json": "f4ae9f70a79a57e7a3a58c3b0b838a3633c60c93512b6258b041d3c1132b35f8",
+    "policy.json": "7ca28b99bc9d791e37036bc8117717682af170adbd607ebe1ac82d645c165091",
+    "build_report.json": "5ad4ec2f11f14fa84ade7df837b2c7ebf458c912d01093c5861882e2fd04deda",
+    "ATTRIBUTION.txt": "e5a9771be6e33b0ca13eac2ebd338232202b45ba8e7740046e5e50f53d75c257"
+  }
+}

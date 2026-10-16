@@ -1,0 +1,498 @@
+{
+  "kind": "development_validation_summary",
+  "date": "2026-10-15",
+  "project_version": "0.2.2.0",
+  "working_tree_uncommitted": true,
+  "map_version": "inha-osm-unity-v2",
+  "vehicle_count": 1,
+  "cruise_speed_kmh": 30,
+  "battery_model": false,
+  "operationally_verified": false,
+  "map_manifest_sha256": "bc75d40e7bf5662f1492975c4667e755021db5c80eddc6c8499d6e69c667e690",
+  "requirements_lock_sha256": "d90fb57f6a24b55b89525dc3e3ebdb822c2314c5a5cc7325f32f466d0a377952",
+  "source_code_sha256": {
+    "service.py": "5862ff546c5ab2dee6102568561a797b3305791b5f2390f0662b9fce84a78e7e",
+    "dispatch.py": "088684147ff07d4973783ecb260c19e2ef4b8b409392adc0004344ceaeab944c",
+    "planning.py": "ba13e3c90ea5003aca007be14e0a2fb218e29087e0a7486a29078b775133e11f",
+    "map_builder.py": "8485f4a5b5c15a739233aaabd4779bfc3cd8ed76148ff07908fee79e394e2df5",
+    "map_coordinates.py": "1b8dde8bf4cbadcc907f1609bbd0e2194205180ee75f980c9f6cfee7408dd318",
+    "map_extension.py": "9fa704e9b9e55fa83d323e79ced0d5b456125090f9a018ce27112efed397b365",
+    "osm_roads.py": "dff13616b40e9b385add0a871e637c6db6c7dcf7069eb6f9a1cae062023cda78",
+    "unity_coverage.py": "10f70328d90111f445dcf1dce37202d7140375912919e7bd4c173af9d794faed",
+    "map_data.py": "533124a983b457fa3f531ba366a3e41febb092c5e21dd0209291572a99e212ca",
+    "virtual_runtime.py": "5d067cde4545069eaf45c09e2c34ac67567ba7df146d0be17135dfdff506b470"
+  },
+  "coverage": {
+    "node_count": 187,
+    "directed_edge_count": 402,
+    "osm_way_count": 59,
+    "landmark_count": 14,
+    "stop_candidate_count": 14,
+    "round_trip_reachable_stop_count": 14
+  },
+  "trips": [
+    {
+      "target": "hitech",
+      "vehicle_id": "V01",
+      "departed_at_s": 0.0,
+      "dropoff_at_s": 78.5103425096007,
+      "returns_at_s": 157.02068501920138,
+      "pickup_distance_m": 0,
+      "delivery_distance_m": 654.2528542466725,
+      "return_distance_m": 654.2528542466725,
+      "round_trip_duration_s": 157.02068501920138,
+      "return_way_ids": [
+        "481241714",
+        "481241715",
+        "481241696",
+        "481241658",
+        "481241689",
+        "481241683"
+      ],
+      "returned": true
+    },
+    {
+      "target": "dorm_1",
+      "vehicle_id": "V01",
+      "departed_at_s": 157.02068501920138,
+      "dropoff_at_s": 188.29373972715524,
+      "returns_at_s": 219.56679443510907,
+      "pickup_distance_m": 0,
+      "delivery_distance_m": 260.6087892329487,
+      "return_distance_m": 260.6087892329487,
+      "round_trip_duration_s": 62.546109415907694,
+      "return_way_ids": [
+        "1390060991",
+        "281621314",
+        "481241658",
+        "481241689",
+        "481241683"
+      ],
+      "returned": true
+    },
+    {
+      "target": "dorm_2",
+      "vehicle_id": "V01",
+      "departed_at_s": 219.56679443510907,
+      "dropoff_at_s": 337.85285387770745,
+      "returns_at_s": 456.1389133203058,
+      "pickup_distance_m": 0,
+      "delivery_distance_m": 985.7171620216529,
+      "return_distance_m": 985.7171620216529,
+      "round_trip_duration_s": 236.57211888519672,
+      "return_way_ids": [
+        "471332807",
+        "284010313",
+        "731224474",
+        "281621314",
+        "481241658",
+        "481241689",
+        "481241683"
+      ],
+      "returned": true
+    },
+    {
+      "target": "dorm_3",
+      "vehicle_id": "V01",
+      "departed_at_s": 456.1389133203058,
+      "dropoff_at_s": 565.8869032275057,
+      "returns_at_s": 675.6348931347056,
+      "pickup_distance_m": 0,
+      "delivery_distance_m": 914.5665825599995,
+      "return_distance_m": 914.5665825599995,
+      "round_trip_duration_s": 219.49597981439985,
+      "return_way_ids": [
+        "471332807",
+        "284010313",
+        "731224474",
+        "281621314",
+        "481241658",
+        "481241689",
+        "481241683"
+      ],
+      "returned": true
+    },
+    {
+      "target": "inha_station",
+      "vehicle_id": "V01",
+      "departed_at_s": 675.6348931347056,
+      "dropoff_at_s": 724.4937894504667,
+      "returns_at_s": 773.3526857662278,
+      "pickup_distance_m": 0,
+      "delivery_distance_m": 407.15746929800866,
+      "return_distance_m": 407.15746929800866,
+      "round_trip_duration_s": 97.71779263152212,
+      "return_way_ids": [
+        "955217469",
+        "281621314",
+        "481241683"
+      ],
+      "returned": true
+    }
+  ],
+  "events": [
+    {
+      "time_s": 0.0,
+      "requests": [
+        {
+          "target": "hitech",
+          "status": "IN_TRANSIT",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_1",
+          "status": "QUEUED",
+          "vehicle_id": null
+        },
+        {
+          "target": "dorm_2",
+          "status": "QUEUED",
+          "vehicle_id": null
+        },
+        {
+          "target": "dorm_3",
+          "status": "QUEUED",
+          "vehicle_id": null
+        },
+        {
+          "target": "inha_station",
+          "status": "QUEUED",
+          "vehicle_id": null
+        }
+      ],
+      "vehicle_available": false
+    },
+    {
+      "time_s": 78.5103425096007,
+      "requests": [
+        {
+          "target": "hitech",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_1",
+          "status": "QUEUED",
+          "vehicle_id": null
+        },
+        {
+          "target": "dorm_2",
+          "status": "QUEUED",
+          "vehicle_id": null
+        },
+        {
+          "target": "dorm_3",
+          "status": "QUEUED",
+          "vehicle_id": null
+        },
+        {
+          "target": "inha_station",
+          "status": "QUEUED",
+          "vehicle_id": null
+        }
+      ],
+      "vehicle_available": false
+    },
+    {
+      "time_s": 157.02068501920138,
+      "requests": [
+        {
+          "target": "hitech",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_1",
+          "status": "IN_TRANSIT",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_2",
+          "status": "QUEUED",
+          "vehicle_id": null
+        },
+        {
+          "target": "dorm_3",
+          "status": "QUEUED",
+          "vehicle_id": null
+        },
+        {
+          "target": "inha_station",
+          "status": "QUEUED",
+          "vehicle_id": null
+        }
+      ],
+      "vehicle_available": false
+    },
+    {
+      "time_s": 188.29373972715524,
+      "requests": [
+        {
+          "target": "hitech",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_1",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_2",
+          "status": "QUEUED",
+          "vehicle_id": null
+        },
+        {
+          "target": "dorm_3",
+          "status": "QUEUED",
+          "vehicle_id": null
+        },
+        {
+          "target": "inha_station",
+          "status": "QUEUED",
+          "vehicle_id": null
+        }
+      ],
+      "vehicle_available": false
+    },
+    {
+      "time_s": 219.56679443510907,
+      "requests": [
+        {
+          "target": "hitech",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_1",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_2",
+          "status": "IN_TRANSIT",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_3",
+          "status": "QUEUED",
+          "vehicle_id": null
+        },
+        {
+          "target": "inha_station",
+          "status": "QUEUED",
+          "vehicle_id": null
+        }
+      ],
+      "vehicle_available": false
+    },
+    {
+      "time_s": 337.85285387770745,
+      "requests": [
+        {
+          "target": "hitech",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_1",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_2",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_3",
+          "status": "QUEUED",
+          "vehicle_id": null
+        },
+        {
+          "target": "inha_station",
+          "status": "QUEUED",
+          "vehicle_id": null
+        }
+      ],
+      "vehicle_available": false
+    },
+    {
+      "time_s": 456.1389133203058,
+      "requests": [
+        {
+          "target": "hitech",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_1",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_2",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_3",
+          "status": "IN_TRANSIT",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "inha_station",
+          "status": "QUEUED",
+          "vehicle_id": null
+        }
+      ],
+      "vehicle_available": false
+    },
+    {
+      "time_s": 565.8869032275057,
+      "requests": [
+        {
+          "target": "hitech",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_1",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_2",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_3",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "inha_station",
+          "status": "QUEUED",
+          "vehicle_id": null
+        }
+      ],
+      "vehicle_available": false
+    },
+    {
+      "time_s": 675.6348931347056,
+      "requests": [
+        {
+          "target": "hitech",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_1",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_2",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_3",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "inha_station",
+          "status": "IN_TRANSIT",
+          "vehicle_id": "V01"
+        }
+      ],
+      "vehicle_available": false
+    },
+    {
+      "time_s": 724.4937894504667,
+      "requests": [
+        {
+          "target": "hitech",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_1",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_2",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_3",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "inha_station",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        }
+      ],
+      "vehicle_available": false
+    },
+    {
+      "time_s": 773.3526857662278,
+      "requests": [
+        {
+          "target": "hitech",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_1",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_2",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "dorm_3",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        },
+        {
+          "target": "inha_station",
+          "status": "COMPLETED",
+          "vehicle_id": "V01"
+        }
+      ],
+      "vehicle_available": true
+    }
+  ],
+  "final_all_requests_completed": true,
+  "final_vehicle_available": true,
+  "test_result": {
+    "python": "3.14.4",
+    "pytest_passed": 75,
+    "ruff": "passed",
+    "format_check": "passed",
+    "warning": "Starlette httpx TestClient deprecation"
+  },
+  "limitations": [
+    "OSM topology and Unity road centerlines are source geometry, not approved vehicle access.",
+    "Missing access permission is a simulation assumption only; explicit restrictions remain excluded.",
+    "Speed is a configured 30 km/h (8.333333333333334 m/s) assumption, never an observed speed or legal limit.",
+    "OSM missing oneway follows the simulation bidirectional assumption; explicit oneway is preserved.",
+    "Road widths remain unknown; visual mesh widths are not measurements.",
+    "Length is horizontal AEQD distance; Terrain height, slopes and physical driving are not modeled.",
+    "Stops are projections of Unity general entrance candidates onto existing road segments within 35 m.",
+    "Entrance-to-stop gap is straight-line separation, not a validated pedestrian route.",
+    "No step-free access is certified; requests requiring it are rejected.",
+    "Vehicle capacity is synthetic; one request at a time, no battery or boarding/dwell time.",
+    "Only original campus centerlines and explicitly pinned extension corridor intervals are enabled; no whole-network expansion."
+  ]
+}

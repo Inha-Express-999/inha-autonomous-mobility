@@ -19,7 +19,7 @@ def test_create_assigns_a_suitable_vehicle_and_is_idempotent() -> None:
     service = MobilityService.synthetic_fixture()
     first = service.create_request(passenger_command())
     repeated = service.create_request(passenger_command())
-    assert first.request.status == "ASSIGNED"
+    assert first.request.status == "IN_TRANSIT"
     assert first.request.vehicle_id == "V01"
     assert repeated.request.id == first.request.id
 
@@ -33,14 +33,20 @@ def test_step_free_request_selects_step_free_stops() -> None:
     assert result.request.dropoff_stop_id == "library_step_free"
 
 
-def test_cancellation_releases_vehicle_and_is_idempotent() -> None:
-    service = MobilityService.synthetic_fixture()
-    created = service.create_request(passenger_command())
+def test_cancellation_keeps_vehicle_reserved_until_return_and_is_idempotent() -> None:
+    service = MobilityService.synthetic_fixture(clock=lambda: 0.0)
+    command = passenger_command()
+    command.pickup_landmark_id = "library"
+    command.dropoff_landmark_id = "hitech"
+    created = service.create_request(command)
     cancelled = service.cancel_request(created.request.id, "cancel-1", "fixture-passenger")
     repeated = service.cancel_request(created.request.id, "cancel-1", "fixture-passenger")
     assert cancelled.request.status == "CANCELLED"
-    assert service.vehicles["V01"].available is True
+    assert service.vehicles["V01"].available is False
     assert repeated.request.id == created.request.id
+    service.step(service.trips[created.request.id].returns_at_s)
+    assert service.vehicles["V01"].available is True
+    assert created.request.status == "CANCELLED"
 
 
 def test_unknown_landmark_is_rejected() -> None:
