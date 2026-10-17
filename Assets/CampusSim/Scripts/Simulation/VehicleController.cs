@@ -21,6 +21,17 @@ namespace InhaExpress.Client.Presentation
         [SerializeField, Min(0f)] private float maxSteerAngle = 30f;
         [SerializeField, Min(0f)] private float brakeTorque = 3000f;
 
+        [Header("Drive Command")]
+        [SerializeField, Min(0.01f)] private float speedControlGain = 0.5f;
+        [SerializeField, Min(0.01f)] private float brakingControlGain = 1f;
+        [SerializeField, Min(0f)] private float reverseSwitchStopSpeedMps = 0.2f;
+        [SerializeField, Min(0.05f)] private float driveCommandTimeoutSeconds = 0.5f;
+
+#if UNITY_EDITOR
+        [Header("Editor Input")]
+        [SerializeField] private bool editorKeyboardInputEnabled = true;
+#endif
+
         [Header("Anti-Roll Bars")]
         [SerializeField, Min(0f)] private float frontAntiRollStiffness = 5000f;
         [SerializeField, Min(0f)] private float rearAntiRollStiffness = 5000f;
@@ -34,17 +45,45 @@ namespace InhaExpress.Client.Presentation
         private WheelCollider rearRightWheel;
         private float driveInput;
         private float steerInput;
-        private bool brakeInput;
+        private float brakeInput;
+        private bool driveCommandMode;
+        private float targetSpeedMps;
+        private float targetSteeringAngleRad;
+        private bool emergencyStopRequested;
+        private float lastDriveCommandTime;
 
         /// <summary>
-        /// Supplies normalized driving inputs from a runtime controller.
-        /// Throttle and steering are clamped to the range -1..1.
+        /// Requests a signed target speed (km/h), front-wheel steering angle (radians), and optional
+        /// emergency stop. Positive speed is forward; negative speed is reverse. Positive steering
+        /// turns right and negative steering turns left. Values are clamped to this vehicle's limits.
+        /// Returns false for non-finite input and requests an emergency stop. Call on Unity's main
+        /// thread; network callbacks should enqueue commands for the main thread.
         /// </summary>
-        public void SetControlInput(float throttle, float steering, bool brake)
+        public bool SetDriveCommand(float targetSpeedKmh, float steeringAngleRad, bool emergencyStop = false)
         {
-            driveInput = Mathf.Clamp(throttle, -1f, 1f);
-            steerInput = Mathf.Clamp(steering, -1f, 1f);
-            brakeInput = brake;
+            driveCommandMode = true;
+#if UNITY_EDITOR
+            editorKeyboardInputEnabled = false;
+#endif
+            lastDriveCommandTime = Time.time;
+
+            if (!IsFinite(targetSpeedKmh) || !IsFinite(steeringAngleRad))
+            {
+                this.targetSpeedMps = 0f;
+                targetSteeringAngleRad = 0f;
+                emergencyStopRequested = true;
+                return false;
+            }
+
+            float maxSteeringAngleRad = Mathf.Max(0f, maxSteerAngle) * Mathf.Deg2Rad;
+            float clampedTargetSpeedKmh = Mathf.Clamp(
+                targetSpeedKmh,
+                -Mathf.Max(0f, maxReverseSpeedKmh),
+                Mathf.Max(0f, maxForwardSpeedKmh));
+            this.targetSpeedMps = clampedTargetSpeedKmh / 3.6f;
+            targetSteeringAngleRad = Mathf.Clamp(steeringAngleRad, -maxSteeringAngleRad, maxSteeringAngleRad);
+            emergencyStopRequested = emergencyStop;
+            return true;
         }
 
         private void Awake()
@@ -56,10 +95,14 @@ namespace InhaExpress.Client.Presentation
 #if UNITY_EDITOR
         private void Update()
         {
+            if (!editorKeyboardInputEnabled)
+                return;
+
+            driveCommandMode = false;
             Keyboard keyboard = Keyboard.current;
             if (keyboard == null)
             {
-                SetControlInput(0f, 0f, false);
+                StoreControlInput(0f, 0f, 0f);
                 return;
             }
 
@@ -70,16 +113,76 @@ namespace InhaExpress.Client.Presentation
             bool steerLeft = keyboard.leftArrowKey.isPressed;
             bool steerRight = keyboard.rightArrowKey.isPressed;
             float steering = steerLeft == steerRight ? 0f : steerLeft ? -1f : 1f;
-            SetControlInput(throttle, steering, keyboard.spaceKey.isPressed);
+            StoreControlInput(throttle, steering, keyboard.spaceKey.isPressed ? 1f : 0f);
         }
 #endif
 
         private void FixedUpdate()
         {
+            if (driveCommandMode)
+                UpdateDriveCommandInputs();
+
             ApplySteering();
             ApplyDriveAndBrakes();
             ApplyAntiRollBars();
         }
+
+        private void StoreControlInput(float throttle, float steering, float brake)
+        {
+            if (!IsFinite(throttle) || !IsFinite(steering) || !IsFinite(brake))
+            {
+                driveInput = 0f;
+                steerInput = 0f;
+                brakeInput = 1f;
+                return;
+            }
+
+            driveInput = Mathf.Clamp(throttle, -1f, 1f);
+            steerInput = Mathf.Clamp(steering, -1f, 1f);
+            brakeInput = Mathf.Clamp01(brake);
+        }
+
+        private void UpdateDriveCommandInputs()
+        {
+            float commandTimeout = Mathf.Max(driveCommandTimeoutSeconds, Time.fixedDeltaTime);
+            bool commandExpired = Time.time - lastDriveCommandTime > commandTimeout;
+            if (commandExpired || emergencyStopRequested)
+            {
+                driveInput = 0f;
+                brakeInput = 1f;
+                return;
+            }
+
+            float forwardSpeed = Vector3.Dot(vehicleBody.linearVelocity, transform.forward);
+            if (Mathf.Abs(targetSpeedMps) <= 0.01f)
+            {
+                driveInput = 0f;
+                brakeInput = Mathf.Clamp01(Mathf.Abs(forwardSpeed) * brakingControlGain);
+                return;
+            }
+
+            if (forwardSpeed * targetSpeedMps < 0f && Mathf.Abs(forwardSpeed) > reverseSwitchStopSpeedMps)
+            {
+                driveInput = 0f;
+                brakeInput = Mathf.Clamp01(Mathf.Abs(forwardSpeed) * brakingControlGain);
+                return;
+            }
+
+            float targetDirection = Mathf.Sign(targetSpeedMps);
+            float speedError = Mathf.Abs(targetSpeedMps) - forwardSpeed * targetDirection;
+            if (speedError >= 0f)
+            {
+                driveInput = targetDirection * Mathf.Clamp01(speedError * speedControlGain);
+                brakeInput = 0f;
+            }
+            else
+            {
+                driveInput = 0f;
+                brakeInput = Mathf.Clamp01(-speedError * brakingControlGain);
+            }
+        }
+
+        private static bool IsFinite(float value) => !float.IsNaN(value) && !float.IsInfinity(value);
 
         private void CacheWheels()
         {
@@ -166,7 +269,9 @@ namespace InhaExpress.Client.Presentation
 
         private void ApplySteering()
         {
-            float steeringAngle = steerInput * maxSteerAngle;
+            float steeringAngle = driveCommandMode
+                ? targetSteeringAngleRad * Mathf.Rad2Deg
+                : steerInput * maxSteerAngle;
             for (int i = 0; i < frontWheels.Length; i++)
                 frontWheels[i].steerAngle = steeringAngle;
         }
@@ -178,8 +283,8 @@ namespace InhaExpress.Client.Presentation
             float maxReverseSpeedMps = maxReverseSpeedKmh / 3.6f;
             bool atSpeedLimit = driveInput > 0f && forwardSpeed >= maxForwardSpeedMps
                                 || driveInput < 0f && forwardSpeed <= -maxReverseSpeedMps;
-            float appliedMotorTorque = brakeInput || atSpeedLimit ? 0f : driveInput * motorTorque;
-            float appliedBrakeTorque = brakeInput ? brakeTorque : 0f;
+            float appliedMotorTorque = brakeInput > 0f || atSpeedLimit ? 0f : driveInput * motorTorque;
+            float appliedBrakeTorque = brakeInput * brakeTorque;
 
             for (int i = 0; i < rearWheels.Length; i++)
                 rearWheels[i].motorTorque = appliedMotorTorque;
