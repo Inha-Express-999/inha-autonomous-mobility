@@ -21,9 +21,17 @@ namespace InhaExpress.Client.Presentation
         [SerializeField, Min(0f)] private float maxSteerAngle = 30f;
         [SerializeField, Min(0f)] private float brakeTorque = 3000f;
 
+        [Header("Anti-Roll Bars")]
+        [SerializeField, Min(0f)] private float frontAntiRollStiffness = 5000f;
+        [SerializeField, Min(0f)] private float rearAntiRollStiffness = 5000f;
+
         private Rigidbody vehicleBody;
         private WheelCollider[] frontWheels;
         private WheelCollider[] rearWheels;
+        private WheelCollider frontLeftWheel;
+        private WheelCollider frontRightWheel;
+        private WheelCollider rearLeftWheel;
+        private WheelCollider rearRightWheel;
         private float driveInput;
         private float steerInput;
         private bool brakeInput;
@@ -70,6 +78,7 @@ namespace InhaExpress.Client.Presentation
         {
             ApplySteering();
             ApplyDriveAndBrakes();
+            ApplyAntiRollBars();
         }
 
         private void CacheWheels()
@@ -120,6 +129,39 @@ namespace InhaExpress.Client.Presentation
                 else
                     rearWheels[rearIndex++] = wheels[i];
             }
+
+            AssignWheelPair(frontWheels, out frontLeftWheel, out frontRightWheel);
+            AssignWheelPair(rearWheels, out rearLeftWheel, out rearRightWheel);
+        }
+
+        private void AssignWheelPair(WheelCollider[] axle, out WheelCollider leftWheel, out WheelCollider rightWheel)
+        {
+            leftWheel = null;
+            rightWheel = null;
+            float leftX = float.PositiveInfinity;
+            float rightX = float.NegativeInfinity;
+
+            for (int i = 0; i < axle.Length; i++)
+            {
+                Vector3 localWheelCenter = transform.InverseTransformPoint(axle[i].transform.TransformPoint(axle[i].center));
+                if (localWheelCenter.x < leftX)
+                {
+                    leftX = localWheelCenter.x;
+                    leftWheel = axle[i];
+                }
+
+                if (localWheelCenter.x > rightX)
+                {
+                    rightX = localWheelCenter.x;
+                    rightWheel = axle[i];
+                }
+            }
+
+            if (axle.Length < 2 || leftWheel == rightWheel)
+            {
+                Debug.LogError($"{nameof(VehicleController)} requires a left and right WheelCollider on each axle.", this);
+                enabled = false;
+            }
         }
 
         private void ApplySteering()
@@ -149,6 +191,38 @@ namespace InhaExpress.Client.Presentation
                 frontWheels[i].brakeTorque = appliedBrakeTorque;
             for (int i = 0; i < rearWheels.Length; i++)
                 rearWheels[i].brakeTorque = appliedBrakeTorque;
+        }
+
+        private void ApplyAntiRollBars()
+        {
+            ApplyAntiRollBar(frontLeftWheel, frontRightWheel, frontAntiRollStiffness);
+            ApplyAntiRollBar(rearLeftWheel, rearRightWheel, rearAntiRollStiffness);
+        }
+
+        private void ApplyAntiRollBar(WheelCollider leftWheel, WheelCollider rightWheel, float stiffness)
+        {
+            if (stiffness <= 0f)
+                return;
+
+            float leftTravel = GetSuspensionTravel(leftWheel);
+            float rightTravel = GetSuspensionTravel(rightWheel);
+            float antiRollForce = (leftTravel - rightTravel) * stiffness;
+
+            Vector3 leftApplicationPoint = leftWheel.transform.TransformPoint(leftWheel.center);
+            Vector3 rightApplicationPoint = rightWheel.transform.TransformPoint(rightWheel.center);
+            vehicleBody.AddForceAtPosition(-leftWheel.transform.up * antiRollForce, leftApplicationPoint);
+            vehicleBody.AddForceAtPosition(rightWheel.transform.up * antiRollForce, rightApplicationPoint);
+        }
+
+        private static float GetSuspensionTravel(WheelCollider wheel)
+        {
+            if (!wheel.GetGroundHit(out WheelHit hit))
+                return 1f;
+
+            float suspensionDistance = Mathf.Max(wheel.suspensionDistance, 0.001f);
+            float localHitY = wheel.transform.InverseTransformPoint(hit.point).y;
+            float suspensionTravel = (wheel.center.y - localHitY - wheel.radius) / suspensionDistance;
+            return Mathf.Clamp01(suspensionTravel);
         }
     }
 }

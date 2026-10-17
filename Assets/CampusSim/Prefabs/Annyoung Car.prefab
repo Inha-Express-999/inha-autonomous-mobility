@@ -596,3 +596,5 @@ MonoBehaviour:
   motorTorque: 1500
   maxSteerAngle: 30
   brakeTorque: 3000
+  frontAntiRollStiffness: 5000
+  rearAntiRollStiffness: 5000
