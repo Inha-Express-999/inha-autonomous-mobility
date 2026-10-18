@@ -1,13 +1,15 @@
 # 구현 현황
 
-프로젝트 버전 **0.2.2.0** · 2026-10-15. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
+프로젝트 버전 **0.2.3.0** · 2026-10-18. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
+
+2026-10-18: 독립 세션 `/demo/`에서 OSM 기반 웹 2D 관제와 차량 3대 경로 재생, 요청·FIFO·배터리·충전, 1~300배속/정지/초기화를 연결했다. 전체 pytest 99개와 브라우저 요청·배차·충전·정지 흐름을 검증했다. Unity/물리/센서 완료 판정과는 구분한다. [시연 안내](WEB_DEMO.md)를 따른다.
 
 ## 단계별 상태
 
 | 단계 | 상태 | 확인된 구현 및 남은 종료 조건 |
 |---|---|---|
 | M0 클라이언트 기반 | VERIFIED (범위 한정) | Bootstrap/Additive 씬, Windows/Android 빌드 프로필, DTO, WorldStateStore, 좌표 변환, fixture replay 및 PC/Mobile uGUI 기본 화면. Unity 6000.3.21f1에서 과거 기록된 EditMode 54/54와 PlayMode 1/1, 화면 smoke 결과가 있다. Android Player/실기기 검증은 아니다. |
-| M0 Python 서버 기반 | PARTIAL | FastAPI/Pydantic, 메모리 요청/취소 API, FIFO와 OSM/Unity 형상 기반 가상 시간 실행. 기본 V01~V03 세 대, 테스트 91개 및 Ruff/format check 검증. 영속 저장, 인증된 principal/명령 충돌 방어, WebSocket/Unity 연결은 미완료다. |
+| M0 Python 서버 기반 | PARTIAL | FastAPI/Pydantic, 메모리 요청/취소 API, FIFO와 OSM/Unity 형상 기반 가상 시간 실행. 기본 V01~V03 세 대, 테스트 99개 및 Ruff/format check 검증. 독립 OSM 웹 2D 시연 세션을 제공한다. 영속 저장, 인증된 principal/명령 충돌 방어, WebSocket/Unity 연결은 미완료다. |
 | 지도 조사·표현 | PARTIAL | OSM/DSM 조사 자료, 기존 Unity 캠퍼스 장면 및 근사 Terrain/건물 표현이 있다. 서비스용 그래프/Stop 또는 통행·접근성 승인은 아니다. 개별 상태는 [지도 계획](MapResearch/PLAN.md)을 따른다. |
 | M1 단일 차량 수직 흐름 | PARTIAL (실제 형상·가상 시간 실행) | 자체 Dijkstra, 방향/평행 edge와 geometry 복원, FIFO·용량·Stop 접근성·세 구간 경로 확인, 픽업→시간상 완료→복귀 후 재배차. 정적 100 합성 OD를 Floyd–Warshall 기준과 대조했다. A* 비교, 승인된 실제 운송 지도, 승하차 시간/도착 판정, Unity 주행은 없어 T01/T03 전체 통과가 아니다. 합성 배터리 소모·예비량·충전과 3대 차량 FIFO 가상 시간 운행을 추가했다. |
 | M2 실제 지도·Stop·커버리지 | PARTIAL (형상 그래프·후보) | OSM/Unity 도로 59 way, 187 node, 402 방향 edge를 AEQD로 변환했다. 인벤토리 14곳 모두 Stop 후보와 정문 왕복 경로를 제공한다. 하이테크/생활관 1·2·3/역을 포함한 v2이며 역은 Unity 중심선 기반 우회 복귀를 사용한다. 접근성·폭·통행·보행/차량 연결 승인과 비룡플라자 정책은 미완료다. 원본/생성 코드 해시와 누락/오류 실패 처리를 검증했다. |
@@ -51,4 +53,4 @@
 3. Dijkstra→A* 비교와 Unity 차량 1대의 실제 운송 흐름을 구현한다. 가상 왕복 타이머는 물리 운송 완료 판정으로 사용하지 않는다.
 4. M2 지도/접근성/비룡플라자 범위를 완료한 뒤, 센서·안전, 다중 차량, WebSocket 통합 순으로 진행한다.
 
-버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.2.2.0로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
+버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.2.3.0로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.

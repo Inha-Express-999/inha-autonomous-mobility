@@ -1,10 +1,15 @@
 import asyncio
 from contextlib import asynccontextmanager, suppress
+from pathlib import Path
+from threading import RLock
 
 from fastapi import FastAPI, HTTPException, status
+from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
 
 from campus_sim.domain import CommandAck, CreateRequest, Landmark, RequestView
 from campus_sim.service import MobilityService
+from campus_sim.web_demo import DemoControl, DemoScenario, DemoSession
 
 
 def create_app(service: MobilityService | None = None) -> FastAPI:
@@ -13,6 +18,8 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
         async def advance():
             while True:
                 app.state.service.step()
+                if app.state.demo is not None:
+                    await asyncio.to_thread(app.state.demo.advance)
                 await asyncio.sleep(0.1)
 
         task = asyncio.create_task(advance())
@@ -23,8 +30,62 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
             with suppress(asyncio.CancelledError):
                 await task
 
-    app = FastAPI(title="Inha Autonomous Mobility API", version="0.2.2.0", lifespan=lifespan)
+    app = FastAPI(title="Inha Autonomous Mobility API", version="0.2.3.0", lifespan=lifespan)
     app.state.service = service or MobilityService.from_osm_map()
+    app.state.demo = None
+    app.state.demo_lock = RLock()
+
+    def demo():
+        with app.state.demo_lock:
+            if app.state.demo is None:
+                app.state.demo = DemoSession()
+            return app.state.demo
+
+    @app.get("/", include_in_schema=False)
+    def home():
+        return RedirectResponse("/demo/")
+
+    @app.get("/v1/demo/map")
+    def demo_map():
+        return demo().map
+
+    @app.get("/v1/demo/state")
+    def demo_state():
+        return demo().state()
+
+    @app.post("/v1/demo/control")
+    def demo_control(command: DemoControl):
+        return demo().control(command)
+
+    @app.post("/v1/demo/reset")
+    def demo_reset():
+        return demo().reset()
+
+    @app.post("/v1/demo/scenario")
+    def demo_scenario(command: DemoScenario):
+        return demo().scenario(command.name)
+
+    @app.post("/v1/demo/requests", response_model=CommandAck, status_code=201)
+    def demo_request(command: CreateRequest):
+        try:
+            return demo().submit(command)
+        except ValueError as error:
+            raise HTTPException(status_code=422, detail=str(error)) from error
+
+    @app.post("/v1/demo/requests/{request_id}/cancel", response_model=CommandAck)
+    def demo_cancel(request_id: str):
+        session = demo()
+        try:
+            with session.lock:
+                return session.service.cancel_request(
+                    request_id, f"web-cancel-{request_id}", "web-demo"
+                )
+        except KeyError as error:
+            raise HTTPException(status_code=404, detail="request not found") from error
+        except ValueError as error:
+            raise HTTPException(status_code=409, detail=str(error)) from error
+
+    app.mount("/demo", StaticFiles(directory=Path(__file__).parent / "web", html=True), name="demo")
 
     @app.get("/health")
     def health() -> dict[str, str]:

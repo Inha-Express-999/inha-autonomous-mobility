@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "build_project_version": "0.2.2.0",
+  "build_project_version": "0.2.3.0",
   "map_version": "inha-osm-unity-v2",
   "geometry_source": "cached_osm_and_unity_centerlines",
   "synthetic_geometry": false,
@@ -61,7 +61,7 @@
     },
     "project_version": {
       "path": "VERSION",
-      "sha256": "fbd16eb45f1b5849779c3fa73fe7f916aa6f3d87f1c9ada41c62dbf82a3f3427"
+      "sha256": "5a76916987624261ed5b78434c9ee49c07897b2afc2bdc963713fb60afaeb2d6"
     },
     "expanded_osm": {
       "path": "Docs/MapResearch/2026-09-17/expanded_campus.osm",
