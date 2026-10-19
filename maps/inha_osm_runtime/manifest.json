@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "build_project_version": "0.2.3.0",
+  "build_project_version": "0.2.4.0",
   "map_version": "inha-osm-unity-v2",
   "geometry_source": "cached_osm_and_unity_centerlines",
   "synthetic_geometry": false,
@@ -25,9 +25,10 @@
     "Three synthetic vehicles; one request each; no boarding/dwell time or multi-vehicle collision coordination.",
     "Only original campus centerlines and explicitly pinned extension corridor intervals are enabled; no whole-network expansion.",
     "Battery capacity, energy rates and charge power are synthetic configurable assumptions, not vehicle measurements.",
-    "Three independent ideal 1000 W home charging ports at main_gate; no charger travel beyond the planned return.",
+    "One ideal 1000 W charging port at each configured home hub; charging infrastructure is synthetic.",
     "Standby vehicles power down: no idle drain. Auxiliary power is applied throughout travel; charging power is net stored power.",
-    "All legs including home return plus 15 percent capacity reserve are required before dispatch; load correction applies to delivery only."
+    "All legs including return to the assigned vehicle home plus 15 percent capacity reserve are required before dispatch; load correction applies to delivery only.",
+    "V01 main_gate, V02 rear_gate, V03 existing OSM road node within parking way568420971; authoring bay/entrance access is unverified, no straight bay connector is created."
   ],
   "home_stop_id": "main_gate_road_candidate",
   "sources": {
@@ -45,7 +46,7 @@
     },
     "policy": {
       "path": "configs/osm_runtime.json",
-      "sha256": "7ca28b99bc9d791e37036bc8117717682af170adbd607ebe1ac82d645c165091"
+      "sha256": "0bfa77a975274aa7458f177742deda595582d866b373950ba9cba93e10330a62"
     },
     "attribution": {
       "path": "Assets/InhaCampus/Source/ATTRIBUTION.txt",
@@ -53,7 +54,7 @@
     },
     "builder": {
       "path": "backend/src/campus_sim/map_builder.py",
-      "sha256": "8ec0564f9e369ee81524c601a203793f0e94a430949a459e26bfe8f24428e42e"
+      "sha256": "08eb0037fb4e04bb112061151ebe114e146621d9127302704af8d1968d9a67ae"
     },
     "coordinate_adapter": {
       "path": "backend/src/campus_sim/map_coordinates.py",
@@ -61,7 +62,7 @@
     },
     "project_version": {
       "path": "VERSION",
-      "sha256": "5a76916987624261ed5b78434c9ee49c07897b2afc2bdc963713fb60afaeb2d6"
+      "sha256": "d305687069dd1ad0ab28a88e5d107f53ed8a08a99a3ece24e9ab8884beb418f5"
     },
     "expanded_osm": {
       "path": "Docs/MapResearch/2026-09-17/expanded_campus.osm",
@@ -90,14 +91,22 @@
     "unity_coverage": {
       "path": "backend/src/campus_sim/unity_coverage.py",
       "sha256": "10f70328d90111f445dcf1dce37202d7140375912919e7bd4c173af9d794faed"
+    },
+    "hub_reference": {
+      "path": "Docs/MapResearch/Iterations/west-field-hub-validation.json",
+      "sha256": "f837fd83d5cb8286f9c640a60ce99326cfaef6576302a9f3f0f200af3e629490"
+    },
+    "hub_builder": {
+      "path": "backend/src/campus_sim/hubs.py",
+      "sha256": "0590f061337c23dd088451915db8bf308ec53128f4a6cc02d260d03066542b6b"
     }
   },
   "files": {
     "graph.json": "df7dd600768e62c2b8d6a986732a44871cd95af7b081a472f175217e971d78cc",
     "stops.json": "4543db0326177442a39a0676fa733b00a06cb4d6103adecd390d3f5c5b627ba6",
     "landmarks.json": "f4ae9f70a79a57e7a3a58c3b0b838a3633c60c93512b6258b041d3c1132b35f8",
-    "policy.json": "7ca28b99bc9d791e37036bc8117717682af170adbd607ebe1ac82d645c165091",
-    "build_report.json": "5ad4ec2f11f14fa84ade7df837b2c7ebf458c912d01093c5861882e2fd04deda",
+    "policy.json": "0bfa77a975274aa7458f177742deda595582d866b373950ba9cba93e10330a62",
+    "build_report.json": "bb5b1248f49ff90ec173c563f77fe85c7d00c292df6c66ad87651f78696b2ecb",
     "ATTRIBUTION.txt": "e5a9771be6e33b0ca13eac2ebd338232202b45ba8e7740046e5e50f53d75c257"
   }
 }

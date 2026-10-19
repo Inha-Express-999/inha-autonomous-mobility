@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 3,
   "map_version": "inha-osm-unity-v2",
   "routing_mode": "osm_geometry_simulation",
   "default_speed_mps": 8.333333333333334,
@@ -23,9 +23,10 @@
     "Three synthetic vehicles; one request each; no boarding/dwell time or multi-vehicle collision coordination.",
     "Only original campus centerlines and explicitly pinned extension corridor intervals are enabled; no whole-network expansion.",
     "Battery capacity, energy rates and charge power are synthetic configurable assumptions, not vehicle measurements.",
-    "Three independent ideal 1000 W home charging ports at main_gate; no charger travel beyond the planned return.",
+    "One ideal 1000 W charging port at each configured home hub; charging infrastructure is synthetic.",
     "Standby vehicles power down: no idle drain. Auxiliary power is applied throughout travel; charging power is net stored power.",
-    "All legs including home return plus 15 percent capacity reserve are required before dispatch; load correction applies to delivery only."
+    "All legs including return to the assigned vehicle home plus 15 percent capacity reserve are required before dispatch; load correction applies to delivery only.",
+    "V01 main_gate, V02 rear_gate, V03 existing OSM road node within parking way568420971; authoring bay/entrance access is unverified, no straight bay connector is created."
   ],
   "extension_corridors": {
     "excluded_osm_way_ids": [
@@ -624,24 +625,28 @@
       "passenger_capacity": 4,
       "wheelchair_slots": 1,
       "cargo_capacity_kg": 20,
-      "available": true
+      "available": true,
+      "home_hub_id": "main_gate"
     },
     {
       "id": "V02",
       "passenger_capacity": 4,
       "wheelchair_slots": 1,
       "cargo_capacity_kg": 20,
-      "available": true
+      "available": true,
+      "home_hub_id": "rear_gate"
     },
     {
       "id": "V03",
       "passenger_capacity": 4,
       "wheelchair_slots": 1,
       "cargo_capacity_kg": 20,
-      "available": true
+      "available": true,
+      "home_hub_id": "west_field_parking"
     }
   ],
   "battery": {
+    "charge_when_idle": true,
     "capacity_wh": 2000.0,
     "initial_wh": 2000.0,
     "wh_per_m": 0.35,
@@ -651,5 +656,27 @@
     "charging_power_w": 1000.0,
     "passenger_load_fraction": 0.05,
     "cargo_load_fraction_per_kg": 0.01
-  }
+  },
+  "hubs": [
+    {
+      "id": "main_gate",
+      "name": "정문",
+      "stop_id": "main_gate_road_candidate",
+      "charging_ports": 1
+    },
+    {
+      "id": "rear_gate",
+      "name": "후문",
+      "stop_id": "rear_gate_road_candidate",
+      "charging_ports": 1
+    },
+    {
+      "id": "west_field_parking",
+      "name": "운동장 옆 주차장",
+      "node_id": "osm:10058484941",
+      "source_parking_osm_way_id": "568420971",
+      "source_unity_hub_id": "west_field_autonomous_hub",
+      "charging_ports": 1
+    }
+  ]
 }

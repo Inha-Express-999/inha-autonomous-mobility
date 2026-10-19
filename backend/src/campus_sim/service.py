@@ -6,11 +6,17 @@ from functools import wraps
 from math import isfinite
 from pathlib import Path
 from threading import RLock
-from time import monotonic
+from time import monotonic, perf_counter
 from uuid import uuid4
 
 from campus_sim.battery import BatteryPolicy, BatteryState, ChargeSession
-from campus_sim.dispatch import Assignment, FifoDispatch
+from campus_sim.dispatch import (
+    Assignment,
+    FifoDispatch,
+    GreedyDispatch,
+    HungarianDispatch,
+    has_capacity,
+)
 from campus_sim.domain import (
     CommandAck,
     CreateRequest,
@@ -47,8 +53,14 @@ class MobilityService:
     commands: dict[str, CommandAck] = field(default_factory=dict)
     graph: RoadGraph | None = None
     costs: CostSnapshot | None = None
+    route_algorithm: str = "dijkstra"
+    dispatch_algorithm: str = "fifo"
+    dispatch_log: list[dict] = field(default_factory=list)
+    _defer_dispatch: bool = field(default=False, init=False, repr=False)
+    _dispatch_opportunities: int = field(default=0, init=False, repr=False)
     stop_nodes: dict[str, str] = field(default_factory=dict)
     home_nodes: dict[str, str] = field(default_factory=dict)
+    home_hubs: dict[str, dict] = field(default_factory=dict)
     trips: dict[str, VirtualTrip] = field(default_factory=dict)
     waiting_reasons: dict[str, str] = field(default_factory=dict)
     battery_policy: BatteryPolicy | None = None
@@ -97,7 +109,10 @@ class MobilityService:
         if type(count) is not int or not 1 <= count <= len(bundle.vehicles):
             raise ValueError("vehicle_count outside configured fleet")
         service.vehicles = {v.id: v for v in bundle.vehicles[:count]}
-        service.home_nodes = {v.id: bundle.home_node for v in bundle.vehicles[:count]}
+        service.home_nodes = {v.id: bundle.home_nodes[v.id] for v in bundle.vehicles[:count]}
+        service.home_hubs = {
+            v.id: bundle.hubs[bundle.home_hub_ids[v.id]] for v in bundle.vehicles[:count]
+        }
         if battery_enabled:
             service.battery_policy = bundle.battery
             service.batteries = {
@@ -163,7 +178,8 @@ class MobilityService:
 
     @synchronized
     def create_request(self, command: CreateRequest) -> CommandAck:
-        self.step()
+        if not self._defer_dispatch:
+            self.step()
         cached = self.commands.get(command.command_id)
         if cached is not None:
             return cached
@@ -191,10 +207,28 @@ class MobilityService:
             latest_arrival_s=command.latest_arrival_s,
         )
         self.requests[request.id] = request
-        self._dispatch_at(self._time_s)
+        if not self._defer_dispatch:
+            self._dispatch_at(self._time_s)
         ack = CommandAck(command_id=command.command_id, accepted=True, request=request)
         self.commands[command.command_id] = ack
         return ack
+
+    @synchronized
+    def create_batch(self, commands: list[CreateRequest]) -> tuple[CommandAck, ...]:
+        """Validate all inputs before queueing; one matching for one arrival tick."""
+        if len({c.command_id for c in commands}) != len(commands):
+            raise ValueError("duplicate batch command id")
+        for command in commands:
+            self._select_stop(command.pickup_landmark_id, command.service_needs.requires_step_free)
+            self._select_stop(command.dropoff_landmark_id, command.service_needs.requires_step_free)
+        self.step()
+        self._defer_dispatch = True
+        try:
+            acknowledgements = tuple(self.create_request(c) for c in commands)
+        finally:
+            self._defer_dispatch = False
+        self._dispatch_at(self._time_s)
+        return acknowledgements
 
     @synchronized
     def cancel_request(self, request_id: str, command_id: str, owner_id: str) -> CommandAck:
@@ -238,6 +272,17 @@ class MobilityService:
         return candidates[0]
 
     def _dispatch_at(self, now_s: float) -> tuple[Assignment, ...]:
+        began = perf_counter()
+        # Charging at a home hub is interruptible, but only for a selected,
+        # energy-feasible mission. Never expose an occupied vehicle as idle.
+        charging = {c.vehicle_id: c for c in self.charges if not c.completed}
+        candidates = [
+            v.model_copy(update={"available": True}) if v.id in charging else v
+            for v in self.vehicles.values()
+        ]
+        order = dict(self.vehicle_order)
+        for index, identifier in enumerate(charging, self._ready_sequence + 1):
+            order[identifier] = index
         routes: dict[tuple[str, str], tuple[RoutePlan, RoutePlan, RoutePlan]] = {}
         needs_charge: set[str] = set()
         self.waiting_reasons = {
@@ -258,7 +303,9 @@ class MobilityService:
             if home is None or pickup is None or dropoff is None:
                 self.waiting_reasons[request.id] = "MISSING_MAP_MAPPING"
                 return False
-            plan = plan_round_trip(self.graph, self.costs, home, pickup, dropoff)
+            plan = plan_round_trip(
+                self.graph, self.costs, home, pickup, dropoff, self.route_algorithm
+            )
             if plan is None:
                 self.waiting_reasons[request.id] = "NO_ROUND_TRIP_ROUTE"
                 return False
@@ -275,14 +322,87 @@ class MobilityService:
             routes[vehicle.id, request.id] = plan
             return True
 
-        assignments = FifoDispatch().assign(
-            self.requests.values(),
-            self.vehicles.values(),
-            feasible,
-            vehicle_order=self.vehicle_order,
-        )
+        if self.dispatch_algorithm == "fifo":
+            assignments = FifoDispatch().assign(
+                self.requests.values(),
+                candidates,
+                feasible,
+                vehicle_order=order,
+            )
+        elif self.dispatch_algorithm in {"greedy", "hungarian"}:
+
+            def cost(vehicle, request):
+                return self.assignment_cost(routes[vehicle.id, request.id], request, now_s, vehicle)
+
+            def priority(request):
+                base = (
+                    3
+                    if (
+                        request.service_needs.requires_step_free
+                        or request.service_needs.boarding_assistance
+                    )
+                    else (2 if request.service_type.value == "PASSENGER" else 1)
+                )
+                best_completion = (
+                    min(
+                        p[0].cost_s + p[1].cost_s for (v, r), p in routes.items() if r == request.id
+                    )
+                    if any(r == request.id for v, r in routes)
+                    else 0
+                )
+                deadline = (
+                    0
+                    if request.latest_arrival_s is None
+                    else 2
+                    * max(0, min(2, 1 - (request.latest_arrival_s - now_s - best_completion) / 600))
+                )
+                score = base + max(0, now_s - request.created_s) / 120 + deadline
+                return -score, request.created_s, request.id
+
+            policy = (
+                GreedyDispatch() if self.dispatch_algorithm == "greedy" else HungarianDispatch()
+            )
+            assignments = policy.assign(
+                self.requests.values(),
+                candidates,
+                feasible,
+                cost=cost,
+                priority=priority,
+                now_s=now_s,
+                opportunity_count=self._dispatch_opportunities,
+            )
+        else:
+            raise ValueError("unknown dispatch algorithm")
+        if routes or (self.waiting_reasons and any(v.available for v in self.vehicles.values())):
+            self.dispatch_log.append(
+                {
+                    "time_s": now_s,
+                    "algorithm": self.dispatch_algorithm,
+                    "elapsed_s": perf_counter() - began,
+                    "assignments": [
+                        {
+                            "request_id": a.request_id,
+                            "vehicle_id": a.vehicle_id,
+                            "cost_s": self.assignment_cost(
+                                routes[a.vehicle_id, a.request_id],
+                                self.requests[a.request_id],
+                                now_s,
+                                self.vehicles[a.vehicle_id],
+                            ),
+                        }
+                        for a in assignments
+                    ],
+                }
+            )
+            self.dispatch_log[:] = self.dispatch_log[-2000:]
+        self._dispatch_opportunities += len(assignments)
         for assignment in assignments:
             request = self.requests[assignment.request_id]
+            charge = charging.get(assignment.vehicle_id)
+            if charge is not None:
+                charge.ends_at_s = now_s
+                charge.completed = True
+                charge.interrupted = True
             self.vehicles[assignment.vehicle_id].available = False
             self.vehicle_order.pop(assignment.vehicle_id, None)
             request.status = RequestStatus.ASSIGNED
@@ -296,6 +416,8 @@ class MobilityService:
                 pickup,
                 delivery,
                 returning,
+                dispatch_algorithm=self.dispatch_algorithm,
+                route_algorithm=self.route_algorithm,
             )
             self.trips[request.id] = trip
             trip.energy_by_leg_wh = self._trip_energy((pickup, delivery, returning), request)
@@ -307,6 +429,11 @@ class MobilityService:
                     vehicle.id in needs_charge
                     or self.batteries[vehicle.id].remaining_wh
                     < self.battery_policy.capacity_wh * self.battery_policy.charge_trigger_fraction
+                    or (
+                        self.battery_policy.charge_when_idle
+                        and self.batteries[vehicle.id].remaining_wh
+                        < self.battery_policy.capacity_wh - 1e-8
+                    )
                 ):
                     self._start_charge(vehicle.id, now_s)
             if any(not charge.completed for charge in self.charges):
@@ -314,6 +441,32 @@ class MobilityService:
                     if reason == "WAITING_FEASIBLE_VEHICLE":
                         self.waiting_reasons[identifier] = "WAITING_BATTERY_CHARGE"
         return assignments
+
+    def assignment_cost(self, routes, request, now_s, vehicle) -> float:
+        pickup, delivery, _ = routes
+        late = (
+            0
+            if request.latest_arrival_s is None
+            else max(0, now_s + pickup.cost_s + delivery.cost_s - request.latest_arrival_s)
+        )
+        # Synthetic seconds-equivalent: recharge the full mission energy at the
+        # configured charger. This is a cost term, not a relaxed battery constraint.
+        energy = (
+            sum(self._trip_energy(routes, request)) * 3600 / self.battery_policy.charging_power_w
+            if self.battery_policy is not None
+            else 0
+        )
+        scarce = (
+            120
+            if vehicle.wheelchair_slots
+            and not request.service_needs.wheelchair_slots
+            and any(
+                r.status is RequestStatus.QUEUED and r.service_needs.wheelchair_slots
+                for r in self.requests.values()
+            )
+            else 0
+        )
+        return pickup.cost_s + 0.5 * delivery.cost_s + 2 * late + energy + scarce
 
     def _enqueue_vehicle(self, vehicle_id: str) -> None:
         self._ready_sequence += 1
@@ -369,6 +522,39 @@ class MobilityService:
                 self.vehicles[charge.vehicle_id].available = True
                 self._enqueue_vehicle(charge.vehicle_id)
 
+    def _charge_ready_times(self) -> list[float]:
+        """Wake at energy feasibility boundaries, independently of polling rate."""
+        policy = self.battery_policy
+        if policy is None or self.graph is None or self.costs is None:
+            return []
+        times = []
+        for charge in self.charges:
+            if charge.completed:
+                continue
+            vehicle = self.vehicles[charge.vehicle_id]
+            for request in self.requests.values():
+                if (
+                    request.status is not RequestStatus.QUEUED
+                    or not has_capacity(vehicle, request)
+                    or not self._stops_accessible(vehicle, request)
+                ):
+                    continue
+                home = self.home_nodes.get(vehicle.id)
+                pickup = self.stop_nodes.get(request.pickup_stop_id)
+                dropoff = self.stop_nodes.get(request.dropoff_stop_id)
+                if home is None or pickup is None or dropoff is None:
+                    continue
+                plan = plan_round_trip(
+                    self.graph, self.costs, home, pickup, dropoff, self.route_algorithm
+                )
+                if plan is None:
+                    continue
+                required = sum(self._trip_energy(plan, request)) + policy.reserve_wh
+                deficit = required - self.batteries[vehicle.id].remaining_wh
+                if required <= policy.capacity_wh + 1e-8 and deficit > 1e-8:
+                    times.append(self._time_s + deficit * 3600 / policy.charging_power_w)
+        return times
+
     @synchronized
     def step(self, now_s: float | None = None) -> tuple[Assignment, ...]:
         """Advance virtual time; replay every due return before new assignments.
@@ -383,6 +569,7 @@ class MobilityService:
         while True:
             due = [t.returns_at_s for t in self.trips.values() if not t.returned]
             due.extend(c.ends_at_s for c in self.charges if not c.completed)
+            due.extend(self._charge_ready_times())
             if not due or min(due) > target:
                 break
             event_time = min(due)
@@ -452,6 +639,8 @@ class MobilityService:
             "synthetic_geometry": self.map_metadata["synthetic_geometry"],
             "routing_mode": self.map_metadata["routing_mode"],
             "map_metadata": self.map_metadata,
+            "home_nodes": dict(self.home_nodes),
+            "home_hubs": dict(self.home_hubs),
             "waiting_reasons": dict(self.waiting_reasons),
             "battery_model": self.battery_policy is not None,
             "battery_policy": self.battery_policy.model_dump() if self.battery_policy else None,

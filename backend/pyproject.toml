@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "inha-autonomous-mobility"
-version = "0.2.3.0"
+version = "0.2.4.0"
 description = "Authoritative service foundation for the Inha campus mobility simulator"
 requires-python = ">=3.11"
 dependencies = [
@@ -24,7 +24,7 @@ campus-sim = "campus_sim.cli:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-campus_sim = ["web/*.html", "web/*.css", "web/*.js", "web/*.svg"]
+campus_sim = ["web/*.html", "web/*.css", "web/*.js", "web/*.svg", "web/*.png", "web/fonts/*.woff2", "web/fonts/*.txt", "web/fonts/*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

@@ -8,6 +8,7 @@ from campus_sim.api import create_app
 from campus_sim.battery import BatteryPolicy
 from campus_sim.domain import CreateRequest
 from campus_sim.service import MobilityService
+from campus_sim.virtual_runtime import plan_round_trip
 
 
 def fleet(**kwargs):
@@ -37,13 +38,17 @@ def test_three_vehicles_assign_first_three_and_queue_fourth():
     assert requests[-1].status == "QUEUED"
     service.step(first.returns_at_s)
     assert requests[-1].vehicle_id == "V01"
-    assert service.virtual_state()["vehicle_fifo"] == ["V02", "V03"]
+    assert service.virtual_state()["vehicle_fifo"] == []
+    assert all(not service.trips[r.id].returned for r in requests[1:3])
+    assert not service.charges  # Their longer trips have not reached their own hubs yet.
 
 
 def test_idle_vehicle_fifo_survives_lower_id_returning():
     service = fleet()
     first = submit(service, 1, "dorm_1")
     service.step(service.trips[first.id].returns_at_s)
+    assert service.virtual_state()["vehicle_fifo"] == ["V02", "V03"]
+    service.step(service.charges[0].ends_at_s)
     assert service.virtual_state()["vehicle_fifo"] == ["V02", "V03", "V01"]
     assert [submit(service, i).vehicle_id for i in range(2, 5)] == ["V02", "V03", "V01"]
 
@@ -89,6 +94,10 @@ def test_reserve_boundary_and_not_just_outbound_energy():
     energy = sum(reference.trips[request.id].energy_by_leg_wh)
     for offset, assigned in ((0.0, True), (-0.001, False)):
         service = fleet(vehicle_count=1)
+        # Isolate the energy boundary from opportunistic idle charging.
+        service.battery_policy = BatteryPolicy(
+            **(service.battery_policy.model_dump() | {"charge_when_idle": False})
+        )
         service.batteries["V01"].remaining_wh = energy + service.battery_policy.reserve_wh + offset
         result = submit(service, 1)
         assert (result.vehicle_id is not None) is assigned
@@ -97,21 +106,64 @@ def test_reserve_boundary_and_not_just_outbound_energy():
             assert not service.trips and len(service.charges) == 1
 
 
-def test_insufficient_battery_charges_and_dispatches_at_charge_completion():
+@pytest.mark.parametrize("algorithm", ["fifo", "greedy", "hungarian"])
+def test_charging_dispatches_at_required_energy_instead_of_full_charge(algorithm):
+    reference = fleet(vehicle_count=1)
+    r = submit(reference, "reference")
+    required = sum(reference.trips[r.id].energy_by_leg_wh) + reference.battery_policy.reserve_wh
     service = fleet(vehicle_count=1)
+    service.dispatch_algorithm = algorithm
     service.batteries["V01"].remaining_wh = 350
     request = submit(service, 1)
     charge = service.charges[0]
-    assert charge.ends_at_s == pytest.approx((2000 - 350) / 1000 * 3600)
-    service.step(charge.ends_at_s / 2)
-    assert service.batteries["V01"].remaining_wh == pytest.approx(1175)
-    assert request.status == "QUEUED" and not service.trips
-    service.step(charge.ends_at_s - 0.001)
-    assert request.status == "QUEUED"
-    service.step(charge.ends_at_s)
-    assert request.vehicle_id == "V01" and charge.completed
-    assert service.trips[request.id].departed_at_s == charge.ends_at_s
-    assert service.batteries["V01"].remaining_wh == pytest.approx(2000)
+    full_at = charge.ends_at_s
+    ready_at = (required - 350) * 3600 / service.battery_policy.charging_power_w
+    service.step(ready_at - 0.001)
+    assert request.status == "QUEUED" and not charge.completed
+    service.step(ready_at)
+    assert request.vehicle_id == "V01"
+    assert charge.completed and charge.interrupted
+    assert charge.ends_at_s == pytest.approx(ready_at) and ready_at < full_at
+    assert service.trips[request.id].departed_at_s == pytest.approx(ready_at)
+    assert service.batteries["V01"].remaining_wh == pytest.approx(required)
+    service.step(service.trips[request.id].returns_at_s)
+    assert service.batteries["V01"].remaining_wh == pytest.approx(service.battery_policy.reserve_wh)
+
+
+@pytest.mark.parametrize("algorithm", ["fifo", "greedy", "hungarian"])
+def test_new_request_interrupts_only_selected_charge(algorithm):
+    service = fleet()
+    service.dispatch_algorithm = algorithm
+    for battery in service.batteries.values():
+        battery.remaining_wh = 1800
+    service.step(0)
+    assert len(service.charges) == 3
+    request = submit(service, "interrupt")
+    assert request.vehicle_id is not None
+    assert sum(c.interrupted for c in service.charges) == 1
+    assert sum(not c.completed for c in service.charges) == 2
+    charge = next(c for c in service.charges if c.vehicle_id == request.vehicle_id)
+    assert charge.interrupted and charge.ends_at_s == 0
+    if algorithm == "greedy":
+        feasible_costs = [
+            service.assignment_cost(
+                plan_round_trip(
+                    service.graph,
+                    service.costs,
+                    service.home_nodes[v.id],
+                    service.stop_nodes[request.pickup_stop_id],
+                    service.stop_nodes[request.dropoff_stop_id],
+                    service.route_algorithm,
+                ),
+                request,
+                0,
+                v,
+            )
+            for v in service.vehicles.values()
+        ]
+        assert service.dispatch_log[-1]["assignments"][0]["cost_s"] == pytest.approx(
+            min(feasible_costs)
+        )
 
 
 def test_structurally_impossible_energy_does_not_infinite_charge_or_dispatch():
@@ -236,3 +288,32 @@ def test_cancel_before_pickup_retains_trip_and_energy_until_home():
     service.step(trip.returns_at_s)
     assert request.status == "CANCELLED" and trip.returned
     assert service.batteries["V01"].consumed_wh == pytest.approx(sum(trip.energy_by_leg_wh))
+
+
+def test_idle_return_above_thirty_percent_starts_charge_without_another_request():
+    service = fleet()
+    request = submit(service, "top-up")
+    trip = service.trips[request.id]
+    service.step(trip.returns_at_s)
+    battery = service.batteries["V01"]
+    assert battery.remaining_wh > service.battery_policy.capacity_wh * 0.3
+    charge = service.charges[0]
+    assert charge.vehicle_id == "V01" and charge.started_at_s == trip.returns_at_s
+    assert not service.vehicles["V01"].available
+    assert "V01" not in service.virtual_state()["vehicle_fifo"]
+    before = battery.remaining_wh
+    service.step((charge.started_at_s + charge.ends_at_s) / 2)
+    assert battery.remaining_wh > before
+    service.step(charge.ends_at_s)
+    assert battery.remaining_wh == pytest.approx(service.battery_policy.capacity_wh)
+    assert service.virtual_state()["vehicle_fifo"] == ["V02", "V03", "V01"]
+    assert len(service.charges) == 1  # Full batteries must not loop into charging.
+
+
+def test_legacy_charge_policy_can_disable_idle_top_up():
+    service = fleet(vehicle_count=1)
+    values = service.battery_policy.model_dump() | {"charge_when_idle": False}
+    service.battery_policy = BatteryPolicy(**values)
+    request = submit(service, "legacy")
+    service.step(service.trips[request.id].returns_at_s)
+    assert service.vehicles["V01"].available and not service.charges

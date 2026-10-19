@@ -1,4 +1,4 @@
-"""Standalone directed multigraph and self-implemented Dijkstra baseline.
+"""Directed multigraph with self-implemented Dijkstra and consistent A*.
 
 Coordinates are local metric (east, north). No Unity dynamic Ground Truth is used.
 """
@@ -131,6 +131,7 @@ class SearchStats:
     generated_nodes: int
     peak_open_set_size: int
     planning_time_s: float
+    expanded_node_ids: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -153,6 +154,9 @@ class NoPath:
 
 
 class DijkstraPlanner:
+    def heuristic_scale(self, graph: RoadGraph, costs: CostSnapshot) -> float:
+        return 0.0
+
     def search(
         self,
         graph: RoadGraph,
@@ -178,17 +182,26 @@ class DijkstraPlanner:
 
         best = {start: 0.0}
         parent: dict[str, RoadEdge] = {}
-        heap = [(0.0, start)]
+        scale = self.heuristic_scale(graph, costs)
+
+        def heuristic(node: str) -> float:
+            return dist(graph.nodes[node], graph.nodes[goal]) * scale
+
+        heap = [(heuristic(start), 0.0, start)]
         expanded, generated, peak = 0, 1, 1
+        expanded_ids = []
 
         def stats() -> SearchStats:
-            return SearchStats(expanded, generated, peak, perf_counter() - started)
+            return SearchStats(
+                expanded, generated, peak, perf_counter() - started, tuple(expanded_ids)
+            )
 
         while heap:
-            cost, node = heappop(heap)
+            _, cost, node = heappop(heap)
             if cost != best[node]:  # Discard stale entries after a shorter relaxation.
                 continue
             expanded += 1
+            expanded_ids.append(node)
             if node == goal:
                 route = []
                 while node != start:
@@ -223,7 +236,25 @@ class DijkstraPlanner:
                 if candidate < best.get(edge.v, float("inf")):
                     best[edge.v] = candidate
                     parent[edge.v] = edge
-                    heappush(heap, (candidate, edge.v))
+                    heappush(heap, (candidate + heuristic(edge.v), candidate, edge.v))
                     generated += 1
                     peak = max(peak, len(heap))
         return NoPath(graph.map_version, costs.id, stats())
+
+
+class AStarPlanner(DijkstraPlanner):
+    def heuristic_scale(self, graph: RoadGraph, costs: CostSnapshot) -> float:
+        """Consistent lower bound for any nonnegative cost snapshot, even zero costs.
+
+        h(n)=Euclidean(n,goal)*min(cost(e)/chord(e)). Triangle inequality
+        gives h(u)<=cost(u,v)+h(v). Unknown/penalized edges never overestimate.
+        The shared expansion loop applies exactly the baseline hard constraints.
+        """
+        return min(
+            (
+                costs.costs_s[e.id] / distance
+                for e in graph.edges
+                if (distance := dist(graph.nodes[e.u], graph.nodes[e.v])) > 0
+            ),
+            default=0.0,
+        )

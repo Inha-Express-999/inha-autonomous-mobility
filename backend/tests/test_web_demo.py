@@ -80,6 +80,9 @@ def test_extensions_fifo_and_large_jump_completes_all_three_vehicle_trips():
     wall[0] += 40
     state = demo.state()
     assert state["completed"] == 5
+    assert all(v["phase"] in {"RETURNING", "CHARGING"} for v in state["vehicles"])
+    wall[0] += 1000
+    state = demo.state()
     assert all(v["phase"] == "READY" for v in state["vehicles"])
     assert not state["queue"]
     assert any("정문 복귀" in e["text"] for e in state["events"])
@@ -91,17 +94,21 @@ def test_battery_demo_shows_charging_then_fifo_reentry_and_energy_conservation()
     wall[0] += 6
     state = demo.state()
     assert all(v["phase"] == "CHARGING" for v in state["vehicles"])
-    assert len(state["queue"]) == 9
+    assert len(state["queue"]) == 18 - state["completed"]
     assert not state["vehicle_fifo"]
     positions = {tuple(v["position"]) for v in state["vehicles"]}
-    assert len(positions) == 1  # Actual common home, never fake offset positions.
-    wall[0] += 114
+    assert positions == {
+        tuple(demo.service.graph.nodes[n]) for n in demo.service.home_nodes.values()
+    }
+    assert len(positions) == 3
+    wall[0] += 194
     state = demo.state()
     assert state["completed"] == 18
-    assert len(state["charging_sessions"]) == 6
+    assert len(state["charging_sessions"]) >= 3
     assert all(c["completed"] for c in state["charging_sessions"])
     assert all(v["phase"] == "READY" and v["soc"] == pytest.approx(1) for v in state["vehicles"])
-    assert any("FIFO 재진입" in e["text"] for e in state["events"])
+    assert any("가용 차량 재진입" in e["text"] for e in state["events"])
+    assert set(state["vehicle_fifo"]) == {"V01", "V02", "V03"}
 
 
 def test_reset_is_paused_and_clears_missions_energy_and_elapsed_time():

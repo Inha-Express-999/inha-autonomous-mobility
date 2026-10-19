@@ -14,6 +14,7 @@ from pathlib import Path
 
 from campus_sim.battery import BatteryPolicy
 from campus_sim.domain import Vehicle
+from campus_sim.hubs import build_hubs
 from campus_sim.map_coordinates import CRS_LOCAL, ORIGIN_LAT, ORIGIN_LON, MapCoordinates, projection
 from campus_sim.planning import CostSnapshot, DijkstraPlanner, NoPath, RoadEdge, RoadGraph
 
@@ -33,6 +34,8 @@ SOURCE_FILES = {
     "extension_builder": "backend/src/campus_sim/map_extension.py",
     "osm_reader": "backend/src/campus_sim/osm_roads.py",
     "unity_coverage": "backend/src/campus_sim/unity_coverage.py",
+    "hub_reference": "Docs/MapResearch/Iterations/west-field-hub-validation.json",
+    "hub_builder": "backend/src/campus_sim/hubs.py",
 }
 NAMES = {
     "main_gate": "정문",
@@ -64,7 +67,7 @@ def write_json(path, value):
 
 def read_policy(path):
     policy = json.loads(Path(path).read_text(encoding="utf-8"))
-    if policy["schema_version"] != 2 or policy["routing_mode"] != "osm_geometry_simulation":
+    if policy["schema_version"] != 3 or policy["routing_mode"] != "osm_geometry_simulation":
         raise ValueError("unsupported map policy; verified mode cannot use assumptions")
     for key in ("default_speed_mps", "max_stop_gap_m"):
         value = policy[key]
@@ -84,6 +87,17 @@ def read_policy(path):
     if not 1 <= len(fleet) <= 3 or len({v.id for v in fleet}) != len(fleet):
         raise ValueError("configure between one and three uniquely identified vehicles")
     BatteryPolicy(**policy["battery"])
+    hub_ids = [hub["id"] for hub in policy["hubs"]]
+    if not hub_ids or len(hub_ids) != len(set(hub_ids)):
+        raise ValueError("hub ids must be nonempty and unique")
+    for hub in policy["hubs"]:
+        if not hub["id"] or not hub["name"] or bool(hub.get("stop_id")) == bool(hub.get("node_id")):
+            raise ValueError("hub needs id/name and exactly one Stop or road node reference")
+        if type(hub.get("charging_ports")) is not int or hub["charging_ports"] != 1:
+            raise ValueError("current simulation requires one independent port per home hub")
+    bindings = [v["home_hub_id"] for v in policy["vehicles"]]
+    if any(hub not in hub_ids for hub in bindings) or len(set(bindings)) != len(bindings):
+        raise ValueError("vehicles need distinct existing home hubs")
     return policy
 
 
@@ -346,6 +360,7 @@ def build_map(project_root, output_dir):
             not isinstance(planner.search(graph, a, b, costs), NoPath)
             for a, b in ((home["node_id"], stop["node_id"]), (stop["node_id"], home["node_id"]))
         )
+    hubs = build_hubs(policy, graph, stops, paths)
 
     output.mkdir(parents=True, exist_ok=True)
     write_json(
@@ -362,6 +377,8 @@ def build_map(project_root, output_dir):
     write_json(output / "landmarks.json", landmarks)
     write_json(output / "policy.json", policy)
     report = {
+        "hubs": hubs,
+        "vehicle_home_hubs": {v["id"]: v["home_hub_id"] for v in policy["vehicles"]},
         "node_count": len(nodes),
         "directed_edge_count": len(edges),
         "osm_way_count": len({s["osm_way_id"] for s in segments}),

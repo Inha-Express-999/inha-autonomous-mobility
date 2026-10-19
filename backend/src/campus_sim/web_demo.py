@@ -14,12 +14,14 @@ from itertools import pairwise
 from pathlib import Path
 from threading import RLock
 from time import monotonic
+from typing import Literal
 from uuid import uuid4
 
 from pydantic import BaseModel, ConfigDict, Field
 
 from campus_sim.domain import CreateRequest, RequestStatus
 from campus_sim.map_coordinates import MapCoordinates
+from campus_sim.planning import AStarPlanner, DijkstraPlanner, NoPath
 from campus_sim.service import MobilityService
 
 
@@ -27,6 +29,14 @@ class DemoControl(BaseModel):
     model_config = ConfigDict(extra="forbid", allow_inf_nan=False, strict=True)
     speed: float | None = Field(default=None, ge=1, le=300)
     paused: bool | None = None
+    planner: Literal["astar", "dijkstra"] | None = None
+    dispatch: Literal["fifo", "greedy", "hungarian"] | None = None
+
+
+class DemoPlan(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    pickup: str = Field(min_length=1)
+    dropoff: str = Field(min_length=1)
 
 
 class DemoScenario(BaseModel):
@@ -86,7 +96,7 @@ def map_presentation(service, root):
         )
         for node in osm.findall("node")
     }
-    buildings, context_roads = [], []
+    buildings, context_roads, areas = [], [], []
     for way in osm.findall("way"):
         tags = {tag.attrib["k"]: tag.attrib["v"] for tag in way.findall("tag")}
         points = [nodes[n.attrib["ref"]] for n in way.findall("nd") if n.attrib["ref"] in nodes]
@@ -99,6 +109,12 @@ def map_presentation(service, root):
             buildings.append(item)
         elif "highway" in tags:
             context_roads.append(item)
+        elif points[0] == points[-1] and (
+            way.attrib["id"] == "568420971" or tags.get("name") == "대운동장"
+        ):
+            areas.append(
+                {**item, "kind": "parking" if tags.get("amenity") == "parking" else "field"}
+            )
     seen, roads = set(), []
     for edge in graph.edges:
         key = tuple(sorted((edge.polyline, tuple(reversed(edge.polyline)))))
@@ -116,7 +132,21 @@ def map_presentation(service, root):
         "buildings": buildings,
         "context_roads": context_roads,
         "roads": roads,
+        "nodes": [{"id": identifier, "point": point} for identifier, point in graph.nodes.items()],
+        "edge_count": len(graph.edges),
         "stops": stops,
+        "hubs": [
+            {
+                **hub,
+                "vehicle_ids": [
+                    identifier
+                    for identifier, home in service.home_hubs.items()
+                    if home["id"] == hub["id"]
+                ],
+            }
+            for hub in {home["id"]: home for home in service.home_hubs.values()}.values()
+        ],
+        "areas": areas,
         "source": "Cached OpenStreetMap geometry + Unity-supported routing corridors",
         "operationally_verified": False,
         "attribution": "© OpenStreetMap contributors · ODbL 1.0",
@@ -130,6 +160,7 @@ class DemoSession:
         self.wall_clock = wall_clock
         self.clock = SimulationClock(wall_clock)
         self.service = factory(clock=self.clock.read)
+        self.service.route_algorithm = "astar"
         self.run_id = uuid4().hex
         self.root = Path(__file__).resolve().parents[3]
         self.map = map_presentation(self.service, self.root)
@@ -175,6 +206,8 @@ class DemoSession:
                 vehicles.append(
                     {
                         "id": vehicle.id,
+                        "home_hub_id": service.home_hubs[vehicle.id]["id"],
+                        "home_name": service.home_hubs[vehicle.id]["name"],
                         "position": position,
                         "phase": phase,
                         "remaining_s": remaining,
@@ -204,6 +237,8 @@ class DemoSession:
                 "time_s": now,
                 "speed": self.clock.speed,
                 "paused": self.clock.paused,
+                "planner": service.route_algorithm,
+                "dispatch": service.dispatch_algorithm,
                 "map_version": service.graph.map_version,
                 "vehicles": vehicles,
                 "requests": requests,
@@ -236,14 +271,21 @@ class DemoSession:
             add(request.created_s, f"{request.id}:created", f"요청 {index:02d} 접수 · {name}")
             trip = self.service.trips.get(request.id)
             if trip:
+                dispatch_name = {"fifo": "FIFO", "greedy": "Greedy", "hungarian": "Hungarian"}[
+                    trip.dispatch_algorithm
+                ]
                 for at, key, text in (
                     (
                         trip.departed_at_s,
                         "assigned",
-                        f"{trip.vehicle_id} → 요청 {index:02d} FIFO 배차",
+                        f"{trip.vehicle_id} → 요청 {index:02d} {dispatch_name} 배차",
                     ),
                     (trip.dropoff_at_s, "delivered", f"{trip.vehicle_id} 목적지 도착 · {name}"),
-                    (trip.returns_at_s, "returned", f"{trip.vehicle_id} 정문 복귀"),
+                    (
+                        trip.returns_at_s,
+                        "returned",
+                        f"{trip.vehicle_id} {self.service.home_hubs[trip.vehicle_id]['name']} 복귀",
+                    ),
                 ):
                     add(at, f"{request.id}:{key}", text)
             if request.status is RequestStatus.CANCELLED:
@@ -251,22 +293,60 @@ class DemoSession:
                 # Its status is displayed in requests; do not invent a timestamp.
                 continue
         for index, charge in enumerate(self.service.charges):
-            add(charge.started_at_s, f"charge:{index}:start", f"{charge.vehicle_id} 충전 시작")
+            home_name = self.service.home_hubs[charge.vehicle_id]["name"]
+            add(
+                charge.started_at_s,
+                f"charge:{index}:start",
+                f"{charge.vehicle_id} {home_name} 충전 시작",
+            )
             add(
                 charge.ends_at_s,
                 f"charge:{index}:end",
-                f"{charge.vehicle_id} 충전 완료 · FIFO 재진입",
+                f"{charge.vehicle_id} 충전 중단 · 요청 배차"
+                if charge.interrupted
+                else f"{charge.vehicle_id} 충전 완료 · 가용 차량 재진입",
             )
         return sorted(result, key=lambda e: e["time_s"])[-40:][::-1]
 
     def control(self, command: DemoControl):
         with self.lock:
+            if command.dispatch is not None:
+                self.service.dispatch_algorithm = command.dispatch
+            if command.planner is not None:
+                self.service.route_algorithm = command.planner
             self.service.step()
             if command.speed is not None:
                 self.clock.speed = command.speed
             if command.paused is not None:
                 self.clock.paused = command.paused
             return self.state()
+
+    def compare_planning(self, command: DemoPlan):
+        with self.lock:
+            service = self.service
+            if command.pickup not in service.landmarks or command.dropoff not in service.landmarks:
+                raise ValueError("unknown landmark")
+            start, goal = (
+                service.stop_nodes[service.landmarks[name].stop_ids[0]]
+                for name in (command.pickup, command.dropoff)
+            )
+            results = {}
+            for name, planner in (("astar", AStarPlanner()), ("dijkstra", DijkstraPlanner())):
+                route = planner.search(service.graph, start, goal, service.costs)
+                results[name] = {
+                    "found": not isinstance(route, NoPath),
+                    "points": route.polyline if not isinstance(route, NoPath) else (),
+                    "cost_s": route.cost_s if not isinstance(route, NoPath) else None,
+                    "length_m": route.length_m if not isinstance(route, NoPath) else None,
+                    "stats": asdict(route.stats),
+                }
+            return {
+                "start_node": start,
+                "goal_node": goal,
+                "results": results,
+                "map_version": service.graph.map_version,
+                "cost_snapshot_id": service.costs.id,
+            }
 
     def submit(self, command: CreateRequest):
         with self.lock:
@@ -281,8 +361,9 @@ class DemoSession:
                 if name == "extensions"
                 else ("hitech",) * 18
             )
+            commands = []
             for destination in destinations:
-                self.service.create_request(
+                commands.append(
                     CreateRequest(
                         command_id=uuid4().hex,
                         owner_id="web-demo",
@@ -291,6 +372,7 @@ class DemoSession:
                         dropoff_landmark_id=destination,
                     )
                 )
+            self.service.create_batch(commands)
             self.clock.read()
             self.clock.speed = 10.0 if name == "extensions" else 100.0
             self.clock.paused = False
@@ -298,7 +380,11 @@ class DemoSession:
 
     def reset(self):
         with self.lock:
+            planner = self.service.route_algorithm
+            dispatch = self.service.dispatch_algorithm
             self.clock = SimulationClock(self.wall_clock)
             self.service = self.factory(clock=self.clock.read)
+            self.service.route_algorithm = planner
+            self.service.dispatch_algorithm = dispatch
             self.run_id = uuid4().hex
             return self.state()

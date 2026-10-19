@@ -40,6 +40,9 @@ class MapBundle:
     home_node: str
     vehicles: tuple[Vehicle, ...]
     battery: BatteryPolicy
+    hubs: dict
+    home_nodes: dict[str, str]
+    home_hub_ids: dict[str, str]
     metadata: dict
 
 
@@ -105,6 +108,26 @@ def load_map_bundle(directory, source_root=None):
     if manifest["home_stop_id"] not in stop_nodes:
         raise ValueError("missing home Stop")
     report = json.loads((directory / "build_report.json").read_text(encoding="utf-8"))
+    hubs = report["hubs"]
+    if set(hubs) != {h["id"] for h in policy["hubs"]}:
+        raise ValueError("hub configuration/report mismatch")
+    for configured in policy["hubs"]:
+        hub = hubs[configured["id"]]
+        expected_node = (
+            stop_nodes.get(configured["stop_id"])
+            if "stop_id" in configured
+            else configured["node_id"]
+        )
+        if (
+            hub["node_id"] != expected_node
+            or expected_node not in graph.nodes
+            or hub["position_xy_m"] != list(graph.nodes[expected_node])
+            or any(hub.get(k) != v for k, v in configured.items())
+        ):
+            raise ValueError("invalid hub source/node binding")
+    bindings = {v["id"]: v["home_hub_id"] for v in policy["vehicles"]}
+    if report["vehicle_home_hubs"] != bindings:
+        raise ValueError("vehicle home hub report mismatch")
     metadata = {
         **manifest,
         "coverage": report,
@@ -123,5 +146,8 @@ def load_map_bundle(directory, source_root=None):
         stop_nodes[manifest["home_stop_id"]],
         vehicles,
         BatteryPolicy(**policy["battery"]),
+        hubs,
+        {identifier: hubs[hub_id]["node_id"] for identifier, hub_id in bindings.items()},
+        bindings,
         metadata,
     )

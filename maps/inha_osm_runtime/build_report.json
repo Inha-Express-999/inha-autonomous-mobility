@@ -1,4 +1,54 @@
 {
+  "hubs": {
+    "main_gate": {
+      "id": "main_gate",
+      "name": "정문",
+      "stop_id": "main_gate_road_candidate",
+      "charging_ports": 1,
+      "node_id": "split:481241683:4:0:0.617567128481",
+      "position_xy_m": [
+        -40.85899130804372,
+        -321.4633004290494
+      ],
+      "round_trip_reachable_stop_count": 14,
+      "verification_status": "UNVERIFIED_SIMULATION_STAGING_NODE",
+      "charging_status": "SYNTHETIC_ONE_PORT_PER_HUB"
+    },
+    "rear_gate": {
+      "id": "rear_gate",
+      "name": "후문",
+      "stop_id": "rear_gate_road_candidate",
+      "charging_ports": 1,
+      "node_id": "split:216916382:4:0:0.027897082418",
+      "position_xy_m": [
+        264.71217701774225,
+        45.96414648905591
+      ],
+      "round_trip_reachable_stop_count": 14,
+      "verification_status": "UNVERIFIED_SIMULATION_STAGING_NODE",
+      "charging_status": "SYNTHETIC_ONE_PORT_PER_HUB"
+    },
+    "west_field_parking": {
+      "id": "west_field_parking",
+      "name": "운동장 옆 주차장",
+      "node_id": "osm:10058484941",
+      "source_parking_osm_way_id": "568420971",
+      "source_unity_hub_id": "west_field_autonomous_hub",
+      "charging_ports": 1,
+      "position_xy_m": [
+        -312.6637858403053,
+        55.798580885198646
+      ],
+      "round_trip_reachable_stop_count": 14,
+      "verification_status": "UNVERIFIED_SIMULATION_STAGING_NODE",
+      "charging_status": "SYNTHETIC_ONE_PORT_PER_HUB"
+    }
+  },
+  "vehicle_home_hubs": {
+    "V01": "main_gate",
+    "V02": "rear_gate",
+    "V03": "west_field_parking"
+  },
   "node_count": 187,
   "directed_edge_count": 402,
   "osm_way_count": 59,

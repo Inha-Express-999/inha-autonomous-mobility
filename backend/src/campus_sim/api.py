@@ -7,9 +7,12 @@ from fastapi import FastAPI, HTTPException, status
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
+from campus_sim.avoidance_demo import AvoidancePreview, avoidance_preview
+from campus_sim.avoidance_simulation import simulate_avoidance
+from campus_sim.dispatch_comparison import DispatchComparison, compare_dispatch
 from campus_sim.domain import CommandAck, CreateRequest, Landmark, RequestView
 from campus_sim.service import MobilityService
-from campus_sim.web_demo import DemoControl, DemoScenario, DemoSession
+from campus_sim.web_demo import DemoControl, DemoPlan, DemoScenario, DemoSession
 
 
 def create_app(service: MobilityService | None = None) -> FastAPI:
@@ -30,7 +33,7 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
             with suppress(asyncio.CancelledError):
                 await task
 
-    app = FastAPI(title="Inha Autonomous Mobility API", version="0.2.3.0", lifespan=lifespan)
+    app = FastAPI(title="Inha Mobil API", version="0.2.4.0", lifespan=lifespan)
     app.state.service = service or MobilityService.from_osm_map()
     app.state.demo = None
     app.state.demo_lock = RLock()
@@ -56,6 +59,35 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
     @app.post("/v1/demo/control")
     def demo_control(command: DemoControl):
         return demo().control(command)
+
+    @app.post("/v1/demo/planning")
+    def demo_planning(command: DemoPlan):
+        try:
+            return demo().compare_planning(command)
+        except ValueError as error:
+            raise HTTPException(status_code=422, detail=str(error)) from error
+
+    @app.post("/v1/demo/avoidance")
+    def demo_avoidance(command: AvoidancePreview):
+        return avoidance_preview(command)
+
+    @app.post("/v1/demo/avoidance-simulation")
+    def demo_avoidance_simulation(command: AvoidancePreview):
+        return simulate_avoidance(command)
+
+    @app.post("/v1/demo/dispatch-comparison")
+    def demo_dispatch_comparison(command: DispatchComparison):
+        try:
+            current = ()
+            if command.source == "current":
+                session = demo()
+                with session.lock:
+                    current = tuple(
+                        r.model_copy(deep=True) for r in session.service.requests.values()
+                    )
+            return compare_dispatch(command, current)
+        except ValueError as error:
+            raise HTTPException(status_code=422, detail=str(error)) from error
 
     @app.post("/v1/demo/reset")
     def demo_reset():

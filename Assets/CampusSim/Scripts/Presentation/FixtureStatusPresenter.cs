@@ -98,7 +98,7 @@ namespace InhaExpress.Client.Presentation
         {
             var bar = FixtureUiFactory.Panel(safe, "Top Bar", new Vector2(0, 1), Vector2.one,
                 new Vector2(12, -64), new Vector2(-12, -10), FixtureUiPalette.Surface);
-            var brand = FixtureUiFactory.Text(bar, "Brand", "INHA  EXPRESS", 20, FixtureUiPalette.Ink,
+            var brand = FixtureUiFactory.Text(bar, "Brand", "Inha Mobil", 20, FixtureUiPalette.Ink,
                 TextAnchor.MiddleLeft, FontStyle.Bold);
             ((RectTransform)brand.transform).offsetMin = new Vector2(16, 0);
             ((RectTransform)brand.transform).offsetMax = new Vector2(-250, 0);
@@ -106,7 +106,7 @@ namespace InhaExpress.Client.Presentation
             if (mobile)
             {
                 brand.fontSize = 14;
-                brand.text = "INHA EXPRESS";
+                brand.text = "Inha Mobil";
                 ((RectTransform)brand.transform).offsetMin = new Vector2(12, 0);
                 ((RectTransform)brand.transform).offsetMax = new Vector2(-242, 0);
             }

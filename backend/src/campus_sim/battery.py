@@ -19,6 +19,7 @@ class BatteryPolicy(BaseModel):
     charging_power_w: float = Field(gt=0)
     passenger_load_fraction: float = Field(ge=0)
     cargo_load_fraction_per_kg: float = Field(ge=0)
+    charge_when_idle: bool = False
 
     @model_validator(mode="after")
     def validate_initial(self):
@@ -52,3 +53,4 @@ class ChargeSession:
     ends_at_s: float
     initial_wh: float
     completed: bool = False
+    interrupted: bool = False

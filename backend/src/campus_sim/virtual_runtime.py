@@ -3,6 +3,7 @@
 from dataclasses import dataclass
 
 from campus_sim.planning import (
+    AStarPlanner,
     CostSnapshot,
     DijkstraPlanner,
     NoPath,
@@ -23,6 +24,8 @@ class VirtualTrip:
     return_route: RoutePlan
     returned: bool = False
     energy_by_leg_wh: tuple[float, float, float] = (0.0, 0.0, 0.0)
+    dispatch_algorithm: str = "fifo"
+    route_algorithm: str = "dijkstra"
 
     def consumed_at(self, now_s: float) -> float:
         """Uniform progress within each route leg; not a physical energy trace."""
@@ -55,8 +58,11 @@ def plan_round_trip(
     home: str,
     pickup: str,
     dropoff: str,
+    algorithm: str = "dijkstra",
 ) -> tuple[RoutePlan, RoutePlan, RoutePlan] | None:
-    planner = DijkstraPlanner()
+    if algorithm not in {"dijkstra", "astar"}:
+        raise ValueError("unknown route algorithm")
+    planner = AStarPlanner() if algorithm == "astar" else DijkstraPlanner()
     routes = []
     for start, goal in ((home, pickup), (pickup, dropoff), (dropoff, home)):
         route = planner.search(graph, start, goal, costs)

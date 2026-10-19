@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="610" viewBox="0 0 760 610">
+<rect width="760" height="610" fill="#F3F6FC"/>
+<g font-family="sans-serif" fill="#10244A"><text x="28" y="36" font-size="22">Sensor-based RRT candidate</text>
+<text x="28" y="62" font-size="13">Synthetic corridor / seed 12 / not a campus driving demonstration</text></g>
+<rect x="152" y="86" width="256" height="448" fill="white" stroke="#8CA1BA"/>
+<rect x="177.6" y="111.6" width="204.8" height="396.8" fill="none" stroke="#B5C7DE" stroke-dasharray="5 4"/>
+<g stroke="#C4D8EF" fill="none" stroke-width="1"><polyline points="280.00,470.00 282.71,454.23"/><polyline points="282.71,454.23 269.53,445.15"/><polyline points="269.53,445.15 275.57,430.34"/><polyline points="275.57,430.34 277.17,414.42"/><polyline points="269.53,445.15 264.91,460.47"/><polyline points="277.17,414.42 270.66,399.80"/><polyline points="270.66,399.80 271.26,383.81"/><polyline points="271.26,383.81 259.61,372.84"/><polyline points="264.91,460.47 250.20,466.77"/><polyline points="280.00,470.00 281.57,485.92"/><polyline points="281.57,485.92 297.56,485.59"/><polyline points="259.61,372.84 244.25,377.29"/><polyline points="244.25,377.29 239.31,362.07"/><polyline points="239.31,362.07 242.33,346.36"/><polyline points="271.26,383.81 286.47,378.85"/><polyline points="286.47,378.85 291.20,363.56"/><polyline points="242.33,346.36 234.11,332.63"/><polyline points="250.20,466.77 236.18,459.05"/><polyline points="234.11,332.63 227.56,318.03"/><polyline points="275.57,430.34 284.86,434.47"/><polyline points="227.56,318.03 230.45,302.29"/></g>
+<circle cx="280" cy="310" r="48" fill="#FFE5C8"/>
+<circle cx="280" cy="310" r="22.4" fill="#E66B53"/>
+<polyline points="280,470 280,150" fill="none" stroke="#A5AFBF" stroke-dasharray="6 5"/>
+<polyline points="280.00,470.00 282.71,454.23 269.53,445.15 275.57,430.34 277.17,414.42 270.66,399.80 271.26,383.81 259.61,372.84 244.25,377.29 239.31,362.07 242.33,346.36 234.11,332.63 227.56,318.03 230.45,302.29 280.00,150.00" fill="none" stroke="#1677FF" stroke-width="3"/>
+<g fill="#10244A" font-family="sans-serif" font-size="14">
+<text x="430" y="140">Gray: blocked reference</text><text x="430" y="172">Light blue: RRT search tree</text>
+<text x="430" y="204">Blue: geometric candidate</text><text x="430" y="236">Orange: inflated obstacle</text>
+<text x="430" y="300">Safety: STOP</text><text x="430" y="330">Candidate executable: false</text>
+<text x="430" y="380">Start (0, 0) / Goal (0, 10)</text><text x="430" y="410">Ego enclosing radius: 0.5 m</text>
+<text x="430" y="440">Clearance margin: 0.3 m</text><text x="28" y="580">A detour candidate never overrides the independent STOP assessment.</text></g></svg>

@@ -1,0 +1,229 @@
+{
+  "date": "2026-10-19",
+  "project_version": "0.2.4.0",
+  "code_commit": "e586124ab1d51c1b7693f1ba0072e2c48b98d808",
+  "working_tree_changes": true,
+  "source_sha256": {
+    "backend/src/campus_sim/api.py": "3af7532b33e0072f04feae79b2e7fd0d63e3a51ec4586c4939dcaec843caa635",
+    "backend/src/campus_sim/battery.py": "713aa4adc54b7d4df31ce247b86807081e2821ae365fcffdf0422afbc6e546b4",
+    "backend/src/campus_sim/cli.py": "bc0bc6668277047a43aeb39fe0c9c45e992e28a17a2170d4593df0f387caaf27",
+    "backend/src/campus_sim/connection_audit.py": "6ed7c30492ee8b7b21432ea89ee8dd8b509941a9dc131c58f5814a3fbe95d8f8",
+    "backend/src/campus_sim/demo_fifo.py": "cedbb5160cb0a12d5ee0a8884fe2c3cbb2b6e88f5fd5455e92e8af0888c0518f",
+    "backend/src/campus_sim/dispatch.py": "28a6c58e9ca6ae619b9a1d58b38095bdd05138a2477f85c0cba690ba8f1a48fb",
+    "backend/src/campus_sim/domain.py": "06945f4b3b56916e9c6763300abd31117b90b42d764e1d85b7119ecceb3e02b1",
+    "backend/src/campus_sim/hubs.py": "0590f061337c23dd088451915db8bf308ec53128f4a6cc02d260d03066542b6b",
+    "backend/src/campus_sim/map_builder.py": "08eb0037fb4e04bb112061151ebe114e146621d9127302704af8d1968d9a67ae",
+    "backend/src/campus_sim/map_coordinates.py": "1b8dde8bf4cbadcc907f1609bbd0e2194205180ee75f980c9f6cfee7408dd318",
+    "backend/src/campus_sim/map_data.py": "5ec062bba0391ddb8278d6b67dd9c1bed9ca3b2e58a48ee89ec194d5d032801a",
+    "backend/src/campus_sim/map_extension.py": "9fa704e9b9e55fa83d323e79ced0d5b456125090f9a018ce27112efed397b365",
+    "backend/src/campus_sim/osm_roads.py": "dff13616b40e9b385add0a871e637c6db6c7dcf7069eb6f9a1cae062023cda78",
+    "backend/src/campus_sim/planning.py": "ba13e3c90ea5003aca007be14e0a2fb218e29087e0a7486a29078b775133e11f",
+    "backend/src/campus_sim/service.py": "5f10f29d443f3203110d50ec193076a87ab0505eed1125a65948eec5f2aee77a",
+    "backend/src/campus_sim/unity_coverage.py": "10f70328d90111f445dcf1dce37202d7140375912919e7bd4c173af9d794faed",
+    "backend/src/campus_sim/virtual_runtime.py": "756a506e80523352d392cfea778498262ffa5dafb22d0126e78d9094d0888fa1",
+    "backend/src/campus_sim/web_demo.py": "b66822ae1c89aa0419fff7452f7e2318e22800dcd5822d18f4d8f907024830c7",
+    "backend/src/campus_sim/__init__.py": "cbd27bc3caba057295d4d9ebbaaf1f66e3e0c990ae7e47bfb8d804bb678e075e",
+    "backend/src/campus_sim/web/app.js": "fe57eddb5bff6f0f4353da207d1ede1d05b7a074d67c9a3b6b19a35a56143307",
+    "backend/src/campus_sim/web/icons.svg": "91e1fb8dbce60c0ac93b65297811644f8d541e68b35124d212fe576bf27b7203",
+    "backend/src/campus_sim/web/index.html": "083c17f8f5058cb454afed413aa94f11ab167668d3e4881543f961ed28181340",
+    "backend/src/campus_sim/web/style.css": "91e9dc1a024e148498f10796ca584ebe20f8b1513b038becb3a8dc50d3fe14fb",
+    "configs/osm_runtime.json": "0bfa77a975274aa7458f177742deda595582d866b373950ba9cba93e10330a62",
+    "backend/tests/test_home_hubs.py": "8e9b650ef848d63a29d2fd5955d6adfe07c96e74698517d71d5b740166c031f1",
+    "backend/tests/test_battery_fleet.py": "eadc60f8ee40fb61883493327719c6d8d078bb34caf8e9ceb356e7fb874c6bcb",
+    "backend/tests/test_web_demo.py": "fe8f8f202322f300902202eb977fba3997259754410fbdda4a98b7ed798a671d",
+    "VERSION": "d305687069dd1ad0ab28a88e5d107f53ed8a08a99a3ece24e9ab8884beb418f5"
+  },
+  "map_manifest_sha256": "12f2b41783d3ae08b248533907c8bf3264b6e737c82ec0b8ac5786f7acfbf7e2",
+  "home_hub_ids": {
+    "V01": "main_gate",
+    "V02": "rear_gate",
+    "V03": "west_field_parking"
+  },
+  "hubs": {
+    "main_gate": {
+      "id": "main_gate",
+      "name": "정문",
+      "stop_id": "main_gate_road_candidate",
+      "charging_ports": 1,
+      "node_id": "split:481241683:4:0:0.617567128481",
+      "position_xy_m": [
+        -40.85899130804372,
+        -321.4633004290494
+      ],
+      "round_trip_reachable_stop_count": 14,
+      "verification_status": "UNVERIFIED_SIMULATION_STAGING_NODE",
+      "charging_status": "SYNTHETIC_ONE_PORT_PER_HUB"
+    },
+    "rear_gate": {
+      "id": "rear_gate",
+      "name": "후문",
+      "stop_id": "rear_gate_road_candidate",
+      "charging_ports": 1,
+      "node_id": "split:216916382:4:0:0.027897082418",
+      "position_xy_m": [
+        264.71217701774225,
+        45.96414648905591
+      ],
+      "round_trip_reachable_stop_count": 14,
+      "verification_status": "UNVERIFIED_SIMULATION_STAGING_NODE",
+      "charging_status": "SYNTHETIC_ONE_PORT_PER_HUB"
+    },
+    "west_field_parking": {
+      "id": "west_field_parking",
+      "name": "운동장 옆 주차장",
+      "node_id": "osm:10058484941",
+      "source_parking_osm_way_id": "568420971",
+      "source_unity_hub_id": "west_field_autonomous_hub",
+      "charging_ports": 1,
+      "position_xy_m": [
+        -312.6637858403053,
+        55.798580885198646
+      ],
+      "round_trip_reachable_stop_count": 14,
+      "verification_status": "UNVERIFIED_SIMULATION_STAGING_NODE",
+      "charging_status": "SYNTHETIC_ONE_PORT_PER_HUB"
+    }
+  },
+  "initial_vehicles": [
+    {
+      "id": "V01",
+      "home_name": "정문",
+      "position": [
+        -40.85899130804372,
+        -321.4633004290494
+      ],
+      "phase": "READY"
+    },
+    {
+      "id": "V02",
+      "home_name": "후문",
+      "position": [
+        264.71217701774225,
+        45.96414648905591
+      ],
+      "phase": "READY"
+    },
+    {
+      "id": "V03",
+      "home_name": "운동장 옆 주차장",
+      "position": [
+        -312.6637858403053,
+        55.798580885198646
+      ],
+      "phase": "READY"
+    }
+  ],
+  "road_topology": {
+    "osm_ways": 59,
+    "nodes": 187,
+    "directed_edges": 402,
+    "passenger_stop_candidates": 14,
+    "hub_to_stop_round_trips": 42,
+    "new_free_space_connectors": 0
+  },
+  "scenario": {
+    "request_count": 18,
+    "completed": 18,
+    "last_return_s": 11442.882420774276,
+    "last_charge_end_s": 14838.454734314491,
+    "charging_sessions": [
+      {
+        "vehicle_id": "V02",
+        "started_at_s": 413.2918699839462,
+        "ends_at_s": 4855.956957949659,
+        "initial_wh": 765.9263644539686,
+        "completed": true
+      },
+      {
+        "vehicle_id": "V01",
+        "started_at_s": 471.0620550576042,
+        "ends_at_s": 5564.420525367948,
+        "initial_wh": 585.178202691571,
+        "completed": true
+      },
+      {
+        "vehicle_id": "V03",
+        "started_at_s": 568.770281724117,
+        "ends_at_s": 6651.732613548632,
+        "initial_wh": 310.28824115985685,
+        "completed": true
+      },
+      {
+        "vehicle_id": "V02",
+        "started_at_s": 5269.248827933604,
+        "ends_at_s": 9711.913915899302,
+        "initial_wh": 765.9263644539728,
+        "completed": true
+      },
+      {
+        "vehicle_id": "V01",
+        "started_at_s": 6035.482580425551,
+        "ends_at_s": 11128.841050735875,
+        "initial_wh": 585.1782026915765,
+        "completed": true
+      },
+      {
+        "vehicle_id": "V03",
+        "started_at_s": 7220.502895272749,
+        "ends_at_s": 13303.465227097266,
+        "initial_wh": 310.28824115985674,
+        "completed": true
+      },
+      {
+        "vehicle_id": "V02",
+        "started_at_s": 10125.205785883249,
+        "ends_at_s": 14567.870873848962,
+        "initial_wh": 765.9263644539687,
+        "completed": true
+      },
+      {
+        "vehicle_id": "V01",
+        "started_at_s": 11442.882420774276,
+        "ends_at_s": 14838.454734314491,
+        "initial_wh": 1056.785468461051,
+        "completed": true
+      }
+    ],
+    "final_batteries": {
+      "V01": {
+        "remaining_wh": 1999.9999999999998,
+        "consumed_wh": 3772.8581261558015,
+        "charged_wh": 3772.858126155801
+      },
+      "V02": {
+        "remaining_wh": 2000.0,
+        "consumed_wh": 3702.2209066380897,
+        "charged_wh": 3702.22090663809
+      },
+      "V03": {
+        "remaining_wh": 2000.0,
+        "consumed_wh": 3379.4235176802863,
+        "charged_wh": 3379.4235176802867
+      }
+    },
+    "final_fifo": [
+      "V03",
+      "V02",
+      "V01"
+    ]
+  },
+  "validation": {
+    "pytest": "109 passed; one Starlette TestClient deprecation warning",
+    "ruff_check": "passed",
+    "ruff_format": "29 files passed",
+    "javascript_syntax": "node --check passed",
+    "browser": [
+      "Three distinct initial markers and three hub labels",
+      "V01 main gate delivery, V02 rear gate pickup, V03 parking pickup after five-request scenario",
+      "Two queued requests; eight route polylines",
+      "Reset returns all three vehicles to configured homes, paused with no requests",
+      "No console errors at desktop preview"
+    ]
+  },
+  "limitations": [
+    "Source OSM road node in parking polygon, not an approved physical parking bay.",
+    "Each hub has one synthetic 1000 W charger; no real infrastructure verification.",
+    "No new passenger Stop, map/physics approval or collision coordination.",
+    "Vehicle selection remains FIFO, not nearest matching."
+  ]
+}

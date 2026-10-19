@@ -32,7 +32,7 @@ try {
     & $taskPython -m campus_sim.map_builder | Out-Null
     if ($LASTEXITCODE -ne 0) { throw 'Map build failed. Check source files and configs/osm_runtime.json.' }
 
-    Write-Host "INHA MOVE: http://127.0.0.1:$Port/demo/" -ForegroundColor Cyan
+    Write-Host "Inha Mobil: http://127.0.0.1:$Port/demo/" -ForegroundColor Cyan
     Write-Host 'Keep this terminal open. Press Ctrl+C to stop. Use -Port 8766 if needed.'
     & $taskPython -m uvicorn campus_sim.api:app --host 127.0.0.1 --port $Port --log-level warning
     if ($LASTEXITCODE -ne 0) { throw 'Server exited with an error. Check whether the port is in use.' }
