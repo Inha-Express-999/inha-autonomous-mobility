@@ -1,0 +1,34 @@
+{
+  "project_version": "0.4.7.1",
+  "unity_editor": "6000.3.21f1",
+  "method": "Unity MCP stdio relay: actual Editor Bootstrap Play Mode and end-of-frame Game View capture",
+  "cases": [
+    "pc-1280x720",
+    "pc-1024x768",
+    "mobile-390x844",
+    "mobile-360x640",
+    "native-pc"
+  ],
+  "same_run_id": "b0fb4cce3ed344aaa27a096e3fb763dd",
+  "clipped_text_count": 0,
+  "nodes": 187,
+  "hubs": 3,
+  "stop_candidates": 14,
+  "max_xz_error_m": 6.823938019806519e-05,
+  "vehicle_actuation": false,
+  "server_paused": true,
+  "python_targeted_tests": "6 passed",
+  "pc_build": "BuildReport Succeeded; optional Unity Pipeline missing RuntimePipelineConfig warning remains",
+  "packaging_error_regression": {
+    "locked_files": 256,
+    "error_chars": 82418,
+    "return_seconds": 4.8229981,
+    "expected_failure": true
+  },
+  "limits": [
+    "No physical mobile device, notch or OS rotation verification",
+    "No FPS/frame-time performance measurement",
+    "No vehicle actuation or sensor/physics integration verification"
+  ],
+  "editor_cleanup": "Stopped Play Mode and restored original Game View preset selections"
+}

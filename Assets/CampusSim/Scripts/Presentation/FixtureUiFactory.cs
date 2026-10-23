@@ -134,7 +134,10 @@ namespace InhaExpress.Client.Presentation
     public static class FixtureUiFactory
     {
         private static Font cachedFont;
+        private static Font cachedBoldFont;
         public static Font Font => cachedFont != null ? cachedFont : cachedFont = CreateFont();
+        private static Font BoldFont => cachedBoldFont != null ? cachedBoldFont :
+            cachedBoldFont = Resources.Load<Font>("Freesentation-Bold") ?? Font;
 
         public static RectTransform Rect(Transform parent, string name, Vector2 anchorMin,
             Vector2 anchorMax, Vector2 offsetMin, Vector2 offsetMax)
@@ -162,12 +165,13 @@ namespace InhaExpress.Client.Presentation
         {
             var rect = Rect(parent, name, Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
             var text = rect.gameObject.AddComponent<Text>();
-            text.font = Font;
+            bool bundledBold = style == FontStyle.Bold && BoldFont != Font;
+            text.font = bundledBold ? BoldFont : Font;
             text.text = value;
             text.fontSize = size;
             text.color = color;
             text.alignment = alignment;
-            text.fontStyle = style;
+            text.fontStyle = bundledBold ? FontStyle.Normal : style;
             text.horizontalOverflow = HorizontalWrapMode.Wrap;
             text.verticalOverflow = VerticalWrapMode.Truncate;
             text.raycastTarget = false;

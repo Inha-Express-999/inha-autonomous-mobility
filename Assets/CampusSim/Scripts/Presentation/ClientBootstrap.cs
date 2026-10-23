@@ -28,7 +28,10 @@ namespace InhaExpress.Client.Presentation
 
         private void Awake()
         {
-#if UNITY_STANDALONE || UNITY_EDITOR
+#if UNITY_EDITOR
+            // MCP queries and Editor tools must not stall the mobile bootstrap between frames.
+            Application.runInBackground = true;
+#elif UNITY_STANDALONE
             // The shared world and transport must keep updating while the web dashboard has focus.
             if (clientRole == ClientRole.PC_Operator) Application.runInBackground = true;
 #endif

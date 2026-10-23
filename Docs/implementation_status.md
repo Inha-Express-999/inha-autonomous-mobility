@@ -1,6 +1,6 @@
 # 구현 현황
 
-프로젝트 버전 **0.4.7.0** · 2026-10-23. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
+프로젝트 버전 **0.4.7.1** · 2026-10-23. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
 
 2026-10-23 PC 진입: PC_Bootstrap이 로컬 Python 서버를 실행/재사용하며 CampusWorld → CampusTerrain 및 PC_Operator Additive 구조를 유지한다. PC fixture는 껐으며 차량 조작은 보류한다. 실제 Python/Unity/웹 세션 검증과 배포·종료 규칙은 `Docs/PC_SERVER_STARTUP.md`를 따른다.
 
@@ -17,6 +17,16 @@
 2026-10-19 추가: FIFO 기준선 외 Greedy/Hungarian을 공통 제약/비용/우선순위와 batch 접수에 연결했다. 웹 정책 선택과 동일 초기 상태의 독립 반복 비교/JSON 저장을 제공한다. 전체 backend 187개 테스트 통과. [비교 범위](DISPATCH_COMPARISON.md)를 따른다.
 
 2026-10-19 추가: 16:9 메인 관제를 요약/상세로 재배치하고 상단 메뉴를 두 개로 정리했다. RRT/TTC 보조 화면에 독립 20Hz 합성 운동 실험과 재생·시간 이동을 추가했다. 기본 정적 우회와 횡단 보행자 감속/대기/재출발, tick 사이 충돌/실패 기록을 검증했다. 전체 backend 191개 통과. 실제 관제 차량의 회피·차량 간 경합·Unity 센서는 여전히 미연결이다.
+
+## 2026-10-23 · Unity MCP 직접 Play Mode 재검증
+
+- 실제 PC_Bootstrap 및 Mobile_Bootstrap을 Unity MCP로 실행하고 동일 CampusWorld→CampusTerrain Additive 로딩과 각 역할 씬을 확인했다. 별도 씬 생성·차량 조작은 없다.
+- 재현한 문제: 실행 중 390×844→360×640 변경 시 카메라 aspect가 1.074617에 머물러 기대값 1.308140과 달랐다. HUD의 화면/안전 영역 변화 감지와 재맞춤으로 수정했다. 허브 라벨의 기준도 실제 Safe Area 크기로 바꿨다.
+- Editor 모바일 검증이 background=false 상태에서 2프레임에 정지한 문제를 수정했다. Editor만 역할과 무관하게 백그라운드 실행하며 실제 모바일 OS 정책은 유지한다.
+- 웹의 실제 Freesentation 7Bold(가중치 700)를 재사용하고 합성 Bold를 없애 겹쳐 보이는 글자 윤곽을 정리했다. 기존 SIL OFL이 적용된다.
+- 서버 패키징의 stdout/stderr를 동시에 읽도록 수정했다. 256개 번들 파일을 잠가 82,418자 오류를 발생시키는 MCP 회귀 검사에서 4.823초 만에 실패를 반환했고 모든 잠금을 해제했다. 이후 전체 빌드는 성공했다.
+- 렌더링 완료 프레임에 실행되는 MCP 캡처 진입점을 개발 검증 프로브에 추가했다. PC 1280×720·1024×768 및 모바일 390×844·360×640에서 잘림 0건, 카메라 비율 일치와 동일 run_id를 확인했다. 지도 XZ 최대 오차 0.00006824m, 노드 187/허브 3/Stop 후보 14개다. Python 대상 검사 6개와 최종 PC 빌드가 통과했다. 결과와 화면은 artifacts/mcp_ui_review_0.4.7.1에 기록했다.
+- 한계: 실제 모바일 단말·노치·OS 회전 및 성능 검증은 수행하지 않았다.
 
 ## 2026-10-23 · 웹 스타일 네이티브 UI / 그래픽 확인
 
@@ -89,7 +99,7 @@
 3. Dijkstra→A* 비교와 Unity 차량 1대의 실제 운송 흐름을 구현한다. 가상 왕복 타이머는 물리 운송 완료 판정으로 사용하지 않는다.
 4. M2 지도/접근성/비룡플라자 범위를 완료한 뒤, 센서·안전, 다중 차량, WebSocket 통합 순으로 진행한다.
 
-버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.4.7.0로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
+버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.4.7.1로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
 
 ### 2026-10-19 커밋 전 최종 확인
 

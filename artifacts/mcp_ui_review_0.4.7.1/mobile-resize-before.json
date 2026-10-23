@@ -1,0 +1,32 @@
+{
+    "run_id": "7a2ec0891dcf4536a08afe6840815404",
+    "width": 360,
+    "height": 640,
+    "nodes": 187,
+    "hubs": 3,
+    "stops": 14,
+    "safe_area": {
+        "serializedVersion": "2",
+        "x": 0.0,
+        "y": 0.0,
+        "width": 360.0,
+        "height": 640.0
+    },
+    "camera_rect": {
+        "serializedVersion": "2",
+        "x": 0.0,
+        "y": 0.49000000953674319,
+        "width": 1.0,
+        "height": 0.4300000071525574
+    },
+    "actual_aspect": 1.0746170282363892,
+    "expected_aspect": 1.3081395626068116,
+    "max_xz_error": 0.00006823938019806519,
+    "scenes": [
+        "Mobile_Bootstrap",
+        "CampusWorld",
+        "Mobile_Passenger",
+        "CampusTerrain"
+    ],
+    "clipped_text": []
+}

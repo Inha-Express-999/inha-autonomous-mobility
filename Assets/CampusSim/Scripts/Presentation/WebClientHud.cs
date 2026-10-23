@@ -14,7 +14,7 @@ namespace InhaExpress.Client.Presentation
         private Text connection, session, fleet, metrics, policy;
         private Camera worldCamera;
         private Camera previousCamera;
-        private bool previousCameraEnabled, wasActive, wasOrthographic;
+        private bool previousCameraEnabled, wasActive, wasOrthographic, wasEnabled;
         private Vector3 cameraPosition;
         private Quaternion cameraRotation;
         private float cameraSize, cameraAspect;
@@ -26,6 +26,11 @@ namespace InhaExpress.Client.Presentation
         private readonly List<Camera> suspendedCameras = new List<Camera>();
         private RectTransform[] hubLabels;
         private ServerMapMarker[] hubs;
+        private RectTransform safeRoot;
+        private Bounds framingBounds;
+        private Vector2Int lastScreenSize;
+        private Rect lastSafeArea;
+        private Rect MapViewport => mobile ? new Rect(0, .49f, 1, .43f) : new Rect(.025f, .29f, .685f, .42f);
 
         public void Initialize(bool passenger) => StartCoroutine(WaitForWorld(passenger));
 
@@ -50,6 +55,7 @@ namespace InhaExpress.Client.Presentation
             scaler.referenceResolution = mobile ? new Vector2(390, 844) : new Vector2(1280, 720);
             scaler.matchWidthOrHeight = .5f;
             var root = FixtureUiFactory.Rect(canvasRoot.transform, "Safe Area", Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+            safeRoot = root;
             root.gameObject.AddComponent<SafeAreaPanel>();
             if (!mobile)
             {
@@ -86,6 +92,7 @@ namespace InhaExpress.Client.Presentation
             {
                 previousViewport = worldCamera.rect;
                 wasActive = worldCamera.gameObject.activeSelf;
+                wasEnabled = worldCamera.enabled;
                 wasOrthographic = worldCamera.orthographic;
                 cameraPosition = worldCamera.transform.position;
                 cameraRotation = worldCamera.transform.rotation;
@@ -99,7 +106,6 @@ namespace InhaExpress.Client.Presentation
                         suspendedCameras.Add(camera);
                         camera.enabled = false;
                     }
-                worldCamera.rect = mobile ? new Rect(0, .49f, 1, .43f) : new Rect(.025f, .29f, .685f, .42f);
                 var bounds = new Bounds(map.markers[0].transform.position, Vector3.zero);
                 foreach (var marker in map.markers) bounds.Encapsulate(marker.transform.position);
                 if (mobile)
@@ -115,16 +121,8 @@ namespace InhaExpress.Client.Presentation
                 worldCamera.orthographic = true;
                 var rotation = Quaternion.Euler(mobile ? 55 : 65, mobile ? 25 : 0, 0);
                 worldCamera.transform.SetPositionAndRotation(bounds.center - rotation * Vector3.forward * 1000, rotation);
-                float aspect = Screen.width * worldCamera.rect.width / (Screen.height * worldCamera.rect.height);
-                worldCamera.aspect = aspect;
-                float fit = 1;
-                for(int x=-1;x<=1;x+=2) for(int y=-1;y<=1;y+=2) for(int z=-1;z<=1;z+=2) {
-                    var corner=bounds.center+Vector3.Scale(bounds.extents,new Vector3(x,y,z));
-                    var local=worldCamera.transform.InverseTransformPoint(corner);
-                    fit=Mathf.Max(fit,Mathf.Abs(local.y),Mathf.Abs(local.x)/aspect);
-                }
-                worldCamera.orthographicSize = fit * (mobile ? 1.04f : 1.08f);
-                fittedSize = worldCamera.orthographicSize;
+                framingBounds = bounds;
+                RefreshViewport();
                 hubs = Array.FindAll(map.markers, m => m.kind == ServerMapMarker.MarkerKind.Hub);
                 hubLabels = new RectTransform[hubs.Length];
                 for (int i = 0; i < hubs.Length; i++)
@@ -138,6 +136,32 @@ namespace InhaExpress.Client.Presentation
                 }
             }
             Debug.Log("CAMPUS_WEB_UI_READY role=" + (mobile ? "Mobile" : "PC") + " additive=true actuation=false");
+        }
+
+        private void RefreshViewport()
+        {
+            if (worldCamera == null || Screen.width <= 0 || Screen.height <= 0) return;
+            float zoom = fittedSize > 0 ? worldCamera.orthographicSize / fittedSize : 1f;
+            var safe = Screen.safeArea;
+            var view = MapViewport;
+            worldCamera.rect = new Rect((safe.x + view.x * safe.width) / Screen.width,
+                (safe.y + view.y * safe.height) / Screen.height,
+                view.width * safe.width / Screen.width, view.height * safe.height / Screen.height);
+            float aspect = worldCamera.rect.width * Screen.width / (worldCamera.rect.height * Screen.height);
+            worldCamera.aspect = aspect;
+            float fit = 1;
+            for (int x = -1; x <= 1; x += 2)
+                for (int y = -1; y <= 1; y += 2)
+                    for (int z = -1; z <= 1; z += 2)
+                    {
+                        var corner = framingBounds.center + Vector3.Scale(framingBounds.extents, new Vector3(x, y, z));
+                        var local = worldCamera.transform.InverseTransformPoint(corner);
+                        fit = Mathf.Max(fit, Mathf.Abs(local.y), Mathf.Abs(local.x) / aspect);
+                    }
+            fittedSize = fit * (mobile ? 1.04f : 1.08f);
+            worldCamera.orthographicSize = fittedSize * zoom;
+            lastScreenSize = new Vector2Int(Screen.width, Screen.height);
+            lastSafeArea = safe;
         }
 
         private void BuildOperator(RectTransform root)
@@ -320,12 +344,17 @@ namespace InhaExpress.Client.Presentation
         private void LateUpdate()
         {
             if (worldCamera == null || hubLabels == null) return;
+            if (lastScreenSize != new Vector2Int(Screen.width, Screen.height) || lastSafeArea != Screen.safeArea)
+                RefreshViewport();
             for (int i = 0; i < hubs.Length; i++)
             {
                 var point = worldCamera.WorldToViewportPoint(hubs[i].transform.position);
-                var anchor = worldCamera.rect.position + Vector2.Scale(new Vector2(point.x, point.y), worldCamera.rect.size);
-                float halfLabel = (mobile ? 56f : 68f) / (mobile ? 390f : 1280f);
-                anchor.x = Mathf.Clamp(anchor.x, worldCamera.rect.xMin + halfLabel, worldCamera.rect.xMax - halfLabel);
+                var view = MapViewport;
+                var anchor = view.position + Vector2.Scale(new Vector2(point.x, point.y), view.size);
+                float halfLabel = hubLabels[i].rect.width * .5f / safeRoot.rect.width;
+                float labelHeight = hubLabels[i].rect.height / safeRoot.rect.height;
+                anchor.x = Mathf.Clamp(anchor.x, view.xMin + halfLabel, view.xMax - halfLabel);
+                anchor.y = Mathf.Clamp(anchor.y, view.yMin, view.yMax - labelHeight);
                 hubLabels[i].anchorMin = hubLabels[i].anchorMax = anchor;
                 hubLabels[i].gameObject.SetActive(point.z > 0 && point.x >= 0 && point.x <= 1 && point.y >= 0 && point.y <= 1);
             }
@@ -339,6 +368,7 @@ namespace InhaExpress.Client.Presentation
                 worldCamera.orthographic = wasOrthographic;
                 worldCamera.orthographicSize = cameraSize;
                 worldCamera.aspect = cameraAspect;
+                worldCamera.enabled = wasEnabled;
                 worldCamera.transform.SetPositionAndRotation(cameraPosition, cameraRotation);
                 worldCamera.gameObject.SetActive(wasActive);
             }

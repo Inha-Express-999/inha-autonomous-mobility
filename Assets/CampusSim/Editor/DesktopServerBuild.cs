@@ -60,8 +60,11 @@ public sealed class DesktopServerBuild : IPostprocessBuildWithReport
         using (var process = Process.Start(info))
         {
             if (process == null) throw new BuildFailedException("Could not start server packaging.");
-            string output = process.StandardOutput.ReadToEnd(), error = process.StandardError.ReadToEnd();
+            // Drain both pipes concurrently: copy failures can exceed the stderr pipe buffer.
+            var outputRead = process.StandardOutput.ReadToEndAsync();
+            var errorRead = process.StandardError.ReadToEndAsync();
             process.WaitForExit();
+            string output = outputRead.GetAwaiter().GetResult(), error = errorRead.GetAwaiter().GetResult();
             if (process.ExitCode != 0) throw new BuildFailedException("Server packaging failed: " + error);
             UnityEngine.Debug.Log("PC server bundle: " + output);
         }

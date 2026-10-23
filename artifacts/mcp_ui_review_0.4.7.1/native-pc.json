@@ -1,0 +1,35 @@
+{
+    "project_version": "0.4.7.1",
+    "run_id": "b0fb4cce3ed344aaa27a096e3fb763dd",
+    "width": 2560,
+    "height": 1440,
+    "nodes": 187,
+    "hubs": 3,
+    "stops": 14,
+    "frame": 14894,
+    "safe_area": {
+        "serializedVersion": "2",
+        "x": 0.0,
+        "y": 0.0,
+        "width": 2560.0,
+        "height": 1440.0
+    },
+    "camera_rect": {
+        "serializedVersion": "2",
+        "x": 0.02500000037252903,
+        "y": 0.28999999165534975,
+        "width": 0.6850000023841858,
+        "height": 0.41999998688697817
+    },
+    "camera_aspect": 2.8994710445404054,
+    "expected_aspect": 2.8994710445404054,
+    "max_xz_error": 0.00006823938019806519,
+    "scenes": [
+        "PC_Bootstrap",
+        "CampusWorld",
+        "PC_Operator",
+        "CampusTerrain"
+    ],
+    "clipped_text": [],
+    "vehicle_actuation": false
+}

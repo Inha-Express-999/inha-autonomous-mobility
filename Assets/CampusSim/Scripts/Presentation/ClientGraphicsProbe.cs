@@ -16,8 +16,9 @@ namespace InhaExpress.Client.Presentation
         [Serializable] private sealed class Evidence
         {
             public string project_version, run_id;
-            public int width, height, nodes, hubs, stops;
-            public Rect safe_area;
+            public int width, height, nodes, hubs, stops, frame;
+            public Rect safe_area, camera_rect;
+            public float camera_aspect, expected_aspect, max_xz_error;
             public string[] scenes, clipped_text;
             public bool vehicle_actuation;
         }
@@ -40,7 +41,19 @@ namespace InhaExpress.Client.Presentation
 
         private IEnumerator Start()
         {
-            string path = Path.GetFullPath(Argument("--capture-ui"));
+            string argument = Argument("--capture-ui");
+            if (argument == null) yield break; // MCP can attach the probe without Player command-line flags.
+            yield return CaptureFrame(Path.GetFullPath(argument));
+            string signal = Argument("--exit-signal");
+            if (signal == null) yield break;
+            while (!File.Exists(signal)) yield return new WaitForSecondsRealtime(.25f);
+            Application.Quit();
+        }
+
+        public void CaptureTo(string path) => StartCoroutine(CaptureFrame(Path.GetFullPath(path)));
+
+        private IEnumerator CaptureFrame(string path)
+        {
             CampusServerMap map = null;
             float deadline = Time.realtimeSinceStartup + 120;
             while (Time.realtimeSinceStartup < deadline)
@@ -55,6 +68,7 @@ namespace InhaExpress.Client.Presentation
                 yield break;
             }
             yield return new WaitForSecondsRealtime(2);
+            Canvas.ForceUpdateCanvases();
             yield return new WaitForEndOfFrame();
             Directory.CreateDirectory(Path.GetDirectoryName(path));
             ScreenCapture.CaptureScreenshot(path);
@@ -78,16 +92,27 @@ namespace InhaExpress.Client.Presentation
             var evidence = new Evidence
             {
                 project_version = Application.version, run_id = map.RunId,
+                frame = Time.frameCount,
                 width = Screen.width, height = Screen.height, safe_area = Screen.safeArea,
                 nodes = map.Document.nodes.Length, hubs = map.Document.hubs.Length, stops = map.Document.stops.Length,
                 scenes = scenes.ToArray(), clipped_text = clipped.ToArray(), vehicle_actuation = false
             };
+            foreach (var camera in FindObjectsByType<Camera>(FindObjectsSortMode.None))
+                if (camera.isActiveAndEnabled && camera.name == "Campus overview camera")
+                {
+                    evidence.camera_rect = camera.rect;
+                    evidence.camera_aspect = camera.aspect;
+                    evidence.expected_aspect = Screen.width * camera.rect.width / (Screen.height * camera.rect.height);
+                }
+            foreach (var marker in map.markers)
+            {
+                var node = Array.Find(map.Document.nodes, n => n.id == marker.nodeId);
+                evidence.max_xz_error = Mathf.Max(evidence.max_xz_error, Vector2.Distance(
+                    new Vector2(marker.transform.position.x, marker.transform.position.z),
+                    new Vector2(node.position.x, node.position.z)));
+            }
             File.WriteAllText(Path.ChangeExtension(path, ".json"), JsonUtility.ToJson(evidence, true));
             Debug.Log("CAMPUS_GRAPHICS_CAPTURED " + path + " clipped_text=" + clipped.Count);
-            string signal = Argument("--exit-signal");
-            if (signal == null) yield break;
-            while (!File.Exists(signal)) yield return new WaitForSecondsRealtime(.25f);
-            Application.Quit();
         }
     }
 }
