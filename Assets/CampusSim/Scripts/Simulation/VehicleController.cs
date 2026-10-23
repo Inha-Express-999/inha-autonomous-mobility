@@ -87,6 +87,8 @@ namespace InhaExpress.Client.Presentation
         private void Awake()
         {
             vehicleBody = GetComponent<Rigidbody>();
+            // Smooth the rendered pose between physics ticks; physics and sensor state stay authoritative.
+            vehicleBody.interpolation = RigidbodyInterpolation.Interpolate;
             CacheWheels();
             // Park until a valid service/controller command arrives. No local keyboard driving.
             SetDriveCommand(0f, 0f, true);

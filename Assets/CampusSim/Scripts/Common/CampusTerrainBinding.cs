@@ -17,5 +17,8 @@ namespace CampusSim
         [Min(0.01f)] public float surfaceReliefScale = 1f;
         public string sourceId;
         public bool verifiedAccess;
+        // Optional road-only authoring profile. Retain the unmodified height source across rebakes.
+        public TerrainData roadHeightSource;
+        [Min(0)] public float roadSmoothingMeters;
     }
 }

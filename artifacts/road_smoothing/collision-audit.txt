@@ -1,0 +1,1 @@
+roads=15 samples=112635 terrainPenetrations=0 meshColliderMismatches=0 minimumClearanceM=0.04855871

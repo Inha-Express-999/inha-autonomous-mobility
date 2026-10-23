@@ -127,9 +127,10 @@ public static class CampusTerrainAuthoring
         data.SetHeights(0,0,h);
     }
 
-    static Mesh Subdivide(Mesh source,Transform projection=null,Terrain terrain=null)
+    internal static Mesh Subdivide(Mesh source,Transform projection=null,Terrain terrain=null)
     {
         var vertices=new List<Vector3>();var uvs=new List<Vector2>();var triangles=new List<int>();
+        var roadProfile=projection?projection.GetComponent<CampusTerrainBinding>():null;
         var v=source.vertices;var uv=source.uv;
         void Triangle(Vector3 a,Vector3 b,Vector3 c,Vector2 ua,Vector2 ub,Vector2 uc,int depth)
         {
@@ -137,7 +138,9 @@ public static class CampusTerrainAuthoring
             bool split=Mathf.Max(ab,bc,ca)>576;
             if(terrain && projection)
             {
-                float Height(Vector3 p)=>terrain.SampleHeight(projection.TransformPoint(p));
+                float Height(Vector3 p)=>roadProfile && roadProfile.roadHeightSource && roadProfile.roadSmoothingMeters>0
+                    ? CampusRoadSurfaceSmoothing.Height(roadProfile,terrain,projection.TransformPoint(p))
+                    : terrain.SampleHeight(projection.TransformPoint(p));
                 float ha=Height(a),hb=Height(b),hc=Height(c);
                 // Height interpolation error is amplified across very narrow faces.
                 // Refine only slivers that actually span changing terrain heights.
@@ -251,6 +254,7 @@ public static class CampusTerrainAuthoring
     {
         if(SceneManager.GetActiveScene().path!=ScenePath || !Terrain)throw new InvalidOperationException("Open the terrain working scene.");
         var terrain=Terrain;
+        CampusRoadSurfaceSmoothing.Prepare(terrain);
         foreach(var binding in UnityEngine.Object.FindObjectsByType<CampusTerrainBinding>(FindObjectsSortMode.None))
         {
             Undo.RecordObject(binding.transform,"Bake terrain binding");
@@ -285,6 +289,8 @@ public static class CampusTerrainAuthoring
                 var world=binding.transform.TransformPoint(vertices[i]);
                 world.y=binding.transform.position.y+(world.y-binding.transform.position.y)*binding.surfaceReliefScale;
                 world.y+=terrain.SampleHeight(world)+terrain.transform.position.y+binding.surfaceOffset;
+                if(binding.roadHeightSource && binding.roadSmoothingMeters>0)
+                    world.y=CampusRoadSurfaceSmoothing.Height(binding,terrain,world);
                 vertices[i]=binding.transform.InverseTransformPoint(world);
             }
             binding.bakedMesh.vertices=vertices;binding.bakedMesh.RecalculateNormals();binding.bakedMesh.RecalculateBounds();
@@ -308,6 +314,7 @@ public static class CampusTerrainAuthoring
             var collider=binding.GetComponent<MeshCollider>();if(collider){collider.sharedMesh=null;collider.sharedMesh=binding.bakedMesh;}
             EditorUtility.SetDirty(binding.bakedMesh);
         }
+        CampusRoadSurfaceSmoothing.UpdateSupport(terrain);
         CampusDormitoryFoundation.Fit();
         CampusDreamCenterFoundation.Fit();
         CampusRemainingFoundations.Fit();
