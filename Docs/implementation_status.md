@@ -1,6 +1,6 @@
 # 구현 현황
 
-프로젝트 버전 **0.4.6.0** · 2026-10-23. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
+프로젝트 버전 **0.4.7.0** · 2026-10-23. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
 
 2026-10-23 PC 진입: PC_Bootstrap이 로컬 Python 서버를 실행/재사용하며 CampusWorld → CampusTerrain 및 PC_Operator Additive 구조를 유지한다. PC fixture는 껐으며 차량 조작은 보류한다. 실제 Python/Unity/웹 세션 검증과 배포·종료 규칙은 `Docs/PC_SERVER_STARTUP.md`를 따른다.
 
@@ -17,6 +17,17 @@
 2026-10-19 추가: FIFO 기준선 외 Greedy/Hungarian을 공통 제약/비용/우선순위와 batch 접수에 연결했다. 웹 정책 선택과 동일 초기 상태의 독립 반복 비교/JSON 저장을 제공한다. 전체 backend 187개 테스트 통과. [비교 범위](DISPATCH_COMPARISON.md)를 따른다.
 
 2026-10-19 추가: 16:9 메인 관제를 요약/상세로 재배치하고 상단 메뉴를 두 개로 정리했다. RRT/TTC 보조 화면에 독립 20Hz 합성 운동 실험과 재생·시간 이동을 추가했다. 기본 정적 우회와 횡단 보행자 감속/대기/재출발, tick 사이 충돌/실패 기록을 검증했다. 전체 backend 191개 통과. 실제 관제 차량의 회피·차량 간 경합·Unity 센서는 여전히 미연결이다.
+
+## 2026-10-23 · 웹 스타일 네이티브 UI / 그래픽 확인
+
+- PC 실서버 모드는 웹과 같은 헤더·4개 지표·운영 지도·요청 카드·대기열·3개 차량 카드 배치다. 읽기 전용 demo 응답의 실제 run/time/배차/탐색/배터리를 표시한다.
+- 모바일은 사용자 참고 이미지의 캠퍼스 3D 지도 + 하단 호출 시트 구성이다. 출발/목적 후보 선택은 UI 내부 동작이며 서버 요청을 만들지 않는다. 차량 호출·운행·탑승 ETA는 보류다.
+- PC는 웹 창이 앞에 있어도 공통 월드와 HTTP 상태를 갱신하도록 데스크톱 백그라운드 실행을 유지한다.
+- 모바일 하단 시트/버튼/메뉴는 SafeArea 내부의 분리된 행에 배치했다. 카메라는 기존 Campus overview camera를 사용하고, 역할별 각도와 지도 범위에 맞춰 투영한다. 신규 씬을 만들지 않았다.
+- 공통 로고와 Freesentation 글꼴을 웹 자산에서 재사용했다. WOFF2를 fontTools로 TTF 컨테이너 변환했으며 SIL OFL 원문을 Resources에 포함했다. 운영체제 한글 글꼴 의존성을 줄였다.
+- Annyoung Car의 실제 누락 원인은 씬 인스턴스의 삭제된 VehicleWebSocketClient GUID(4f84e7f4abde4aef8964fb1f5dcb993a)였다. 이 고아 컴포넌트만 정리하고 기존 WheelCollider VehicleController와 물리 설정을 유지했다. 프리팹 클래스 식별자도 완전한 이름으로 정리했다.
+- 회귀: Python 212개, Unity EditMode 57개, 실제 Python 기동을 포함한 PlayMode 3개 통과. 첫 PlayMode 시도는 열려 있던 그래픽 Player가 포트를 소유해 자동 기동 조건에서 실패했고, 검증 창 정상 종료 후 재실행하여 3개 통과했다.
+- 그래픽 Player/모바일 Windows 미리보기 검증은 artifacts/client_ui_0.4.7.0에 기록한다. Unity MCP로 최종 빌드를 실행했고 Player 자체 캡처에서 PC 2560×1440, 모바일 780×1688 모두 텍스트 잘림 0건, 웹 API와 두 클라이언트의 run_id 일치를 확인했다. 선택적 com.unity.pipeline의 RuntimePipelineConfig 부재 경고가 있지만 BuildReport는 성공했고 이번 클라이언트 UI/HTTP 경로에서 해당 패키지는 사용하지 않는다. 모바일 실기기·Android/iOS 빌드, FPS/메모리 성능, 실제 차량 동역학은 이번 검증 대상이 아니다. 자동 기동 서버는 loopback 바인딩이며 LAN 모바일 배포는 별도 서버 바인딩/주소 설정이 필요하다.
 
 ## 인지한 미구현 사항: 차량 간 경로 충돌
 
@@ -78,7 +89,7 @@
 3. Dijkstra→A* 비교와 Unity 차량 1대의 실제 운송 흐름을 구현한다. 가상 왕복 타이머는 물리 운송 완료 판정으로 사용하지 않는다.
 4. M2 지도/접근성/비룡플라자 범위를 완료한 뒤, 센서·안전, 다중 차량, WebSocket 통합 순으로 진행한다.
 
-버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.4.6.0로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
+버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.4.7.0로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
 
 ### 2026-10-19 커밋 전 최종 확인
 

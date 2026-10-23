@@ -1,0 +1,40 @@
+{
+  "project_version": "0.4.7.0",
+  "editor_version": "6000.3.21f1",
+  "run_id": "7a2ec0891dcf4536a08afe6840815404",
+  "web_pc_mobile_same_session": true,
+  "graphic_player": true,
+  "computer_use_used_for_final_verification": false,
+  "final_build_control": "Unity MCP Unity_RunCommand -> DesktopServerBuild.BuildForVerification",
+  "nodes": 187,
+  "hubs": 3,
+  "stop_candidates": 14,
+  "vehicle_actuation": false,
+  "clipped_text": {
+    "pc": 0,
+    "mobile": 0
+  },
+  "resolutions": {
+    "pc": [
+      2560,
+      1440
+    ],
+    "mobile_windows_preview": [
+      780,
+      1688
+    ]
+  },
+  "tests": {
+    "python_passed": 212,
+    "unity_editmode_passed": 57,
+    "unity_playmode_with_real_python_passed": 3,
+    "final_release_checks_passed": 6
+  },
+  "limits": [
+    "Mobile device and Android/iOS builds not verified",
+    "No FPS/memory benchmark",
+    "RuntimePipelineConfig absent in optional com.unity.pipeline package; BuildReport succeeded, package disabled in Player",
+    "Vehicle actuation and request submission deferred; no fabricated ETA"
+  ],
+  "build_source_base_commit": "e969cdc192afad287b48e78c72865dede2827530"
+}

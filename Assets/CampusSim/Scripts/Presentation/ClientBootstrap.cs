@@ -28,6 +28,10 @@ namespace InhaExpress.Client.Presentation
 
         private void Awake()
         {
+#if UNITY_STANDALONE || UNITY_EDITOR
+            // The shared world and transport must keep updating while the web dashboard has focus.
+            if (clientRole == ClientRole.PC_Operator) Application.runInBackground = true;
+#endif
             if (instance != null && instance != this)
             {
                 enabled = false;
@@ -46,6 +50,12 @@ namespace InhaExpress.Client.Presentation
             }
 
             isLoading = true;
+            if (Array.IndexOf(Environment.GetCommandLineArgs(), "--mobile-preview") >= 0)
+            {
+                clientRole = ClientRole.Mobile_Passenger;
+                roleScenePath = "Assets/CampusSim/Scenes/Mobile_Passenger.unity";
+                useFixture = false;
+            }
             if (!useFixture && autoStartLocalServer && clientRole == ClientRole.PC_Operator)
             {
                 var launcher = gameObject.AddComponent<DesktopServerLauncher>();
@@ -53,7 +63,12 @@ namespace InhaExpress.Client.Presentation
             }
             yield return LoadAdditiveSceneIfNeeded(worldScenePath);
             yield return LoadAdditiveSceneIfNeeded(roleScenePath);
-            if (!useFixture) yield break; // No implicit mock fallback after a real transport failure.
+            if (!useFixture)
+            {
+                var hud = gameObject.AddComponent<WebClientHud>();
+                hud.Initialize(clientRole == ClientRole.Mobile_Passenger);
+                yield break;
+            } // No implicit mock fallback after a real transport failure.
             Runtime = gameObject.AddComponent<ClientRuntimeHost>();
             string subscriber = clientRole == ClientRole.Mobile_Passenger ? FixtureScenario.PassengerId : null;
             Runtime.Initialize(clientRole, new FixtureClientDataSource(clientRole, Application.version, subscriber), subscriber);

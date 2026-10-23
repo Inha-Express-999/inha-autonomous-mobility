@@ -8,12 +8,12 @@ namespace InhaExpress.Client.Presentation
 {
     public static class FixtureUiPalette
     {
-        public static readonly Color Ink = Hex("172033");
-        public static readonly Color Muted = Hex("6E7787");
-        public static readonly Color Canvas = Hex("F4F6FA", 0.96f);
+        public static readonly Color Ink = Hex("16233B");
+        public static readonly Color Muted = Hex("6C7A90");
+        public static readonly Color Canvas = Hex("F4F7FB", 0.96f);
         public static readonly Color Surface = Hex("FFFFFF");
-        public static readonly Color Line = Hex("E4E8F0");
-        public static readonly Color Blue = Hex("2864DC");
+        public static readonly Color Line = Hex("DDE5F0");
+        public static readonly Color Blue = Hex("1677FF");
         public static readonly Color Green = Hex("1C9B68");
         public static readonly Color Amber = Hex("E39B22");
         public static readonly Color Red = Hex("D95757");
@@ -199,10 +199,12 @@ namespace InhaExpress.Client.Presentation
 
         private static Font CreateFont()
         {
+            var bundled = Resources.Load<Font>("Freesentation-Regular");
+            if (bundled != null) return bundled;
             string[] paths = Font.GetPathsToOSFonts();
-            foreach (var name in new[] { "Malgun Gothic", "Noto Sans CJK KR", "Apple SD Gothic Neo", "sans-serif", "Arial" })
+            foreach (var name in new[] { "malgun", "Noto Sans CJK KR", "Apple SD Gothic Neo", "sans-serif", "Arial" })
                 if (System.Array.Exists(paths, path => path.IndexOf(name, System.StringComparison.OrdinalIgnoreCase) >= 0))
-                    return Font.CreateDynamicFontFromOSFont(name, 18);
+                    return Font.CreateDynamicFontFromOSFont(name == "malgun" ? "Malgun Gothic" : name, 18);
             return Resources.GetBuiltinResource<Font>("LegacyRuntime.ttf");
         }
     }

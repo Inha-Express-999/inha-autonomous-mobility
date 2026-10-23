@@ -70,6 +70,11 @@ namespace InhaExpress.Client.Tests
             if (opened) scene = EditorSceneManager.OpenScene(ScenePath, OpenSceneMode.Additive);
             try
             {
+                var vehicle = scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<Transform>(true))
+                    .Single(t => t.name == "Annyoung Car");
+                Assert.That(GameObjectUtility.GetMonoBehavioursWithMissingScriptCount(vehicle.gameObject), Is.Zero,
+                    "The scene instance must not retain the removed VehicleWebSocketClient reference.");
+                Assert.That(vehicle.GetComponents<MonoBehaviour>().Any(c => c != null && c.GetType().Name == "VehicleController"), Is.True);
                 var roots = scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<CampusServerMap>(true)).ToArray();
                 Assert.That(roots.Length, Is.EqualTo(1));
                 var overlay = roots[0];

@@ -1,0 +1,5 @@
+CAMPUS_WEB_UI_READY role=PC additive=true actuation=false
+CAMPUS_WEB_SESSION_CONNECTED run=7a2ec0891dcf4536a08afe6840815404 server_version=0.4.7.0 map=inha-osm-unity-v2 scenes=PC_Bootstrap,CampusWorld,PC_Operator,CampusTerrain
+CAMPUS_GRAPHICS_CAPTURED C:\Users\sy\Documents\GitHub\inha-autonomous-mobility\artifacts\client_ui_0.4.7.0\pc.png clipped_text=0
+Missing script warning count: 0
+Unhandled exception count: 0

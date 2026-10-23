@@ -1,0 +1,24 @@
+{
+    "project_version": "0.4.7.0",
+    "run_id": "7a2ec0891dcf4536a08afe6840815404",
+    "width": 2560,
+    "height": 1440,
+    "nodes": 187,
+    "hubs": 3,
+    "stops": 14,
+    "safe_area": {
+        "serializedVersion": "2",
+        "x": 0.0,
+        "y": 0.0,
+        "width": 2560.0,
+        "height": 1440.0
+    },
+    "scenes": [
+        "PC_Bootstrap",
+        "CampusWorld",
+        "PC_Operator",
+        "CampusTerrain"
+    ],
+    "clipped_text": [],
+    "vehicle_actuation": false
+}

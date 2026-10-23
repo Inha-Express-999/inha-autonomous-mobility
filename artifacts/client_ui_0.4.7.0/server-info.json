@@ -1,0 +1,10 @@
+{
+  "service_id": "inha-mobil-local-demo",
+  "schema_version": 1,
+  "map_schema_version": 1,
+  "project_version": "0.4.7.0",
+  "process_id": 42224,
+  "run_id": "7a2ec0891dcf4536a08afe6840815404",
+  "geometry_hash": "32950491597bd9b134fda86eaaa95af1fc25737413f6841a04d94dd854cad7c4",
+  "simulation_only": true
+}

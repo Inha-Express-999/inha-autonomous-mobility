@@ -1,0 +1,89 @@
+{
+  "run_id": "7a2ec0891dcf4536a08afe6840815404",
+  "time_s": 0.0,
+  "speed": 10.0,
+  "paused": true,
+  "planner": "astar",
+  "dispatch": "fifo",
+  "map_version": "inha-osm-unity-v2",
+  "vehicles": [
+    {
+      "id": "V01",
+      "home_hub_id": "main_gate",
+      "home_name": "정문",
+      "position": [
+        -40.85899130804372,
+        -321.4633004290494
+      ],
+      "phase": "READY",
+      "remaining_s": 0.0,
+      "remaining_wh": 2000.0,
+      "soc": 1.0,
+      "destination": null,
+      "routes": [],
+      "request_id": null,
+      "departed_at_s": null,
+      "trajectory": []
+    },
+    {
+      "id": "V02",
+      "home_hub_id": "rear_gate",
+      "home_name": "후문",
+      "position": [
+        264.71217701774225,
+        45.96414648905591
+      ],
+      "phase": "READY",
+      "remaining_s": 0.0,
+      "remaining_wh": 2000.0,
+      "soc": 1.0,
+      "destination": null,
+      "routes": [],
+      "request_id": null,
+      "departed_at_s": null,
+      "trajectory": []
+    },
+    {
+      "id": "V03",
+      "home_hub_id": "west_field_parking",
+      "home_name": "운동장 옆 주차장",
+      "position": [
+        -312.6637858403053,
+        55.798580885198646
+      ],
+      "phase": "READY",
+      "remaining_s": 0.0,
+      "remaining_wh": 2000.0,
+      "soc": 1.0,
+      "destination": null,
+      "routes": [],
+      "request_id": null,
+      "departed_at_s": null,
+      "trajectory": []
+    }
+  ],
+  "requests": [],
+  "queue": [],
+  "vehicle_fifo": [
+    "V01",
+    "V02",
+    "V03"
+  ],
+  "waiting_reasons": {},
+  "completed": 0,
+  "charging_sessions": [],
+  "events": [],
+  "battery_policy": {
+    "capacity_wh": 2000.0,
+    "initial_wh": 2000.0,
+    "wh_per_m": 0.35,
+    "auxiliary_power_w": 50.0,
+    "reserve_fraction": 0.15,
+    "charge_trigger_fraction": 0.3,
+    "charging_power_w": 1000.0,
+    "passenger_load_fraction": 0.05,
+    "cargo_load_fraction_per_kg": 0.01,
+    "charge_when_idle": true
+  },
+  "simulation_only": true
+}

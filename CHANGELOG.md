@@ -1,5 +1,14 @@
 # 변경 이력
 
+## 0.4.7.0 — 2026-10-23 · 웹 스타일 PC/모바일 화면
+
+- 작업: 기존 Additive CampusTerrain 위에 웹 관제 구성과 모바일 지도/호출 시트 UI 적용. 실제 demo 세션 상태만 표시. 차량 호출·조작은 보류.
+- 이유: fixture 전용 화면과 실제 서버 연결 화면을 구분하고 웹과 시각적 일관성을 유지.
+- 호환성: map/schema 계약 유지, 모바일 Bootstrap은 읽기 전용 서버 모드. 서버 주소는 CampusServerMap 설정 사용.
+- 차량: CampusTerrain 차량 인스턴스에 남은 삭제된 VehicleWebSocketClient 참조를 정리하고 기존 WheelCollider 컨트롤러를 보존. 프리팹 클래스 식별자 정정.
+- 검증: Python 212, Unity EditMode 57, 실제 Python 연동 PlayMode 3 통과. Unity MCP 빌드 후 Windows 그래픽 Player/세로 모바일 미리보기에서 UI 잘림 0건과 웹 API/PC/모바일 동일 run_id 확인. 기록은 artifacts/client_ui_0.4.7.0. PC 백그라운드 갱신 유지.
+- 한계: 모바일 단말 성능 및 센서/차량 동역학 미검증.
+
 ## 0.4.6.0 — 2026-10-23 · PC Additive 진입 시 로컬 서버 자동 실행
 
 - 작업: PC_Bootstrap의 실제 서버 모드에서 로컬 Python 서버를 자동 시작하고, 호환 스키마의 기존 서비스는 재사용한다. PC_Bootstrap → CampusWorld → CampusTerrain 및 PC_Operator의 Additive 구조를 유지한다.

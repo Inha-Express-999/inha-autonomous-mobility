@@ -18,11 +18,19 @@ public sealed class DesktopServerBuild : IPostprocessBuildWithReport
         serialized.FindProperty("m_Subtarget").intValue = (int)StandaloneBuildSubtarget.Player;
         serialized.ApplyModifiedPropertiesWithoutUndo();
         AssetDatabase.SaveAssets();
+        var script = AssetDatabase.LoadAssetAtPath<MonoScript>("Assets/CampusSim/Scripts/Simulation/VehicleController.cs");
+        UnityEngine.Debug.Log("VEHICLE_SCRIPT_TYPE=" + script.GetClass());
+        var prefab = AssetDatabase.LoadAssetAtPath<GameObject>("Assets/CampusSim/Prefabs/Annyoung Car.prefab");
+        int missing = 0;
+        foreach (var t in prefab.GetComponentsInChildren<Transform>(true))
+            missing += GameObjectUtility.GetMonoBehavioursWithMissingScriptCount(t.gameObject);
+        if (missing != 0) throw new BuildFailedException("Vehicle prefab missing scripts: " + missing);
         Directory.CreateDirectory(".utmp/pc-client");
         var report = BuildPipeline.BuildPlayer(new BuildPlayerOptions
         {
             scenes = new[] { "Assets/CampusSim/Scenes/PC_Bootstrap.unity", "Assets/CampusSim/Scenes/CampusWorld.unity",
-                "Assets/CampusSim/Scenes/CampusTerrain.unity", "Assets/CampusSim/Scenes/PC_Operator.unity" },
+                "Assets/CampusSim/Scenes/CampusTerrain.unity", "Assets/CampusSim/Scenes/PC_Operator.unity",
+                "Assets/CampusSim/Scenes/Mobile_Passenger.unity" },
             locationPathName = ".utmp/pc-client/InhaMobil.exe", target = BuildTarget.StandaloneWindows64,
             subtarget = (int)StandaloneBuildSubtarget.Player, options = BuildOptions.Development
         });

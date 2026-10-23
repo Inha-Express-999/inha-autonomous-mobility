@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "hash_format": "sha256-utf8-lf-v1",
-  "build_project_version": "0.4.6.0",
+  "build_project_version": "0.4.7.0",
   "map_version": "inha-osm-unity-v2",
   "geometry_source": "cached_osm_and_unity_centerlines",
   "synthetic_geometry": false,
@@ -63,7 +63,7 @@
     },
     "project_version": {
       "path": "VERSION",
-      "sha256": "22744a1808eec5d541f47cdff231f5179facfb031501790699a2645fa8273e00"
+      "sha256": "6aafbc4f23e168a2a27f4a0c383a7e246a52149670b5278f04fb7d417f0cb998"
     },
     "expanded_osm": {
       "path": "Docs/MapResearch/2026-09-17/expanded_campus.osm",

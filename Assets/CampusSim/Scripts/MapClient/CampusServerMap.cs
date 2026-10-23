@@ -29,16 +29,20 @@ namespace InhaExpress.Client.MapClient
         private Coroutine connection;
         private ServerMapDocument localMap;
         private string lastLoggedRun;
+        public SharedState LatestState { get; private set; }
+        public ServerMapDocument Document => localMap;
 
-        [Serializable] private sealed class State
+        [Serializable] public sealed class SharedState
         {
             public string run_id, map_version;
             public double time_s;
             public bool paused, simulation_only;
             public int completed;
+            public string planner, dispatch;
+            public string[] queue;
             public Vehicle[] vehicles;
         }
-        [Serializable] private sealed class Vehicle { public string id; }
+        [Serializable] public sealed class Vehicle { public string id, home_name, phase, destination; public float soc; }
 
         private void OnEnable()
         {
@@ -111,11 +115,12 @@ namespace InhaExpress.Client.MapClient
                     }
                     else
                     {
-                        var state = JsonUtility.FromJson<State>(activeRequest.downloadHandler.text);
+                        var state = JsonUtility.FromJson<SharedState>(activeRequest.downloadHandler.text);
                         if (state == null || state.map_version != mapVersion || !state.simulation_only ||
                             string.IsNullOrEmpty(state.run_id) || state.vehicles == null ||
                             double.IsNaN(state.time_s) || double.IsInfinity(state.time_s) || state.time_s < 0)
                             throw new ArgumentException("Invalid shared demo state.");
+                        LatestState = state;
                         RunId = state.run_id;
                         if (lastLoggedRun != RunId)
                         {

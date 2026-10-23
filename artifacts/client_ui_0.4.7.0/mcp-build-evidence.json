@@ -1,0 +1,26 @@
+[
+  {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"success\": true,\n  \"message\": \"Retrieved editor state.\",\n  \"data\": {\n    \"IsPlaying\": false,\n    \"IsPaused\": false,\n    \"IsCompiling\": false,\n    \"IsUpdating\": false,\n    \"ApplicationPath\": \"C:/Program Files/Unity/Hub/Editor/6000.3.21f1/Editor/Unity.exe\",\n    \"ApplicationContentsPath\": \"C:/Program Files/Unity/Hub/Editor/6000.3.21f1/Editor/Data\",\n    \"TimeSinceStartup\": 1018.5015517\n  }\n}"
+        }
+      ]
+    },
+    "jsonrpc": "2.0",
+    "id": 2
+  },
+  {
+    "result": {
+      "content": [
+        {
+          "type": "text",
+          "text": "{\n  \"success\": true,\n  \"message\": \"Retrieved 1 log entries.\",\n  \"data\": [\n    {\n      \"Message\": \"CAMPUS_PC_BUILD_SUCCEEDED C:/Users/sy/Documents/GitHub/inha-autonomous-mobility/.utmp/pc-client/InhaMobil.exe\\nUnityEngine.Debug:Log (object)\\nDesktopServerBuild:BuildForVerification () (at Assets/CampusSim/Editor/DesktopServerBuild.cs:39)\\nSystem.Reflection.MethodBase:Invoke (object,object[])\\nUnity.AI.Assistant.Agent.Dynamic.Extension.Editor.CommandScript:Execute (Unity.AI.Assistant.Agent.Dynamic.Extension.Editor.ExecutionResult)\\nUnity.AI.Assistant.Editor.RunCommand.AgentRunCommand:Execute (Unity.AI.Assistant.Agent.Dynamic.Extension.Editor.ExecutionResult&,string) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Editor/Assistant/RunCommand/AgentRunCommand.cs:56)\\nUnity.AI.Assistant.Editor.RunCommand.RunCommandUtils:Execute (Unity.AI.Assistant.Editor.RunCommand.AgentRunCommand,string) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Editor/Assistant/RunCommand/RunCommandUtils.cs:75)\\nUnity.AI.Assistant.Tools.Editor.RunCommandTool/<ExecuteCommand>d__6:MoveNext () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.Assistant.Tools/Scripting/RunCommandTool.cs:73)\\nSystem.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<Unity.AI.Assistant.Tools.Editor.RunCommandTool/ExecutionOutput>:Start<Unity.AI.Assistant.Tools.Editor.RunCommandTool/<ExecuteCommand>d__6> (Unity.AI.Assistant.Tools.Editor.RunCommandTool/<ExecuteCommand>d__6&)\\nUnity.AI.Assistant.Tools.Editor.RunCommandTool:ExecuteCommand (Unity.AI.Assistant.FunctionCalling.ToolExecutionContext,string,string)\\nUnity.AI.MCP.Editor.Tools.RunCommand/<HandleCommand>d__4:MoveNext () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Tools/RunCommand.cs:155)\\nSystem.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<object>:Start<Unity.AI.MCP.Editor.Tools.RunCommand/<HandleCommand>d__4> (Unity.AI.MCP.Editor.Tools.RunCommand/<HandleCommand>d__4&)\\nUnity.AI.MCP.Editor.Tools.RunCommand:HandleCommand (Unity.AI.MCP.Editor.Tools.Parameters.RunCommandParams)\\nSystem.Reflection.MethodBase:Invoke (object,object[])\\nUnity.AI.MCP.Editor.ToolRegistry.TypedToolHandler:ExecuteAsync (Newtonsoft.Json.Linq.JObject) (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/ToolRegistry/IToolHandler.cs:164)\\nUnity.AI.MCP.Editor.ToolRegistry.McpToolRegistry/<ExecuteToolAsync>d__14:MoveNext () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/ToolRegistry/McpToolRegistry.cs:244)\\nSystem.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<object>:Start<Unity.AI.MCP.Editor.ToolRegistry.McpToolRegistry/<ExecuteToolAsync>d__14> (Unity.AI.MCP.Editor.ToolRegistry.McpToolRegistry/<ExecuteToolAsync>d__14&)\\nUnity.AI.MCP.Editor.ToolRegistry.McpToolRegistry:ExecuteToolAsync (string,Newtonsoft.Json.Linq.JObject)\\nUnity.AI.MCP.Editor.Bridge/<ExecuteCommandAsync>d__75:MoveNext () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:1783)\\nSystem.Runtime.CompilerServices.AsyncTaskMethodBuilder`1<string>:Start<Unity.AI.MCP.Editor.Bridge/<ExecuteCommandAsync>d__75> (Unity.AI.MCP.Editor.Bridge/<ExecuteCommandAsync>d__75&)\\nUnity.AI.MCP.Editor.Bridge:ExecuteCommandAsync (Unity.AI.MCP.Editor.Models.Command,Unity.AI.MCP.Editor.Connection.IConnectionTransport,System.Threading.CancellationToken)\\nUnity.AI.MCP.Editor.Bridge:ProcessCommands () (at ./Library/PackageCache/com.unity.ai.assistant@8d1e3e89e3a7/Modules/Unity.AI.MCP.Editor/Bridge.cs:1537)\\nUnityEditor.EditorApplication:Internal_CallUpdateFunctions ()\\n\",\n      \"Type\": \"Log\",\n      \"File\": null,\n      \"Line\": null,\n      \"StackTrace\": null\n    }\n  ]\n}"
+        }
+      ]
+    },
+    "jsonrpc": "2.0",
+    "id": 3
+  }
+]
