@@ -1,0 +1,14 @@
+{
+  "name": "Freesentation",
+  "source": "https://github.com/Freesentation/freesentation",
+  "revision": "98f6b841fca55a23fbb0f9eb91acda0e16a676ea",
+  "license": "SIL Open Font License 1.1 (OFL.txt)",
+  "modified": false,
+  "files": {
+    "Freesentation-4Regular.woff2": "3b8eff642db011de013dcec90501cfea3f36cbebf4c604ccc05cf862ac365165",
+    "Freesentation-5Medium.woff2": "8b709b83bc76dd6f2585ecd8c122afdc5043dabc7790f9d092201f438e3d6947",
+    "Freesentation-6SemiBold.woff2": "2a3155bcc0b7d7178da0f8e32cc1534545e922cbfb6c057604f30f3269a27f6f",
+    "Freesentation-7Bold.woff2": "668055a6dcb3115afd7b2da45863acffe0cef6b309ed969099e198746c035dce",
+    "OFL.txt": "d592b07a70a08517d00a6b606046a1a3dce40473c870738852cf3011ad0c8820"
+  }
+}

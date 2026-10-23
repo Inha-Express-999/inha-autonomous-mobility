@@ -1,0 +1,637 @@
+{
+  "project_version": "0.2.2.0",
+  "date": "2026-10-15",
+  "python_version": "3.14.4",
+  "code_commit": "ea99f17d43f2069ad96dfd5d0b4e572081d1ef88",
+  "working_tree_changes": true,
+  "source_sha256": {
+    "backend/src/campus_sim/api.py": "181f6ff24e01ba5cccfc0a4add30ea2a6377fc61db84675342aadb34310bab44",
+    "backend/src/campus_sim/battery.py": "b547a5f22be6051e043d0d8412a5b1f7a33b0bd3dccf9309373188a0d05f2aaa",
+    "backend/src/campus_sim/cli.py": "bc0bc6668277047a43aeb39fe0c9c45e992e28a17a2170d4593df0f387caaf27",
+    "backend/src/campus_sim/connection_audit.py": "6ed7c30492ee8b7b21432ea89ee8dd8b509941a9dc131c58f5814a3fbe95d8f8",
+    "backend/src/campus_sim/demo_fifo.py": "cedbb5160cb0a12d5ee0a8884fe2c3cbb2b6e88f5fd5455e92e8af0888c0518f",
+    "backend/src/campus_sim/dispatch.py": "28a6c58e9ca6ae619b9a1d58b38095bdd05138a2477f85c0cba690ba8f1a48fb",
+    "backend/src/campus_sim/domain.py": "06945f4b3b56916e9c6763300abd31117b90b42d764e1d85b7119ecceb3e02b1",
+    "backend/src/campus_sim/map_builder.py": "8ec0564f9e369ee81524c601a203793f0e94a430949a459e26bfe8f24428e42e",
+    "backend/src/campus_sim/map_coordinates.py": "1b8dde8bf4cbadcc907f1609bbd0e2194205180ee75f980c9f6cfee7408dd318",
+    "backend/src/campus_sim/map_data.py": "76fc8e102a1a67e05c8c007d55097a27889143f5c536631cec61a0388fc067b5",
+    "backend/src/campus_sim/map_extension.py": "9fa704e9b9e55fa83d323e79ced0d5b456125090f9a018ce27112efed397b365",
+    "backend/src/campus_sim/osm_roads.py": "dff13616b40e9b385add0a871e637c6db6c7dcf7069eb6f9a1cae062023cda78",
+    "backend/src/campus_sim/planning.py": "ba13e3c90ea5003aca007be14e0a2fb218e29087e0a7486a29078b775133e11f",
+    "backend/src/campus_sim/service.py": "34b794dc4e497f25ac97093388f920066c6c9460dac5152872cd4e9845bf81da",
+    "backend/src/campus_sim/unity_coverage.py": "10f70328d90111f445dcf1dce37202d7140375912919e7bd4c173af9d794faed",
+    "backend/src/campus_sim/virtual_runtime.py": "756a506e80523352d392cfea778498262ffa5dafb22d0126e78d9094d0888fa1",
+    "backend/src/campus_sim/__init__.py": "494ad6cfe544eaa2f3e78be70eb985f449e3639fbd4d3b224bf26cfe4796fda2",
+    "configs/osm_runtime.json": "7ca28b99bc9d791e37036bc8117717682af170adbd607ebe1ac82d645c165091",
+    "backend/tests/test_battery_fleet.py": "b951627773c58deba22edc5e5e37edca5df155f1394b4c0afe889896f78ef3a0",
+    "backend/requirements-dev.lock": "d90fb57f6a24b55b89525dc3e3ebdb822c2314c5a5cc7325f32f466d0a377952",
+    "VERSION": "fbd16eb45f1b5849779c3fa73fe7f916aa6f3d87f1c9ada41c62dbf82a3f3427"
+  },
+  "map_manifest_sha256": "ff7f81eace26efa9f9198b9ff7f4f857e3a7224daf17225d3b8766920ef54319",
+  "map_version": "inha-osm-unity-v2",
+  "speed_kmh": 30,
+  "vehicle_policy": "request receipt FIFO / vehicle availability FIFO",
+  "synthetic_time_and_energy": true,
+  "operationally_verified": false,
+  "limitations": [
+    "Synthetic battery specs and three ideal home charging ports; no real facility approval.",
+    "Standby power off; route-leg time-linear energy; no dynamics or unexpected discharge recovery.",
+    "No Unity Physics/sensor/multi-vehicle collision coordination."
+  ],
+  "validation": {
+    "pytest_passed": 91,
+    "pytest_warning": "Starlette TestClient httpx deprecation",
+    "ruff_check": "passed",
+    "ruff_format_check": "passed"
+  },
+  "scenarios": {
+    "extension_destinations": {
+      "request_count": 5,
+      "completed_count": 5,
+      "all_returned": true,
+      "all_ready": true,
+      "final_time_s": 282.04208923030757,
+      "last_return_s": 282.04208923030757,
+      "battery_policy": {
+        "capacity_wh": 2000.0,
+        "initial_wh": 2000.0,
+        "wh_per_m": 0.35,
+        "auxiliary_power_w": 50.0,
+        "reserve_fraction": 0.15,
+        "charge_trigger_fraction": 0.3,
+        "charging_power_w": 1000.0,
+        "passenger_load_fraction": 0.05,
+        "cargo_load_fraction_per_kg": 0.01
+      },
+      "final_batteries": {
+        "V01": {
+          "remaining_wh": 1234.9000584448759,
+          "consumed_wh": 765.0999415551241,
+          "charged_wh": 0.0
+        },
+        "V02": {
+          "remaining_wh": 1152.89441949925,
+          "consumed_wh": 847.1055805007501,
+          "charged_wh": 0.0
+        },
+        "V03": {
+          "remaining_wh": 1289.4622123760587,
+          "consumed_wh": 710.5377876239413,
+          "charged_wh": 0.0
+        }
+      },
+      "charges": [],
+      "trips": [
+        {
+          "request_sequence": 1,
+          "vehicle_id": "V01",
+          "destination": "hitech",
+          "departed_at_s": 0.0,
+          "returns_at_s": 157.02068501920138,
+          "energy_wh": 471.60726576947644,
+          "energy_by_leg_wh": [
+            0.0,
+            241.5283453593966,
+            230.07892041007983
+          ]
+        },
+        {
+          "request_sequence": 2,
+          "vehicle_id": "V02",
+          "destination": "dorm_1",
+          "departed_at_s": 0.0,
+          "returns_at_s": 62.546109415907694,
+          "energy_wh": 187.85550223875052,
+          "energy_by_leg_wh": [
+            0.0,
+            96.20807802516356,
+            91.64742421358696
+          ]
+        },
+        {
+          "request_sequence": 3,
+          "vehicle_id": "V03",
+          "destination": "dorm_2",
+          "departed_at_s": 0.0,
+          "returns_at_s": 236.5721188851967,
+          "energy_wh": 710.5377876239413,
+          "energy_by_leg_wh": [
+            0.0,
+            363.89391897966016,
+            346.6438686442812
+          ]
+        },
+        {
+          "request_sequence": 4,
+          "vehicle_id": "V02",
+          "destination": "dorm_3",
+          "departed_at_s": 62.546109415907694,
+          "returns_at_s": 282.04208923030757,
+          "energy_wh": 659.2500782619995,
+          "energy_by_leg_wh": [
+            0.0,
+            337.62749672839976,
+            321.62258153359977
+          ]
+        },
+        {
+          "request_sequence": 5,
+          "vehicle_id": "V01",
+          "destination": "inha_station",
+          "departed_at_s": 157.02068501920138,
+          "returns_at_s": 254.73847765072344,
+          "energy_wh": 293.49267578564786,
+          "energy_by_leg_wh": [
+            0.0,
+            150.3089657491815,
+            143.18371003646635
+          ]
+        }
+      ],
+      "events": [
+        {
+          "time_s": 62.546109415907694,
+          "completed": 1,
+          "remaining_wh": {
+            "V01": 1807.5838439496729,
+            "V02": 1812.1444977612496,
+            "V03": 1807.5838439496729
+          },
+          "vehicle_fifo": [],
+          "charging": []
+        },
+        {
+          "time_s": 157.02068501920138,
+          "completed": 3,
+          "remaining_wh": {
+            "V01": 1528.3927342305237,
+            "V02": 1521.5039630927836,
+            "V03": 1522.5921088444616
+          },
+          "vehicle_fifo": [],
+          "charging": []
+        },
+        {
+          "time_s": 236.5721188851967,
+          "completed": 5,
+          "remaining_wh": {
+            "V01": 1288.1375820494056,
+            "V02": 1286.1466937050611,
+            "V03": 1289.4622123760587
+          },
+          "vehicle_fifo": [
+            "V03"
+          ],
+          "charging": []
+        },
+        {
+          "time_s": 254.73847765072344,
+          "completed": 5,
+          "remaining_wh": {
+            "V01": 1234.9000584448759,
+            "V02": 1232.9091701005314,
+            "V03": 1289.4622123760587
+          },
+          "vehicle_fifo": [
+            "V03",
+            "V01"
+          ],
+          "charging": []
+        },
+        {
+          "time_s": 282.04208923030757,
+          "completed": 5,
+          "remaining_wh": {
+            "V01": 1234.9000584448759,
+            "V02": 1152.89441949925,
+            "V03": 1289.4622123760587
+          },
+          "vehicle_fifo": [
+            "V03",
+            "V01",
+            "V02"
+          ],
+          "charging": []
+        }
+      ]
+    },
+    "battery_18_requests": {
+      "request_count": 18,
+      "completed_count": 18,
+      "all_returned": true,
+      "all_ready": true,
+      "final_time_s": 11128.841050735875,
+      "last_return_s": 6035.482580425551,
+      "battery_policy": {
+        "capacity_wh": 2000.0,
+        "initial_wh": 2000.0,
+        "wh_per_m": 0.35,
+        "auxiliary_power_w": 50.0,
+        "reserve_fraction": 0.15,
+        "charge_trigger_fraction": 0.3,
+        "charging_power_w": 1000.0,
+        "passenger_load_fraction": 0.05,
+        "cargo_load_fraction_per_kg": 0.01
+      },
+      "final_batteries": {
+        "V01": {
+          "remaining_wh": 2000.0,
+          "consumed_wh": 2829.6435946168526,
+          "charged_wh": 2829.643594616852
+        },
+        "V02": {
+          "remaining_wh": 2000.0,
+          "consumed_wh": 2829.6435946168526,
+          "charged_wh": 2829.643594616852
+        },
+        "V03": {
+          "remaining_wh": 2000.0,
+          "consumed_wh": 2829.6435946168526,
+          "charged_wh": 2829.643594616852
+        }
+      },
+      "charges": [
+        {
+          "vehicle_id": "V01",
+          "started_at_s": 471.0620550576042,
+          "ends_at_s": 5564.420525367948,
+          "initial_wh": 585.178202691571,
+          "completed": true
+        },
+        {
+          "vehicle_id": "V02",
+          "started_at_s": 471.0620550576042,
+          "ends_at_s": 5564.420525367948,
+          "initial_wh": 585.178202691571,
+          "completed": true
+        },
+        {
+          "vehicle_id": "V03",
+          "started_at_s": 471.0620550576042,
+          "ends_at_s": 5564.420525367948,
+          "initial_wh": 585.178202691571,
+          "completed": true
+        },
+        {
+          "vehicle_id": "V01",
+          "started_at_s": 6035.482580425551,
+          "ends_at_s": 11128.841050735875,
+          "initial_wh": 585.1782026915765,
+          "completed": true
+        },
+        {
+          "vehicle_id": "V02",
+          "started_at_s": 6035.482580425551,
+          "ends_at_s": 11128.841050735875,
+          "initial_wh": 585.1782026915765,
+          "completed": true
+        },
+        {
+          "vehicle_id": "V03",
+          "started_at_s": 6035.482580425551,
+          "ends_at_s": 11128.841050735875,
+          "initial_wh": 585.1782026915765,
+          "completed": true
+        }
+      ],
+      "trips": [
+        {
+          "request_sequence": 1,
+          "vehicle_id": "V01",
+          "destination": "hitech",
+          "departed_at_s": 0.0,
+          "returns_at_s": 157.02068501920138,
+          "energy_wh": 471.60726576947644,
+          "energy_by_leg_wh": [
+            0.0,
+            241.5283453593966,
+            230.07892041007983
+          ]
+        },
+        {
+          "request_sequence": 2,
+          "vehicle_id": "V02",
+          "destination": "hitech",
+          "departed_at_s": 0.0,
+          "returns_at_s": 157.02068501920138,
+          "energy_wh": 471.60726576947644,
+          "energy_by_leg_wh": [
+            0.0,
+            241.5283453593966,
+            230.07892041007983
+          ]
+        },
+        {
+          "request_sequence": 3,
+          "vehicle_id": "V03",
+          "destination": "hitech",
+          "departed_at_s": 0.0,
+          "returns_at_s": 157.02068501920138,
+          "energy_wh": 471.60726576947644,
+          "energy_by_leg_wh": [
+            0.0,
+            241.5283453593966,
+            230.07892041007983
+          ]
+        },
+        {
+          "request_sequence": 4,
+          "vehicle_id": "V01",
+          "destination": "hitech",
+          "departed_at_s": 157.02068501920138,
+          "returns_at_s": 314.04137003840276,
+          "energy_wh": 471.60726576947644,
+          "energy_by_leg_wh": [
+            0.0,
+            241.5283453593966,
+            230.07892041007983
+          ]
+        },
+        {
+          "request_sequence": 5,
+          "vehicle_id": "V02",
+          "destination": "hitech",
+          "departed_at_s": 157.02068501920138,
+          "returns_at_s": 314.04137003840276,
+          "energy_wh": 471.60726576947644,
+          "energy_by_leg_wh": [
+            0.0,
+            241.5283453593966,
+            230.07892041007983
+          ]
+        },
+        {
+          "request_sequence": 6,
+          "vehicle_id": "V03",
+          "destination": "hitech",
+          "departed_at_s": 157.02068501920138,
+          "returns_at_s": 314.04137003840276,
+          "energy_wh": 471.60726576947644,
+          "energy_by_leg_wh": [
+            0.0,
+            241.5283453593966,
+            230.07892041007983
+          ]
+        },
+        {
+          "request_sequence": 7,
+          "vehicle_id": "V01",
+          "destination": "hitech",
+          "departed_at_s": 314.04137003840276,
+          "returns_at_s": 471.0620550576042,
+          "energy_wh": 471.60726576947644,
+          "energy_by_leg_wh": [
+            0.0,
+            241.5283453593966,
+            230.07892041007983
+          ]
+        },
+        {
+          "request_sequence": 8,
+          "vehicle_id": "V02",
+          "destination": "hitech",
+          "departed_at_s": 314.04137003840276,
+          "returns_at_s": 471.0620550576042,
+          "energy_wh": 471.60726576947644,
+          "energy_by_leg_wh": [
+            0.0,
+            241.5283453593966,
+            230.07892041007983
+          ]
+        },
+        {
+          "request_sequence": 9,
+          "vehicle_id": "V03",
+          "destination": "hitech",
+          "departed_at_s": 314.04137003840276,
+          "returns_at_s": 471.0620550576042,
+          "energy_wh": 471.60726576947644,
+          "energy_by_leg_wh": [
+            0.0,
+            241.5283453593966,
+            230.07892041007983
+          ]
+        },
+        {
+          "request_sequence": 10,
+          "vehicle_id": "V01",
+          "destination": "hitech",
+          "departed_at_s": 5564.420525367948,
+          "returns_at_s": 5721.441210387149,
+          "energy_wh": 471.60726576947644,
+          "energy_by_leg_wh": [
+            0.0,
+            241.5283453593966,
+            230.07892041007983
+          ]
+        },
+        {
+          "request_sequence": 11,
+          "vehicle_id": "V02",
+          "destination": "hitech",
+          "departed_at_s": 5564.420525367948,
+          "returns_at_s": 5721.441210387149,
+          "energy_wh": 471.60726576947644,
+          "energy_by_leg_wh": [
+            0.0,
+            241.5283453593966,
+            230.07892041007983
+          ]
+        },
+        {
+          "request_sequence": 12,
+          "vehicle_id": "V03",
+          "destination": "hitech",
+          "departed_at_s": 5564.420525367948,
+          "returns_at_s": 5721.441210387149,
+          "energy_wh": 471.60726576947644,
+          "energy_by_leg_wh": [
+            0.0,
+            241.5283453593966,
+            230.07892041007983
+          ]
+        },
+        {
+          "request_sequence": 13,
+          "vehicle_id": "V01",
+          "destination": "hitech",
+          "departed_at_s": 5721.441210387149,
+          "returns_at_s": 5878.46189540635,
+          "energy_wh": 471.60726576947644,
+          "energy_by_leg_wh": [
+            0.0,
+            241.5283453593966,
+            230.07892041007983
+          ]
+        },
+        {
+          "request_sequence": 14,
+          "vehicle_id": "V02",
+          "destination": "hitech",
+          "departed_at_s": 5721.441210387149,
+          "returns_at_s": 5878.46189540635,
+          "energy_wh": 471.60726576947644,
+          "energy_by_leg_wh": [
+            0.0,
+            241.5283453593966,
+            230.07892041007983
+          ]
+        },
+        {
+          "request_sequence": 15,
+          "vehicle_id": "V03",
+          "destination": "hitech",
+          "departed_at_s": 5721.441210387149,
+          "returns_at_s": 5878.46189540635,
+          "energy_wh": 471.60726576947644,
+          "energy_by_leg_wh": [
+            0.0,
+            241.5283453593966,
+            230.07892041007983
+          ]
+        },
+        {
+          "request_sequence": 16,
+          "vehicle_id": "V01",
+          "destination": "hitech",
+          "departed_at_s": 5878.46189540635,
+          "returns_at_s": 6035.482580425551,
+          "energy_wh": 471.60726576947644,
+          "energy_by_leg_wh": [
+            0.0,
+            241.5283453593966,
+            230.07892041007983
+          ]
+        },
+        {
+          "request_sequence": 17,
+          "vehicle_id": "V02",
+          "destination": "hitech",
+          "departed_at_s": 5878.46189540635,
+          "returns_at_s": 6035.482580425551,
+          "energy_wh": 471.60726576947644,
+          "energy_by_leg_wh": [
+            0.0,
+            241.5283453593966,
+            230.07892041007983
+          ]
+        },
+        {
+          "request_sequence": 18,
+          "vehicle_id": "V03",
+          "destination": "hitech",
+          "departed_at_s": 5878.46189540635,
+          "returns_at_s": 6035.482580425551,
+          "energy_wh": 471.60726576947644,
+          "energy_by_leg_wh": [
+            0.0,
+            241.5283453593966,
+            230.07892041007983
+          ]
+        }
+      ],
+      "events": [
+        {
+          "time_s": 157.02068501920138,
+          "completed": 3,
+          "remaining_wh": {
+            "V01": 1528.3927342305237,
+            "V02": 1528.3927342305237,
+            "V03": 1528.3927342305237
+          },
+          "vehicle_fifo": [],
+          "charging": []
+        },
+        {
+          "time_s": 314.04137003840276,
+          "completed": 6,
+          "remaining_wh": {
+            "V01": 1056.7854684610475,
+            "V02": 1056.7854684610475,
+            "V03": 1056.7854684610475
+          },
+          "vehicle_fifo": [],
+          "charging": []
+        },
+        {
+          "time_s": 471.0620550576042,
+          "completed": 9,
+          "remaining_wh": {
+            "V01": 585.178202691571,
+            "V02": 585.178202691571,
+            "V03": 585.178202691571
+          },
+          "vehicle_fifo": [],
+          "charging": [
+            "V01",
+            "V02",
+            "V03"
+          ]
+        },
+        {
+          "time_s": 5564.420525367948,
+          "completed": 9,
+          "remaining_wh": {
+            "V01": 2000.0,
+            "V02": 2000.0,
+            "V03": 2000.0
+          },
+          "vehicle_fifo": [],
+          "charging": []
+        },
+        {
+          "time_s": 5721.441210387149,
+          "completed": 12,
+          "remaining_wh": {
+            "V01": 1528.3927342305255,
+            "V02": 1528.3927342305255,
+            "V03": 1528.3927342305255
+          },
+          "vehicle_fifo": [],
+          "charging": []
+        },
+        {
+          "time_s": 5878.46189540635,
+          "completed": 15,
+          "remaining_wh": {
+            "V01": 1056.785468461051,
+            "V02": 1056.785468461051,
+            "V03": 1056.785468461051
+          },
+          "vehicle_fifo": [],
+          "charging": []
+        },
+        {
+          "time_s": 6035.482580425551,
+          "completed": 18,
+          "remaining_wh": {
+            "V01": 585.1782026915765,
+            "V02": 585.1782026915765,
+            "V03": 585.1782026915765
+          },
+          "vehicle_fifo": [],
+          "charging": [
+            "V01",
+            "V02",
+            "V03"
+          ]
+        },
+        {
+          "time_s": 11128.841050735875,
+          "completed": 18,
+          "remaining_wh": {
+            "V01": 2000.0,
+            "V02": 2000.0,
+            "V03": 2000.0
+          },
+          "vehicle_fifo": [
+            "V01",
+            "V02",
+            "V03"
+          ],
+          "charging": []
+        }
+      ]
+    }
+  }
+}

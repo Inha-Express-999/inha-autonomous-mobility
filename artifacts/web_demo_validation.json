@@ -1,0 +1,153 @@
+{
+  "project_version": "0.2.3.0",
+  "date": "2026-10-18",
+  "code_commit": "6208bd5d9f5ff76f4b66b5e44a8c305215471428",
+  "working_tree_changes": true,
+  "python": "3.14.4",
+  "source_sha256": {
+    "backend/src/campus_sim/api.py": "c28b165b3e24077477e9b4aaff98388562519019a1c5cf9bcad73a98e4f7a376",
+    "backend/src/campus_sim/battery.py": "b547a5f22be6051e043d0d8412a5b1f7a33b0bd3dccf9309373188a0d05f2aaa",
+    "backend/src/campus_sim/cli.py": "bc0bc6668277047a43aeb39fe0c9c45e992e28a17a2170d4593df0f387caaf27",
+    "backend/src/campus_sim/connection_audit.py": "6ed7c30492ee8b7b21432ea89ee8dd8b509941a9dc131c58f5814a3fbe95d8f8",
+    "backend/src/campus_sim/demo_fifo.py": "cedbb5160cb0a12d5ee0a8884fe2c3cbb2b6e88f5fd5455e92e8af0888c0518f",
+    "backend/src/campus_sim/dispatch.py": "28a6c58e9ca6ae619b9a1d58b38095bdd05138a2477f85c0cba690ba8f1a48fb",
+    "backend/src/campus_sim/domain.py": "06945f4b3b56916e9c6763300abd31117b90b42d764e1d85b7119ecceb3e02b1",
+    "backend/src/campus_sim/map_builder.py": "8ec0564f9e369ee81524c601a203793f0e94a430949a459e26bfe8f24428e42e",
+    "backend/src/campus_sim/map_coordinates.py": "1b8dde8bf4cbadcc907f1609bbd0e2194205180ee75f980c9f6cfee7408dd318",
+    "backend/src/campus_sim/map_data.py": "76fc8e102a1a67e05c8c007d55097a27889143f5c536631cec61a0388fc067b5",
+    "backend/src/campus_sim/map_extension.py": "9fa704e9b9e55fa83d323e79ced0d5b456125090f9a018ce27112efed397b365",
+    "backend/src/campus_sim/osm_roads.py": "dff13616b40e9b385add0a871e637c6db6c7dcf7069eb6f9a1cae062023cda78",
+    "backend/src/campus_sim/planning.py": "ba13e3c90ea5003aca007be14e0a2fb218e29087e0a7486a29078b775133e11f",
+    "backend/src/campus_sim/service.py": "34b794dc4e497f25ac97093388f920066c6c9460dac5152872cd4e9845bf81da",
+    "backend/src/campus_sim/unity_coverage.py": "10f70328d90111f445dcf1dce37202d7140375912919e7bd4c173af9d794faed",
+    "backend/src/campus_sim/virtual_runtime.py": "756a506e80523352d392cfea778498262ffa5dafb22d0126e78d9094d0888fa1",
+    "backend/src/campus_sim/web_demo.py": "41de0b416c68de24c09009c687dc894f53dc03077ea3d7ceab63cd4fb83372d2",
+    "backend/src/campus_sim/__init__.py": "d40d8e4da831809bcaf78cef105461d3938dbaeb1122a7823a1849c562ba4bc9",
+    "backend/src/campus_sim/web/app.js": "7b40667e53c5b2a4af737c953f4f9e8e5f2027c7e5851f01c26dee949329c94e",
+    "backend/src/campus_sim/web/icons.svg": "91e1fb8dbce60c0ac93b65297811644f8d541e68b35124d212fe576bf27b7203",
+    "backend/src/campus_sim/web/index.html": "59fa166417ad154df9b5c31f0768a96979cb64f09c063c460aee087872c8c679",
+    "backend/src/campus_sim/web/style.css": "24f76d994544f68cb3ad47a7a3921d1b3f4ff686528ead4e9f3220c770894854",
+    "backend/pyproject.toml": "1a6afdc25860b80507df8c1794ecf759dd871e0603777548425d9c4884d1de20",
+    "backend/tests/test_web_demo.py": "b52e7ee4fe4f46a935f199d3a2d906fa0bfb35aec88013e792a487f9707d1684",
+    "scripts/start_web_demo.ps1": "f8dbf8fe8a381ffbb6bdfa62113bc3106feb8111ff911da0ca0c6d6602faf147",
+    "configs/osm_runtime.json": "7ca28b99bc9d791e37036bc8117717682af170adbd607ebe1ac82d645c165091",
+    "VERSION": "5a76916987624261ed5b78434c9ee49c07897b2afc2bdc963713fb60afaeb2d6"
+  },
+  "map_manifest_sha256": "72b11e7c36992301618bfb7b3ad0f4c4ee7e720817bc4345078ccc960bf2691a",
+  "map": {
+    "version": "inha-osm-unity-v2",
+    "osm_building_ways": 128,
+    "context_roads": 188,
+    "display_routing_segments": 208,
+    "stops": 14,
+    "operationally_verified": false
+  },
+  "validation": {
+    "pytest": "99 passed, 1 Starlette TestClient deprecation warning",
+    "ruff_check": "passed",
+    "ruff_format_check": "27 files passed",
+    "javascript_syntax": "node --check passed",
+    "powershell_launcher": "AST parse and actual server launch on 8766 passed",
+    "http_smoke": "/demo/, icons.svg, map, state, OpenAPI 0.2.3.0: 200"
+  },
+  "browser": {
+    "desktop_viewport": "1600x900",
+    "mobile_viewport": "390x844, mobile touch emulation",
+    "horizontal_overflow": false,
+    "external_runtime_resources": [],
+    "console_errors_after_final_reload": [],
+    "checks": [
+      "Scenario click: five requests, V01/V02/V03 assigned, two queued",
+      "Pause: simulation time unchanged across reads",
+      "Zoom changes map viewBox",
+      "Eighteen requests: charging UI shows all three charging and nine queued",
+      "SVG icons and branded #1677FF primary",
+      "Three shuttle markers with IDs, routes and fourteen stops render"
+    ],
+    "screenshots": "Inspected inline; not saved by browser tool"
+  },
+  "battery_scenario": {
+    "requests": 18,
+    "initial_queue": 15,
+    "charging_time_s": 600.0,
+    "charging_vehicles": [
+      "V01",
+      "V02",
+      "V03"
+    ],
+    "final_time_s": 12000.0,
+    "completed": 18,
+    "charging_sessions": [
+      {
+        "vehicle_id": "V01",
+        "started_at_s": 471.0620550576042,
+        "ends_at_s": 5564.420525367948,
+        "initial_wh": 585.178202691571,
+        "completed": true
+      },
+      {
+        "vehicle_id": "V02",
+        "started_at_s": 471.0620550576042,
+        "ends_at_s": 5564.420525367948,
+        "initial_wh": 585.178202691571,
+        "completed": true
+      },
+      {
+        "vehicle_id": "V03",
+        "started_at_s": 471.0620550576042,
+        "ends_at_s": 5564.420525367948,
+        "initial_wh": 585.178202691571,
+        "completed": true
+      },
+      {
+        "vehicle_id": "V01",
+        "started_at_s": 6035.482580425551,
+        "ends_at_s": 11128.841050735875,
+        "initial_wh": 585.1782026915765,
+        "completed": true
+      },
+      {
+        "vehicle_id": "V02",
+        "started_at_s": 6035.482580425551,
+        "ends_at_s": 11128.841050735875,
+        "initial_wh": 585.1782026915765,
+        "completed": true
+      },
+      {
+        "vehicle_id": "V03",
+        "started_at_s": 6035.482580425551,
+        "ends_at_s": 11128.841050735875,
+        "initial_wh": 585.1782026915765,
+        "completed": true
+      }
+    ],
+    "final_vehicles": [
+      {
+        "id": "V01",
+        "phase": "READY",
+        "remaining_wh": 2000.0,
+        "soc": 1.0
+      },
+      {
+        "id": "V02",
+        "phase": "READY",
+        "remaining_wh": 2000.0,
+        "soc": 1.0
+      },
+      {
+        "id": "V03",
+        "phase": "READY",
+        "remaining_wh": 2000.0,
+        "soc": 1.0
+      }
+    ]
+  },
+  "limitations": [
+    "Time-only route replay, not Unity Physics or sensors",
+    "Unknown access, width and stops are simulation assumptions",
+    "Battery specs and three independent home chargers are synthetic",
+    "No collision/resource coordination, authentication or per-tab isolation",
+    "Building relations, live tiles and traffic are not loaded",
+    "Mobile browser emulation, not physical device testing"
+  ]
+}

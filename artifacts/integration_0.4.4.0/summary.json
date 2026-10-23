@@ -1,0 +1,67 @@
+{
+  "project_version": "0.4.4.0",
+  "date": "2026-10-23",
+  "branch": "codex/integrate-decision-main",
+  "parents": {
+    "main": "442593a1cd95f521bd99c1c017c88e627ae9ea41",
+    "decision": "6e980df61aa8ad36921cff8a6d4ed8dfa77ee3dc"
+  },
+  "environment": {
+    "python": "3.14.4",
+    "pytest": "8.4.2",
+    "fastapi": "0.143.1",
+    "pyproj": "3.8.0",
+    "unity_editor": "6000.3.21f1",
+    "os": "Windows"
+  },
+  "python": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "205",
+    "time": "40.928",
+    "timestamp": "2026-10-23T14:05:35.530469+09:00",
+    "hostname": "DESKTOP-SBRPQ6K"
+  },
+  "unity_editmode": {
+    "result": "Passed",
+    "total": "54",
+    "passed": "54",
+    "failed": "0",
+    "skipped": "0",
+    "duration": "0.2154952"
+  },
+  "unity_playmode": {
+    "result": "Passed",
+    "total": "1",
+    "passed": "1",
+    "failed": "0",
+    "skipped": "0",
+    "duration": "1.4518133"
+  },
+  "checks": {
+    "ruff_check": "passed: backend/src backend/tests",
+    "ruff_format": "passed: 42 files",
+    "javascript_syntax": "passed: app.js, avoidance.js, comparison.js",
+    "map_hashes": {
+      "valid": 23,
+      "format": "sha256-utf8-lf-v1",
+      "manifest_schema_version": 2
+    },
+    "map_data": "graph/stops/landmarks/policy/build_report JSON unchanged from decision",
+    "main_preserved_files": 5,
+    "git_index_hashes": "passed: all 23 normalized hashes after Git staging",
+    "git_index_main_preservation": "passed: all 5 main files byte for byte"
+  },
+  "warnings": [
+    "Existing Starlette TestClient/httpx deprecation warning (1).",
+    "Incoming font OFL.txt line 21 contains trailing whitespace; upstream license text preserved."
+  ],
+  "limitations": [
+    "No PC or mobile Player build, graphics/device/FPS validation. Only Windows Standalone playback module installed.",
+    "No Python 3.11 execution.",
+    "No Python-Unity WebSocket/SensorRig/physical arrival integration or multi-vehicle collision coordination.",
+    "Historical artifacts remain evidence for their original versions; not re-labelled as this run."
+  ]
+}

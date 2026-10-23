@@ -1,0 +1,129 @@
+/* Shared presentation finish. Freesentation and existing behavior are retained. */
+:root{--ink:#16233b;--muted:#6c7a90;--line:#dde5f0;--paper:#f4f7fb}
+body{color:var(--ink);background:var(--paper)}
+button,select,input{border-radius:10px}
+button{transition:background .15s,border-color .15s,box-shadow .15s}
+button:focus-visible,a:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid #91c1ff;outline-offset:3px}
+select,input:not([type=range]):not([type=checkbox]){background:#f8fafd;border-color:#dce4ef;color:#27446f}
+button:hover{border-color:#b9cce4}
+.primary-button,.play-button{box-shadow:0 3px 8px #1677ff16}
+.primary-button:hover,.play-button:hover{background:#0b63e5;color:#fff}
+.topbar,.dashboard .topbar{height:64px;min-height:64px;padding:0 24px;gap:20px;background:#fff;border-bottom:1px solid #e3e9f2}
+.brand-home{gap:12px;font-size:22px;letter-spacing:-.6px}
+.brand-home .brand-image{width:40px;height:40px;border-radius:11px}
+.top-nav{margin-left:auto;gap:6px;align-items:center}
+.top-nav a{padding:9px 15px;border:0;border-radius:9px;font-size:13px;font-weight:600;color:#6c7a90;text-decoration:none}
+.top-nav a:hover{background:#f4f7fb;color:#27446f}
+.top-nav a.active{background:#eaf3ff;color:#1677ff;border:0}
+.detail-panel{border:1px solid #e0e7f1;border-radius:12px;overflow:hidden;background:#fff}
+.detail-panel summary{padding:12px 14px;font-size:12px;color:#46607f}
+.detail-panel[open] summary{border-bottom:1px solid #eef2f7;color:#1677ff}
+.count-badge,.mini-label{font-size:11px;border-radius:6px}
+.section-title h2{font-weight:600;letter-spacing:-.3px}
+.connection-label{color:#72849c;font-size:12px}
+.connection-label::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:currentColor;margin-right:6px;vertical-align:2px}
+.dashboard .map-panel{border-color:#dce5f0;border-radius:16px;box-shadow:0 3px 12px #20395704}
+.dashboard .stats{border-radius:14px;border-color:#dce5f0;box-shadow:none}
+.dashboard .stats>div>span:not(.stat-icon){color:#6c7a90}
+.dashboard .map-heading strong{font-weight:600}
+.dashboard .map-heading .icon-button{color:#617792;border:1px solid #e4eaf3;border-radius:8px;background:#fff}
+.dashboard #toggle-nodes[aria-pressed=true]{color:#1677ff;background:#eaf3ff;border-color:#bedaff}
+.dashboard .map-hint{border-color:#e0e7f0;background:#ffffffeb;border-radius:8px;color:#6c7a90}
+.dashboard .map-legend{border:1px solid #e3eaf2;border-radius:8px}
+.dashboard .simulation-toolbar{background:#fff}
+.dashboard .simulation-toolbar label{color:#63758e;font-weight:500}
+.dashboard .simulation-toolbar select{border-radius:8px;background:#f8fafd}
+.dashboard .clock small{color:#7b8ca2}
+.dashboard .vehicle-card{border:1px solid #dce5f0;border-radius:13px;box-shadow:none;text-align:left}
+.dashboard .vehicle-card:hover{border-color:#b7cce7;background:#fcfdff}
+.dashboard .vehicle-card.selected{border-color:var(--vehicle-color);box-shadow:0 0 0 1px var(--vehicle-color)}
+.dashboard .vehicle-destination{color:#6c7a90}
+.dashboard .phase{border-radius:6px;font-weight:500}
+.dashboard .battery-track{background:#edf1f6;border-radius:10px;overflow:hidden}
+.dashboard .battery-fill{border-radius:10px}
+.dashboard .queue-list .empty{border:0;background:transparent;color:#8a9bb1}
+.dashboard .form-message:empty{display:none}
+.dashboard .request-panel .section-title{align-items:center}
+.dashboard .swap-row button{background:#f4f7fb;border:1px solid #e3eaf3;border-radius:7px;color:#6f84a0}
+.dashboard dialog{border:1px solid #dce5f0;border-radius:18px;padding:24px;box-shadow:0 20px 80px #10244a26}
+dialog::backdrop{background:#10244a50;backdrop-filter:blur(3px)}
+.live-lab{gap:16px;padding:20px;background:#f4f7fb}
+.live-lab .lab-card{border:1px solid #dce5f0;border-radius:16px;box-shadow:none;padding:20px}
+.live-lab h1{font-size:23px;font-weight:700;letter-spacing:-.6px}
+.live-lab h2{font-size:17px;font-weight:600;letter-spacing:-.3px;margin:0 0 10px}
+.live-lab #avoidance-map{background:#f7f9fc;border-radius:12px}
+.live-lab .lab-controls>label{display:flex;justify-content:space-between;align-items:center;font-size:13px;margin:14px 0 7px;color:#526986}
+.live-lab .lab-controls>label output{font-size:12px;font-weight:600;color:#1677ff;background:#eaf3ff;border-radius:6px;padding:3px 7px}
+.live-lab .lab-controls select{min-height:40px;background:#f8fafd;font-size:13px}
+.live-lab input[type=range]{accent-color:#1677ff;cursor:pointer}
+.live-lab .lab-controls .checks{justify-content:flex-start;gap:8px;margin:16px 0 8px}
+.live-lab .checks input{accent-color:#1677ff}
+.live-lab #lab-run{background:#eaf3ff;color:#1677ff;border-color:#d6e7ff;min-height:40px;font-size:13px;font-weight:600}
+.live-lab .lab-status{padding:16px;margin:16px 0;font-size:13px;border-radius:10px;line-height:1.8}
+.live-lab .lab-playback{gap:10px;padding-top:14px}
+.live-lab .lab-playback button{height:38px;font-size:13px;border-radius:9px}
+.live-lab .lab-playback output{font-size:14px;font-weight:600;font-variant-numeric:tabular-nums}
+.live-lab .lab-note{font-size:11px;color:#7c8da4;line-height:1.7}
+@media(min-width:1100px) and (min-height:680px){
+ .dashboard main{grid-template-columns:minmax(0,1fr) 328px}
+ .dashboard .workspace{grid-template-rows:30px 70px minmax(0,1fr) 136px;gap:12px;padding:16px 20px}
+ .dashboard .page-title h1{font-size:23px}
+ .dashboard .stats,.dashboard .stats>div{height:70px}
+ .dashboard .stats>div{padding:11px 16px}
+ .dashboard .stats>div>span:not(.stat-icon){font-size:12px;margin-bottom:4px}
+ .dashboard .stats strong{font-size:28px}
+ .dashboard .stats .stat-icon{top:19px;width:32px;height:32px}
+ .dashboard .map-panel{grid-template-rows:44px minmax(0,1fr) 58px}
+ .dashboard .map-heading{padding:8px 12px}
+ .dashboard .map-heading strong{font-size:13px}
+ .dashboard .map-heading button{font-size:12px;padding:5px 9px;min-height:28px}
+ .dashboard .simulation-toolbar{height:58px}
+ .dashboard .simulation-toolbar .planner-tools{font-size:12px;gap:8px}
+ .dashboard .simulation-toolbar .planner-tools select{font-size:13px;width:98px;min-height:34px}
+ .dashboard .simulation-toolbar .playback{height:56px;gap:10px}
+ .dashboard .simulation-toolbar .play-button{min-width:96px;min-height:36px;font-size:13px}
+ .dashboard .simulation-toolbar .clock time{font-size:18px}
+ .dashboard .simulation-toolbar .playback .text-button{font-size:12px;padding:6px}
+ .dashboard .fleet-section{gap:8px}
+ .dashboard .fleet-section h2{font-size:15px}
+ .dashboard .vehicle-card{padding:12px 14px}
+ .dashboard .vehicle-name{font-size:16px}
+ .dashboard .vehicle-destination{font-size:12px;line-height:1.35;margin:5px 0 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+ .dashboard .battery-row{font-size:11px}
+ .dashboard .battery-row strong{font-size:13px}
+ .dashboard .battery-track{margin-top:7px;height:4px}
+ .dashboard aside{padding:16px;gap:12px;background:#f4f7fb;border-left:1px solid #e0e7f0}
+ .dashboard .request-panel,.dashboard .queue-panel{padding:16px;background:#fff;border:1px solid #dce5f0;border-radius:14px}
+ .dashboard aside h2{font-size:15px}
+ .dashboard .request-panel .section-title{margin-bottom:12px;gap:6px}
+ .dashboard .request-panel label{font-size:12px;margin:8px 0 6px}
+ .dashboard .request-panel select,.dashboard .request-panel input{font-size:14px;min-height:37px;padding:8px 10px}
+ .dashboard .swap-row{margin:1px 0;height:20px}
+ .dashboard .swap-row button{height:24px;min-height:24px;padding:2px 5px}
+ .dashboard .form-row{gap:10px;margin-top:8px}
+ .dashboard .primary-button{min-height:40px;font-size:14px;margin-top:14px;border-radius:10px}
+ .dashboard .queue-panel{min-height:112px}
+ .dashboard .queue-panel .section-title{margin-bottom:8px}
+ .dashboard .queue-list{display:flex;flex-direction:column}
+ .dashboard .queue-list .empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;flex:1;padding:12px 4px;font-size:12px}
+ .dashboard .detail-panel summary{padding:11px 13px;font-size:12px}
+ .live-lab{height:calc(100dvh - 64px);grid-template-columns:minmax(0,1fr) 328px}
+}
+@media(max-width:1099px){
+ .topbar,.dashboard .topbar{padding:12px 16px;height:auto;gap:12px;flex-wrap:wrap}
+ .top-nav{gap:4px}.top-nav a{font-size:12px;padding:8px 10px}
+ .brand-home{font-size:20px;gap:9px}.brand-home .brand-image{width:36px;height:36px}
+ .dashboard .page-title h1{font-size:23px}
+ .dashboard .stats strong{font-size:26px}
+ .dashboard .vehicle-card{padding:16px;border-radius:13px}
+ .dashboard aside{background:#f4f7fb;padding:16px}
+ .dashboard .request-panel,.dashboard .queue-panel{background:#fff;padding:16px;border:1px solid #dce5f0;border-radius:14px}
+ .live-lab{padding:16px;gap:16px}.live-lab .lab-card{padding:16px}
+}
+@media(prefers-reduced-motion:reduce){button{transition:none}}
+
+/* Form-wide input minimums must not inflate sliders and checkboxes. */
+.live-lab input[type=range]{min-height:0;height:20px;padding:0}
+.live-lab input[type=checkbox]{min-height:0;height:16px;width:16px;margin:0}
+.live-lab .lab-controls>label:first-of-type{margin-top:8px}
+.live-lab .detail-panel{padding:0 12px}

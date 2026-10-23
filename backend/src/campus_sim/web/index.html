@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Inha Mobil | 캠퍼스 운행 시뮬레이션</title>
+  <link rel="icon" sizes="1024x1024" type="image/png" href="./inha-mobil-logo-579cbb6f.png">
+  <link rel="stylesheet" href="./style.css?v=f59ebfe268b3">
+  <link rel="stylesheet" href="./dashboard.css?v=cd60a1d247ea">
+  <script src="./app.js?v=6194a9888c7f" defer></script>
+<link rel="stylesheet" href="./polish.css?v=1ce57c5d31dd">
+</head>
+<body class="dashboard">
+  <header class="topbar">
+    <a class="brand brand-home" href="/demo/" aria-label="Inha Mobil 메인 새로고침"><img class="brand-image" src="./inha-mobil-logo-579cbb6f.png" alt="" width="52" height="52"><div>Inha <strong>Mobil</strong></div></a>
+    <nav class="top-nav" aria-label="관제 메뉴"><a href="/demo/" class="active">캠퍼스 관제</a><a href="./avoidance.html">RRT / TTC</a></nav>
+  </header>
+  <main>
+    <section class="workspace">
+      <div class="page-title"><div><h1>캠퍼스 관제</h1><span id="connection" class="connection-label">서버 연결 중</span></div></div>
+      <div class="stats" aria-label="운행 집계">
+        <div><span class="stat-icon blue"><svg class="icon " aria-hidden="true"><use href="./icons.svg#bus"></use></svg></span><span>운행 차량</span><strong><b id="driving-count">0</b><small> / 3대</small></strong></div>
+        <div><span class="stat-icon purple"><svg class="icon " aria-hidden="true"><use href="./icons.svg#queue"></use></svg></span><span>대기 요청</span><strong id="queue-count">0</strong></div>
+        <div><span class="stat-icon green"><svg class="icon " aria-hidden="true"><use href="./icons.svg#check"></use></svg></span><span>운송 완료</span><strong id="completed-count">0</strong></div>
+        <div><span class="stat-icon amber"><svg class="icon " aria-hidden="true"><use href="./icons.svg#bolt"></use></svg></span><span>충전 중</span><strong id="charging-count">0</strong></div>
+      </div>
+      <section id="map-panel" class="map-panel" aria-label="캠퍼스 운행 지도">
+        <div class="map-heading"><div><span class="dot"></span><strong><svg class="icon " aria-hidden="true"><use href="./icons.svg#layers"></use></svg> 인하대학교   운행 지도</strong><span class="map-version">실제 OSM 형상</span></div><button id="toggle-nodes" class="icon-button" aria-pressed="false">노드 보기</button><button id="fit" class="icon-button" title="지도 전체 보기"><svg class="icon " aria-hidden="true"><use href="./icons.svg#focus"></use></svg> 전체 보기</button></div>
+        <div id="map-container">
+          <svg id="map" role="group" aria-label="OSM 캠퍼스 도로, 거점 및 차량 지도" tabindex="0"><g id="areas"></g><g id="buildings"></g><g id="context-roads"></g><g id="roads"></g><g id="routes"></g><g id="graph-nodes" hidden></g><g id="search-nodes"></g><g id="stops"></g><g id="hubs"></g><g id="cars"></g></svg>
+          <div class="map-hint">드래그 이동   휠 확대   거점 클릭으로 출발/도착 선택</div>
+          <div class="map-controls"><button id="zoom-in" aria-label="지도 확대"><svg class="icon " aria-hidden="true"><use href="./icons.svg#plus"></use></svg></button><button id="zoom-out" aria-label="지도 축소"><svg class="icon " aria-hidden="true"><use href="./icons.svg#minus"></use></svg></button></div>
+          <div class="north">N<span>↑</span></div>
+          <div class="map-legend"><span class="legend-road"></span>운행 그래프 <span class="legend-path"></span>현재 경로</div>
+          <a class="attribution" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors   ODbL 1.0</a>
+        </div>
+        <div class="simulation-toolbar"><div class="planner-tools"><label for="dispatch">배차</label><select id="dispatch"><option value="fifo">FIFO</option><option value="greedy">Greedy</option><option value="hungarian">Hungarian</option></select><label for="planner">경로 탐색</label><select id="planner"><option value="astar">A*</option><option value="dijkstra">Dijkstra</option></select></div><div class="playback"><button id="play" class="play-button"><svg class="icon " aria-hidden="true"><use href="./icons.svg#play"></use></svg><span>시작</span></button><div class="clock"><small><svg class="icon " aria-hidden="true"><use href="./icons.svg#clock"></use></svg> 가상 경과 시간</small><time id="clock">00:00:00</time></div><label for="speed">배속</label><select id="speed"><option value="1">1×</option><option value="5">5×</option><option value="10" selected>10×</option><option value="30">30×</option><option value="100">100×</option><option value="300">300×</option></select><button id="reset" class="text-button"><svg class="icon " aria-hidden="true"><use href="./icons.svg#reset"></use></svg> 초기화</button></div></div>
+      </section>
+      <section class="fleet-section"><div class="section-title"><h2><svg class="icon " aria-hidden="true"><use href="./icons.svg#bus"></use></svg> 차량 현황</h2><button id="fleet-details" class="text-button">상세 보기</button><span id="fifo-label">가용 FIFO   V01 → V02 → V03</span></div><div id="fleet" class="fleet"></div></section>
+
+    </section>
+    <aside>
+      <section id="request-panel" class="request-panel"><div class="section-title"><h2><svg class="icon " aria-hidden="true"><use href="./icons.svg#pin"></use></svg> 이동 요청 접수</h2><span id="dispatch-badge" class="mini-label">FIFO 배차</span></div>
+        <form id="request-form"><label for="pickup">출발 거점</label><select id="pickup" required></select><div class="swap-row"><button type="button" id="swap" title="출발과 도착 바꾸기"><svg class="icon " aria-hidden="true"><use href="./icons.svg#swap"></use></svg></button></div><label for="dropoff">도착 거점</label><select id="dropoff" required></select><div class="form-row"><div><label for="service-type">서비스</label><select id="service-type"><option value="PASSENGER">승객 이동</option><option value="CARGO">물품 배송</option></select></div><div><label for="load" id="load-label">인원 (명)</label><input id="load" type="number" min="1" max="4" value="1" step="1" required></div></div><button type="submit" class="primary-button"><svg class="icon " aria-hidden="true"><use href="./icons.svg#send"></use></svg> 요청 접수 <span><svg class="icon " aria-hidden="true"><use href="./icons.svg#arrow"></use></svg></span></button><p id="form-message" class="form-message" aria-live="polite"></p></form>
+      </section>
+      <details class="scenario-panel detail-panel"><summary>시연 시나리오</summary><button id="scenario-extensions"><span class="scenario-icon"><svg class="icon " aria-hidden="true"><use href="./icons.svg#route"></use></svg></span><div><strong>캠퍼스 5개 목적지</strong><small>요청 5건 / 10배속</small></div><b><svg class="icon " aria-hidden="true"><use href="./icons.svg#chevron"></use></svg></b></button><button id="scenario-battery"><span class="scenario-icon"><svg class="icon " aria-hidden="true"><use href="./icons.svg#bolt"></use></svg></span><div><strong>배터리 충전 시나리오</strong><small>요청 18건 / 100배속</small></div><b><svg class="icon " aria-hidden="true"><use href="./icons.svg#chevron"></use></svg></b></button></details>
+      <section class="queue-panel"><div class="section-title"><h2><svg class="icon " aria-hidden="true"><use href="./icons.svg#queue"></use></svg> 요청 대기열</h2><span id="queue-badge" class="count-badge">0</span></div><div id="queue" class="queue-list"></div></section>
+      <details id="event-panel" class="event-panel detail-panel"><summary>운행 기록</summary><div id="events" class="event-list"></div></details><details class="detail-panel planning-detail"><summary>탐색 상세</summary><button id="compare-path">선택 구간 비교</button><div id="planning-result" hidden aria-live="polite"></div></details>
+    </aside>
+  </main>
+  <dialog id="fleet-dialog"><form method="dialog"><div class="section-title"><h2>차량 상세</h2><button value="close">닫기</button></div><div id="fleet-detail-content"></div><p class="lab-note">가상 운행 / 실제 통행·차량 간 충돌 회피 미검증</p></form></dialog>
+  <dialog id="reset-dialog"><form method="dialog"><h2>시연을 처음부터 시작할까요?</h2><p>현재 웹 시연의 요청 운행 배터리 상태를 초기화합니다.</p><div><button value="cancel">돌아가기</button><button value="reset" class="primary-button">초기화</button></div></form></dialog>
+  <div id="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

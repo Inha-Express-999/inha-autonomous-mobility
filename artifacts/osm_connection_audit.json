@@ -1,0 +1,4710 @@
+{
+  "schema_version": 1,
+  "kind": "connection_candidates_not_service_approval",
+  "runtime_geometry_changed": false,
+  "speed_assumption_kmh": 30.0,
+  "stop_gap_assumption_m": 35.0,
+  "sources": {
+    "expanded_osm": {
+      "path": "Docs/MapResearch/2026-09-17/expanded_campus.osm",
+      "sha256": "cf400f997d72d4d42f057adf6ce5b54861c9d5dcdc28d944c2934ffa1a4e84ca"
+    },
+    "core_unity": {
+      "path": "Assets/InhaCampus/Source/campus.json",
+      "sha256": "a7d6b6b4049291b38e3325e1295667708d587b9f611c85beab8f7ca76e03241a"
+    },
+    "scoped_unity": {
+      "path": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "sha256": "82dcdb354e8aa4d6cd9a79f15235159b5dbf599fcce5ceb2ae6898b853cb9ab7"
+    },
+    "restored_unity": {
+      "path": "Assets/CampusSim/Data/road_connections_restored.json",
+      "sha256": "120aecff2c50ea3aea45620615f5905b166f2f4fe39423550d0c2efc1295044e"
+    },
+    "extension_export": {
+      "path": "Assets/CampusSim/Data/road_extensions.json",
+      "sha256": "11d36a651c467d0249cf0e660c8e8ed032f4f73ccd3a5054b665b4490b97209f"
+    },
+    "entrances": {
+      "path": "Docs/MapResearch/Iterations/EntranceInventory/entrances.csv",
+      "sha256": "00cedbe3f9b42ea2fba8a27ce0a883a266d300fa84c985333e81e13f5182ba15"
+    },
+    "dorm3_draft": {
+      "path": "Assets/CampusSim/Data/dormitory_three_draft.json",
+      "sha256": "65cfea1926fc7aa17ad8452c47301f105fb82e7edce667131f9b36a7c5d63133"
+    },
+    "policy": {
+      "path": "configs/osm_runtime.json",
+      "sha256": "10dc4e070c3abaa61dcfcb7a9858a39df4695ae3ca25470fbc344bb35e216d5b"
+    },
+    "scene": {
+      "path": "Assets/CampusSim/Scenes/CampusTerrain.unity",
+      "sha256": "e22ea34971f5bd562da1599a95ac098df40ca2af0f26533d40fbc4691cbd501f"
+    },
+    "audit_code": {
+      "path": "backend/src/campus_sim/connection_audit.py",
+      "sha256": "76d82801b04d72c3329fdce8f7c306ec86bf3d72245e0a343f53826164300e9f"
+    },
+    "planner_code": {
+      "path": "backend/src/campus_sim/planning.py",
+      "sha256": "ba13e3c90ea5003aca007be14e0a2fb218e29087e0a7486a29078b775133e11f"
+    },
+    "runtime_manifest": {
+      "path": "maps/inha_osm_runtime/manifest.json",
+      "sha256": "bfdf207d9849b4f766bfc27ef27f73dabe045660d09ac6a6e3fd9d0e23dff041"
+    }
+  },
+  "excluded_ways": [
+    {
+      "osm_way_id": "71382408",
+      "reason": "TURN_RESTRICTION_REQUIRES_STATEFUL_ROUTER",
+      "tags": {
+        "highway": "secondary",
+        "name": "독배로",
+        "name:en": "Dokbae-ro",
+        "name:ko": "독배로",
+        "ref": "17"
+      }
+    },
+    {
+      "osm_way_id": "71395177",
+      "reason": "TURN_RESTRICTION_REQUIRES_STATEFUL_ROUTER",
+      "tags": {
+        "highway": "secondary",
+        "lanes": "6",
+        "name": "매소홀로",
+        "name:en": "Maesohol-ro",
+        "name:ja": "買召忽路",
+        "name:ko": "매소홀로",
+        "name:ko-Hani": "買召忽路",
+        "name:zh": "买召忽路",
+        "name:zh-Hans": "买召忽路",
+        "name:zh-Hant": "買召忽路",
+        "oneway": "no",
+        "ref": "14",
+        "surface": "asphalt",
+        "wikidata": "Q110114908",
+        "wikipedia": "ko:매소홀로"
+      }
+    },
+    {
+      "osm_way_id": "955217467",
+      "reason": "TURN_RESTRICTION_REQUIRES_STATEFUL_ROUTER",
+      "tags": {
+        "highway": "service"
+      }
+    },
+    {
+      "osm_way_id": "955217468",
+      "reason": "TURN_RESTRICTION_REQUIRES_STATEFUL_ROUTER",
+      "tags": {
+        "highway": "service"
+      }
+    },
+    {
+      "osm_way_id": "955217470",
+      "reason": "TURN_RESTRICTION_REQUIRES_STATEFUL_ROUTER",
+      "tags": {
+        "highway": "secondary",
+        "name": "매소홀로",
+        "name:en": "Maesohol-ro",
+        "name:ja": "買召忽路",
+        "name:ko": "매소홀로",
+        "name:ko-Hani": "買召忽路",
+        "name:zh": "买召忽路",
+        "name:zh-Hans": "买召忽路",
+        "name:zh-Hant": "買召忽路",
+        "oneway": "no",
+        "ref": "14",
+        "wikidata": "Q110114908",
+        "wikipedia": "ko:매소홀로"
+      }
+    },
+    {
+      "osm_way_id": "1063267904",
+      "reason": "EXPLICIT_ACCESS_RESTRICTION",
+      "tags": {
+        "bicycle": "yes",
+        "foot": "yes",
+        "highway": "footway",
+        "horse": "no",
+        "motor_vehicle": "no",
+        "width": "2"
+      }
+    },
+    {
+      "osm_way_id": "1416977808",
+      "reason": "TURN_RESTRICTION_REQUIRES_STATEFUL_ROUTER",
+      "tags": {
+        "highway": "secondary",
+        "name": "독배로",
+        "name:en": "Dokbae-ro",
+        "name:ko": "독배로",
+        "ref": "17",
+        "surface": "asphalt"
+      }
+    }
+  ],
+  "targets": [
+    {
+      "landmark_id": "hitech",
+      "entrance_id": "hitech_general",
+      "entrance_status": "synthetic_facade_entrances_not_verified_access",
+      "operationally_verified": false,
+      "nearest_osm_highways": [
+        {
+          "gap_m": 21.93722214315661,
+          "osm_way_id": "1223158575",
+          "tags": {
+            "highway": "secondary",
+            "name": "인하로",
+            "name:en": "Inha-ro",
+            "name:ko": "인하로",
+            "ref": "16"
+          }
+        },
+        {
+          "gap_m": 28.913367408312567,
+          "osm_way_id": "1098496328",
+          "tags": {
+            "bicycle": "yes",
+            "foot": "yes",
+            "highway": "footway",
+            "surface": "concrete"
+          }
+        },
+        {
+          "gap_m": 32.472028443426545,
+          "osm_way_id": "481241714",
+          "tags": {
+            "highway": "service"
+          }
+        },
+        {
+          "gap_m": 36.42629201495175,
+          "osm_way_id": "216916382",
+          "tags": {
+            "highway": "service"
+          }
+        }
+      ],
+      "modes": {
+        "service_only": [
+          {
+            "osm_way_id": "481241714",
+            "gap_m": 32.472028443426545,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              382.18229362469225,
+              9.727419548680295
+            ],
+            "within_stop_gap": true,
+            "outward": {
+              "reachable": true,
+              "length_m": 654.2528542466974,
+              "travel_time_s": 78.51034250960369,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241715",
+                "481241714"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 654.2528542466974,
+              "travel_time_s": 78.51034250960367,
+              "osm_way_sequence": [
+                "481241714",
+                "481241715",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "216916382",
+            "gap_m": 36.42629201495175,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              334.4606928407473,
+              -10.192889887017099
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 600.3723183100179,
+              "travel_time_s": 72.04467819720216,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241663",
+                "481241699",
+                "216916382"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 600.3723183100179,
+              "travel_time_s": 72.04467819720215,
+              "osm_way_sequence": [
+                "216916382",
+                "481241699",
+                "481241663",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "481241699",
+            "gap_m": 60.50202462945309,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              292.12836147084755,
+              13.07928137166463
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 552.0647595401483,
+              "travel_time_s": 66.2477711448178,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241663",
+                "481241699"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 552.0647595401483,
+              "travel_time_s": 66.24777114481778,
+              "osm_way_sequence": [
+                "481241699",
+                "481241663",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "284008454",
+            "gap_m": 76.98898982448173,
+            "tags": {
+              "highway": "service",
+              "name": "인하로91번길",
+              "name:en": "Inha-ro 91beon-gil",
+              "name:ko": "인하로91번길"
+            },
+            "stop_xy_m": [
+              428.950132879093,
+              19.011856347402016
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "481241663",
+            "gap_m": 87.71451971718285,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              264.33623259225396,
+              24.431825780567415
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 556.8640917743261,
+              "travel_time_s": 66.82369101291913,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241663"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 556.8640917743261,
+              "travel_time_s": 66.82369101291911,
+              "osm_way_sequence": [
+                "481241663",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "940020898",
+            "gap_m": 91.65211592468557,
+            "tags": {
+              "highway": "service",
+              "name": "경인남길30번길",
+              "name:en": "Gyeonginnam-gil 30beon-gil",
+              "name:ko": "경인남길30번길"
+            },
+            "stop_xy_m": [
+              381.3869006703477,
+              108.54398704163162
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          }
+        ],
+        "local_roads": [
+          {
+            "osm_way_id": "481241714",
+            "gap_m": 32.472028443426545,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              382.18229362469225,
+              9.727419548680295
+            ],
+            "within_stop_gap": true,
+            "outward": {
+              "reachable": true,
+              "length_m": 654.2528542466974,
+              "travel_time_s": 78.51034250960369,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241715",
+                "481241714"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 654.2528542466974,
+              "travel_time_s": 78.51034250960367,
+              "osm_way_sequence": [
+                "481241714",
+                "481241715",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "216916382",
+            "gap_m": 36.42629201495175,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              334.4606928407473,
+              -10.192889887017099
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 600.3723183100179,
+              "travel_time_s": 72.04467819720216,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241663",
+                "481241699",
+                "216916382"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 600.3723183100179,
+              "travel_time_s": 72.04467819720215,
+              "osm_way_sequence": [
+                "216916382",
+                "481241699",
+                "481241663",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "281589090",
+            "gap_m": 59.2679404272001,
+            "tags": {
+              "highway": "residential",
+              "name": "인하로77번길",
+              "name:en": "Inha-ro 77beon-gil",
+              "name:ko": "인하로77번길"
+            },
+            "stop_xy_m": [
+              306.80604958972106,
+              60.060230137943485
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "481241699",
+            "gap_m": 60.50202462945309,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              292.12836147084755,
+              13.07928137166463
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 552.0647595401483,
+              "travel_time_s": 66.2477711448178,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241663",
+                "481241699"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 552.0647595401483,
+              "travel_time_s": 66.24777114481778,
+              "osm_way_sequence": [
+                "481241699",
+                "481241663",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "284008454",
+            "gap_m": 76.98898982448173,
+            "tags": {
+              "highway": "service",
+              "name": "인하로91번길",
+              "name:en": "Inha-ro 91beon-gil",
+              "name:ko": "인하로91번길"
+            },
+            "stop_xy_m": [
+              428.950132879093,
+              19.011856347402016
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "481241663",
+            "gap_m": 87.71451971718285,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              264.33623259225396,
+              24.431825780567415
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 556.8640917743261,
+              "travel_time_s": 66.82369101291913,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241663"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 556.8640917743261,
+              "travel_time_s": 66.82369101291911,
+              "osm_way_sequence": [
+                "481241663",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          }
+        ],
+        "including_arterials": [
+          {
+            "osm_way_id": "1223158575",
+            "gap_m": 21.93722214315661,
+            "tags": {
+              "highway": "secondary",
+              "name": "인하로",
+              "name:en": "Inha-ro",
+              "name:ko": "인하로",
+              "ref": "16"
+            },
+            "stop_xy_m": [
+              358.9967551149071,
+              42.522348170406595
+            ],
+            "within_stop_gap": true,
+            "outward": {
+              "reachable": true,
+              "length_m": 677.9066441571774,
+              "travel_time_s": 81.3487972988613,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241664",
+                "216916384",
+                "216916385",
+                "216916383",
+                "1223158575"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 677.9066441571774,
+              "travel_time_s": 81.34879729886127,
+              "osm_way_sequence": [
+                "1223158575",
+                "216916383",
+                "216916385",
+                "216916384",
+                "481241664",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "481241714",
+            "gap_m": 32.472028443426545,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              382.18229362469225,
+              9.727419548680295
+            ],
+            "within_stop_gap": true,
+            "outward": {
+              "reachable": true,
+              "length_m": 654.2528542466974,
+              "travel_time_s": 78.51034250960369,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241715",
+                "481241714"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 654.2528542466974,
+              "travel_time_s": 78.51034250960367,
+              "osm_way_sequence": [
+                "481241714",
+                "481241715",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "216916382",
+            "gap_m": 36.42629201495175,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              334.4606928407473,
+              -10.192889887017099
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 600.3723183100179,
+              "travel_time_s": 72.04467819720216,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241663",
+                "481241699",
+                "216916382"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 600.3723183100179,
+              "travel_time_s": 72.04467819720215,
+              "osm_way_sequence": [
+                "216916382",
+                "481241699",
+                "481241663",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "281589090",
+            "gap_m": 59.2679404272001,
+            "tags": {
+              "highway": "residential",
+              "name": "인하로77번길",
+              "name:en": "Inha-ro 77beon-gil",
+              "name:ko": "인하로77번길"
+            },
+            "stop_xy_m": [
+              306.80604958972106,
+              60.060230137943485
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 622.8480658325972,
+              "travel_time_s": 74.74176789991166,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241664",
+                "216916384",
+                "216916385",
+                "216916383",
+                "1223158575"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 622.8480658325972,
+              "travel_time_s": 74.74176789991164,
+              "osm_way_sequence": [
+                "1223158575",
+                "216916383",
+                "216916385",
+                "216916384",
+                "481241664",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "481241699",
+            "gap_m": 60.50202462945309,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              292.12836147084755,
+              13.07928137166463
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 552.0647595401483,
+              "travel_time_s": 66.2477711448178,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241663",
+                "481241699"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 552.0647595401483,
+              "travel_time_s": 66.24777114481778,
+              "osm_way_sequence": [
+                "481241699",
+                "481241663",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "284008454",
+            "gap_m": 76.98898982448173,
+            "tags": {
+              "highway": "service",
+              "name": "인하로91번길",
+              "name:en": "Inha-ro 91beon-gil",
+              "name:ko": "인하로91번길"
+            },
+            "stop_xy_m": [
+              428.950132879093,
+              19.011856347402016
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 718.0751690253666,
+              "travel_time_s": 86.16902028304399,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241715",
+                "481241714",
+                "1223158575"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 718.0751690253666,
+              "travel_time_s": 86.16902028304399,
+              "osm_way_sequence": [
+                "1223158575",
+                "481241714",
+                "481241715",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          }
+        ]
+      },
+      "best_candidate": {
+        "osm_way_id": "481241714",
+        "gap_m": 32.472028443426545,
+        "tags": {
+          "highway": "service"
+        },
+        "stop_xy_m": [
+          382.18229362469225,
+          9.727419548680295
+        ],
+        "within_stop_gap": true,
+        "outward": {
+          "reachable": true,
+          "length_m": 654.2528542466974,
+          "travel_time_s": 78.51034250960369,
+          "osm_way_sequence": [
+            "481241683",
+            "481241689",
+            "481241658",
+            "481241696",
+            "481241715",
+            "481241714"
+          ]
+        },
+        "return": {
+          "reachable": true,
+          "length_m": 654.2528542466974,
+          "travel_time_s": 78.51034250960367,
+          "osm_way_sequence": [
+            "481241714",
+            "481241715",
+            "481241696",
+            "481241658",
+            "481241689",
+            "481241683"
+          ]
+        },
+        "round_trip": true,
+        "diagnostic_mode": "service_only",
+        "route_highway_classes": [
+          "service"
+        ],
+        "outward_unity_coverage": {
+          "length_estimate_m_by_source": {
+            "core_unity": 589.5980072375335,
+            "extension_export": 64.65484700916319
+          },
+          "missing_way_ids": [],
+          "method": "same OSM way only; midpoint samples <=2m, 0.05m centerline tolerance; not mesh/height/access verification"
+        },
+        "return_unity_coverage": {
+          "length_estimate_m_by_source": {
+            "core_unity": 589.5980072375326,
+            "extension_export": 64.65484700916323
+          },
+          "missing_way_ids": [],
+          "method": "same OSM way only; midpoint samples <=2m, 0.05m centerline tolerance; not mesh/height/access verification"
+        },
+        "outward_edge_ids": [
+          [
+            "split:481241683:4:0.617567128481",
+            "4741759495",
+            "481241683:4:0:-1"
+          ],
+          [
+            "4741759495",
+            "4741759434",
+            "481241689:0:0:1"
+          ],
+          [
+            "4741759434",
+            "4741759435",
+            "481241658:2:0:1"
+          ],
+          [
+            "4741759435",
+            "4741759436",
+            "481241658:3:0:1"
+          ],
+          [
+            "4741759436",
+            "4741759437",
+            "481241658:4:0:1"
+          ],
+          [
+            "4741759437",
+            "4741759438",
+            "481241658:5:0:1"
+          ],
+          [
+            "4741759438",
+            "4741759508",
+            "481241658:6:0:1"
+          ],
+          [
+            "4741759508",
+            "4741759507",
+            "481241658:7:0:1"
+          ],
+          [
+            "4741759507",
+            "4741759439",
+            "481241658:8:0:1"
+          ],
+          [
+            "4741759439",
+            "4741759444",
+            "481241696:2:0:1"
+          ],
+          [
+            "4741759444",
+            "4741759448",
+            "481241696:3:0:1"
+          ],
+          [
+            "4741759448",
+            "4741759651",
+            "481241715:0:0:1"
+          ],
+          [
+            "4741759651",
+            "4741759650",
+            "481241714:4:0:-1"
+          ],
+          [
+            "4741759650",
+            "4741759649",
+            "481241714:3:0:-1"
+          ],
+          [
+            "4741759649",
+            "4741759628",
+            "481241714:2:0:-1"
+          ],
+          [
+            "4741759628",
+            "4741759648",
+            "481241714:1:0:-1"
+          ],
+          [
+            "4741759648",
+            "split:481241714:0:0.328648316752",
+            "481241714:0:1:-1"
+          ]
+        ],
+        "return_edge_ids": [
+          [
+            "split:481241714:0:0.328648316752",
+            "4741759648",
+            "481241714:0:1:1"
+          ],
+          [
+            "4741759648",
+            "4741759628",
+            "481241714:1:0:1"
+          ],
+          [
+            "4741759628",
+            "4741759649",
+            "481241714:2:0:1"
+          ],
+          [
+            "4741759649",
+            "4741759650",
+            "481241714:3:0:1"
+          ],
+          [
+            "4741759650",
+            "4741759651",
+            "481241714:4:0:1"
+          ],
+          [
+            "4741759651",
+            "4741759448",
+            "481241715:0:0:-1"
+          ],
+          [
+            "4741759448",
+            "4741759444",
+            "481241696:3:0:-1"
+          ],
+          [
+            "4741759444",
+            "4741759439",
+            "481241696:2:0:-1"
+          ],
+          [
+            "4741759439",
+            "4741759507",
+            "481241658:8:0:-1"
+          ],
+          [
+            "4741759507",
+            "4741759508",
+            "481241658:7:0:-1"
+          ],
+          [
+            "4741759508",
+            "4741759438",
+            "481241658:6:0:-1"
+          ],
+          [
+            "4741759438",
+            "4741759437",
+            "481241658:5:0:-1"
+          ],
+          [
+            "4741759437",
+            "4741759436",
+            "481241658:4:0:-1"
+          ],
+          [
+            "4741759436",
+            "4741759435",
+            "481241658:3:0:-1"
+          ],
+          [
+            "4741759435",
+            "4741759434",
+            "481241658:2:0:-1"
+          ],
+          [
+            "4741759434",
+            "4741759495",
+            "481241689:0:0:-1"
+          ],
+          [
+            "4741759495",
+            "split:481241683:4:0.617567128481",
+            "481241683:4:0:1"
+          ]
+        ]
+      },
+      "finding": "DIRECTED_ROUND_TRIP_CANDIDATE"
+    },
+    {
+      "landmark_id": "dorm_1",
+      "entrance_id": "dorm_1_general",
+      "entrance_status": "osm_footprint_photo_guided_synthetic_height_and_entrances",
+      "operationally_verified": false,
+      "nearest_osm_highways": [
+        {
+          "gap_m": 5.616468846155142,
+          "osm_way_id": "1390060991",
+          "tags": {
+            "highway": "residential"
+          }
+        },
+        {
+          "gap_m": 49.92711659837991,
+          "osm_way_id": "281621314",
+          "tags": {
+            "highway": "secondary",
+            "lanes": "4",
+            "name": "소성로",
+            "name:en": "Soseong-ro",
+            "name:ko": "소성로",
+            "oneway": "no",
+            "ref": "16",
+            "surface": "asphalt"
+          }
+        },
+        {
+          "gap_m": 51.09026466871617,
+          "osm_way_id": "1098489687",
+          "tags": {
+            "description": "인하대학교 등록차량 진출로(진출 단독)",
+            "highway": "service",
+            "oneway": "yes",
+            "service": "driveway",
+            "surface": "asphalt"
+          }
+        },
+        {
+          "gap_m": 104.20554465742605,
+          "osm_way_id": "481241660",
+          "tags": {
+            "highway": "service"
+          }
+        }
+      ],
+      "modes": {
+        "service_only": [
+          {
+            "osm_way_id": "1098489687",
+            "gap_m": 51.09026466871617,
+            "tags": {
+              "description": "인하대학교 등록차량 진출로(진출 단독)",
+              "highway": "service",
+              "oneway": "yes",
+              "service": "driveway",
+              "surface": "asphalt"
+            },
+            "stop_xy_m": [
+              80.69228087023997,
+              -416.09748912857515
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 339.58962587510837,
+              "travel_time_s": 40.750755105013,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241659",
+                "481241661",
+                "1098489687"
+              ]
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "481241660",
+            "gap_m": 104.20554465742605,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              101.6368089261789,
+              -366.8194583176764
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 286.045274388832,
+              "travel_time_s": 34.32543292665984,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241659",
+                "481241661"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 286.045274388832,
+              "travel_time_s": 34.325432926659836,
+              "osm_way_sequence": [
+                "481241661",
+                "481241659",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "481241661",
+            "gap_m": 104.20554465742605,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              101.6368089261789,
+              -366.8194583176764
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 286.045274388832,
+              "travel_time_s": 34.32543292665984,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241659",
+                "481241661"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 286.045274388832,
+              "travel_time_s": 34.325432926659836,
+              "osm_way_sequence": [
+                "481241661",
+                "481241659",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "481241658",
+            "gap_m": 138.32250424606386,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              -23.502286194187644,
+              -363.5681535528079
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 74.75489408052871,
+              "travel_time_s": 8.970587289663445,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 74.75489408052871,
+              "travel_time_s": 8.970587289663445,
+              "osm_way_sequence": [
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "481241689",
+            "gap_m": 171.12435750150453,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              -19.316724677368803,
+              -319.6842807010219
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 28.319077783518132,
+              "travel_time_s": 3.3982893340221754,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 28.319077783518132,
+              "travel_time_s": 3.3982893340221754,
+              "osm_way_sequence": [
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "258995842",
+            "gap_m": 177.53719561197602,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              0.7698357916009968,
+              -302.2594926008896
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 322.14012825995826,
+              "travel_time_s": 38.656815391194996,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241659",
+                "258995842"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 320.5387693485291,
+              "travel_time_s": 38.46465232182349,
+              "osm_way_sequence": [
+                "258995842",
+                "481241657",
+                "481241690",
+                "481241685",
+                "1098491076",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          }
+        ],
+        "local_roads": [
+          {
+            "osm_way_id": "1390060991",
+            "gap_m": 5.616468846155142,
+            "tags": {
+              "highway": "residential"
+            },
+            "stop_xy_m": [
+              74.48308190537236,
+              -468.5591462409919
+            ],
+            "within_stop_gap": true,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "1098489687",
+            "gap_m": 51.09026466871617,
+            "tags": {
+              "description": "인하대학교 등록차량 진출로(진출 단독)",
+              "highway": "service",
+              "oneway": "yes",
+              "service": "driveway",
+              "surface": "asphalt"
+            },
+            "stop_xy_m": [
+              80.69228087023997,
+              -416.09748912857515
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 339.58962587510837,
+              "travel_time_s": 40.750755105013,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241659",
+                "481241661",
+                "1098489687"
+              ]
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "481241660",
+            "gap_m": 104.20554465742605,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              101.6368089261789,
+              -366.8194583176764
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 286.045274388832,
+              "travel_time_s": 34.32543292665984,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241659",
+                "481241661"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 286.045274388832,
+              "travel_time_s": 34.325432926659836,
+              "osm_way_sequence": [
+                "481241661",
+                "481241659",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "481241661",
+            "gap_m": 104.20554465742605,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              101.6368089261789,
+              -366.8194583176764
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 286.045274388832,
+              "travel_time_s": 34.32543292665984,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241659",
+                "481241661"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 286.045274388832,
+              "travel_time_s": 34.325432926659836,
+              "osm_way_sequence": [
+                "481241661",
+                "481241659",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "481241658",
+            "gap_m": 138.32250424606386,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              -23.502286194187644,
+              -363.5681535528079
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 74.75489408052871,
+              "travel_time_s": 8.970587289663445,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 74.75489408052871,
+              "travel_time_s": 8.970587289663445,
+              "osm_way_sequence": [
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "481241689",
+            "gap_m": 171.12435750150453,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              -19.316724677368803,
+              -319.6842807010219
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 28.319077783518132,
+              "travel_time_s": 3.3982893340221754,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 28.319077783518132,
+              "travel_time_s": 3.3982893340221754,
+              "osm_way_sequence": [
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          }
+        ],
+        "including_arterials": [
+          {
+            "osm_way_id": "1390060991",
+            "gap_m": 5.616468846155142,
+            "tags": {
+              "highway": "residential"
+            },
+            "stop_xy_m": [
+              74.48308190537236,
+              -468.5591462409919
+            ],
+            "within_stop_gap": true,
+            "outward": {
+              "reachable": true,
+              "length_m": 260.60878923300527,
+              "travel_time_s": 31.273054707960632,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "281621314",
+                "1390060991"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 260.60878923300527,
+              "travel_time_s": 31.273054707960632,
+              "osm_way_sequence": [
+                "1390060991",
+                "281621314",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "281621314",
+            "gap_m": 49.92711659837991,
+            "tags": {
+              "highway": "secondary",
+              "lanes": "4",
+              "name": "소성로",
+              "name:en": "Soseong-ro",
+              "name:ko": "소성로",
+              "oneway": "no",
+              "ref": "16",
+              "surface": "asphalt"
+            },
+            "stop_xy_m": [
+              90.52494556382474,
+              -420.66004072990256
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 202.28147832686986,
+              "travel_time_s": 24.273777399224386,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "281621314"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 202.28147832686986,
+              "travel_time_s": 24.273777399224382,
+              "osm_way_sequence": [
+                "281621314",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "1098489687",
+            "gap_m": 51.09026466871617,
+            "tags": {
+              "description": "인하대학교 등록차량 진출로(진출 단독)",
+              "highway": "service",
+              "oneway": "yes",
+              "service": "driveway",
+              "surface": "asphalt"
+            },
+            "stop_xy_m": [
+              80.69228087023997,
+              -416.09748912857515
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 191.44182094800203,
+              "travel_time_s": 22.973018513760245,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "281621314"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 191.44182094800203,
+              "travel_time_s": 22.973018513760245,
+              "osm_way_sequence": [
+                "281621314",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "481241660",
+            "gap_m": 104.20554465742605,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              101.6368089261789,
+              -366.8194583176764
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 286.045274388832,
+              "travel_time_s": 34.32543292665984,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241659",
+                "481241661"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 244.98617243427836,
+              "travel_time_s": 29.3983406921134,
+              "osm_way_sequence": [
+                "1098489687",
+                "281621314",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "481241661",
+            "gap_m": 104.20554465742605,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              101.6368089261789,
+              -366.8194583176764
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 286.045274388832,
+              "travel_time_s": 34.32543292665984,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241659",
+                "481241661"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 244.98617243427836,
+              "travel_time_s": 29.3983406921134,
+              "osm_way_sequence": [
+                "1098489687",
+                "281621314",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "481241658",
+            "gap_m": 138.32250424606386,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              -23.502286194187644,
+              -363.5681535528079
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 74.75489408052871,
+              "travel_time_s": 8.970587289663445,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 74.75489408052871,
+              "travel_time_s": 8.970587289663445,
+              "osm_way_sequence": [
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          }
+        ]
+      },
+      "best_candidate": {
+        "osm_way_id": "1390060991",
+        "gap_m": 5.616468846155142,
+        "tags": {
+          "highway": "residential"
+        },
+        "stop_xy_m": [
+          74.48308190537236,
+          -468.5591462409919
+        ],
+        "within_stop_gap": true,
+        "outward": {
+          "reachable": true,
+          "length_m": 260.60878923300527,
+          "travel_time_s": 31.273054707960632,
+          "osm_way_sequence": [
+            "481241683",
+            "481241689",
+            "481241658",
+            "281621314",
+            "1390060991"
+          ]
+        },
+        "return": {
+          "reachable": true,
+          "length_m": 260.60878923300527,
+          "travel_time_s": 31.273054707960632,
+          "osm_way_sequence": [
+            "1390060991",
+            "281621314",
+            "481241658",
+            "481241689",
+            "481241683"
+          ]
+        },
+        "round_trip": true,
+        "diagnostic_mode": "including_arterials",
+        "route_highway_classes": [
+          "residential",
+          "secondary",
+          "service"
+        ],
+        "outward_unity_coverage": {
+          "length_estimate_m_by_source": {
+            "core_unity": 59.88426229358707,
+            "extension_export": 181.81915443160548,
+            "scoped_unity": 18.905372507812835
+          },
+          "missing_way_ids": [],
+          "method": "same OSM way only; midpoint samples <=2m, 0.05m centerline tolerance; not mesh/height/access verification"
+        },
+        "return_unity_coverage": {
+          "length_estimate_m_by_source": {
+            "extension_export": 181.81915443160545,
+            "scoped_unity": 18.905372507812835,
+            "core_unity": 59.884262293587014
+          },
+          "missing_way_ids": [],
+          "method": "same OSM way only; midpoint samples <=2m, 0.05m centerline tolerance; not mesh/height/access verification"
+        },
+        "outward_edge_ids": [
+          [
+            "split:481241683:4:0.617567128481",
+            "4741759495",
+            "481241683:4:0:-1"
+          ],
+          [
+            "4741759495",
+            "4741759434",
+            "481241689:0:0:1"
+          ],
+          [
+            "4741759434",
+            "4741759433",
+            "481241658:1:0:-1"
+          ],
+          [
+            "4741759433",
+            "2643032901",
+            "481241658:0:0:-1"
+          ],
+          [
+            "2643032901",
+            "10058049431",
+            "281621314:14:0:-1"
+          ],
+          [
+            "10058049431",
+            "12866720417",
+            "281621314:13:0:-1"
+          ],
+          [
+            "12866720417",
+            "split:1390060991:3:0.579325503739",
+            "1390060991:3:1:-1"
+          ]
+        ],
+        "return_edge_ids": [
+          [
+            "split:1390060991:3:0.579325503739",
+            "12866720417",
+            "1390060991:3:1:1"
+          ],
+          [
+            "12866720417",
+            "10058049431",
+            "281621314:13:0:1"
+          ],
+          [
+            "10058049431",
+            "2643032901",
+            "281621314:14:0:1"
+          ],
+          [
+            "2643032901",
+            "4741759433",
+            "481241658:0:0:1"
+          ],
+          [
+            "4741759433",
+            "4741759434",
+            "481241658:1:0:1"
+          ],
+          [
+            "4741759434",
+            "4741759495",
+            "481241689:0:0:-1"
+          ],
+          [
+            "4741759495",
+            "split:481241683:4:0.617567128481",
+            "481241683:4:0:1"
+          ]
+        ]
+      },
+      "finding": "DIRECTED_ROUND_TRIP_CANDIDATE"
+    },
+    {
+      "landmark_id": "dorm_2",
+      "entrance_id": "dorm_2_general",
+      "entrance_status": "osm_footprint_photo_guided_synthetic_height_and_entrances",
+      "operationally_verified": false,
+      "nearest_osm_highways": [
+        {
+          "gap_m": 12.053931454301965,
+          "osm_way_id": "471332807",
+          "tags": {
+            "highway": "service",
+            "lanes": "1",
+            "surface": "asphalt"
+          }
+        },
+        {
+          "gap_m": 35.428720629284605,
+          "osm_way_id": "481241712",
+          "tags": {
+            "highway": "service"
+          }
+        },
+        {
+          "gap_m": 56.08783797495776,
+          "osm_way_id": "284010312",
+          "tags": {
+            "highway": "service",
+            "name": "재넘이길123번길",
+            "name:en": "Jaeneomi-gil 123beon-gil",
+            "name:ko": "재넘이길123번길"
+          }
+        },
+        {
+          "gap_m": 66.6823168187652,
+          "osm_way_id": "481241715",
+          "tags": {
+            "highway": "service"
+          }
+        }
+      ],
+      "modes": {
+        "service_only": [
+          {
+            "osm_way_id": "471332807",
+            "gap_m": 12.053931454301965,
+            "tags": {
+              "highway": "service",
+              "lanes": "1",
+              "surface": "asphalt"
+            },
+            "stop_xy_m": [
+              564.2577524447892,
+              -305.78658812357867
+            ],
+            "within_stop_gap": true,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "481241712",
+            "gap_m": 35.428720629284605,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              543.3427885624459,
+              -271.4875521247832
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 842.2755204468502,
+              "travel_time_s": 101.073062453622,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241715",
+                "481241714",
+                "481241706",
+                "481241712"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 842.2755204468502,
+              "travel_time_s": 101.073062453622,
+              "osm_way_sequence": [
+                "481241712",
+                "481241706",
+                "481241714",
+                "481241715",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "284010312",
+            "gap_m": 56.08783797495776,
+            "tags": {
+              "highway": "service",
+              "name": "재넘이길123번길",
+              "name:en": "Jaeneomi-gil 123beon-gil",
+              "name:ko": "재넘이길123번길"
+            },
+            "stop_xy_m": [
+              605.1244451974795,
+              -324.37125759598484
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "481241715",
+            "gap_m": 66.6823168187652,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              485.7927872292009,
+              -299.7814501160815
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 671.0448614576653,
+              "travel_time_s": 80.52538337491983,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241715"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 671.0448614576653,
+              "travel_time_s": 80.52538337491983,
+              "osm_way_sequence": [
+                "481241715",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "281586687",
+            "gap_m": 88.46347733843533,
+            "tags": {
+              "highway": "service",
+              "name": "재넘이길",
+              "name:en": "Jaeneomi-gil",
+              "name:ko": "재넘이길"
+            },
+            "stop_xy_m": [
+              580.5030775546106,
+              -221.97535956818297
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "281586684",
+            "gap_m": 90.42037079972067,
+            "tags": {
+              "highway": "service",
+              "name": "재넘이길",
+              "name:en": "Jaeneomi-gil",
+              "name:ko": "재넘이길"
+            },
+            "stop_xy_m": [
+              573.079427640861,
+              -217.81270002912876
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          }
+        ],
+        "local_roads": [
+          {
+            "osm_way_id": "471332807",
+            "gap_m": 12.053931454301965,
+            "tags": {
+              "highway": "service",
+              "lanes": "1",
+              "surface": "asphalt"
+            },
+            "stop_xy_m": [
+              564.2577524447892,
+              -305.78658812357867
+            ],
+            "within_stop_gap": true,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "481241712",
+            "gap_m": 35.428720629284605,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              543.3427885624459,
+              -271.4875521247832
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 842.2755204468502,
+              "travel_time_s": 101.073062453622,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241715",
+                "481241714",
+                "481241706",
+                "481241712"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 842.2755204468502,
+              "travel_time_s": 101.073062453622,
+              "osm_way_sequence": [
+                "481241712",
+                "481241706",
+                "481241714",
+                "481241715",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "284010312",
+            "gap_m": 56.08783797495776,
+            "tags": {
+              "highway": "service",
+              "name": "재넘이길123번길",
+              "name:en": "Jaeneomi-gil 123beon-gil",
+              "name:ko": "재넘이길123번길"
+            },
+            "stop_xy_m": [
+              605.1244451974795,
+              -324.37125759598484
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "481241715",
+            "gap_m": 66.6823168187652,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              485.7927872292009,
+              -299.7814501160815
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 671.0448614576653,
+              "travel_time_s": 80.52538337491983,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241715"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 671.0448614576653,
+              "travel_time_s": 80.52538337491983,
+              "osm_way_sequence": [
+                "481241715",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "281586687",
+            "gap_m": 88.46347733843533,
+            "tags": {
+              "highway": "service",
+              "name": "재넘이길",
+              "name:en": "Jaeneomi-gil",
+              "name:ko": "재넘이길"
+            },
+            "stop_xy_m": [
+              580.5030775546106,
+              -221.97535956818297
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "281586684",
+            "gap_m": 90.42037079972067,
+            "tags": {
+              "highway": "service",
+              "name": "재넘이길",
+              "name:en": "Jaeneomi-gil",
+              "name:ko": "재넘이길"
+            },
+            "stop_xy_m": [
+              573.079427640861,
+              -217.81270002912876
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          }
+        ],
+        "including_arterials": [
+          {
+            "osm_way_id": "471332807",
+            "gap_m": 12.053931454301965,
+            "tags": {
+              "highway": "service",
+              "lanes": "1",
+              "surface": "asphalt"
+            },
+            "stop_xy_m": [
+              564.2577524447892,
+              -305.78658812357867
+            ],
+            "within_stop_gap": true,
+            "outward": {
+              "reachable": true,
+              "length_m": 985.7171620216566,
+              "travel_time_s": 118.2860594425988,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "281621314",
+                "731224474",
+                "284010313",
+                "471332807"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 985.7171620216566,
+              "travel_time_s": 118.28605944259877,
+              "osm_way_sequence": [
+                "471332807",
+                "284010313",
+                "731224474",
+                "281621314",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "481241712",
+            "gap_m": 35.428720629284605,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              543.3427885624459,
+              -271.4875521247832
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 842.2755204468502,
+              "travel_time_s": 101.073062453622,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241715",
+                "481241714",
+                "481241706",
+                "481241712"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 842.2755204468502,
+              "travel_time_s": 101.073062453622,
+              "osm_way_sequence": [
+                "481241712",
+                "481241706",
+                "481241714",
+                "481241715",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "284010312",
+            "gap_m": 56.08783797495776,
+            "tags": {
+              "highway": "service",
+              "name": "재넘이길123번길",
+              "name:en": "Jaeneomi-gil 123beon-gil",
+              "name:ko": "재넘이길123번길"
+            },
+            "stop_xy_m": [
+              605.1244451974795,
+              -324.37125759598484
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 963.2618539613494,
+              "travel_time_s": 115.59142247536194,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "281621314",
+                "731224474",
+                "284010313",
+                "284010312"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 963.2618539613494,
+              "travel_time_s": 115.59142247536191,
+              "osm_way_sequence": [
+                "284010312",
+                "284010313",
+                "731224474",
+                "281621314",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "481241715",
+            "gap_m": 66.6823168187652,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              485.7927872292009,
+              -299.7814501160815
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 671.0448614576653,
+              "travel_time_s": 80.52538337491983,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241715"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 671.0448614576653,
+              "travel_time_s": 80.52538337491983,
+              "osm_way_sequence": [
+                "481241715",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "281586687",
+            "gap_m": 88.46347733843533,
+            "tags": {
+              "highway": "service",
+              "name": "재넘이길",
+              "name:en": "Jaeneomi-gil",
+              "name:ko": "재넘이길"
+            },
+            "stop_xy_m": [
+              580.5030775546106,
+              -221.97535956818297
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 1113.0314621678042,
+              "travel_time_s": 133.5637754601365,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "281621314",
+                "731224474",
+                "284010313",
+                "284010312",
+                "281586687"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 1113.0314621678042,
+              "travel_time_s": 133.5637754601365,
+              "osm_way_sequence": [
+                "281586687",
+                "284010312",
+                "284010313",
+                "731224474",
+                "281621314",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "281586684",
+            "gap_m": 90.42037079972067,
+            "tags": {
+              "highway": "service",
+              "name": "재넘이길",
+              "name:en": "Jaeneomi-gil",
+              "name:ko": "재넘이길"
+            },
+            "stop_xy_m": [
+              573.079427640861,
+              -217.81270002912876
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 1121.7258671463283,
+              "travel_time_s": 134.6071040575594,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "281621314",
+                "731224474",
+                "284010313",
+                "284010312",
+                "281586687"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 1121.7258671463283,
+              "travel_time_s": 134.60710405755944,
+              "osm_way_sequence": [
+                "281586687",
+                "284010312",
+                "284010313",
+                "731224474",
+                "281621314",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          }
+        ]
+      },
+      "best_candidate": {
+        "osm_way_id": "471332807",
+        "gap_m": 12.053931454301965,
+        "tags": {
+          "highway": "service",
+          "lanes": "1",
+          "surface": "asphalt"
+        },
+        "stop_xy_m": [
+          564.2577524447892,
+          -305.78658812357867
+        ],
+        "within_stop_gap": true,
+        "outward": {
+          "reachable": true,
+          "length_m": 985.7171620216566,
+          "travel_time_s": 118.2860594425988,
+          "osm_way_sequence": [
+            "481241683",
+            "481241689",
+            "481241658",
+            "281621314",
+            "731224474",
+            "284010313",
+            "471332807"
+          ]
+        },
+        "return": {
+          "reachable": true,
+          "length_m": 985.7171620216566,
+          "travel_time_s": 118.28605944259877,
+          "osm_way_sequence": [
+            "471332807",
+            "284010313",
+            "731224474",
+            "281621314",
+            "481241658",
+            "481241689",
+            "481241683"
+          ]
+        },
+        "round_trip": true,
+        "diagnostic_mode": "including_arterials",
+        "route_highway_classes": [
+          "secondary",
+          "service"
+        ],
+        "outward_unity_coverage": {
+          "length_estimate_m_by_source": {
+            "core_unity": 59.88426229358707,
+            "extension_export": 155.02537619904368,
+            "scoped_unity": 666.6261729143243,
+            "restored_unity": 104.18135061469972
+          },
+          "missing_way_ids": [],
+          "method": "same OSM way only; midpoint samples <=2m, 0.05m centerline tolerance; not mesh/height/access verification"
+        },
+        "return_unity_coverage": {
+          "length_estimate_m_by_source": {
+            "extension_export": 155.0253761990437,
+            "scoped_unity": 666.6261729143256,
+            "restored_unity": 104.18135061469971,
+            "core_unity": 59.884262293587014
+          },
+          "missing_way_ids": [],
+          "method": "same OSM way only; midpoint samples <=2m, 0.05m centerline tolerance; not mesh/height/access verification"
+        },
+        "outward_edge_ids": [
+          [
+            "split:481241683:4:0.617567128481",
+            "4741759495",
+            "481241683:4:0:-1"
+          ],
+          [
+            "4741759495",
+            "4741759434",
+            "481241689:0:0:1"
+          ],
+          [
+            "4741759434",
+            "4741759433",
+            "481241658:1:0:-1"
+          ],
+          [
+            "4741759433",
+            "2643032901",
+            "481241658:0:0:-1"
+          ],
+          [
+            "2643032901",
+            "10058049431",
+            "281621314:14:0:-1"
+          ],
+          [
+            "10058049431",
+            "12866720417",
+            "281621314:13:0:-1"
+          ],
+          [
+            "12866720417",
+            "4741759657",
+            "281621314:12:0:-1"
+          ],
+          [
+            "4741759657",
+            "1770237413",
+            "281621314:11:0:-1"
+          ],
+          [
+            "1770237413",
+            "4638918402",
+            "281621314:10:0:-1"
+          ],
+          [
+            "4638918402",
+            "4638925351",
+            "281621314:9:0:-1"
+          ],
+          [
+            "4638925351",
+            "4638934519",
+            "281621314:8:0:-1"
+          ],
+          [
+            "4638934519",
+            "4958020925",
+            "281621314:7:0:-1"
+          ],
+          [
+            "4958020925",
+            "2877970943",
+            "281621314:6:0:-1"
+          ],
+          [
+            "2877970943",
+            "4638918405",
+            "281621314:5:0:-1"
+          ],
+          [
+            "4638918405",
+            "2429042772",
+            "281621314:4:0:-1"
+          ],
+          [
+            "2429042772",
+            "2877968880",
+            "281621314:3:0:-1"
+          ],
+          [
+            "2877968880",
+            "2877968888",
+            "731224474:4:0:-1"
+          ],
+          [
+            "2877968888",
+            "2877968868",
+            "731224474:3:0:-1"
+          ],
+          [
+            "2877968868",
+            "2877968854",
+            "731224474:2:0:-1"
+          ],
+          [
+            "2877968854",
+            "2877968889",
+            "731224474:1:0:-1"
+          ],
+          [
+            "2877968889",
+            "2877968866",
+            "731224474:0:0:-1"
+          ],
+          [
+            "2877968866",
+            "2877968892",
+            "284010313:10:0:-1"
+          ],
+          [
+            "2877968892",
+            "2877968891",
+            "284010313:9:0:-1"
+          ],
+          [
+            "2877968891",
+            "2877968852",
+            "284010313:8:0:-1"
+          ],
+          [
+            "2877968852",
+            "2877968867",
+            "284010313:7:0:-1"
+          ],
+          [
+            "2877968867",
+            "2877968897",
+            "284010313:6:0:-1"
+          ],
+          [
+            "2877968897",
+            "2877968859",
+            "284010313:5:0:-1"
+          ],
+          [
+            "2877968859",
+            "2877968853",
+            "284010313:4:0:-1"
+          ],
+          [
+            "2877968853",
+            "4654965039",
+            "284010313:3:0:-1"
+          ],
+          [
+            "4654965039",
+            "4654965040",
+            "471332807:0:0:1"
+          ],
+          [
+            "4654965040",
+            "4654965041",
+            "471332807:1:0:1"
+          ],
+          [
+            "4654965041",
+            "split:471332807:2:0.630248405646",
+            "471332807:2:0:1"
+          ]
+        ],
+        "return_edge_ids": [
+          [
+            "split:471332807:2:0.630248405646",
+            "4654965041",
+            "471332807:2:0:-1"
+          ],
+          [
+            "4654965041",
+            "4654965040",
+            "471332807:1:0:-1"
+          ],
+          [
+            "4654965040",
+            "4654965039",
+            "471332807:0:0:-1"
+          ],
+          [
+            "4654965039",
+            "2877968853",
+            "284010313:3:0:1"
+          ],
+          [
+            "2877968853",
+            "2877968859",
+            "284010313:4:0:1"
+          ],
+          [
+            "2877968859",
+            "2877968897",
+            "284010313:5:0:1"
+          ],
+          [
+            "2877968897",
+            "2877968867",
+            "284010313:6:0:1"
+          ],
+          [
+            "2877968867",
+            "2877968852",
+            "284010313:7:0:1"
+          ],
+          [
+            "2877968852",
+            "2877968891",
+            "284010313:8:0:1"
+          ],
+          [
+            "2877968891",
+            "2877968892",
+            "284010313:9:0:1"
+          ],
+          [
+            "2877968892",
+            "2877968866",
+            "284010313:10:0:1"
+          ],
+          [
+            "2877968866",
+            "2877968889",
+            "731224474:0:0:1"
+          ],
+          [
+            "2877968889",
+            "2877968854",
+            "731224474:1:0:1"
+          ],
+          [
+            "2877968854",
+            "2877968868",
+            "731224474:2:0:1"
+          ],
+          [
+            "2877968868",
+            "2877968888",
+            "731224474:3:0:1"
+          ],
+          [
+            "2877968888",
+            "2877968880",
+            "731224474:4:0:1"
+          ],
+          [
+            "2877968880",
+            "2429042772",
+            "281621314:3:0:1"
+          ],
+          [
+            "2429042772",
+            "4638918405",
+            "281621314:4:0:1"
+          ],
+          [
+            "4638918405",
+            "2877970943",
+            "281621314:5:0:1"
+          ],
+          [
+            "2877970943",
+            "4958020925",
+            "281621314:6:0:1"
+          ],
+          [
+            "4958020925",
+            "4638934519",
+            "281621314:7:0:1"
+          ],
+          [
+            "4638934519",
+            "4638925351",
+            "281621314:8:0:1"
+          ],
+          [
+            "4638925351",
+            "4638918402",
+            "281621314:9:0:1"
+          ],
+          [
+            "4638918402",
+            "1770237413",
+            "281621314:10:0:1"
+          ],
+          [
+            "1770237413",
+            "4741759657",
+            "281621314:11:0:1"
+          ],
+          [
+            "4741759657",
+            "12866720417",
+            "281621314:12:0:1"
+          ],
+          [
+            "12866720417",
+            "10058049431",
+            "281621314:13:0:1"
+          ],
+          [
+            "10058049431",
+            "2643032901",
+            "281621314:14:0:1"
+          ],
+          [
+            "2643032901",
+            "4741759433",
+            "481241658:0:0:1"
+          ],
+          [
+            "4741759433",
+            "4741759434",
+            "481241658:1:0:1"
+          ],
+          [
+            "4741759434",
+            "4741759495",
+            "481241689:0:0:-1"
+          ],
+          [
+            "4741759495",
+            "split:481241683:4:0.617567128481",
+            "481241683:4:0:1"
+          ]
+        ]
+      },
+      "finding": "DIRECTED_ROUND_TRIP_CANDIDATE"
+    },
+    {
+      "landmark_id": "dorm_3",
+      "entrance_id": "dorm_3_general",
+      "entrance_status": "official_map_relative_location_approximate_outline_synthetic_entrances",
+      "operationally_verified": false,
+      "nearest_osm_highways": [
+        {
+          "gap_m": 22.216520066908508,
+          "osm_way_id": "471332807",
+          "tags": {
+            "highway": "service",
+            "lanes": "1",
+            "surface": "asphalt"
+          }
+        },
+        {
+          "gap_m": 38.03286178243088,
+          "osm_way_id": "284010313",
+          "tags": {
+            "highway": "service",
+            "name": "재넘이길123번길",
+            "name:en": "Jaeneomi-gil 123beon-gil",
+            "name:ko": "재넘이길123번길"
+          }
+        },
+        {
+          "gap_m": 57.1296091045121,
+          "osm_way_id": "284010312",
+          "tags": {
+            "highway": "service",
+            "name": "재넘이길123번길",
+            "name:en": "Jaeneomi-gil 123beon-gil",
+            "name:ko": "재넘이길123번길"
+          }
+        },
+        {
+          "gap_m": 81.31715092360461,
+          "osm_way_id": "731224474",
+          "tags": {
+            "highway": "service",
+            "name": "소성로87번길",
+            "name:en": "Soseong-ro 87beon-gil",
+            "name:ko": "소성로87번길"
+          }
+        }
+      ],
+      "modes": {
+        "service_only": [
+          {
+            "osm_way_id": "471332807",
+            "gap_m": 22.216520066908508,
+            "tags": {
+              "highway": "service",
+              "lanes": "1",
+              "surface": "asphalt"
+            },
+            "stop_xy_m": [
+              564.8167676274949,
+              -376.93397300193624
+            ],
+            "within_stop_gap": true,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "284010313",
+            "gap_m": 38.03286178243088,
+            "tags": {
+              "highway": "service",
+              "name": "재넘이길123번길",
+              "name:en": "Jaeneomi-gil 123beon-gil",
+              "name:ko": "재넘이길123번길"
+            },
+            "stop_xy_m": [
+              575.2604468995108,
+              -407.87616705033673
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "284010312",
+            "gap_m": 57.1296091045121,
+            "tags": {
+              "highway": "service",
+              "name": "재넘이길123번길",
+              "name:en": "Jaeneomi-gil 123beon-gil",
+              "name:ko": "재넘이길123번길"
+            },
+            "stop_xy_m": [
+              601.5071880133087,
+              -384.59753963105993
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "731224474",
+            "gap_m": 81.31715092360461,
+            "tags": {
+              "highway": "service",
+              "name": "소성로87번길",
+              "name:en": "Soseong-ro 87beon-gil",
+              "name:ko": "소성로87번길"
+            },
+            "stop_xy_m": [
+              559.6019422971233,
+              -465.5455753237498
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "481241715",
+            "gap_m": 103.96743486672544,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              485.7927872292009,
+              -299.7814501160815
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 671.0448614576653,
+              "travel_time_s": 80.52538337491983,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241715"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 671.0448614576653,
+              "travel_time_s": 80.52538337491983,
+              "osm_way_sequence": [
+                "481241715",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "481241712",
+            "gap_m": 114.1816347613787,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              543.3427885624459,
+              -271.4875521247832
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 842.2755204468502,
+              "travel_time_s": 101.073062453622,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241715",
+                "481241714",
+                "481241706",
+                "481241712"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 842.2755204468502,
+              "travel_time_s": 101.073062453622,
+              "osm_way_sequence": [
+                "481241712",
+                "481241706",
+                "481241714",
+                "481241715",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          }
+        ],
+        "local_roads": [
+          {
+            "osm_way_id": "471332807",
+            "gap_m": 22.216520066908508,
+            "tags": {
+              "highway": "service",
+              "lanes": "1",
+              "surface": "asphalt"
+            },
+            "stop_xy_m": [
+              564.8167676274949,
+              -376.93397300193624
+            ],
+            "within_stop_gap": true,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "284010313",
+            "gap_m": 38.03286178243088,
+            "tags": {
+              "highway": "service",
+              "name": "재넘이길123번길",
+              "name:en": "Jaeneomi-gil 123beon-gil",
+              "name:ko": "재넘이길123번길"
+            },
+            "stop_xy_m": [
+              575.2604468995108,
+              -407.87616705033673
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "284010312",
+            "gap_m": 57.1296091045121,
+            "tags": {
+              "highway": "service",
+              "name": "재넘이길123번길",
+              "name:en": "Jaeneomi-gil 123beon-gil",
+              "name:ko": "재넘이길123번길"
+            },
+            "stop_xy_m": [
+              601.5071880133087,
+              -384.59753963105993
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "731224474",
+            "gap_m": 81.31715092360461,
+            "tags": {
+              "highway": "service",
+              "name": "소성로87번길",
+              "name:en": "Soseong-ro 87beon-gil",
+              "name:ko": "소성로87번길"
+            },
+            "stop_xy_m": [
+              559.6019422971233,
+              -465.5455753237498
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "481241715",
+            "gap_m": 103.96743486672544,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              485.7927872292009,
+              -299.7814501160815
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 671.0448614576653,
+              "travel_time_s": 80.52538337491983,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241715"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 671.0448614576653,
+              "travel_time_s": 80.52538337491983,
+              "osm_way_sequence": [
+                "481241715",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "481241712",
+            "gap_m": 114.1816347613787,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              543.3427885624459,
+              -271.4875521247832
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 842.2755204468502,
+              "travel_time_s": 101.073062453622,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241715",
+                "481241714",
+                "481241706",
+                "481241712"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 842.2755204468502,
+              "travel_time_s": 101.073062453622,
+              "osm_way_sequence": [
+                "481241712",
+                "481241706",
+                "481241714",
+                "481241715",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          }
+        ],
+        "including_arterials": [
+          {
+            "osm_way_id": "471332807",
+            "gap_m": 22.216520066908508,
+            "tags": {
+              "highway": "service",
+              "lanes": "1",
+              "surface": "asphalt"
+            },
+            "stop_xy_m": [
+              564.8167676274949,
+              -376.93397300193624
+            ],
+            "within_stop_gap": true,
+            "outward": {
+              "reachable": true,
+              "length_m": 914.5665825599995,
+              "travel_time_s": 109.74798990719994,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "281621314",
+                "731224474",
+                "284010313",
+                "471332807"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 914.5665825599995,
+              "travel_time_s": 109.74798990719994,
+              "osm_way_sequence": [
+                "471332807",
+                "284010313",
+                "731224474",
+                "281621314",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "284010313",
+            "gap_m": 38.03286178243088,
+            "tags": {
+              "highway": "service",
+              "name": "재넘이길123번길",
+              "name:en": "Jaeneomi-gil 123beon-gil",
+              "name:ko": "재넘이길123번길"
+            },
+            "stop_xy_m": [
+              575.2604468995108,
+              -407.87616705033673
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 864.67020143993,
+              "travel_time_s": 103.7604241727916,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "281621314",
+                "731224474",
+                "284010313"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 864.67020143993,
+              "travel_time_s": 103.76042417279159,
+              "osm_way_sequence": [
+                "284010313",
+                "731224474",
+                "281621314",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "284010312",
+            "gap_m": 57.1296091045121,
+            "tags": {
+              "highway": "service",
+              "name": "재넘이길123번길",
+              "name:en": "Jaeneomi-gil 123beon-gil",
+              "name:ko": "재넘이길123번길"
+            },
+            "stop_xy_m": [
+              601.5071880133087,
+              -384.59753963105993
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 902.5743130721302,
+              "travel_time_s": 108.30891756865562,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "281621314",
+                "731224474",
+                "284010313",
+                "284010312"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 902.5743130721302,
+              "travel_time_s": 108.3089175686556,
+              "osm_way_sequence": [
+                "284010312",
+                "284010313",
+                "731224474",
+                "281621314",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "731224474",
+            "gap_m": 81.31715092360461,
+            "tags": {
+              "highway": "service",
+              "name": "소성로87번길",
+              "name:en": "Soseong-ro 87beon-gil",
+              "name:ko": "소성로87번길"
+            },
+            "stop_xy_m": [
+              559.6019422971233,
+              -465.5455753237498
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 803.9818714907744,
+              "travel_time_s": 96.47782457889292,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "281621314",
+                "731224474"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 803.9818714907744,
+              "travel_time_s": 96.47782457889294,
+              "osm_way_sequence": [
+                "731224474",
+                "281621314",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "481241715",
+            "gap_m": 103.96743486672544,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              485.7927872292009,
+              -299.7814501160815
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 671.0448614576653,
+              "travel_time_s": 80.52538337491983,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241715"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 671.0448614576653,
+              "travel_time_s": 80.52538337491983,
+              "osm_way_sequence": [
+                "481241715",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "481241712",
+            "gap_m": 114.1816347613787,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              543.3427885624459,
+              -271.4875521247832
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 842.2755204468502,
+              "travel_time_s": 101.073062453622,
+              "osm_way_sequence": [
+                "481241683",
+                "481241689",
+                "481241658",
+                "481241696",
+                "481241715",
+                "481241714",
+                "481241706",
+                "481241712"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 842.2755204468502,
+              "travel_time_s": 101.073062453622,
+              "osm_way_sequence": [
+                "481241712",
+                "481241706",
+                "481241714",
+                "481241715",
+                "481241696",
+                "481241658",
+                "481241689",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          }
+        ]
+      },
+      "best_candidate": {
+        "osm_way_id": "471332807",
+        "gap_m": 22.216520066908508,
+        "tags": {
+          "highway": "service",
+          "lanes": "1",
+          "surface": "asphalt"
+        },
+        "stop_xy_m": [
+          564.8167676274949,
+          -376.93397300193624
+        ],
+        "within_stop_gap": true,
+        "outward": {
+          "reachable": true,
+          "length_m": 914.5665825599995,
+          "travel_time_s": 109.74798990719994,
+          "osm_way_sequence": [
+            "481241683",
+            "481241689",
+            "481241658",
+            "281621314",
+            "731224474",
+            "284010313",
+            "471332807"
+          ]
+        },
+        "return": {
+          "reachable": true,
+          "length_m": 914.5665825599995,
+          "travel_time_s": 109.74798990719994,
+          "osm_way_sequence": [
+            "471332807",
+            "284010313",
+            "731224474",
+            "281621314",
+            "481241658",
+            "481241689",
+            "481241683"
+          ]
+        },
+        "round_trip": true,
+        "diagnostic_mode": "including_arterials",
+        "route_highway_classes": [
+          "secondary",
+          "service"
+        ],
+        "outward_unity_coverage": {
+          "length_estimate_m_by_source": {
+            "core_unity": 59.88426229358707,
+            "extension_export": 131.5575586544152,
+            "scoped_unity": 618.9434109972954,
+            "restored_unity": 104.18135061469972
+          },
+          "missing_way_ids": [],
+          "method": "same OSM way only; midpoint samples <=2m, 0.05m centerline tolerance; not mesh/height/access verification"
+        },
+        "return_unity_coverage": {
+          "length_estimate_m_by_source": {
+            "scoped_unity": 618.9434109972967,
+            "restored_unity": 104.18135061469971,
+            "extension_export": 131.55755865441515,
+            "core_unity": 59.884262293587014
+          },
+          "missing_way_ids": [],
+          "method": "same OSM way only; midpoint samples <=2m, 0.05m centerline tolerance; not mesh/height/access verification"
+        },
+        "outward_edge_ids": [
+          [
+            "split:481241683:4:0.617567128481",
+            "4741759495",
+            "481241683:4:0:-1"
+          ],
+          [
+            "4741759495",
+            "4741759434",
+            "481241689:0:0:1"
+          ],
+          [
+            "4741759434",
+            "4741759433",
+            "481241658:1:0:-1"
+          ],
+          [
+            "4741759433",
+            "2643032901",
+            "481241658:0:0:-1"
+          ],
+          [
+            "2643032901",
+            "10058049431",
+            "281621314:14:0:-1"
+          ],
+          [
+            "10058049431",
+            "12866720417",
+            "281621314:13:0:-1"
+          ],
+          [
+            "12866720417",
+            "4741759657",
+            "281621314:12:0:-1"
+          ],
+          [
+            "4741759657",
+            "1770237413",
+            "281621314:11:0:-1"
+          ],
+          [
+            "1770237413",
+            "4638918402",
+            "281621314:10:0:-1"
+          ],
+          [
+            "4638918402",
+            "4638925351",
+            "281621314:9:0:-1"
+          ],
+          [
+            "4638925351",
+            "4638934519",
+            "281621314:8:0:-1"
+          ],
+          [
+            "4638934519",
+            "4958020925",
+            "281621314:7:0:-1"
+          ],
+          [
+            "4958020925",
+            "2877970943",
+            "281621314:6:0:-1"
+          ],
+          [
+            "2877970943",
+            "4638918405",
+            "281621314:5:0:-1"
+          ],
+          [
+            "4638918405",
+            "2429042772",
+            "281621314:4:0:-1"
+          ],
+          [
+            "2429042772",
+            "2877968880",
+            "281621314:3:0:-1"
+          ],
+          [
+            "2877968880",
+            "2877968888",
+            "731224474:4:0:-1"
+          ],
+          [
+            "2877968888",
+            "2877968868",
+            "731224474:3:0:-1"
+          ],
+          [
+            "2877968868",
+            "2877968854",
+            "731224474:2:0:-1"
+          ],
+          [
+            "2877968854",
+            "2877968889",
+            "731224474:1:0:-1"
+          ],
+          [
+            "2877968889",
+            "2877968866",
+            "731224474:0:0:-1"
+          ],
+          [
+            "2877968866",
+            "2877968892",
+            "284010313:10:0:-1"
+          ],
+          [
+            "2877968892",
+            "2877968891",
+            "284010313:9:0:-1"
+          ],
+          [
+            "2877968891",
+            "2877968852",
+            "284010313:8:0:-1"
+          ],
+          [
+            "2877968852",
+            "2877968867",
+            "284010313:7:0:-1"
+          ],
+          [
+            "2877968867",
+            "2877968897",
+            "284010313:6:0:-1"
+          ],
+          [
+            "2877968897",
+            "2877968859",
+            "284010313:5:0:-1"
+          ],
+          [
+            "2877968859",
+            "2877968853",
+            "284010313:4:0:-1"
+          ],
+          [
+            "2877968853",
+            "4654965039",
+            "284010313:3:0:-1"
+          ],
+          [
+            "4654965039",
+            "4654965040",
+            "471332807:0:0:1"
+          ]
+        ],
+        "return_edge_ids": [
+          [
+            "4654965040",
+            "4654965039",
+            "471332807:0:0:-1"
+          ],
+          [
+            "4654965039",
+            "2877968853",
+            "284010313:3:0:1"
+          ],
+          [
+            "2877968853",
+            "2877968859",
+            "284010313:4:0:1"
+          ],
+          [
+            "2877968859",
+            "2877968897",
+            "284010313:5:0:1"
+          ],
+          [
+            "2877968897",
+            "2877968867",
+            "284010313:6:0:1"
+          ],
+          [
+            "2877968867",
+            "2877968852",
+            "284010313:7:0:1"
+          ],
+          [
+            "2877968852",
+            "2877968891",
+            "284010313:8:0:1"
+          ],
+          [
+            "2877968891",
+            "2877968892",
+            "284010313:9:0:1"
+          ],
+          [
+            "2877968892",
+            "2877968866",
+            "284010313:10:0:1"
+          ],
+          [
+            "2877968866",
+            "2877968889",
+            "731224474:0:0:1"
+          ],
+          [
+            "2877968889",
+            "2877968854",
+            "731224474:1:0:1"
+          ],
+          [
+            "2877968854",
+            "2877968868",
+            "731224474:2:0:1"
+          ],
+          [
+            "2877968868",
+            "2877968888",
+            "731224474:3:0:1"
+          ],
+          [
+            "2877968888",
+            "2877968880",
+            "731224474:4:0:1"
+          ],
+          [
+            "2877968880",
+            "2429042772",
+            "281621314:3:0:1"
+          ],
+          [
+            "2429042772",
+            "4638918405",
+            "281621314:4:0:1"
+          ],
+          [
+            "4638918405",
+            "2877970943",
+            "281621314:5:0:1"
+          ],
+          [
+            "2877970943",
+            "4958020925",
+            "281621314:6:0:1"
+          ],
+          [
+            "4958020925",
+            "4638934519",
+            "281621314:7:0:1"
+          ],
+          [
+            "4638934519",
+            "4638925351",
+            "281621314:8:0:1"
+          ],
+          [
+            "4638925351",
+            "4638918402",
+            "281621314:9:0:1"
+          ],
+          [
+            "4638918402",
+            "1770237413",
+            "281621314:10:0:1"
+          ],
+          [
+            "1770237413",
+            "4741759657",
+            "281621314:11:0:1"
+          ],
+          [
+            "4741759657",
+            "12866720417",
+            "281621314:12:0:1"
+          ],
+          [
+            "12866720417",
+            "10058049431",
+            "281621314:13:0:1"
+          ],
+          [
+            "10058049431",
+            "2643032901",
+            "281621314:14:0:1"
+          ],
+          [
+            "2643032901",
+            "4741759433",
+            "481241658:0:0:1"
+          ],
+          [
+            "4741759433",
+            "4741759434",
+            "481241658:1:0:1"
+          ],
+          [
+            "4741759434",
+            "4741759495",
+            "481241689:0:0:-1"
+          ],
+          [
+            "4741759495",
+            "split:481241683:4:0.617567128481",
+            "481241683:4:0:1"
+          ]
+        ]
+      },
+      "finding": "DIRECTED_ROUND_TRIP_CANDIDATE"
+    },
+    {
+      "landmark_id": "inha_station",
+      "entrance_id": "inha_station_general_exit_7",
+      "entrance_status": "osm_exit_7_wheelchair_no_accessible_entrance_unresolved",
+      "operationally_verified": false,
+      "nearest_osm_highways": [
+        {
+          "gap_m": 15.949180179399587,
+          "osm_way_id": "955217469",
+          "tags": {
+            "highway": "secondary",
+            "name": "독배로",
+            "name:en": "Dokbae-ro",
+            "name:ko": "독배로",
+            "ref": "17",
+            "surface": "asphalt"
+          }
+        },
+        {
+          "gap_m": 34.500791217318465,
+          "osm_way_id": "1215102704",
+          "tags": {
+            "highway": "secondary_link",
+            "oneway": "yes"
+          }
+        },
+        {
+          "gap_m": 74.05152340081263,
+          "osm_way_id": "281621314",
+          "tags": {
+            "highway": "secondary",
+            "lanes": "4",
+            "name": "소성로",
+            "name:en": "Soseong-ro",
+            "name:ko": "소성로",
+            "oneway": "no",
+            "ref": "16",
+            "surface": "asphalt"
+          }
+        },
+        {
+          "gap_m": 74.43250566036252,
+          "osm_way_id": "1215102705",
+          "tags": {
+            "highway": "secondary_link",
+            "oneway": "yes"
+          }
+        }
+      ],
+      "modes": {
+        "service_only": [
+          {
+            "osm_way_id": "284973522",
+            "gap_m": 106.38014823960914,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              -337.62082694672023,
+              -407.1899490644139
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "284973519",
+            "gap_m": 142.4108793718807,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              -276.73009991828906,
+              -456.01496331464494
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "284973520",
+            "gap_m": 155.9074007317433,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              -274.6953052660944,
+              -469.39994558889197
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "1098491074",
+            "gap_m": 159.18856104989604,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              -198.96868655077265,
+              -180.9271517153983
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 228.70975555039922,
+              "travel_time_s": 27.445170666047904,
+              "osm_way_sequence": [
+                "481241683",
+                "1098491074"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 228.70975555039922,
+              "travel_time_s": 27.445170666047904,
+              "osm_way_sequence": [
+                "1098491074",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "481241681",
+            "gap_m": 164.72163453043478,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              -168.45037309116498,
+              -198.98525844056377
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 193.249035381227,
+              "travel_time_s": 23.189884245747237,
+              "osm_way_sequence": [
+                "481241683",
+                "1098491074"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 193.249035381227,
+              "travel_time_s": 23.189884245747237,
+              "osm_way_sequence": [
+                "1098491074",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "481241687",
+            "gap_m": 174.84821766290563,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              -115.43963021099098,
+              -277.420013850613
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 151.76650166149105,
+              "travel_time_s": 18.21198019937892,
+              "osm_way_sequence": [
+                "481241683",
+                "481241687"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 151.76650166149105,
+              "travel_time_s": 18.211980199378925,
+              "osm_way_sequence": [
+                "481241687",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          }
+        ],
+        "local_roads": [
+          {
+            "osm_way_id": "471689462",
+            "gap_m": 96.63411799551163,
+            "tags": {
+              "highway": "tertiary",
+              "name": "독배로317번길",
+              "name:en": "Dokbae-ro 317beon-gil",
+              "name:ko": "독배로317번길",
+              "surface": "asphalt"
+            },
+            "stop_xy_m": [
+              -320.74419027534736,
+              -223.59750117553284
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "731804508",
+            "gap_m": 103.31153647849646,
+            "tags": {
+              "highway": "residential",
+              "name": "용정공원로83번길",
+              "name:en": "Yongjeonggongwon-ro 83beon-gil",
+              "name:ko": "용정공원로83번길"
+            },
+            "stop_xy_m": [
+              -366.3567398192321,
+              -379.39784648268204
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "284973522",
+            "gap_m": 106.38014823960914,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              -337.62082694672023,
+              -407.1899490644139
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "284973519",
+            "gap_m": 142.4108793718807,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              -276.73009991828906,
+              -456.01496331464494
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "284973520",
+            "gap_m": 155.9074007317433,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              -274.6953052660944,
+              -469.39994558889197
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": false
+            },
+            "return": {
+              "reachable": false
+            },
+            "round_trip": false
+          },
+          {
+            "osm_way_id": "1098491074",
+            "gap_m": 159.18856104989604,
+            "tags": {
+              "highway": "service"
+            },
+            "stop_xy_m": [
+              -198.96868655077265,
+              -180.9271517153983
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 228.70975555039922,
+              "travel_time_s": 27.445170666047904,
+              "osm_way_sequence": [
+                "481241683",
+                "1098491074"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 228.70975555039922,
+              "travel_time_s": 27.445170666047904,
+              "osm_way_sequence": [
+                "1098491074",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          }
+        ],
+        "including_arterials": [
+          {
+            "osm_way_id": "955217469",
+            "gap_m": 15.949180179399587,
+            "tags": {
+              "highway": "secondary",
+              "name": "독배로",
+              "name:en": "Dokbae-ro",
+              "name:ko": "독배로",
+              "ref": "17",
+              "surface": "asphalt"
+            },
+            "stop_xy_m": [
+              -302.0725517581673,
+              -317.0598269194984
+            ],
+            "within_stop_gap": true,
+            "outward": {
+              "reachable": true,
+              "length_m": 407.1574692980317,
+              "travel_time_s": 48.8588963157638,
+              "osm_way_sequence": [
+                "481241683",
+                "281621314",
+                "955217469"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 349.71787012699616,
+              "travel_time_s": 41.96614441523954,
+              "osm_way_sequence": [
+                "955217469",
+                "1215102704",
+                "281621314",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "1215102704",
+            "gap_m": 34.500791217318465,
+            "tags": {
+              "highway": "secondary_link",
+              "oneway": "yes"
+            },
+            "stop_xy_m": [
+              -308.0664858144486,
+              -287.05981024025306
+            ],
+            "within_stop_gap": true,
+            "outward": {
+              "reachable": true,
+              "length_m": 376.56452491168585,
+              "travel_time_s": 45.1877429894023,
+              "osm_way_sequence": [
+                "481241683",
+                "281621314",
+                "955217469"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 319.1249257406504,
+              "travel_time_s": 38.294991088878035,
+              "osm_way_sequence": [
+                "1215102704",
+                "281621314",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "281621314",
+            "gap_m": 74.05152340081263,
+            "tags": {
+              "highway": "secondary",
+              "lanes": "4",
+              "name": "소성로",
+              "name:en": "Soseong-ro",
+              "name:ko": "소성로",
+              "oneway": "no",
+              "ref": "16",
+              "surface": "asphalt"
+            },
+            "stop_xy_m": [
+              -253.6109543551193,
+              -247.55444455358332
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 239.48740638491304,
+              "travel_time_s": 28.738488766189562,
+              "osm_way_sequence": [
+                "481241683",
+                "281621314"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 239.48740638491304,
+              "travel_time_s": 28.738488766189562,
+              "osm_way_sequence": [
+                "281621314",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "1215102705",
+            "gap_m": 74.43250566036252,
+            "tags": {
+              "highway": "secondary_link",
+              "oneway": "yes"
+            },
+            "stop_xy_m": [
+              -260.35311332151775,
+              -244.22081689431937
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 247.0086948981132,
+              "travel_time_s": 29.641043387773582,
+              "osm_way_sequence": [
+                "481241683",
+                "281621314"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 247.0086948981132,
+              "travel_time_s": 29.641043387773582,
+              "osm_way_sequence": [
+                "281621314",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "1215393150",
+            "gap_m": 96.63411799551163,
+            "tags": {
+              "highway": "secondary",
+              "name": "독배로",
+              "name:en": "Dokbae-ro",
+              "name:ko": "독배로",
+              "ref": "16;17",
+              "surface": "asphalt"
+            },
+            "stop_xy_m": [
+              -320.74419027534736,
+              -223.59750117553284
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 311.84830698894285,
+              "travel_time_s": 37.421796838673146,
+              "osm_way_sequence": [
+                "481241683",
+                "281621314"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 311.84830698894285,
+              "travel_time_s": 37.42179683867314,
+              "osm_way_sequence": [
+                "281621314",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          },
+          {
+            "osm_way_id": "471689462",
+            "gap_m": 96.63411799551163,
+            "tags": {
+              "highway": "tertiary",
+              "name": "독배로317번길",
+              "name:en": "Dokbae-ro 317beon-gil",
+              "name:ko": "독배로317번길",
+              "surface": "asphalt"
+            },
+            "stop_xy_m": [
+              -320.74419027534736,
+              -223.59750117553284
+            ],
+            "within_stop_gap": false,
+            "outward": {
+              "reachable": true,
+              "length_m": 311.84830698894285,
+              "travel_time_s": 37.421796838673146,
+              "osm_way_sequence": [
+                "481241683",
+                "281621314"
+              ]
+            },
+            "return": {
+              "reachable": true,
+              "length_m": 311.84830698894285,
+              "travel_time_s": 37.42179683867314,
+              "osm_way_sequence": [
+                "281621314",
+                "481241683"
+              ]
+            },
+            "round_trip": true
+          }
+        ]
+      },
+      "best_candidate": {
+        "osm_way_id": "955217469",
+        "gap_m": 15.949180179399587,
+        "tags": {
+          "highway": "secondary",
+          "name": "독배로",
+          "name:en": "Dokbae-ro",
+          "name:ko": "독배로",
+          "ref": "17",
+          "surface": "asphalt"
+        },
+        "stop_xy_m": [
+          -302.0725517581673,
+          -317.0598269194984
+        ],
+        "within_stop_gap": true,
+        "outward": {
+          "reachable": true,
+          "length_m": 407.1574692980317,
+          "travel_time_s": 48.8588963157638,
+          "osm_way_sequence": [
+            "481241683",
+            "281621314",
+            "955217469"
+          ]
+        },
+        "return": {
+          "reachable": true,
+          "length_m": 349.71787012699616,
+          "travel_time_s": 41.96614441523954,
+          "osm_way_sequence": [
+            "955217469",
+            "1215102704",
+            "281621314",
+            "481241683"
+          ]
+        },
+        "round_trip": true,
+        "diagnostic_mode": "including_arterials",
+        "route_highway_classes": [
+          "secondary",
+          "secondary_link",
+          "service"
+        ],
+        "outward_unity_coverage": {
+          "length_estimate_m_by_source": {
+            "core_unity": 20.734287409770552,
+            "scoped_unity": 386.42318188826147
+          },
+          "missing_way_ids": [],
+          "method": "same OSM way only; midpoint samples <=2m, 0.05m centerline tolerance; not mesh/height/access verification"
+        },
+        "return_unity_coverage": {
+          "length_estimate_m_by_source": {
+            "scoped_unity": 256.867351874688,
+            "not_in_unity_exports": 72.11623084253718,
+            "core_unity": 20.734287409770552
+          },
+          "missing_way_ids": [
+            "1215102704"
+          ],
+          "method": "same OSM way only; midpoint samples <=2m, 0.05m centerline tolerance; not mesh/height/access verification"
+        },
+        "outward_edge_ids": [
+          [
+            "split:481241683:4:0.617567128481",
+            "4741759496",
+            "481241683:4:1:1"
+          ],
+          [
+            "4741759496",
+            "4741759497",
+            "481241683:5:0:1"
+          ],
+          [
+            "4741759497",
+            "11257934923",
+            "281621314:16:0:1"
+          ],
+          [
+            "11257934923",
+            "11257934917",
+            "281621314:17:0:1"
+          ],
+          [
+            "11257934917",
+            "436836503",
+            "281621314:18:0:1"
+          ],
+          [
+            "436836503",
+            "11257934918",
+            "955217469:11:0:-1"
+          ],
+          [
+            "11257934918",
+            "split:955217469:10:0.364442941943",
+            "955217469:10:1:-1"
+          ]
+        ],
+        "return_edge_ids": [
+          [
+            "split:955217469:10:0.364442941943",
+            "11257934918",
+            "955217469:10:1:1"
+          ],
+          [
+            "11257934918",
+            "11257934919",
+            "1215102704:0:0:1"
+          ],
+          [
+            "11257934919",
+            "11257934920",
+            "1215102704:1:0:1"
+          ],
+          [
+            "11257934920",
+            "11257934921",
+            "1215102704:2:0:1"
+          ],
+          [
+            "11257934921",
+            "11257934922",
+            "1215102704:3:0:1"
+          ],
+          [
+            "11257934922",
+            "11257934923",
+            "1215102704:4:0:1"
+          ],
+          [
+            "11257934923",
+            "4741759497",
+            "281621314:16:0:-1"
+          ],
+          [
+            "4741759497",
+            "4741759496",
+            "481241683:5:0:-1"
+          ],
+          [
+            "4741759496",
+            "split:481241683:4:0.617567128481",
+            "481241683:4:1:-1"
+          ]
+        ],
+        "unity_export_backed_alternative": {
+          "outward": {
+            "reachable": true,
+            "length_m": 407.1574692980317,
+            "travel_time_s": 48.8588963157638,
+            "osm_way_sequence": [
+              "481241683",
+              "281621314",
+              "955217469"
+            ]
+          },
+          "return": {
+            "reachable": true,
+            "length_m": 407.1574692980317,
+            "travel_time_s": 48.85889631576379,
+            "osm_way_sequence": [
+              "955217469",
+              "281621314",
+              "481241683"
+            ]
+          },
+          "outward_unity_coverage": {
+            "length_estimate_m_by_source": {
+              "core_unity": 20.734287409770552,
+              "scoped_unity": 386.42318188826147
+            },
+            "missing_way_ids": [],
+            "method": "same OSM way only; midpoint samples <=2m, 0.05m centerline tolerance; not mesh/height/access verification"
+          },
+          "return_unity_coverage": {
+            "length_estimate_m_by_source": {
+              "scoped_unity": 386.42318188826266,
+              "core_unity": 20.734287409770552
+            },
+            "missing_way_ids": [],
+            "method": "same OSM way only; midpoint samples <=2m, 0.05m centerline tolerance; not mesh/height/access verification"
+          },
+          "excluded_uncovered_way_ids": [
+            "1215102704"
+          ],
+          "limitation": "whole-way exclusion and sampled centerline coverage; not active-mesh or global optimum verification"
+        }
+      },
+      "finding": "DIRECTED_ROUND_TRIP_CANDIDATE"
+    }
+  ],
+  "limitations": [
+    "No invented edges; Stop candidates lie on an original OSM segment.",
+    "General entrance anchors remain unverified; no step-free or safe boarding claim.",
+    "Road-class modes are diagnostics, not changes to runtime allowed_highways.",
+    "Turn-restriction member ways are conservatively excluded, not ignored.",
+    "Unity export coverage is not live Editor or mesh/collider/grade validation.",
+    "Missing cache connectivity does not prove a real-world road is absent."
+  ]
+}

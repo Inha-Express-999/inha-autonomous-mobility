@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-19",
+  "scope": "Freesentation font and compact UI only",
+  "font_source": "backend/src/campus_sim/web/fonts/source.json",
+  "checks": {
+    "javascript_syntax": "node --check backend/src/campus_sim/web/app.js passed",
+    "font_http": "4 WOFF2 files: HTTP 200 and expected byte lengths",
+    "browser_font": "400/500/600/700 loaded; body/button/select/SVG computed family Freesentation",
+    "desktop": "no horizontal overflow; 14 stops and 3 vehicles retained",
+    "mobile_390px": "no horizontal overflow; swap and zoom/fit functional",
+    "console": "no errors or warnings",
+    "visible_middle_dots": 0,
+    "stop_and_hub_point_circles": 0
+  },
+  "limits": "Backend algorithm tests not rerun for this UI-only edit. Existing distributed_hubs_validation.json remains the historical run before this font/UI edit.",
+  "web_sha256": {
+    "app.js": "ab919c1d1508896e9a652c7c4528df35da6091ba9ccf680f0a2785b189aa3db5",
+    "icons.svg": "91e1fb8dbce60c0ac93b65297811644f8d541e68b35124d212fe576bf27b7203",
+    "index.html": "0dee2adeaad8f9c0a06503bf20aec79a42c681614ee5414c273f81309b99196f",
+    "style.css": "09f48e94ad41e81c4d1c76c2d4a50e999f18a20952f45baf4ec79e678a76022a"
+  }
+}

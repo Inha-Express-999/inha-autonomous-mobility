@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Passed" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-23 05:06:36Z" end-time="2026-10-23 05:06:38Z" duration="1.4518133">
+  <test-suite type="TestSuite" id="1010" name="Inha Mobil" fullname="Inha Mobil" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-10-23 05:06:36Z" end-time="2026-10-23 05:06:38Z" duration="1.451813" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1003" name="InhaExpress.Client.Tests.PlayMode.dll" fullname="C:/Users/sy/Documents/GitHub/inha-autonomous-mobility/Library/ScriptAssemblies/InhaExpress.Client.Tests.PlayMode.dll" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-10-23 05:06:36Z" end-time="2026-10-23 05:06:38Z" duration="1.444367" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="31124" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1004" name="InhaExpress" fullname="InhaExpress" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-10-23 05:06:36Z" end-time="2026-10-23 05:06:38Z" duration="1.443906" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1005" name="Client" fullname="InhaExpress.Client" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-10-23 05:06:36Z" end-time="2026-10-23 05:06:38Z" duration="1.443662" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1006" name="Tests" fullname="InhaExpress.Client.Tests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-10-23 05:06:36Z" end-time="2026-10-23 05:06:38Z" duration="1.443394" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1001" name="FixtureLifecycleTests" fullname="InhaExpress.Client.Tests.FixtureLifecycleTests" classname="InhaExpress.Client.Tests.FixtureLifecycleTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-10-23 05:06:36Z" end-time="2026-10-23 05:06:38Z" duration="1.442339" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1002" name="PresenterDisableEnableRebindAndHostDestructionCleanUpSubscriptions" fullname="InhaExpress.Client.Tests.FixtureLifecycleTests.PresenterDisableEnableRebindAndHostDestructionCleanUpSubscriptions" methodname="PresenterDisableEnableRebindAndHostDestructionCleanUpSubscriptions" classname="InhaExpress.Client.Tests.FixtureLifecycleTests" runstate="Runnable" seed="1063866815" result="Passed" start-time="2026-10-23 05:06:36Z" end-time="2026-10-23 05:06:38Z" duration="1.428366" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:/Users/sy/AppData/LocalLow/DefaultCompany/Inha Mobil\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

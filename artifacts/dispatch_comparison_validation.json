@@ -1,0 +1,594 @@
+{
+  "source": "mixed",
+  "planner": "astar",
+  "repeats": 3,
+  "condition_hash": "debe1bdffbb40f2e4a49749de6ca7f3a6bdb0256da5a380d63abaa9e8ce312b0",
+  "conditions": {
+    "planner": "astar",
+    "map_version": "inha-osm-unity-v2",
+    "cost_snapshot_id": "configured-speed-0bfa77a97527",
+    "map_files": {
+      "graph.json": "df7dd600768e62c2b8d6a986732a44871cd95af7b081a472f175217e971d78cc",
+      "stops.json": "4543db0326177442a39a0676fa733b00a06cb4d6103adecd390d3f5c5b627ba6",
+      "landmarks.json": "f4ae9f70a79a57e7a3a58c3b0b838a3633c60c93512b6258b041d3c1132b35f8",
+      "policy.json": "0bfa77a975274aa7458f177742deda595582d866b373950ba9cba93e10330a62",
+      "build_report.json": "bb5b1248f49ff90ec173c563f77fe85c7d00c292df6c66ad87651f78696b2ecb",
+      "ATTRIBUTION.txt": "e5a9771be6e33b0ca13eac2ebd338232202b45ba8e7740046e5e50f53d75c257"
+    },
+    "battery": {
+      "capacity_wh": 2000.0,
+      "initial_wh": 2000.0,
+      "wh_per_m": 0.35,
+      "auxiliary_power_w": 50.0,
+      "reserve_fraction": 0.15,
+      "charge_trigger_fraction": 0.3,
+      "charging_power_w": 1000.0,
+      "passenger_load_fraction": 0.05,
+      "cargo_load_fraction_per_kg": 0.01,
+      "charge_when_idle": true
+    },
+    "vehicles": [
+      {
+        "id": "V01",
+        "passenger_capacity": 4,
+        "wheelchair_slots": 1,
+        "cargo_capacity_kg": 20.0,
+        "available": true
+      },
+      {
+        "id": "V02",
+        "passenger_capacity": 4,
+        "wheelchair_slots": 1,
+        "cargo_capacity_kg": 20.0,
+        "available": true
+      },
+      {
+        "id": "V03",
+        "passenger_capacity": 4,
+        "wheelchair_slots": 1,
+        "cargo_capacity_kg": 20.0,
+        "available": true
+      }
+    ],
+    "homes": {
+      "V01": "split:481241683:4:0:0.617567128481",
+      "V02": "split:216916382:4:0:0.027897082418",
+      "V03": "osm:10058484941"
+    },
+    "requests": [
+      {
+        "at_s": 0,
+        "command": {
+          "service_type": "PASSENGER",
+          "pickup_landmark_id": "main_gate",
+          "dropoff_landmark_id": "hitech",
+          "party_size": 1,
+          "cargo_kg": 0,
+          "latest_arrival_s": null
+        }
+      },
+      {
+        "at_s": 0,
+        "command": {
+          "service_type": "PASSENGER",
+          "pickup_landmark_id": "rear_gate",
+          "dropoff_landmark_id": "dorm_3",
+          "party_size": 1,
+          "cargo_kg": 0,
+          "latest_arrival_s": 300
+        }
+      },
+      {
+        "at_s": 0,
+        "command": {
+          "service_type": "CARGO",
+          "pickup_landmark_id": "library",
+          "dropoff_landmark_id": "inha_station",
+          "party_size": 0,
+          "cargo_kg": 5,
+          "latest_arrival_s": null
+        }
+      },
+      {
+        "at_s": 0,
+        "command": {
+          "service_type": "PASSENGER",
+          "pickup_landmark_id": "main_gate",
+          "dropoff_landmark_id": "dorm_2",
+          "party_size": 1,
+          "cargo_kg": 0,
+          "latest_arrival_s": null
+        }
+      },
+      {
+        "at_s": 0,
+        "command": {
+          "service_type": "PASSENGER",
+          "pickup_landmark_id": "rear_gate",
+          "dropoff_landmark_id": "dorm_1",
+          "party_size": 1,
+          "cargo_kg": 0,
+          "latest_arrival_s": 300
+        }
+      },
+      {
+        "at_s": 0,
+        "command": {
+          "service_type": "CARGO",
+          "pickup_landmark_id": "anniversary_60",
+          "dropoff_landmark_id": "main_gate",
+          "party_size": 0,
+          "cargo_kg": 5,
+          "latest_arrival_s": null
+        }
+      },
+      {
+        "at_s": 180,
+        "command": {
+          "service_type": "PASSENGER",
+          "pickup_landmark_id": "building_5",
+          "dropoff_landmark_id": "hitech",
+          "party_size": 1,
+          "cargo_kg": 0,
+          "latest_arrival_s": null
+        }
+      },
+      {
+        "at_s": 180,
+        "command": {
+          "service_type": "PASSENGER",
+          "pickup_landmark_id": "hitech",
+          "dropoff_landmark_id": "inha_station",
+          "party_size": 1,
+          "cargo_kg": 0,
+          "latest_arrival_s": 480
+        }
+      },
+      {
+        "at_s": 180,
+        "command": {
+          "service_type": "PASSENGER",
+          "pickup_landmark_id": "dorm_2",
+          "dropoff_landmark_id": "rear_gate",
+          "party_size": 1,
+          "cargo_kg": 0,
+          "latest_arrival_s": null
+        }
+      },
+      {
+        "at_s": 400,
+        "command": {
+          "service_type": "PASSENGER",
+          "pickup_landmark_id": "library",
+          "dropoff_landmark_id": "dorm_3",
+          "party_size": 1,
+          "cargo_kg": 0,
+          "latest_arrival_s": null
+        }
+      },
+      {
+        "at_s": 400,
+        "command": {
+          "service_type": "CARGO",
+          "pickup_landmark_id": "main_gate",
+          "dropoff_landmark_id": "inha_station",
+          "party_size": 0,
+          "cargo_kg": 5,
+          "latest_arrival_s": null
+        }
+      },
+      {
+        "at_s": 400,
+        "command": {
+          "service_type": "PASSENGER",
+          "pickup_landmark_id": "rear_gate",
+          "dropoff_landmark_id": "library",
+          "party_size": 1,
+          "cargo_kg": 0,
+          "latest_arrival_s": 700
+        }
+      }
+    ],
+    "cost_policy": {
+      "pickup_weight": 1,
+      "delivery_weight": 0.5,
+      "lateness_weight": 2,
+      "energy": "full mission recharge seconds",
+      "scarce_vehicle_penalty_s": 120,
+      "aging_interval_s": 120,
+      "deadline_window_s": 600,
+      "deadline_weight": 2,
+      "long_wait_s": 600,
+      "long_wait_every_n_opportunities": 3
+    }
+  },
+  "request_count": 12,
+  "simulation_only": true,
+  "results": [
+    {
+      "policy": "fifo",
+      "completed": 12,
+      "unassigned": 0,
+      "mean_wait_s": 3173.6636548966767,
+      "p95_wait_s": 10317.261508747117,
+      "mean_pickup_s": 3219.356928175071,
+      "p95_pickup_s": 10317.261508747117,
+      "completion_s": 10766.120405062878,
+      "return_s": 10814.97930137864,
+      "distance_m": 24912.267242054906,
+      "empty_distance_m": 14724.060356942748,
+      "empty_ratio": 0.5910365449230073,
+      "energy_wh": 8939.107600612104,
+      "charge_count": 7,
+      "deadline_count": 4,
+      "on_time_rate": 0.25,
+      "assignment_cost_s": 54675.441870014874,
+      "assignments": [
+        {
+          "request": 1,
+          "vehicle": "V01",
+          "assigned_s": 0,
+          "pickup_s": 0.0,
+          "completed_s": 78.5103425096007,
+          "returned_s": 157.02068501920138
+        },
+        {
+          "request": 2,
+          "vehicle": "V02",
+          "assigned_s": 0,
+          "pickup_s": 0.0,
+          "completed_s": 170.25435111882354,
+          "returned_s": 340.5087022376472
+        },
+        {
+          "request": 3,
+          "vehicle": "V03",
+          "assigned_s": 0,
+          "pickup_s": 57.905336089713856,
+          "completed_s": 128.26623449204885,
+          "returned_s": 279.40042767122947
+        },
+        {
+          "request": 4,
+          "vehicle": "V01",
+          "assigned_s": 157.02068501920138,
+          "pickup_s": 157.02068501920138,
+          "completed_s": 275.3067444617997,
+          "returned_s": 393.59280390439807
+        },
+        {
+          "request": 5,
+          "vehicle": "V02",
+          "assigned_s": 340.5087022376472,
+          "pickup_s": 340.5087022376472,
+          "completed_s": 432.2881181572247,
+          "returned_s": 524.0675340768022
+        },
+        {
+          "request": 6,
+          "vehicle": "V03",
+          "assigned_s": 279.40042767122947,
+          "pickup_s": 350.04857761788924,
+          "completed_s": 414.17911414606385,
+          "returned_s": 516.4544110094835
+        },
+        {
+          "request": 7,
+          "vehicle": "V01",
+          "assigned_s": 4649.314996120702,
+          "pickup_s": 4740.698235776297,
+          "completed_s": 4831.512096759257,
+          "returned_s": 4910.022439268857
+        },
+        {
+          "request": 8,
+          "vehicle": "V01",
+          "assigned_s": 4910.022439268857,
+          "pickup_s": 4988.532781778457,
+          "completed_s": 5115.902020603819,
+          "returned_s": 5164.76091691958
+        },
+        {
+          "request": 9,
+          "vehicle": "V03",
+          "assigned_s": 6035.656450498052,
+          "pickup_s": 6230.4282956314255,
+          "completed_s": 6409.2207162856475,
+          "returned_s": 6513.966168479119
+        },
+        {
+          "request": 10,
+          "vehicle": "V02",
+          "assigned_s": 6190.547746282225,
+          "pickup_s": 6245.648112288009,
+          "completed_s": 6373.97655179627,
+          "returned_s": 6544.230902915093
+        },
+        {
+          "request": 11,
+          "vehicle": "V01",
+          "assigned_s": 10717.261508747117,
+          "pickup_s": 10717.261508747117,
+          "completed_s": 10766.120405062878,
+          "returned_s": 10814.97930137864
+        },
+        {
+          "request": 12,
+          "vehicle": "V02",
+          "assigned_s": 6544.230902915093,
+          "pickup_s": 6544.230902915093,
+          "completed_s": 6599.331268920877,
+          "returned_s": 6654.431634926661
+        }
+      ],
+      "dispatch_p50_ms": 1.1870999951497652,
+      "dispatch_p95_ms": 5.977499997243285,
+      "dispatch_samples": 48
+    },
+    {
+      "policy": "greedy",
+      "completed": 12,
+      "unassigned": 0,
+      "mean_wait_s": 2579.4655100532304,
+      "p95_wait_s": 6409.880718038242,
+      "mean_pickup_s": 2639.465049564423,
+      "p95_pickup_s": 6604.652563171615,
+      "completion_s": 6963.444983825837,
+      "return_s": 7068.190436019308,
+      "distance_m": 25946.880527594767,
+      "empty_distance_m": 15758.67364248261,
+      "empty_ratio": 0.6073436699152757,
+      "energy_wh": 9302.946606026955,
+      "charge_count": 6,
+      "deadline_count": 4,
+      "on_time_rate": 0.75,
+      "assignment_cost_s": 45184.19173177571,
+      "assignments": [
+        {
+          "request": 1,
+          "vehicle": "V03",
+          "assigned_s": 0,
+          "pickup_s": 79.40733817628782,
+          "completed_s": 157.9176806858885,
+          "returned_s": 284.3851408620585
+        },
+        {
+          "request": 2,
+          "vehicle": "V02",
+          "assigned_s": 0,
+          "pickup_s": 0.0,
+          "completed_s": 170.25435111882354,
+          "returned_s": 340.5087022376472
+        },
+        {
+          "request": 3,
+          "vehicle": "V03",
+          "assigned_s": 284.3851408620585,
+          "pickup_s": 342.29047695177235,
+          "completed_s": 412.65137535410736,
+          "returned_s": 563.7855685332879
+        },
+        {
+          "request": 4,
+          "vehicle": "V02",
+          "assigned_s": 5936.248897424598,
+          "pickup_s": 6003.551837304266,
+          "completed_s": 6121.837896746864,
+          "returned_s": 6300.630317401086
+        },
+        {
+          "request": 5,
+          "vehicle": "V01",
+          "assigned_s": 0,
+          "pickup_s": 67.302939879668,
+          "completed_s": 159.0823557992455,
+          "returned_s": 190.35541050719934
+        },
+        {
+          "request": 6,
+          "vehicle": "V02",
+          "assigned_s": 340.5087022376472,
+          "pickup_s": 362.3324196439632,
+          "completed_s": 426.4629561721378,
+          "returned_s": 493.76589605180584
+        },
+        {
+          "request": 7,
+          "vehicle": "V01",
+          "assigned_s": 6410.178877424955,
+          "pickup_s": 6501.562117080551,
+          "completed_s": 6592.37597806351,
+          "returned_s": 6670.88632057311
+        },
+        {
+          "request": 8,
+          "vehicle": "V01",
+          "assigned_s": 190.35541050719934,
+          "pickup_s": 268.86575301680006,
+          "completed_s": 396.2349918421618,
+          "returned_s": 445.09388815792283
+        },
+        {
+          "request": 9,
+          "vehicle": "V03",
+          "assigned_s": 6589.880718038242,
+          "pickup_s": 6784.652563171615,
+          "completed_s": 6963.444983825837,
+          "returned_s": 7068.190436019308
+        },
+        {
+          "request": 10,
+          "vehicle": "V01",
+          "assigned_s": 6670.88632057311,
+          "pickup_s": 6732.473095977204,
+          "completed_s": 6860.801535485465,
+          "returned_s": 6970.549525392665
+        },
+        {
+          "request": 11,
+          "vehicle": "V01",
+          "assigned_s": 445.09388815792283,
+          "pickup_s": 445.09388815792283,
+          "completed_s": 493.9527844736839,
+          "returned_s": 542.811680789445
+        },
+        {
+          "request": 12,
+          "vehicle": "V02",
+          "assigned_s": 5826.04816541303,
+          "pickup_s": 5826.04816541303,
+          "completed_s": 5881.148531418814,
+          "returned_s": 5936.248897424598
+        }
+      ],
+      "dispatch_p50_ms": 4.404200000863057,
+      "dispatch_p95_ms": 16.327400000591297,
+      "dispatch_samples": 42
+    },
+    {
+      "policy": "hungarian",
+      "completed": 12,
+      "unassigned": 0,
+      "mean_wait_s": 2931.349661933758,
+      "p95_wait_s": 8595.422794536818,
+      "mean_pickup_s": 2984.227595214755,
+      "p95_pickup_s": 8650.523160542602,
+      "completion_s": 9178.851600050863,
+      "return_s": 9349.105951169686,
+      "distance_m": 25235.724678618786,
+      "empty_distance_m": 15047.517793506628,
+      "empty_ratio": 0.5962784102750884,
+      "energy_wh": 9052.856799137067,
+      "charge_count": 7,
+      "deadline_count": 4,
+      "on_time_rate": 0.5,
+      "assignment_cost_s": 51239.414803597225,
+      "assignments": [
+        {
+          "request": 1,
+          "vehicle": "V01",
+          "assigned_s": 0,
+          "pickup_s": 0.0,
+          "completed_s": 78.5103425096007,
+          "returned_s": 157.02068501920138
+        },
+        {
+          "request": 2,
+          "vehicle": "V02",
+          "assigned_s": 0,
+          "pickup_s": 0.0,
+          "completed_s": 170.25435111882354,
+          "returned_s": 340.5087022376472
+        },
+        {
+          "request": 3,
+          "vehicle": "V02",
+          "assigned_s": 6167.736510904617,
+          "pickup_s": 6222.836876910401,
+          "completed_s": 6293.197775312736,
+          "returned_s": 6409.359611508165
+        },
+        {
+          "request": 4,
+          "vehicle": "V01",
+          "assigned_s": 157.02068501920138,
+          "pickup_s": 157.02068501920138,
+          "completed_s": 275.3067444617997,
+          "returned_s": 393.59280390439807
+        },
+        {
+          "request": 5,
+          "vehicle": "V03",
+          "assigned_s": 0,
+          "pickup_s": 83.11998151084308,
+          "completed_s": 174.89939743042058,
+          "returned_s": 305.52619651628123
+        },
+        {
+          "request": 6,
+          "vehicle": "V03",
+          "assigned_s": 305.52619651628123,
+          "pickup_s": 376.174346462941,
+          "completed_s": 440.3048829911156,
+          "returned_s": 542.5801798545352
+        },
+        {
+          "request": 7,
+          "vehicle": "V02",
+          "assigned_s": 340.5087022376472,
+          "pickup_s": 370.489910617902,
+          "completed_s": 461.30377160086124,
+          "returned_s": 522.1364242035656
+        },
+        {
+          "request": 8,
+          "vehicle": "V01",
+          "assigned_s": 4649.314996120702,
+          "pickup_s": 4727.825338630302,
+          "completed_s": 4855.194577455664,
+          "returned_s": 4904.053473771425
+        },
+        {
+          "request": 9,
+          "vehicle": "V03",
+          "assigned_s": 6348.653802354953,
+          "pickup_s": 6543.425647488326,
+          "completed_s": 6722.218068142548,
+          "returned_s": 6826.963520336019
+        },
+        {
+          "request": 10,
+          "vehicle": "V02",
+          "assigned_s": 8995.422794536818,
+          "pickup_s": 9050.523160542602,
+          "completed_s": 9178.851600050863,
+          "returned_s": 9349.105951169686
+        },
+        {
+          "request": 11,
+          "vehicle": "V01",
+          "assigned_s": 5047.958781743451,
+          "pickup_s": 5047.958781743451,
+          "completed_s": 5096.817678059212,
+          "returned_s": 5145.676574374973
+        },
+        {
+          "request": 12,
+          "vehicle": "V01",
+          "assigned_s": 4904.053473771425,
+          "pickup_s": 4971.356413651093,
+          "completed_s": 5026.456779656877,
+          "returned_s": 5047.958781743451
+        }
+      ],
+      "dispatch_p50_ms": 3.163599998515565,
+      "dispatch_p95_ms": 16.392700003052596,
+      "dispatch_samples": 48
+    }
+  ],
+  "validation": {
+    "date": "2026-10-19",
+    "project_version": "0.2.4.0",
+    "python": "3.14.4",
+    "platform": "Windows-11-10.0.26200-SP0",
+    "backend_tests": "187 passed; 1 Starlette TestClient deprecation warning",
+    "checks": "Ruff check/format, three JS syntax checks; desktop/mobile browser verification",
+    "source_sha256": {
+      "backend/src/campus_sim/api.py": "8a4067cd80f3d4d1c82d7b0b66892ac711b1c98884b26cf7033a46ff2574b22b",
+      "backend/src/campus_sim/dispatch.py": "8baa667612586839a5b55525fc65a5f2494f38126565124009e5c854a36814ac",
+      "backend/src/campus_sim/dispatch_comparison.py": "7676f4d10387f5b5a9d6f61a1ad243390807f573daaeba5ed193c6b4795cf85d",
+      "backend/src/campus_sim/service.py": "572fdf6506e6d50e0f91d3794f865a11e02921e1a35d217aceefa09e36586502",
+      "backend/src/campus_sim/web/app.js": "2676be0103b18f3da81a083c95ac84a3bc3cb992138ead2fb987870f878d067e",
+      "backend/src/campus_sim/web/avoidance.html": "96eda4ad1b624cecb4ab030c841bf24e81f75df0b81c42706081fd58935049d9",
+      "backend/src/campus_sim/web/avoidance.js": "a31126afd99415d989a48416dad4704e18d7d0d03ecd15b60d366dd02a6ce5c8",
+      "backend/src/campus_sim/web/comparison.html": "01ff630ec80e902898c5106385a58a7e07355b0fc0aa3ba07f64340e5bf13b2c",
+      "backend/src/campus_sim/web/comparison.js": "bad29a0296a3b995f143aa66a16e4447be40e2826124949adaba706001a03778",
+      "backend/src/campus_sim/web/icons.svg": "91e1fb8dbce60c0ac93b65297811644f8d541e68b35124d212fe576bf27b7203",
+      "backend/src/campus_sim/web/index.html": "9f4479b68b90263f182fb087c9dc6c1ea6206cfc54ebb4d09dd683b209ea4d2c",
+      "backend/src/campus_sim/web/inha-mobil-icon.png": "579cbb6f66c9e87fa81946eff8fee0a09848784167f451b182573202881e8f76",
+      "backend/src/campus_sim/web/style.css": "cf7bd4415a5329cc2cc22a6c4872751ed628c805d12245ee2535c17d6afcd073",
+      "backend/src/campus_sim/web_demo.py": "58defbde9d41be6daab910bdd427223bd58d8cc91d0ff12cfd299d8cd94890a1"
+    },
+    "limits": "Time-only OSM geometry simulation; synthetic battery/charger/vehicle assumptions. No Unity Physics or real fleet performance validation."
+  }
+}

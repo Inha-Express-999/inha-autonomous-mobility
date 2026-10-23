@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-18",
+  "version": "0.2.3.1",
+  "source_sha256": {
+    "backend/src/campus_sim/battery.py": "713aa4adc54b7d4df31ce247b86807081e2821ae365fcffdf0422afbc6e546b4",
+    "backend/src/campus_sim/service.py": "c0070b8d72ef176c7e85fea08dd441c0a9ef5a15b7fd125127220c4b24f2ca1b",
+    "configs/osm_runtime.json": "1bcb020da00005a0440a434bb751194389013107dfb5b5d1ded7158d1ab52e43",
+    "backend/tests/test_battery_fleet.py": "0c93a3d73c44aeadb7a0f11a51f4c4d1d3fc028dbcdcb1188aa89e269e7f1b1d",
+    "backend/tests/test_web_demo.py": "6650d885f51923b4e16aaa423cf2c23bc34d4f32cc6161ca34c9ff87240495f8",
+    "VERSION": "1d33262b11ec768a37b7e03d7525d5a52a4c3afacfc687ab30509dc1e9b78da2"
+  },
+  "policy": {
+    "capacity_wh": 2000.0,
+    "initial_wh": 2000.0,
+    "wh_per_m": 0.35,
+    "auxiliary_power_w": 50.0,
+    "reserve_fraction": 0.15,
+    "charge_trigger_fraction": 0.3,
+    "charging_power_w": 1000.0,
+    "passenger_load_fraction": 0.05,
+    "cargo_load_fraction_per_kg": 0.01,
+    "charge_when_idle": true
+  },
+  "regression": "Returned idle vehicle above 30 percent now charges; queued feasible requests still dispatch first.",
+  "proof": {
+    "returned_at_s": 157.02068501920138,
+    "return_energy_wh": 1528.3927342305237,
+    "mid_charge_energy_wh": 1764.1963671152619,
+    "end_energy_wh": 2000.0,
+    "session": {
+      "vehicle_id": "V01",
+      "started_at_s": 157.02068501920138,
+      "ends_at_s": 1854.806841789316,
+      "initial_wh": 1528.3927342305237,
+      "completed": true
+    },
+    "fifo_after_completion": [
+      "V02",
+      "V03",
+      "V01"
+    ]
+  },
+  "validation": {
+    "pytest": "101 passed, one Starlette TestClient warning",
+    "ruff": "check and format passed",
+    "browser": "V01 CHARGING at 78.4 percent, then full READY and FIFO reentry; charge complete event visible"
+  },
+  "limitations": "Synthetic energy and charging; charge progress follows virtual clock, pauses when simulation pauses."
+}
