@@ -1,6 +1,8 @@
 # 구현 현황
 
-프로젝트 버전 **0.4.7.1** · 2026-10-23. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
+프로젝트 버전 **0.4.8.0** · 2026-10-23. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
+
+2026-10-23 PC 카메라: 기존 CampusTerrain의 V01 차량을 명시적 ID로 Cinemachine 3.1.7에 연결했다. 차량 버튼으로 추적하고 운영지도에서 드래그 이동·우클릭 회전·휠/버튼 확대 및 전체 보기/Esc 복귀를 제공한다. V02/V03은 웹 시연 데이터만 있으므로 Unity 미연결로 표시한다. 사용자의 추가 지시에 따라 수동 운전 UI와 Editor 방향키 입력을 제거했고 명령 없는 차량은 제동 상태로 시작한다. 기존 SetDriveCommand API와 물리 모델은 유지하며 서버 경로를 실제 차량에 적용하는 기능은 이번 변경에 포함하지 않는다. 검증 증거는 artifacts/pc_operator_0.4.8.0에 기록한다.
 
 2026-10-23 PC 진입: PC_Bootstrap이 로컬 Python 서버를 실행/재사용하며 CampusWorld → CampusTerrain 및 PC_Operator Additive 구조를 유지한다. PC fixture는 껐으며 차량 조작은 보류한다. 실제 Python/Unity/웹 세션 검증과 배포·종료 규칙은 `Docs/PC_SERVER_STARTUP.md`를 따른다.
 
@@ -99,7 +101,7 @@
 3. Dijkstra→A* 비교와 Unity 차량 1대의 실제 운송 흐름을 구현한다. 가상 왕복 타이머는 물리 운송 완료 판정으로 사용하지 않는다.
 4. M2 지도/접근성/비룡플라자 범위를 완료한 뒤, 센서·안전, 다중 차량, WebSocket 통합 순으로 진행한다.
 
-버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.4.7.1로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
+버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.4.8.0로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
 
 ### 2026-10-19 커밋 전 최종 확인
 

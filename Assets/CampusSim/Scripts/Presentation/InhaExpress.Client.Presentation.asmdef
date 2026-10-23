@@ -7,7 +7,8 @@
     "InhaExpress.Client.MapClient",
     "Unity.InputSystem",
     "Unity.InputSystem.UI",
-    "Unity.ugui"
+    "Unity.ugui",
+    "Unity.Cinemachine"
   ],
   "autoReferenced": true
 }

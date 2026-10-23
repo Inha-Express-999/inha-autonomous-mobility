@@ -27,6 +27,9 @@ namespace InhaExpress.Client.Presentation
         private RectTransform[] hubLabels;
         private ServerMapMarker[] hubs;
         private RectTransform safeRoot;
+        public PcOperatorControls OperatorControls { get; private set; }
+        private Text vehicleStatus;
+        private Button[] vehicleButtons;
         private Bounds framingBounds;
         private Vector2Int lastScreenSize;
         private Rect lastSafeArea;
@@ -130,12 +133,18 @@ namespace InhaExpress.Client.Presentation
                     float halfWidth = mobile ? 56 : 68;
                     var label = FixtureUiFactory.Panel(root, "Hub " + hubs[i].serverId, Vector2.zero, Vector2.zero,
                         new Vector2(-halfWidth, 0), new Vector2(halfWidth, 28), Color.white);
+                    label.GetComponent<Image>().raycastTarget = false;
                     var text = FixtureUiFactory.Text(label, "Name", "● " + hubs[i].displayName, mobile ? 10 : 13,
                         FixtureUiPalette.Blue, TextAnchor.MiddleCenter, FontStyle.Bold);
                     hubLabels[i] = label;
                 }
             }
-            Debug.Log("CAMPUS_WEB_UI_READY role=" + (mobile ? "Mobile" : "PC") + " additive=true actuation=false");
+            if (!mobile && worldCamera != null)
+            {
+                OperatorControls = gameObject.AddComponent<PcOperatorControls>();
+                OperatorControls.Initialize(worldCamera, framingBounds, fittedSize);
+            }
+            Debug.Log("CAMPUS_WEB_UI_READY role=" + (mobile ? "Mobile" : "PC") + " additive=true camera_navigation=" + !mobile);
         }
 
         private void RefreshViewport()
@@ -155,11 +164,12 @@ namespace InhaExpress.Client.Presentation
                     for (int z = -1; z <= 1; z += 2)
                     {
                         var corner = framingBounds.center + Vector3.Scale(framingBounds.extents, new Vector3(x, y, z));
-                        var local = worldCamera.transform.InverseTransformPoint(corner);
+                        var local = Quaternion.Inverse(Quaternion.Euler(mobile ? 55 : 65, mobile ? 25 : 0, 0)) * (corner - framingBounds.center);
                         fit = Mathf.Max(fit, Mathf.Abs(local.y), Mathf.Abs(local.x) / aspect);
                     }
             fittedSize = fit * (mobile ? 1.04f : 1.08f);
-            worldCamera.orthographicSize = fittedSize * zoom;
+            if (OperatorControls != null) OperatorControls.Resize(fittedSize);
+            else worldCamera.orthographicSize = fittedSize * zoom;
             lastScreenSize = new Vector2Int(Screen.width, Screen.height);
             lastSafeArea = safe;
         }
@@ -182,32 +192,32 @@ namespace InhaExpress.Client.Presentation
             ActionButton(root,"Zoom In","+",.665f,.53f,.70f,.59f,()=>Zoom(.8f));
             ActionButton(root,"Zoom Out","−",.665f,.47f,.70f,.53f,()=>Zoom(1.25f));
             ActionButton(root,"Overview","전체 보기",.59f,.715f,.70f,.75f,ResetView);
+            ActionButton(root,"Rotate Left","↶",.625f,.36f,.66f,.42f,()=>OperatorControls?.Rotate(new Vector2(-15,0)));
+            ActionButton(root,"Rotate Right","↷",.665f,.36f,.70f,.42f,()=>OperatorControls?.Rotate(new Vector2(15,0)));
             Panel(root, "Map Footer", .025f, .23f, .71f, .29f);
             policy = Label(root, "Map Legend", "배차 · 경로 상태 수신 대기  |  차량 조작 보류", 15, .04f, .24f, .70f, .285f);
             Label(root, "Attribution", "© OpenStreetMap contributors · ODbL 1.0", 10, .39f, .295f, .70f, .32f);
-            Panel(root, "Request Card", .73f, .44f, .975f, .895f);
-            Label(root, "Request Title", "이동 요청 접수", 19, .75f, .83f, .95f, .88f, true);
-            Label(root, "Origin Label", "출발 거점", 12, .75f, .785f, .95f, .825f);
-            Field(root, "Origin", "출발 거점 선택     ▾", .75f, .73f, .95f, .785f);
-            Label(root, "Destination Label", "도착 거점", 12, .75f, .68f, .95f, .72f);
-            Field(root, "Destination", "도착 거점 선택     ▾", .75f, .625f, .95f, .68f);
-            Label(root, "Service Label", "서비스                         인원 (명)", 12, .75f, .58f, .95f, .62f);
-            Field(root, "Service", "승객 이동     ·     1", .75f, .53f, .95f, .58f);
-            Panel(root, "Deferred Call", .75f, .465f, .95f, .515f, FixtureUiPalette.Blue);
-            var action=Label(root, "Call Text", "요청 접수 보류", 16, .75f, .465f, .95f, .515f, true);
-            action.color=Color.white; action.alignment=TextAnchor.MiddleCenter;
+            Panel(root, "Vehicle Detail Card", .73f, .44f, .975f, .895f);
+            Label(root, "Vehicle Detail Title", "선택 차량", 19, .75f, .83f, .96f, .885f, true);
+            vehicleStatus = Label(root, "Vehicle Detail", "차량 현황에서 차량을 선택하세요", 15, .75f, .64f, .95f, .82f);
+            ActionButton(root,"Return To Map","운영지도 보기",.75f,.54f,.955f,.61f,()=>OperatorControls?.ShowMap());
+            Label(root,"Camera Hint","차량 버튼: 추적 카메라\n휠 / + −: 거리 조절\nEsc: 운영지도 복귀",13,.75f,.455f,.95f,.53f);
             Panel(root, "Queue Card", .73f, .23f, .975f, .42f);
             Label(root, "Queue Title", "요청 대기열", 18, .75f, .36f, .95f, .41f, true);
             queue = Label(root, "Queue Status", "서버 상태 수신 대기", 14, .75f, .25f, .95f, .35f);
             Panel(root, "Notes", .73f, .05f, .975f, .21f);
-            Label(root, "Notes Text", "운영 기록 · 탐색 상세\n노드 배치 확인 단계\n통행·접근성 미검증 / 시뮬레이션", 13, .75f, .065f, .95f, .20f);
+            Label(root, "Notes Text", "드래그 이동 · 우클릭 회전 · 휠 확대\n전체 보기 / Esc: 지도 복귀\n웹 시연과 Unity 차량 상태는 별도", 13, .75f, .065f, .95f, .20f);
             Label(root, "Fleet Title", "차량 현황", 17, .025f, .18f, .71f, .23f, true);
             fleetCards = new Text[3];
+            vehicleButtons = new Button[3];
             for(int i=0;i<3;i++)
             {
                 float left=.025f+i*.233f;
-                Panel(root, "Vehicle Card "+i, left,.05f,left+.219f,.175f);
-                fleetCards[i]=Label(root,"Vehicle "+i,"V0"+(i+1)+" · 수신 대기",15,left+.012f,.06f,left+.209f,.165f);
+                int index=i;
+                var holder=FixtureUiFactory.Rect(root,"Vehicle Card "+i,new Vector2(left,.05f),new Vector2(left+.219f,.175f),Vector2.zero,Vector2.zero);
+                vehicleButtons[i]=FixtureUiFactory.Button(holder,"Select V0"+(i+1),"V0"+(i+1)+" · 연결 확인 중",FixtureUiPalette.Surface,out fleetCards[i]);
+                fleetCards[i].color=FixtureUiPalette.Ink; fleetCards[i].fontSize=14;
+                vehicleButtons[i].onClick.AddListener(()=>OperatorControls?.SelectVehicle("V0"+(index+1)));
             }
         }
 
@@ -215,9 +225,10 @@ namespace InhaExpress.Client.Presentation
         private Text[] statCards;
         private void Zoom(float factor)
         {
+            if(OperatorControls!=null) { OperatorControls.Zoom(factor); return; }
             if(worldCamera != null) worldCamera.orthographicSize = Mathf.Clamp(worldCamera.orthographicSize*factor,20,fittedSize*2);
         }
-        private void ResetView() { if(worldCamera != null) worldCamera.orthographicSize=fittedSize; }
+        private void ResetView() { if(OperatorControls!=null) OperatorControls.ShowMap(true); else if(worldCamera != null) worldCamera.orthographicSize=fittedSize; }
         private static void ActionButton(RectTransform root,string name,string value,float x,float y,float right,float top,UnityEngine.Events.UnityAction action)
         {
             var holder=FixtureUiFactory.Rect(root,name+" Bounds",new Vector2(x,y),new Vector2(right,top),Vector2.zero,Vector2.zero);
@@ -322,8 +333,22 @@ namespace InhaExpress.Client.Presentation
             connection.color = online ? FixtureUiPalette.Green : FixtureUiPalette.Amber;
             var state = map.LatestState;
             session.text = online ? $"v{Application.version} · {map.SimulationTime:F1}s · Run {(mobile ? map.RunId.Substring(0, Math.Min(8, map.RunId.Length)) : map.RunId)}" : "서버 미연결 · 저장된 지도 표시";
+            if (OperatorControls != null)
+            {
+                var controls=OperatorControls;
+                if(vehicleStatus!=null) vehicleStatus.text=controls.SelectionMessage +
+                    (controls.SelectedVehicle?.VehicleTransform != null ? $"\n속도 {controls.SelectedVehicle.VehicleBody.linearVelocity.magnitude*3.6f:F1} km/h\n{controls.SelectedVehicle.VehicleTransform.name}" : "");
+                for(int i=0;i<vehicleButtons.Length;i++)
+                {
+                    string id="V0"+(i+1); bool bound=controls.HasVehicle(id);
+                    vehicleButtons[i].interactable=bound;
+                    bool selected=controls.IsFollowing && controls.SelectedVehicle?.OperatorVehicleId==id;
+                    fleetCards[i].text=bound ? id+" · Unity 차량\n"+(selected?"선택됨 · 추적 중":"클릭하여 추적") : id+" · 웹 시연 차량\nUnity 미연결";
+                    fleetCards[i].color=selected ? FixtureUiPalette.Blue : FixtureUiPalette.Ink;
+                }
+            }
             if (state == null) return;
-            if (policy != null) policy.text = $"배차 {state.dispatch}  |  경로 탐색 {state.planner}  |  차량 조작 보류";
+            if (policy != null) policy.text = $"배차 {state.dispatch}  |  경로 탐색 {state.planner}  |  드래그 이동 · 우클릭 회전 · 휠 확대";
             int queued = state.queue == null ? 0 : state.queue.Length;
             if(metrics!=null) metrics.text = mobile ? $"차량 {map.VehicleCount}대 · 대기 {queued}건 · 완료 {map.Completed}건" :
                 $"차량   {map.VehicleCount} / 3       대기 요청   {queued}       운송 완료   {map.Completed}       충전 중   {Array.FindAll(state.vehicles, v => v.phase == "CHARGING").Length}";
@@ -335,8 +360,6 @@ namespace InhaExpress.Client.Presentation
                 foreach (var vehicle in state.vehicles)
                     value += $"{vehicle.id}   {vehicle.home_name}   ·   {vehicle.phase}   ·   배터리 {vehicle.soc:P0}        ";
                 if (fleet != null) fleet.text = value;
-                for(int i=0;fleetCards!=null && i<fleetCards.Length;i++)
-                    if(i<state.vehicles.Length) { var v=state.vehicles[i]; fleetCards[i].text=$"{v.id}   ·   {v.phase}\n{v.home_name}\n배터리   {v.soc:P1}"; }
                 if(queue!=null) queue.text=queued==0 ? "대기 중인 요청이 없습니다." : $"대기 요청 {queued}건";
             }
         }
@@ -362,6 +385,7 @@ namespace InhaExpress.Client.Presentation
 
         private void OnDestroy()
         {
+            if (OperatorControls != null) { OperatorControls.ShowMap(); OperatorControls.enabled=false; }
             if (worldCamera != null)
             {
                 worldCamera.rect = previousViewport;

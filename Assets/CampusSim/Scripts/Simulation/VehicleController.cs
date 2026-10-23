@@ -1,7 +1,4 @@
 using UnityEngine;
-#if UNITY_EDITOR
-using UnityEngine.InputSystem;
-#endif
 using UnityEngine.Serialization;
 
 namespace InhaExpress.Client.Presentation
@@ -10,8 +7,13 @@ namespace InhaExpress.Client.Presentation
     /// WheelCollider-based vehicle movement controller.
     /// </summary>
     [RequireComponent(typeof(Rigidbody))]
-    public sealed class VehicleController : MonoBehaviour
+    public sealed class VehicleController : MonoBehaviour, IOperatorVehicle
     {
+        [Header("PC Operator Binding")]
+        [SerializeField] private string operatorVehicleId = "V01";
+        public string OperatorVehicleId => operatorVehicleId;
+        public Transform VehicleTransform => transform;
+        public Rigidbody VehicleBody => vehicleBody != null ? vehicleBody : GetComponent<Rigidbody>();
         [Header("Driving")]
         [FormerlySerializedAs("maxForwardSpeed")]
         [SerializeField, Min(0f)] private float maxForwardSpeedKmh = 36f;
@@ -26,11 +28,6 @@ namespace InhaExpress.Client.Presentation
         [SerializeField, Min(0.01f)] private float brakingControlGain = 1f;
         [SerializeField, Min(0f)] private float reverseSwitchStopSpeedMps = 0.2f;
         [SerializeField, Min(0.05f)] private float driveCommandTimeoutSeconds = 0.5f;
-
-#if UNITY_EDITOR
-        [Header("Editor Input")]
-        [SerializeField] private bool editorKeyboardInputEnabled = true;
-#endif
 
         [Header("Anti-Roll Bars")]
         [SerializeField, Min(0f)] private float frontAntiRollStiffness = 5000f;
@@ -62,9 +59,6 @@ namespace InhaExpress.Client.Presentation
         public bool SetDriveCommand(float targetSpeedKmh, float steeringAngleRad, bool emergencyStop = false)
         {
             driveCommandMode = true;
-#if UNITY_EDITOR
-            editorKeyboardInputEnabled = false;
-#endif
             lastDriveCommandTime = Time.time;
 
             if (!IsFinite(targetSpeedKmh) || !IsFinite(steeringAngleRad))
@@ -90,32 +84,9 @@ namespace InhaExpress.Client.Presentation
         {
             vehicleBody = GetComponent<Rigidbody>();
             CacheWheels();
+            // Park until a valid service/controller command arrives. No local keyboard driving.
+            SetDriveCommand(0f, 0f, true);
         }
-
-#if UNITY_EDITOR
-        private void Update()
-        {
-            if (!editorKeyboardInputEnabled)
-                return;
-
-            driveCommandMode = false;
-            Keyboard keyboard = Keyboard.current;
-            if (keyboard == null)
-            {
-                StoreControlInput(0f, 0f, 0f);
-                return;
-            }
-
-            bool accelerate = keyboard.upArrowKey.isPressed;
-            bool reverse = keyboard.downArrowKey.isPressed;
-            float throttle = accelerate == reverse ? 0f : accelerate ? 1f : -1f;
-
-            bool steerLeft = keyboard.leftArrowKey.isPressed;
-            bool steerRight = keyboard.rightArrowKey.isPressed;
-            float steering = steerLeft == steerRight ? 0f : steerLeft ? -1f : 1f;
-            StoreControlInput(throttle, steering, keyboard.spaceKey.isPressed ? 1f : 0f);
-        }
-#endif
 
         private void FixedUpdate()
         {
