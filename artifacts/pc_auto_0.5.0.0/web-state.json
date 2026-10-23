@@ -1,0 +1,187 @@
+{
+  "run_id": "6e68c16ceb78415e9cf4afdc2f3dd014",
+  "time_s": 79.93745450000279,
+  "speed": 1.0,
+  "paused": false,
+  "planner": "astar",
+  "dispatch": "fifo",
+  "map_version": "inha-osm-unity-v2",
+  "vehicles": [
+    {
+      "id": "V01",
+      "home_hub_id": "main_gate",
+      "home_name": "정문",
+      "position": [
+        -48.763482956613984,
+        -165.9575910795491
+      ],
+      "phase": "READY",
+      "remaining_s": 0.0,
+      "remaining_wh": 2000.0,
+      "soc": 1.0,
+      "destination": "library",
+      "routes": [
+        {
+          "phase": "TO_DROPOFF",
+          "points": [
+            [
+              70.15462124701406,
+              -159.69426284345494
+            ],
+            [
+              70.31266144127572,
+              -159.41228459384595
+            ],
+            [
+              -15.45501781693182,
+              -111.45195199229522
+            ],
+            [
+              -15.73248381378197,
+              -111.31478084802234
+            ],
+            [
+              -16.016900420399843,
+              -111.20851735267658
+            ],
+            [
+              -16.306176685937974,
+              -111.13256113379528
+            ],
+            [
+              -16.598221649887744,
+              -111.08631180868548
+            ],
+            [
+              -16.890944355365946,
+              -111.06916901111505
+            ],
+            [
+              -17.182253849035536,
+              -111.08053236393933
+            ],
+            [
+              -17.47005917096655,
+              -111.11980149602762
+            ],
+            [
+              -17.752269367633467,
+              -111.18637603262339
+            ],
+            [
+              -18.026793481122667,
+              -111.2796556025754
+            ],
+            [
+              -18.29154055500944,
+              -111.39903983143444
+            ],
+            [
+              -18.54441962842531,
+              -111.5439283490427
+            ],
+            [
+              -18.78333974897523,
+              -111.7137207815726
+            ],
+            [
+              -19.006209952183564,
+              -111.90781675756234
+            ],
+            [
+              -19.210939284612365,
+              -112.12561590685264
+            ],
+            [
+              -19.395436781069982,
+              -112.36651785594502
+            ],
+            [
+              -19.55761148689411,
+              -112.6299222346451
+            ],
+            [
+              -49.05181217566199,
+              -166.48158722810712
+            ]
+          ]
+        }
+      ],
+      "request_id": null,
+      "departed_at_s": null,
+      "trajectory": [],
+      "physical_status": "ARRIVED",
+      "motion_source": "unity_physics",
+      "physical_reason": "Reached Stop candidate",
+      "battery_measured": false,
+      "lane_model": "right_hand_authored_simulation",
+      "lane_ids": [
+        "osm:4741759508|split:481241692:0:0:0.389486496264|481241692:0:0:1:r|right",
+        "split:481241692:0:0:0.389486496264|osm:4741759506|481241692:0:0:0:r|right",
+        "osm:4741759506|osm:4741759499|481241685:1:0:0:f|right",
+        "osm:4741759499|split:481241685:2:0:0.674809737286|481241685:2:0:0:f|right"
+      ],
+      "lane_error_m": 0.0007612123254269739,
+      "lane_profile_hash": "e7ba7d3c1b56dfea2ea874af26f5ee2c160baf9ee47e8e81ce8a1c2660b0588c"
+    },
+    {
+      "id": "V02",
+      "home_hub_id": "rear_gate",
+      "home_name": "후문",
+      "position": [
+        264.71217701774225,
+        45.96414648905591
+      ],
+      "phase": "READY",
+      "remaining_s": 0.0,
+      "remaining_wh": 2000.0,
+      "soc": 1.0,
+      "destination": null,
+      "routes": [],
+      "request_id": null,
+      "departed_at_s": null,
+      "trajectory": []
+    },
+    {
+      "id": "V03",
+      "home_hub_id": "west_field_parking",
+      "home_name": "운동장 옆 주차장",
+      "position": [
+        -312.6637858403053,
+        55.798580885198646
+      ],
+      "phase": "READY",
+      "remaining_s": 0.0,
+      "remaining_wh": 2000.0,
+      "soc": 1.0,
+      "destination": null,
+      "routes": [],
+      "request_id": null,
+      "departed_at_s": null,
+      "trajectory": []
+    }
+  ],
+  "requests": [],
+  "queue": [],
+  "vehicle_fifo": [
+    "V02",
+    "V03"
+  ],
+  "waiting_reasons": {},
+  "completed": 0,
+  "charging_sessions": [],
+  "events": [],
+  "battery_policy": {
+    "capacity_wh": 2000.0,
+    "initial_wh": 2000.0,
+    "wh_per_m": 0.35,
+    "auxiliary_power_w": 50.0,
+    "reserve_fraction": 0.15,
+    "charge_trigger_fraction": 0.3,
+    "charging_power_w": 1000.0,
+    "passenger_load_fraction": 0.05,
+    "cargo_load_fraction_per_kg": 0.01,
+    "charge_when_idle": true
+  },
+  "simulation_only": true
+}

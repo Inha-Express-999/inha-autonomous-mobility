@@ -1,0 +1,19 @@
+{
+    "version": "0.5.0.0",
+    "status": "목적 거점 도착",
+    "reason": "Reached Stop candidate",
+    "lane_hash": "e7ba7d3c1b56dfea2ea874af26f5ee2c160baf9ee47e8e81ce8a1c2660b0588c",
+    "arrived": true,
+    "sensor_stop": false,
+    "release_stationary_camera": true,
+    "release_vehicle_moves": true,
+    "refollow": true,
+    "no_stop_ui": true,
+    "max_speed_kmh": 18.911903381347658,
+    "max_lane_error_m": 0.4280083477497101,
+    "displacement_m": 118.95860290527344,
+    "heading_change_deg": 92.7860107421875,
+    "goal_distance_m": 0.6100434064865112,
+    "release_distance_m": 8.659533500671387,
+    "stopped_speed": 0.4326043725013733
+}

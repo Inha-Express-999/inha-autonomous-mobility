@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="2" result="Passed" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-23 12:31:24Z" end-time="2026-10-23 12:31:25Z" duration="0.751911">
+  <test-suite type="TestSuite" id="1017" name="Inha Mobil" fullname="Inha Mobil" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-10-23 12:31:24Z" end-time="2026-10-23 12:31:25Z" duration="0.751911" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1010" name="InhaExpress.Client.Tests.PlayMode.dll" fullname="C:/Users/sy/Documents/GitHub/inha-autonomous-mobility/Library/ScriptAssemblies/InhaExpress.Client.Tests.PlayMode.dll" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-10-23 12:31:24Z" end-time="2026-10-23 12:31:25Z" duration="0.668384" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="39792" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1011" name="InhaExpress" fullname="InhaExpress" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-10-23 12:31:24Z" end-time="2026-10-23 12:31:25Z" duration="0.657282" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1012" name="Client" fullname="InhaExpress.Client" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-10-23 12:31:24Z" end-time="2026-10-23 12:31:25Z" duration="0.646329" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1013" name="Tests" fullname="InhaExpress.Client.Tests" runstate="Runnable" testcasecount="5" result="Passed" start-time="2026-10-23 12:31:24Z" end-time="2026-10-23 12:31:25Z" duration="0.639983" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1005" name="PcCameraNavigationTests" fullname="InhaExpress.Client.Tests.PcCameraNavigationTests" classname="InhaExpress.Client.Tests.PcCameraNavigationTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-23 12:31:24Z" end-time="2026-10-23 12:31:25Z" duration="0.631183" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1006" name="ExplicitTargetSelectionTracksMovementAndFallsBackWhenTargetIsDestroyed" fullname="InhaExpress.Client.Tests.PcCameraNavigationTests.ExplicitTargetSelectionTracksMovementAndFallsBackWhenTargetIsDestroyed" methodname="ExplicitTargetSelectionTracksMovementAndFallsBackWhenTargetIsDestroyed" classname="InhaExpress.Client.Tests.PcCameraNavigationTests" runstate="Runnable" seed="848183153" result="Passed" start-time="2026-10-23 12:31:24Z" end-time="2026-10-23 12:31:25Z" duration="0.595828" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[CAMPUS_PC_VEHICLE_SELECTED id=camera-test target=Synthetic camera target
+]]></output>
+              </test-case>
+              <test-case id="1007" name="MapNavigationPreservesZoomOnResizeAndResetsItsPose" fullname="InhaExpress.Client.Tests.PcCameraNavigationTests.MapNavigationPreservesZoomOnResizeAndResetsItsPose" methodname="MapNavigationPreservesZoomOnResizeAndResetsItsPose" classname="InhaExpress.Client.Tests.PcCameraNavigationTests" runstate="Runnable" seed="1126324110" result="Passed" start-time="2026-10-23 12:31:25Z" end-time="2026-10-23 12:31:25Z" duration="0.015290" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:\Users\sy\Documents\GitHub\inha-autonomous-mobility\artifacts\pc_operator_0.4.10.0\playmode.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

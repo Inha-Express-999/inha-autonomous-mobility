@@ -1,0 +1,22 @@
+{
+  "samples": 134,
+  "exact_right_offset_min_m": 1.4268561620496953,
+  "exact_right_offset_max_m": 1.752431246023157,
+  "configured_right_offset_m": 1.75,
+  "max_lane_error_m": 0.2969078,
+  "reference_edge": [
+    "osm:4741759508",
+    "split:481241692:0:0:0.389486496264",
+    "481241692:0:0:1:r"
+  ],
+  "reference_start": [
+    148.60170408642568,
+    -205.29080400024782
+  ],
+  "reference_end": [
+    47.260685421990445,
+    -148.5525485377866
+  ],
+  "note": "Exact projection from map geometry. Raw probe offset columns used an approximate normal; lane_error is the server calculation.",
+  "web_final_pose_error_m": 2.2889421402267282e-05
+}

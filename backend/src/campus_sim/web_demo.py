@@ -240,7 +240,9 @@ class DemoSession:
                                             phase="TO_DROPOFF" if physics["status"] == "DRIVING" else "READY",
                                             destination=physics["destination"], trajectory=[], departed_at_s=None,
                                             physical_status=physics["status"], motion_source="unity_physics",
-                                            physical_reason=physics["reason"], battery_measured=False)
+                                            physical_reason=physics["reason"], battery_measured=False,
+                                            lane_model=physics["lane_model"], lane_ids=physics["lane_ids"],
+                                            lane_error_m=physics["lane_error_m"], lane_profile_hash=physics["lane_profile_hash"])
             requests = [r.model_dump(mode="json") for r in service.requests.values()]
             queued = [r for r in requests if r["status"] == "QUEUED"]
             return {

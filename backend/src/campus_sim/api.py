@@ -37,7 +37,7 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
             with suppress(asyncio.CancelledError):
                 await task
 
-    app = FastAPI(title="Inha Mobil API", version="0.4.9.0", lifespan=lifespan)
+    app = FastAPI(title="Inha Mobil API", version="0.5.0.0", lifespan=lifespan)
     app.state.service = service or MobilityService.from_osm_map()
     app.state.demo = None
     app.state.demo_lock = RLock()
@@ -69,15 +69,6 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
         except ValueError as error:
             raise HTTPException(status_code=409, detail=str(error)) from error
 
-    @app.post("/v1/demo/unity/vehicles/{vehicle_id}/stop")
-    def unity_stop(vehicle_id: str):
-        session = demo()
-        try:
-            with session.lock:
-                return session.physical.stop(vehicle_id)
-        except ValueError as error:
-            raise HTTPException(status_code=409, detail=str(error)) from error
-
     @app.websocket("/v1/demo/unity/vehicles/{vehicle_id}/control")
     async def unity_control(websocket: WebSocket, vehicle_id: str):
         await websocket.accept()
@@ -92,7 +83,7 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
                 observation = EgoObservation.model_validate(data)
                 with session.lock:
                     command = physical.observation(vehicle_id, token, observation)
-                await websocket.send_json(DriveCommand.model_validate(command).model_dump(mode="json"))
+                await websocket.send_json(DriveCommand.model_validate(command).model_dump(mode="json", exclude_none=True))
         except WebSocketDisconnect:
             pass
         except (ValueError, KeyError, ValidationError):
@@ -121,6 +112,8 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
                 "run_id": session.run_id,
                 "geometry_hash": unity_map(session.service)["geometry_hash"],
                 "simulation_only": True,
+                "physics_protocol_versions": [1, 2],
+                "lane_profile_hash": session.physical.lanes.hash if session.physical.lanes else None,
             }
 
     @app.post("/v1/demo/control")

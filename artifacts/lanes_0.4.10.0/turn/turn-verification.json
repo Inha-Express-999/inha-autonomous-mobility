@@ -1,0 +1,17 @@
+{
+    "project_version": "0.4.10.0",
+    "final_status": "차로 자동 운행 중",
+    "final_reason": "A* / pure pursuit / Raycast safety",
+    "sensor_stop": false,
+    "manual_ui_absent": true,
+    "arrived": false,
+    "displacement_m": 99.78650665283203,
+    "camera_travel_m": 101.02333068847656,
+    "goal_distance_m": 63.21548080444336,
+    "stopped_speed": 0.0,
+    "max_lane_error_m": 0.5368985533714294,
+    "min_right_offset_m": 0.9820408225059509,
+    "max_right_offset_m": 1.8448266983032227,
+    "lane_profile_hash": "e7ba7d3c1b56dfea2ea874af26f5ee2c160baf9ee47e8e81ce8a1c2660b0588c",
+    "max_heading_change_deg": 27.775482177734376
+}

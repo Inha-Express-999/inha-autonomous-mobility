@@ -1,0 +1,7 @@
+{
+  "same_run": true,
+  "motion_source": "unity_physics",
+  "web_pose_error_m": 0.010475368054694985,
+  "lane_hash_matches": true,
+  "note": "Asynchronous post-arrival snapshots; small settling drift between captures."
+}

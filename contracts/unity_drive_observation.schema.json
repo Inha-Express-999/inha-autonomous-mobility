@@ -14,6 +14,48 @@
           "minimum": -1.5707963267948966,
           "title": "Bearing Rad",
           "type": "number"
+        },
+        "lateral_m": {
+          "anyOf": [
+            {
+              "maximum": 35,
+              "minimum": -35,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Lateral M"
+        },
+        "forward_m": {
+          "anyOf": [
+            {
+              "maximum": 40,
+              "minimum": -10,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Forward M"
+        },
+        "origin_forward_m": {
+          "anyOf": [
+            {
+              "maximum": 10,
+              "minimum": 0,
+              "type": "number"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Origin Forward M"
         }
       },
       "required": [
@@ -25,9 +67,33 @@
     }
   },
   "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "schema_version": {
+            "const": 2
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "half_width_m": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "half_width_m"
+        ]
+      }
+    }
+  ],
   "properties": {
     "schema_version": {
-      "const": 1,
+      "enum": [
+        1,
+        2
+      ],
       "title": "Schema Version",
       "type": "integer"
     },
@@ -94,6 +160,20 @@
       "minItems": 7,
       "title": "Rays",
       "type": "array"
+    },
+    "half_width_m": {
+      "anyOf": [
+        {
+          "maximum": 3,
+          "minimum": 0.1,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Half Width M"
     }
   },
   "required": [

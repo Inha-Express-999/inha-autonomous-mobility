@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 namespace InhaExpress.Client.Presentation
 {
-    /// <summary>Shared web visual language over the existing additive world; GET data only.</summary>
+    /// <summary>Shared web visual language; PC automatic missions and read-only mobile map.</summary>
     public sealed class WebClientHud : MonoBehaviour
     {
         private CampusServerMap map;
@@ -220,8 +220,8 @@ namespace InhaExpress.Client.Presentation
             automaticStart=FixtureUiFactory.Button(startHolder,"Start Automatic Mission","자동 운행 시작",FixtureUiPalette.Blue,out var startText);
             startText.fontSize=14;
             automaticStart.onClick.AddListener(()=>ActiveAutomaticClient?.StartMission(automaticStopId));
-            ActionButton(root,"Stop Automatic Mission","자동 운행 중지",.75f,.50f,.955f,.555f,()=>ActiveAutomaticClient?.StopMission());
-            ActionButton(root,"Return To Map","운영지도 보기",.75f,.445f,.955f,.49f,()=>OperatorControls?.ShowMap());
+            ActionButton(root,"Release Follow","추적 해제",.75f,.50f,.955f,.555f,()=>OperatorControls?.ReleaseFollow());
+            ActionButton(root,"Return To Map","운영지도 보기",.75f,.445f,.955f,.49f,()=>OperatorControls?.ShowMap(true));
             Panel(root, "Queue Card", .73f, .23f, .975f, .42f);
             Label(root, "Queue Title", "요청 대기열", 18, .75f, .36f, .95f, .41f, true);
             queue = Label(root, "Queue Status", "서버 상태 수신 대기", 14, .75f, .25f, .95f, .35f);
@@ -358,7 +358,7 @@ namespace InhaExpress.Client.Presentation
                 var controls=OperatorControls;
                 if(vehicleStatus!=null) vehicleStatus.text=controls.SelectionMessage +
                     (controls.SelectedVehicle?.VehicleTransform != null ? $"\n속도 {controls.SelectedVehicle.VehicleBody.linearVelocity.magnitude*3.6f:F1} km/h\n{ActiveAutomaticClient?.Status}" : "");
-                if(automaticStart!=null) automaticStart.interactable=ActiveAutomaticClient?.Connected == true && !string.IsNullOrEmpty(automaticStopId);
+                if(automaticStart!=null) automaticStart.interactable=ActiveAutomaticClient?.Connected == true && !string.IsNullOrEmpty(automaticStopId) && controls.SelectedVehicle.VehicleBody.linearVelocity.magnitude <= .2f;
                 for(int i=0;i<vehicleButtons.Length;i++)
                 {
                     string id="V0"+(i+1); bool bound=controls.HasVehicle(id);

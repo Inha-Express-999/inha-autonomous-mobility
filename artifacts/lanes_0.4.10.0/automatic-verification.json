@@ -1,0 +1,16 @@
+{
+    "project_version": "0.4.10.0",
+    "final_status": "목적 거점 도착",
+    "final_reason": "Reached Stop candidate",
+    "sensor_stop": true,
+    "manual_ui_absent": true,
+    "arrived": true,
+    "displacement_m": 24.765077590942384,
+    "camera_travel_m": 24.765790939331056,
+    "goal_distance_m": 0.5778481364250183,
+    "stopped_speed": 0.000018689310309127904,
+    "max_lane_error_m": 0.29690784215927126,
+    "min_right_offset_m": 1.4808061122894288,
+    "max_right_offset_m": 1.818016767501831,
+    "lane_profile_hash": "e7ba7d3c1b56dfea2ea874af26f5ee2c160baf9ee47e8e81ce8a1c2660b0588c"
+}

@@ -139,6 +139,7 @@ def test_same_session_websocket_to_mission_to_web_physics_pose():
             assert vehicle["position"] == pytest.approx(MapCoordinates().from_unity(ego.x, ego.z))
             assert vehicle["motion_source"] == "unity_physics" and not vehicle["trajectory"]
             assert state["run_id"] == session.run_id
-            assert client.post("/v1/demo/unity/vehicles/V01/stop").status_code == 200
+            assert client.post("/v1/demo/unity/vehicles/V01/stop").status_code == 404
+            session.control(DemoControl(paused=True))
             socket.send_json(observation(session, tick=3).model_dump())
             assert socket.receive_json()["emergency_stop"]

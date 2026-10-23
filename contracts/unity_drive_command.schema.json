@@ -2,7 +2,10 @@
   "additionalProperties": false,
   "properties": {
     "schema_version": {
-      "const": 1,
+      "enum": [
+        1,
+        2
+      ],
       "title": "Schema Version",
       "type": "integer"
     },
@@ -16,7 +19,7 @@
       "type": "integer"
     },
     "target_speed_kmh": {
-      "maximum": 10,
+      "maximum": 18,
       "minimum": 0,
       "title": "Target Speed Kmh",
       "type": "number"
@@ -44,6 +47,30 @@
     "reason": {
       "title": "Reason",
       "type": "string"
+    },
+    "lane_error_m": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Lane Error M"
+    },
+    "lane_profile_hash": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Lane Profile Hash"
     }
   },
   "required": [

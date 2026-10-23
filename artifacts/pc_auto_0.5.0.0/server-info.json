@@ -1,0 +1,15 @@
+{
+  "service_id": "inha-mobil-local-demo",
+  "schema_version": 1,
+  "map_schema_version": 1,
+  "project_version": "0.5.0.0",
+  "process_id": 56764,
+  "run_id": "6e68c16ceb78415e9cf4afdc2f3dd014",
+  "geometry_hash": "32950491597bd9b134fda86eaaa95af1fc25737413f6841a04d94dd854cad7c4",
+  "simulation_only": true,
+  "physics_protocol_versions": [
+    1,
+    2
+  ],
+  "lane_profile_hash": "e7ba7d3c1b56dfea2ea874af26f5ee2c160baf9ee47e8e81ce8a1c2660b0588c"
+}

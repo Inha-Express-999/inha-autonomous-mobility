@@ -9,6 +9,7 @@ using UnityEngine.UI;
 namespace InhaExpress.Client.Presentation
 {
     /// <summary>PC camera navigation only. Never sends drive commands or writes a vehicle Transform.</summary>
+    [DefaultExecutionOrder(-200)]
     public sealed class PcOperatorControls : MonoBehaviour
     {
         private readonly Dictionary<string, IOperatorVehicle> vehicles = new Dictionary<string, IOperatorVehicle>();
@@ -16,6 +17,8 @@ namespace InhaExpress.Client.Presentation
         private CinemachineBrain brain;
         private CinemachineCamera followCamera;
         private CinemachineFollow follow;
+        private Transform stabilizedTarget;
+        private float heightVelocity;
         private Vector3 mapCenter, initialCenter;
         private float mapYaw, mapPitch = 65, fit, mapZoom = 1, followDistance = 8;
         private Bounds bounds;
@@ -67,6 +70,8 @@ namespace InhaExpress.Client.Presentation
             follow.TrackerSettings.PositionDamping = new Vector3(.2f, .3f, .2f);
             var aim = rig.AddComponent<CinemachineHardLookAt>();
             aim.LookAtOffset = Vector3.up * .6f;
+            stabilizedTarget = new GameObject("PC stabilized camera target").transform;
+            stabilizedTarget.SetParent(transform, false);
             UpdateFollowDistance();
             initialized = true;
             ApplyMapPose();
@@ -83,8 +88,9 @@ namespace InhaExpress.Client.Presentation
                 return false;
             }
             SelectedVehicle = vehicles[id];
-            followCamera.Follow = SelectedVehicle.VehicleTransform;
-            followCamera.LookAt = SelectedVehicle.VehicleTransform;
+            UpdateStabilizedTarget(true);
+            followCamera.Follow = stabilizedTarget;
+            followCamera.LookAt = stabilizedTarget;
             followCamera.PreviousStateIsValid = false;
             followCamera.gameObject.SetActive(true);
             IsFollowing = true;
@@ -94,12 +100,25 @@ namespace InhaExpress.Client.Presentation
             return true;
         }
 
+        public void ReleaseFollow()
+        {
+            if (!initialized || !IsFollowing) return;
+            mapCenter = SelectedVehicle.VehicleTransform.position;
+            mapYaw = output.transform.eulerAngles.y;
+            mapPitch = Mathf.Clamp(output.transform.eulerAngles.x, 25, 85);
+            mapZoom = Mathf.Clamp(Mathf.Max(20, followDistance * 2) / fit, 20 / fit, 2);
+            ShowMap();
+            SelectionMessage = "추적 해제 · 자유 지도";
+        }
+
         public void ShowMap(bool reset = false)
         {
             if (!initialized || output == null) return;
             IsFollowing = false;
             brain.enabled = false;
             followCamera.gameObject.SetActive(false);
+            followCamera.Follow = null;
+            followCamera.LookAt = null;
             panGesture = rotateGesture = false;
             if (reset) { mapCenter = initialCenter; mapYaw = 0; mapPitch = 65; mapZoom = 1; }
             ApplyMapPose();
@@ -152,13 +171,37 @@ namespace InhaExpress.Client.Presentation
 
         private void UpdateFollowDistance() => follow.FollowOffset = new Vector3(0, followDistance * .45f, -followDistance);
 
+        // Presentation only: preserve physical vehicle pose for localization and sensors.
+        // Run before the Cinemachine brain, after physics interpolation has updated the target.
+        private void LateUpdate()
+        {
+            if (IsFollowing && SelectedVehicle is Component component && component != null &&
+                SelectedVehicle.VehicleTransform != null) UpdateStabilizedTarget(false);
+        }
+
+        private void UpdateStabilizedTarget(bool reset)
+        {
+            var target = SelectedVehicle.VehicleTransform;
+            var position = target.position;
+            reset |= (position - stabilizedTarget.position).sqrMagnitude > 400;
+            if (reset) heightVelocity = 0;
+            else position.y = Mathf.SmoothDamp(stabilizedTarget.position.y, position.y,
+                ref heightVelocity, .45f, Mathf.Infinity, Time.deltaTime);
+            var heading = Vector3.ProjectOnPlane(target.forward, Vector3.up);
+            var rotation = heading.sqrMagnitude > .0001f
+                ? Quaternion.LookRotation(heading, Vector3.up) : stabilizedTarget.rotation;
+            if (!reset) rotation = Quaternion.Slerp(stabilizedTarget.rotation, rotation,
+                1 - Mathf.Exp(-Time.deltaTime / .18f));
+            stabilizedTarget.SetPositionAndRotation(position, rotation);
+        }
+
         private void Update()
         {
             if (!initialized || output == null) return;
             if (SelectedVehicle != null && (SelectedVehicle is Component selected && selected == null || SelectedVehicle.VehicleTransform == null))
             { ShowMap(); SelectedVehicle = null; }
             var keyboard = Keyboard.current;
-            if (keyboard != null && keyboard.escapeKey.wasPressedThisFrame) { ShowMap(); return; }
+            if (keyboard != null && keyboard.escapeKey.wasPressedThisFrame) { ReleaseFollow(); return; }
             bool typing = EventSystem.current != null && EventSystem.current.currentSelectedGameObject != null &&
                 EventSystem.current.currentSelectedGameObject.GetComponent<InputField>() != null;
             var mouse = Mouse.current;
@@ -183,6 +226,7 @@ namespace InhaExpress.Client.Presentation
         {
             if (brain != null) Destroy(brain);
             if (followCamera != null) Destroy(followCamera.gameObject);
+            if (stabilizedTarget != null) Destroy(stabilizedTarget.gameObject);
         }
     }
 }

@@ -1,0 +1,15 @@
+{
+  "version": "0.5.0.0",
+  "run_id": "af6f2238a36a42809e2810f1fc58cb00",
+  "same_session": true,
+  "nodes": 187,
+  "hubs": 3,
+  "stops": 14,
+  "clipped_text": [],
+  "physical_status": "PARKED",
+  "motion_source": "unity_physics",
+  "lane_profile_hash": "e7ba7d3c1b56dfea2ea874af26f5ee2c160baf9ee47e8e81ce8a1c2660b0588c",
+  "native_motion_tested": false,
+  "screenshot_saved": false,
+  "note": "Hidden native Player startup and computed layout smoke. Screenshot unavailable in hidden window; visual QA uses MCP Game View captures."
+}
