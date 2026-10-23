@@ -28,6 +28,7 @@ namespace InhaExpress.Client.MapClient
         private UnityWebRequest activeRequest;
         private Coroutine connection;
         private ServerMapDocument localMap;
+        private string lastLoggedRun;
 
         [Serializable] private sealed class State
         {
@@ -116,6 +117,15 @@ namespace InhaExpress.Client.MapClient
                             double.IsNaN(state.time_s) || double.IsInfinity(state.time_s) || state.time_s < 0)
                             throw new ArgumentException("Invalid shared demo state.");
                         RunId = state.run_id;
+                        if (lastLoggedRun != RunId)
+                        {
+                            lastLoggedRun = RunId;
+                            var scenes = new System.Collections.Generic.List<string>();
+                            for (int i = 0; i < UnityEngine.SceneManagement.SceneManager.sceneCount; i++)
+                                scenes.Add(UnityEngine.SceneManagement.SceneManager.GetSceneAt(i).name);
+                            Debug.Log("CAMPUS_WEB_SESSION_CONNECTED run=" + RunId + " server_version=" +
+                                ServerProjectVersion + " map=" + mapVersion + " scenes=" + string.Join(",", scenes));
+                        }
                         SimulationTime = state.time_s;
                         ServerPaused = state.paused;
                         VehicleCount = state.vehicles.Length;

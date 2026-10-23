@@ -1,0 +1,131 @@
+{
+  "project_version": "0.4.6.0",
+  "date": "2026-10-23",
+  "additive_scenes": [
+    "PC_Bootstrap",
+    "CampusWorld",
+    "CampusTerrain",
+    "PC_Operator"
+  ],
+  "windows_player": {
+    "server_identity": {
+      "service_id": "inha-mobil-local-demo",
+      "schema_version": 1,
+      "map_schema_version": 1,
+      "project_version": "0.4.6.0",
+      "process_id": 5336,
+      "run_id": "08f8305654a9455d8b2168b758b6ac65",
+      "geometry_hash": "32950491597bd9b134fda86eaaa95af1fc25737413f6841a04d94dd854cad7c4",
+      "simulation_only": true
+    },
+    "paused": true,
+    "request_count": 0,
+    "player_connection_log": "CAMPUS_WEB_SESSION_CONNECTED run=08f8305654a9455d8b2168b758b6ac65 server_version=0.4.6.0 map=inha-osm-unity-v2 scenes=PC_Bootstrap,CampusWorld,PC_Operator,CampusTerrain",
+    "web_time_s": 0.0,
+    "player_process_id": 18196,
+    "server_bundle": {
+      "project_version": "0.4.6.0",
+      "python_version": "3.14.4",
+      "local_dependencies_bundled": true,
+      "python_runtime_bundled": false,
+      "copied_server_files": 71
+    }
+  },
+  "player_shutdown": {
+    "server_stopped_after_parent_exit": true,
+    "player_process_id": 18196,
+    "server_process_id": 5336,
+    "parent_exit": "headless verification Player terminated after evidence capture; child EOF shutdown"
+  },
+  "final_editor_live": {
+    "project_version": "0.4.6.0",
+    "run_id": "0e01af1bb4d94415b4007037362b7fd2",
+    "http_run_id": "0e01af1bb4d94415b4007037362b7fd2",
+    "geometry_hash": "32950491597bd9b134fda86eaaa95af1fc25737413f6841a04d94dd854cad7c4",
+    "unity_time_s": 0.0,
+    "web_time_s": 0.0,
+    "process_id": 33140,
+    "nodes": 187,
+    "hubs": 3,
+    "stops": 14,
+    "auto_started": true,
+    "reused_without_ownership": true,
+    "duplicate_bootstrap_rejected": true,
+    "vehicle_actuation": false,
+    "loaded_scenes": [
+      "PC_Bootstrap",
+      "CampusWorld",
+      "CampusTerrain",
+      "PC_Operator"
+    ]
+  },
+  "build": {
+    "result": "Succeeded",
+    "exe_path": ".utmp/pc-client/InhaMobil.exe",
+    "exe_sha256": "7e874b6ba2033dce93ea36c75cd6a2e1f9c72d07ce5a3c20fb51ea79bf454f27",
+    "sidecar": "CampusServer",
+    "python_runtime_bundled": false,
+    "dependencies_bundled": true
+  },
+  "checks": {
+    "ruff": "passed: backend/src, backend/tests and scripts/package_pc_server.py (48 files)",
+    "vehicle_actuation": "deferred; no controller/prefab edits or transport requests",
+    "restored_build_generated_settings": [
+      "URP prefilter/runtime settings",
+      "GraphicsSettings",
+      "batching and analytics defines"
+    ]
+  },
+  "limitations": [
+    "Windows headless execution verified; no visual Unity rendering/FPS claim",
+    "Python installed runtime required; bundled native dependencies verified with Python 3.14.4",
+    "Mobile launch, WebSocket/SensorRig/vehicle control remain out of scope",
+    "Existing Annyoung Car missing script reference and Unity headless TempJob allocation lifetime warnings observed"
+  ],
+  "python": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "212",
+    "time": "111.323",
+    "timestamp": "2026-10-23T16:02:42.493012+09:00",
+    "hostname": "DESKTOP-SBRPQ6K"
+  },
+  "unity_editmode": {
+    "id": "2",
+    "testcasecount": "57",
+    "result": "Passed",
+    "total": "57",
+    "passed": "57",
+    "failed": "0",
+    "inconclusive": "0",
+    "skipped": "0",
+    "asserts": "0",
+    "engine-version": "3.5.0.0",
+    "clr-version": "4.0.30319.42000",
+    "start-time": "2026-10-23 07:10:40Z",
+    "end-time": "2026-10-23 07:10:49Z",
+    "duration": "9.3872363"
+  },
+  "unity_playmode": {
+    "id": "2",
+    "testcasecount": "3",
+    "result": "Passed",
+    "total": "3",
+    "passed": "3",
+    "failed": "0",
+    "inconclusive": "0",
+    "skipped": "0",
+    "asserts": "0",
+    "engine-version": "3.5.0.0",
+    "clr-version": "4.0.30319.42000",
+    "start-time": "2026-10-23 07:12:49Z",
+    "end-time": "2026-10-23 07:13:05Z",
+    "duration": "16.0155777"
+  },
+  "headless_warnings": {
+    "missing_script_reference_count": 1,
+    "allocation_lifetime_count": 23
+  }
+}

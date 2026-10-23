@@ -1,4 +1,5 @@
 import asyncio
+import os
 from contextlib import asynccontextmanager, suppress
 from pathlib import Path
 from threading import RLock
@@ -34,7 +35,7 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
             with suppress(asyncio.CancelledError):
                 await task
 
-    app = FastAPI(title="Inha Mobil API", version="0.4.5.0", lifespan=lifespan)
+    app = FastAPI(title="Inha Mobil API", version="0.4.6.0", lifespan=lifespan)
     app.state.service = service or MobilityService.from_osm_map()
     app.state.demo = None
     app.state.demo_lock = RLock()
@@ -62,6 +63,21 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
         session = demo()
         with session.lock:
             return unity_map(session.service)
+
+    @app.get("/v1/desktop/info")
+    def desktop_info():
+        session = demo()
+        with session.lock:
+            return {
+                "service_id": "inha-mobil-local-demo",
+                "schema_version": 1,
+                "map_schema_version": 1,
+                "project_version": app.version,
+                "process_id": os.getpid(),
+                "run_id": session.run_id,
+                "geometry_hash": unity_map(session.service)["geometry_hash"],
+                "simulation_only": True,
+            }
 
     @app.post("/v1/demo/control")
     def demo_control(command: DemoControl):

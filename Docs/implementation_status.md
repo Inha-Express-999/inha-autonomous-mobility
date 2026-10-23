@@ -1,6 +1,8 @@
 # 구현 현황
 
-프로젝트 버전 **0.4.5.0** · 2026-10-23. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
+프로젝트 버전 **0.4.6.0** · 2026-10-23. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
+
+2026-10-23 PC 진입: PC_Bootstrap이 로컬 Python 서버를 실행/재사용하며 CampusWorld → CampusTerrain 및 PC_Operator Additive 구조를 유지한다. PC fixture는 껐으며 차량 조작은 보류한다. 실제 Python/Unity/웹 세션 검증과 배포·종료 규칙은 `Docs/PC_SERVER_STARTUP.md`를 따른다.
 
 2026-10-23 노드 단계: 기존 CampusTerrain에 웹과 동일한 노드 187개·허브 3개·Stop 후보 14개를 배치했다. 읽기 전용 HTTP 지도·동일 웹 세션 상태와 오프라인 snapshot을 추가했다. 차량 조작은 보류하며 WebSocket/센서/물리 운행 연결 완료가 아니다. 상세는 [서버 지도 안내](CAMPUS_SERVER_MAP.md)를 따른다.
 
@@ -76,7 +78,7 @@
 3. Dijkstra→A* 비교와 Unity 차량 1대의 실제 운송 흐름을 구현한다. 가상 왕복 타이머는 물리 운송 완료 판정으로 사용하지 않는다.
 4. M2 지도/접근성/비룡플라자 범위를 완료한 뒤, 센서·안전, 다중 차량, WebSocket 통합 순으로 진행한다.
 
-버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.4.5.0로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
+버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.4.6.0로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
 
 ### 2026-10-19 커밋 전 최종 확인
 

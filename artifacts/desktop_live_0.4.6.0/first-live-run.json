@@ -1,0 +1,22 @@
+{
+    "project_version": "0.4.6.0",
+    "run_id": "9330cbb21142411d986c0feaf8e0401f",
+    "http_run_id": "9330cbb21142411d986c0feaf8e0401f",
+    "geometry_hash": "32950491597bd9b134fda86eaaa95af1fc25737413f6841a04d94dd854cad7c4",
+    "unity_time_s": 0.0,
+    "web_time_s": 0.0,
+    "process_id": 33628,
+    "nodes": 187,
+    "hubs": 3,
+    "stops": 14,
+    "auto_started": true,
+    "reused_without_ownership": true,
+    "duplicate_bootstrap_rejected": true,
+    "vehicle_actuation": false,
+    "loaded_scenes": [
+        "PC_Bootstrap",
+        "CampusWorld",
+        "CampusTerrain",
+        "PC_Operator"
+    ]
+}

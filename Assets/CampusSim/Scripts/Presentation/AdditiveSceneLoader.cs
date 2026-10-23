@@ -26,7 +26,12 @@ namespace InhaExpress.Client.Presentation
                 yield break;
             }
 
+#if UNITY_EDITOR
+            var operation = UnityEditor.SceneManagement.EditorSceneManager.LoadSceneAsyncInPlayMode(
+                scenePath, new LoadSceneParameters(LoadSceneMode.Additive));
+#else
             var operation = SceneManager.LoadSceneAsync(scenePath, LoadSceneMode.Additive);
+#endif
             if (operation == null)
             {
                 throw new InvalidOperationException(

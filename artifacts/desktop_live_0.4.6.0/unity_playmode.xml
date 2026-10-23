@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="3" result="Passed" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-23 07:12:49Z" end-time="2026-10-23 07:13:05Z" duration="16.0155777">
+  <test-suite type="TestSuite" id="1014" name="Inha Mobil" fullname="Inha Mobil" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-23 07:12:49Z" end-time="2026-10-23 07:13:05Z" duration="16.015578" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1007" name="InhaExpress.Client.Tests.PlayMode.dll" fullname="C:/Users/sy/Documents/GitHub/inha-autonomous-mobility/Library/ScriptAssemblies/InhaExpress.Client.Tests.PlayMode.dll" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-23 07:12:49Z" end-time="2026-10-23 07:13:05Z" duration="16.004701" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="29348" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1008" name="InhaExpress" fullname="InhaExpress" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-23 07:12:49Z" end-time="2026-10-23 07:13:05Z" duration="16.003715" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1009" name="Client" fullname="InhaExpress.Client" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-23 07:12:49Z" end-time="2026-10-23 07:13:05Z" duration="16.003366" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1010" name="Tests" fullname="InhaExpress.Client.Tests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-23 07:12:49Z" end-time="2026-10-23 07:13:05Z" duration="16.003032" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1001" name="DesktopLiveIntegrationTests" fullname="InhaExpress.Client.Tests.DesktopLiveIntegrationTests" classname="InhaExpress.Client.Tests.DesktopLiveIntegrationTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-10-23 07:12:49Z" end-time="2026-10-23 07:13:02Z" duration="12.825954" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1002" name="PcBootstrapAutoStartsRealPythonAndLoadsTheExistingAdditiveStack" fullname="InhaExpress.Client.Tests.DesktopLiveIntegrationTests.PcBootstrapAutoStartsRealPythonAndLoadsTheExistingAdditiveStack" methodname="PcBootstrapAutoStartsRealPythonAndLoadsTheExistingAdditiveStack" classname="InhaExpress.Client.Tests.DesktopLiveIntegrationTests" runstate="Runnable" seed="222736036" result="Passed" start-time="2026-10-23 07:12:49Z" end-time="2026-10-23 07:13:02Z" duration="12.809935" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[CAMPUS_WEB_SESSION_CONNECTED run=0e01af1bb4d94415b4007037362b7fd2 server_version=0.4.6.0 map=inha-osm-unity-v2 scenes=InitTestScene0273ad0a-3f77-4b41-acbe-d2d2f110bc13,PC_Bootstrap,CampusWorld,PC_Operator,CampusTerrain
+]]></output>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1003" name="FixtureLifecycleTests" fullname="InhaExpress.Client.Tests.FixtureLifecycleTests" classname="InhaExpress.Client.Tests.FixtureLifecycleTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-10-23 07:13:02Z" end-time="2026-10-23 07:13:02Z" duration="0.116438" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1004" name="PresenterDisableEnableRebindAndHostDestructionCleanUpSubscriptions" fullname="InhaExpress.Client.Tests.FixtureLifecycleTests.PresenterDisableEnableRebindAndHostDestructionCleanUpSubscriptions" methodname="PresenterDisableEnableRebindAndHostDestructionCleanUpSubscriptions" classname="InhaExpress.Client.Tests.FixtureLifecycleTests" runstate="Runnable" seed="496178726" result="Passed" start-time="2026-10-23 07:13:02Z" end-time="2026-10-23 07:13:02Z" duration="0.115482" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+            </test-suite>
+            <test-suite type="TestFixture" id="1005" name="ServerMapConnectionTests" fullname="InhaExpress.Client.Tests.ServerMapConnectionTests" classname="InhaExpress.Client.Tests.ServerMapConnectionTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-10-23 07:13:02Z" end-time="2026-10-23 07:13:05Z" duration="3.059241" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1006" name="ReadsWebMapAndSharedRunOverHttpAndKeepsAuthoredNodesWhenDisconnected" fullname="InhaExpress.Client.Tests.ServerMapConnectionTests.ReadsWebMapAndSharedRunOverHttpAndKeepsAuthoredNodesWhenDisconnected" methodname="ReadsWebMapAndSharedRunOverHttpAndKeepsAuthoredNodesWhenDisconnected" classname="InhaExpress.Client.Tests.ServerMapConnectionTests" runstate="Runnable" seed="429599260" result="Passed" start-time="2026-10-23 07:13:02Z" end-time="2026-10-23 07:13:05Z" duration="3.058320" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[CAMPUS_WEB_SESSION_CONNECTED run=http-fixture-run server_version=0.4.6.0 map=inha-osm-unity-v2 scenes=InitTestScene0273ad0a-3f77-4b41-acbe-d2d2f110bc13
+Saving results to: C:/Users/sy/AppData/LocalLow/DefaultCompany/Inha Mobil\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

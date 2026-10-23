@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using InhaExpress.Client.Domain;
 using InhaExpress.Client.Networking;
+using InhaExpress.Client.MapClient;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -13,6 +14,7 @@ namespace InhaExpress.Client.Presentation
         [SerializeField] private string roleScenePath;
         [SerializeField] private ClientRole clientRole;
         [SerializeField] private bool useFixture = true;
+        [SerializeField] private bool autoStartLocalServer = true;
 
         private static ClientBootstrap instance;
         private bool isLoading;
@@ -44,6 +46,11 @@ namespace InhaExpress.Client.Presentation
             }
 
             isLoading = true;
+            if (!useFixture && autoStartLocalServer && clientRole == ClientRole.PC_Operator)
+            {
+                var launcher = gameObject.AddComponent<DesktopServerLauncher>();
+                yield return launcher.EnsureRunning();
+            }
             yield return LoadAdditiveSceneIfNeeded(worldScenePath);
             yield return LoadAdditiveSceneIfNeeded(roleScenePath);
             if (!useFixture) yield break; // No implicit mock fallback after a real transport failure.
@@ -82,7 +89,12 @@ namespace InhaExpress.Client.Presentation
                 yield break;
             }
 
+#if UNITY_EDITOR
+            var operation = UnityEditor.SceneManagement.EditorSceneManager.LoadSceneAsyncInPlayMode(
+                scenePath, new LoadSceneParameters(LoadSceneMode.Additive));
+#else
             var operation = SceneManager.LoadSceneAsync(scenePath, LoadSceneMode.Additive);
+#endif
             if (operation == null)
             {
                 throw new InvalidOperationException(

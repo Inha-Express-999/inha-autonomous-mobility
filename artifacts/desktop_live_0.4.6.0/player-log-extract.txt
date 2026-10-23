@@ -1,0 +1,2 @@
+The referenced script on this Behaviour (Game Object 'Annyoung Car') is missing!
+CAMPUS_WEB_SESSION_CONNECTED run=08f8305654a9455d8b2168b758b6ac65 server_version=0.4.6.0 map=inha-osm-unity-v2 scenes=PC_Bootstrap,CampusWorld,PC_Operator,CampusTerrain

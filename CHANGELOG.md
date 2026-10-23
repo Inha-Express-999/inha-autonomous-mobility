@@ -1,5 +1,15 @@
 # 변경 이력
 
+## 0.4.6.0 — 2026-10-23 · PC Additive 진입 시 로컬 서버 자동 실행
+
+- 작업: PC_Bootstrap의 실제 서버 모드에서 로컬 Python 서버를 자동 시작하고, 호환 스키마의 기존 서비스는 재사용한다. PC_Bootstrap → CampusWorld → CampusTerrain 및 PC_Operator의 Additive 구조를 유지한다.
+- PC 진입은 fixture 재생을 끄고 기존 CampusTerrain의 읽기 전용 지도 클라이언트를 사용한다. 모바일과 직접 Terrain 디버그 실행은 서버 프로세스를 소유하지 않는다.
+- 서버 identity/run ID 조회와 부모 stdin 기반 정상 종료를 추가했다. 소유하지 않은 기존 서버는 종료하지 않는다. 포트에 다른 서비스가 있으면 덮어쓰지 않는다.
+- 이유: 서버 수동 실행을 없애고 실제 Python/Unity/웹 세션 일치를 검증한다.
+- 호환성/마이그레이션: 신규 씬 없음. 기존 통신·지도 스키마 유지. 프로젝트 버전/지도 묶음/export를 동기화한다. Python과 backend 의존성은 필요하다.
+- 검증: 실제 Python/Editor/웹 세션 일치, Windows Player 빌드·동반 서버 실행·부모 종료 후 서버 종료를 확인했다. Python 212개, EditMode 57개/PlayMode 3개 및 Ruff 48파일 통과. 결과·경고·배포 경로는 Docs/PC_SERVER_STARTUP.md에 기록한다.
+- 미검증/한계: 차량 조작·센서·WebSocket·모바일 서버 실행·성능 보장은 범위 밖이다.
+
 ## 0.4.5.0 — 2026-10-23 · CampusTerrain 웹 지도 노드·허브 및 읽기 전용 서버 연결
 
 - 작업: 기존 CampusTerrain에 웹과 동일한 도로 노드 187개/방향 간선 402개 메타데이터, home hub 3개, Stop 후보 14개를 연결했다. 새 씬을 만들지 않는다.

@@ -1,0 +1,6 @@
+{
+  "server_stopped_after_parent_exit": true,
+  "player_process_id": 18196,
+  "server_process_id": 5336,
+  "parent_exit": "headless verification Player terminated after evidence capture; child EOF shutdown"
+}

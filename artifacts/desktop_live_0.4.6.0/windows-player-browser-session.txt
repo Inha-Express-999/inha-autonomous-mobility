@@ -1,0 +1,7 @@
+Browser tab: 2, Title: "127.0.0.1:8765/v1/desktop/info", URL: "http://127.0.0.1:8765/v1/desktop/info".
+1 AXWebArea 127.0.0.1:8765/v1/desktop/info
+	2 text {"service_id":"inha-mobil-local-demo","schema_version":1,"map_schema_version":1,"project_version":"0.4.6.0","process_id":5336,"run_id":"08f8305654a9455d8b2168b758b6ac65","geometry_hash":"32950491597bd9b134fda86eaaa95af1fc25737413f6841a04d94dd854cad7c4","simulation_only":true}
+	3 container
+		4 checkbox 0
+
+The focused UI element is 1 AXWebArea 127.0.0.1:8765/v1/desktop/info
