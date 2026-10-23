@@ -1,5 +1,15 @@
 # 변경 이력
 
+## 0.4.5.0 — 2026-10-23 · CampusTerrain 웹 지도 노드·허브 및 읽기 전용 서버 연결
+
+- 작업: 기존 CampusTerrain에 웹과 동일한 도로 노드 187개/방향 간선 402개 메타데이터, home hub 3개, Stop 후보 14개를 연결했다. 새 씬을 만들지 않는다.
+- 웹 DemoSession의 읽기 전용 Unity 지도 projection API와 오프라인 export, 멱등 Editor importer, 동일 웹 run/time 상태 조회를 추가했다. 차량 조작·스폰·Transform 이동은 보류한다.
+- 표시용 마커 204개는 유형별 mesh 3개/전용 재질로 합쳤다. 기존 도로·건물·차량·주차 베이와 공유 원본 재질은 수정하지 않는다.
+- 이유: 웹의 지도·허브·노드 ID/좌표를 Unity 캠퍼스 씬에 일치시키고 후속 차량 연결의 기준점을 마련한다.
+- 호환성/마이그레이션: HTTP/Unity snapshot schema 3, 지도 manifest schema 2, map_version 유지. 추가 projection은 독립 schema 1이다. 버전 변경에 따라 지도 묶음과 server_map.json을 재생성한다.
+- 검증: Python 208개, Unity EditMode 57개/PlayMode 2개, Ruff 44파일 통과. 재가져오기 후 씬 바이트 동일, 기존 씬 객체 보존과 204개 앵커 XZ 일치를 확인했다. 상세는 Docs/CAMPUS_SERVER_MAP.md 및 artifacts/server_map_0.4.5.0에 기록한다.
+- 미검증/한계: 지면 높이는 시각 투영이며 접근성/주행 승인 아님. WebSocket·센서·차량 제어·Player/실단말/FPS는 이번 범위에 포함하지 않는다.
+
 ## 0.4.4.0 — 2026-10-23 · main/decision 통합 및 지도 해시 재현성 수정
 
 - 작업: main의 WheelCollider 차량 제어·Anti-Roll·프리팹/씬과 decision의 지도·경로·배차·배터리·웹 시연을 이력을 보존해 병합했다. 통합 브랜치는 codex/integrate-decision-main이다.

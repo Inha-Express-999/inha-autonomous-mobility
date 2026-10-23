@@ -1,0 +1,6 @@
+{
+  "name": "InhaExpress.Client.MapClient",
+  "rootNamespace": "InhaExpress.Client.MapClient",
+  "references": [],
+  "autoReferenced": true
+}

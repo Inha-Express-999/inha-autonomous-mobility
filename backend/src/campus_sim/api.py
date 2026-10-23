@@ -12,6 +12,7 @@ from campus_sim.avoidance_simulation import simulate_avoidance
 from campus_sim.dispatch_comparison import DispatchComparison, compare_dispatch
 from campus_sim.domain import CommandAck, CreateRequest, Landmark, RequestView
 from campus_sim.service import MobilityService
+from campus_sim.unity_map import unity_map
 from campus_sim.web_demo import DemoControl, DemoPlan, DemoScenario, DemoSession
 
 
@@ -33,7 +34,7 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
             with suppress(asyncio.CancelledError):
                 await task
 
-    app = FastAPI(title="Inha Mobil API", version="0.4.4.0", lifespan=lifespan)
+    app = FastAPI(title="Inha Mobil API", version="0.4.5.0", lifespan=lifespan)
     app.state.service = service or MobilityService.from_osm_map()
     app.state.demo = None
     app.state.demo_lock = RLock()
@@ -55,6 +56,12 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
     @app.get("/v1/demo/state")
     def demo_state():
         return demo().state()
+
+    @app.get("/v1/demo/unity-map")
+    def demo_unity_map():
+        session = demo()
+        with session.lock:
+            return unity_map(session.service)
 
     @app.post("/v1/demo/control")
     def demo_control(command: DemoControl):

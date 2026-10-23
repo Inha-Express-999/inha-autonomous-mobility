@@ -1,0 +1,87 @@
+{
+  "project_version": "0.4.5.0",
+  "date": "2026-10-23",
+  "scene": "Assets/CampusSim/Scenes/CampusTerrain.unity",
+  "scene_preservation": {
+    "existing_documents_modified": [
+      "9223372036854775807"
+    ],
+    "existing_documents_removed": 0,
+    "new_documents": 633
+  },
+  "import_idempotency": {
+    "byte_identical": true,
+    "after": "E38E4764129636E70F18957BC5CB6432F4471524193FFED38D410C7C9A1E78FB",
+    "unity_exit": 0,
+    "before": "E38E4764129636E70F18957BC5CB6432F4471524193FFED38D410C7C9A1E78FB"
+  },
+  "placement": {
+    "project_version": "0.4.5.0",
+    "map_version": "inha-osm-unity-v2",
+    "geometry_hash": "32950491597bd9b134fda86eaaa95af1fc25737413f6841a04d94dd854cad7c4",
+    "road_nodes": 187,
+    "directed_edges": 402,
+    "hubs": 3,
+    "stop_candidates": 14,
+    "road_mesh_projected": 200,
+    "terrain_projected": 4,
+    "outside_terrain": 0,
+    "marker_renderers": 3,
+    "operationally_verified": false,
+    "vehicle_actuation": false
+  },
+  "checks": {
+    "ruff": "passed: src/tests, 44 files",
+    "vehicle_prefabs_and_controller": "unchanged",
+    "scene_changes": "CampusTerrain only; new owned root appended",
+    "python_warning": "existing Starlette TestClient/httpx deprecation"
+  },
+  "limits": [
+    "HTTP read-only map/state, no WebSocket or vehicle actuation",
+    "Surface heights are visualization only, 4 Terrain projections need road-surface review",
+    "No Player/device/FPS or real driving validation"
+  ],
+  "http_transport_test": "UnityWebRequest against a loopback TCP fixture serving the same exported map; real Python API parity is separately verified by FastAPI tests.",
+  "python": {
+    "name": "pytest",
+    "errors": "0",
+    "failures": "0",
+    "skipped": "0",
+    "tests": "208",
+    "time": "40.155",
+    "timestamp": "2026-10-23T15:11:02.248832+09:00",
+    "hostname": "DESKTOP-SBRPQ6K"
+  },
+  "unity_editmode": {
+    "id": "2",
+    "testcasecount": "57",
+    "result": "Passed",
+    "total": "57",
+    "passed": "57",
+    "failed": "0",
+    "inconclusive": "0",
+    "skipped": "0",
+    "asserts": "0",
+    "engine-version": "3.5.0.0",
+    "clr-version": "4.0.30319.42000",
+    "start-time": "2026-10-23 06:12:27Z",
+    "end-time": "2026-10-23 06:12:35Z",
+    "duration": "8.0571868"
+  },
+  "unity_playmode": {
+    "id": "2",
+    "testcasecount": "2",
+    "result": "Passed",
+    "total": "2",
+    "passed": "2",
+    "failed": "0",
+    "inconclusive": "0",
+    "skipped": "0",
+    "asserts": "0",
+    "engine-version": "3.5.0.0",
+    "clr-version": "4.0.30319.42000",
+    "start-time": "2026-10-23 06:13:43Z",
+    "end-time": "2026-10-23 06:13:46Z",
+    "duration": "3.3080935"
+  }
+}
