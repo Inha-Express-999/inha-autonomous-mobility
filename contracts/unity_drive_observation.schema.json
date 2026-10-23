@@ -1,0 +1,116 @@
+{
+  "$defs": {
+    "RayDetection": {
+      "additionalProperties": false,
+      "properties": {
+        "range_m": {
+          "maximum": 30,
+          "minimum": 0,
+          "title": "Range M",
+          "type": "number"
+        },
+        "bearing_rad": {
+          "maximum": 1.5707963267948966,
+          "minimum": -1.5707963267948966,
+          "title": "Bearing Rad",
+          "type": "number"
+        }
+      },
+      "required": [
+        "range_m",
+        "bearing_rad"
+      ],
+      "title": "RayDetection",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {
+      "const": 1,
+      "title": "Schema Version",
+      "type": "integer"
+    },
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "geometry_hash": {
+      "maxLength": 64,
+      "minLength": 64,
+      "title": "Geometry Hash",
+      "type": "string"
+    },
+    "tick": {
+      "minimum": 0,
+      "title": "Tick",
+      "type": "integer"
+    },
+    "x": {
+      "title": "X",
+      "type": "number"
+    },
+    "z": {
+      "title": "Z",
+      "type": "number"
+    },
+    "heading_rad": {
+      "title": "Heading Rad",
+      "type": "number"
+    },
+    "speed_mps": {
+      "maximum": 30,
+      "minimum": -15,
+      "title": "Speed Mps",
+      "type": "number"
+    },
+    "wheelbase_m": {
+      "maximum": 10,
+      "minimum": 0.3,
+      "title": "Wheelbase M",
+      "type": "number"
+    },
+    "max_steering_rad": {
+      "exclusiveMinimum": 0,
+      "maximum": 1,
+      "title": "Max Steering Rad",
+      "type": "number"
+    },
+    "sensor_valid": {
+      "title": "Sensor Valid",
+      "type": "boolean"
+    },
+    "sensor_age_s": {
+      "maximum": 10,
+      "minimum": 0,
+      "title": "Sensor Age S",
+      "type": "number"
+    },
+    "rays": {
+      "items": {
+        "$ref": "#/$defs/RayDetection"
+      },
+      "maxItems": 64,
+      "minItems": 7,
+      "title": "Rays",
+      "type": "array"
+    }
+  },
+  "required": [
+    "schema_version",
+    "run_id",
+    "geometry_hash",
+    "tick",
+    "x",
+    "z",
+    "heading_rad",
+    "speed_mps",
+    "wheelbase_m",
+    "max_steering_rad",
+    "sensor_valid",
+    "sensor_age_s",
+    "rays"
+  ],
+  "title": "EgoObservation",
+  "type": "object"
+}

@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager, suppress
 from pathlib import Path
 from threading import RLock
 
-from fastapi import FastAPI, HTTPException, status
+from fastapi import FastAPI, HTTPException, status, WebSocket, WebSocketDisconnect
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
@@ -15,6 +15,8 @@ from campus_sim.domain import CommandAck, CreateRequest, Landmark, RequestView
 from campus_sim.service import MobilityService
 from campus_sim.unity_map import unity_map
 from campus_sim.web_demo import DemoControl, DemoPlan, DemoScenario, DemoSession
+from campus_sim.unity_drive import AutoMission, EgoObservation, DriveCommand
+from pydantic import ValidationError
 
 
 def create_app(service: MobilityService | None = None) -> FastAPI:
@@ -35,7 +37,7 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
             with suppress(asyncio.CancelledError):
                 await task
 
-    app = FastAPI(title="Inha Mobil API", version="0.4.8.0", lifespan=lifespan)
+    app = FastAPI(title="Inha Mobil API", version="0.4.9.0", lifespan=lifespan)
     app.state.service = service or MobilityService.from_osm_map()
     app.state.demo = None
     app.state.demo_lock = RLock()
@@ -57,6 +59,48 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
     @app.get("/v1/demo/state")
     def demo_state():
         return demo().state()
+
+    @app.post("/v1/demo/unity/vehicles/{vehicle_id}/mission")
+    def unity_mission(vehicle_id: str, command: AutoMission):
+        session = demo()
+        try:
+            with session.lock:
+                return session.physical.mission(vehicle_id, command)
+        except ValueError as error:
+            raise HTTPException(status_code=409, detail=str(error)) from error
+
+    @app.post("/v1/demo/unity/vehicles/{vehicle_id}/stop")
+    def unity_stop(vehicle_id: str):
+        session = demo()
+        try:
+            with session.lock:
+                return session.physical.stop(vehicle_id)
+        except ValueError as error:
+            raise HTTPException(status_code=409, detail=str(error)) from error
+
+    @app.websocket("/v1/demo/unity/vehicles/{vehicle_id}/control")
+    async def unity_control(websocket: WebSocket, vehicle_id: str):
+        await websocket.accept()
+        session = demo()
+        physical, token = None, None
+        try:
+            with session.lock:
+                physical = session.physical
+                token = physical.connect(vehicle_id)
+            while True:
+                data = await websocket.receive_json()
+                observation = EgoObservation.model_validate(data)
+                with session.lock:
+                    command = physical.observation(vehicle_id, token, observation)
+                await websocket.send_json(DriveCommand.model_validate(command).model_dump(mode="json"))
+        except WebSocketDisconnect:
+            pass
+        except (ValueError, KeyError, ValidationError):
+            await websocket.close(code=1008, reason="Invalid/stale ownership, session, map or observation")
+        finally:
+            if token is not None:
+                with session.lock:
+                    physical.disconnect(vehicle_id, token)
 
     @app.get("/v1/demo/unity-map")
     def demo_unity_map():

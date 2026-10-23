@@ -1,0 +1,12 @@
+{
+    "project_version": "0.4.9.0",
+    "final_status": "목적 거점 도착",
+    "final_reason": "Reached Stop candidate",
+    "sensor_stop": true,
+    "manual_ui_absent": true,
+    "arrived": true,
+    "displacement_m": 24.78358268737793,
+    "camera_travel_m": 24.77900505065918,
+    "goal_distance_m": 0.5984054207801819,
+    "stopped_speed": 0.000017735494111548178
+}

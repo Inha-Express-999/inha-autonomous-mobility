@@ -1,0 +1,26 @@
+{
+  "version": "0.4.9.0",
+  "unity_editor": "6000.3.21f1",
+  "run_id": "52fe15b7ba684181bdb099f93a36325a",
+  "actual_mcp_ui_auto_mission": {
+    "project_version": "0.4.9.0",
+    "final_status": "목적 거점 도착",
+    "final_reason": "Reached Stop candidate",
+    "sensor_stop": true,
+    "manual_ui_absent": true,
+    "arrived": true,
+    "displacement_m": 24.78358268737793,
+    "camera_travel_m": 24.77900505065918,
+    "goal_distance_m": 0.5984054207801819,
+    "stopped_speed": 1.7735494111548178e-05
+  },
+  "python_full_tests": 222,
+  "new_auto_tests": 10,
+  "javascript_syntax": "node --check passed",
+  "windows_player_build": "Not built for this milestone; final lane integration build follows",
+  "limits": [
+    "Single existing V01, automatic Stop-candidate route; passenger state machine still separate",
+    "Sensor fan and controller tuning are simulation assumptions; no performance/device/safety certification",
+    "No manual driving inputs"
+  ]
+}

@@ -30,6 +30,11 @@ namespace InhaExpress.Client.Presentation
         public PcOperatorControls OperatorControls { get; private set; }
         private Text vehicleStatus;
         private Button[] vehicleButtons;
+        private readonly Dictionary<string, UnityAutonomousClient> automaticClients = new Dictionary<string, UnityAutonomousClient>();
+        private string automaticStopId;
+        private Button automaticStart;
+        public UnityAutonomousClient ActiveAutomaticClient => OperatorControls?.SelectedVehicle != null &&
+            automaticClients.TryGetValue(OperatorControls.SelectedVehicle.OperatorVehicleId, out var client) ? client : null;
         private Bounds framingBounds;
         private Vector2Int lastScreenSize;
         private Rect lastSafeArea;
@@ -143,6 +148,13 @@ namespace InhaExpress.Client.Presentation
             {
                 OperatorControls = gameObject.AddComponent<PcOperatorControls>();
                 OperatorControls.Initialize(worldCamera, framingBounds, fittedSize);
+                foreach (var bound in OperatorControls.Vehicles)
+                    if (bound is IAutonomousVehicle target && !automaticClients.ContainsKey(target.OperatorVehicleId))
+                    {
+                        var client = gameObject.AddComponent<UnityAutonomousClient>();
+                        automaticClients.Add(target.OperatorVehicleId, client);
+                        client.Initialize(map, target);
+                    }
             }
             Debug.Log("CAMPUS_WEB_UI_READY role=" + (mobile ? "Mobile" : "PC") + " additive=true camera_navigation=" + !mobile);
         }
@@ -199,9 +211,17 @@ namespace InhaExpress.Client.Presentation
             Label(root, "Attribution", "© OpenStreetMap contributors · ODbL 1.0", 10, .39f, .295f, .70f, .32f);
             Panel(root, "Vehicle Detail Card", .73f, .44f, .975f, .895f);
             Label(root, "Vehicle Detail Title", "선택 차량", 19, .75f, .83f, .96f, .885f, true);
-            vehicleStatus = Label(root, "Vehicle Detail", "차량 현황에서 차량을 선택하세요", 15, .75f, .64f, .95f, .82f);
-            ActionButton(root,"Return To Map","운영지도 보기",.75f,.54f,.955f,.61f,()=>OperatorControls?.ShowMap());
-            Label(root,"Camera Hint","차량 버튼: 추적 카메라\n휠 / + −: 거리 조절\nEsc: 운영지도 복귀",13,.75f,.455f,.95f,.53f);
+            vehicleStatus = Label(root, "Vehicle Detail", "차량 현황에서 차량을 선택하세요", 14, .75f, .715f, .95f, .825f);
+            var goalHolder=FixtureUiFactory.Rect(root,"Automatic Goal Bounds",new Vector2(.75f,.645f),new Vector2(.955f,.705f),Vector2.zero,Vector2.zero);
+            var goal=FixtureUiFactory.Button(goalHolder,"Automatic Goal","목적 거점 선택",FixtureUiPalette.Canvas,out var goalText);
+            goalText.color=FixtureUiPalette.Ink; goalText.fontSize=13;
+            goal.onClick.AddListener(()=>OpenStops(root,goalText,stop=>automaticStopId=stop.id));
+            var startHolder=FixtureUiFactory.Rect(root,"Automatic Start Bounds",new Vector2(.75f,.57f),new Vector2(.955f,.63f),Vector2.zero,Vector2.zero);
+            automaticStart=FixtureUiFactory.Button(startHolder,"Start Automatic Mission","자동 운행 시작",FixtureUiPalette.Blue,out var startText);
+            startText.fontSize=14;
+            automaticStart.onClick.AddListener(()=>ActiveAutomaticClient?.StartMission(automaticStopId));
+            ActionButton(root,"Stop Automatic Mission","자동 운행 중지",.75f,.50f,.955f,.555f,()=>ActiveAutomaticClient?.StopMission());
+            ActionButton(root,"Return To Map","운영지도 보기",.75f,.445f,.955f,.49f,()=>OperatorControls?.ShowMap());
             Panel(root, "Queue Card", .73f, .23f, .975f, .42f);
             Label(root, "Queue Title", "요청 대기열", 18, .75f, .36f, .95f, .41f, true);
             queue = Label(root, "Queue Status", "서버 상태 수신 대기", 14, .75f, .25f, .95f, .35f);
@@ -247,7 +267,7 @@ namespace InhaExpress.Client.Presentation
             hit.gameObject.AddComponent<Button>().onClick.AddListener(()=>OpenStops(root,label));
         }
 
-        private void OpenStops(RectTransform root, Text target)
+        private void OpenStops(RectTransform root, Text target, Action<ServerMapAnchor> selected = null)
         {
             if (map.Document == null) return;
             var modal=FixtureUiFactory.Panel(root,"Stop Selection",new Vector2(.08f,.1f),new Vector2(.92f,.89f),Vector2.zero,Vector2.zero,FixtureUiPalette.Surface);
@@ -262,7 +282,7 @@ namespace InhaExpress.Client.Presentation
                 text.color=FixtureUiPalette.Ink; text.fontSize=mobile?13:16;
                 var rect=(RectTransform)button.transform;
                 rect.anchorMin=new Vector2(.04f,.88f-i*.057f); rect.anchorMax=new Vector2(.96f,.93f-i*.057f);
-                button.onClick.AddListener(()=>{target.text=stop.name; Destroy(modal.gameObject);});
+                button.onClick.AddListener(()=>{target.text=stop.name; selected?.Invoke(stop); Destroy(modal.gameObject);});
             }
             var close=FixtureUiFactory.Button(modal,"Close","닫기",FixtureUiPalette.Blue,out _);
             var closeRect=(RectTransform)close.transform;
@@ -337,7 +357,8 @@ namespace InhaExpress.Client.Presentation
             {
                 var controls=OperatorControls;
                 if(vehicleStatus!=null) vehicleStatus.text=controls.SelectionMessage +
-                    (controls.SelectedVehicle?.VehicleTransform != null ? $"\n속도 {controls.SelectedVehicle.VehicleBody.linearVelocity.magnitude*3.6f:F1} km/h\n{controls.SelectedVehicle.VehicleTransform.name}" : "");
+                    (controls.SelectedVehicle?.VehicleTransform != null ? $"\n속도 {controls.SelectedVehicle.VehicleBody.linearVelocity.magnitude*3.6f:F1} km/h\n{ActiveAutomaticClient?.Status}" : "");
+                if(automaticStart!=null) automaticStart.interactable=ActiveAutomaticClient?.Connected == true && !string.IsNullOrEmpty(automaticStopId);
                 for(int i=0;i<vehicleButtons.Length;i++)
                 {
                     string id="V0"+(i+1); bool bound=controls.HasVehicle(id);
@@ -385,6 +406,7 @@ namespace InhaExpress.Client.Presentation
 
         private void OnDestroy()
         {
+            foreach(var client in automaticClients.Values) if(client!=null) client.enabled=false;
             if (OperatorControls != null) { OperatorControls.ShowMap(); OperatorControls.enabled=false; }
             if (worldCamera != null)
             {

@@ -7,13 +7,17 @@ namespace InhaExpress.Client.Presentation
     /// WheelCollider-based vehicle movement controller.
     /// </summary>
     [RequireComponent(typeof(Rigidbody))]
-    public sealed class VehicleController : MonoBehaviour, IOperatorVehicle
+    public sealed class VehicleController : MonoBehaviour, IAutonomousVehicle
     {
         [Header("PC Operator Binding")]
         [SerializeField] private string operatorVehicleId = "V01";
         public string OperatorVehicleId => operatorVehicleId;
         public Transform VehicleTransform => transform;
         public Rigidbody VehicleBody => vehicleBody != null ? vehicleBody : GetComponent<Rigidbody>();
+        public float MaximumSteeringRad => maxSteerAngle * Mathf.Deg2Rad;
+        public float WheelbaseM => frontLeftWheel == null || rearLeftWheel == null ? 0 : Vector3.Distance(
+            (frontLeftWheel.transform.TransformPoint(frontLeftWheel.center) + frontRightWheel.transform.TransformPoint(frontRightWheel.center)) * .5f,
+            (rearLeftWheel.transform.TransformPoint(rearLeftWheel.center) + rearRightWheel.transform.TransformPoint(rearRightWheel.center)) * .5f);
         [Header("Driving")]
         [FormerlySerializedAs("maxForwardSpeed")]
         [SerializeField, Min(0f)] private float maxForwardSpeedKmh = 36f;

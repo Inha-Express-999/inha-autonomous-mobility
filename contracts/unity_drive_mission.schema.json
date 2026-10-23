@@ -1,0 +1,26 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "run_id": {
+      "title": "Run Id",
+      "type": "string"
+    },
+    "command_id": {
+      "maxLength": 100,
+      "minLength": 1,
+      "title": "Command Id",
+      "type": "string"
+    },
+    "stop_id": {
+      "title": "Stop Id",
+      "type": "string"
+    }
+  },
+  "required": [
+    "run_id",
+    "command_id",
+    "stop_id"
+  ],
+  "title": "AutoMission",
+  "type": "object"
+}

@@ -26,6 +26,7 @@ namespace InhaExpress.Client.Presentation
         public bool IsFollowing { get; private set; }
         public string SelectionMessage { get; private set; } = "차량을 선택하면 추적합니다";
         public CinemachineCamera FollowCamera => followCamera;
+        public IEnumerable<IOperatorVehicle> Vehicles => vehicles.Values;
 
         public void Initialize(Camera camera, Bounds mapBounds, float fittedSize)
         {

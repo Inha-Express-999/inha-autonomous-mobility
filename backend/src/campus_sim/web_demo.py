@@ -23,6 +23,8 @@ from campus_sim.domain import CreateRequest, RequestStatus
 from campus_sim.map_coordinates import MapCoordinates
 from campus_sim.planning import AStarPlanner, DijkstraPlanner, NoPath
 from campus_sim.service import MobilityService
+from campus_sim.unity_map import unity_map
+from campus_sim.unity_drive import UnityDriveSession
 
 
 class DemoControl(BaseModel):
@@ -164,6 +166,7 @@ class DemoSession:
         self.run_id = uuid4().hex
         self.root = Path(__file__).resolve().parents[3]
         self.map = map_presentation(self.service, self.root)
+        self.physical = UnityDriveSession(self, unity_map(self.service)["geometry_hash"])
 
     def state(self):
         with self.lock:
@@ -230,6 +233,14 @@ class DemoSession:
                         else [],
                     }
                 )
+                if vehicle.id in self.physical.vehicles:
+                    physics = self.physical.describe(vehicle.id)
+                    if physics["position"] is not None:
+                        vehicles[-1].update(position=physics["position"], routes=physics["routes"],
+                                            phase="TO_DROPOFF" if physics["status"] == "DRIVING" else "READY",
+                                            destination=physics["destination"], trajectory=[], departed_at_s=None,
+                                            physical_status=physics["status"], motion_source="unity_physics",
+                                            physical_reason=physics["reason"], battery_measured=False)
             requests = [r.model_dump(mode="json") for r in service.requests.values()]
             queued = [r for r in requests if r["status"] == "QUEUED"]
             return {
@@ -316,7 +327,7 @@ class DemoSession:
                 self.service.route_algorithm = command.planner
             self.service.step()
             if command.speed is not None:
-                self.clock.speed = command.speed
+                self.clock.speed = 1. if self.physical.vehicles else command.speed
             if command.paused is not None:
                 self.clock.paused = command.paused
             return self.state()
@@ -387,4 +398,5 @@ class DemoSession:
             self.service.route_algorithm = planner
             self.service.dispatch_algorithm = dispatch
             self.run_id = uuid4().hex
+            self.physical = UnityDriveSession(self, unity_map(self.service)["geometry_hash"])
             return self.state()

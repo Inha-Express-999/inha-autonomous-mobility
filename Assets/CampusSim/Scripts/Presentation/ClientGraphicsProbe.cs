@@ -95,7 +95,8 @@ namespace InhaExpress.Client.Presentation
                 frame = Time.frameCount,
                 width = Screen.width, height = Screen.height, safe_area = Screen.safeArea,
                 nodes = map.Document.nodes.Length, hubs = map.Document.hubs.Length, stops = map.Document.stops.Length,
-                scenes = scenes.ToArray(), clipped_text = clipped.ToArray(), vehicle_actuation = false
+                scenes = scenes.ToArray(), clipped_text = clipped.ToArray(),
+                vehicle_actuation = FindFirstObjectByType<WebClientHud>().ActiveAutomaticClient?.IsDriving ?? false
             };
             foreach (var camera in FindObjectsByType<Camera>(FindObjectsSortMode.None))
                 if (camera.isActiveAndEnabled && camera.name == "Campus overview camera")
