@@ -1,5 +1,12 @@
 # 변경 이력
 
+## 0.4.3.0 — 2026-10-25 · 통신 세션 복구 및 Unity 단절 제동
+
+- 작업/이유: 별도 experimental schema-v4 stop-only gateway, run/session/seq 검증·bounded 버퍼·timeout·복구 demo를 추가했다. C# wall-clock gate, WheelCollider 제동 bridge 및 기존 v3 PC host의 정지 전용 relay/Bootstrap 연결을 추가했다. 팀 VehicleController는 main 442593a의 원본을 가져왔다.
+- 호환성/마이그레이션: 기존 schema-v3 HTTP/WebSocket 계약은 유지한다. experimental v4 입력은 hello 이후 session_id가 필요하다. v4 서버와 demo를 함께 갱신한다. live PC의 WheelCollider 차량은 초기 정지 상태로 등록하며 중복 합성 driver는 거부한다. 별도 검증된 제어 어댑터 없이는 출발하지 않는다.
+- 검증: Python/MapData 508 passed, 기존 Starlette/httpx 경고 1개. 순수 C# gate 37개 검사 통과. 사용자 Unity 격리 PlayMode 7/7 결과 XML과 실행 소스 manifest 일치 확인. 실제 v3 host/relay 및 Python 서버 종료→WheelCollider 제동/감속을 포함한다. 버전 변경 전 Unity 실행 증거는 원래 hash 그대로 보존했다.
+- 미검증/한계: 운영 v4 Unity codec/주행 허가/전체 서비스 상태 복원, 원본 캠퍼스 씬의 WheelCollider 차량 배치·주행, Player/Android는 미완료다. 직접 확인한 Editor preview는 서버 연결 실패 상태였으며 주행 증거가 아니다. 기존 Unity 재질의 미세 수치 변경은 제외한다.
+
 ## 0.4.2.2 — 2026-10-12 · algorithms 브랜치 작업 기록 보존
 
 - 작업/이유: 기존 서버·알고리즘 개발 이력과 2026-09-30 Unity Editor 수동 연결 확인 기록을 algorithms 브랜치에 보존한다. 프로젝트 버전 표기를 동기화했다.

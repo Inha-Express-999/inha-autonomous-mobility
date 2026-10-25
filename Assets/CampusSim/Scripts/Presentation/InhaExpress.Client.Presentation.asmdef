@@ -4,6 +4,7 @@
   "references": [
     "InhaExpress.Client.Domain",
     "InhaExpress.Client.Networking",
+    "InhaExpress.Simulation",
     "Unity.InputSystem",
     "Unity.InputSystem.UI",
     "Unity.ugui"

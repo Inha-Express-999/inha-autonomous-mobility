@@ -46,8 +46,6 @@ namespace InhaExpress.Client.Presentation
             }
 
             isLoading = true;
-            yield return LoadAdditiveSceneIfNeeded(worldScenePath);
-            yield return LoadAdditiveSceneIfNeeded(roleScenePath);
             string subscriber = clientRole == ClientRole.Mobile_Passenger
                 ? (useFixture ? FixtureScenario.PassengerId : passengerSubscriberId)
                 : null;
@@ -56,6 +54,14 @@ namespace InhaExpress.Client.Presentation
                 ? (IClientDataSource)new FixtureClientDataSource(clientRole, Application.version, subscriber)
                 : new WebSocketClientDataSource(serverWebSocketUrl, clientRole, Application.version, subscriber);
             Runtime.Initialize(clientRole, source, subscriber);
+            SceneManager.sceneLoaded += BindLoadedVehicles;
+            // Register physical vehicles in the loaded world before the first network pump.
+            // Existing synthetic/fixture actors are not converted into WheelCollider vehicles.
+            ClientVehicleSafetyBinding.BindScene(Runtime, SceneManager.GetSceneByPath(worldScenePath));
+            if (roleScenePath != worldScenePath)
+                ClientVehicleSafetyBinding.BindScene(Runtime, SceneManager.GetSceneByPath(roleScenePath));
+            yield return LoadAdditiveSceneIfNeeded(worldScenePath);
+            yield return LoadAdditiveSceneIfNeeded(roleScenePath);
             int boundViews = 0;
             foreach (var root in SceneManager.GetSceneByPath(roleScenePath).GetRootGameObjects())
                 foreach (var component in root.GetComponentsInChildren<MonoBehaviour>(true))
@@ -68,7 +74,17 @@ namespace InhaExpress.Client.Presentation
             Runtime.StartSource();
         }
 
-        private void OnDestroy() { if (instance == this) instance = null; }
+        private void BindLoadedVehicles(Scene scene, LoadSceneMode mode)
+        {
+            if (scene.path == worldScenePath || scene.path == roleScenePath)
+                ClientVehicleSafetyBinding.BindScene(Runtime, scene);
+        }
+
+        private void OnDestroy()
+        {
+            SceneManager.sceneLoaded -= BindLoadedVehicles;
+            if (instance == this) instance = null;
+        }
 
         public void Configure(string worldPath, string rolePath)
         {

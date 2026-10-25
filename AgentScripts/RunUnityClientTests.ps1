@@ -15,7 +15,7 @@ function Copy-RecordedSource([string]$relative) {
     Copy-Item -LiteralPath $source -Destination $destination
     $sources[$relative] = (Get-FileHash -LiteralPath $source -Algorithm SHA256).Hash
 }
-foreach ($directory in @('Domain', 'Networking', 'Presentation', 'PC', 'Mobile')) {
+foreach ($directory in @('Domain', 'Networking', 'Simulation', 'Presentation', 'PC', 'Mobile')) {
     foreach ($file in Get-ChildItem (Join-Path $repoRoot "Assets/CampusSim/Scripts/$directory") -File) {
         if ($file.Extension -in @('.cs', '.asmdef')) {
             Copy-RecordedSource "Assets/CampusSim/Scripts/$directory/$($file.Name)"

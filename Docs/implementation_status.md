@@ -1,6 +1,40 @@
 # 구현 현황
 
-프로젝트 버전 **0.4.2.2** · 2026-09-28 문서 갱신. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
+릴리스 준비: v0.4.3.0. Python/MapData 회귀 508개 통과(2026-10-25), 기존 의존성 경고 1개. 아래 Unity 7/7은 버전 표기 변경 전 실행 소스에 대한 증거이며 manifest를 보존했다.
+
+## 2026-10-25 PC 차량 제동 자동 연결 작업본
+
+- IMPLEMENTED / PARTIAL: live PC Bootstrap의 world/role 씬 로드 시 WheelCollider 차량을 host/relay/bridge에 연결. 초기 제동, host 비활성 감지, fixture/mobile 제외, 중복 합성 driver 및 다른 host 소유 거부. 동적 생성 차량은 BindVehicle 명시 호출 필요.
+- 로컬 씬에는 팀 VehicleController 배치가 아직 없음. 기존 합성 actor를 변경하지 않음. v3 연결의 정지 경로이며 v4 codec/주행 허가/캠퍼스 운행 전체 통합은 미완료.
+- VERIFIED: 관련 C# 및 테스트 7개 컴파일, 실제 Python v3 접속/snapshot/강제 종료 감지, 복사 backend 초기화, Ruff 통과.
+- VERIFIED (격리 v3/Physics): 사용자 실행 transport-brake-03eb4c0d566f484a9e2c6b2c242ca2fc XML에서 7/7 통과, manifest 소스 불일치 0 확인. 증거: artifacts/validation/2026-10-25-transport-brake/client-v3-results.xml 및 client-v3-source-manifest.json. 열린 Unity Editor도 Computer Use로 직접 Play/종료 확인. 합성 preview는 서버 접속 실패 상태였으며 캠퍼스 주행 완료 증거는 아님.
+- 상세: [연결과 검증 안내](transport_vehicle_brake_integration.md). 커밋/푸시 없음.
+
+## 2026-10-25 차량 제동 연결 컴포넌트 추가
+
+- IMPLEMENTED / PARTIAL: 팀원의 고정 main VehicleController 원본을 추가하고 TransportVehicleBrakeBridge로 통신 감시 제동 요청을 SetDriveCommand 비상 제동에 연결. 기존 v3 ClientRuntimeHost의 단절/stale snapshot을 전달하는 정지 전용 relay 추가. 원본 씬 자동 부착 없음.
+- VERIFIED (컴파일/순수 로직): gate 37개 검사 재통과, Unity 라이브러리 및 Roslyn 기반 전체 클라이언트 소스/새 테스트 컴파일 확인.
+- VERIFIED (격리 Physics): 사용자 재실행 XML에서 PlayMode 2/2 통과 및 source-manifest 7개 파일 hash 일치 확인. 단절 신호 주입/시간 정지/재접속 조건 검증이며 실제 v4 transport 및 서비스 복구 통합은 남아 있음.
+- IMPLEMENTED / FIXTURE_ONLY: 실제 loopback WebSocket 연결 후 시험 소유 Python 서버 프로세스를 종료하는 세 번째 Physics 시험 추가. 시험용 어댑터이며 운영 v4 decoder는 아님. 새 시험 포함 성공 기준은 3/3이다.
+- VERIFIED: 새 테스트 Roslyn 컴파일, 순수 gate 37개 검사(PowerShell 7), Python fixture 실제 loopback/강제 종료 감지, Ruff. 사용자 재실행 transport-brake-b4b48b7680e546a3b1d3f5b263c91cdd의 XML에서 Physics 3/3 통과 확인. 실제 소켓 단절→제동/감속/옛 세션 명령 거부를 격리 fixture에서 검증했다. 증거: artifacts/validation/2026-10-25-transport-brake/socket-results.xml 및 socket-source-manifest.json. 운영 v4 decoder/캠퍼스 씬/서비스 복구 검증은 아님.
+- 실행/범위: [차량 제동 연결 안내](transport_vehicle_brake_integration.md). 커밋/푸시 없음.
+
+## 2026-10-25 연결 안정성 독립 검증
+
+- IMPLEMENTED / FIXTURE_ONLY: v4 세션 ID 바인딩, 만료 경계 검사, bounded 연결 로그와 재접속 오류 시험.
+- IMPLEMENTED / PARTIAL: C# TransportSafetyGate의 실제 시간 기반 감시, 중복/역순 명령의 타이머 연장 차단, 단계별 복구 잠금. 실제 Unity transport/차량에는 아직 연결하지 않았다.
+- VERIFIED: Python 통신 전용 41개 및 순수 C# 37개 assertion 통과. 범위와 실행 절차는 [8주차 기록](transport_week8_progress.md).
+- NOT_STARTED: 실제 차량 단절 제동, 서비스 전체 상태 복구, 모바일 정보 분리의 새 통합 검증. 커밋/푸시 없음.
+
+## 2026-10-18 작업 중 버전 4 통신 초안
+
+- IMPLEMENTED / FIXTURE_ONLY: 기존 v3 API와 분리된 정지 전용 WebSocket 앱, strict JSON codec, 서버 설정 역할/차량 권한, 세션/관측 버퍼와 명령 결과 검증.
+- VERIFIED (Python 시험 범위): 전용 30개 및 회귀 포함 497개 테스트 통과(기존 경고 1개), 변경 코드 Ruff 통과. 시험용 peer의 인프로세스 및 실제 로컬 TCP WebSocket 왕복 성공.
+- NOT_STARTED (새 v4 경로): C# codec/Pump와 실제 차량 제동 연결, ServiceFacade/역할별 상태 projection, 실제 Unity 단절 복구 검증. 기존 v3 기능의 상태와 혼동하지 않는다.
+- 실행: `python -m campus_sim.transport.demo`. 상세 절차와 한계는 [정지 통신 시험](runtime_v4_stop_demo.md), 계약 결정은 [ADR 0004](ADR/0004-isolated-runtime-v4-stop-prototype.md).
+- 커밋/푸시하지 않은 작업으로 릴리스 버전은 유지한다. APPLIED는 FakeSimulationPeer의 시험 응답이며 Physics 적용 증거가 아니다.
+
+프로젝트 버전 **0.4.3.0** · 2026-10-25 문서 갱신. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
 
 ## v0.4.1.0 커밋 체크포인트 (2026-09-26)
 
@@ -140,7 +174,7 @@ Python/MapData 259개 및 Ruff, 격리 Unity PlayMode 4/4(가림·포화·센서
 4. 합성 preview에 V01 route-following alpha를 연결했다. 다음은 Unity Editor에서 씬 재임포트와 PlayMode를 통해 local Python server 연결·요청→Physics 이동→도착→요청 완료 흐름을 검증한다. 축·Collider·ground contact를 확인하고, 센서/TTC safety 계층이 연결되기 전까지는 실제 캠퍼스 이동을 활성화하지 않는다.
 5. M2 지도/접근성/비룡플라자 범위를 완료하는 동안 재사용 빈도가 높은 캠퍼스 오브젝트를 prefab/variant로 단계적으로 정리한 뒤 센서·안전, 다중 차량, 성능 실험을 진행한다.
 
-버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.4.2.2으로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
+버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.4.3.0으로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
 
 ## 2026-09-26 차량 telemetry 연결 소유권 (v0.2.4.0 이후 작업본)
 

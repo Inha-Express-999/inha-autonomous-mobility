@@ -59,6 +59,7 @@ namespace InhaExpress.Client.Presentation
         public ISensorObservationSource Sensors => source as ISensorObservationSource;
         public ConnectionState ConnectionState => source?.ConnectionState ?? ConnectionState.Disconnected;
         public ClientRole Role { get; private set; }
+        public bool IsLivePcTransport => Role == ClientRole.PC_Operator && source is WebSocketClientDataSource;
 
         public void Initialize(ClientRole role, IClientDataSource dataSource, string subscriberId = null)
         {
