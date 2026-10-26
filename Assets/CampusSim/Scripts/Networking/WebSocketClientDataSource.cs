@@ -50,6 +50,9 @@ namespace InhaExpress.Client.Networking
         private bool hasConnected;
         private bool connectAttemptActive;
         private int connectionGeneration;
+        // Main-thread connection epoch; changes on invalidation and each new socket attempt.
+        // This is local transport metadata, not the server's protocol session ID.
+        public int ConnectionGeneration => connectionGeneration;
         private int reconnectAttempt;
         private double lastNow;
         private double reconnectAtS;

@@ -60,6 +60,10 @@ namespace InhaExpress.Client.Presentation
         public ConnectionState ConnectionState => source?.ConnectionState ?? ConnectionState.Disconnected;
         public ClientRole Role { get; private set; }
         public bool IsLivePcTransport => Role == ClientRole.PC_Operator && source is WebSocketClientDataSource;
+        private int snapshotGeneration = -1;
+        public int ConnectionGeneration => (source as WebSocketClientDataSource)?.ConnectionGeneration ?? -1;
+        public bool HasCurrentConnectionSnapshot => IsLivePcTransport &&
+            snapshotGeneration == ConnectionGeneration && Store?.Current != null;
 
         public void Initialize(ClientRole role, IClientDataSource dataSource, string subscriberId = null)
         {
@@ -74,7 +78,12 @@ namespace InhaExpress.Client.Presentation
 
         public void StartSource() => source.Start(Time.realtimeSinceStartupAsDouble);
         private void Update() => source?.Pump(Time.realtimeSinceStartupAsDouble);
-        private void Receive(WorldSnapshotDto snapshot, double receivedAt) => Store.ApplySnapshot(snapshot, receivedAt);
+        private void Receive(WorldSnapshotDto snapshot, double receivedAt)
+        {
+            // Ignored old sequences/runs must not authorize the new connection.
+            if (Store.ApplySnapshot(snapshot, receivedAt) == SnapshotApplyResult.Applied)
+                snapshotGeneration = ConnectionGeneration;
+        }
 
         private void OnDestroy()
         {

@@ -1,7 +1,14 @@
 # 구현 현황
 
-릴리스 준비: v0.4.3.0. Python/MapData 회귀 508개 통과(2026-10-25), 기존 의존성 경고 1개. 아래 Unity 7/7은 버전 표기 변경 전 실행 소스에 대한 증거이며 manifest를 보존했다.
+릴리스 준비: v0.4.3.1. Python/MapData 회귀 508개 통과(2026-10-25), 기존 의존성 경고 1개. 아래 Unity 7/7은 버전 표기 변경 전 실행 소스에 대한 증거이며 manifest를 보존했다.
 
+## 2026-10-26 재접속 시 최신 상태 확인과 정지 유지 작업본
+
+- IMPLEMENTED: v3 연결 generation별로 실제 적용된 snapshot을 구분. 연결 교체/새 snapshot 대기/run 변경 시 정지를 요청하며 재접속 자체로 주행 권한을 복구하지 않음. 통신 schema 변경 없음.
+- VERIFIED: 실제 Unity Editor PlayMode 8/8 통과. 실제 Python v3 서버 강제 종료 및 같은 포트 재시작 → 새 run/snapshot 수신 → WheelCollider 제동 유지, 이전 명령/retired run 거부 포함. 실행 소스 122개 hash 일치 확인.
+- 증거: artifacts/validation/2026-10-26-transport-recovery/editor-results.xml 및 editor-source-manifest.json.
+- 재실행: InhaExpress > Validation > Run Transport Brake Tests 또는 기존 PowerShell runner의 -IncludeClientIntegration (현재 8개).
+- 한계: 합성 Physics/시험 주입 주행 권한. 캠퍼스 씬 주행, v4 정상 제어/관측 복구, 서버 재시작 전 서비스 상태의 영구 복구는 미완료. 이번 작업 커밋/푸시 없음.
 ## 2026-10-25 PC 차량 제동 자동 연결 작업본
 
 - IMPLEMENTED / PARTIAL: live PC Bootstrap의 world/role 씬 로드 시 WheelCollider 차량을 host/relay/bridge에 연결. 초기 제동, host 비활성 감지, fixture/mobile 제외, 중복 합성 driver 및 다른 host 소유 거부. 동적 생성 차량은 BindVehicle 명시 호출 필요.
@@ -34,7 +41,7 @@
 - 실행: `python -m campus_sim.transport.demo`. 상세 절차와 한계는 [정지 통신 시험](runtime_v4_stop_demo.md), 계약 결정은 [ADR 0004](ADR/0004-isolated-runtime-v4-stop-prototype.md).
 - 커밋/푸시하지 않은 작업으로 릴리스 버전은 유지한다. APPLIED는 FakeSimulationPeer의 시험 응답이며 Physics 적용 증거가 아니다.
 
-프로젝트 버전 **0.4.3.0** · 2026-10-25 문서 갱신. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
+프로젝트 버전 **0.4.3.1** · 2026-10-25 문서 갱신. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
 
 ## v0.4.1.0 커밋 체크포인트 (2026-09-26)
 
@@ -174,7 +181,7 @@ Python/MapData 259개 및 Ruff, 격리 Unity PlayMode 4/4(가림·포화·센서
 4. 합성 preview에 V01 route-following alpha를 연결했다. 다음은 Unity Editor에서 씬 재임포트와 PlayMode를 통해 local Python server 연결·요청→Physics 이동→도착→요청 완료 흐름을 검증한다. 축·Collider·ground contact를 확인하고, 센서/TTC safety 계층이 연결되기 전까지는 실제 캠퍼스 이동을 활성화하지 않는다.
 5. M2 지도/접근성/비룡플라자 범위를 완료하는 동안 재사용 빈도가 높은 캠퍼스 오브젝트를 prefab/variant로 단계적으로 정리한 뒤 센서·안전, 다중 차량, 성능 실험을 진행한다.
 
-버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.4.3.0으로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
+버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.4.3.1으로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
 
 ## 2026-09-26 차량 telemetry 연결 소유권 (v0.2.4.0 이후 작업본)
 

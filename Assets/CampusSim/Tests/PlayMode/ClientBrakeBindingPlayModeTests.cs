@@ -69,7 +69,7 @@ namespace InhaExpress.Client.Tests
                     }
                     Assert.That(bridge.BrakeRequired, Is.True);
                     Assert.That(bridge.Reason, Is.EqualTo("SOCKET_DISCONNECTED"));
-                    CollectionAssert.Contains(new[] { "TRANSPORT_DISCONNECTED", "SNAPSHOT_STALE" }, relay.LastStopReason);
+                    CollectionAssert.Contains(new[] { "TRANSPORT_DISCONNECTED", "SNAPSHOT_STALE", "CONNECTION_REPLACED" }, relay.LastStopReason);
                     yield return new WaitForFixedUpdate();
                     yield return new WaitForFixedUpdate();
                     foreach (var wheel in wheels)
@@ -87,6 +87,85 @@ namespace InhaExpress.Client.Tests
                 {
                     if (host != null) Object.Destroy(host.gameObject);
                     if (!server.HasExited) { server.Kill(); server.WaitForExit(2000); }
+                }
+            }
+        }
+
+        [UnityTest]
+        public IEnumerator ServerRestartRestoresNewSnapshotButKeepsVehicleBraked()
+        {
+            var bridge = Create(out _, out var wheels);
+            yield return new WaitForSeconds(0.7f);
+            var start = new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = System.Environment.GetEnvironmentVariable("CAMPUS_BRAKE_TEST_PYTHON") ?? "python",
+                Arguments = "-u \"" + System.IO.Path.GetFullPath(System.IO.Path.Combine(
+                    Application.dataPath, "../AgentScripts/brake_runtime_fixture.py")) + "\"",
+                UseShellExecute = false, CreateNoWindow = true, RedirectStandardOutput = true
+            };
+            System.Diagnostics.Process server = null;
+            ClientRuntimeHost host = null;
+            try
+            {
+                server = System.Diagnostics.Process.Start(start);
+                var portLine = server.StandardOutput.ReadLineAsync();
+                float deadline = Time.realtimeSinceStartup + 8;
+                while (!portLine.IsCompleted && Time.realtimeSinceStartup < deadline) yield return null;
+                Assert.That(portLine.IsCompleted, Is.True);
+                Assert.That(int.TryParse(portLine.GetAwaiter().GetResult(), out int port), Is.True);
+                host = LiveHost("ws://127.0.0.1:" + port + "/v1/client/ws");
+                ClientVehicleSafetyBinding.BindVehicle(host, bridge.GetComponent<VehicleController>());
+                host.StartSource();
+                deadline = Time.realtimeSinceStartup + 10;
+                while (!host.HasCurrentConnectionSnapshot && Time.realtimeSinceStartup < deadline) yield return null;
+                Assert.That(host.HasCurrentConnectionSnapshot, Is.True);
+                yield return null;
+                var oldSnapshot = host.Store.Current;
+                int oldGeneration = host.ConnectionGeneration;
+                Ready(bridge);
+                Assert.That(bridge.ApplyValidatedCommand("r", "s", "test-map", 1, 0, 10, 3.6f, 0, false), Is.True);
+                server.Kill();
+                Assert.That(server.WaitForExit(2000), Is.True);
+                server.Dispose(); server = null;
+                deadline = Time.realtimeSinceStartup + 4;
+                while (host.ConnectionGeneration == oldGeneration && Time.realtimeSinceStartup < deadline) yield return null;
+                Assert.That(host.ConnectionGeneration, Is.GreaterThan(oldGeneration));
+                Assert.That(host.HasCurrentConnectionSnapshot, Is.False, "Old full snapshot cannot satisfy a new connection");
+                yield return null;
+                Assert.That(bridge.BrakeRequired, Is.True);
+                start.Arguments += " " + port;
+                server = System.Diagnostics.Process.Start(start);
+                var restartLine = server.StandardOutput.ReadLineAsync();
+                deadline = Time.realtimeSinceStartup + 8;
+                while (!restartLine.IsCompleted && Time.realtimeSinceStartup < deadline) yield return null;
+                Assert.That(restartLine.IsCompleted, Is.True);
+                Assert.That(restartLine.GetAwaiter().GetResult(), Is.EqualTo(port.ToString()));
+                deadline = Time.realtimeSinceStartup + 12;
+                while ((!host.HasCurrentConnectionSnapshot || host.Store.Current.RunId == oldSnapshot.RunId) &&
+                    Time.realtimeSinceStartup < deadline) yield return null;
+                Assert.That(host.HasCurrentConnectionSnapshot, Is.True);
+                Assert.That(host.Store.Current.RunId, Is.Not.EqualTo(oldSnapshot.RunId));
+                Assert.That(host.Store.IsStale(Time.realtimeSinceStartupAsDouble), Is.False);
+                yield return null;
+                yield return new WaitForFixedUpdate();
+                yield return new WaitForFixedUpdate();
+                Assert.That(bridge.BrakeRequired, Is.True, "Reconnect/full snapshot alone cannot resume motion");
+                Assert.That(bridge.ApplyValidatedCommand("r", "s", "test-map", 999, 0, 10, 3.6f, 0, false), Is.False);
+                Assert.That(host.Store.ApplySnapshot(oldSnapshot, Time.realtimeSinceStartupAsDouble),
+                    Is.EqualTo(SnapshotApplyResult.IgnoredRetiredRun));
+                foreach (var wheel in wheels)
+                {
+                    Assert.That(wheel.motorTorque, Is.Zero);
+                    Assert.That(wheel.brakeTorque, Is.GreaterThan(0));
+                }
+            }
+            finally
+            {
+                if (host != null) Object.Destroy(host.gameObject);
+                if (server != null)
+                {
+                    if (!server.HasExited) { server.Kill(); server.WaitForExit(2000); }
+                    server.Dispose();
                 }
             }
         }

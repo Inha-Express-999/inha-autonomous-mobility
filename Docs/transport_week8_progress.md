@@ -80,3 +80,12 @@ observationsReady를 true로 만들면 안 된다. accepted command에는 실제
 팀의 통합 기준은 합의 전이다. 이번 session_id 확장은 로컬 v4 초안에만 적용하며
 기존 v3 HTTP/WebSocket 계약은 변경하지 않았다. 기존 시험 서버를 실행 중이었다면
 종료 후 재시작하고 동일 소스의 demo를 사용해야 한다.
+
+## 2026-10-26 후속 검증
+
+앞 절의 미연결/미검증 표기는 해당 작업 당시 기록이다. 이후 v3 PC 연결과 차량 제동을
+연결했고, 오늘 실제 Unity Editor에서 서버 재시작 복구를 포함한 PlayMode 8/8을 통과했다.
+현재 연결의 최신 snapshot만 복구 상태로 인정하며, 새 서버 상태를 받아도 자동 출발하지 않는다.
+증거와 범위는 transport_vehicle_brake_integration.md의 2026-10-26 절과
+artifacts/validation/2026-10-26-transport-recovery/를 따른다.
+캠퍼스 씬 정상 주행, v4 제어 연결, 승객/배차 상태 영구 복원은 남아 있다.

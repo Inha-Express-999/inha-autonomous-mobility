@@ -12,7 +12,8 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "backend" / "src"))
 
 async def main():
     with socket.socket() as listener:
-        listener.bind(("127.0.0.1", 0))
+        # Optional same port supports process-restart recovery tests; still loopback only.
+        listener.bind(("127.0.0.1", int(sys.argv[1]) if len(sys.argv) > 1 else 0))
         listener.listen()
         print(listener.getsockname()[1], flush=True)
         server = uvicorn.Server(uvicorn.Config("campus_sim.api:app", log_level="error"))

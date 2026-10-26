@@ -143,3 +143,31 @@ connected/snapshot/프로세스 종료 감지, 복사 backend 초기화, Ruff �
 manifest와 현재 소스 불일치는 0이다. artifacts 폴더의 `client-v3-results.xml`과
 `client-v3-source-manifest.json`에 보존했다. 별도로 열린 Editor의 Play 진입/종료도
 직접 확인했다. 당시 합성 preview 화면은 서버 연결 실패 상태였으므로 주행 검증은 아니다.
+
+## 2026-10-26 서버 재시작과 최신 snapshot 검증
+
+기존 v3 연결의 로컬 connection generation을 추적한다. 연결이 교체되면 이전 snapshot은
+새 연결의 복구 완료로 인정하지 않으며, WorldStateStore가 실제 적용한 새 snapshot만 현재
+연결의 상태로 기록한다. generation은 로컬 메타데이터이며 wire session_id가 아니다.
+relay는 연결 교체, 현재 연결 snapshot 미수신, 서버 run 변경 시 정지를 요청한다.
+최신 snapshot 수신 자체는 주행 권한을 부여하지 않는다.
+
+확장 명령의 현재 성공 기준은 **Passed 8/8**이다. 앞의 7/7은 10월 25일 실행 기록이다.
+새 시험은 실제 campus_sim.api 서버를 종료하고 같은 loopback 포트에 다시 실행한다.
+새 run_id와 최신 snapshot 수신, 이전 snapshot의 복구 완료 인정 차단, 재연결 후
+motorTorque=0 / brakeTorque>0 유지, 옛 명령과 retired run snapshot 거부를 검사한다.
+
+열린 Unity Editor에서는 `InhaExpress > Validation > Run Transport Brake Tests`로
+동일한 8개 시험을 실행할 수 있다. 저장하지 않은 씬 변경이 있으면 실행을 거부한다.
+결과 위치는 `tmp/transport-editor-latest.txt`에 기록하며 해당 폴더에 results.xml과
+source-manifest.json이 생성된다. Python은 CAMPUS_BRAKE_TEST_PYTHON 또는 PATH의 python을 쓴다.
+자동 실행용 고정 요청 파일은 `tmp/run-transport-brake-editor.request`이며 실행 시 소비한다.
+
+검증: Unity 6000.3.21f1의 실제 Editor PlayMode에서 **8/8 Passed, failed=0**.
+실행 manifest의 소스 122개와 현재 파일 hash 불일치 0을 확인했다.
+증거: `artifacts/validation/2026-10-26-transport-recovery/editor-results.xml` 및
+`editor-source-manifest.json`. 관련 C# 컴파일과 Python fixture Ruff도 통과했다.
+
+범위: 합성 Physics 차량 + 실제 v3 소켓/서버 재시작 시험이다. 준비 상태와 초기 주행 명령은
+시험에서 주입한다. 원본 캠퍼스 씬 주행, v4 제어 codec, 최신 관측 기반 정상 주행 재개,
+서버 재시작 전 승객 요청/배차의 영구 복구, 모바일 실기기 복구는 검증하지 않았다.

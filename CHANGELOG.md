@@ -1,5 +1,11 @@
 # 변경 이력
 
+## 0.4.3.1 — 2026-10-26 · 재접속 상태 검증 및 제동 유지
+
+- 작업/이유: 연결 generation별 최신 snapshot 확인과 연결 교체/run 변경 시 정지를 추가하여 이전 상태로 복구 완료를 판정하지 않도록 수정했다. 서버 재시작 시험과 Editor 테스트 메뉴를 추가했다.
+- 호환성/마이그레이션: 기존 schema-v3 유지. generation은 로컬 메타데이터다. 재접속만으로 주행 권한을 부여하지 않는다. 프로젝트 버전 표기를 동기화했다.
+- 검증: 실제 Unity Editor PlayMode 8/8 통과, 실행 소스 122개 hash 일치. 실제 Python 서버 종료/같은 포트 재시작, 새 snapshot 수신, 제동 유지 및 옛 명령 거부 포함. 관련 C# 컴파일 및 Python fixture Ruff 통과. 증거는 artifacts/validation/2026-10-26-transport-recovery/에 보존했다. 테스트 이후 버전 표기만 변경했으며 원래 manifest를 유지한다.
+- 미검증/한계: 캠퍼스 씬 주행, v4 정상 제어/관측 복구, 서비스 상태 영구 복원, Player/모바일은 미검증. 기존 재질/Editor 설정 변경은 제외한다.
 ## 0.4.3.0 — 2026-10-25 · 통신 세션 복구 및 Unity 단절 제동
 
 - 작업/이유: 별도 experimental schema-v4 stop-only gateway, run/session/seq 검증·bounded 버퍼·timeout·복구 demo를 추가했다. C# wall-clock gate, WheelCollider 제동 bridge 및 기존 v3 PC host의 정지 전용 relay/Bootstrap 연결을 추가했다. 팀 VehicleController는 main 442593a의 원본을 가져왔다.

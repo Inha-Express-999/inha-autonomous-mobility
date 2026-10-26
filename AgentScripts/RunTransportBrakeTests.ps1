@@ -26,7 +26,7 @@ $dependencies=@{'com.unity.inputsystem'='1.20.0';'com.unity.test-framework'='1.6
 if($IncludeClientIntegration) {
  & $pythonPath -c 'import fastapi, uvicorn, pydantic'
  if($LASTEXITCODE -ne 0){throw 'Selected Python needs the backend dependencies.'}
- $expected=7
+ $expected=8
  $references+=@('InhaExpress.Client.Networking','InhaExpress.Client.Presentation')
  $files+=@('Assets/CampusSim/Tests/PlayMode/ClientBrakeBindingPlayModeTests.cs','AgentScripts/brake_runtime_fixture.py')
  foreach($directory in @('Domain','Networking','Simulation','Presentation')) {

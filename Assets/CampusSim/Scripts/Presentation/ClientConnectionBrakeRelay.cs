@@ -11,6 +11,8 @@ namespace InhaExpress.Client.Presentation
         [SerializeField] private ClientRuntimeHost runtime;
         private TransportVehicleBrakeBridge brake;
         private bool holding;
+        private int observedGeneration = -1;
+        private string observedRun;
         public string LastStopReason { get; private set; }
         public ClientRuntimeHost Runtime => runtime;
 
@@ -19,6 +21,8 @@ namespace InhaExpress.Client.Presentation
         public void Bind(ClientRuntimeHost host)
         {
             runtime = host;
+            observedGeneration = host != null ? host.ConnectionGeneration : -1;
+            observedRun = null;
             // A change of transport invalidates all existing movement authority.
             holding = false;
             // Inactive world vehicles bind before Awake; their bridge starts braked on activation.
@@ -32,11 +36,30 @@ namespace InhaExpress.Client.Presentation
                 Stop("NO_LIVE_PC_TRANSPORT");
                 return;
             }
+            if (observedGeneration != runtime.ConnectionGeneration)
+            {
+                observedGeneration = runtime.ConnectionGeneration;
+                Stop("CONNECTION_REPLACED");
+                return;
+            }
             if (runtime.ConnectionState != ConnectionState.Connected)
             {
                 Stop("TRANSPORT_DISCONNECTED");
                 return;
             }
+            if (!runtime.HasCurrentConnectionSnapshot)
+            {
+                Stop("WAITING_FOR_CURRENT_SNAPSHOT");
+                return;
+            }
+            string currentRun = runtime.Store.Current.RunId;
+            if (observedRun != null && observedRun != currentRun)
+            {
+                observedRun = currentRun;
+                Stop("SERVER_RUN_CHANGED");
+                return;
+            }
+            observedRun = currentRun;
             if (runtime.Store.IsStale(Time.realtimeSinceStartupAsDouble))
             {
                 Stop("SNAPSHOT_STALE");
