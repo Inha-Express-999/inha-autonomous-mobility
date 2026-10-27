@@ -1,6 +1,6 @@
 # 구현 현황
 
-릴리스 준비: v0.4.3.1. Python/MapData 회귀 508개 통과(2026-10-25), 기존 의존성 경고 1개. 아래 Unity 7/7은 버전 표기 변경 전 실행 소스에 대한 증거이며 manifest를 보존했다.
+릴리스 준비: v0.4.4.0. Python/MapData 회귀 508개 통과(2026-10-25), 기존 의존성 경고 1개. 아래 Unity 7/7은 버전 표기 변경 전 실행 소스에 대한 증거이며 manifest를 보존했다.
 
 ## 2026-10-26 재접속 시 최신 상태 확인과 정지 유지 작업본
 
@@ -41,7 +41,7 @@
 - 실행: `python -m campus_sim.transport.demo`. 상세 절차와 한계는 [정지 통신 시험](runtime_v4_stop_demo.md), 계약 결정은 [ADR 0004](ADR/0004-isolated-runtime-v4-stop-prototype.md).
 - 커밋/푸시하지 않은 작업으로 릴리스 버전은 유지한다. APPLIED는 FakeSimulationPeer의 시험 응답이며 Physics 적용 증거가 아니다.
 
-프로젝트 버전 **0.4.3.1** · 2026-10-25 문서 갱신. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
+프로젝트 버전 **0.4.4.0** · 2026-10-25 문서 갱신. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
 
 ## v0.4.1.0 커밋 체크포인트 (2026-09-26)
 
@@ -181,7 +181,7 @@ Python/MapData 259개 및 Ruff, 격리 Unity PlayMode 4/4(가림·포화·센서
 4. 합성 preview에 V01 route-following alpha를 연결했다. 다음은 Unity Editor에서 씬 재임포트와 PlayMode를 통해 local Python server 연결·요청→Physics 이동→도착→요청 완료 흐름을 검증한다. 축·Collider·ground contact를 확인하고, 센서/TTC safety 계층이 연결되기 전까지는 실제 캠퍼스 이동을 활성화하지 않는다.
 5. M2 지도/접근성/비룡플라자 범위를 완료하는 동안 재사용 빈도가 높은 캠퍼스 오브젝트를 prefab/variant로 단계적으로 정리한 뒤 센서·안전, 다중 차량, 성능 실험을 진행한다.
 
-버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.4.3.1으로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
+버전의 단일 원본은 루트 `VERSION`이다. 현재 Python package/API 버전, Unity `bundleVersion`, README 및 CHANGELOG는 0.4.4.0으로 정합화했다. Unity Editor 버전은 별도인 6000.3.21f1이다. schema_version 및 map_version은 프로젝트 버전과 독립적으로 유지한다.
 
 ## 2026-09-26 차량 telemetry 연결 소유권 (v0.2.4.0 이후 작업본)
 
@@ -332,3 +332,11 @@ CBS 작업본 검증: 전체 Python/MapData 397개 통과 후 disjoint 탐색 �
 ## 2026-09-26 충전 슬롯 후속 작업 (v0.4.2.0)
 
 충전 완료와 일시 중단 상태를 분리하고 중단된 FIFO 큐 복구, 독점 전력 적립, 긴 갱신 공백/역행 시간 처리, 위치 확인 후 슬롯 해제를 연결했다. 선택적 `--charging-config`와 합성 n1/n6 설정을 추가했다. 전용 11개와 전체 Python/MapData 467개 및 Ruff 통과. 잔량 부족→정차 충전→대기 승객 배차→운송 완료→슬롯 해제 서비스 흐름을 검증했다. 자동 충전 이동·물리 dock/예약 통합·Unity/Player 및 전체 M5는 미완료다. 상세는 `Docs/charging_lifecycle.md`, 증거는 `artifacts/validation/2026-09-26-charging-lifecycle/`를 따른다.
+
+## 2026-10-27 팀 차량 프리팹 통합 작업본
+
+- main 442593a의 Annyoung Car 물리 프리팹을 별도 TransportVehicle_Annyoung 에셋으로 복사하고 초기 제동 bridge 추가. 기존 합성 wrapper 유지.
+- Unity Editor PlayMode 9/9 통과: 실제 팀 프리팹 로딩, dynamic body/네 바퀴, 초기 및 단절 상태 제동, live PC host 바인딩 포함. 기존 서버 재시작 시험도 통과.
+- 증거: artifacts/validation/2026-10-27-team-vehicle-brake/. 실행 manifest hash 일치 확인.
+- 원본 재질 참조 하나가 GitHub/로컬에서 누락됨. 캠퍼스 지면 배치·접지·이동 중 정지, 정상 주행 제어는 남아 있음.
+- 절차와 범위: team_vehicle_transport_integration.md. 이번 작업 커밋/푸시 없음.

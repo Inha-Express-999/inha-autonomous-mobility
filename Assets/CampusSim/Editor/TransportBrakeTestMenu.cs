@@ -50,9 +50,9 @@ namespace InhaExpress.EditorTools
                     throw new InvalidOperationException("Save your scene changes before running transport tests.");
             string folder = Path.Combine(Root, "tmp", "transport-editor-" + Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(folder);
-            string[] roots = { "Assets/CampusSim/Scripts", "Assets/CampusSim/Tests/PlayMode", "backend/src", "configs", "maps/fixtures" };
+            string[] roots = { "Assets/CampusSim/Scripts", "Assets/CampusSim/Tests/PlayMode", "backend/src", "configs", "maps/fixtures", "Assets/CampusSim/Prefabs/Vehicles", "Assets/CampusSim/Models" };
             var paths = roots.SelectMany(p => Directory.GetFiles(Path.Combine(Root, p), "*", SearchOption.AllDirectories))
-                .Where(p => p.EndsWith(".cs") || p.EndsWith(".py") || p.EndsWith(".json") || p.EndsWith(".asmdef"))
+                .Where(p => p.EndsWith(".cs") || p.EndsWith(".py") || p.EndsWith(".json") || p.EndsWith(".asmdef") || p.EndsWith(".prefab") || p.EndsWith(".fbx") || p.EndsWith(".meta"))
                 .Concat(new[] { Path.Combine(Root, "AgentScripts/brake_runtime_fixture.py"),
                     Path.Combine(Root, "AgentScripts/brake_socket_fixture.py"),
                     Path.Combine(Root, "Assets/CampusSim/Editor/TransportBrakeTestMenu.cs") });
@@ -69,7 +69,7 @@ namespace InhaExpress.EditorTools
             try
             {
                 api.Execute(new ExecutionSettings(new Filter { testMode = TestMode.PlayMode,
-                    testNames = new[] { "InhaExpress.Client.Tests.TransportBrakePlayModeTests" } }));
+                    testNames = new[] { "InhaExpress.Client.Tests.TransportBrakePlayModeTests", "InhaExpress.Client.Tests.TeamVehicleBrakePlayModeTests" } }));
             }
             catch { SessionState.EraseString(ResultKey); throw; }
         }
