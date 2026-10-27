@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Code": "using UnityEngine; using UnityEditor; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { Application.runInBackground=true; result.Log(\"playing=\"+EditorApplication.isPlaying); foreach(var c in Object.FindObjectsByType<InhaExpress.Client.Presentation.UnityAutonomousClient>(FindObjectsSortMode.None)) result.Log(\"client=\"+c.VehicleId+\" connected=\"+c.Connected+\" status=\"+c.Status); foreach(var s in Object.FindObjectsByType<InhaExpress.Client.MapClient.DesktopServerLauncher>(FindObjectsSortMode.None)) result.Log(\"server=\"+s.Status); } }",
+    "Title": "백그라운드 주행과 서버 상태 확인"
+  },
+  "name": "Unity_RunCommand"
+}

@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Code": "using UnityEngine;using UnityEngine.UI;using InhaExpress.Client.Presentation;\ninternal class CommandScript : IRunCommand {public void Execute(ExecutionResult result){var h=Object.FindFirstObjectByType<WebClientHud>();foreach(var d in h.GetComponentsInChildren<Dropdown>(true))if(d.name==\"Dispatch Policy Dropdown\"){result.Log(\"before=\"+d.value+\" options=\"+string.Join(\",\",d.options.ConvertAll(o=>o.text)));d.value=0;result.Log(\"FIFO_SELECTED\");}ScreenCapture.CaptureScreenshot(\"artifacts/high_speed_drive/garage-driving-ui.png\");}}",
+    "Title": "운송 중 FIFO 드롭다운 전환 확인"
+  },
+  "name": "Unity_RunCommand"
+}

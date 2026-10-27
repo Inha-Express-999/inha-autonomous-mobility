@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] road=OSM road extensions/Road 1390060991  active=False mesh=1390060991_0_baked\\n[Log] road=OSM road extensions exact clips/Road 1390060991  active=False mesh=1390060991_0_baked\\n[Log] stop_hit=Campus Terrain | approximate DSM relief y=-7.894852\\n[Log] stop_hit=Terrain approach draft y=-7.779603\",\n    \"localFixedCode\": \"using UnityEngine;\\r\\nusing CampusSim;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            foreach (var b in Object.FindObjectsByType<CampusTerrainBinding>(FindObjectsInactive.Include, FindObjectsSortMode.None))\\r\\n                if (b.sourceId != null && b.sourceId.Contains(\\\"1390060991\\\"))\\r\\n                {\\r\\n                    string path = b.name;\\r\\n                    var t = b.transform.parent;\\r\\n                    while (t != null)\\r\\n                    {\\r\\n                        path = t.name + \\\"/\\\" + path;\\r\\n                        t = t.parent;\\r\\n                    }\\r\\n\\r\\n                    result.Log(\\\"road=\\\" + path + \\\" active=\\\" + b.gameObject.activeInHierarchy + \\\" mesh=\\\" + b.bakedMesh?.name);\\r\\n                }\\r\\n\\r\\n            foreach (var hit in Physics.RaycastAll(new Vector3(74.387f, 1000, -468.534f), Vector3.down, 2000))\\r\\n                result.Log(\\\"stop_hit=\\\" + hit.collider.name + \\\" y=\\\" + hit.point.y);\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] road=OSM road extensions/Road 1390060991  active=False mesh=1390060991_0_baked\n[Log] road=OSM road extensions exact clips/Road 1390060991  active=False mesh=1390060991_0_baked\n[Log] stop_hit=Campus Terrain | approximate DSM relief y=-7.894852\n[Log] stop_hit=Terrain approach draft y=-7.779603",
+      "localFixedCode": "using UnityEngine;\r\nusing CampusSim;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            foreach (var b in Object.FindObjectsByType<CampusTerrainBinding>(FindObjectsInactive.Include, FindObjectsSortMode.None))\r\n                if (b.sourceId != null && b.sourceId.Contains(\"1390060991\"))\r\n                {\r\n                    string path = b.name;\r\n                    var t = b.transform.parent;\r\n                    while (t != null)\r\n                    {\r\n                        path = t.name + \"/\" + path;\r\n                        t = t.parent;\r\n                    }\r\n\r\n                    result.Log(\"road=\" + path + \" active=\" + b.gameObject.activeInHierarchy + \" mesh=\" + b.bakedMesh?.name);\r\n                }\r\n\r\n            foreach (var hit in Physics.RaycastAll(new Vector3(74.387f, 1000, -468.534f), Vector3.down, 2000))\r\n                result.Log(\"stop_hit=\" + hit.collider.name + \" y=\" + hit.point.y);\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Title": "차고 배차 대기 원인 계측",
+    "Code": "using UnityEngine;using System.IO;using InhaExpress.Client.Presentation;\ninternal class CommandScript : IRunCommand {public void Execute(ExecutionResult result){foreach(var c in Object.FindObjectsByType<UnityAutonomousClient>(FindObjectsSortMode.None)){File.WriteAllText(\"artifacts/high_speed_drive/garage-ego-\"+c.VehicleId+\".json\",c.LatestObservationJson);result.Log(c.VehicleId+\" \"+c.Status+\" \"+c.DiagnosticReason);} }}"
+  },
+  "name": "Unity_RunCommand"
+}

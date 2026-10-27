@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] Seam caps trimmed and scene saved\",\n    \"localFixedCode\": \"using UnityEngine;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            CampusHitechSeamAuthoring.Apply();\\r\\n            result.Log(\\\"Seam caps trimmed and scene saved\\\");\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] Seam caps trimmed and scene saved",
+      "localFixedCode": "using UnityEngine;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            CampusHitechSeamAuthoring.Apply();\r\n            result.Log(\"Seam caps trimmed and scene saved\");\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

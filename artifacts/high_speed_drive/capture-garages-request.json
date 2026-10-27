@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Title": "세 차고 배치 화면 검증",
+    "Code": "using UnityEngine; using System.IO;\ninternal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) {\nvar root=GameObject.Find(\"Campus hub garages\");if(root==null)throw new System.Exception(\"Missing garages\");\nfor(int i=0;i<root.transform.childCount;i++){var g=root.transform.GetChild(i);var go=new GameObject(\"Garage validation capture\");go.hideFlags=HideFlags.HideAndDontSave;var cam=go.AddComponent<Camera>();cam.orthographic=true;cam.orthographicSize=8;cam.nearClipPlane=.1f;cam.farClipPlane=1000;cam.transform.position=g.position+g.rotation*new Vector3(12,9,13);cam.transform.LookAt(g.position+Vector3.up);var rt=new RenderTexture(1280,900,24);var old=RenderTexture.active;cam.targetTexture=rt;cam.Render();RenderTexture.active=rt;var tex=new Texture2D(1280,900,TextureFormat.RGB24,false);tex.ReadPixels(new Rect(0,0,1280,900),0,0);tex.Apply();File.WriteAllBytes(\"artifacts/high_speed_drive/garage-V0\"+(i+1)+\".png\",tex.EncodeToPNG());RenderTexture.active=old;Object.DestroyImmediate(tex);Object.DestroyImmediate(rt);Object.DestroyImmediate(go);result.Log(g.name);}\n}}"
+  }
+}

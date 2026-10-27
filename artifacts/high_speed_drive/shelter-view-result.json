@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] shelters=14 colliders=0\\n[Log] position=(-43.51, -5.00, -169.48) dirty=False\",\n    \"localFixedCode\": \"using UnityEngine;\\r\\nusing UnityEditor;\\r\\nusing UnityEngine.SceneManagement;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            var root = GameObject.Find(\\\"Stop shelters | visual only\\\");\\r\\n            if (root == null)\\r\\n                throw new System.Exception(\\\"Shelters missing\\\");\\r\\n            result.Log(\\\"shelters=\\\" + root.transform.childCount + \\\" colliders=\\\" + root.GetComponentsInChildren<Collider>(true).Length);\\r\\n            Transform target = root.transform.GetChild(0);\\r\\n            foreach (Transform t in root.transform)\\r\\n                if (t.name.StartsWith(\\\"library_road_candidate\\\"))\\r\\n                    target = t;\\r\\n            Selection.activeGameObject = target.gameObject;\\r\\n            SceneView.lastActiveSceneView.LookAt(target.position + Vector3.up * 1.3f, Quaternion.Euler(18, target.eulerAngles.y + 160, 0), 5, false, true);\\r\\n            result.Log(\\\"position=\\\" + target.position + \\\" dirty=\\\" + SceneManager.GetActiveScene().isDirty);\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] shelters=14 colliders=0\n[Log] position=(-43.51, -5.00, -169.48) dirty=False",
+      "localFixedCode": "using UnityEngine;\r\nusing UnityEditor;\r\nusing UnityEngine.SceneManagement;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            var root = GameObject.Find(\"Stop shelters | visual only\");\r\n            if (root == null)\r\n                throw new System.Exception(\"Shelters missing\");\r\n            result.Log(\"shelters=\" + root.transform.childCount + \" colliders=\" + root.GetComponentsInChildren<Collider>(true).Length);\r\n            Transform target = root.transform.GetChild(0);\r\n            foreach (Transform t in root.transform)\r\n                if (t.name.StartsWith(\"library_road_candidate\"))\r\n                    target = t;\r\n            Selection.activeGameObject = target.gameObject;\r\n            SceneView.lastActiveSceneView.LookAt(target.position + Vector3.up * 1.3f, Quaternion.Euler(18, target.eulerAngles.y + 160, 0), 5, false, true);\r\n            result.Log(\"position=\" + target.position + \" dirty=\" + SceneManager.GetActiveScene().isDirty);\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

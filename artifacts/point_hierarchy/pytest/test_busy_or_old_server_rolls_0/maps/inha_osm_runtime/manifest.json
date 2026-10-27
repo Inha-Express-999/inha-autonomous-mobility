@@ -1,0 +1,117 @@
+{
+  "schema_version": 2,
+  "hash_format": "sha256-utf8-lf-v1",
+  "build_project_version": "0.5.0.0",
+  "map_version": "inha-osm-unity-v2",
+  "geometry_source": "cached_osm_and_unity_centerlines",
+  "synthetic_geometry": false,
+  "routing_mode": "osm_geometry_simulation",
+  "operationally_verified": false,
+  "crs": "+proj=aeqd +lat_0=37.4506 +lon_0=126.6535 +datum=WGS84 +units=m +no_defs",
+  "origin_wgs84_lon_lat": [
+    126.6535,
+    37.4506
+  ],
+  "unity_coordinate_system": "legacy formula from AgentScripts/prepare_campus.py; north-aligned X east/Z north",
+  "assumptions": [
+    "OSM topology and Unity road centerlines are source geometry, not approved vehicle access.",
+    "Missing access permission is a simulation assumption only; explicit restrictions remain excluded.",
+    "Speed is a configured 30 km/h (8.333333333333334 m/s) assumption, never an observed speed or legal limit.",
+    "OSM missing oneway follows the simulation bidirectional assumption; explicit oneway is preserved.",
+    "Road widths remain unknown; visual mesh widths are not measurements.",
+    "Length is horizontal AEQD distance; Terrain height, slopes and physical driving are not modeled.",
+    "Stops are projections of Unity general entrance candidates onto existing road segments within 35 m.",
+    "Entrance-to-stop gap is straight-line separation, not a validated pedestrian route.",
+    "No step-free access is certified; requests requiring it are rejected.",
+    "Three synthetic vehicles; one request each; no boarding/dwell time or multi-vehicle collision coordination.",
+    "Only original campus centerlines and explicitly pinned extension corridor intervals are enabled; no whole-network expansion.",
+    "Battery capacity, energy rates and charge power are synthetic configurable assumptions, not vehicle measurements.",
+    "One ideal 1000 W charging port at each configured home hub; charging infrastructure is synthetic.",
+    "Standby vehicles power down: no idle drain. Auxiliary power is applied throughout travel; charging power is net stored power.",
+    "All legs including return to the assigned vehicle home plus 15 percent capacity reserve are required before dispatch; load correction applies to delivery only.",
+    "V01 main_gate, V02 rear_gate, V03 existing OSM road node within parking way568420971; authoring bay/entrance access is unverified, no straight bay connector is created."
+  ],
+  "home_stop_id": "main_gate_road_candidate",
+  "sources": {
+    "osm": {
+      "path": "Assets/InhaCampus/Source/campus.osm",
+      "sha256": "65c272cc689d18ba0df6f6b207f24eb64638fde51c7242ef458008b6c2400f1b"
+    },
+    "unity": {
+      "path": "Assets/InhaCampus/Source/campus.json",
+      "sha256": "a7d6b6b4049291b38e3325e1295667708d587b9f611c85beab8f7ca76e03241a"
+    },
+    "entrances": {
+      "path": "Docs/MapResearch/Iterations/EntranceInventory/entrances.csv",
+      "sha256": "f2fbcd810ca2e460269a239e8a0a94d06e8eb0fda961aa3cd72cf1b9ac4cf6b5"
+    },
+    "policy": {
+      "path": "configs/osm_runtime.json",
+      "sha256": "9c9ae5a526e40722a332108f95a27cbb2715c4ad5bd172f37bd568dbca1bc007"
+    },
+    "attribution": {
+      "path": "Assets/InhaCampus/Source/ATTRIBUTION.txt",
+      "sha256": "ca1c4fc47e94694d5b2f65577cbda5fba03f2cfd5f80ac1544eb70685931754b"
+    },
+    "builder": {
+      "path": "backend/src/campus_sim/map_builder.py",
+      "sha256": "98f4bfe66270af23c7aff8ecdc74be37ff62c2f9905028b9a0a799609f84b2ae"
+    },
+    "coordinate_adapter": {
+      "path": "backend/src/campus_sim/map_coordinates.py",
+      "sha256": "7ab6585d36579e490393f3b6bacfcc74f4611e582921fd11fcf96a0a677e37ce"
+    },
+    "project_version": {
+      "path": "VERSION",
+      "sha256": "3d11f7e899ce28f7ddf008cbc6002801428b62dd237f8bd1c82415683d16e094"
+    },
+    "expanded_osm": {
+      "path": "Docs/MapResearch/2026-09-17/expanded_campus.osm",
+      "sha256": "cf400f997d72d4d42f057adf6ce5b54861c9d5dcdc28d944c2934ffa1a4e84ca"
+    },
+    "unity_scoped": {
+      "path": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "sha256": "1ac3a77fa2bbe3763e23490b86e6944721c89dccd8e32150bb48b939c32aecb0"
+    },
+    "unity_restored": {
+      "path": "Assets/CampusSim/Data/road_connections_restored.json",
+      "sha256": "b9b835ddf129cb04592e0d5c3eb6ed842857dd8aaf7ceac48ec0068038504330"
+    },
+    "unity_extensions": {
+      "path": "Assets/CampusSim/Data/road_extensions.json",
+      "sha256": "fa91653ac7733a1774521c4c3b4428f996b08d6e2bdd49c8d07bfece05fc0616"
+    },
+    "extension_builder": {
+      "path": "backend/src/campus_sim/map_extension.py",
+      "sha256": "6da77573e5566c2846b5280052559b5ae85335acfb001a6a6bde86dab8e7f907"
+    },
+    "osm_reader": {
+      "path": "backend/src/campus_sim/osm_roads.py",
+      "sha256": "56c9d2635419bddab35a37073d01593b1e80f085f1508804da207db05ea4041f"
+    },
+    "unity_coverage": {
+      "path": "backend/src/campus_sim/unity_coverage.py",
+      "sha256": "27dddff5d961ca8d79c84f4d016c46dc97eb6c2e0d025514c1e186c8bb4024ce"
+    },
+    "hub_reference": {
+      "path": "Docs/MapResearch/Iterations/west-field-hub-validation.json",
+      "sha256": "f837fd83d5cb8286f9c640a60ce99326cfaef6576302a9f3f0f200af3e629490"
+    },
+    "hub_builder": {
+      "path": "backend/src/campus_sim/hubs.py",
+      "sha256": "0590f061337c23dd088451915db8bf308ec53128f4a6cc02d260d03066542b6b"
+    },
+    "service_location_builder": {
+      "path": "backend/src/campus_sim/service_locations.py",
+      "sha256": "95d022fd8f7a20350f0dad745cef441b398132c53988f79d2212876304c2c65e"
+    }
+  },
+  "files": {
+    "graph.json": "0883fa034998bb27580ad9324f421aa303f516d80ddf0804d7ed4039bb88aa06",
+    "stops.json": "4d48495d22539dc652322d1109ba105f5d93dc0b2c5c17cf28aba6a12114353d",
+    "landmarks.json": "60bbf7051c5f87d6378e447c909a6b519fb725e3d5fe40df365f83926b0ef037",
+    "policy.json": "9c9ae5a526e40722a332108f95a27cbb2715c4ad5bd172f37bd568dbca1bc007",
+    "build_report.json": "3fc2479fff44635b1db80c1abd1d55a3325c90b0d666119a66917d8d1871df08",
+    "ATTRIBUTION.txt": "c243c904de3a85696895f942921790d66e7c51e3549e5b28b70ed3dea20bdc85"
+  }
+}

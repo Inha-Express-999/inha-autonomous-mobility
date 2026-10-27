@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Code": "using UnityEngine;using CampusSim;\ninternal class CommandScript : IRunCommand {public void Execute(ExecutionResult result){foreach(var b in Object.FindObjectsByType<CampusTerrainBinding>(FindObjectsSortMode.None))if(b.kind==CampusTerrainBinding.BindingKind.Building&&b.name.Contains(\"218081857\")){result.Log(\"BUILDING \"+b.name+\" pos=\"+b.transform.position+\" source=\"+(b.sourceMesh?b.sourceMesh.bounds.ToString():\"none\")+\" original=\"+(b.originalMesh?b.originalMesh.bounds.ToString():\"none\"));foreach(var t in b.GetComponentsInChildren<Transform>(true)){var r=t.GetComponent<Renderer>();var c=t.GetComponent<Collider>();if(r||c)result.Log(t.name+\" parent=\"+t.parent?.name+\" active=\"+t.gameObject.activeSelf+\" renderer=\"+(r?r.enabled.ToString():\"none\")+\" bounds=\"+(r?r.bounds.ToString():\"none\")+\" collider=\"+(c?c.enabled.ToString():\"none\"));}}}}",
+    "Title": "하이테크 원본·장식 건물 경계 비교"
+  },
+  "name": "Unity_RunCommand"
+}

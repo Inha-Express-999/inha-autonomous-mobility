@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Title": "차량 토글 선택과 센서 OFF 검증",
+    "Code": "using UnityEngine; using UnityEngine.UI; using InhaExpress.Client.Presentation; using Unity.Cinemachine; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { Application.runInBackground=true; var hud=Object.FindFirstObjectByType<WebClientHud>(); if(hud==null) throw new System.Exception(\"HUD not loaded\"); foreach(var t in hud.GetComponentsInChildren<Toggle>()) if(t.name==\"Select V01\") { result.Log(\"allowSwitchOff=\"+t.group.allowSwitchOff+\" initial=\"+t.isOn); t.isOn=true; result.Log(\"selected=\"+hud.OperatorControls.SelectedVehicle.OperatorVehicleId+\" following=\"+hud.OperatorControls.IsFollowing); } var c=Object.FindFirstObjectByType<UnityAutonomousClient>(); result.Log(\"observation=\"+c.LatestObservationJson); foreach(var b in Object.FindObjectsByType<CinemachineBrain>(FindObjectsSortMode.None)) result.Log(\"brain=\"+b.enabled+\" camera=\"+b.ActiveVirtualCamera?.Name); } }"
+  }
+}

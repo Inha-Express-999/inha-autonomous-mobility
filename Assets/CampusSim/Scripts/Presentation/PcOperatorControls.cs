@@ -16,6 +16,9 @@ namespace InhaExpress.Client.Presentation
         private Camera output;
         private CinemachineBrain brain;
         private CinemachineCamera followCamera;
+        private CinemachineCamera mapCamera;
+        public bool InputEnabled { get; set; } = true;
+        private float initialPitch = 65, initialYaw;
         private CinemachineFollow follow;
         private Transform stabilizedTarget;
         private float heightVelocity;
@@ -31,7 +34,7 @@ namespace InhaExpress.Client.Presentation
         public CinemachineCamera FollowCamera => followCamera;
         public IEnumerable<IOperatorVehicle> Vehicles => vehicles.Values;
 
-        public void Initialize(Camera camera, Bounds mapBounds, float fittedSize)
+        public void Initialize(Camera camera, Bounds mapBounds, float fittedSize, float pitch = 65, float yaw = 0)
         {
             output = camera;
             originalNearClip = output.nearClipPlane;
@@ -40,6 +43,8 @@ namespace InhaExpress.Client.Presentation
             bounds = mapBounds;
             initialCenter = mapCenter = bounds.center;
             fit = fittedSize;
+            initialPitch = mapPitch = pitch;
+            initialYaw = mapYaw = yaw;
             // Only controllers in the loaded simulation world participate. IDs are explicit, never array order.
             foreach (var component in FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None))
                 if (component is IOperatorVehicle vehicle)
@@ -52,11 +57,17 @@ namespace InhaExpress.Client.Presentation
                     vehicles.Add(vehicle.OperatorVehicleId, vehicle);
                 }
             brain = output.gameObject.AddComponent<CinemachineBrain>();
-            brain.enabled = false;
+            brain.enabled = true;
             brain.UpdateMethod = CinemachineBrain.UpdateMethods.LateUpdate;
             brain.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.Cut, 0);
             brain.LensModeOverride = new CinemachineBrain.LensModeOverrideSettings
                 { Enabled = true, DefaultMode = LensSettings.OverrideModes.Orthographic };
+            var mapRig = new GameObject("Campus map Cinemachine");
+            mapRig.transform.SetParent(transform, false);
+            mapCamera = mapRig.AddComponent<CinemachineCamera>();
+            mapCamera.Lens.ModeOverride = LensSettings.OverrideModes.Orthographic;
+            mapCamera.Lens.NearClipPlane = originalNearClip;
+            mapCamera.Lens.FarClipPlane = originalFarClip;
             var rig = new GameObject("PC selected vehicle Cinemachine");
             rig.transform.SetParent(transform, false);
             rig.SetActive(false);
@@ -93,6 +104,7 @@ namespace InhaExpress.Client.Presentation
             followCamera.LookAt = stabilizedTarget;
             followCamera.PreviousStateIsValid = false;
             followCamera.gameObject.SetActive(true);
+            mapCamera.gameObject.SetActive(false);
             IsFollowing = true;
             brain.enabled = true;
             SelectionMessage = id + " 추적 중";
@@ -111,16 +123,23 @@ namespace InhaExpress.Client.Presentation
             SelectionMessage = "추적 해제 · 자유 지도";
         }
 
+        public void DeselectVehicle()
+        {
+            SelectedVehicle = null;
+            ShowMap(true);
+        }
+
         public void ShowMap(bool reset = false)
         {
             if (!initialized || output == null) return;
             IsFollowing = false;
-            brain.enabled = false;
+            brain.enabled = true;
+            mapCamera.gameObject.SetActive(true);
             followCamera.gameObject.SetActive(false);
             followCamera.Follow = null;
             followCamera.LookAt = null;
             panGesture = rotateGesture = false;
-            if (reset) { mapCenter = initialCenter; mapYaw = 0; mapPitch = 65; mapZoom = 1; }
+            if (reset) { mapCenter = initialCenter; mapYaw = initialYaw; mapPitch = initialPitch; mapZoom = 1; }
             ApplyMapPose();
             SelectionMessage = "운영 지도 · 드래그 이동 / 우클릭 회전 / 휠 확대";
         }
@@ -160,13 +179,9 @@ namespace InhaExpress.Client.Presentation
 
         private void ApplyMapPose()
         {
-            output.orthographic = true;
-            output.nearClipPlane = originalNearClip;
-            output.farClipPlane = originalFarClip;
-            output.fieldOfView = originalFov;
-            output.orthographicSize = fit * mapZoom;
+            mapCamera.Lens.OrthographicSize = fit * mapZoom;
             var rotation = Quaternion.Euler(mapPitch, mapYaw, 0);
-            output.transform.SetPositionAndRotation(mapCenter - rotation * Vector3.forward * 1000, rotation);
+            mapCamera.transform.SetPositionAndRotation(mapCenter - rotation * Vector3.forward * 1000, rotation);
         }
 
         private void UpdateFollowDistance() => follow.FollowOffset = new Vector3(0, followDistance * .45f, -followDistance);
@@ -197,7 +212,7 @@ namespace InhaExpress.Client.Presentation
 
         private void Update()
         {
-            if (!initialized || output == null) return;
+            if (!initialized || output == null || !InputEnabled) return;
             if (SelectedVehicle != null && (SelectedVehicle is Component selected && selected == null || SelectedVehicle.VehicleTransform == null))
             { ShowMap(); SelectedVehicle = null; }
             var keyboard = Keyboard.current;
@@ -226,6 +241,7 @@ namespace InhaExpress.Client.Presentation
         {
             if (brain != null) Destroy(brain);
             if (followCamera != null) Destroy(followCamera.gameObject);
+            if (mapCamera != null) Destroy(mapCamera.gameObject);
             if (stabilizedTarget != null) Destroy(stabilizedTarget.gameObject);
         }
     }

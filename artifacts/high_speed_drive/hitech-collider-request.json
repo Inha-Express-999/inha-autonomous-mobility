@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Code": "using UnityEngine; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { foreach(var c in Object.FindObjectsByType<Collider>(FindObjectsSortMode.None)) if(c.name==\"Photo inspired HiTech\") { string path=c.name; var t=c.transform.parent;while(t!=null){path=t.name+\"/\"+path;t=t.parent;} result.Log(\"collider=\"+c.GetType().Name+\" path=\"+path+\" bounds=\"+c.bounds+\" position=\"+c.transform.position+\" scale=\"+c.transform.lossyScale); var b=c as BoxCollider; if(b!=null)result.Log(\"box center=\"+b.center+\" size=\"+b.size); var m=c as MeshCollider;if(m!=null)result.Log(\"mesh=\"+m.sharedMesh?.name+\" convex=\"+m.convex); var r=c.GetComponent<Renderer>();if(r!=null)result.Log(\"renderer_bounds=\"+r.bounds); } }",
+    "Title": "도로와 건물 충돌체 중첩 확인"
+  },
+  "name": "Unity_RunCommand"
+}

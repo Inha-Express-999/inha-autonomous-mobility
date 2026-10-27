@@ -20,11 +20,12 @@ namespace InhaExpress.Client.Presentation
             (rearLeftWheel.transform.TransformPoint(rearLeftWheel.center) + rearRightWheel.transform.TransformPoint(rearRightWheel.center)) * .5f);
         [Header("Driving")]
         [FormerlySerializedAs("maxForwardSpeed")]
-        [SerializeField, Min(0f)] private float maxForwardSpeedKmh = 36f;
+        [SerializeField, Min(0f)] private float maxForwardSpeedKmh = 50f;
         [FormerlySerializedAs("maxReverseSpeed")]
         [SerializeField, Min(0f)] private float maxReverseSpeedKmh = 12.6f;
         [SerializeField, Min(0f)] private float motorTorque = 1500f;
         [SerializeField, Min(0f)] private float maxSteerAngle = 30f;
+        [SerializeField, Min(1f)] private float steeringRateDegreesPerSecond = 120f;
         [SerializeField, Min(0f)] private float brakeTorque = 3000f;
 
         [Header("Drive Command")]
@@ -250,7 +251,8 @@ namespace InhaExpress.Client.Presentation
                 ? targetSteeringAngleRad * Mathf.Rad2Deg
                 : steerInput * maxSteerAngle;
             for (int i = 0; i < frontWheels.Length; i++)
-                frontWheels[i].steerAngle = steeringAngle;
+                frontWheels[i].steerAngle = Mathf.MoveTowards(frontWheels[i].steerAngle,
+                    steeringAngle, steeringRateDegreesPerSecond * Time.fixedDeltaTime);
         }
 
         private void ApplyDriveAndBrakes()

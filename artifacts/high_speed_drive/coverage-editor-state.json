@@ -1,0 +1,8 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Retrieved editor state.\",\n  \"data\": {\n    \"IsPlaying\": true,\n    \"IsPaused\": false,\n    \"IsCompiling\": false,\n    \"IsUpdating\": false,\n    \"ApplicationPath\": \"C:/Program Files/Unity/Hub/Editor/6000.3.21f1/Editor/Unity.exe\",\n    \"ApplicationContentsPath\": \"C:/Program Files/Unity/Hub/Editor/6000.3.21f1/Editor/Data\",\n    \"TimeSinceStartup\": 6270.2855624\n  }\n}"
+    }
+  ]
+}

@@ -1,10 +1,52 @@
 {
   "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "schema_version": {
+            "enum": [
+              1,
+              2
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "target_speed_kmh": {
+            "maximum": 18
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "target_speed_kmh": {
+            "exclusiveMaximum": 0
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "schema_version": {
+            "const": 4
+          },
+          "status": {
+            "const": "MANEUVER"
+          }
+        }
+      }
+    }
+  ],
   "properties": {
     "schema_version": {
       "enum": [
         1,
-        2
+        2,
+        3,
+        4
       ],
       "title": "Schema Version",
       "type": "integer"
@@ -19,8 +61,8 @@
       "type": "integer"
     },
     "target_speed_kmh": {
-      "maximum": 18,
-      "minimum": 0,
+      "maximum": 50,
+      "minimum": -5,
       "title": "Target Speed Kmh",
       "type": "number"
     },
@@ -71,6 +113,20 @@
       ],
       "default": null,
       "title": "Lane Profile Hash"
+    },
+    "transport_phase": {
+      "default": "",
+      "enum": [
+        "",
+        "TO_PICKUP",
+        "PICKUP_SERVICE",
+        "TO_DROPOFF",
+        "DROPOFF_SERVICE",
+        "RETURN_PENDING",
+        "RETURNING"
+      ],
+      "title": "Transport Phase",
+      "type": "string"
     }
   },
   "required": [

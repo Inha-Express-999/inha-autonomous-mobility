@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] PC Bootstrap play requested\",\n    \"localFixedCode\": \"using UnityEditor;\\r\\nusing UnityEditor.SceneManagement;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            if (EditorApplication.isPlaying)\\r\\n            {\\r\\n                result.Log(\\\"Already playing\\\");\\r\\n                return;\\r\\n            }\\r\\n\\r\\n            if (!EditorSceneManager.SaveOpenScenes())\\r\\n                return;\\r\\n            EditorSceneManager.OpenScene(\\\"Assets/CampusSim/Scenes/PC_Bootstrap.unity\\\");\\r\\n            EditorApplication.isPlaying = true;\\r\\n            result.Log(\\\"PC Bootstrap play requested\\\");\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] PC Bootstrap play requested",
+      "localFixedCode": "using UnityEditor;\r\nusing UnityEditor.SceneManagement;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            if (EditorApplication.isPlaying)\r\n            {\r\n                result.Log(\"Already playing\");\r\n                return;\r\n            }\r\n\r\n            if (!EditorSceneManager.SaveOpenScenes())\r\n                return;\r\n            EditorSceneManager.OpenScene(\"Assets/CampusSim/Scenes/PC_Bootstrap.unity\");\r\n            EditorApplication.isPlaying = true;\r\n            result.Log(\"PC Bootstrap play requested\");\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

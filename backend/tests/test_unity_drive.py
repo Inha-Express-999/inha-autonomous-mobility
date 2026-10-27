@@ -134,6 +134,7 @@ def test_same_session_websocket_to_mission_to_web_physics_pose():
             socket.send_json(observation(session, tick=2).model_dump())
             command = socket.receive_json()
             assert command["run_id"] == session.run_id and command["target_speed_kmh"] > 0
+            assert "transport_phase" not in command
             state = client.get("/v1/demo/state").json()
             vehicle = next(v for v in state["vehicles"] if v["id"] == "V01")
             assert vehicle["position"] == pytest.approx(MapCoordinates().from_unity(ego.x, ego.z))

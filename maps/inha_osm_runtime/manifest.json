@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "hash_format": "sha256-utf8-lf-v1",
-  "build_project_version": "0.5.0.0",
+  "build_project_version": "0.5.1.0",
   "map_version": "inha-osm-unity-v2",
   "geometry_source": "cached_osm_and_unity_centerlines",
   "synthetic_geometry": false,
@@ -55,7 +55,7 @@
     },
     "builder": {
       "path": "backend/src/campus_sim/map_builder.py",
-      "sha256": "1f3bc8e7d1c9eca27faecad2e418d11da9cb0041c5fe273bfdd9d464d0f0df65"
+      "sha256": "98f4bfe66270af23c7aff8ecdc74be37ff62c2f9905028b9a0a799609f84b2ae"
     },
     "coordinate_adapter": {
       "path": "backend/src/campus_sim/map_coordinates.py",
@@ -63,7 +63,7 @@
     },
     "project_version": {
       "path": "VERSION",
-      "sha256": "3d11f7e899ce28f7ddf008cbc6002801428b62dd237f8bd1c82415683d16e094"
+      "sha256": "9cdbce9f3de8397e7cece53307c5d4ddd92b5bf2ac68137abc7910ccb7d5b460"
     },
     "expanded_osm": {
       "path": "Docs/MapResearch/2026-09-17/expanded_campus.osm",
@@ -100,14 +100,18 @@
     "hub_builder": {
       "path": "backend/src/campus_sim/hubs.py",
       "sha256": "0590f061337c23dd088451915db8bf308ec53128f4a6cc02d260d03066542b6b"
+    },
+    "service_location_builder": {
+      "path": "backend/src/campus_sim/service_locations.py",
+      "sha256": "95d022fd8f7a20350f0dad745cef441b398132c53988f79d2212876304c2c65e"
     }
   },
   "files": {
-    "graph.json": "0883fa034998bb27580ad9324f421aa303f516d80ddf0804d7ed4039bb88aa06",
-    "stops.json": "4d48495d22539dc652322d1109ba105f5d93dc0b2c5c17cf28aba6a12114353d",
+    "graph.json": "123d950127fd1f5f47079c38f2ad111a3f53f4ffbdfdb05c87c88191cd0f6940",
+    "stops.json": "9ebbf281ecac157e7cfd8721a57c5b101d5da5ba75da232971249971b057961c",
     "landmarks.json": "60bbf7051c5f87d6378e447c909a6b519fb725e3d5fe40df365f83926b0ef037",
-    "policy.json": "9c9ae5a526e40722a332108f95a27cbb2715c4ad5bd172f37bd568dbca1bc007",
-    "build_report.json": "3fc2479fff44635b1db80c1abd1d55a3325c90b0d666119a66917d8d1871df08",
+    "policy.json": "f878ad8f4ba22e7366156c74b553e5689d21b95baf4b4cca2ada6e0c472db4c3",
+    "build_report.json": "1f84e105d2c64cbcfc5873322fc0379f48d3ab83e71559cdc5835b98486beb21",
     "ATTRIBUTION.txt": "c243c904de3a85696895f942921790d66e7c51e3549e5b28b70ed3dea20bdc85"
   }
 }

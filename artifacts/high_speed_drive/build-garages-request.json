@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Code": "using UnityEngine; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { CampusGarageAuthoring.Build(); result.Log(\"GARAGES_DONE\"); } }",
+    "Title": "세 허브 차고 생성"
+  }
+}

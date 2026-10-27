@@ -86,11 +86,15 @@ namespace InhaExpress.Client.Tests
                 Assert.That(controls.SelectedVehicle, Is.SameAs(vehicle));
                 Assert.That(controls.FollowCamera.Follow, Is.Null);
                 Assert.That(controls.FollowCamera.LookAt, Is.Null);
+                yield return null;
+                yield return null; // Allow the Cinemachine LateUpdate to drive the output camera.
                 before = camera.transform.position;
                 vehicle.transform.position += Vector3.right * 5;
                 for (int i = 0; i < 12; i++) yield return null;
                 Assert.That(Vector3.Distance(before, camera.transform.position), Is.LessThan(.01));
                 controls.Pan(new Vector2(50, 20));
+                yield return null;
+                yield return null; // Allow the Cinemachine LateUpdate to drive the output camera.
                 Assert.That(Vector3.Distance(before, camera.transform.position), Is.GreaterThan(.1));
                 Assert.That(controls.SelectVehicle("camera-test"), Is.True);
                 Object.Destroy(vehicleObject);
@@ -117,17 +121,28 @@ namespace InhaExpress.Client.Tests
                 var camera = cameraObject.AddComponent<Camera>();
                 var controls = controlsObject.AddComponent<PcOperatorControls>();
                 controls.Initialize(camera, new Bounds(Vector3.zero, Vector3.one * 100), 100);
+                yield return null;
+                yield return null; // Allow the Cinemachine LateUpdate to drive the output camera.
                 var initialPosition = camera.transform.position;
                 controls.Pan(new Vector2(40, 20));
+                yield return null;
+                yield return null; // Allow the Cinemachine LateUpdate to drive the output camera.
                 Assert.That(Vector3.Distance(initialPosition, camera.transform.position), Is.GreaterThan(1));
                 controls.Rotate(new Vector2(30, 10));
+                yield return null;
+                yield return null; // Allow the Cinemachine LateUpdate to drive the output camera.
                 Assert.That(camera.transform.eulerAngles.y, Is.EqualTo(30).Within(.01));
                 controls.Zoom(.5f);
                 controls.Resize(200);
+                yield return null;
+                yield return null; // Allow the Cinemachine LateUpdate to drive the output camera.
                 Assert.That(camera.orthographicSize, Is.EqualTo(100).Within(.01));
                 controls.Zoom(float.NaN);
                 Assert.That(camera.orthographicSize, Is.EqualTo(100).Within(.01));
-                controls.ShowMap(true);
+                controls.DeselectVehicle();
+                yield return null;
+                yield return null; // Allow the Cinemachine LateUpdate to drive the output camera.
+                Assert.That(controls.SelectedVehicle, Is.Null);
                 Assert.That(camera.orthographicSize, Is.EqualTo(200).Within(.01));
                 Assert.That(Vector3.Distance(initialPosition, camera.transform.position), Is.LessThan(.01));
                 yield return null;

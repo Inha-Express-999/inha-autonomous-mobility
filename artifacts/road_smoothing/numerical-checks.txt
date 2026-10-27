@@ -1,0 +1,9 @@
+PASS constant road height
+PASS planar slope at asymmetric road boundary
+PASS one-row narrow road retains longitudinal slope
+PASS 4m wavelength ripple attenuated by at least 90 percent
+PASS continuous height across sample-window boundary
+PASS no support fails explicitly
+PASS outside-radius sample excluded
+PASS invalid input rejected
+PASS total=8; rippleResidualM=7.676749430585161E-08; boundaryStepM=3.8405042908747793E-07

@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] status=경로 이탈 · 정지 reason=Turn tracking error exceeds 0.3m mission=자동 경로 명령 접수 target=0\",\n    \"localFixedCode\": \"using UnityEngine;\\r\\nusing System.IO;\\r\\nusing InhaExpress.Client.Presentation;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            var c = Object.FindFirstObjectByType<UnityAutonomousClient>();\\r\\n            if (c == null)\\r\\n            {\\r\\n                result.Log(\\\"NO_CLIENT\\\");\\r\\n                return;\\r\\n            }\\r\\n\\r\\n            File.WriteAllText(\\\"artifacts/high_speed_drive/turn-current-observation.json\\\", c.LatestObservationJson);\\r\\n            result.Log(\\\"status=\\\" + c.Status + \\\" reason=\\\" + c.DiagnosticReason + \\\" mission=\\\" + c.MissionResult + \\\" target=\\\" + c.LastTargetSpeedKmh);\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] status=경로 이탈 · 정지 reason=Turn tracking error exceeds 0.3m mission=자동 경로 명령 접수 target=0",
+      "localFixedCode": "using UnityEngine;\r\nusing System.IO;\r\nusing InhaExpress.Client.Presentation;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            var c = Object.FindFirstObjectByType<UnityAutonomousClient>();\r\n            if (c == null)\r\n            {\r\n                result.Log(\"NO_CLIENT\");\r\n                return;\r\n            }\r\n\r\n            File.WriteAllText(\"artifacts/high_speed_drive/turn-current-observation.json\", c.LatestObservationJson);\r\n            result.Log(\"status=\" + c.Status + \" reason=\" + c.DiagnosticReason + \" mission=\" + c.MissionResult + \" target=\" + c.LastTargetSpeedKmh);\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

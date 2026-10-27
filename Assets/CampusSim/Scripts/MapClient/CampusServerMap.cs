@@ -39,10 +39,14 @@ namespace InhaExpress.Client.MapClient
             public bool paused, simulation_only;
             public int completed;
             public string planner, dispatch;
-            public string[] queue;
+            public TransportRequest[] queue, requests;
             public Vehicle[] vehicles;
         }
         [Serializable] public sealed class Vehicle { public string id, home_name, phase, destination; public float soc; }
+        [Serializable] public sealed class TransportRequest
+        {
+            public string id, status, vehicle_id, pickup_landmark_id, dropoff_landmark_id, reason;
+        }
 
         private void OnEnable()
         {

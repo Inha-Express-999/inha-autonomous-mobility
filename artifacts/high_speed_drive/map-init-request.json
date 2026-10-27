@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Title": "자동 운행 초기화 객체 확인",
+    "Code": "using UnityEngine; using InhaExpress.Client.MapClient; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { foreach(var map in Object.FindObjectsByType<CampusServerMap>(FindObjectsInactive.Include,FindObjectsSortMode.None)) { result.Log(\"map=\"+map.name+\" active=\"+map.gameObject.activeInHierarchy+\" enabled=\"+map.enabled+\" markers=\"+map.markers.Length);for(var t=map.transform;t!=null;t=t.parent)result.Log(\"parent=\"+t.name+\" self=\"+t.gameObject.activeSelf); } } }"
+  },
+  "name": "Unity_RunCommand"
+}

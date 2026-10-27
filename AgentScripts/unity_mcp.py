@@ -6,6 +6,7 @@ from pathlib import Path
 import queue
 import subprocess
 import threading
+import time
 
 
 def main():
@@ -13,6 +14,10 @@ def main():
     parser.add_argument("method", choices=["tools/list", "tools/call"])
     parser.add_argument("--params-file", type=Path)
     parser.add_argument("--output", type=Path)
+    parser.add_argument("--discovery-wait", type=float, default=0,
+                        help="Keep the connection open while Editor tools register (seconds).")
+    parser.add_argument("--timeout", type=float, default=45,
+                        help="Maximum wait for an MCP response (seconds).")
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
     relay = Path.home() / ".unity/relay/relay_win.exe"
@@ -33,7 +38,7 @@ def main():
     def request(identifier, method, params):
         send(dict(jsonrpc="2.0", id=identifier, method=method, params=params))
         while True:
-            reply = messages.get(timeout=45)
+            reply = messages.get(timeout=max(1, min(args.timeout, 180)))
             if reply.get("id") == identifier:
                 if "error" in reply:
                     raise RuntimeError(reply["error"])
@@ -44,6 +49,12 @@ def main():
         send(dict(jsonrpc="2.0", method="notifications/initialized"))
         params = json.loads(args.params_file.read_text(encoding="utf-8")) if args.params_file else {}
         result = request(2, args.method, params)
+        deadline = time.monotonic() + min(max(args.discovery_wait, 0), 40)
+        identifier = 2
+        while args.method == "tools/list" and not result.get("tools") and time.monotonic() < deadline:
+            time.sleep(2)
+            identifier += 1
+            result = request(identifier, args.method, params)
         content = json.dumps(result, ensure_ascii=False, indent=2)
         if args.output:
             args.output.write_text(content, encoding="utf-8")

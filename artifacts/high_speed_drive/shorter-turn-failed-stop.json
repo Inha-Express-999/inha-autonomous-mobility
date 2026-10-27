@@ -1,0 +1,8 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Already stopped (not in play mode).\"\n}"
+    }
+  ]
+}

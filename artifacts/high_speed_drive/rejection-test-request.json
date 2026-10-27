@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Title": "Test rejected route UI",
+    "Code": "using UnityEngine; using InhaExpress.Client.Presentation; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) {var c=Object.FindFirstObjectByType<UnityAutonomousClient>(); if(c==null || !c.Connected) {result.Log(\"NOT_READY\");return;} c.StartMission(\"invalid_stop_for_rejection_check\"); result.Log(\"Rejection test submitted\");}}"
+  },
+  "name": "Unity_RunCommand"
+}

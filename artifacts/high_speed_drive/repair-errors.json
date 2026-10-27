@@ -1,0 +1,8 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Retrieved 1 log entries.\",\n  \"data\": [\n    {\n      \"Message\": \"NullReferenceException: Object reference not set to an instance of an object\",\n      \"Type\": \"Error\",\n      \"File\": null,\n      \"Line\": null,\n      \"StackTrace\": null\n    }\n  ]\n}"
+    }
+  ]
+}

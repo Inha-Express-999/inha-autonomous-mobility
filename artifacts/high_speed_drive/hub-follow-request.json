@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Title": "차량 추적 화면의 허브 UI 숨김 확인",
+    "Code": "using UnityEngine; using InhaExpress.Client.Presentation; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { var h=Object.FindFirstObjectByType<WebClientHud>(); if(h==null){result.Log(\"NOT_READY\");return;} int hubs=0,shown=0; foreach(var t in h.GetComponentsInChildren<RectTransform>(true))if(t.name.StartsWith(\"Map Pin \")&&!t.name.StartsWith(\"Map Pin V\")){hubs++;if(t.gameObject.activeSelf)shown++;} result.Log(\"following=\"+h.OperatorControls.IsFollowing+\" hub_pins=\"+hubs+\" shown=\"+shown); ScreenCapture.CaptureScreenshot(\"artifacts/high_speed_drive/hub-follow-hidden.png\"); } }"
+  },
+  "name": "Unity_RunCommand"
+}

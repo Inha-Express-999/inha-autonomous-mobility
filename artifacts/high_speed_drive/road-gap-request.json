@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Title": "누락 도로 양끝 연결 조사",
+    "Code": "using UnityEngine; using UnityEditor.SceneManagement; using System.IO; using System.Linq; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { result.Log(\"map=\"+GameObject.Find(\"INHA UNIVERSITY\").transform.position+\" scale=\"+GameObject.Find(\"INHA UNIVERSITY\").transform.lossyScale); Physics.SyncTransforms(); for(int n=0;n<=20;n++){var p=Vector3.Lerp(new Vector3(319.02f,0,-113.26f),new Vector3(390.47f,0,31.77f),n/20f); var hits=Physics.RaycastAll(p+Vector3.up*100,Vector3.down,200); result.Log(p+\" => \"+string.Join(\";\",hits.Select(h=>h.collider.name+\" y=\"+h.point.y)));} } }"
+  },
+  "name": "Unity_RunCommand"
+}

@@ -1,0 +1,45 @@
+{
+  "info": {
+    "service_id": "inha-mobil-local-demo",
+    "schema_version": 1,
+    "map_schema_version": 1,
+    "project_version": "0.5.0.0",
+    "process_id": 29372,
+    "run_id": "7ef146419f2341f9bdb0abd59bebff2e",
+    "geometry_hash": "123f499e275ca47556ca1a4df35572dbbdcc42849be5ca8b4fd90195aa37da71",
+    "simulation_only": true,
+    "physics_protocol_versions": [
+      1,
+      2
+    ],
+    "lane_profile_hash": null
+  },
+  "stops": [
+    {
+      "id": "library_road_candidate",
+      "name": "정석학술정보관",
+      "landmark_id": "library",
+      "node_id": "split:481241685:2:0:0.669396172",
+      "position": {
+        "x": -47.2234112604756,
+        "y": 0.0,
+        "z": -166.89009040127914
+      }
+    }
+  ],
+  "hubs": [
+    {
+      "id": "main_gate",
+      "name": "정문",
+      "node_id": "split:481241683:4:0:0.586532254",
+      "position": {
+        "x": -40.433724028020976,
+        "y": 0.0,
+        "z": -320.9615307919799
+      },
+      "vehicle_ids": [
+        "V01"
+      ]
+    }
+  ]
+}

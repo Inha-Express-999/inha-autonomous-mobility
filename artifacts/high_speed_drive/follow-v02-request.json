@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Title": "Greedy 배차 차량 추적",
+    "Code": "using UnityEngine;using InhaExpress.Client.Presentation;\ninternal class CommandScript : IRunCommand {public void Execute(ExecutionResult result){var h=Object.FindFirstObjectByType<WebClientHud>();h.OperatorControls.SelectVehicle(\"V02\");result.Log(\"FOLLOW_V02 \"+h.OperatorControls.IsFollowing);}}"
+  },
+  "name": "Unity_RunCommand"
+}

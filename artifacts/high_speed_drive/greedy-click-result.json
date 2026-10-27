@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] GREEDY_CLICKED\",\n    \"localFixedCode\": \"using UnityEngine;\\r\\nusing UnityEngine.UI;\\r\\nusing InhaExpress.Client.Presentation;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            var h = Object.FindFirstObjectByType<WebClientHud>();\\r\\n            foreach (var b in h.GetComponentsInChildren<Button>(true))\\r\\n                if (b.transform.parent.name == \\\"Greedy\\\")\\r\\n                {\\r\\n                    b.onClick.Invoke();\\r\\n                    result.Log(\\\"GREEDY_CLICKED\\\");\\r\\n                    return;\\r\\n                }\\r\\n\\r\\n            result.Log(\\\"NO_BUTTON\\\");\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] GREEDY_CLICKED",
+      "localFixedCode": "using UnityEngine;\r\nusing UnityEngine.UI;\r\nusing InhaExpress.Client.Presentation;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            var h = Object.FindFirstObjectByType<WebClientHud>();\r\n            foreach (var b in h.GetComponentsInChildren<Button>(true))\r\n                if (b.transform.parent.name == \"Greedy\")\r\n                {\r\n                    b.onClick.Invoke();\r\n                    result.Log(\"GREEDY_CLICKED\");\r\n                    return;\r\n                }\r\n\r\n            result.Log(\"NO_BUTTON\");\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

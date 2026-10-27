@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] V03 reserved=False status=자동 운행 대기\\n[Log] V01 reserved=False status=자동 운행 대기\\n[Log] V02 reserved=False status=목적 거점 도착\",\n    \"localFixedCode\": \"using UnityEngine;\\r\\nusing UnityEngine.UI;\\r\\nusing InhaExpress.Client.Presentation;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            var h = Object.FindFirstObjectByType<WebClientHud>();\\r\\n            h.OperatorControls.DeselectVehicle();\\r\\n            foreach (var d in h.GetComponentsInChildren<Dropdown>(true))\\r\\n                if (d.name == \\\"Dispatch Policy Dropdown\\\")\\r\\n                    d.Show();\\r\\n            ScreenCapture.CaptureScreenshot(\\\"artifacts/high_speed_drive/garage-dropdown-charging.png\\\");\\r\\n            foreach (var c in Object.FindObjectsByType<UnityAutonomousClient>(FindObjectsSortMode.None))\\r\\n                result.Log(c.VehicleId + \\\" reserved=\\\" + c.TransportReserved + \\\" status=\\\" + c.Status);\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] V03 reserved=False status=자동 운행 대기\n[Log] V01 reserved=False status=자동 운행 대기\n[Log] V02 reserved=False status=목적 거점 도착",
+      "localFixedCode": "using UnityEngine;\r\nusing UnityEngine.UI;\r\nusing InhaExpress.Client.Presentation;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            var h = Object.FindFirstObjectByType<WebClientHud>();\r\n            h.OperatorControls.DeselectVehicle();\r\n            foreach (var d in h.GetComponentsInChildren<Dropdown>(true))\r\n                if (d.name == \"Dispatch Policy Dropdown\")\r\n                    d.Show();\r\n            ScreenCapture.CaptureScreenshot(\"artifacts/high_speed_drive/garage-dropdown-charging.png\");\r\n            foreach (var c in Object.FindObjectsByType<UnityAutonomousClient>(FindObjectsSortMode.None))\r\n                result.Log(c.VehicleId + \" reserved=\" + c.TransportReserved + \" status=\" + c.Status);\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

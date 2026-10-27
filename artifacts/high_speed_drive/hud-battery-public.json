@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] Vehicle V01 battery=1\\n[Log] Vehicle V02 battery=1\\n[Log] Vehicle V03 battery=1\\n[Log] Three vehicle battery widgets PASS\\n[Log] V03 connected=True\\n[Log] V01 connected=True\\n[Log] V02 connected=True\",\n    \"localFixedCode\": \"using UnityEngine;\\r\\nusing UnityEngine.UI;\\r\\nusing InhaExpress.Client.Presentation;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            var h = Object.FindFirstObjectByType<WebClientHud>();\\r\\n            if (h == null)\\r\\n                throw new System.Exception(\\\"HUD missing\\\");\\r\\n            int count = 0;\\r\\n            foreach (var s in h.GetComponentsInChildren<Slider>(true))\\r\\n                if (s.name == \\\"Battery\\\")\\r\\n                {\\r\\n                    count++;\\r\\n                    result.Log(s.transform.parent.name + \\\" battery=\\\" + s.value);\\r\\n                }\\r\\n\\r\\n            if (count != 3)\\r\\n                throw new System.Exception(\\\"Expected 3 battery indicators, got \\\" + count);\\r\\n            result.Log(\\\"Three vehicle battery widgets PASS\\\");\\r\\n            foreach (var c in Object.FindObjectsByType<UnityAutonomousClient>(FindObjectsSortMode.None))\\r\\n                result.Log(c.VehicleId + \\\" connected=\\\" + c.Connected);\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] Vehicle V01 battery=1\n[Log] Vehicle V02 battery=1\n[Log] Vehicle V03 battery=1\n[Log] Three vehicle battery widgets PASS\n[Log] V03 connected=True\n[Log] V01 connected=True\n[Log] V02 connected=True",
+      "localFixedCode": "using UnityEngine;\r\nusing UnityEngine.UI;\r\nusing InhaExpress.Client.Presentation;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            var h = Object.FindFirstObjectByType<WebClientHud>();\r\n            if (h == null)\r\n                throw new System.Exception(\"HUD missing\");\r\n            int count = 0;\r\n            foreach (var s in h.GetComponentsInChildren<Slider>(true))\r\n                if (s.name == \"Battery\")\r\n                {\r\n                    count++;\r\n                    result.Log(s.transform.parent.name + \" battery=\" + s.value);\r\n                }\r\n\r\n            if (count != 3)\r\n                throw new System.Exception(\"Expected 3 battery indicators, got \" + count);\r\n            result.Log(\"Three vehicle battery widgets PASS\");\r\n            foreach (var c in Object.FindObjectsByType<UnityAutonomousClient>(FindObjectsSortMode.None))\r\n                result.Log(c.VehicleId + \" connected=\" + c.Connected);\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

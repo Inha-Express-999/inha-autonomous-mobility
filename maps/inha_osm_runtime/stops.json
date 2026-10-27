@@ -27,26 +27,26 @@
   {
     "id": "biryong_plaza_road_candidate",
     "landmark_id": "biryong_plaza",
-    "node_id": "split:481241663:0:0:0.903003431591",
+    "node_id": "split:481241663:0:0:0.478845445",
     "position_xy_m": [
-      241.0662857064407,
-      -97.06105559383852
+      227.51816060863302,
+      -125.82463911043754
     ],
     "unity_xz_m": [
-      240.76604356401157,
-      -97.05920730072293
+      227.23400839916872,
+      -125.82083241883694
     ],
     "entrance_id": "biryong_plaza_general",
     "entrance_unity_xz_m": [
       253.528717,
       -103.07827
     ],
-    "entrance_gap_m": 14.125351065647576,
+    "entrance_gap_m": 34.79110479863376,
     "step_free_access": false,
     "verification_status": "UNVERIFIED_ROAD_PROJECTION_CANDIDATE",
     "entrance_verification_status": "osm_entrance_positions_synthetic_roles_and_pavilions_access_unknown",
     "osm_way_id": "481241663",
-    "selection_policy": "nearest_core_road",
+    "selection_policy": "unity_editor_override",
     "round_trip_reachable": true
   },
   {
@@ -177,26 +177,26 @@
   {
     "id": "hitech_road_candidate",
     "landmark_id": "hitech",
-    "node_id": "split:481241714:0:0:0.222804228624",
+    "node_id": "split:481241714:0:0:0.426317296",
     "position_xy_m": [
-      382.18229362468304,
-      9.727419548657101
+      377.4898290252757,
+      -2.0711229334815755
     ],
     "unity_xz_m": [
-      381.7111838489037,
-      9.718125140509528
+      377.02397003392076,
+      -2.0795543233714398
     ],
     "entrance_id": "hitech_general",
     "entrance_unity_xz_m": [
       351.575653,
       21.7191582
     ],
-    "entrance_gap_m": 32.472028443426545,
+    "entrance_gap_m": 34.86627969759405,
     "step_free_access": false,
     "verification_status": "UNVERIFIED_ROAD_PROJECTION_CANDIDATE",
     "entrance_verification_status": "synthetic_facade_entrances_not_verified_access",
     "osm_way_id": "481241714",
-    "selection_policy": "pinned_corridor_way",
+    "selection_policy": "unity_editor_override",
     "round_trip_reachable": true
   },
   {
@@ -221,7 +221,7 @@
     "verification_status": "UNVERIFIED_ROAD_PROJECTION_CANDIDATE",
     "entrance_verification_status": "osm_exit_7_wheelchair_no_accessible_entrance_unresolved",
     "osm_way_id": "955217469",
-    "selection_policy": "pinned_corridor_way",
+    "selection_policy": "unity_editor_override",
     "round_trip_reachable": true
   },
   {

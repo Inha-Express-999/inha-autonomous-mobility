@@ -1,0 +1,10 @@
+roads=16
+triangles=51543
+samples=783465
+terrainPenetrations=0
+meshColliderMismatches=0
+minimumClearanceM=0.0485878
+maximumGrade=0.0589056723
+horizontalAreaM2=60831.283831728782
+areaAbove10PercentM2=0
+maximumClearanceM=0.2126956

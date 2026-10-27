@@ -1,0 +1,25 @@
+{
+  "components": 1,
+  "area": 60485.040075500714,
+  "junction_added_m2": 199.04672700000046,
+  "new_corridor_m2": 7861.900658460234,
+  "removed_m2": 11.517590000008273,
+  "max_boundary_displacement_m": 248.20293602010437,
+  "mesh_count": 18,
+  "triangles": 61557,
+  "source_way_ids": [
+    "1215393150",
+    "1390060991",
+    "281621314",
+    "284010312",
+    "284010313",
+    "284973522",
+    "471332807",
+    "471689462",
+    "481241658",
+    "731224474",
+    "731804508",
+    "955217469"
+  ],
+  "note": "Cached OSM corridor restoration; synthetic widths, closing radius 2m and corner radius 1m; unchanged server graph/access."
+}

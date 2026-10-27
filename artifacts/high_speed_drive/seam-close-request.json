@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Title": "접합부 미세 틈 보정",
+    "Code": "using UnityEngine; using UnityEditor; using CampusSim; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { var b=GameObject.Find(\"Hitech missing OSM road\").GetComponentInChildren<CampusTerrainBinding>();var m=b.originalMesh;var v=m.vertices;var d=(v[2]+v[3]-v[0]-v[1]).normalized;v[0]-=d*.15f;v[1]-=d*.15f;d=(v[v.Length-2]+v[v.Length-1]-v[v.Length-4]-v[v.Length-3]).normalized;v[v.Length-2]+=d*.15f;v[v.Length-1]+=d*.15f;m.vertices=v;m.RecalculateBounds();EditorUtility.SetDirty(m);CampusMissingRoadAuthoring.FitEndpointGrade();CampusRoadSmoothingValidation.Validate();result.Log(\"Seam overlap fitted and validated\"); } }"
+  }
+}

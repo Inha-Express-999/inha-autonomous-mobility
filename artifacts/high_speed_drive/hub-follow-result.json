@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] following=True hub_pins=3 shown=0\",\n    \"localFixedCode\": \"using UnityEngine;\\r\\nusing InhaExpress.Client.Presentation;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            var h = Object.FindFirstObjectByType<WebClientHud>();\\r\\n            if (h == null)\\r\\n            {\\r\\n                result.Log(\\\"NOT_READY\\\");\\r\\n                return;\\r\\n            }\\r\\n\\r\\n            int hubs = 0, shown = 0;\\r\\n            foreach (var t in h.GetComponentsInChildren<RectTransform>(true))\\r\\n                if (t.name.StartsWith(\\\"Map Pin \\\") && !t.name.StartsWith(\\\"Map Pin V\\\"))\\r\\n                {\\r\\n                    hubs++;\\r\\n                    if (t.gameObject.activeSelf)\\r\\n                        shown++;\\r\\n                }\\r\\n\\r\\n            result.Log(\\\"following=\\\" + h.OperatorControls.IsFollowing + \\\" hub_pins=\\\" + hubs + \\\" shown=\\\" + shown);\\r\\n            ScreenCapture.CaptureScreenshot(\\\"artifacts/high_speed_drive/hub-follow-hidden.png\\\");\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] following=True hub_pins=3 shown=0",
+      "localFixedCode": "using UnityEngine;\r\nusing InhaExpress.Client.Presentation;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            var h = Object.FindFirstObjectByType<WebClientHud>();\r\n            if (h == null)\r\n            {\r\n                result.Log(\"NOT_READY\");\r\n                return;\r\n            }\r\n\r\n            int hubs = 0, shown = 0;\r\n            foreach (var t in h.GetComponentsInChildren<RectTransform>(true))\r\n                if (t.name.StartsWith(\"Map Pin \") && !t.name.StartsWith(\"Map Pin V\"))\r\n                {\r\n                    hubs++;\r\n                    if (t.gameObject.activeSelf)\r\n                        shown++;\r\n                }\r\n\r\n            result.Log(\"following=\" + h.OperatorControls.IsFollowing + \" hub_pins=\" + hubs + \" shown=\" + shown);\r\n            ScreenCapture.CaptureScreenshot(\"artifacts/high_speed_drive/hub-follow-hidden.png\");\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

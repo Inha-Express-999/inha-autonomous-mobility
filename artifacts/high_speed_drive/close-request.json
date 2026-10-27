@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Code": "using UnityEngine; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { foreach(var r in Object.FindObjectsByType<CampusDriveTelemetry>(FindObjectsSortMode.None)) r.Close(); result.Log(\"Telemetry closed\"); } }",
+    "Title": "도착한 경로 계측 저장"
+  }
+}

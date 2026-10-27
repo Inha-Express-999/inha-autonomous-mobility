@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Title": "경로 이탈 구간 충돌면 조사",
+    "Code": "using UnityEngine; using UnityEditor; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { SceneView.lastActiveSceneView.LookAt(new Vector3(348,3,-66),Quaternion.Euler(90,0,0),90,true,true); } }"
+  }
+}

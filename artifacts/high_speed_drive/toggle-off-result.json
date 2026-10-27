@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] before=PC selected vehicle Cinemachine\\n[Log] isOn=False anyOn=False selectedNull=True following=False\",\n    \"localFixedCode\": \"using UnityEngine;\\r\\nusing UnityEngine.UI;\\r\\nusing UnityEngine.EventSystems;\\r\\nusing InhaExpress.Client.Presentation;\\r\\nusing Unity.Cinemachine;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            var hud = Object.FindFirstObjectByType<WebClientHud>();\\r\\n            foreach (var b in Object.FindObjectsByType<CinemachineBrain>(FindObjectsSortMode.None))\\r\\n                result.Log(\\\"before=\\\" + b.ActiveVirtualCamera?.Name);\\r\\n            foreach (var t in hud.GetComponentsInChildren<Toggle>())\\r\\n                if (t.name == \\\"Select V01\\\")\\r\\n                {\\r\\n                    t.OnPointerClick(new PointerEventData(EventSystem.current)\\r\\n                    {button = PointerEventData.InputButton.Left});\\r\\n                    result.Log(\\\"isOn=\\\" + t.isOn + \\\" anyOn=\\\" + t.group.AnyTogglesOn() + \\\" selectedNull=\\\" + (hud.OperatorControls.SelectedVehicle == null) + \\\" following=\\\" + hud.OperatorControls.IsFollowing);\\r\\n                }\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] before=PC selected vehicle Cinemachine\n[Log] isOn=False anyOn=False selectedNull=True following=False",
+      "localFixedCode": "using UnityEngine;\r\nusing UnityEngine.UI;\r\nusing UnityEngine.EventSystems;\r\nusing InhaExpress.Client.Presentation;\r\nusing Unity.Cinemachine;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            var hud = Object.FindFirstObjectByType<WebClientHud>();\r\n            foreach (var b in Object.FindObjectsByType<CinemachineBrain>(FindObjectsSortMode.None))\r\n                result.Log(\"before=\" + b.ActiveVirtualCamera?.Name);\r\n            foreach (var t in hud.GetComponentsInChildren<Toggle>())\r\n                if (t.name == \"Select V01\")\r\n                {\r\n                    t.OnPointerClick(new PointerEventData(EventSystem.current)\r\n                    {button = PointerEventData.InputButton.Left});\r\n                    result.Log(\"isOn=\" + t.isOn + \" anyOn=\" + t.group.AnyTogglesOn() + \" selectedNull=\" + (hud.OperatorControls.SelectedVehicle == null) + \" following=\" + hud.OperatorControls.IsFollowing);\r\n                }\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

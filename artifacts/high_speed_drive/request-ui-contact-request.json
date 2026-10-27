@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Title": "복귀 구간 물리 접촉 진단",
+    "Code": "using UnityEngine; using InhaExpress.Client.Presentation; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { var v=Object.FindFirstObjectByType<VehicleController>(); var c=Object.FindFirstObjectByType<UnityAutonomousClient>(); if(v==null)return; result.Log(\"position=\"+v.transform.position+\" driving=\"+c.IsDriving+\" target=\"+c.LastTargetSpeedKmh+\" reason=\"+c.DiagnosticReason); foreach(var w in v.GetComponentsInChildren<WheelCollider>()) result.Log(\"wheel=\"+w.name+\" motor=\"+w.motorTorque+\" brake=\"+w.brakeTorque+\" rpm=\"+w.rpm); foreach(var box in v.GetComponentsInChildren<BoxCollider>()) foreach(var other in Physics.OverlapBox(box.bounds.center,box.bounds.extents+Vector3.one*.1f)) { if(other.transform.IsChildOf(v.transform))continue; Vector3 dir; float depth; if(Physics.ComputePenetration(box,box.transform.position,box.transform.rotation,other,other.transform.position,other.transform.rotation,out dir,out depth)) result.Log(\"contact=\"+other.name+\" depth=\"+depth+\" dir=\"+dir); } var h=Object.FindFirstObjectByType<WebClientHud>(); h.OperatorControls.SelectVehicle(\"V01\"); ScreenCapture.CaptureScreenshot(\"artifacts/high_speed_drive/request-ui-stalled.png\"); } }"
+  }
+}

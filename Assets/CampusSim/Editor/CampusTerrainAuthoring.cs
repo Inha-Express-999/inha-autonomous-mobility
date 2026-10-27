@@ -147,9 +147,7 @@ public static class CampusTerrainAuthoring
                 float longest=Mathf.Sqrt(Mathf.Max(ab,bc,ca));
                 float area2=Mathf.Abs((b.x-a.x)*(c.z-a.z)-(b.z-a.z)*(c.x-a.x));
                 float altitude=area2/Mathf.Max(longest,.0001f);
-                var worldCenter=projection.TransformPoint((a+b+c)/3);
-                bool lakeRoadJoint=projection.name=="Continuous asphalt network"
-                    &&worldCenter.x>244&&worldCenter.x<260&&worldCenter.z> -77&&worldCenter.z< -54;
+                bool lakeRoadJoint=roadProfile && roadProfile.roadHeightSource && roadProfile.roadSmoothingMeters>0 && !roadProfile.roadPlanarGridProfile;
                 if(lakeRoadJoint&&longest>.25f&&longest>8*Mathf.Max(altitude,.0001f)
                     &&Mathf.Max(ha,hb,hc)-Mathf.Min(ha,hb,hc)>.02f)split=true;
                 split|=Mathf.Abs(Height((a+b)*.5f)-(ha+hb)*.5f)>.025f;

@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] map=Server Map | Web-aligned Nodes and Hubs active=True enabled=True markers=204\\n[Log] parent=Server Map | Web-aligned Nodes and Hubs self=True\",\n    \"localFixedCode\": \"using UnityEngine;\\r\\nusing InhaExpress.Client.MapClient;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            foreach (var map in Object.FindObjectsByType<CampusServerMap>(FindObjectsInactive.Include, FindObjectsSortMode.None))\\r\\n            {\\r\\n                result.Log(\\\"map=\\\" + map.name + \\\" active=\\\" + map.gameObject.activeInHierarchy + \\\" enabled=\\\" + map.enabled + \\\" markers=\\\" + map.markers.Length);\\r\\n                for (var t = map.transform; t != null; t = t.parent)\\r\\n                    result.Log(\\\"parent=\\\" + t.name + \\\" self=\\\" + t.gameObject.activeSelf);\\r\\n            }\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] map=Server Map | Web-aligned Nodes and Hubs active=True enabled=True markers=204\n[Log] parent=Server Map | Web-aligned Nodes and Hubs self=True",
+      "localFixedCode": "using UnityEngine;\r\nusing InhaExpress.Client.MapClient;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            foreach (var map in Object.FindObjectsByType<CampusServerMap>(FindObjectsInactive.Include, FindObjectsSortMode.None))\r\n            {\r\n                result.Log(\"map=\" + map.name + \" active=\" + map.gameObject.activeInHierarchy + \" enabled=\" + map.enabled + \" markers=\" + map.markers.Length);\r\n                for (var t = map.transform; t != null; t = t.parent)\r\n                    result.Log(\"parent=\" + t.name + \" self=\" + t.gameObject.activeSelf);\r\n            }\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

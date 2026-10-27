@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Code": "using UnityEngine;using UnityEditor;using UnityEditor.SceneManagement;\ninternal class CommandScript : IRunCommand {public void Execute(ExecutionResult result){if(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name!=\"CampusTerrain\")EditorSceneManager.OpenScene(\"Assets/CampusSim/Scenes/CampusTerrain.unity\");var p=new Vector3(-40.8f,-4,-321.4f);foreach(var r in Object.FindObjectsByType<MeshRenderer>(FindObjectsSortMode.None))if(Vector3.Distance(r.bounds.center,p)<5)result.Log(r.name+\" parent=\"+r.transform.parent?.name+\" enabled=\"+r.enabled+\" material=\"+r.sharedMaterial?.name);}}",
+    "Title": "차고 내부 중복 표시 확인"
+  }
+}

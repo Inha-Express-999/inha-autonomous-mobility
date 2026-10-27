@@ -1,0 +1,3 @@
+pointMoveChildFollow=true
+modelMoveDoesNotMovePoint=true
+vehiclesUnchanged=true

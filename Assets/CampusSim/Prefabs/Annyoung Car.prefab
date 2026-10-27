@@ -591,7 +591,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e93ea9a6b6105c40b74d451067489a5, type: 3}
   m_Name: ''
   m_EditorClassIdentifier: Assembly-CSharp::InhaExpress.Client.Presentation.VehicleController
-  maxForwardSpeedKmh: 36
+  maxForwardSpeedKmh: 50
   maxReverseSpeedKmh: 12.6
   motorTorque: 1500
   maxSteerAngle: 30

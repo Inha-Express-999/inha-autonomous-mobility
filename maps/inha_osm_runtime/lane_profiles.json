@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "geometry_hash": "32950491597bd9b134fda86eaaa95af1fc25737413f6841a04d94dd854cad7c4",
+  "geometry_hash": "a912d2bd63406d1c1d4e553f5e03dba23750cb566a44d5560018609ff32d13ce",
   "sources": {
     "Assets/InhaCampus/Source/campus.json": "a7d6b6b4049291b38e3325e1295667708d587b9f611c85beab8f7ca76e03241a",
     "Assets/CampusSim/Data/road_connections_scoped.json": "1ac3a77fa2bbe3763e23490b86e6944721c89dccd8e32150bb48b939c32aecb0",
@@ -26,10 +26,10 @@
     {
       "edge": [
         "clip:expanded:216916383:0:0.706021600575",
-        "osm:4741793209",
+        "split:216916383:0:0:0.883296855",
         "216916383:0:0:0:f"
       ],
-      "lane_id": "clip:expanded:216916383:0:0.706021600575|osm:4741793209|216916383:0:0:0:f|right",
+      "lane_id": "clip:expanded:216916383:0:0.706021600575|split:216916383:0:0:0.883296855|216916383:0:0:0:f|right",
       "authored_road_width_m": 7,
       "lane_width_m": 3.5,
       "right_offset_m": 1.75,
@@ -54,10 +54,10 @@
     {
       "edge": [
         "clip:expanded:481241714:0:0.136187164195",
-        "split:481241714:0:0:0.222804228624",
+        "split:481241714:0:0:0.426317296",
         "481241714:0:0:0:f"
       ],
-      "lane_id": "clip:expanded:481241714:0:0.136187164195|split:481241714:0:0:0.222804228624|481241714:0:0:0:f|right",
+      "lane_id": "clip:expanded:481241714:0:0.136187164195|split:481241714:0:0:0.426317296|481241714:0:0:0:f|right",
       "authored_road_width_m": 7,
       "lane_width_m": 3.5,
       "right_offset_m": 1.75,
@@ -2924,10 +2924,10 @@
     {
       "edge": [
         "osm:4741759444",
-        "split:481241663:0:0:0.903003431591",
+        "split:481241663:0:0:0.478845445",
         "481241663:0:0:0:f"
       ],
-      "lane_id": "osm:4741759444|split:481241663:0:0:0.903003431591|481241663:0:0:0:f|right",
+      "lane_id": "osm:4741759444|split:481241663:0:0:0.478845445|481241663:0:0:0:f|right",
       "authored_road_width_m": 7,
       "lane_width_m": 3.5,
       "right_offset_m": 1.75,
@@ -4730,10 +4730,10 @@
     {
       "edge": [
         "osm:4741759648",
-        "split:481241714:0:0:0.222804228624",
+        "split:481241714:0:0:0.426317296",
         "481241714:0:0:1:r"
       ],
-      "lane_id": "osm:4741759648|split:481241714:0:0:0.222804228624|481241714:0:0:1:r|right",
+      "lane_id": "osm:4741759648|split:481241714:0:0:0.426317296|481241714:0:0:1:r|right",
       "authored_road_width_m": 7,
       "lane_width_m": 3.5,
       "right_offset_m": 1.75,
@@ -4870,10 +4870,10 @@
     {
       "edge": [
         "osm:4741793209",
-        "clip:expanded:216916383:0:0.706021600575",
-        "216916383:0:0:0:r"
+        "osm:2262335939",
+        "216916383:1:0:0:f"
       ],
-      "lane_id": "osm:4741793209|clip:expanded:216916383:0:0.706021600575|216916383:0:0:0:r|right",
+      "lane_id": "osm:4741793209|osm:2262335939|216916383:1:0:0:f|right",
       "authored_road_width_m": 7,
       "lane_width_m": 3.5,
       "right_offset_m": 1.75,
@@ -4884,10 +4884,10 @@
     {
       "edge": [
         "osm:4741793209",
-        "osm:2262335939",
-        "216916383:1:0:0:f"
+        "split:216916383:0:0:0.883296855",
+        "216916383:0:0:1:r"
       ],
-      "lane_id": "osm:4741793209|osm:2262335939|216916383:1:0:0:f|right",
+      "lane_id": "osm:4741793209|split:216916383:0:0:0.883296855|216916383:0:0:1:r|right",
       "authored_road_width_m": 7,
       "lane_width_m": 3.5,
       "right_offset_m": 1.75,
@@ -5276,10 +5276,10 @@
     {
       "edge": [
         "osm:9767122971",
-        "split:481241663:0:0:0.903003431591",
+        "split:481241663:0:0:0.478845445",
         "481241663:0:0:1:r"
       ],
-      "lane_id": "osm:9767122971|split:481241663:0:0:0.903003431591|481241663:0:0:1:r|right",
+      "lane_id": "osm:9767122971|split:481241663:0:0:0.478845445|481241663:0:0:1:r|right",
       "authored_road_width_m": 7,
       "lane_width_m": 3.5,
       "right_offset_m": 1.75,
@@ -5359,6 +5359,34 @@
     },
     {
       "edge": [
+        "split:216916383:0:0:0.883296855",
+        "clip:expanded:216916383:0:0.706021600575",
+        "216916383:0:0:0:r"
+      ],
+      "lane_id": "split:216916383:0:0:0.883296855|clip:expanded:216916383:0:0.706021600575|216916383:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "split:216916383:0:0:0.883296855",
+        "osm:4741793209",
+        "216916383:0:0:1:f"
+      ],
+      "lane_id": "split:216916383:0:0:0.883296855|osm:4741793209|216916383:0:0:1:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
         "split:216916383:3:0:0.236611800777",
         "osm:2262335940",
         "216916383:3:0:1:f"
@@ -5415,11 +5443,11 @@
     },
     {
       "edge": [
-        "split:481241663:0:0:0.903003431591",
+        "split:481241663:0:0:0.478845445",
         "osm:4741759444",
         "481241663:0:0:0:r"
       ],
-      "lane_id": "split:481241663:0:0:0.903003431591|osm:4741759444|481241663:0:0:0:r|right",
+      "lane_id": "split:481241663:0:0:0.478845445|osm:4741759444|481241663:0:0:0:r|right",
       "authored_road_width_m": 7,
       "lane_width_m": 3.5,
       "right_offset_m": 1.75,
@@ -5429,11 +5457,11 @@
     },
     {
       "edge": [
-        "split:481241663:0:0:0.903003431591",
+        "split:481241663:0:0:0.478845445",
         "osm:9767122971",
         "481241663:0:0:1:f"
       ],
-      "lane_id": "split:481241663:0:0:0.903003431591|osm:9767122971|481241663:0:0:1:f|right",
+      "lane_id": "split:481241663:0:0:0.478845445|osm:9767122971|481241663:0:0:1:f|right",
       "authored_road_width_m": 7,
       "lane_width_m": 3.5,
       "right_offset_m": 1.75,
@@ -5555,11 +5583,11 @@
     },
     {
       "edge": [
-        "split:481241714:0:0:0.222804228624",
+        "split:481241714:0:0:0.426317296",
         "clip:expanded:481241714:0:0.136187164195",
         "481241714:0:0:0:r"
       ],
-      "lane_id": "split:481241714:0:0:0.222804228624|clip:expanded:481241714:0:0.136187164195|481241714:0:0:0:r|right",
+      "lane_id": "split:481241714:0:0:0.426317296|clip:expanded:481241714:0:0.136187164195|481241714:0:0:0:r|right",
       "authored_road_width_m": 7,
       "lane_width_m": 3.5,
       "right_offset_m": 1.75,
@@ -5569,11 +5597,11 @@
     },
     {
       "edge": [
-        "split:481241714:0:0:0.222804228624",
+        "split:481241714:0:0:0.426317296",
         "osm:4741759648",
         "481241714:0:0:1:f"
       ],
-      "lane_id": "split:481241714:0:0:0.222804228624|osm:4741759648|481241714:0:0:1:f|right",
+      "lane_id": "split:481241714:0:0:0.426317296|osm:4741759648|481241714:0:0:1:f|right",
       "authored_road_width_m": 7,
       "lane_width_m": 3.5,
       "right_offset_m": 1.75,
@@ -5610,5 +5638,5 @@
       "verification": "synthetic_authored_width_not_surveyed"
     }
   ],
-  "profile_hash": "e7ba7d3c1b56dfea2ea874af26f5ee2c160baf9ee47e8e81ce8a1c2660b0588c"
+  "profile_hash": "5b106cc9ce5c406082c674b8a48bfdbe9a78b483963d0c61c54a951a5952d1ce"
 }

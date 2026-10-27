@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] Saved Scene View\",\n    \"localFixedCode\": \"using UnityEngine;\\r\\nusing UnityEditor;\\r\\nusing System.IO;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            var cam = SceneView.lastActiveSceneView.camera;\\r\\n            var rt = new RenderTexture(1280, 720, 24);\\r\\n            var old = cam.targetTexture;\\r\\n            var active = RenderTexture.active;\\r\\n            cam.targetTexture = rt;\\r\\n            cam.Render();\\r\\n            RenderTexture.active = rt;\\r\\n            var tex = new Texture2D(1280, 720, TextureFormat.RGB24, false);\\r\\n            tex.ReadPixels(new Rect(0, 0, 1280, 720), 0, 0);\\r\\n            tex.Apply();\\r\\n            File.WriteAllBytes(\\\"artifacts/high_speed_drive/hitech-ground-overview.png\\\", tex.EncodeToPNG());\\r\\n            cam.targetTexture = old;\\r\\n            RenderTexture.active = active;\\r\\n            Object.DestroyImmediate(tex);\\r\\n            Object.DestroyImmediate(rt);\\r\\n            result.Log(\\\"Saved Scene View\\\");\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] Saved Scene View",
+      "localFixedCode": "using UnityEngine;\r\nusing UnityEditor;\r\nusing System.IO;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            var cam = SceneView.lastActiveSceneView.camera;\r\n            var rt = new RenderTexture(1280, 720, 24);\r\n            var old = cam.targetTexture;\r\n            var active = RenderTexture.active;\r\n            cam.targetTexture = rt;\r\n            cam.Render();\r\n            RenderTexture.active = rt;\r\n            var tex = new Texture2D(1280, 720, TextureFormat.RGB24, false);\r\n            tex.ReadPixels(new Rect(0, 0, 1280, 720), 0, 0);\r\n            tex.Apply();\r\n            File.WriteAllBytes(\"artifacts/high_speed_drive/hitech-ground-overview.png\", tex.EncodeToPNG());\r\n            cam.targetTexture = old;\r\n            RenderTexture.active = active;\r\n            Object.DestroyImmediate(tex);\r\n            Object.DestroyImmediate(rt);\r\n            result.Log(\"Saved Scene View\");\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

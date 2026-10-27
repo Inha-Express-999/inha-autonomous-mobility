@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] reserved=True driving_before=True driving_after=True target=6.813645 result=승객 운송과 거점 복귀가 끝난 후 목적지를 변경할 수 있습니다\",\n    \"localFixedCode\": \"using UnityEngine;\\r\\nusing InhaExpress.Client.Presentation;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            var c = Object.FindFirstObjectByType<UnityAutonomousClient>();\\r\\n            if (c == null || !c.TransportReserved)\\r\\n            {\\r\\n                result.Log(\\\"NOT_RESERVED\\\");\\r\\n                return;\\r\\n            }\\r\\n\\r\\n            bool before = c.IsDriving;\\r\\n            c.StartMission(\\\"main_gate_road_candidate\\\");\\r\\n            result.Log(\\\"reserved=\\\" + c.TransportReserved + \\\" driving_before=\\\" + before + \\\" driving_after=\\\" + c.IsDriving + \\\" target=\\\" + c.LastTargetSpeedKmh + \\\" result=\\\" + c.MissionResult);\\r\\n            ScreenCapture.CaptureScreenshot(\\\"artifacts/high_speed_drive/request-ui-running.png\\\");\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] reserved=True driving_before=True driving_after=True target=6.813645 result=승객 운송과 거점 복귀가 끝난 후 목적지를 변경할 수 있습니다",
+      "localFixedCode": "using UnityEngine;\r\nusing InhaExpress.Client.Presentation;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            var c = Object.FindFirstObjectByType<UnityAutonomousClient>();\r\n            if (c == null || !c.TransportReserved)\r\n            {\r\n                result.Log(\"NOT_RESERVED\");\r\n                return;\r\n            }\r\n\r\n            bool before = c.IsDriving;\r\n            c.StartMission(\"main_gate_road_candidate\");\r\n            result.Log(\"reserved=\" + c.TransportReserved + \" driving_before=\" + before + \" driving_after=\" + c.IsDriving + \" target=\" + c.LastTargetSpeedKmh + \" result=\" + c.MissionResult);\r\n            ScreenCapture.CaptureScreenshot(\"artifacts/high_speed_drive/request-ui-running.png\");\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

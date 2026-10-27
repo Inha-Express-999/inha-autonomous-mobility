@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Title": "주행 측정 참조 확인",
+    "Code": "using UnityEngine; using InhaExpress.Client.Presentation; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { result.Log(\"client=\"+Object.FindFirstObjectByType<UnityAutonomousClient>()+\" vehicle=\"+Object.FindFirstObjectByType<VehicleController>()+\" hud=\"+Object.FindFirstObjectByType<WebClientHud>()); foreach(var b in Object.FindObjectsByType<MonoBehaviour>(FindObjectsSortMode.None)) if(b is IAutonomousVehicle) result.Log(\"vehicleType=\"+b.GetType().FullName+\" name=\"+b.name); foreach(var cam in Object.FindObjectsByType<Camera>(FindObjectsSortMode.None)) result.Log(\"camera=\"+cam.name+\" enabled=\"+cam.enabled); } }"
+  },
+  "name": "Unity_RunCommand"
+}

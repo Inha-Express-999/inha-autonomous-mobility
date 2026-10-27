@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Code": "using UnityEngine; using System.IO; using InhaExpress.Client.Presentation;\n[System.Serializable] public class HomePoseRecord { public string vehicleId; public Vector3 position; public Quaternion rotation; }\ninternal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { var v=Object.FindFirstObjectByType<VehicleController>(); var c=Object.FindFirstObjectByType<UnityAutonomousClient>(); if(v==null || c.TransportReserved || c.IsDriving || v.VehicleBody.linearVelocity.magnitude>.01f) { result.Log(\"NOT_PARKED\");return;} File.WriteAllText(\"artifacts/high_speed_drive/v01-home-pose.json\",JsonUtility.ToJson(new HomePoseRecord{vehicleId=v.OperatorVehicleId,position=v.transform.position,rotation=v.transform.rotation},true)); result.Log(\"HOME_POSE_SAVED \"+v.transform.position); } }",
+    "Title": "실제 차고 정차 자세 저장"
+  }
+}

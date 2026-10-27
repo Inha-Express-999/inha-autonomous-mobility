@@ -1,0 +1,7 @@
+durationS=8.002933
+horizontalDistanceM=8.238823
+peakSpeedMps=1.553295
+peakVerticalSpeedMps=0.4143445
+samples=2490
+allWheelsUngroundedSamples=0
+finalSpeedMps=1.703322E-05

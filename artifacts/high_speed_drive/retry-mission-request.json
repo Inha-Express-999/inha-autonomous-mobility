@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Title": "Read mission response",
+    "Code": "using UnityEngine; using InhaExpress.Client.Presentation; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) {var c=Object.FindFirstObjectByType<UnityAutonomousClient>(); result.Log(\"result=\"+c.MissionResult+\" reason=\"+c.DiagnosticReason); c.StartMission(\"hitech_road_candidate\");}}"
+  }
+}

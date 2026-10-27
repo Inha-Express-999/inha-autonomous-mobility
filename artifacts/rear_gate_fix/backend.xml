@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="9" failures="0" skipped="0" tests="19" time="3.677" timestamp="2026-10-27T14:16:21.567961+09:00" hostname="DESKTOP-SBRPQ6K"><testcase classname="tests.test_editor_locations" name="test_snapper_reuses_existing_stop_cut_and_road_endpoint" time="0.001" /><testcase classname="tests.test_editor_locations" name="test_projection_preview_is_read_only" time="0.002"><error message="failed on setup with &quot;FileNotFoundError: [WinError 3] 지정된 경로를 찾을 수 없습니다: 'C:\\Users\\sy\\Documents\\GitHub\\inha-autonomous-mobility\\artifacts\\rear_gate_fix\\pytest'&quot;">self = WindowsPath('C:/Users/sy/Documents/GitHub/inha-autonomous-mobility/artifacts/rear_gate_fix/pytest')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+&gt;           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] 지정된 경로를 찾을 수 없습니다: 'C:\\Users\\sy\\Documents\\GitHub\\inha-autonomous-mobility\\artifacts\\rear_gate_fix\\pytest'
+
+C:\Python314\Lib\pathlib\__init__.py:1011: FileNotFoundError</error></testcase><testcase classname="tests.test_editor_locations" name="test_preview_hash_change_blocks_publication" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [WinError 3] 지정된 경로를 찾을 수 없습니다: 'C:\\Users\\sy\\Documents\\GitHub\\inha-autonomous-mobility\\artifacts\\rear_gate_fix\\pytest'&quot;">self = WindowsPath('C:/Users/sy/Documents/GitHub/inha-autonomous-mobility/artifacts/rear_gate_fix/pytest')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+&gt;           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] 지정된 경로를 찾을 수 없습니다: 'C:\\Users\\sy\\Documents\\GitHub\\inha-autonomous-mobility\\artifacts\\rear_gate_fix\\pytest'
+
+C:\Python314\Lib\pathlib\__init__.py:1011: FileNotFoundError</error></testcase><testcase classname="tests.test_editor_locations" name="test_validated_preview_matches_published_map" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [WinError 3] 지정된 경로를 찾을 수 없습니다: 'C:\\Users\\sy\\Documents\\GitHub\\inha-autonomous-mobility\\artifacts\\rear_gate_fix\\pytest'&quot;">self = WindowsPath('C:/Users/sy/Documents/GitHub/inha-autonomous-mobility/artifacts/rear_gate_fix/pytest')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+&gt;           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] 지정된 경로를 찾을 수 없습니다: 'C:\\Users\\sy\\Documents\\GitHub\\inha-autonomous-mobility\\artifacts\\rear_gate_fix\\pytest'
+
+C:\Python314\Lib\pathlib\__init__.py:1011: FileNotFoundError</error></testcase><testcase classname="tests.test_editor_locations" name="test_invalid_location_contract[document0]" time="0.001" /><testcase classname="tests.test_editor_locations" name="test_invalid_location_contract[document1]" time="0.001" /><testcase classname="tests.test_editor_locations" name="test_invalid_location_contract[document2]" time="0.001" /><testcase classname="tests.test_editor_locations" name="test_invalid_location_contract[document3]" time="0.001" /><testcase classname="tests.test_editor_locations" name="test_stop_and_hub_move_preserves_ids_and_round_trip_routes" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [WinError 3] 지정된 경로를 찾을 수 없습니다: 'C:\\Users\\sy\\Documents\\GitHub\\inha-autonomous-mobility\\artifacts\\rear_gate_fix\\pytest'&quot;">self = WindowsPath('C:/Users/sy/Documents/GitHub/inha-autonomous-mobility/artifacts/rear_gate_fix/pytest')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+&gt;           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] 지정된 경로를 찾을 수 없습니다: 'C:\\Users\\sy\\Documents\\GitHub\\inha-autonomous-mobility\\artifacts\\rear_gate_fix\\pytest'
+
+C:\Python314\Lib\pathlib\__init__.py:1011: FileNotFoundError</error></testcase><testcase classname="tests.test_editor_locations" name="test_invalid_move_does_not_publish[row0]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [WinError 3] 지정된 경로를 찾을 수 없습니다: 'C:\\Users\\sy\\Documents\\GitHub\\inha-autonomous-mobility\\artifacts\\rear_gate_fix\\pytest'&quot;">self = WindowsPath('C:/Users/sy/Documents/GitHub/inha-autonomous-mobility/artifacts/rear_gate_fix/pytest')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+&gt;           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] 지정된 경로를 찾을 수 없습니다: 'C:\\Users\\sy\\Documents\\GitHub\\inha-autonomous-mobility\\artifacts\\rear_gate_fix\\pytest'
+
+C:\Python314\Lib\pathlib\__init__.py:1011: FileNotFoundError</error></testcase><testcase classname="tests.test_editor_locations" name="test_invalid_move_does_not_publish[row1]" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [WinError 3] 지정된 경로를 찾을 수 없습니다: 'C:\\Users\\sy\\Documents\\GitHub\\inha-autonomous-mobility\\artifacts\\rear_gate_fix\\pytest'&quot;">self = WindowsPath('C:/Users/sy/Documents/GitHub/inha-autonomous-mobility/artifacts/rear_gate_fix/pytest')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+&gt;           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] 지정된 경로를 찾을 수 없습니다: 'C:\\Users\\sy\\Documents\\GitHub\\inha-autonomous-mobility\\artifacts\\rear_gate_fix\\pytest'
+
+C:\Python314\Lib\pathlib\__init__.py:1011: FileNotFoundError</error></testcase><testcase classname="tests.test_editor_locations" name="test_editor_transaction_and_repeat_are_stable" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [WinError 3] 지정된 경로를 찾을 수 없습니다: 'C:\\Users\\sy\\Documents\\GitHub\\inha-autonomous-mobility\\artifacts\\rear_gate_fix\\pytest'&quot;">self = WindowsPath('C:/Users/sy/Documents/GitHub/inha-autonomous-mobility/artifacts/rear_gate_fix/pytest')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+&gt;           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] 지정된 경로를 찾을 수 없습니다: 'C:\\Users\\sy\\Documents\\GitHub\\inha-autonomous-mobility\\artifacts\\rear_gate_fix\\pytest'
+
+C:\Python314\Lib\pathlib\__init__.py:1011: FileNotFoundError</error></testcase><testcase classname="tests.test_editor_locations" name="test_busy_or_old_server_rolls_back_all_outputs" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [WinError 3] 지정된 경로를 찾을 수 없습니다: 'C:\\Users\\sy\\Documents\\GitHub\\inha-autonomous-mobility\\artifacts\\rear_gate_fix\\pytest'&quot;">self = WindowsPath('C:/Users/sy/Documents/GitHub/inha-autonomous-mobility/artifacts/rear_gate_fix/pytest')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+&gt;           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] 지정된 경로를 찾을 수 없습니다: 'C:\\Users\\sy\\Documents\\GitHub\\inha-autonomous-mobility\\artifacts\\rear_gate_fix\\pytest'
+
+C:\Python314\Lib\pathlib\__init__.py:1011: FileNotFoundError</error></testcase><testcase classname="tests.test_editor_locations" name="test_reload_rejects_remote_origin_stale_and_busy" time="0.329" /><testcase classname="tests.test_editor_locations" name="test_reload_activates_new_session_only_after_hash_check" time="0.001"><error message="failed on setup with &quot;FileNotFoundError: [WinError 3] 지정된 경로를 찾을 수 없습니다: 'C:\\Users\\sy\\Documents\\GitHub\\inha-autonomous-mobility\\artifacts\\rear_gate_fix\\pytest'&quot;">self = WindowsPath('C:/Users/sy/Documents/GitHub/inha-autonomous-mobility/artifacts/rear_gate_fix/pytest')
+mode = 448, parents = False, exist_ok = False
+
+    def mkdir(self, mode=0o777, parents=False, exist_ok=False):
+        """
+        Create a new directory at this given path.
+        """
+        try:
+&gt;           os.mkdir(self, mode)
+E           FileNotFoundError: [WinError 3] 지정된 경로를 찾을 수 없습니다: 'C:\\Users\\sy\\Documents\\GitHub\\inha-autonomous-mobility\\artifacts\\rear_gate_fix\\pytest'
+
+C:\Python314\Lib\pathlib\__init__.py:1011: FileNotFoundError</error></testcase><testcase classname="tests.test_unity_map" name="test_unity_projection_and_export_match_all_web_nodes_hubs_and_stops" time="0.058" /><testcase classname="tests.test_unity_map" name="test_unity_endpoint_shares_web_session_and_never_changes_its_controls" time="0.245" /><testcase classname="tests.test_unity_map" name="test_geometry_hash_detects_hub_binding_and_node_changes" time="0.051" /><testcase classname="tests.test_release_version" name="test_release_versions_match_without_changing_independent_contract_versions" time="0.068" /></testsuite></testsuites>

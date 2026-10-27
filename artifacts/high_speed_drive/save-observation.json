@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Title": "도착 위치의 후속 경로 실패 원인 기록",
+    "Code": "using UnityEngine; using InhaExpress.Client.Presentation; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { var c=Object.FindFirstObjectByType<UnityAutonomousClient>(); System.IO.File.WriteAllText(\"artifacts/high_speed_drive/library-arrived-observation.json\",c.LatestObservationJson); result.Log(\"saved localization\"); } }"
+  }
+}

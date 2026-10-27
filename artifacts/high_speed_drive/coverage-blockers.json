@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] INHA UNIVERSITY Group/INHA UNIVERSITY/02 Roads and pedestrian network/Junction aware kerbs bounds=Center: (5.93, -3.17, -117.50), Extents: (384.23, 5.74, 288.40) type=MeshCollider\\n[Log] INHA UNIVERSITY Group/INHA UNIVERSITY/03 Campus buildings/60주년기념관 | OSM 218189298_0/Photo inspired massing bounds=Center: (75.38, 24.26, 31.81), Extents: (43.78, 26.60, 61.14) type=MeshCollider\",\n    \"localFixedCode\": \"using UnityEngine;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            foreach (var c in Object.FindObjectsByType<Collider>(FindObjectsSortMode.None))\\r\\n                if (c.GetInstanceID() == 945330 || c.GetInstanceID() == 962910)\\r\\n                {\\r\\n                    string path = c.name;\\r\\n                    var t = c.transform.parent;\\r\\n                    while (t)\\r\\n                    {\\r\\n                        path = t.name + \\\"/\\\" + path;\\r\\n                        t = t.parent;\\r\\n                    }\\r\\n\\r\\n                    result.Log(path + \\\" bounds=\\\" + c.bounds + \\\" type=\\\" + c.GetType().Name);\\r\\n                }\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] INHA UNIVERSITY Group/INHA UNIVERSITY/02 Roads and pedestrian network/Junction aware kerbs bounds=Center: (5.93, -3.17, -117.50), Extents: (384.23, 5.74, 288.40) type=MeshCollider\n[Log] INHA UNIVERSITY Group/INHA UNIVERSITY/03 Campus buildings/60주년기념관 | OSM 218189298_0/Photo inspired massing bounds=Center: (75.38, 24.26, 31.81), Extents: (43.78, 26.60, 61.14) type=MeshCollider",
+      "localFixedCode": "using UnityEngine;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            foreach (var c in Object.FindObjectsByType<Collider>(FindObjectsSortMode.None))\r\n                if (c.GetInstanceID() == 945330 || c.GetInstanceID() == 962910)\r\n                {\r\n                    string path = c.name;\r\n                    var t = c.transform.parent;\r\n                    while (t)\r\n                    {\r\n                        path = t.name + \"/\" + path;\r\n                        t = t.parent;\r\n                    }\r\n\r\n                    result.Log(path + \" bounds=\" + c.bounds + \" type=\" + c.GetType().Name);\r\n                }\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

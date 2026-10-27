@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Code": "using UnityEngine; using UnityEditor; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { result.Log(\"playing=\"+EditorApplication.isPlaying+\" paused=\"+EditorApplication.isPaused+\" time=\"+Time.time); var t=typeof(EditorWindow).Assembly.GetType(\"UnityEditor.GameView\"); if(t!=null){var view=EditorWindow.GetWindow(t);view.Show();view.Focus();} Application.runInBackground=true; EditorApplication.QueuePlayerLoopUpdate(); result.Log(\"Game View focused\"); } }",
+    "Title": "Game View ?? ??"
+  },
+  "name": "Unity_RunCommand"
+}

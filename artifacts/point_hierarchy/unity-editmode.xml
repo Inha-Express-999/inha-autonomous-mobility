@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="3" result="Passed" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-27 04:56:22Z" end-time="2026-10-27 04:57:49Z" duration="86.9399608">
+  <test-suite type="TestSuite" id="1000" name="Inha Mobil" fullname="Inha Mobil" runstate="Runnable" testcasecount="57" result="Passed" start-time="2026-10-27 04:56:22Z" end-time="2026-10-27 04:57:49Z" duration="86.939961" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="EditMode" />
+    </properties>
+    <test-suite type="Assembly" id="1069" name="InhaExpress.Client.Tests.EditMode.dll" fullname="C:/Users/sy/Documents/GitHub/inha-autonomous-mobility/Library/ScriptAssemblies/InhaExpress.Client.Tests.EditMode.dll" runstate="Runnable" testcasecount="57" result="Passed" start-time="2026-10-27 04:56:22Z" end-time="2026-10-27 04:57:49Z" duration="86.929566" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="22964" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="EditMode" />
+        <property name="EditorOnly" value="True" />
+      </properties>
+      <test-suite type="TestSuite" id="1070" name="InhaExpress" fullname="InhaExpress" runstate="Runnable" testcasecount="57" result="Passed" start-time="2026-10-27 04:56:22Z" end-time="2026-10-27 04:57:49Z" duration="86.928525" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1071" name="Client" fullname="InhaExpress.Client" runstate="Runnable" testcasecount="57" result="Passed" start-time="2026-10-27 04:56:22Z" end-time="2026-10-27 04:57:49Z" duration="86.927838" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1072" name="Tests" fullname="InhaExpress.Client.Tests" runstate="Runnable" testcasecount="57" result="Passed" start-time="2026-10-27 04:56:22Z" end-time="2026-10-27 04:57:49Z" duration="86.927140" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1065" name="ServerMapTests" fullname="InhaExpress.Client.Tests.ServerMapTests" classname="InhaExpress.Client.Tests.ServerMapTests" runstate="Runnable" testcasecount="3" result="Passed" start-time="2026-10-27 04:56:22Z" end-time="2026-10-27 04:57:49Z" duration="86.925638" total="3" passed="3" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1068" name="ExistingCampusTerrainContainsAllAnchorsAtServerXZWithoutPhysicsComponents" fullname="InhaExpress.Client.Tests.ServerMapTests.ExistingCampusTerrainContainsAllAnchorsAtServerXZWithoutPhysicsComponents" methodname="ExistingCampusTerrainContainsAllAnchorsAtServerXZWithoutPhysicsComponents" classname="InhaExpress.Client.Tests.ServerMapTests" runstate="Runnable" seed="669019595" result="Passed" start-time="2026-10-27 04:56:22Z" end-time="2026-10-27 04:57:49Z" duration="86.830679" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1066" name="ExportHasExactServerTopologyAndRejectsInvalidBindings" fullname="InhaExpress.Client.Tests.ServerMapTests.ExportHasExactServerTopologyAndRejectsInvalidBindings" methodname="ExportHasExactServerTopologyAndRejectsInvalidBindings" classname="InhaExpress.Client.Tests.ServerMapTests" runstate="Runnable" seed="798940764" result="Passed" start-time="2026-10-27 04:57:49Z" end-time="2026-10-27 04:57:49Z" duration="0.052084" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1067" name="RemoteMapMismatchIsRejectedEvenIfItReportsTheSameHash" fullname="InhaExpress.Client.Tests.ServerMapTests.RemoteMapMismatchIsRejectedEvenIfItReportsTheSameHash" methodname="RemoteMapMismatchIsRejectedEvenIfItReportsTheSameHash" classname="InhaExpress.Client.Tests.ServerMapTests" runstate="Runnable" seed="2114674527" result="Passed" start-time="2026-10-27 04:57:49Z" end-time="2026-10-27 04:57:49Z" duration="0.018438" asserts="0">
+                <properties>
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:/Users/sy/AppData/LocalLow/DefaultCompany/Inha Mobil\TestResults.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

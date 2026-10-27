@@ -1,0 +1,21 @@
+{
+  "date": "2026-10-27",
+  "project_version": "0.5.0.0",
+  "committed": false,
+  "backend_tests_passed": 307,
+  "new_backend_tests": 12,
+  "unity_mcp_compilation_verified": true,
+  "edit_save_play_without_manual_apply_verified": true,
+  "live_server_and_unity_run_id_match": true,
+  "live_server_and_unity_geometry_hash_match": true,
+  "lane_profile_regeneration_verified": true,
+  "invalid_off_road_anchor_blocks_play": true,
+  "test_positions_restored": true,
+  "final_editor_playing": false,
+  "baseline_geometry_hash": "32950491597bd9b134fda86eaaa95af1fc25737413f6841a04d94dd854cad7c4",
+  "live_test_geometry_hash": "f31592283aec4608ceca5401b08c2889f84ebef01daebd9a1525884bdb23cf81",
+  "live_test_run_id": "9a44bc51008742b288db61f42c0627bc",
+  "browser_render_verification": false,
+  "physical_driving_verification": false,
+  "evidence": ["direct-play-unity.txt", "direct-play-server.json", "off-road-play-check.txt", "final-editor.txt", "backend-final.xml"]
+}

@@ -1,0 +1,25 @@
+{
+  "source": "hitech-turn-roundtrip.csv",
+  "samples": 836,
+  "elapsed_s": 18.079152900000054,
+  "commanded_directions": [
+    1,
+    -1,
+    1
+  ],
+  "transitions": [
+    {
+      "to_direction": -1,
+      "preceding_brake_samples": 19,
+      "last_brake_speed_kmh": 0.023562820628285408
+    },
+    {
+      "to_direction": 1,
+      "preceding_brake_samples": 19,
+      "last_brake_speed_kmh": 0.007897784560918808
+    }
+  ],
+  "peak_measured_speed_kmh": 2.1574337482452393,
+  "all_wheels_airborne_samples": 0,
+  "limitation": "CSV sampling is not every control tick; speed is body magnitude, direction is commanded sign."
+}

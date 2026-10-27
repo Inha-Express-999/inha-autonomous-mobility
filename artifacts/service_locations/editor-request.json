@@ -1,0 +1,28 @@
+{
+    "schema_version": 1,
+    "base_geometry_hash": "a912d2bd63406d1c1d4e553f5e03dba23750cb566a44d5560018609ff32d13ce",
+    "stops": [
+        {
+            "id": "biryong_plaza_road_candidate",
+            "x": 227.23400839916872,
+            "z": -125.82083241883695
+        },
+        {
+            "id": "hitech_road_candidate",
+            "x": 377.0239700339208,
+            "z": -2.07955432337144
+        },
+        {
+            "id": "inha_station_road_candidate",
+            "x": -301.6883673675083,
+            "z": -317.04793058425227
+        }
+    ],
+    "hubs": [
+        {
+            "id": "rear_gate",
+            "x": 258.83105049297458,
+            "z": 61.1592116317712
+        }
+    ]
+}

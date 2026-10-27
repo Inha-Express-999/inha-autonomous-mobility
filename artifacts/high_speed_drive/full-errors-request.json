@@ -1,0 +1,8 @@
+{
+  "arguments": {
+    "maxEntries": 8,
+    "includeStackTrace": true,
+    "logTypes": "Error,Exception"
+  },
+  "name": "Unity_GetConsoleLogs"
+}

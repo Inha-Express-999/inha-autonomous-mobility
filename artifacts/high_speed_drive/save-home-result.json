@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] HOME_POSE_SAVED (-41.65, -4.53, -320.05)\",\n    \"localFixedCode\": \"using UnityEngine;\\r\\nusing System.IO;\\r\\nusing InhaExpress.Client.Presentation;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    [System.Serializable]\\r\\n    public class HomePoseRecord\\r\\n    {\\r\\n        public string vehicleId;\\r\\n        public Vector3 position;\\r\\n        public Quaternion rotation;\\r\\n    }\\r\\n\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            var v = Object.FindFirstObjectByType<VehicleController>();\\r\\n            var c = Object.FindFirstObjectByType<UnityAutonomousClient>();\\r\\n            if (v == null || c.TransportReserved || c.IsDriving || v.VehicleBody.linearVelocity.magnitude > .01f)\\r\\n            {\\r\\n                result.Log(\\\"NOT_PARKED\\\");\\r\\n                return;\\r\\n            }\\r\\n\\r\\n            File.WriteAllText(\\\"artifacts/high_speed_drive/v01-home-pose.json\\\", JsonUtility.ToJson(new HomePoseRecord{vehicleId = v.OperatorVehicleId, position = v.transform.position, rotation = v.transform.rotation}, true));\\r\\n            result.Log(\\\"HOME_POSE_SAVED \\\" + v.transform.position);\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] HOME_POSE_SAVED (-41.65, -4.53, -320.05)",
+      "localFixedCode": "using UnityEngine;\r\nusing System.IO;\r\nusing InhaExpress.Client.Presentation;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    [System.Serializable]\r\n    public class HomePoseRecord\r\n    {\r\n        public string vehicleId;\r\n        public Vector3 position;\r\n        public Quaternion rotation;\r\n    }\r\n\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            var v = Object.FindFirstObjectByType<VehicleController>();\r\n            var c = Object.FindFirstObjectByType<UnityAutonomousClient>();\r\n            if (v == null || c.TransportReserved || c.IsDriving || v.VehicleBody.linearVelocity.magnitude > .01f)\r\n            {\r\n                result.Log(\"NOT_PARKED\");\r\n                return;\r\n            }\r\n\r\n            File.WriteAllText(\"artifacts/high_speed_drive/v01-home-pose.json\", JsonUtility.ToJson(new HomePoseRecord{vehicleId = v.OperatorVehicleId, position = v.transform.position, rotation = v.transform.rotation}, true));\r\n            result.Log(\"HOME_POSE_SAVED \" + v.transform.position);\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

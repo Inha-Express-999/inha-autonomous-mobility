@@ -1,0 +1,352 @@
+[
+  {
+    "id": "anniversary_60_road_candidate",
+    "landmark_id": "anniversary_60",
+    "node_id": "split:216916383:4:0:0.893099911983",
+    "position_xy_m": [
+      90.3066249083672,
+      97.44940101143288
+    ],
+    "unity_xz_m": [
+      90.19625450609568,
+      97.4435429833315
+    ],
+    "entrance_id": "anniversary_60_general",
+    "entrance_unity_xz_m": [
+      83.39986,
+      75.1586
+    ],
+    "entrance_gap_m": 23.30188155167219,
+    "step_free_access": false,
+    "verification_status": "UNVERIFIED_ROAD_PROJECTION_CANDIDATE",
+    "entrance_verification_status": "synthetic_facade_entrances_not_verified_access",
+    "osm_way_id": "216916383",
+    "selection_policy": "nearest_core_road",
+    "round_trip_reachable": true
+  },
+  {
+    "id": "biryong_plaza_road_candidate",
+    "landmark_id": "biryong_plaza",
+    "node_id": "split:481241663:0:0:0.903003431591",
+    "position_xy_m": [
+      241.0662857064407,
+      -97.06105559383852
+    ],
+    "unity_xz_m": [
+      240.76604356401157,
+      -97.05920730072293
+    ],
+    "entrance_id": "biryong_plaza_general",
+    "entrance_unity_xz_m": [
+      253.528717,
+      -103.07827
+    ],
+    "entrance_gap_m": 14.125351065647576,
+    "step_free_access": false,
+    "verification_status": "UNVERIFIED_ROAD_PROJECTION_CANDIDATE",
+    "entrance_verification_status": "osm_entrance_positions_synthetic_roles_and_pavilions_access_unknown",
+    "osm_way_id": "481241663",
+    "selection_policy": "nearest_core_road",
+    "round_trip_reachable": true
+  },
+  {
+    "id": "building_2_road_candidate",
+    "landmark_id": "building_2",
+    "node_id": "split:216916383:3:0:0.236611800777",
+    "position_xy_m": [
+      195.59447103201182,
+      65.87355398404289
+    ],
+    "unity_xz_m": [
+      195.3546806575184,
+      65.86763204420052
+    ],
+    "entrance_id": "building_2_general",
+    "entrance_unity_xz_m": [
+      191.3657,
+      52.4189148
+    ],
+    "entrance_gap_m": 14.029932709565315,
+    "step_free_access": false,
+    "verification_status": "UNVERIFIED_ROAD_PROJECTION_CANDIDATE",
+    "entrance_verification_status": "synthetic_facade_entrances_not_verified_access",
+    "osm_way_id": "216916383",
+    "selection_policy": "nearest_core_road",
+    "round_trip_reachable": true
+  },
+  {
+    "id": "building_5_road_candidate",
+    "landmark_id": "building_5",
+    "node_id": "split:937727088:0:0:0.399868428418",
+    "position_xy_m": [
+      28.726281276649587,
+      126.12707829598756
+    ],
+    "unity_xz_m": [
+      28.6912714571284,
+      126.12007708850243
+    ],
+    "entrance_id": "building_5_general",
+    "entrance_unity_xz_m": [
+      27.8830185,
+      124.427994
+    ],
+    "entrance_gap_m": 1.8757210854636546,
+    "step_free_access": false,
+    "verification_status": "UNVERIFIED_ROAD_PROJECTION_CANDIDATE",
+    "entrance_verification_status": "synthetic_facade_entrances_not_verified_access",
+    "osm_way_id": "937727088",
+    "selection_policy": "nearest_core_road",
+    "round_trip_reachable": true
+  },
+  {
+    "id": "dorm_1_road_candidate",
+    "landmark_id": "dorm_1",
+    "node_id": "clip:expanded:1390060991:3:0.579325503739",
+    "position_xy_m": [
+      74.48308190539865,
+      -468.5591462409418
+    ],
+    "unity_xz_m": [
+      74.38700067568973,
+      -468.53386633269224
+    ],
+    "entrance_id": "dorm_1_general",
+    "entrance_unity_xz_m": [
+      69.4203339,
+      -465.9238
+    ],
+    "entrance_gap_m": 5.616468846155147,
+    "step_free_access": false,
+    "verification_status": "UNVERIFIED_ROAD_PROJECTION_CANDIDATE",
+    "entrance_verification_status": "osm_footprint_photo_guided_synthetic_height_and_entrances",
+    "osm_way_id": "1390060991",
+    "selection_policy": "pinned_corridor_way",
+    "round_trip_reachable": true
+  },
+  {
+    "id": "dorm_2_road_candidate",
+    "landmark_id": "dorm_2",
+    "node_id": "clip:expanded:471332807:2:0.630248405646",
+    "position_xy_m": [
+      564.2577524447892,
+      -305.78658812358225
+    ],
+    "unity_xz_m": [
+      563.5408748343275,
+      -305.78892697124047
+    ],
+    "entrance_id": "dorm_2_general",
+    "entrance_unity_xz_m": [
+      551.502258,
+      -305.7918
+    ],
+    "entrance_gap_m": 12.053931454301964,
+    "step_free_access": false,
+    "verification_status": "UNVERIFIED_ROAD_PROJECTION_CANDIDATE",
+    "entrance_verification_status": "osm_footprint_photo_guided_synthetic_height_and_entrances",
+    "osm_way_id": "471332807",
+    "selection_policy": "pinned_corridor_way",
+    "round_trip_reachable": true
+  },
+  {
+    "id": "dorm_3_road_candidate",
+    "landmark_id": "dorm_3",
+    "node_id": "osm:4654965040",
+    "position_xy_m": [
+      564.8167676274949,
+      -376.93397300193624
+    ],
+    "unity_xz_m": [
+      564.0943664487879,
+      -376.932471999183
+    ],
+    "entrance_id": "dorm_3_general",
+    "entrance_unity_xz_m": [
+      543.6907,
+      -385.661072
+    ],
+    "entrance_gap_m": 22.216520066908508,
+    "step_free_access": false,
+    "verification_status": "UNVERIFIED_ROAD_PROJECTION_CANDIDATE",
+    "entrance_verification_status": "official_map_relative_location_approximate_outline_synthetic_entrances",
+    "osm_way_id": "471332807",
+    "selection_policy": "pinned_corridor_way",
+    "round_trip_reachable": true
+  },
+  {
+    "id": "hitech_road_candidate",
+    "landmark_id": "hitech",
+    "node_id": "split:481241714:0:0:0.222804228624",
+    "position_xy_m": [
+      382.18229362468304,
+      9.727419548657101
+    ],
+    "unity_xz_m": [
+      381.7111838489037,
+      9.718125140509528
+    ],
+    "entrance_id": "hitech_general",
+    "entrance_unity_xz_m": [
+      351.575653,
+      21.7191582
+    ],
+    "entrance_gap_m": 32.472028443426545,
+    "step_free_access": false,
+    "verification_status": "UNVERIFIED_ROAD_PROJECTION_CANDIDATE",
+    "entrance_verification_status": "synthetic_facade_entrances_not_verified_access",
+    "osm_way_id": "481241714",
+    "selection_policy": "pinned_corridor_way",
+    "round_trip_reachable": true
+  },
+  {
+    "id": "inha_station_road_candidate",
+    "landmark_id": "inha_station",
+    "node_id": "clip:expanded:955217469:10:0.364442941943",
+    "position_xy_m": [
+      -302.07255175817187,
+      -317.0598269194758
+    ],
+    "unity_xz_m": [
+      -301.6883673675083,
+      -317.04793058425224
+    ],
+    "entrance_id": "inha_station_general_exit_7",
+    "entrance_unity_xz_m": [
+      -286.0683,
+      -313.9227
+    ],
+    "entrance_gap_m": 15.949180179399624,
+    "step_free_access": false,
+    "verification_status": "UNVERIFIED_ROAD_PROJECTION_CANDIDATE",
+    "entrance_verification_status": "osm_exit_7_wheelchair_no_accessible_entrance_unresolved",
+    "osm_way_id": "955217469",
+    "selection_policy": "pinned_corridor_way",
+    "round_trip_reachable": true
+  },
+  {
+    "id": "library_road_candidate",
+    "landmark_id": "library",
+    "node_id": "split:481241685:2:0:0.669398976745",
+    "position_xy_m": [
+      -47.28281638857393,
+      -166.89933674953107
+    ],
+    "unity_xz_m": [
+      -47.22353125199062,
+      -166.89030922361596
+    ],
+    "entrance_id": "library_general",
+    "entrance_unity_xz_m": [
+      -72.04845,
+      -153.79422
+    ],
+    "entrance_gap_m": 28.095378637859675,
+    "step_free_access": false,
+    "verification_status": "UNVERIFIED_ROAD_PROJECTION_CANDIDATE",
+    "entrance_verification_status": "OSM 217958067 building; synthetic separated facade portals; actual doors and access unverified",
+    "osm_way_id": "481241685",
+    "selection_policy": "unity_editor_override",
+    "round_trip_reachable": true
+  },
+  {
+    "id": "main_building_road_candidate",
+    "landmark_id": "main_building",
+    "node_id": "split:481241692:0:0:0.389486496264",
+    "position_xy_m": [
+      47.31991311945886,
+      -148.5605712666374
+    ],
+    "unity_xz_m": [
+      47.260685421990445,
+      -148.5525485377866
+    ],
+    "entrance_id": "main_building_general",
+    "entrance_unity_xz_m": [
+      55.95985,
+      -132.977341
+    ],
+    "entrance_gap_m": 17.84597429653937,
+    "step_free_access": false,
+    "verification_status": "UNVERIFIED_ROAD_PROJECTION_CANDIDATE",
+    "entrance_verification_status": "OSM 217958071 building; synthetic separated facade portals; actual doors and access unverified",
+    "osm_way_id": "481241692",
+    "selection_policy": "nearest_core_road",
+    "round_trip_reachable": true
+  },
+  {
+    "id": "main_gate_road_candidate",
+    "landmark_id": "main_gate",
+    "node_id": "split:481241683:4:0:0.617567128481",
+    "position_xy_m": [
+      -40.85899130804372,
+      -321.4633004290494
+    ],
+    "unity_xz_m": [
+      -40.80700415696088,
+      -321.4457924498224
+    ],
+    "entrance_id": "main_gate_general",
+    "entrance_unity_xz_m": [
+      -33.9840469,
+      -326.717926
+    ],
+    "entrance_gap_m": 8.629593762421194,
+    "step_free_access": false,
+    "verification_status": "UNVERIFIED_ROAD_PROJECTION_CANDIDATE",
+    "entrance_verification_status": "osm_gate_location_synthetic_layout_unverified_access",
+    "osm_way_id": "481241683",
+    "selection_policy": "nearest_core_road",
+    "round_trip_reachable": true
+  },
+  {
+    "id": "rear_gate_road_candidate",
+    "landmark_id": "rear_gate",
+    "node_id": "split:216916382:4:0:0.027897082418",
+    "position_xy_m": [
+      264.71217701774225,
+      45.96414648905591
+    ],
+    "unity_xz_m": [
+      264.387019918994,
+      45.95741376762547
+    ],
+    "entrance_id": "rear_gate_general",
+    "entrance_unity_xz_m": [
+      266.341431,
+      54.2892342
+    ],
+    "entrance_gap_m": 8.55897201871347,
+    "step_free_access": false,
+    "verification_status": "UNVERIFIED_ROAD_PROJECTION_CANDIDATE",
+    "entrance_verification_status": "osm_gate_location_synthetic_layout_unverified_access",
+    "osm_way_id": "216916382",
+    "selection_policy": "nearest_core_road",
+    "round_trip_reachable": true
+  },
+  {
+    "id": "student_center_road_candidate",
+    "landmark_id": "student_center",
+    "node_id": "split:481241663:1:0:0.74650168143",
+    "position_xy_m": [
+      257.447032030475,
+      -62.27211828589701
+    ],
+    "unity_xz_m": [
+      257.1274609440355,
+      -62.27266957659694
+    ],
+    "entrance_id": "student_center_general",
+    "entrance_unity_xz_m": [
+      264.629761,
+      -65.80942
+    ],
+    "entrance_gap_m": 8.302680360800222,
+    "step_free_access": false,
+    "verification_status": "UNVERIFIED_ROAD_PROJECTION_CANDIDATE",
+    "entrance_verification_status": "OSM 218038027 building; synthetic separated facade portals; actual doors and access unverified",
+    "osm_way_id": "481241663",
+    "selection_policy": "nearest_core_road",
+    "round_trip_reachable": true
+  }
+]

@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Title": "허브 도로면 직접 확인",
+    "Code": "using UnityEngine;\ninternal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) {Physics.SyncTransforms();var points=new[]{new Vector3(-38.39798f,100,-320.77752f),new Vector3(262.84065f,100,48.11872f),new Vector3(-309.75181f,100,54.97094f)};for(int i=0;i<points.Length;i++){var hits=Physics.RaycastAll(points[i],Vector3.down,300);result.Log(\"V0\"+(i+1)+\" hits=\"+hits.Length);foreach(var hit in hits){if(hit.collider==null)continue;result.Log(\"ground=\"+hit.collider.name+\" y=\"+hit.point.y+\" binding=\"+(hit.collider.GetComponent<CampusSim.CampusTerrainBinding>()!=null));}}}}"
+  }
+}

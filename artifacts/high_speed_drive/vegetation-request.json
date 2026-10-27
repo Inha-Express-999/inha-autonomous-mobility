@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Code": "using UnityEngine; using UnityEditor; using UnityEditor.SceneManagement; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { if(EditorApplication.isPlaying) throw new System.Exception(\"Stop Play first\"); var s=EditorSceneManager.OpenScene(\"Assets/CampusSim/Scenes/CampusTerrain.unity\"); foreach(var root in s.GetRootGameObjects()) foreach(var t in root.GetComponentsInChildren<Transform>(true)) if(t.name==\"01 Terrain, water and vegetation\") foreach(Transform child in t) result.Log(child.name+\" children=\"+child.childCount); } }",
+    "Title": "원본 수목·장식 그룹 확인"
+  },
+  "name": "Unity_RunCommand"
+}

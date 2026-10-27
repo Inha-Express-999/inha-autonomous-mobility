@@ -1,0 +1,7 @@
+play=True
+mapHash=f31592283aec4608ceca5401b08c2889f84ebef01daebd9a1525884bdb23cf81
+mapRun=9a44bc51008742b288db61f42c0627bc
+serverRun=9a44bc51008742b288db61f42c0627bc
+ready=True
+library_road_candidate (-47.22, -3.24, -166.89)
+main_gate (-40.43, -4.72, -320.96)

@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] brain=True active=PC selected vehicle Cinemachine\",\n    \"localFixedCode\": \"using UnityEngine;\\r\\nusing Unity.Cinemachine;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            ScreenCapture.CaptureScreenshot(\\\"artifacts/high_speed_drive/repaired-driving-ui.png\\\");\\r\\n            foreach (var b in Object.FindObjectsByType<CinemachineBrain>(FindObjectsSortMode.None))\\r\\n                result.Log(\\\"brain=\\\" + b.enabled + \\\" active=\\\" + b.ActiveVirtualCamera?.Name);\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] brain=True active=PC selected vehicle Cinemachine",
+      "localFixedCode": "using UnityEngine;\r\nusing Unity.Cinemachine;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            ScreenCapture.CaptureScreenshot(\"artifacts/high_speed_drive/repaired-driving-ui.png\");\r\n            foreach (var b in Object.FindObjectsByType<CinemachineBrain>(FindObjectsSortMode.None))\r\n                result.Log(\"brain=\" + b.enabled + \" active=\" + b.ActiveVirtualCamera?.Name);\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

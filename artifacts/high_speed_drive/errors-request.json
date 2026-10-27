@@ -1,0 +1,11 @@
+{
+  "name": "Unity_ReadConsole",
+  "arguments": {
+    "Types": [
+      "Error"
+    ],
+    "Action": "Get",
+    "Format": "Plain",
+    "Count": 8
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Title": "운송 요청 화면 준비 확인",
+    "Code": "using UnityEngine; using UnityEngine.UI; using InhaExpress.Client.Presentation; using InhaExpress.Client.MapClient; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { var hud=Object.FindFirstObjectByType<WebClientHud>(); var map=Object.FindFirstObjectByType<CampusServerMap>(); result.Log(\"hud=\"+(hud!=null)+\" run=\"+map?.RunId+\" error=\"+map?.LastError); foreach(var c in Object.FindObjectsByType<UnityAutonomousClient>(FindObjectsSortMode.None)) result.Log(\"vehicle=\"+c.VehicleId+\" connected=\"+c.Connected+\" reserved=\"+c.TransportReserved+\" status=\"+c.Status); foreach(var d in Object.FindObjectsByType<Dropdown>(FindObjectsSortMode.None)) result.Log(\"dropdown=\"+d.name+\" count=\"+d.options.Count); ScreenCapture.CaptureScreenshot(\"artifacts/high_speed_drive/request-ui-before.png\"); } }"
+  },
+  "name": "Unity_RunCommand"
+}

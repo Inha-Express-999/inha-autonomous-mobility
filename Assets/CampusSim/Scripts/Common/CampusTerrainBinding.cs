@@ -19,6 +19,13 @@ namespace CampusSim
         public bool verifiedAccess;
         // Optional road-only authoring profile. Retain the unmodified height source across rebakes.
         public TerrainData roadHeightSource;
+        // Physical terrain seed is independent of a synthetic, grade-limited road profile.
+        public TerrainData roadSupportSource;
+        public bool roadPlanarGridProfile;
         [Min(0)] public float roadSmoothingMeters;
+        // Synthetic connection grade anchored to existing asphalt, not building-pad DSM.
+        public bool roadEndpointGrade;
+        public Vector3 roadGradeStart;
+        public Vector3 roadGradeEnd;
     }
 }

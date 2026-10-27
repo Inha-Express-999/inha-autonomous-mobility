@@ -1,0 +1,45 @@
+{
+  "geometry_hash": "32950491597bd9b134fda86eaaa95af1fc25737413f6841a04d94dd854cad7c4",
+  "simulation_only": true,
+  "homes": [
+    {
+      "vehicle_id": "V01",
+      "hub_id": "main_gate",
+      "name": "정문",
+      "node_id": "split:481241683:4:0:0.617567128481",
+      "x": -38.39797691942945,
+      "z": -320.77752022323233,
+      "yaw": 37.62590963946847,
+      "center_x": -40.80700415696088,
+      "center_z": -321.4457924498224,
+      "road_width": 6,
+      "reachable_stops": 13
+    },
+    {
+      "vehicle_id": "V02",
+      "hub_id": "rear_gate",
+      "name": "후문",
+      "node_id": "split:216916382:4:0:0.027897082418",
+      "x": 262.84065278254843,
+      "z": 48.11872093675278,
+      "yaw": -76.76880127731627,
+      "center_x": 264.387019918994,
+      "center_z": 45.95741376762547,
+      "road_width": 7,
+      "reachable_stops": 13
+    },
+    {
+      "vehicle_id": "V03",
+      "hub_id": "west_field_parking",
+      "name": "운동장 옆 주차장",
+      "node_id": "osm:10058484941",
+      "x": -309.75181115483105,
+      "z": 54.97094255045724,
+      "yaw": 66.75694674638517,
+      "center_x": -312.28009607983364,
+      "center_z": 55.78964599982385,
+      "road_width": 7,
+      "reachable_stops": 13
+    }
+  ]
+}

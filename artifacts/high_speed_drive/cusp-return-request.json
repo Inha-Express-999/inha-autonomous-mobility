@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Title": "비룡플라자에서 원래 차고 복귀 검증",
+    "Code": "using UnityEngine; using InhaExpress.Client.Presentation; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) {var c=Object.FindFirstObjectByType<UnityAutonomousClient>();var v=Object.FindFirstObjectByType<VehicleController>();var h=Object.FindFirstObjectByType<WebClientHud>();if(c==null||!c.Connected||v==null||h==null||v.VehicleBody.linearVelocity.magnitude>.05f){result.Log(\"NOT_STOPPED\");return;}h.OperatorControls.SelectVehicle(\"V01\");Camera cam=null;foreach(var ca in Object.FindObjectsByType<Camera>(FindObjectsSortMode.None))if(ca.enabled&&ca.targetTexture==null)cam=ca;var rec=v.GetComponent<CampusDriveTelemetry>();if(rec==null)rec=v.gameObject.AddComponent<CampusDriveTelemetry>();rec.Begin(v,c,cam,\"artifacts/high_speed_drive/cusp-fixture-home-return.csv\",300);c.SimulationCruiseKmh=40;c.StartMission(\"main_gate_road_candidate\");result.Log(\"HOME_RETURN requested from measured arrival \"+v.transform.position); } }"
+  },
+  "name": "Unity_RunCommand"
+}

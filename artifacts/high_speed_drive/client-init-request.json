@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Title": "자동 운행 초기화 객체 확인",
+    "Code": "using UnityEngine; using InhaExpress.Client.Presentation; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { result.Log(\"vehicleControllers=\"+Object.FindObjectsByType<VehicleController>(FindObjectsInactive.Include,FindObjectsSortMode.None).Length);foreach(var hud in Object.FindObjectsByType<WebClientHud>(FindObjectsSortMode.None))result.Log(\"hud=\"+hud.name+\" controls=\"+(hud.OperatorControls!=null));foreach(var v in Object.FindObjectsByType<VehicleController>(FindObjectsInactive.Include,FindObjectsSortMode.None))result.Log(\"vehicle=\"+v.name+\" active=\"+v.gameObject.activeInHierarchy); foreach(var camera in Object.FindObjectsByType<Camera>(FindObjectsInactive.Include,FindObjectsSortMode.None))result.Log(\"camera=\"+camera.name+\" active=\"+camera.gameObject.activeInHierarchy); } }"
+  },
+  "name": "Unity_RunCommand"
+}

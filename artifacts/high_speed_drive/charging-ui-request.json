@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Title": "차고 충전 및 배차 드롭다운 화면 확인",
+    "Code": "using UnityEngine;using UnityEngine.UI;using InhaExpress.Client.Presentation;\ninternal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) {var h=Object.FindFirstObjectByType<WebClientHud>();h.OperatorControls.DeselectVehicle();foreach(var d in h.GetComponentsInChildren<Dropdown>(true))if(d.name==\"Dispatch Policy Dropdown\")d.Show();ScreenCapture.CaptureScreenshot(\"artifacts/high_speed_drive/garage-dropdown-charging.png\");foreach(var c in Object.FindObjectsByType<UnityAutonomousClient>(FindObjectsSortMode.None))result.Log(c.VehicleId+\" reserved=\"+c.TransportReserved+\" status=\"+c.Status);}}"
+  },
+  "name": "Unity_RunCommand"
+}

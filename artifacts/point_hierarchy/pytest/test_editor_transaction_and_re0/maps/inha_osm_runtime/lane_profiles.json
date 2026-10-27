@@ -1,0 +1,5642 @@
+{
+  "schema_version": 1,
+  "geometry_hash": "d8170694f29c4920aee2d487b99d50bd6899ff7fcf2947e2e7673edd88d1af46",
+  "sources": {
+    "Assets/InhaCampus/Source/campus.json": "a7d6b6b4049291b38e3325e1295667708d587b9f611c85beab8f7ca76e03241a",
+    "Assets/CampusSim/Data/road_connections_scoped.json": "1ac3a77fa2bbe3763e23490b86e6944721c89dccd8e32150bb48b939c32aecb0",
+    "Assets/CampusSim/Data/road_connections_restored.json": "b9b835ddf129cb04592e0d5c3eb6ed842857dd8aaf7ceac48ec0068038504330"
+  },
+  "traffic_side": "right",
+  "operationally_verified": false,
+  "profiles": [
+    {
+      "edge": [
+        "clip:expanded:1098496330:0:0.693879740621",
+        "osm:2262335931",
+        "1098496330:0:0:0:r"
+      ],
+      "lane_id": "clip:expanded:1098496330:0:0.693879740621|osm:2262335931|1098496330:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "clip:expanded:216916383:0:0.706021600575",
+        "osm:4741793209",
+        "216916383:0:0:0:f"
+      ],
+      "lane_id": "clip:expanded:216916383:0:0.706021600575|osm:4741793209|216916383:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "clip:expanded:471332807:2:0.630248405646",
+        "osm:4654965041",
+        "471332807:2:0:0:r"
+      ],
+      "lane_id": "clip:expanded:471332807:2:0.630248405646|osm:4654965041|471332807:2:0:0:r|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "clip:expanded:481241714:0:0.136187164195",
+        "split:481241714:0:0:0.222804228624",
+        "481241714:0:0:0:f"
+      ],
+      "lane_id": "clip:expanded:481241714:0:0.136187164195|split:481241714:0:0:0.222804228624|481241714:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "clip:expanded:481241715:1:0.173416418534",
+        "osm:4741759651",
+        "481241715:1:0:0:r"
+      ],
+      "lane_id": "clip:expanded:481241715:1:0.173416418534|osm:4741759651|481241715:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "clip:expanded:955217469:10:0.364442941943",
+        "osm:11257934918",
+        "955217469:10:0:0:f"
+      ],
+      "lane_id": "clip:expanded:955217469:10:0.364442941943|osm:11257934918|955217469:10:0:0:f|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058049420",
+        "osm:4741759463",
+        "481241669:2:0:0:r"
+      ],
+      "lane_id": "osm:10058049420|osm:4741759463|481241669:2:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058049421",
+        "osm:4741759460",
+        "1098489686:0:0:0:r"
+      ],
+      "lane_id": "osm:10058049421|osm:4741759460|1098489686:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058049431",
+        "osm:12866720417",
+        "281621314:13:0:0:r"
+      ],
+      "lane_id": "osm:10058049431|osm:12866720417|281621314:13:0:0:r|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058049431",
+        "osm:2643032901",
+        "281621314:14:0:0:f"
+      ],
+      "lane_id": "osm:10058049431|osm:2643032901|281621314:14:0:0:f|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058056496",
+        "osm:8956947373",
+        "1098491073:0:0:0:r"
+      ],
+      "lane_id": "osm:10058056496|osm:8956947373|1098491073:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058056497",
+        "osm:4741759493",
+        "481241683:2:0:0:r"
+      ],
+      "lane_id": "osm:10058056497|osm:4741759493|481241683:2:0:0:r|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058056497",
+        "osm:4741759495",
+        "481241683:3:0:0:f"
+      ],
+      "lane_id": "osm:10058056497|osm:4741759495|481241683:3:0:0:f|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058056498",
+        "osm:10058056499",
+        "1098491076:0:0:0:f"
+      ],
+      "lane_id": "osm:10058056498|osm:10058056499|1098491076:0:0:0:f|shared",
+      "authored_road_width_m": 7,
+      "lane_width_m": 7,
+      "right_offset_m": 0.0,
+      "mode": "one_way_single",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058056498",
+        "osm:4741759501",
+        "481241685:4:0:0:r"
+      ],
+      "lane_id": "osm:10058056498|osm:4741759501|481241685:4:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058056498",
+        "osm:4741759503",
+        "1098491075:0:0:0:f"
+      ],
+      "lane_id": "osm:10058056498|osm:4741759503|1098491075:0:0:0:f|shared",
+      "authored_road_width_m": 7,
+      "lane_width_m": 7,
+      "right_offset_m": 0.0,
+      "mode": "one_way_single",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058056499",
+        "osm:4741759502",
+        "1098491076:1:0:0:f"
+      ],
+      "lane_id": "osm:10058056499|osm:4741759502|1098491076:1:0:0:f|shared",
+      "authored_road_width_m": 7,
+      "lane_width_m": 7,
+      "right_offset_m": 0.0,
+      "mode": "one_way_single",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058120934",
+        "osm:10058120935",
+        "481241675:5:0:0:f"
+      ],
+      "lane_id": "osm:10058120934|osm:10058120935|481241675:5:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058120934",
+        "osm:4741759480",
+        "481241675:4:0:0:r"
+      ],
+      "lane_id": "osm:10058120934|osm:4741759480|481241675:4:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058120935",
+        "osm:10058120934",
+        "481241675:5:0:0:r"
+      ],
+      "lane_id": "osm:10058120935|osm:10058120934|481241675:5:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058120935",
+        "osm:4741759446",
+        "481241662:6:0:0:f"
+      ],
+      "lane_id": "osm:10058120935|osm:4741759446|481241662:6:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058120935",
+        "osm:4741759482",
+        "481241662:5:0:0:r"
+      ],
+      "lane_id": "osm:10058120935|osm:4741759482|481241662:5:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058460594",
+        "osm:2276360845",
+        "481241661:2:0:0:r"
+      ],
+      "lane_id": "osm:10058460594|osm:2276360845|481241661:2:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058460594",
+        "osm:4741759444",
+        "481241661:3:0:0:f"
+      ],
+      "lane_id": "osm:10058460594|osm:4741759444|481241661:3:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058460594",
+        "osm:4741759507",
+        "1098539002:0:0:0:r"
+      ],
+      "lane_id": "osm:10058460594|osm:4741759507|1098539002:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058460613",
+        "osm:10058460614",
+        "1098539006:0:0:0:f"
+      ],
+      "lane_id": "osm:10058460613|osm:10058460614|1098539006:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058460614",
+        "osm:10058460613",
+        "1098539006:0:0:0:r"
+      ],
+      "lane_id": "osm:10058460614|osm:10058460613|1098539006:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058460614",
+        "osm:10058460615",
+        "1098539006:1:0:0:f"
+      ],
+      "lane_id": "osm:10058460614|osm:10058460615|1098539006:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058460615",
+        "osm:10058460614",
+        "1098539006:1:0:0:r"
+      ],
+      "lane_id": "osm:10058460615|osm:10058460614|1098539006:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058460615",
+        "osm:10058484917",
+        "481241681:1:0:0:r"
+      ],
+      "lane_id": "osm:10058460615|osm:10058484917|481241681:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058460615",
+        "osm:4741759491",
+        "481241681:2:0:0:f"
+      ],
+      "lane_id": "osm:10058460615|osm:4741759491|481241681:2:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484917",
+        "osm:10058460615",
+        "481241681:1:0:0:f"
+      ],
+      "lane_id": "osm:10058484917|osm:10058460615|481241681:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484917",
+        "osm:4741759490",
+        "481241681:0:0:0:r"
+      ],
+      "lane_id": "osm:10058484917|osm:4741759490|481241681:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484930",
+        "osm:10058484931",
+        "1098539014:0:0:0:f"
+      ],
+      "lane_id": "osm:10058484930|osm:10058484931|1098539014:0:0:0:f|shared",
+      "authored_road_width_m": 7,
+      "lane_width_m": 7,
+      "right_offset_m": 0.0,
+      "mode": "one_way_single",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484930",
+        "osm:10058484943",
+        "1098539016:9:0:0:r"
+      ],
+      "lane_id": "osm:10058484930|osm:10058484943|1098539016:9:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484931",
+        "osm:10058484932",
+        "1098539014:1:0:0:f"
+      ],
+      "lane_id": "osm:10058484931|osm:10058484932|1098539014:1:0:0:f|shared",
+      "authored_road_width_m": 7,
+      "lane_width_m": 7,
+      "right_offset_m": 0.0,
+      "mode": "one_way_single",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484932",
+        "osm:4741759445",
+        "481241662:0:0:0:r"
+      ],
+      "lane_id": "osm:10058484932|osm:4741759445|481241662:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484932",
+        "osm:4741759478",
+        "481241662:1:0:0:f"
+      ],
+      "lane_id": "osm:10058484932|osm:4741759478|481241662:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484933",
+        "osm:10058484934",
+        "1098539015:1:0:0:f"
+      ],
+      "lane_id": "osm:10058484933|osm:10058484934|1098539015:1:0:0:f|shared",
+      "authored_road_width_m": 7,
+      "lane_width_m": 7,
+      "right_offset_m": 0.0,
+      "mode": "one_way_single",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484934",
+        "osm:10058484935",
+        "1098539015:2:0:0:f"
+      ],
+      "lane_id": "osm:10058484934|osm:10058484935|1098539015:2:0:0:f|shared",
+      "authored_road_width_m": 7,
+      "lane_width_m": 7,
+      "right_offset_m": 0.0,
+      "mode": "one_way_single",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484935",
+        "osm:10058484936",
+        "1098539015:3:0:0:f"
+      ],
+      "lane_id": "osm:10058484935|osm:10058484936|1098539015:3:0:0:f|shared",
+      "authored_road_width_m": 7,
+      "lane_width_m": 7,
+      "right_offset_m": 0.0,
+      "mode": "one_way_single",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484936",
+        "osm:10058484937",
+        "1098539015:4:0:0:f"
+      ],
+      "lane_id": "osm:10058484936|osm:10058484937|1098539015:4:0:0:f|shared",
+      "authored_road_width_m": 7,
+      "lane_width_m": 7,
+      "right_offset_m": 0.0,
+      "mode": "one_way_single",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484937",
+        "osm:10058484938",
+        "1098539015:5:0:0:f"
+      ],
+      "lane_id": "osm:10058484937|osm:10058484938|1098539015:5:0:0:f|shared",
+      "authored_road_width_m": 7,
+      "lane_width_m": 7,
+      "right_offset_m": 0.0,
+      "mode": "one_way_single",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484938",
+        "osm:10058484939",
+        "1098539015:6:0:0:f"
+      ],
+      "lane_id": "osm:10058484938|osm:10058484939|1098539015:6:0:0:f|shared",
+      "authored_road_width_m": 7,
+      "lane_width_m": 7,
+      "right_offset_m": 0.0,
+      "mode": "one_way_single",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484939",
+        "osm:10058484940",
+        "1098539016:0:0:0:f"
+      ],
+      "lane_id": "osm:10058484939|osm:10058484940|1098539016:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484940",
+        "osm:10058484939",
+        "1098539016:0:0:0:r"
+      ],
+      "lane_id": "osm:10058484940|osm:10058484939|1098539016:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484940",
+        "osm:10058484941",
+        "1098539016:1:0:0:f"
+      ],
+      "lane_id": "osm:10058484940|osm:10058484941|1098539016:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484940",
+        "osm:10058484947",
+        "1098539017:0:0:0:f"
+      ],
+      "lane_id": "osm:10058484940|osm:10058484947|1098539017:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484941",
+        "osm:10058484940",
+        "1098539016:1:0:0:r"
+      ],
+      "lane_id": "osm:10058484941|osm:10058484940|1098539016:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484941",
+        "osm:10058484955",
+        "1098539016:2:0:0:f"
+      ],
+      "lane_id": "osm:10058484941|osm:10058484955|1098539016:2:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484942",
+        "osm:10058484948",
+        "1098539016:4:0:0:f"
+      ],
+      "lane_id": "osm:10058484942|osm:10058484948|1098539016:4:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484942",
+        "osm:10058484955",
+        "1098539016:3:0:0:r"
+      ],
+      "lane_id": "osm:10058484942|osm:10058484955|1098539016:3:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484943",
+        "osm:10058484930",
+        "1098539016:9:0:0:f"
+      ],
+      "lane_id": "osm:10058484943|osm:10058484930|1098539016:9:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484943",
+        "osm:10058484946",
+        "1098539017:7:0:0:r"
+      ],
+      "lane_id": "osm:10058484943|osm:10058484946|1098539017:7:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484943",
+        "osm:10058484954",
+        "1098539016:8:0:0:r"
+      ],
+      "lane_id": "osm:10058484943|osm:10058484954|1098539016:8:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484944",
+        "osm:10058484949",
+        "1098539017:2:0:0:r"
+      ],
+      "lane_id": "osm:10058484944|osm:10058484949|1098539017:2:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484944",
+        "osm:10058484951",
+        "1098539017:3:0:0:f"
+      ],
+      "lane_id": "osm:10058484944|osm:10058484951|1098539017:3:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484945",
+        "osm:10058484946",
+        "1098539017:6:0:0:f"
+      ],
+      "lane_id": "osm:10058484945|osm:10058484946|1098539017:6:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484945",
+        "osm:10058484953",
+        "1098539017:5:0:0:r"
+      ],
+      "lane_id": "osm:10058484945|osm:10058484953|1098539017:5:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484946",
+        "osm:10058484943",
+        "1098539017:7:0:0:f"
+      ],
+      "lane_id": "osm:10058484946|osm:10058484943|1098539017:7:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484946",
+        "osm:10058484945",
+        "1098539017:6:0:0:r"
+      ],
+      "lane_id": "osm:10058484946|osm:10058484945|1098539017:6:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484947",
+        "osm:10058484940",
+        "1098539017:0:0:0:r"
+      ],
+      "lane_id": "osm:10058484947|osm:10058484940|1098539017:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484947",
+        "osm:10058484948",
+        "1098539018:0:0:0:f"
+      ],
+      "lane_id": "osm:10058484947|osm:10058484948|1098539018:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484947",
+        "osm:10058484949",
+        "1098539017:1:0:0:f"
+      ],
+      "lane_id": "osm:10058484947|osm:10058484949|1098539017:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484948",
+        "osm:10058484942",
+        "1098539016:4:0:0:r"
+      ],
+      "lane_id": "osm:10058484948|osm:10058484942|1098539016:4:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484948",
+        "osm:10058484947",
+        "1098539018:0:0:0:r"
+      ],
+      "lane_id": "osm:10058484948|osm:10058484947|1098539018:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484948",
+        "osm:10058484950",
+        "1098539016:5:0:0:f"
+      ],
+      "lane_id": "osm:10058484948|osm:10058484950|1098539016:5:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484949",
+        "osm:10058484944",
+        "1098539017:2:0:0:f"
+      ],
+      "lane_id": "osm:10058484949|osm:10058484944|1098539017:2:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484949",
+        "osm:10058484947",
+        "1098539017:1:0:0:r"
+      ],
+      "lane_id": "osm:10058484949|osm:10058484947|1098539017:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484949",
+        "osm:10058484950",
+        "1098539019:0:0:0:f"
+      ],
+      "lane_id": "osm:10058484949|osm:10058484950|1098539019:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484950",
+        "osm:10058484948",
+        "1098539016:5:0:0:r"
+      ],
+      "lane_id": "osm:10058484950|osm:10058484948|1098539016:5:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484950",
+        "osm:10058484949",
+        "1098539019:0:0:0:r"
+      ],
+      "lane_id": "osm:10058484950|osm:10058484949|1098539019:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484950",
+        "osm:10058484952",
+        "1098539016:6:0:0:f"
+      ],
+      "lane_id": "osm:10058484950|osm:10058484952|1098539016:6:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484951",
+        "osm:10058484944",
+        "1098539017:3:0:0:r"
+      ],
+      "lane_id": "osm:10058484951|osm:10058484944|1098539017:3:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484951",
+        "osm:10058484952",
+        "1098539020:0:0:0:f"
+      ],
+      "lane_id": "osm:10058484951|osm:10058484952|1098539020:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484951",
+        "osm:10058484953",
+        "1098539017:4:0:0:f"
+      ],
+      "lane_id": "osm:10058484951|osm:10058484953|1098539017:4:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484952",
+        "osm:10058484950",
+        "1098539016:6:0:0:r"
+      ],
+      "lane_id": "osm:10058484952|osm:10058484950|1098539016:6:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484952",
+        "osm:10058484951",
+        "1098539020:0:0:0:r"
+      ],
+      "lane_id": "osm:10058484952|osm:10058484951|1098539020:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484952",
+        "osm:10058484954",
+        "1098539016:7:0:0:f"
+      ],
+      "lane_id": "osm:10058484952|osm:10058484954|1098539016:7:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484953",
+        "osm:10058484945",
+        "1098539017:5:0:0:f"
+      ],
+      "lane_id": "osm:10058484953|osm:10058484945|1098539017:5:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484953",
+        "osm:10058484951",
+        "1098539017:4:0:0:r"
+      ],
+      "lane_id": "osm:10058484953|osm:10058484951|1098539017:4:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484953",
+        "osm:10058484954",
+        "1098539021:0:0:0:f"
+      ],
+      "lane_id": "osm:10058484953|osm:10058484954|1098539021:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484954",
+        "osm:10058484943",
+        "1098539016:8:0:0:f"
+      ],
+      "lane_id": "osm:10058484954|osm:10058484943|1098539016:8:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484954",
+        "osm:10058484952",
+        "1098539016:7:0:0:r"
+      ],
+      "lane_id": "osm:10058484954|osm:10058484952|1098539016:7:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484954",
+        "osm:10058484953",
+        "1098539021:0:0:0:r"
+      ],
+      "lane_id": "osm:10058484954|osm:10058484953|1098539021:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484955",
+        "osm:10058484941",
+        "1098539016:2:0:0:r"
+      ],
+      "lane_id": "osm:10058484955|osm:10058484941|1098539016:2:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:10058484955",
+        "osm:10058484942",
+        "1098539016:3:0:0:f"
+      ],
+      "lane_id": "osm:10058484955|osm:10058484942|1098539016:3:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:11257934917",
+        "osm:11257934923",
+        "281621314:17:0:0:r"
+      ],
+      "lane_id": "osm:11257934917|osm:11257934923|281621314:17:0:0:r|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:11257934917",
+        "osm:436836503",
+        "281621314:18:0:0:f"
+      ],
+      "lane_id": "osm:11257934917|osm:436836503|281621314:18:0:0:f|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:11257934918",
+        "clip:expanded:955217469:10:0.364442941943",
+        "955217469:10:0:0:r"
+      ],
+      "lane_id": "osm:11257934918|clip:expanded:955217469:10:0.364442941943|955217469:10:0:0:r|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:11257934918",
+        "osm:436836503",
+        "955217469:11:0:0:f"
+      ],
+      "lane_id": "osm:11257934918|osm:436836503|955217469:11:0:0:f|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:11257934923",
+        "osm:11257934917",
+        "281621314:17:0:0:f"
+      ],
+      "lane_id": "osm:11257934923|osm:11257934917|281621314:17:0:0:f|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:11257934923",
+        "osm:4741759497",
+        "281621314:16:0:0:r"
+      ],
+      "lane_id": "osm:11257934923|osm:4741759497|281621314:16:0:0:r|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:12866720417",
+        "osm:10058049431",
+        "281621314:13:0:0:f"
+      ],
+      "lane_id": "osm:12866720417|osm:10058049431|281621314:13:0:0:f|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:12866720417",
+        "osm:4741759657",
+        "281621314:12:0:0:r"
+      ],
+      "lane_id": "osm:12866720417|osm:4741759657|281621314:12:0:0:r|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:1770237413",
+        "osm:4638918402",
+        "281621314:10:0:0:r"
+      ],
+      "lane_id": "osm:1770237413|osm:4638918402|281621314:10:0:0:r|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:1770237413",
+        "osm:4741759657",
+        "281621314:11:0:0:f"
+      ],
+      "lane_id": "osm:1770237413|osm:4741759657|281621314:11:0:0:f|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2262335931",
+        "clip:expanded:1098496330:0:0.693879740621",
+        "1098496330:0:0:0:f"
+      ],
+      "lane_id": "osm:2262335931|clip:expanded:1098496330:0:0.693879740621|1098496330:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2262335931",
+        "split:216916383:4:0:0.893099911983",
+        "216916383:4:0:1:r"
+      ],
+      "lane_id": "osm:2262335931|split:216916383:4:0:0.893099911983|216916383:4:0:1:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2262335931",
+        "split:937727088:0:0:0.399868428418",
+        "937727088:0:0:0:f"
+      ],
+      "lane_id": "osm:2262335931|split:937727088:0:0:0.399868428418|937727088:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2262335932",
+        "osm:2262335938",
+        "216916382:2:0:0:r"
+      ],
+      "lane_id": "osm:2262335932|osm:2262335938|216916382:2:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2262335932",
+        "osm:4741759450",
+        "216916382:3:0:0:f"
+      ],
+      "lane_id": "osm:2262335932|osm:4741759450|216916382:3:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2262335935",
+        "osm:2262335939",
+        "216916385:0:0:0:f"
+      ],
+      "lane_id": "osm:2262335935|osm:2262335939|216916385:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2262335935",
+        "osm:4741759453",
+        "216916384:0:0:0:f"
+      ],
+      "lane_id": "osm:2262335935|osm:4741759453|216916384:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2262335936",
+        "osm:4741759447",
+        "481241665:0:0:0:f"
+      ],
+      "lane_id": "osm:2262335936|osm:4741759447|481241665:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2262335936",
+        "osm:4741759509",
+        "216916384:2:0:0:r"
+      ],
+      "lane_id": "osm:2262335936|osm:4741759509|216916384:2:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2262335936",
+        "osm:9767076578",
+        "216916384:3:0:0:f"
+      ],
+      "lane_id": "osm:2262335936|osm:9767076578|216916384:3:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2262335938",
+        "osm:2262335932",
+        "216916382:2:0:0:f"
+      ],
+      "lane_id": "osm:2262335938|osm:2262335932|216916382:2:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2262335938",
+        "osm:4741759513",
+        "216916382:1:0:0:r"
+      ],
+      "lane_id": "osm:2262335938|osm:4741759513|216916382:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2262335939",
+        "osm:2262335935",
+        "216916385:0:0:0:r"
+      ],
+      "lane_id": "osm:2262335939|osm:2262335935|216916385:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2262335939",
+        "osm:4741793209",
+        "216916383:1:0:0:r"
+      ],
+      "lane_id": "osm:2262335939|osm:4741793209|216916383:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2262335939",
+        "osm:9767086763",
+        "216916383:2:0:0:f"
+      ],
+      "lane_id": "osm:2262335939|osm:9767086763|216916383:2:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2262335939",
+        "split:216916382:4:0:0.027897082418",
+        "216916382:4:0:1:r"
+      ],
+      "lane_id": "osm:2262335939|split:216916382:4:0:0.027897082418|216916382:4:0:1:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2262335940",
+        "osm:4741759458",
+        "216916384:5:0:0:r"
+      ],
+      "lane_id": "osm:2262335940|osm:4741759458|216916384:5:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2262335940",
+        "split:216916383:3:0:0.236611800777",
+        "216916383:3:0:1:r"
+      ],
+      "lane_id": "osm:2262335940|split:216916383:3:0:0.236611800777|216916383:3:0:1:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2262335940",
+        "split:216916383:4:0:0.893099911983",
+        "216916383:4:0:0:f"
+      ],
+      "lane_id": "osm:2262335940|split:216916383:4:0:0.893099911983|216916383:4:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2262335941",
+        "osm:4741759513",
+        "216916382:0:0:0:f"
+      ],
+      "lane_id": "osm:2262335941|osm:4741759513|216916382:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2276360845",
+        "osm:10058460594",
+        "481241661:2:0:0:f"
+      ],
+      "lane_id": "osm:2276360845|osm:10058460594|481241661:2:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2276360845",
+        "osm:4741759438",
+        "481241659:1:0:0:r"
+      ],
+      "lane_id": "osm:2276360845|osm:4741759438|481241659:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2276360845",
+        "osm:4741759442",
+        "481241661:1:0:0:r"
+      ],
+      "lane_id": "osm:2276360845|osm:4741759442|481241661:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2429042772",
+        "osm:2877968880",
+        "281621314:3:0:0:r"
+      ],
+      "lane_id": "osm:2429042772|osm:2877968880|281621314:3:0:0:r|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2429042772",
+        "osm:4638918405",
+        "281621314:4:0:0:f"
+      ],
+      "lane_id": "osm:2429042772|osm:4638918405|281621314:4:0:0:f|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2643032901",
+        "osm:10058049431",
+        "281621314:14:0:0:r"
+      ],
+      "lane_id": "osm:2643032901|osm:10058049431|281621314:14:0:0:r|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2643032901",
+        "osm:4741759433",
+        "481241658:0:0:0:f"
+      ],
+      "lane_id": "osm:2643032901|osm:4741759433|481241658:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2643032903",
+        "osm:2643032904",
+        "258995842:0:0:0:r"
+      ],
+      "lane_id": "osm:2643032903|osm:2643032904|258995842:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2643032903",
+        "osm:4741759440",
+        "258995842:1:0:0:f"
+      ],
+      "lane_id": "osm:2643032903|osm:4741759440|258995842:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2643032904",
+        "osm:2643032903",
+        "258995842:0:0:0:f"
+      ],
+      "lane_id": "osm:2643032904|osm:2643032903|258995842:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2643032904",
+        "osm:2643032905",
+        "481241657:0:0:0:f"
+      ],
+      "lane_id": "osm:2643032904|osm:2643032905|481241657:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2643032905",
+        "osm:2643032904",
+        "481241657:0:0:0:r"
+      ],
+      "lane_id": "osm:2643032905|osm:2643032904|481241657:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2643032905",
+        "osm:4741759505",
+        "481241657:1:0:0:f"
+      ],
+      "lane_id": "osm:2643032905|osm:4741759505|481241657:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2643032907",
+        "osm:4741759440",
+        "258995842:2:0:0:r"
+      ],
+      "lane_id": "osm:2643032907|osm:4741759440|258995842:2:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2643032908",
+        "osm:4741759505",
+        "481241657:2:0:0:r"
+      ],
+      "lane_id": "osm:2643032908|osm:4741759505|481241657:2:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968852",
+        "osm:2877968867",
+        "284010313:7:0:0:r"
+      ],
+      "lane_id": "osm:2877968852|osm:2877968867|284010313:7:0:0:r|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968852",
+        "osm:2877968891",
+        "284010313:8:0:0:f"
+      ],
+      "lane_id": "osm:2877968852|osm:2877968891|284010313:8:0:0:f|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968853",
+        "osm:2877968859",
+        "284010313:4:0:0:f"
+      ],
+      "lane_id": "osm:2877968853|osm:2877968859|284010313:4:0:0:f|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968853",
+        "osm:4654965039",
+        "284010313:3:0:0:r"
+      ],
+      "lane_id": "osm:2877968853|osm:4654965039|284010313:3:0:0:r|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968854",
+        "osm:2877968868",
+        "731224474:2:0:0:f"
+      ],
+      "lane_id": "osm:2877968854|osm:2877968868|731224474:2:0:0:f|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968854",
+        "osm:2877968889",
+        "731224474:1:0:0:r"
+      ],
+      "lane_id": "osm:2877968854|osm:2877968889|731224474:1:0:0:r|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968859",
+        "osm:2877968853",
+        "284010313:4:0:0:r"
+      ],
+      "lane_id": "osm:2877968859|osm:2877968853|284010313:4:0:0:r|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968859",
+        "osm:2877968897",
+        "284010313:5:0:0:f"
+      ],
+      "lane_id": "osm:2877968859|osm:2877968897|284010313:5:0:0:f|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968866",
+        "osm:2877968889",
+        "731224474:0:0:0:f"
+      ],
+      "lane_id": "osm:2877968866|osm:2877968889|731224474:0:0:0:f|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968866",
+        "osm:2877968892",
+        "284010313:10:0:0:r"
+      ],
+      "lane_id": "osm:2877968866|osm:2877968892|284010313:10:0:0:r|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968867",
+        "osm:2877968852",
+        "284010313:7:0:0:f"
+      ],
+      "lane_id": "osm:2877968867|osm:2877968852|284010313:7:0:0:f|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968867",
+        "osm:2877968897",
+        "284010313:6:0:0:r"
+      ],
+      "lane_id": "osm:2877968867|osm:2877968897|284010313:6:0:0:r|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968868",
+        "osm:2877968854",
+        "731224474:2:0:0:r"
+      ],
+      "lane_id": "osm:2877968868|osm:2877968854|731224474:2:0:0:r|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968868",
+        "osm:2877968888",
+        "731224474:3:0:0:f"
+      ],
+      "lane_id": "osm:2877968868|osm:2877968888|731224474:3:0:0:f|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968880",
+        "osm:2429042772",
+        "281621314:3:0:0:f"
+      ],
+      "lane_id": "osm:2877968880|osm:2429042772|281621314:3:0:0:f|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968880",
+        "osm:2877968888",
+        "731224474:4:0:0:r"
+      ],
+      "lane_id": "osm:2877968880|osm:2877968888|731224474:4:0:0:r|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968888",
+        "osm:2877968868",
+        "731224474:3:0:0:r"
+      ],
+      "lane_id": "osm:2877968888|osm:2877968868|731224474:3:0:0:r|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968888",
+        "osm:2877968880",
+        "731224474:4:0:0:f"
+      ],
+      "lane_id": "osm:2877968888|osm:2877968880|731224474:4:0:0:f|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968889",
+        "osm:2877968854",
+        "731224474:1:0:0:f"
+      ],
+      "lane_id": "osm:2877968889|osm:2877968854|731224474:1:0:0:f|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968889",
+        "osm:2877968866",
+        "731224474:0:0:0:r"
+      ],
+      "lane_id": "osm:2877968889|osm:2877968866|731224474:0:0:0:r|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968891",
+        "osm:2877968852",
+        "284010313:8:0:0:r"
+      ],
+      "lane_id": "osm:2877968891|osm:2877968852|284010313:8:0:0:r|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968891",
+        "osm:2877968892",
+        "284010313:9:0:0:f"
+      ],
+      "lane_id": "osm:2877968891|osm:2877968892|284010313:9:0:0:f|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968892",
+        "osm:2877968866",
+        "284010313:10:0:0:f"
+      ],
+      "lane_id": "osm:2877968892|osm:2877968866|284010313:10:0:0:f|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968892",
+        "osm:2877968891",
+        "284010313:9:0:0:r"
+      ],
+      "lane_id": "osm:2877968892|osm:2877968891|284010313:9:0:0:r|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968897",
+        "osm:2877968859",
+        "284010313:5:0:0:r"
+      ],
+      "lane_id": "osm:2877968897|osm:2877968859|284010313:5:0:0:r|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877968897",
+        "osm:2877968867",
+        "284010313:6:0:0:f"
+      ],
+      "lane_id": "osm:2877968897|osm:2877968867|284010313:6:0:0:f|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877970943",
+        "osm:4638918405",
+        "281621314:5:0:0:r"
+      ],
+      "lane_id": "osm:2877970943|osm:4638918405|281621314:5:0:0:r|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:2877970943",
+        "osm:4958020925",
+        "281621314:6:0:0:f"
+      ],
+      "lane_id": "osm:2877970943|osm:4958020925|281621314:6:0:0:f|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:436836503",
+        "osm:11257934917",
+        "281621314:18:0:0:r"
+      ],
+      "lane_id": "osm:436836503|osm:11257934917|281621314:18:0:0:r|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:436836503",
+        "osm:11257934918",
+        "955217469:11:0:0:r"
+      ],
+      "lane_id": "osm:436836503|osm:11257934918|955217469:11:0:0:r|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4638918402",
+        "osm:1770237413",
+        "281621314:10:0:0:f"
+      ],
+      "lane_id": "osm:4638918402|osm:1770237413|281621314:10:0:0:f|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4638918402",
+        "osm:4638925351",
+        "281621314:9:0:0:r"
+      ],
+      "lane_id": "osm:4638918402|osm:4638925351|281621314:9:0:0:r|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4638918405",
+        "osm:2429042772",
+        "281621314:4:0:0:r"
+      ],
+      "lane_id": "osm:4638918405|osm:2429042772|281621314:4:0:0:r|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4638918405",
+        "osm:2877970943",
+        "281621314:5:0:0:f"
+      ],
+      "lane_id": "osm:4638918405|osm:2877970943|281621314:5:0:0:f|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4638925351",
+        "osm:4638918402",
+        "281621314:9:0:0:f"
+      ],
+      "lane_id": "osm:4638925351|osm:4638918402|281621314:9:0:0:f|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4638925351",
+        "osm:4638934519",
+        "281621314:8:0:0:r"
+      ],
+      "lane_id": "osm:4638925351|osm:4638934519|281621314:8:0:0:r|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4638934519",
+        "osm:4638925351",
+        "281621314:8:0:0:f"
+      ],
+      "lane_id": "osm:4638934519|osm:4638925351|281621314:8:0:0:f|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4638934519",
+        "osm:4958020925",
+        "281621314:7:0:0:r"
+      ],
+      "lane_id": "osm:4638934519|osm:4958020925|281621314:7:0:0:r|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4654965039",
+        "osm:2877968853",
+        "284010313:3:0:0:f"
+      ],
+      "lane_id": "osm:4654965039|osm:2877968853|284010313:3:0:0:f|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4654965039",
+        "osm:4654965040",
+        "471332807:0:0:0:f"
+      ],
+      "lane_id": "osm:4654965039|osm:4654965040|471332807:0:0:0:f|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4654965040",
+        "osm:4654965039",
+        "471332807:0:0:0:r"
+      ],
+      "lane_id": "osm:4654965040|osm:4654965039|471332807:0:0:0:r|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4654965040",
+        "osm:4654965041",
+        "471332807:1:0:0:f"
+      ],
+      "lane_id": "osm:4654965040|osm:4654965041|471332807:1:0:0:f|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4654965041",
+        "clip:expanded:471332807:2:0.630248405646",
+        "471332807:2:0:0:f"
+      ],
+      "lane_id": "osm:4654965041|clip:expanded:471332807:2:0.630248405646|471332807:2:0:0:f|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4654965041",
+        "osm:4654965040",
+        "471332807:1:0:0:r"
+      ],
+      "lane_id": "osm:4654965041|osm:4654965040|471332807:1:0:0:r|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759433",
+        "osm:2643032901",
+        "481241658:0:0:0:r"
+      ],
+      "lane_id": "osm:4741759433|osm:2643032901|481241658:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759433",
+        "osm:4741759434",
+        "481241658:1:0:0:f"
+      ],
+      "lane_id": "osm:4741759433|osm:4741759434|481241658:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759434",
+        "osm:4741759433",
+        "481241658:1:0:0:r"
+      ],
+      "lane_id": "osm:4741759434|osm:4741759433|481241658:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759434",
+        "osm:4741759435",
+        "481241658:2:0:0:f"
+      ],
+      "lane_id": "osm:4741759434|osm:4741759435|481241658:2:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759434",
+        "osm:4741759495",
+        "481241689:0:0:0:r"
+      ],
+      "lane_id": "osm:4741759434|osm:4741759495|481241689:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759435",
+        "osm:4741759434",
+        "481241658:2:0:0:r"
+      ],
+      "lane_id": "osm:4741759435|osm:4741759434|481241658:2:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759435",
+        "osm:4741759436",
+        "481241658:3:0:0:f"
+      ],
+      "lane_id": "osm:4741759435|osm:4741759436|481241658:3:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759436",
+        "osm:4741759435",
+        "481241658:3:0:0:r"
+      ],
+      "lane_id": "osm:4741759436|osm:4741759435|481241658:3:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759436",
+        "osm:4741759437",
+        "481241658:4:0:0:f"
+      ],
+      "lane_id": "osm:4741759436|osm:4741759437|481241658:4:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759437",
+        "osm:4741759436",
+        "481241658:4:0:0:r"
+      ],
+      "lane_id": "osm:4741759437|osm:4741759436|481241658:4:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759437",
+        "osm:4741759438",
+        "481241658:5:0:0:f"
+      ],
+      "lane_id": "osm:4741759437|osm:4741759438|481241658:5:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759438",
+        "osm:2276360845",
+        "481241659:1:0:0:f"
+      ],
+      "lane_id": "osm:4741759438|osm:2276360845|481241659:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759438",
+        "osm:4741759437",
+        "481241658:5:0:0:r"
+      ],
+      "lane_id": "osm:4741759438|osm:4741759437|481241658:5:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759438",
+        "osm:4741759440",
+        "481241659:0:0:0:r"
+      ],
+      "lane_id": "osm:4741759438|osm:4741759440|481241659:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759438",
+        "osm:4741759508",
+        "481241658:6:0:0:f"
+      ],
+      "lane_id": "osm:4741759438|osm:4741759508|481241658:6:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759439",
+        "osm:4741759444",
+        "481241696:2:0:0:f"
+      ],
+      "lane_id": "osm:4741759439|osm:4741759444|481241696:2:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759439",
+        "osm:4741759451",
+        "481241696:1:0:0:r"
+      ],
+      "lane_id": "osm:4741759439|osm:4741759451|481241696:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759439",
+        "osm:4741759507",
+        "481241658:8:0:0:r"
+      ],
+      "lane_id": "osm:4741759439|osm:4741759507|481241658:8:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759440",
+        "osm:2643032903",
+        "258995842:1:0:0:r"
+      ],
+      "lane_id": "osm:4741759440|osm:2643032903|258995842:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759440",
+        "osm:2643032907",
+        "258995842:2:0:0:f"
+      ],
+      "lane_id": "osm:4741759440|osm:2643032907|258995842:2:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759440",
+        "osm:4741759438",
+        "481241659:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759440|osm:4741759438|481241659:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759441",
+        "osm:4741759442",
+        "481241660:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759441|osm:4741759442|481241660:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759442",
+        "osm:2276360845",
+        "481241661:1:0:0:f"
+      ],
+      "lane_id": "osm:4741759442|osm:2276360845|481241661:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759442",
+        "osm:4741759441",
+        "481241660:0:0:0:r"
+      ],
+      "lane_id": "osm:4741759442|osm:4741759441|481241660:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759442",
+        "osm:4741759443",
+        "481241661:0:0:0:r"
+      ],
+      "lane_id": "osm:4741759442|osm:4741759443|481241661:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759442",
+        "osm:8956947371",
+        "481241660:1:0:0:f"
+      ],
+      "lane_id": "osm:4741759442|osm:8956947371|481241660:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759443",
+        "clip:expanded:1098489687:0:0.764217942009",
+        "1098489687:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759443|clip:expanded:1098489687:0:0.764217942009|1098489687:0:0:0:f|shared",
+      "authored_road_width_m": 6,
+      "lane_width_m": 6,
+      "right_offset_m": 0.0,
+      "mode": "one_way_single",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759443",
+        "osm:4741759442",
+        "481241661:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759443|osm:4741759442|481241661:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759443",
+        "osm:8956947368",
+        "481241660:5:0:0:r"
+      ],
+      "lane_id": "osm:4741759443|osm:8956947368|481241660:5:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759444",
+        "osm:10058460594",
+        "481241661:3:0:0:r"
+      ],
+      "lane_id": "osm:4741759444|osm:10058460594|481241661:3:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759444",
+        "osm:4741759439",
+        "481241696:2:0:0:r"
+      ],
+      "lane_id": "osm:4741759444|osm:4741759439|481241696:2:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759444",
+        "osm:4741759448",
+        "481241696:3:0:0:f"
+      ],
+      "lane_id": "osm:4741759444|osm:4741759448|481241696:3:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759444",
+        "split:481241663:0:0:0.903003431591",
+        "481241663:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759444|split:481241663:0:0:0.903003431591|481241663:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759445",
+        "osm:10058484932",
+        "481241662:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759445|osm:10058484932|481241662:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759445",
+        "osm:10058484933",
+        "1098539015:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759445|osm:10058484933|1098539015:0:0:0:f|shared",
+      "authored_road_width_m": 7,
+      "lane_width_m": 7,
+      "right_offset_m": 0.0,
+      "mode": "one_way_single",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759446",
+        "osm:10058120935",
+        "481241662:6:0:0:r"
+      ],
+      "lane_id": "osm:4741759446|osm:10058120935|481241662:6:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759446",
+        "osm:4741759455",
+        "1098496331:0:0:0:r"
+      ],
+      "lane_id": "osm:4741759446|osm:4741759455|1098496331:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759446",
+        "osm:4741759498",
+        "481241662:7:0:0:f"
+      ],
+      "lane_id": "osm:4741759446|osm:4741759498|481241662:7:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759447",
+        "osm:2262335936",
+        "481241665:0:0:0:r"
+      ],
+      "lane_id": "osm:4741759447|osm:2262335936|481241665:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759447",
+        "osm:4741759498",
+        "481241662:8:0:0:r"
+      ],
+      "lane_id": "osm:4741759447|osm:4741759498|481241662:8:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759447",
+        "osm:4741759511",
+        "481241662:9:0:0:f"
+      ],
+      "lane_id": "osm:4741759447|osm:4741759511|481241662:9:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759448",
+        "osm:4741759444",
+        "481241696:3:0:0:r"
+      ],
+      "lane_id": "osm:4741759448|osm:4741759444|481241696:3:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759448",
+        "osm:4741759651",
+        "481241715:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759448|osm:4741759651|481241715:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759449",
+        "osm:4741759450",
+        "481241663:2:0:0:f"
+      ],
+      "lane_id": "osm:4741759449|osm:4741759450|481241663:2:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759449",
+        "osm:4741759514",
+        "481241699:1:0:0:r"
+      ],
+      "lane_id": "osm:4741759449|osm:4741759514|481241699:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759449",
+        "split:481241663:1:0:0.74650168143",
+        "481241663:1:0:1:r"
+      ],
+      "lane_id": "osm:4741759449|split:481241663:1:0:0.74650168143|481241663:1:0:1:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759450",
+        "osm:2262335932",
+        "216916382:3:0:0:r"
+      ],
+      "lane_id": "osm:4741759450|osm:2262335932|216916382:3:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759450",
+        "osm:4741759449",
+        "481241663:2:0:0:r"
+      ],
+      "lane_id": "osm:4741759450|osm:4741759449|481241663:2:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759450",
+        "split:216916382:4:0:0.027897082418",
+        "216916382:4:0:0:f"
+      ],
+      "lane_id": "osm:4741759450|split:216916382:4:0:0.027897082418|216916382:4:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759451",
+        "osm:4741759439",
+        "481241696:1:0:0:f"
+      ],
+      "lane_id": "osm:4741759451|osm:4741759439|481241696:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759451",
+        "osm:4741759452",
+        "481241664:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759451|osm:4741759452|481241664:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759451",
+        "osm:4741759512",
+        "481241696:0:0:0:r"
+      ],
+      "lane_id": "osm:4741759451|osm:4741759512|481241696:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759452",
+        "osm:4741759451",
+        "481241664:0:0:0:r"
+      ],
+      "lane_id": "osm:4741759452|osm:4741759451|481241664:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759452",
+        "osm:4741759453",
+        "481241664:1:0:0:f"
+      ],
+      "lane_id": "osm:4741759452|osm:4741759453|481241664:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759453",
+        "osm:2262335935",
+        "216916384:0:0:0:r"
+      ],
+      "lane_id": "osm:4741759453|osm:2262335935|216916384:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759453",
+        "osm:4741759452",
+        "481241664:1:0:0:r"
+      ],
+      "lane_id": "osm:4741759453|osm:4741759452|481241664:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759453",
+        "osm:4741759509",
+        "216916384:1:0:0:f"
+      ],
+      "lane_id": "osm:4741759453|osm:4741759509|216916384:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759455",
+        "osm:4741759446",
+        "1098496331:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759455|osm:4741759446|1098496331:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759458",
+        "osm:2262335940",
+        "216916384:5:0:0:f"
+      ],
+      "lane_id": "osm:4741759458|osm:2262335940|216916384:5:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759458",
+        "osm:4741759466",
+        "481241668:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759458|osm:4741759466|481241668:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759458",
+        "osm:9767076578",
+        "216916384:4:0:0:r"
+      ],
+      "lane_id": "osm:4741759458|osm:9767076578|216916384:4:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759459",
+        "osm:4741759460",
+        "481241668:2:0:0:f"
+      ],
+      "lane_id": "osm:4741759459|osm:4741759460|481241668:2:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759459",
+        "osm:4741759466",
+        "481241668:1:0:0:r"
+      ],
+      "lane_id": "osm:4741759459|osm:4741759466|481241668:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759460",
+        "osm:10058049421",
+        "1098489686:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759460|osm:10058049421|1098489686:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759460",
+        "osm:4741759459",
+        "481241668:2:0:0:r"
+      ],
+      "lane_id": "osm:4741759460|osm:4741759459|481241668:2:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759460",
+        "osm:4741759462",
+        "481241669:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759460|osm:4741759462|481241669:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759462",
+        "osm:4741759460",
+        "481241669:0:0:0:r"
+      ],
+      "lane_id": "osm:4741759462|osm:4741759460|481241669:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759462",
+        "osm:4741759463",
+        "481241669:1:0:0:f"
+      ],
+      "lane_id": "osm:4741759462|osm:4741759463|481241669:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759462",
+        "osm:8956947367",
+        "968147725:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759462|osm:8956947367|968147725:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759463",
+        "osm:10058049420",
+        "481241669:2:0:0:f"
+      ],
+      "lane_id": "osm:4741759463|osm:10058049420|481241669:2:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759463",
+        "osm:4741759462",
+        "481241669:1:0:0:r"
+      ],
+      "lane_id": "osm:4741759463|osm:4741759462|481241669:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759466",
+        "osm:4741759458",
+        "481241668:0:0:0:r"
+      ],
+      "lane_id": "osm:4741759466|osm:4741759458|481241668:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759466",
+        "osm:4741759459",
+        "481241668:1:0:0:f"
+      ],
+      "lane_id": "osm:4741759466|osm:4741759459|481241668:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759478",
+        "osm:10058484932",
+        "481241662:1:0:0:r"
+      ],
+      "lane_id": "osm:4741759478|osm:10058484932|481241662:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759478",
+        "osm:4741759483",
+        "481241662:2:0:0:f"
+      ],
+      "lane_id": "osm:4741759478|osm:4741759483|481241662:2:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759479",
+        "osm:4741759487",
+        "481241675:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759479|osm:4741759487|481241675:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759479",
+        "osm:8687774328",
+        "937727088:2:0:0:r"
+      ],
+      "lane_id": "osm:4741759479|osm:8687774328|937727088:2:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759480",
+        "osm:10058120934",
+        "481241675:4:0:0:f"
+      ],
+      "lane_id": "osm:4741759480|osm:10058120934|481241675:4:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759480",
+        "osm:4741759481",
+        "481241675:3:0:0:r"
+      ],
+      "lane_id": "osm:4741759480|osm:4741759481|481241675:3:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759481",
+        "osm:4741759480",
+        "481241675:3:0:0:f"
+      ],
+      "lane_id": "osm:4741759481|osm:4741759480|481241675:3:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759481",
+        "osm:4741759482",
+        "481241676:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759481|osm:4741759482|481241676:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759481",
+        "osm:4741759486",
+        "481241675:2:0:0:r"
+      ],
+      "lane_id": "osm:4741759481|osm:4741759486|481241675:2:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759482",
+        "osm:10058120935",
+        "481241662:5:0:0:f"
+      ],
+      "lane_id": "osm:4741759482|osm:10058120935|481241662:5:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759482",
+        "osm:4741759481",
+        "481241676:0:0:0:r"
+      ],
+      "lane_id": "osm:4741759482|osm:4741759481|481241676:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759482",
+        "osm:4741759490",
+        "481241662:4:0:0:r"
+      ],
+      "lane_id": "osm:4741759482|osm:4741759490|481241662:4:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759483",
+        "osm:4741759478",
+        "481241662:2:0:0:r"
+      ],
+      "lane_id": "osm:4741759483|osm:4741759478|481241662:2:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759483",
+        "osm:4741759484",
+        "481241677:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759483|osm:4741759484|481241677:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759483",
+        "osm:4741759490",
+        "481241662:3:0:0:f"
+      ],
+      "lane_id": "osm:4741759483|osm:4741759490|481241662:3:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759484",
+        "osm:4741759483",
+        "481241677:0:0:0:r"
+      ],
+      "lane_id": "osm:4741759484|osm:4741759483|481241677:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759484",
+        "osm:4741759485",
+        "481241677:1:0:0:f"
+      ],
+      "lane_id": "osm:4741759484|osm:4741759485|481241677:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759484",
+        "osm:4741759489",
+        "481241679:2:0:0:r"
+      ],
+      "lane_id": "osm:4741759484|osm:4741759489|481241679:2:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759485",
+        "osm:4741759484",
+        "481241677:1:0:0:r"
+      ],
+      "lane_id": "osm:4741759485|osm:4741759484|481241677:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759485",
+        "osm:4741759486",
+        "481241677:2:0:0:f"
+      ],
+      "lane_id": "osm:4741759485|osm:4741759486|481241677:2:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759486",
+        "osm:4741759481",
+        "481241675:2:0:0:f"
+      ],
+      "lane_id": "osm:4741759486|osm:4741759481|481241675:2:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759486",
+        "osm:4741759485",
+        "481241677:2:0:0:r"
+      ],
+      "lane_id": "osm:4741759486|osm:4741759485|481241677:2:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759486",
+        "osm:4741759487",
+        "481241675:1:0:0:r"
+      ],
+      "lane_id": "osm:4741759486|osm:4741759487|481241675:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759487",
+        "osm:4741759479",
+        "481241675:0:0:0:r"
+      ],
+      "lane_id": "osm:4741759487|osm:4741759479|481241675:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759487",
+        "osm:4741759486",
+        "481241675:1:0:0:f"
+      ],
+      "lane_id": "osm:4741759487|osm:4741759486|481241675:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759487",
+        "osm:4741759488",
+        "481241679:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759487|osm:4741759488|481241679:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759488",
+        "osm:4741759487",
+        "481241679:0:0:0:r"
+      ],
+      "lane_id": "osm:4741759488|osm:4741759487|481241679:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759488",
+        "osm:4741759489",
+        "481241679:1:0:0:f"
+      ],
+      "lane_id": "osm:4741759488|osm:4741759489|481241679:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759489",
+        "osm:4741759484",
+        "481241679:2:0:0:f"
+      ],
+      "lane_id": "osm:4741759489|osm:4741759484|481241679:2:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759489",
+        "osm:4741759488",
+        "481241679:1:0:0:r"
+      ],
+      "lane_id": "osm:4741759489|osm:4741759488|481241679:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759490",
+        "osm:10058484917",
+        "481241681:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759490|osm:10058484917|481241681:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759490",
+        "osm:4741759482",
+        "481241662:4:0:0:f"
+      ],
+      "lane_id": "osm:4741759490|osm:4741759482|481241662:4:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759490",
+        "osm:4741759483",
+        "481241662:3:0:0:r"
+      ],
+      "lane_id": "osm:4741759490|osm:4741759483|481241662:3:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759491",
+        "osm:10058460615",
+        "481241681:2:0:0:r"
+      ],
+      "lane_id": "osm:4741759491|osm:10058460615|481241681:2:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759491",
+        "osm:4741759492",
+        "1098491074:0:0:0:r"
+      ],
+      "lane_id": "osm:4741759491|osm:4741759492|1098491074:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759491",
+        "osm:4741759503",
+        "1098491074:1:0:0:f"
+      ],
+      "lane_id": "osm:4741759491|osm:4741759503|1098491074:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759492",
+        "osm:4741759491",
+        "1098491074:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759492|osm:4741759491|1098491074:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759493",
+        "osm:10058056497",
+        "481241683:2:0:0:f"
+      ],
+      "lane_id": "osm:4741759493|osm:10058056497|481241683:2:0:0:f|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759493",
+        "osm:8956947373",
+        "481241683:1:0:0:r"
+      ],
+      "lane_id": "osm:4741759493|osm:8956947373|481241683:1:0:0:r|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759495",
+        "osm:10058056497",
+        "481241683:3:0:0:r"
+      ],
+      "lane_id": "osm:4741759495|osm:10058056497|481241683:3:0:0:r|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759495",
+        "osm:4741759434",
+        "481241689:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759495|osm:4741759434|481241689:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759495",
+        "split:481241683:4:0:0.584475355",
+        "481241683:4:0:0:f"
+      ],
+      "lane_id": "osm:4741759495|split:481241683:4:0:0.584475355|481241683:4:0:0:f|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759496",
+        "osm:4741759497",
+        "481241683:5:0:0:f"
+      ],
+      "lane_id": "osm:4741759496|osm:4741759497|481241683:5:0:0:f|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759496",
+        "split:481241683:4:0:0.617567128481",
+        "481241683:4:0:2:r"
+      ],
+      "lane_id": "osm:4741759496|split:481241683:4:0:0.617567128481|481241683:4:0:2:r|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759497",
+        "osm:11257934923",
+        "281621314:16:0:0:f"
+      ],
+      "lane_id": "osm:4741759497|osm:11257934923|281621314:16:0:0:f|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759497",
+        "osm:4741759496",
+        "481241683:5:0:0:r"
+      ],
+      "lane_id": "osm:4741759497|osm:4741759496|481241683:5:0:0:r|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759498",
+        "osm:4741759446",
+        "481241662:7:0:0:r"
+      ],
+      "lane_id": "osm:4741759498|osm:4741759446|481241662:7:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759498",
+        "osm:4741759447",
+        "481241662:8:0:0:f"
+      ],
+      "lane_id": "osm:4741759498|osm:4741759447|481241662:8:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759498",
+        "osm:4741759506",
+        "481241685:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759498|osm:4741759506|481241685:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759499",
+        "osm:4741759506",
+        "481241685:1:0:0:r"
+      ],
+      "lane_id": "osm:4741759499|osm:4741759506|481241685:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759499",
+        "split:481241685:2:0:0.669398977",
+        "481241685:2:0:0:f"
+      ],
+      "lane_id": "osm:4741759499|split:481241685:2:0:0.669398977|481241685:2:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759500",
+        "osm:4741759501",
+        "481241685:3:0:0:f"
+      ],
+      "lane_id": "osm:4741759500|osm:4741759501|481241685:3:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759500",
+        "osm:4741759505",
+        "481241690:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759500|osm:4741759505|481241690:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759500",
+        "split:481241685:2:0:0.669398977",
+        "481241685:2:0:1:r"
+      ],
+      "lane_id": "osm:4741759500|split:481241685:2:0:0.669398977|481241685:2:0:1:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759501",
+        "osm:10058056498",
+        "481241685:4:0:0:f"
+      ],
+      "lane_id": "osm:4741759501|osm:10058056498|481241685:4:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759501",
+        "osm:4741759500",
+        "481241685:3:0:0:r"
+      ],
+      "lane_id": "osm:4741759501|osm:4741759500|481241685:3:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759502",
+        "osm:4741759493",
+        "1098491076:2:0:0:f"
+      ],
+      "lane_id": "osm:4741759502|osm:4741759493|1098491076:2:0:0:f|shared",
+      "authored_road_width_m": 7,
+      "lane_width_m": 7,
+      "right_offset_m": 0.0,
+      "mode": "one_way_single",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759503",
+        "osm:4741759491",
+        "1098491074:1:0:0:r"
+      ],
+      "lane_id": "osm:4741759503|osm:4741759491|1098491074:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759503",
+        "osm:8956947373",
+        "481241683:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759503|osm:8956947373|481241683:0:0:0:f|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759503",
+        "osm:8956947377",
+        "481241687:0:0:0:r"
+      ],
+      "lane_id": "osm:4741759503|osm:8956947377|481241687:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759505",
+        "osm:2643032905",
+        "481241657:1:0:0:r"
+      ],
+      "lane_id": "osm:4741759505|osm:2643032905|481241657:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759505",
+        "osm:2643032908",
+        "481241657:2:0:0:f"
+      ],
+      "lane_id": "osm:4741759505|osm:2643032908|481241657:2:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759505",
+        "osm:4741759500",
+        "481241690:0:0:0:r"
+      ],
+      "lane_id": "osm:4741759505|osm:4741759500|481241690:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759506",
+        "osm:4741759498",
+        "481241685:0:0:0:r"
+      ],
+      "lane_id": "osm:4741759506|osm:4741759498|481241685:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759506",
+        "osm:4741759499",
+        "481241685:1:0:0:f"
+      ],
+      "lane_id": "osm:4741759506|osm:4741759499|481241685:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759506",
+        "split:481241692:0:0:0.389486496264",
+        "481241692:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759506|split:481241692:0:0:0.389486496264|481241692:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759507",
+        "osm:10058460594",
+        "1098539002:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759507|osm:10058460594|1098539002:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759507",
+        "osm:4741759439",
+        "481241658:8:0:0:f"
+      ],
+      "lane_id": "osm:4741759507|osm:4741759439|481241658:8:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759507",
+        "osm:4741759508",
+        "481241658:7:0:0:r"
+      ],
+      "lane_id": "osm:4741759507|osm:4741759508|481241658:7:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759508",
+        "osm:4741759438",
+        "481241658:6:0:0:r"
+      ],
+      "lane_id": "osm:4741759508|osm:4741759438|481241658:6:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759508",
+        "osm:4741759507",
+        "481241658:7:0:0:f"
+      ],
+      "lane_id": "osm:4741759508|osm:4741759507|481241658:7:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759508",
+        "split:481241692:0:0:0.389486496264",
+        "481241692:0:0:1:r"
+      ],
+      "lane_id": "osm:4741759508|split:481241692:0:0:0.389486496264|481241692:0:0:1:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759509",
+        "osm:2262335936",
+        "216916384:2:0:0:f"
+      ],
+      "lane_id": "osm:4741759509|osm:2262335936|216916384:2:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759509",
+        "osm:4741759453",
+        "216916384:1:0:0:r"
+      ],
+      "lane_id": "osm:4741759509|osm:4741759453|216916384:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759509",
+        "osm:4741759510",
+        "481241694:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759509|osm:4741759510|481241694:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759510",
+        "osm:4741759509",
+        "481241694:0:0:0:r"
+      ],
+      "lane_id": "osm:4741759510|osm:4741759509|481241694:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759511",
+        "osm:4741759447",
+        "481241662:9:0:0:r"
+      ],
+      "lane_id": "osm:4741759511|osm:4741759447|481241662:9:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759511",
+        "osm:9769489906",
+        "481241697:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759511|osm:9769489906|481241697:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759512",
+        "osm:4741759451",
+        "481241696:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759512|osm:4741759451|481241696:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759512",
+        "osm:9769489906",
+        "481241697:1:0:0:r"
+      ],
+      "lane_id": "osm:4741759512|osm:9769489906|481241697:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759513",
+        "osm:2262335938",
+        "216916382:1:0:0:f"
+      ],
+      "lane_id": "osm:4741759513|osm:2262335938|216916382:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759513",
+        "osm:2262335941",
+        "216916382:0:0:0:r"
+      ],
+      "lane_id": "osm:4741759513|osm:2262335941|216916382:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759513",
+        "osm:4741759514",
+        "481241699:0:0:0:f"
+      ],
+      "lane_id": "osm:4741759513|osm:4741759514|481241699:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759514",
+        "osm:4741759449",
+        "481241699:1:0:0:f"
+      ],
+      "lane_id": "osm:4741759514|osm:4741759449|481241699:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759514",
+        "osm:4741759513",
+        "481241699:0:0:0:r"
+      ],
+      "lane_id": "osm:4741759514|osm:4741759513|481241699:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759628",
+        "osm:4741759648",
+        "481241714:1:0:0:r"
+      ],
+      "lane_id": "osm:4741759628|osm:4741759648|481241714:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759628",
+        "osm:4741759649",
+        "481241714:2:0:0:f"
+      ],
+      "lane_id": "osm:4741759628|osm:4741759649|481241714:2:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759648",
+        "osm:4741759628",
+        "481241714:1:0:0:f"
+      ],
+      "lane_id": "osm:4741759648|osm:4741759628|481241714:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759648",
+        "split:481241714:0:0:0.222804228624",
+        "481241714:0:0:1:r"
+      ],
+      "lane_id": "osm:4741759648|split:481241714:0:0:0.222804228624|481241714:0:0:1:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759649",
+        "osm:4741759628",
+        "481241714:2:0:0:r"
+      ],
+      "lane_id": "osm:4741759649|osm:4741759628|481241714:2:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759649",
+        "osm:4741759650",
+        "481241714:3:0:0:f"
+      ],
+      "lane_id": "osm:4741759649|osm:4741759650|481241714:3:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759650",
+        "osm:4741759649",
+        "481241714:3:0:0:r"
+      ],
+      "lane_id": "osm:4741759650|osm:4741759649|481241714:3:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759650",
+        "osm:4741759651",
+        "481241714:4:0:0:f"
+      ],
+      "lane_id": "osm:4741759650|osm:4741759651|481241714:4:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759651",
+        "clip:expanded:481241715:1:0.173416418534",
+        "481241715:1:0:0:f"
+      ],
+      "lane_id": "osm:4741759651|clip:expanded:481241715:1:0.173416418534|481241715:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759651",
+        "osm:4741759448",
+        "481241715:0:0:0:r"
+      ],
+      "lane_id": "osm:4741759651|osm:4741759448|481241715:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759651",
+        "osm:4741759650",
+        "481241714:4:0:0:r"
+      ],
+      "lane_id": "osm:4741759651|osm:4741759650|481241714:4:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759657",
+        "osm:12866720417",
+        "281621314:12:0:0:f"
+      ],
+      "lane_id": "osm:4741759657|osm:12866720417|281621314:12:0:0:f|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741759657",
+        "osm:1770237413",
+        "281621314:11:0:0:r"
+      ],
+      "lane_id": "osm:4741759657|osm:1770237413|281621314:11:0:0:r|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741793209",
+        "clip:expanded:216916383:0:0.706021600575",
+        "216916383:0:0:0:r"
+      ],
+      "lane_id": "osm:4741793209|clip:expanded:216916383:0:0.706021600575|216916383:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4741793209",
+        "osm:2262335939",
+        "216916383:1:0:0:f"
+      ],
+      "lane_id": "osm:4741793209|osm:2262335939|216916383:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4958020925",
+        "osm:2877970943",
+        "281621314:6:0:0:r"
+      ],
+      "lane_id": "osm:4958020925|osm:2877970943|281621314:6:0:0:r|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:4958020925",
+        "osm:4638934519",
+        "281621314:7:0:0:f"
+      ],
+      "lane_id": "osm:4958020925|osm:4638934519|281621314:7:0:0:f|right",
+      "authored_road_width_m": 10,
+      "lane_width_m": 5.0,
+      "right_offset_m": 2.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_restored.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:8687774327",
+        "osm:8687774328",
+        "937727088:1:0:0:f"
+      ],
+      "lane_id": "osm:8687774327|osm:8687774328|937727088:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:8687774327",
+        "split:937727088:0:0:0.399868428418",
+        "937727088:0:0:1:r"
+      ],
+      "lane_id": "osm:8687774327|split:937727088:0:0:0.399868428418|937727088:0:0:1:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:8687774328",
+        "osm:4741759479",
+        "937727088:2:0:0:f"
+      ],
+      "lane_id": "osm:8687774328|osm:4741759479|937727088:2:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:8687774328",
+        "osm:8687774327",
+        "937727088:1:0:0:r"
+      ],
+      "lane_id": "osm:8687774328|osm:8687774327|937727088:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:8956947365",
+        "osm:8956947366",
+        "968147725:2:0:0:r"
+      ],
+      "lane_id": "osm:8956947365|osm:8956947366|968147725:2:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:8956947366",
+        "osm:8956947365",
+        "968147725:2:0:0:f"
+      ],
+      "lane_id": "osm:8956947366|osm:8956947365|968147725:2:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:8956947366",
+        "osm:8956947367",
+        "968147725:1:0:0:r"
+      ],
+      "lane_id": "osm:8956947366|osm:8956947367|968147725:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:8956947367",
+        "osm:4741759462",
+        "968147725:0:0:0:r"
+      ],
+      "lane_id": "osm:8956947367|osm:4741759462|968147725:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:8956947367",
+        "osm:8956947366",
+        "968147725:1:0:0:f"
+      ],
+      "lane_id": "osm:8956947367|osm:8956947366|968147725:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:8956947368",
+        "osm:4741759443",
+        "481241660:5:0:0:f"
+      ],
+      "lane_id": "osm:8956947368|osm:4741759443|481241660:5:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:8956947368",
+        "osm:8956947369",
+        "481241660:4:0:0:r"
+      ],
+      "lane_id": "osm:8956947368|osm:8956947369|481241660:4:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:8956947369",
+        "osm:8956947368",
+        "481241660:4:0:0:f"
+      ],
+      "lane_id": "osm:8956947369|osm:8956947368|481241660:4:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:8956947369",
+        "osm:8956947370",
+        "481241660:3:0:0:r"
+      ],
+      "lane_id": "osm:8956947369|osm:8956947370|481241660:3:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:8956947370",
+        "osm:8956947369",
+        "481241660:3:0:0:f"
+      ],
+      "lane_id": "osm:8956947370|osm:8956947369|481241660:3:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:8956947370",
+        "osm:8956947371",
+        "481241660:2:0:0:r"
+      ],
+      "lane_id": "osm:8956947370|osm:8956947371|481241660:2:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:8956947371",
+        "osm:4741759442",
+        "481241660:1:0:0:r"
+      ],
+      "lane_id": "osm:8956947371|osm:4741759442|481241660:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:8956947371",
+        "osm:8956947370",
+        "481241660:2:0:0:f"
+      ],
+      "lane_id": "osm:8956947371|osm:8956947370|481241660:2:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:8956947373",
+        "osm:10058056496",
+        "1098491073:0:0:0:f"
+      ],
+      "lane_id": "osm:8956947373|osm:10058056496|1098491073:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:8956947373",
+        "osm:4741759493",
+        "481241683:1:0:0:f"
+      ],
+      "lane_id": "osm:8956947373|osm:4741759493|481241683:1:0:0:f|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:8956947373",
+        "osm:4741759503",
+        "481241683:0:0:0:r"
+      ],
+      "lane_id": "osm:8956947373|osm:4741759503|481241683:0:0:0:r|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:8956947377",
+        "osm:4741759503",
+        "481241687:0:0:0:f"
+      ],
+      "lane_id": "osm:8956947377|osm:4741759503|481241687:0:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:9767076578",
+        "osm:2262335936",
+        "216916384:3:0:0:r"
+      ],
+      "lane_id": "osm:9767076578|osm:2262335936|216916384:3:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:9767076578",
+        "osm:4741759458",
+        "216916384:4:0:0:f"
+      ],
+      "lane_id": "osm:9767076578|osm:4741759458|216916384:4:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:9767086763",
+        "osm:2262335939",
+        "216916383:2:0:0:r"
+      ],
+      "lane_id": "osm:9767086763|osm:2262335939|216916383:2:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:9767086763",
+        "split:216916383:3:0:0.236611800777",
+        "216916383:3:0:0:f"
+      ],
+      "lane_id": "osm:9767086763|split:216916383:3:0:0.236611800777|216916383:3:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:9767122971",
+        "split:481241663:0:0:0.903003431591",
+        "481241663:0:0:1:r"
+      ],
+      "lane_id": "osm:9767122971|split:481241663:0:0:0.903003431591|481241663:0:0:1:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:9767122971",
+        "split:481241663:1:0:0.74650168143",
+        "481241663:1:0:0:f"
+      ],
+      "lane_id": "osm:9767122971|split:481241663:1:0:0.74650168143|481241663:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:9769489906",
+        "osm:4741759511",
+        "481241697:0:0:0:r"
+      ],
+      "lane_id": "osm:9769489906|osm:4741759511|481241697:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "osm:9769489906",
+        "osm:4741759512",
+        "481241697:1:0:0:f"
+      ],
+      "lane_id": "osm:9769489906|osm:4741759512|481241697:1:0:0:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "split:216916382:4:0:0.027897082418",
+        "osm:2262335939",
+        "216916382:4:0:1:f"
+      ],
+      "lane_id": "split:216916382:4:0:0.027897082418|osm:2262335939|216916382:4:0:1:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "split:216916382:4:0:0.027897082418",
+        "osm:4741759450",
+        "216916382:4:0:0:r"
+      ],
+      "lane_id": "split:216916382:4:0:0.027897082418|osm:4741759450|216916382:4:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "split:216916383:3:0:0.236611800777",
+        "osm:2262335940",
+        "216916383:3:0:1:f"
+      ],
+      "lane_id": "split:216916383:3:0:0.236611800777|osm:2262335940|216916383:3:0:1:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "split:216916383:3:0:0.236611800777",
+        "osm:9767086763",
+        "216916383:3:0:0:r"
+      ],
+      "lane_id": "split:216916383:3:0:0.236611800777|osm:9767086763|216916383:3:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "split:216916383:4:0:0.893099911983",
+        "osm:2262335931",
+        "216916383:4:0:1:f"
+      ],
+      "lane_id": "split:216916383:4:0:0.893099911983|osm:2262335931|216916383:4:0:1:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "split:216916383:4:0:0.893099911983",
+        "osm:2262335940",
+        "216916383:4:0:0:r"
+      ],
+      "lane_id": "split:216916383:4:0:0.893099911983|osm:2262335940|216916383:4:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "split:481241663:0:0:0.903003431591",
+        "osm:4741759444",
+        "481241663:0:0:0:r"
+      ],
+      "lane_id": "split:481241663:0:0:0.903003431591|osm:4741759444|481241663:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "split:481241663:0:0:0.903003431591",
+        "osm:9767122971",
+        "481241663:0:0:1:f"
+      ],
+      "lane_id": "split:481241663:0:0:0.903003431591|osm:9767122971|481241663:0:0:1:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "split:481241663:1:0:0.74650168143",
+        "osm:4741759449",
+        "481241663:1:0:1:f"
+      ],
+      "lane_id": "split:481241663:1:0:0.74650168143|osm:4741759449|481241663:1:0:1:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "split:481241663:1:0:0.74650168143",
+        "osm:9767122971",
+        "481241663:1:0:0:r"
+      ],
+      "lane_id": "split:481241663:1:0:0.74650168143|osm:9767122971|481241663:1:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "split:481241683:4:0:0.584475355",
+        "osm:4741759495",
+        "481241683:4:0:0:r"
+      ],
+      "lane_id": "split:481241683:4:0:0.584475355|osm:4741759495|481241683:4:0:0:r|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "split:481241683:4:0:0.584475355",
+        "split:481241683:4:0:0.617567128481",
+        "481241683:4:0:1:f"
+      ],
+      "lane_id": "split:481241683:4:0:0.584475355|split:481241683:4:0:0.617567128481|481241683:4:0:1:f|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "split:481241683:4:0:0.617567128481",
+        "osm:4741759496",
+        "481241683:4:0:2:f"
+      ],
+      "lane_id": "split:481241683:4:0:0.617567128481|osm:4741759496|481241683:4:0:2:f|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "split:481241683:4:0:0.617567128481",
+        "split:481241683:4:0:0.584475355",
+        "481241683:4:0:1:r"
+      ],
+      "lane_id": "split:481241683:4:0:0.617567128481|split:481241683:4:0:0.584475355|481241683:4:0:1:r|right",
+      "authored_road_width_m": 6,
+      "lane_width_m": 3.0,
+      "right_offset_m": 1.5,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/CampusSim/Data/road_connections_scoped.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "split:481241685:2:0:0.669398977",
+        "osm:4741759499",
+        "481241685:2:0:0:r"
+      ],
+      "lane_id": "split:481241685:2:0:0.669398977|osm:4741759499|481241685:2:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "split:481241685:2:0:0.669398977",
+        "osm:4741759500",
+        "481241685:2:0:1:f"
+      ],
+      "lane_id": "split:481241685:2:0:0.669398977|osm:4741759500|481241685:2:0:1:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "split:481241692:0:0:0.389486496264",
+        "osm:4741759506",
+        "481241692:0:0:0:r"
+      ],
+      "lane_id": "split:481241692:0:0:0.389486496264|osm:4741759506|481241692:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "split:481241692:0:0:0.389486496264",
+        "osm:4741759508",
+        "481241692:0:0:1:f"
+      ],
+      "lane_id": "split:481241692:0:0:0.389486496264|osm:4741759508|481241692:0:0:1:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "split:481241714:0:0:0.222804228624",
+        "clip:expanded:481241714:0:0.136187164195",
+        "481241714:0:0:0:r"
+      ],
+      "lane_id": "split:481241714:0:0:0.222804228624|clip:expanded:481241714:0:0.136187164195|481241714:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "split:481241714:0:0:0.222804228624",
+        "osm:4741759648",
+        "481241714:0:0:1:f"
+      ],
+      "lane_id": "split:481241714:0:0:0.222804228624|osm:4741759648|481241714:0:0:1:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "split:937727088:0:0:0.399868428418",
+        "osm:2262335931",
+        "937727088:0:0:0:r"
+      ],
+      "lane_id": "split:937727088:0:0:0.399868428418|osm:2262335931|937727088:0:0:0:r|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    },
+    {
+      "edge": [
+        "split:937727088:0:0:0.399868428418",
+        "osm:8687774327",
+        "937727088:0:0:1:f"
+      ],
+      "lane_id": "split:937727088:0:0:0.399868428418|osm:8687774327|937727088:0:0:1:f|right",
+      "authored_road_width_m": 7,
+      "lane_width_m": 3.5,
+      "right_offset_m": 1.75,
+      "mode": "right_hand_two_way",
+      "width_source": "Assets/InhaCampus/Source/campus.json",
+      "verification": "synthetic_authored_width_not_surveyed"
+    }
+  ],
+  "profile_hash": "35b227a2ae80189a9deea1265660cac3b45b2123b567e07dd0bcb47d01a660b7"
+}

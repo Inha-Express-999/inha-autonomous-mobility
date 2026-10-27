@@ -1,0 +1,1564 @@
+{
+  "scope": "Offline mission planning, predicted lane endpoint poses; not Unity Physics or dispatch validation",
+  "protocol": 4,
+  "vehicle_geometry_source": "artifacts/high_speed_drive/turnaround-measure.json (MCP V01 Collider measurement)",
+  "half_width_m": 0.46001,
+  "geometry_hash": "32950491597bd9b134fda86eaaa95af1fc25737413f6841a04d94dd854cad7c4",
+  "lane_profile_hash": "e7ba7d3c1b56dfea2ea874af26f5ee2c160baf9ee47e8e81ce8a1c2660b0588c",
+  "missing_origins": [
+    "dorm_1_road_candidate"
+  ],
+  "accepted": 134,
+  "total": 183,
+  "routes": [
+    {
+      "origin": "spawn",
+      "destination": "anniversary_60_road_candidate",
+      "accepted": true,
+      "length_m": 570.3751984211577,
+      "lane_count": 18,
+      "requires_turn": false,
+      "planning_ms": 46.24299999977666
+    },
+    {
+      "origin": "spawn",
+      "destination": "biryong_plaza_road_candidate",
+      "accepted": true,
+      "length_m": 260.3722544146344,
+      "lane_count": 5,
+      "requires_turn": true,
+      "planning_ms": 46.801200000118115
+    },
+    {
+      "origin": "spawn",
+      "destination": "building_2_road_candidate",
+      "accepted": true,
+      "length_m": 596.6387113153725,
+      "lane_count": 18,
+      "requires_turn": false,
+      "planning_ms": 46.22479999989082
+    },
+    {
+      "origin": "spawn",
+      "destination": "building_5_road_candidate",
+      "accepted": true,
+      "length_m": 609.8459657044833,
+      "lane_count": 14,
+      "requires_turn": false,
+      "planning_ms": 44.97520000040822
+    },
+    {
+      "origin": "spawn",
+      "destination": "dorm_1_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 141.02820000016436
+    },
+    {
+      "origin": "spawn",
+      "destination": "dorm_2_road_candidate",
+      "accepted": true,
+      "length_m": 1610.1947040834084,
+      "lane_count": 46,
+      "requires_turn": false,
+      "planning_ms": 75.99350000009508
+    },
+    {
+      "origin": "spawn",
+      "destination": "dorm_3_road_candidate",
+      "accepted": true,
+      "length_m": 1540.7282989171738,
+      "lane_count": 44,
+      "requires_turn": false,
+      "planning_ms": 76.22779999974227
+    },
+    {
+      "origin": "spawn",
+      "destination": "hitech_road_candidate",
+      "accepted": true,
+      "length_m": 484.0170935861666,
+      "lane_count": 11,
+      "requires_turn": true,
+      "planning_ms": 48.825099999703525
+    },
+    {
+      "origin": "spawn",
+      "destination": "inha_station_road_candidate",
+      "accepted": true,
+      "length_m": 1054.9700283749557,
+      "lane_count": 23,
+      "requires_turn": false,
+      "planning_ms": 57.45470000010755
+    },
+    {
+      "origin": "spawn",
+      "destination": "library_road_candidate",
+      "accepted": true,
+      "length_m": 455.1734798217328,
+      "lane_count": 15,
+      "requires_turn": false,
+      "planning_ms": 48.206800000116345
+    },
+    {
+      "origin": "spawn",
+      "destination": "main_building_road_candidate",
+      "accepted": true,
+      "length_m": 25.6614191059712,
+      "lane_count": 1,
+      "requires_turn": false,
+      "planning_ms": 49.02519999996002
+    },
+    {
+      "origin": "spawn",
+      "destination": "main_gate_road_candidate",
+      "accepted": true,
+      "length_m": 646.1620712474596,
+      "lane_count": 16,
+      "requires_turn": false,
+      "planning_ms": 50.766899999871384
+    },
+    {
+      "origin": "spawn",
+      "destination": "rear_gate_road_candidate",
+      "accepted": true,
+      "length_m": 668.6012022275104,
+      "lane_count": 21,
+      "requires_turn": false,
+      "planning_ms": 60.1040000001376
+    },
+    {
+      "origin": "spawn",
+      "destination": "student_center_road_candidate",
+      "accepted": true,
+      "length_m": 298.81443314717245,
+      "lane_count": 7,
+      "requires_turn": true,
+      "planning_ms": 45.8997000000636
+    },
+    {
+      "origin": "anniversary_60_road_candidate",
+      "destination": "biryong_plaza_road_candidate",
+      "accepted": true,
+      "length_m": 350.82522953977633,
+      "lane_count": 14,
+      "requires_turn": true,
+      "planning_ms": 96.27639999962412
+    },
+    {
+      "origin": "anniversary_60_road_candidate",
+      "destination": "building_2_road_candidate",
+      "accepted": true,
+      "length_m": 108.50559308523329,
+      "lane_count": 2,
+      "requires_turn": true,
+      "planning_ms": 73.6733000003369
+    },
+    {
+      "origin": "anniversary_60_road_candidate",
+      "destination": "building_5_road_candidate",
+      "accepted": true,
+      "length_m": 67.64673265226155,
+      "lane_count": 2,
+      "requires_turn": false,
+      "planning_ms": 73.6931999999797
+    },
+    {
+      "origin": "anniversary_60_road_candidate",
+      "destination": "dorm_1_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 254.44829999969443
+    },
+    {
+      "origin": "anniversary_60_road_candidate",
+      "destination": "dorm_2_road_candidate",
+      "accepted": true,
+      "length_m": 1793.979951860696,
+      "lane_count": 55,
+      "requires_turn": false,
+      "planning_ms": 152.63109999978042
+    },
+    {
+      "origin": "anniversary_60_road_candidate",
+      "destination": "dorm_3_road_candidate",
+      "accepted": true,
+      "length_m": 1724.5135466944614,
+      "lane_count": 53,
+      "requires_turn": false,
+      "planning_ms": 149.4311999999809
+    },
+    {
+      "origin": "anniversary_60_road_candidate",
+      "destination": "hitech_road_candidate",
+      "accepted": true,
+      "length_m": 1049.3747962852676,
+      "lane_count": 27,
+      "requires_turn": false,
+      "planning_ms": 74.33390000005602
+    },
+    {
+      "origin": "anniversary_60_road_candidate",
+      "destination": "inha_station_road_candidate",
+      "accepted": true,
+      "length_m": 1238.7552761522434,
+      "lane_count": 32,
+      "requires_turn": false,
+      "planning_ms": 71.12649999999121
+    },
+    {
+      "origin": "anniversary_60_road_candidate",
+      "destination": "library_road_candidate",
+      "accepted": true,
+      "length_m": 651.748097952887,
+      "lane_count": 16,
+      "requires_turn": false,
+      "planning_ms": 53.35990000003221
+    },
+    {
+      "origin": "anniversary_60_road_candidate",
+      "destination": "main_building_road_candidate",
+      "accepted": true,
+      "length_m": 665.4319078436934,
+      "lane_count": 15,
+      "requires_turn": false,
+      "planning_ms": 54.723899999771675
+    },
+    {
+      "origin": "anniversary_60_road_candidate",
+      "destination": "main_gate_road_candidate",
+      "accepted": true,
+      "length_m": 829.9473190247473,
+      "lane_count": 25,
+      "requires_turn": false,
+      "planning_ms": 48.86720000013156
+    },
+    {
+      "origin": "anniversary_60_road_candidate",
+      "destination": "rear_gate_road_candidate",
+      "accepted": true,
+      "length_m": 180.47275000966488,
+      "lane_count": 5,
+      "requires_turn": true,
+      "planning_ms": 42.94630000003963
+    },
+    {
+      "origin": "anniversary_60_road_candidate",
+      "destination": "student_center_road_candidate",
+      "accepted": true,
+      "length_m": 312.39941142595825,
+      "lane_count": 12,
+      "requires_turn": true,
+      "planning_ms": 45.70319999993444
+    },
+    {
+      "origin": "biryong_plaza_road_candidate",
+      "destination": "anniversary_60_road_candidate",
+      "accepted": true,
+      "length_m": 360.03822623923344,
+      "lane_count": 14,
+      "requires_turn": false,
+      "planning_ms": 38.19740000017191
+    },
+    {
+      "origin": "biryong_plaza_road_candidate",
+      "destination": "building_2_road_candidate",
+      "accepted": true,
+      "length_m": 250.2445421319158,
+      "lane_count": 12,
+      "requires_turn": false,
+      "planning_ms": 42.401499999868975
+    },
+    {
+      "origin": "biryong_plaza_road_candidate",
+      "destination": "building_5_road_candidate",
+      "accepted": true,
+      "length_m": 427.6743685531592,
+      "lane_count": 16,
+      "requires_turn": false,
+      "planning_ms": 41.21590000022479
+    },
+    {
+      "origin": "biryong_plaza_road_candidate",
+      "destination": "dorm_1_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 254.77150000006077
+    },
+    {
+      "origin": "biryong_plaza_road_candidate",
+      "destination": "dorm_2_road_candidate",
+      "accepted": true,
+      "length_m": 1672.6484180479658,
+      "lane_count": 51,
+      "requires_turn": false,
+      "planning_ms": 94.95060000017475
+    },
+    {
+      "origin": "biryong_plaza_road_candidate",
+      "destination": "dorm_3_road_candidate",
+      "accepted": true,
+      "length_m": 1603.1820128817312,
+      "lane_count": 49,
+      "requires_turn": false,
+      "planning_ms": 138.97529999985636
+    },
+    {
+      "origin": "biryong_plaza_road_candidate",
+      "destination": "hitech_road_candidate",
+      "accepted": true,
+      "length_m": 675.5201216794202,
+      "lane_count": 20,
+      "requires_turn": false,
+      "planning_ms": 36.569999999755964
+    },
+    {
+      "origin": "biryong_plaza_road_candidate",
+      "destination": "inha_station_road_candidate",
+      "accepted": true,
+      "length_m": 1147.6960455055641,
+      "lane_count": 30,
+      "requires_turn": false,
+      "planning_ms": 78.70719999982612
+    },
+    {
+      "origin": "biryong_plaza_road_candidate",
+      "destination": "library_road_candidate",
+      "accepted": true,
+      "length_m": 725.8862460963234,
+      "lane_count": 23,
+      "requires_turn": false,
+      "planning_ms": 49.53960000011648
+    },
+    {
+      "origin": "biryong_plaza_road_candidate",
+      "destination": "main_building_road_candidate",
+      "accepted": true,
+      "length_m": 739.5455983644353,
+      "lane_count": 22,
+      "requires_turn": false,
+      "planning_ms": 48.74019999988377
+    },
+    {
+      "origin": "biryong_plaza_road_candidate",
+      "destination": "main_gate_road_candidate",
+      "accepted": true,
+      "length_m": 738.8880897377194,
+      "lane_count": 23,
+      "requires_turn": false,
+      "planning_ms": 42.41629999978613
+    },
+    {
+      "origin": "biryong_plaza_road_candidate",
+      "destination": "rear_gate_road_candidate",
+      "accepted": true,
+      "length_m": 178.4846618575242,
+      "lane_count": 9,
+      "requires_turn": false,
+      "planning_ms": 41.71990000031656
+    },
+    {
+      "origin": "biryong_plaza_road_candidate",
+      "destination": "student_center_road_candidate",
+      "accepted": true,
+      "length_m": 38.44236808242377,
+      "lane_count": 2,
+      "requires_turn": false,
+      "planning_ms": 36.907500000324944
+    },
+    {
+      "origin": "building_2_road_candidate",
+      "destination": "anniversary_60_road_candidate",
+      "accepted": true,
+      "length_m": 108.50528284850209,
+      "lane_count": 2,
+      "requires_turn": true,
+      "planning_ms": 40.32370000004448
+    },
+    {
+      "origin": "building_2_road_candidate",
+      "destination": "biryong_plaza_road_candidate",
+      "accepted": true,
+      "length_m": 242.31509843603504,
+      "lane_count": 12,
+      "requires_turn": false,
+      "planning_ms": 40.14360000019224
+    },
+    {
+      "origin": "building_2_road_candidate",
+      "destination": "building_5_road_candidate",
+      "accepted": true,
+      "length_m": 176.1437699603524,
+      "lane_count": 4,
+      "requires_turn": true,
+      "planning_ms": 43.24220000034984
+    },
+    {
+      "origin": "building_2_road_candidate",
+      "destination": "dorm_1_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 242.33930000036707
+    },
+    {
+      "origin": "building_2_road_candidate",
+      "destination": "dorm_2_road_candidate",
+      "accepted": true,
+      "length_m": 1602.8491260196504,
+      "lane_count": 51,
+      "requires_turn": false,
+      "planning_ms": 102.7020999999877
+    },
+    {
+      "origin": "building_2_road_candidate",
+      "destination": "dorm_3_road_candidate",
+      "accepted": true,
+      "length_m": 1533.3827208534158,
+      "lane_count": 49,
+      "requires_turn": false,
+      "planning_ms": 158.03830000004382
+    },
+    {
+      "origin": "building_2_road_candidate",
+      "destination": "hitech_road_candidate",
+      "accepted": true,
+      "length_m": 605.7208296511049,
+      "lane_count": 20,
+      "requires_turn": false,
+      "planning_ms": 67.33149999990928
+    },
+    {
+      "origin": "building_2_road_candidate",
+      "destination": "inha_station_road_candidate",
+      "accepted": true,
+      "length_m": 1077.8967534772487,
+      "lane_count": 30,
+      "requires_turn": false,
+      "planning_ms": 74.32470000003377
+    },
+    {
+      "origin": "building_2_road_candidate",
+      "destination": "library_road_candidate",
+      "accepted": true,
+      "length_m": 656.086954068008,
+      "lane_count": 23,
+      "requires_turn": false,
+      "planning_ms": 38.27739999996993
+    },
+    {
+      "origin": "building_2_road_candidate",
+      "destination": "main_building_road_candidate",
+      "accepted": true,
+      "length_m": 669.7463063361198,
+      "lane_count": 22,
+      "requires_turn": false,
+      "planning_ms": 47.53630000004705
+    },
+    {
+      "origin": "building_2_road_candidate",
+      "destination": "main_gate_road_candidate",
+      "accepted": true,
+      "length_m": 669.0887977094039,
+      "lane_count": 23,
+      "requires_turn": false,
+      "planning_ms": 40.71169999997437
+    },
+    {
+      "origin": "building_2_road_candidate",
+      "destination": "rear_gate_road_candidate",
+      "accepted": true,
+      "length_m": 71.9626189253913,
+      "lane_count": 3,
+      "requires_turn": false,
+      "planning_ms": 40.34110000020519
+    },
+    {
+      "origin": "building_2_road_candidate",
+      "destination": "student_center_road_candidate",
+      "accepted": true,
+      "length_m": 203.88928032221696,
+      "lane_count": 10,
+      "requires_turn": false,
+      "planning_ms": 34.912399999939225
+    },
+    {
+      "origin": "building_5_road_candidate",
+      "destination": "anniversary_60_road_candidate",
+      "accepted": true,
+      "length_m": 68.1722164727051,
+      "lane_count": 2,
+      "requires_turn": false,
+      "planning_ms": 38.45610000007582
+    },
+    {
+      "origin": "building_5_road_candidate",
+      "destination": "biryong_plaza_road_candidate",
+      "accepted": true,
+      "length_m": 420.2972965522196,
+      "lane_count": 16,
+      "requires_turn": false,
+      "planning_ms": 43.29349999989063
+    },
+    {
+      "origin": "building_5_road_candidate",
+      "destination": "building_2_road_candidate",
+      "accepted": true,
+      "length_m": 177.97724086284413,
+      "lane_count": 4,
+      "requires_turn": false,
+      "planning_ms": 36.51990000025762
+    },
+    {
+      "origin": "building_5_road_candidate",
+      "destination": "dorm_1_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 148.52429999973538
+    },
+    {
+      "origin": "building_5_road_candidate",
+      "destination": "dorm_2_road_candidate",
+      "accepted": true,
+      "length_m": 1684.3473250597735,
+      "lane_count": 48,
+      "requires_turn": false,
+      "planning_ms": 98.8785999998072
+    },
+    {
+      "origin": "building_5_road_candidate",
+      "destination": "dorm_3_road_candidate",
+      "accepted": true,
+      "length_m": 1614.880919893539,
+      "lane_count": 46,
+      "requires_turn": false,
+      "planning_ms": 97.69539999979315
+    },
+    {
+      "origin": "building_5_road_candidate",
+      "destination": "hitech_road_candidate",
+      "accepted": true,
+      "length_m": 755.3820301008404,
+      "lane_count": 19,
+      "requires_turn": false,
+      "planning_ms": 60.44479999991381
+    },
+    {
+      "origin": "building_5_road_candidate",
+      "destination": "inha_station_road_candidate",
+      "accepted": true,
+      "length_m": 1159.3949525173718,
+      "lane_count": 27,
+      "requires_turn": false,
+      "planning_ms": 66.7647999998735
+    },
+    {
+      "origin": "building_5_road_candidate",
+      "destination": "library_road_candidate",
+      "accepted": true,
+      "length_m": 834.0691521841925,
+      "lane_count": 27,
+      "requires_turn": false,
+      "planning_ms": 55.09910000000673
+    },
+    {
+      "origin": "building_5_road_candidate",
+      "destination": "main_building_road_candidate",
+      "accepted": true,
+      "length_m": 847.7285044523044,
+      "lane_count": 26,
+      "requires_turn": false,
+      "planning_ms": 47.46789999990142
+    },
+    {
+      "origin": "building_5_road_candidate",
+      "destination": "main_gate_road_candidate",
+      "accepted": true,
+      "length_m": 750.5869967495271,
+      "lane_count": 20,
+      "requires_turn": false,
+      "planning_ms": 44.371200000114186
+    },
+    {
+      "origin": "building_5_road_candidate",
+      "destination": "rear_gate_road_candidate",
+      "accepted": true,
+      "length_m": 249.94481701967936,
+      "lane_count": 7,
+      "requires_turn": false,
+      "planning_ms": 33.612300000186224
+    },
+    {
+      "origin": "building_5_road_candidate",
+      "destination": "student_center_road_candidate",
+      "accepted": true,
+      "length_m": 381.8714784384015,
+      "lane_count": 14,
+      "requires_turn": false,
+      "planning_ms": 40.98019999992175
+    },
+    {
+      "origin": "dorm_2_road_candidate",
+      "destination": "anniversary_60_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 13.89580000022761
+    },
+    {
+      "origin": "dorm_2_road_candidate",
+      "destination": "biryong_plaza_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 16.857099999924685
+    },
+    {
+      "origin": "dorm_2_road_candidate",
+      "destination": "building_2_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 15.397900000152731
+    },
+    {
+      "origin": "dorm_2_road_candidate",
+      "destination": "building_5_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 14.473499999894557
+    },
+    {
+      "origin": "dorm_2_road_candidate",
+      "destination": "dorm_1_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 11.618600000019796
+    },
+    {
+      "origin": "dorm_2_road_candidate",
+      "destination": "dorm_3_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 44.54549999991286
+    },
+    {
+      "origin": "dorm_2_road_candidate",
+      "destination": "hitech_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 23.487200000090525
+    },
+    {
+      "origin": "dorm_2_road_candidate",
+      "destination": "inha_station_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 24.161999999705586
+    },
+    {
+      "origin": "dorm_2_road_candidate",
+      "destination": "library_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 25.27490000011312
+    },
+    {
+      "origin": "dorm_2_road_candidate",
+      "destination": "main_building_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 18.82949999981065
+    },
+    {
+      "origin": "dorm_2_road_candidate",
+      "destination": "main_gate_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 18.61159999998563
+    },
+    {
+      "origin": "dorm_2_road_candidate",
+      "destination": "rear_gate_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 15.442200000052253
+    },
+    {
+      "origin": "dorm_2_road_candidate",
+      "destination": "student_center_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 25.08799999986877
+    },
+    {
+      "origin": "dorm_3_road_candidate",
+      "destination": "anniversary_60_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 20.981900000151654
+    },
+    {
+      "origin": "dorm_3_road_candidate",
+      "destination": "biryong_plaza_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 21.042800000032003
+    },
+    {
+      "origin": "dorm_3_road_candidate",
+      "destination": "building_2_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 18.279100000199833
+    },
+    {
+      "origin": "dorm_3_road_candidate",
+      "destination": "building_5_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 11.334700000134035
+    },
+    {
+      "origin": "dorm_3_road_candidate",
+      "destination": "dorm_1_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 16.001200000118843
+    },
+    {
+      "origin": "dorm_3_road_candidate",
+      "destination": "dorm_2_road_candidate",
+      "accepted": true,
+      "length_m": 72.46711612646999,
+      "lane_count": 3,
+      "requires_turn": false,
+      "planning_ms": 13.247800000044663
+    },
+    {
+      "origin": "dorm_3_road_candidate",
+      "destination": "hitech_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 12.822199999845907
+    },
+    {
+      "origin": "dorm_3_road_candidate",
+      "destination": "inha_station_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 12.79789999989589
+    },
+    {
+      "origin": "dorm_3_road_candidate",
+      "destination": "library_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 11.977499999829888
+    },
+    {
+      "origin": "dorm_3_road_candidate",
+      "destination": "main_building_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 13.016700000207493
+    },
+    {
+      "origin": "dorm_3_road_candidate",
+      "destination": "main_gate_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 19.033999999919615
+    },
+    {
+      "origin": "dorm_3_road_candidate",
+      "destination": "rear_gate_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 12.998800000332267
+    },
+    {
+      "origin": "dorm_3_road_candidate",
+      "destination": "student_center_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 14.188000000103784
+    },
+    {
+      "origin": "hitech_road_candidate",
+      "destination": "anniversary_60_road_candidate",
+      "accepted": true,
+      "length_m": 680.8091635265655,
+      "lane_count": 17,
+      "requires_turn": true,
+      "planning_ms": 27.89539999957924
+    },
+    {
+      "origin": "hitech_road_candidate",
+      "destination": "biryong_plaza_road_candidate",
+      "accepted": true,
+      "length_m": 348.16546967744205,
+      "lane_count": 8,
+      "requires_turn": true,
+      "planning_ms": 29.225700000097277
+    },
+    {
+      "origin": "hitech_road_candidate",
+      "destination": "building_2_road_candidate",
+      "accepted": true,
+      "length_m": 598.426332145052,
+      "lane_count": 20,
+      "requires_turn": true,
+      "planning_ms": 32.84350000012637
+    },
+    {
+      "origin": "hitech_road_candidate",
+      "destination": "building_5_road_candidate",
+      "accepted": true,
+      "length_m": 748.4558956578734,
+      "lane_count": 19,
+      "requires_turn": true,
+      "planning_ms": 39.02400000015405
+    },
+    {
+      "origin": "hitech_road_candidate",
+      "destination": "dorm_1_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 132.28960000014922
+    },
+    {
+      "origin": "hitech_road_candidate",
+      "destination": "dorm_2_road_candidate",
+      "accepted": true,
+      "length_m": 1582.9566480459941,
+      "lane_count": 45,
+      "requires_turn": true,
+      "planning_ms": 66.58640000023297
+    },
+    {
+      "origin": "hitech_road_candidate",
+      "destination": "dorm_3_road_candidate",
+      "accepted": true,
+      "length_m": 1513.4902428797593,
+      "lane_count": 43,
+      "requires_turn": true,
+      "planning_ms": 65.33859999990455
+    },
+    {
+      "origin": "hitech_road_candidate",
+      "destination": "inha_station_road_candidate",
+      "accepted": true,
+      "length_m": 1058.0042755035925,
+      "lane_count": 24,
+      "requires_turn": true,
+      "planning_ms": 39.11950000019715
+    },
+    {
+      "origin": "hitech_road_candidate",
+      "destination": "library_road_candidate",
+      "accepted": true,
+      "length_m": 636.1968744066819,
+      "lane_count": 17,
+      "requires_turn": true,
+      "planning_ms": 29.64109999993525
+    },
+    {
+      "origin": "hitech_road_candidate",
+      "destination": "main_building_road_candidate",
+      "accepted": true,
+      "length_m": 649.8562266747937,
+      "lane_count": 16,
+      "requires_turn": true,
+      "planning_ms": 31.505899999956455
+    },
+    {
+      "origin": "hitech_road_candidate",
+      "destination": "main_gate_road_candidate",
+      "accepted": true,
+      "length_m": 649.1963197357476,
+      "lane_count": 17,
+      "requires_turn": true,
+      "planning_ms": 28.72960000013336
+    },
+    {
+      "origin": "hitech_road_candidate",
+      "destination": "rear_gate_road_candidate",
+      "accepted": true,
+      "length_m": 526.6664518706604,
+      "lane_count": 17,
+      "requires_turn": true,
+      "planning_ms": 29.21909999986383
+    },
+    {
+      "origin": "hitech_road_candidate",
+      "destination": "student_center_road_candidate",
+      "accepted": true,
+      "length_m": 386.60792177315915,
+      "lane_count": 10,
+      "requires_turn": true,
+      "planning_ms": 25.169999999889114
+    },
+    {
+      "origin": "inha_station_road_candidate",
+      "destination": "anniversary_60_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 12.288800000078481
+    },
+    {
+      "origin": "inha_station_road_candidate",
+      "destination": "biryong_plaza_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 12.170900000000984
+    },
+    {
+      "origin": "inha_station_road_candidate",
+      "destination": "building_2_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 10.377099999914208
+    },
+    {
+      "origin": "inha_station_road_candidate",
+      "destination": "building_5_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 11.911699999927805
+    },
+    {
+      "origin": "inha_station_road_candidate",
+      "destination": "dorm_1_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 12.582699999711622
+    },
+    {
+      "origin": "inha_station_road_candidate",
+      "destination": "dorm_2_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 11.481600000024628
+    },
+    {
+      "origin": "inha_station_road_candidate",
+      "destination": "dorm_3_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 9.263899999950809
+    },
+    {
+      "origin": "inha_station_road_candidate",
+      "destination": "hitech_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 9.555099999943195
+    },
+    {
+      "origin": "inha_station_road_candidate",
+      "destination": "library_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 10.302499999852444
+    },
+    {
+      "origin": "inha_station_road_candidate",
+      "destination": "main_building_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 11.091600000327162
+    },
+    {
+      "origin": "inha_station_road_candidate",
+      "destination": "main_gate_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 11.674700000185112
+    },
+    {
+      "origin": "inha_station_road_candidate",
+      "destination": "rear_gate_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 9.451500000068336
+    },
+    {
+      "origin": "inha_station_road_candidate",
+      "destination": "student_center_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 8.598399999755202
+    },
+    {
+      "origin": "library_road_candidate",
+      "destination": "anniversary_60_road_candidate",
+      "accepted": true,
+      "length_m": 691.6165293898489,
+      "lane_count": 18,
+      "requires_turn": false,
+      "planning_ms": 42.62920000019221
+    },
+    {
+      "origin": "library_road_candidate",
+      "destination": "biryong_plaza_road_candidate",
+      "accepted": true,
+      "length_m": 588.2413716653633,
+      "lane_count": 18,
+      "requires_turn": false,
+      "planning_ms": 38.188199999694916
+    },
+    {
+      "origin": "library_road_candidate",
+      "destination": "building_2_road_candidate",
+      "accepted": true,
+      "length_m": 717.8800422840637,
+      "lane_count": 18,
+      "requires_turn": false,
+      "planning_ms": 41.714800000136165
+    },
+    {
+      "origin": "library_road_candidate",
+      "destination": "building_5_road_candidate",
+      "accepted": true,
+      "length_m": 744.7671567106846,
+      "lane_count": 17,
+      "requires_turn": false,
+      "planning_ms": 44.32169999972757
+    },
+    {
+      "origin": "library_road_candidate",
+      "destination": "dorm_1_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 141.29069999989952
+    },
+    {
+      "origin": "library_road_candidate",
+      "destination": "dorm_2_road_candidate",
+      "accepted": true,
+      "length_m": 1142.2365040324937,
+      "lane_count": 39,
+      "requires_turn": false,
+      "planning_ms": 82.29729999993651
+    },
+    {
+      "origin": "library_road_candidate",
+      "destination": "dorm_3_road_candidate",
+      "accepted": true,
+      "length_m": 1072.770098866259,
+      "lane_count": 37,
+      "requires_turn": false,
+      "planning_ms": 72.81269999975848
+    },
+    {
+      "origin": "library_road_candidate",
+      "destination": "hitech_road_candidate",
+      "accepted": true,
+      "length_m": 811.8861803002535,
+      "lane_count": 24,
+      "requires_turn": false,
+      "planning_ms": 52.78050000015355
+    },
+    {
+      "origin": "library_road_candidate",
+      "destination": "inha_station_road_candidate",
+      "accepted": true,
+      "length_m": 587.0118283240412,
+      "lane_count": 16,
+      "requires_turn": false,
+      "planning_ms": 47.49020000008386
+    },
+    {
+      "origin": "library_road_candidate",
+      "destination": "main_building_road_candidate",
+      "accepted": true,
+      "length_m": 538.2340635674392,
+      "lane_count": 15,
+      "requires_turn": false,
+      "planning_ms": 32.25479999991876
+    },
+    {
+      "origin": "library_road_candidate",
+      "destination": "main_gate_road_candidate",
+      "accepted": true,
+      "length_m": 178.203871196545,
+      "lane_count": 9,
+      "requires_turn": false,
+      "planning_ms": 38.91010000006645
+    },
+    {
+      "origin": "library_road_candidate",
+      "destination": "rear_gate_road_candidate",
+      "accepted": true,
+      "length_m": 766.7184144463469,
+      "lane_count": 27,
+      "requires_turn": false,
+      "planning_ms": 55.844600000000355
+    },
+    {
+      "origin": "library_road_candidate",
+      "destination": "student_center_road_candidate",
+      "accepted": true,
+      "length_m": 626.6835503979013,
+      "lane_count": 20,
+      "requires_turn": false,
+      "planning_ms": 45.20050000019182
+    },
+    {
+      "origin": "main_building_road_candidate",
+      "destination": "anniversary_60_road_candidate",
+      "accepted": true,
+      "length_m": 544.7137810540257,
+      "lane_count": 17,
+      "requires_turn": false,
+      "planning_ms": 40.866599999844766
+    },
+    {
+      "origin": "main_building_road_candidate",
+      "destination": "biryong_plaza_road_candidate",
+      "accepted": true,
+      "length_m": 603.4850452606037,
+      "lane_count": 19,
+      "requires_turn": false,
+      "planning_ms": 30.774299999848154
+    },
+    {
+      "origin": "main_building_road_candidate",
+      "destination": "building_2_road_candidate",
+      "accepted": true,
+      "length_m": 570.9772939482405,
+      "lane_count": 17,
+      "requires_turn": false,
+      "planning_ms": 42.42100000010396
+    },
+    {
+      "origin": "main_building_road_candidate",
+      "destination": "building_5_road_candidate",
+      "accepted": true,
+      "length_m": 584.1845483373513,
+      "lane_count": 13,
+      "requires_turn": false,
+      "planning_ms": 37.316200000077515
+    },
+    {
+      "origin": "main_building_road_candidate",
+      "destination": "dorm_1_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 135.61630000003788
+    },
+    {
+      "origin": "main_building_road_candidate",
+      "destination": "dorm_2_road_candidate",
+      "accepted": true,
+      "length_m": 1584.5332867162763,
+      "lane_count": 45,
+      "requires_turn": false,
+      "planning_ms": 81.91790000000765
+    },
+    {
+      "origin": "main_building_road_candidate",
+      "destination": "dorm_3_road_candidate",
+      "accepted": true,
+      "length_m": 1515.0668815500417,
+      "lane_count": 43,
+      "requires_turn": false,
+      "planning_ms": 77.8958999999304
+    },
+    {
+      "origin": "main_building_road_candidate",
+      "destination": "hitech_road_candidate",
+      "accepted": true,
+      "length_m": 827.1387607869816,
+      "lane_count": 25,
+      "requires_turn": false,
+      "planning_ms": 37.4349999997321
+    },
+    {
+      "origin": "main_building_road_candidate",
+      "destination": "inha_station_road_candidate",
+      "accepted": true,
+      "length_m": 1029.3086110078236,
+      "lane_count": 22,
+      "requires_turn": false,
+      "planning_ms": 45.373599999948055
+    },
+    {
+      "origin": "main_building_road_candidate",
+      "destination": "library_road_candidate",
+      "accepted": true,
+      "length_m": 429.51206245460077,
+      "lane_count": 14,
+      "requires_turn": false,
+      "planning_ms": 43.4823000000506
+    },
+    {
+      "origin": "main_building_road_candidate",
+      "destination": "main_gate_road_candidate",
+      "accepted": true,
+      "length_m": 620.5006538803276,
+      "lane_count": 15,
+      "requires_turn": false,
+      "planning_ms": 41.28599999967264
+    },
+    {
+      "origin": "main_building_road_candidate",
+      "destination": "rear_gate_road_candidate",
+      "accepted": true,
+      "length_m": 642.9397848603783,
+      "lane_count": 20,
+      "requires_turn": false,
+      "planning_ms": 36.11270000010336
+    },
+    {
+      "origin": "main_building_road_candidate",
+      "destination": "student_center_road_candidate",
+      "accepted": true,
+      "length_m": 641.9272239931416,
+      "lane_count": 21,
+      "requires_turn": false,
+      "planning_ms": 41.28859999991619
+    },
+    {
+      "origin": "main_gate_road_candidate",
+      "destination": "anniversary_60_road_candidate",
+      "accepted": true,
+      "length_m": 689.9256097189743,
+      "lane_count": 18,
+      "requires_turn": true,
+      "planning_ms": 37.95750000017506
+    },
+    {
+      "origin": "main_gate_road_candidate",
+      "destination": "biryong_plaza_road_candidate",
+      "accepted": true,
+      "length_m": 425.9642616153592,
+      "lane_count": 11,
+      "requires_turn": true,
+      "planning_ms": 27.287999999771273
+    },
+    {
+      "origin": "main_gate_road_candidate",
+      "destination": "building_2_road_candidate",
+      "accepted": true,
+      "length_m": 676.2011846707344,
+      "lane_count": 23,
+      "requires_turn": true,
+      "planning_ms": 33.77790000013192
+    },
+    {
+      "origin": "main_gate_road_candidate",
+      "destination": "building_5_road_candidate",
+      "accepted": true,
+      "length_m": 757.5723418502823,
+      "lane_count": 20,
+      "requires_turn": true,
+      "planning_ms": 38.73849999990853
+    },
+    {
+      "origin": "main_gate_road_candidate",
+      "destination": "dorm_1_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 113.27049999999872
+    },
+    {
+      "origin": "main_gate_road_candidate",
+      "destination": "dorm_2_road_candidate",
+      "accepted": true,
+      "length_m": 979.9593939824897,
+      "lane_count": 32,
+      "requires_turn": true,
+      "planning_ms": 38.52390000020023
+    },
+    {
+      "origin": "main_gate_road_candidate",
+      "destination": "dorm_3_road_candidate",
+      "accepted": true,
+      "length_m": 910.4929888162551,
+      "lane_count": 30,
+      "requires_turn": true,
+      "planning_ms": 38.48329999982525
+    },
+    {
+      "origin": "main_gate_road_candidate",
+      "destination": "hitech_road_candidate",
+      "accepted": true,
+      "length_m": 649.6090702502494,
+      "lane_count": 17,
+      "requires_turn": true,
+      "planning_ms": 30.858099999932165
+    },
+    {
+      "origin": "main_gate_road_candidate",
+      "destination": "inha_station_road_candidate",
+      "accepted": true,
+      "length_m": 408.80795598516465,
+      "lane_count": 7,
+      "requires_turn": false,
+      "planning_ms": 48.34400000027017
+    },
+    {
+      "origin": "main_gate_road_candidate",
+      "destination": "library_road_candidate",
+      "accepted": true,
+      "length_m": 511.29787007488756,
+      "lane_count": 13,
+      "requires_turn": true,
+      "planning_ms": 37.98219999998764
+    },
+    {
+      "origin": "main_gate_road_candidate",
+      "destination": "main_building_road_candidate",
+      "accepted": true,
+      "length_m": 375.9569535174351,
+      "lane_count": 8,
+      "requires_turn": true,
+      "planning_ms": 27.993100000003324
+    },
+    {
+      "origin": "main_gate_road_candidate",
+      "destination": "rear_gate_road_candidate",
+      "accepted": true,
+      "length_m": 604.4413043963428,
+      "lane_count": 20,
+      "requires_turn": true,
+      "planning_ms": 34.20989999995072
+    },
+    {
+      "origin": "main_gate_road_candidate",
+      "destination": "student_center_road_candidate",
+      "accepted": true,
+      "length_m": 464.4064403478972,
+      "lane_count": 13,
+      "requires_turn": true,
+      "planning_ms": 27.856600000177423
+    },
+    {
+      "origin": "rear_gate_road_candidate",
+      "destination": "anniversary_60_road_candidate",
+      "accepted": true,
+      "length_m": 180.2558377730159,
+      "lane_count": 5,
+      "requires_turn": true,
+      "planning_ms": 38.86990000000878
+    },
+    {
+      "origin": "rear_gate_road_candidate",
+      "destination": "biryong_plaza_road_candidate",
+      "accepted": true,
+      "length_m": 170.35317674535395,
+      "lane_count": 9,
+      "requires_turn": false,
+      "planning_ms": 35.91310000001613
+    },
+    {
+      "origin": "rear_gate_road_candidate",
+      "destination": "building_2_road_candidate",
+      "accepted": true,
+      "length_m": 70.46215374148086,
+      "lane_count": 3,
+      "requires_turn": true,
+      "planning_ms": 36.804100000153994
+    },
+    {
+      "origin": "rear_gate_road_candidate",
+      "destination": "building_5_road_candidate",
+      "accepted": true,
+      "length_m": 247.89198007980337,
+      "lane_count": 7,
+      "requires_turn": true,
+      "planning_ms": 44.111700000030396
+    },
+    {
+      "origin": "rear_gate_road_candidate",
+      "destination": "dorm_1_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 255.64120000035473
+    },
+    {
+      "origin": "rear_gate_road_candidate",
+      "destination": "dorm_2_road_candidate",
+      "accepted": true,
+      "length_m": 1530.8872043289693,
+      "lane_count": 48,
+      "requires_turn": false,
+      "planning_ms": 123.2412999997905
+    },
+    {
+      "origin": "rear_gate_road_candidate",
+      "destination": "dorm_3_road_candidate",
+      "accepted": true,
+      "length_m": 1461.4207991627347,
+      "lane_count": 46,
+      "requires_turn": false,
+      "planning_ms": 112.2349000002032
+    },
+    {
+      "origin": "rear_gate_road_candidate",
+      "destination": "hitech_road_candidate",
+      "accepted": true,
+      "length_m": 533.7589079604237,
+      "lane_count": 17,
+      "requires_turn": false,
+      "planning_ms": 39.42610000012792
+    },
+    {
+      "origin": "rear_gate_road_candidate",
+      "destination": "inha_station_road_candidate",
+      "accepted": true,
+      "length_m": 1005.9348317865677,
+      "lane_count": 27,
+      "requires_turn": false,
+      "planning_ms": 81.21919999985039
+    },
+    {
+      "origin": "rear_gate_road_candidate",
+      "destination": "library_road_candidate",
+      "accepted": true,
+      "length_m": 584.1250323773269,
+      "lane_count": 20,
+      "requires_turn": false,
+      "planning_ms": 52.4238999996669
+    },
+    {
+      "origin": "rear_gate_road_candidate",
+      "destination": "main_building_road_candidate",
+      "accepted": true,
+      "length_m": 597.7843846454388,
+      "lane_count": 19,
+      "requires_turn": false,
+      "planning_ms": 57.42169999984981
+    },
+    {
+      "origin": "rear_gate_road_candidate",
+      "destination": "main_gate_road_candidate",
+      "accepted": true,
+      "length_m": 597.1268760187228,
+      "lane_count": 20,
+      "requires_turn": false,
+      "planning_ms": 46.90200000004552
+    },
+    {
+      "origin": "rear_gate_road_candidate",
+      "destination": "student_center_road_candidate",
+      "accepted": true,
+      "length_m": 131.92735863153587,
+      "lane_count": 7,
+      "requires_turn": false,
+      "planning_ms": 42.7505999996356
+    },
+    {
+      "origin": "student_center_road_candidate",
+      "destination": "anniversary_60_road_candidate",
+      "accepted": true,
+      "length_m": 321.59975955093296,
+      "lane_count": 12,
+      "requires_turn": false,
+      "planning_ms": 30.694300000050134
+    },
+    {
+      "origin": "student_center_road_candidate",
+      "destination": "biryong_plaza_road_candidate",
+      "accepted": true,
+      "length_m": 273.6721602249139,
+      "lane_count": 10,
+      "requires_turn": false,
+      "planning_ms": 26.513400000112597
+    },
+    {
+      "origin": "student_center_road_candidate",
+      "destination": "building_2_road_candidate",
+      "accepted": true,
+      "length_m": 211.80607544361533,
+      "lane_count": 10,
+      "requires_turn": false,
+      "planning_ms": 34.23419999990074
+    },
+    {
+      "origin": "student_center_road_candidate",
+      "destination": "building_5_road_candidate",
+      "accepted": true,
+      "length_m": 389.2359018648587,
+      "lane_count": 14,
+      "requires_turn": false,
+      "planning_ms": 31.38089999993099
+    },
+    {
+      "origin": "student_center_road_candidate",
+      "destination": "dorm_1_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 215.78500000032363
+    },
+    {
+      "origin": "student_center_road_candidate",
+      "destination": "dorm_2_road_candidate",
+      "accepted": true,
+      "length_m": 1634.2061878085292,
+      "lane_count": 49,
+      "requires_turn": false,
+      "planning_ms": 80.91899999999441
+    },
+    {
+      "origin": "student_center_road_candidate",
+      "destination": "dorm_3_road_candidate",
+      "accepted": true,
+      "length_m": 1564.7397826422946,
+      "lane_count": 47,
+      "requires_turn": false,
+      "planning_ms": 83.81120000012743
+    },
+    {
+      "origin": "student_center_road_candidate",
+      "destination": "hitech_road_candidate",
+      "accepted": true,
+      "length_m": 637.0778914399837,
+      "lane_count": 18,
+      "requires_turn": false,
+      "planning_ms": 41.64779999973689
+    },
+    {
+      "origin": "student_center_road_candidate",
+      "destination": "inha_station_road_candidate",
+      "accepted": true,
+      "length_m": 1109.2538152661277,
+      "lane_count": 28,
+      "requires_turn": false,
+      "planning_ms": 60.83459999990737
+    },
+    {
+      "origin": "student_center_road_candidate",
+      "destination": "library_road_candidate",
+      "accepted": true,
+      "length_m": 687.4440158568868,
+      "lane_count": 21,
+      "requires_turn": false,
+      "planning_ms": 38.75420000031227
+    },
+    {
+      "origin": "student_center_road_candidate",
+      "destination": "main_building_road_candidate",
+      "accepted": true,
+      "length_m": 701.1033681249987,
+      "lane_count": 20,
+      "requires_turn": false,
+      "planning_ms": 41.14460000027975
+    },
+    {
+      "origin": "student_center_road_candidate",
+      "destination": "main_gate_road_candidate",
+      "accepted": true,
+      "length_m": 700.4458594982827,
+      "lane_count": 21,
+      "requires_turn": false,
+      "planning_ms": 33.46640000017942
+    },
+    {
+      "origin": "student_center_road_candidate",
+      "destination": "rear_gate_road_candidate",
+      "accepted": true,
+      "length_m": 140.04619516922372,
+      "lane_count": 7,
+      "requires_turn": false,
+      "planning_ms": 28.976500000226224
+    }
+  ]
+}

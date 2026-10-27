@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Title": "경로 이탈 구간 충돌면 조사",
+    "Code": "using InhaExpress.Client.Presentation; using UnityEngine; using UnityEditor; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { var v=Object.FindFirstObjectByType<VehicleController>(); result.Log(\"vehicle=\"+v.transform.position+\" rotation=\"+v.transform.eulerAngles); foreach(var w in v.GetComponentsInChildren<WheelCollider>()) { WheelHit h; if(w.GetGroundHit(out h)) result.Log(\"wheel=\"+w.name+\" hit=\"+h.collider.name+\" point=\"+h.point+\" normal=\"+h.normal); } for(int n=-20;n<=20;n+=5){var origin=v.transform.position+new Vector3(0,50,n);foreach(var h in Physics.RaycastAll(origin,Vector3.down,100)) result.Log(\"sample=\"+n+\" hit=\"+h.collider.name+\" y=\"+h.point.y+\" normal=\"+h.normal); } SceneView.lastActiveSceneView.LookAt(v.transform.position,Quaternion.Euler(30,210,0),15,false,true); } }"
+  }
+}

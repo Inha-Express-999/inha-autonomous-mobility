@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Title": "컴파일 오류 수정 확인",
+    "Code": "using UnityEngine; using UnityEditor; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { result.Log(\"compiling=\"+EditorApplication.isCompiling+\" compilationFailed=\"+EditorUtility.scriptCompilationFailed+\" playing=\"+EditorApplication.isPlaying+\" telemetry=\"+typeof(CampusDriveTelemetry).Assembly.GetName().Name); } }"
+  },
+  "name": "Unity_RunCommand"
+}

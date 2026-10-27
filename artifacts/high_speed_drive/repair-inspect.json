@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] project=C:/Users/sy/Documents/GitHub/inha-autonomous-mobility/Assets time=51.57336 background=True\\n[Log] scene=Assets/CampusSim/Scenes/PC_Bootstrap.unity dirty=False\\n[Log] scene=Assets/CampusSim/Scenes/CampusWorld.unity dirty=False\\n[Log] scene=Assets/CampusSim/Scenes/PC_Operator.unity dirty=False\\n[Log] scene=Assets/CampusSim/Scenes/CampusTerrain.unity dirty=False\",\n    \"localFixedCode\": \"using UnityEngine;\\r\\nusing UnityEditor;\\r\\nusing UnityEngine.SceneManagement;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            result.Log(\\\"project=\\\" + Application.dataPath + \\\" time=\\\" + Time.time + \\\" background=\\\" + Application.runInBackground);\\r\\n            for (int i = 0; i < SceneManager.sceneCount; i++)\\r\\n            {\\r\\n                var s = SceneManager.GetSceneAt(i);\\r\\n                result.Log(\\\"scene=\\\" + s.path + \\\" dirty=\\\" + s.isDirty);\\r\\n            }\\r\\n\\r\\n            foreach (var c in Object.FindObjectsByType<InhaExpress.Client.Presentation.UnityAutonomousClient>(FindObjectsSortMode.None))\\r\\n                result.Log(\\\"client=\\\" + c.VehicleId + \\\" status=\\\" + c.Status + \\\" reason=\\\" + c.DiagnosticReason);\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] project=C:/Users/sy/Documents/GitHub/inha-autonomous-mobility/Assets time=51.57336 background=True\n[Log] scene=Assets/CampusSim/Scenes/PC_Bootstrap.unity dirty=False\n[Log] scene=Assets/CampusSim/Scenes/CampusWorld.unity dirty=False\n[Log] scene=Assets/CampusSim/Scenes/PC_Operator.unity dirty=False\n[Log] scene=Assets/CampusSim/Scenes/CampusTerrain.unity dirty=False",
+      "localFixedCode": "using UnityEngine;\r\nusing UnityEditor;\r\nusing UnityEngine.SceneManagement;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            result.Log(\"project=\" + Application.dataPath + \" time=\" + Time.time + \" background=\" + Application.runInBackground);\r\n            for (int i = 0; i < SceneManager.sceneCount; i++)\r\n            {\r\n                var s = SceneManager.GetSceneAt(i);\r\n                result.Log(\"scene=\" + s.path + \" dirty=\" + s.isDirty);\r\n            }\r\n\r\n            foreach (var c in Object.FindObjectsByType<InhaExpress.Client.Presentation.UnityAutonomousClient>(FindObjectsSortMode.None))\r\n                result.Log(\"client=\" + c.VehicleId + \" status=\" + c.Status + \" reason=\" + c.DiagnosticReason);\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

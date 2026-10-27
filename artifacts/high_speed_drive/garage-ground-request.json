@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Title": "허브 차고 도로면 확인",
+    "Code": "using UnityEngine; using UnityEditor; using UnityEditor.SceneManagement; using System.IO;\n[System.Serializable] public class Homes {public Home[] homes;} [System.Serializable] public class Home {public string vehicle_id;public float x,z,center_x,center_z;}\ninternal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) {if(EditorApplication.isPlaying)throw new System.Exception(\"Stop first\");EditorSceneManager.OpenScene(\"Assets/CampusSim/Scenes/CampusTerrain.unity\");Physics.SyncTransforms();var homes=JsonUtility.FromJson<Homes>(File.ReadAllText(\"Assets/CampusSim/Data/home_garages.json\"));foreach(var h in homes.homes){foreach(var hit in Physics.RaycastAll(new Vector3(h.x,100,h.z),Vector3.down,300))result.Log(h.vehicle_id+\" ground=\"+hit.collider.name+\" y=\"+hit.point.y+\" binding=\"+(hit.collider.GetComponent<CampusSim.CampusTerrainBinding>()!=null));}}}"
+  },
+  "name": "Unity_RunCommand"
+}

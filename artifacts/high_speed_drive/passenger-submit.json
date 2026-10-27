@@ -1,0 +1,26 @@
+{
+  "command_id": "observed-library-hitech-20261025",
+  "accepted": true,
+  "request": {
+    "id": "req-00000001-9de81e7ea769",
+    "owner_id": "physical-verification",
+    "service_type": "PASSENGER",
+    "status": "QUEUED",
+    "created_s": 0.0,
+    "pickup_landmark_id": "library",
+    "dropoff_landmark_id": "hitech",
+    "pickup_stop_id": "library_road_candidate",
+    "dropoff_stop_id": "hitech_road_candidate",
+    "service_needs": {
+      "requires_step_free": false,
+      "wheelchair_slots": 0,
+      "boarding_assistance": false
+    },
+    "party_size": 1,
+    "cargo_kg": 0.0,
+    "latest_arrival_s": null,
+    "eta_s": null,
+    "vehicle_id": null,
+    "reason": "UNKNOWN"
+  }
+}

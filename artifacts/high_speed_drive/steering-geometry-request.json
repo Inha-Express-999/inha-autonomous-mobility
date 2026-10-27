@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Code": "using UnityEngine; using InhaExpress.Client.Presentation; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) {var v=Object.FindFirstObjectByType<VehicleController>(); result.Log(\"position=\"+v.transform.position+\" yaw=\"+v.transform.eulerAngles.y+\" wheelbase=\"+v.WheelbaseM+\" maxSteering=\"+v.MaximumSteeringRad);}}",
+    "Title": "Read stopped vehicle geometry"
+  },
+  "name": "Unity_RunCommand"
+}

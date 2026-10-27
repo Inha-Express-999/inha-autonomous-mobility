@@ -1,0 +1,1 @@
+{"name":"Unity_RunCommand","arguments":{"Title":"Import grid-aligned road authoring","Code":"using UnityEditor;internal class CommandScript:IRunCommand {public void Execute(ExecutionResult result){AssetDatabase.Refresh();result.Log(\"REFRESH_REQUESTED\");}}"}}

@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Code": "using UnityEngine;using UnityEngine.UI;using InhaExpress.Client.Presentation;\ninternal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) {var h=Object.FindFirstObjectByType<WebClientHud>();if(h==null){result.Log(\"NOT_READY\");return;}foreach(var d in h.GetComponentsInChildren<Dropdown>(true))if(d.name==\"Dispatch Policy Dropdown\"){d.value=1;result.Log(\"GREEDY_DROPDOWN_SELECTED options=\"+d.options.Count);return;}result.Log(\"NO_DROPDOWN\");}}",
+    "Title": "FIFO Greedy 드롭다운 실동작 확인"
+  }
+}

@@ -51,6 +51,8 @@ class MobilityService:
     vehicles: dict[str, Vehicle] = field(default_factory=dict)
     requests: dict[str, RequestView] = field(default_factory=dict)
     commands: dict[str, CommandAck] = field(default_factory=dict)
+    external_request_ids: set[str] = field(default_factory=set)
+    external_vehicle_ids: set[str] = field(default_factory=set)
     graph: RoadGraph | None = None
     costs: CostSnapshot | None = None
     route_algorithm: str = "dijkstra"
@@ -177,7 +179,7 @@ class MobilityService:
         return max(self._time_s, self.clock() - self.started_at)
 
     @synchronized
-    def create_request(self, command: CreateRequest) -> CommandAck:
+    def create_request(self, command: CreateRequest, *, external_execution: bool = False) -> CommandAck:
         if not self._defer_dispatch:
             self.step()
         cached = self.commands.get(command.command_id)
@@ -207,6 +209,8 @@ class MobilityService:
             latest_arrival_s=command.latest_arrival_s,
         )
         self.requests[request.id] = request
+        if external_execution:
+            self.external_request_ids.add(request.id)
         if not self._defer_dispatch:
             self._dispatch_at(self._time_s)
         ack = CommandAck(command_id=command.command_id, accepted=True, request=request)
@@ -273,12 +277,16 @@ class MobilityService:
 
     def _dispatch_at(self, now_s: float) -> tuple[Assignment, ...]:
         began = perf_counter()
+        # External executors use observed arrivals. Never let the virtual clock
+        # consume their requests or mark them complete by travel-time replay.
+        dispatch_requests = [r for r in self.requests.values() if r.id not in self.external_request_ids]
         # Charging at a home hub is interruptible, but only for a selected,
         # energy-feasible mission. Never expose an occupied vehicle as idle.
         charging = {c.vehicle_id: c for c in self.charges if not c.completed}
         candidates = [
             v.model_copy(update={"available": True}) if v.id in charging else v
             for v in self.vehicles.values()
+            if v.id not in self.external_vehicle_ids
         ]
         order = dict(self.vehicle_order)
         for index, identifier in enumerate(charging, self._ready_sequence + 1):
@@ -286,7 +294,7 @@ class MobilityService:
         routes: dict[tuple[str, str], tuple[RoutePlan, RoutePlan, RoutePlan]] = {}
         needs_charge: set[str] = set()
         self.waiting_reasons = {
-            r.id: "WAITING_FEASIBLE_VEHICLE"
+            r.id: ("WAITING_EXTERNAL_EXECUTOR" if r.id in self.external_request_ids else "WAITING_FEASIBLE_VEHICLE")
             for r in self.requests.values()
             if r.status is RequestStatus.QUEUED
         }
@@ -324,7 +332,7 @@ class MobilityService:
 
         if self.dispatch_algorithm == "fifo":
             assignments = FifoDispatch().assign(
-                self.requests.values(),
+                dispatch_requests,
                 candidates,
                 feasible,
                 vehicle_order=order,
@@ -363,7 +371,7 @@ class MobilityService:
                 GreedyDispatch() if self.dispatch_algorithm == "greedy" else HungarianDispatch()
             )
             assignments = policy.assign(
-                self.requests.values(),
+                dispatch_requests,
                 candidates,
                 feasible,
                 cost=cost,
@@ -461,6 +469,7 @@ class MobilityService:
             if vehicle.wheelchair_slots
             and not request.service_needs.wheelchair_slots
             and any(
+                r.id not in self.external_request_ids and
                 r.status is RequestStatus.QUEUED and r.service_needs.wheelchair_slots
                 for r in self.requests.values()
             )
@@ -534,7 +543,8 @@ class MobilityService:
             vehicle = self.vehicles[charge.vehicle_id]
             for request in self.requests.values():
                 if (
-                    request.status is not RequestStatus.QUEUED
+                    request.id in self.external_request_ids
+                    or request.status is not RequestStatus.QUEUED
                     or not has_capacity(vehicle, request)
                     or not self._stops_accessible(vehicle, request)
                 ):

@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Title": "복구 도로 충돌면 검증",
+    "Code": "using UnityEngine; using UnityEditor; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { CampusRoadSmoothingValidation.Validate(); var g=GameObject.Find(\"Hitech missing OSM road\"); foreach(var mf in g.GetComponentsInChildren<MeshFilter>()) result.Log(\"repair=\"+mf.name+\" bounds=\"+mf.sharedMesh.bounds); result.Log(\"compilationFailed=\"+EditorUtility.scriptCompilationFailed); } }"
+  },
+  "name": "Unity_RunCommand"
+}

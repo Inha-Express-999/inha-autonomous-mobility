@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] Vehicle Annyoung Car position=(70.07, -1.63, -159.69) forward=(-0.87, 0.00, 0.50)\",\n    \"localFixedCode\": \"using UnityEngine;\\r\\nusing InhaExpress.Client.Presentation;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            var v = Object.FindFirstObjectByType<VehicleController>();\\r\\n            result.Log(v == null ? \\\"No vehicle\\\" : \\\"Vehicle \\\" + v.name + \\\" position=\\\" + v.transform.position + \\\" forward=\\\" + v.transform.forward);\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] Vehicle Annyoung Car position=(70.07, -1.63, -159.69) forward=(-0.87, 0.00, 0.50)",
+      "localFixedCode": "using UnityEngine;\r\nusing InhaExpress.Client.Presentation;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            var v = Object.FindFirstObjectByType<VehicleController>();\r\n            result.Log(v == null ? \"No vehicle\" : \"Vehicle \" + v.name + \" position=\" + v.transform.position + \" forward=\" + v.transform.forward);\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

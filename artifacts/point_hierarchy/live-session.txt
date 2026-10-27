@@ -1,0 +1,4 @@
+mapStatus=Connected to shared web demo / read only
+mapRun=cc3b4d451a5049ec836ec976d7a9d7f2
+serverStatus=Local server ready
+serverRun=cc3b4d451a5049ec836ec976d7a9d7f2

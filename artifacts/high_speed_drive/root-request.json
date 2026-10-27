@@ -1,0 +1,6 @@
+{
+  "name": "Unity_ManageEditor",
+  "arguments": {
+    "Action": "GetProjectRoot"
+  }
+}

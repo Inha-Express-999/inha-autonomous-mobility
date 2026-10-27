@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Code": "using UnityEngine; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { CampusHitechSeamAuthoring.Apply(); result.Log(\"Seam caps trimmed and scene saved\"); } }",
+    "Title": "복구 차로의 옛 연석 제거"
+  },
+  "name": "Unity_RunCommand"
+}

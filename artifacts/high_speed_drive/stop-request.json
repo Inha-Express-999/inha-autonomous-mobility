@@ -1,0 +1,7 @@
+{
+  "name": "Unity_ManageEditor",
+  "arguments": {
+    "WaitForCompletion": true,
+    "Action": "Stop"
+  }
+}

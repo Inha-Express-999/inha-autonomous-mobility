@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Code": "using UnityEngine; using UnityEditor; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { result.Log(\"playing=\"+EditorApplication.isPlaying+\" compiling=\"+EditorApplication.isCompiling+\" scene=\"+UnityEngine.SceneManagement.SceneManager.GetActiveScene().path); AssetDatabase.Refresh(); } }",
+    "Title": "고속 운행 스크립트 갱신"
+  }
+}

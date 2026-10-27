@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Code": "using UnityEngine; using UnityEditor; using UnityEngine.SceneManagement; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { result.Log(\"project=\"+Application.dataPath+\" time=\"+Time.time+\" background=\"+Application.runInBackground); for(int i=0;i<SceneManager.sceneCount;i++){var s=SceneManager.GetSceneAt(i); result.Log(\"scene=\"+s.path+\" dirty=\"+s.isDirty);} foreach(var c in Object.FindObjectsByType<InhaExpress.Client.Presentation.UnityAutonomousClient>(FindObjectsSortMode.None)) result.Log(\"client=\"+c.VehicleId+\" status=\"+c.Status+\" reason=\"+c.DiagnosticReason); } }",
+    "Title": "캠퍼스 실행 상태 확인"
+  }
+}

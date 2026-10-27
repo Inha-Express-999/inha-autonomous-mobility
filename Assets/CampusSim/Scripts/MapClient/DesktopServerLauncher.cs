@@ -92,7 +92,14 @@ namespace InhaExpress.Client.MapClient
                     var info = JsonUtility.FromJson<Info>(request.downloadHandler.text);
                     if (info != null && info.service_id == "inha-mobil-local-demo" && info.simulation_only &&
                         info.schema_version == 1 && info.map_schema_version == 1 && !string.IsNullOrEmpty(info.run_id))
-                    { Ready = true; RunId = info.run_id; Status = ownedProcess == null ? "Reusing existing local server" : "Local server ready"; }
+                    {
+#if UNITY_EDITOR
+                        string snapshot = Path.Combine(Application.dataPath, "CampusSim/Data/server_map.json");
+                        if (File.Exists(snapshot) && ServerMapDocument.Parse(File.ReadAllText(snapshot)).geometry_hash != info.geometry_hash)
+                        { Status = "Server map differs from edited locations. Stop Play and apply locations again."; yield break; }
+#endif
+                        Ready = true; RunId = info.run_id; Status = ownedProcess == null ? "Reusing existing local server" : "Local server ready";
+                    }
                 }
             }
             catch (Exception error) { Status = "Server identity check failed: " + error.Message; }

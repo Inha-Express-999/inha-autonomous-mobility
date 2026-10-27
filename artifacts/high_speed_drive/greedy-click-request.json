@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Code": "using UnityEngine; using UnityEngine.UI; using InhaExpress.Client.Presentation;\ninternal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) {var h=Object.FindFirstObjectByType<WebClientHud>();foreach(var b in h.GetComponentsInChildren<Button>(true))if(b.transform.parent.name==\"Greedy\"){b.onClick.Invoke();result.Log(\"GREEDY_CLICKED\");return;}result.Log(\"NO_BUTTON\");}}",
+    "Title": "Unity Greedy 배차 버튼 확인"
+  }
+}

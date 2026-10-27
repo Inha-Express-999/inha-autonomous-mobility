@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Title": "40km/h 도서관 전체 경로 측정 시작",
+    "Code": "using UnityEngine; using InhaExpress.Client.Presentation; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { var c=Object.FindFirstObjectByType<UnityAutonomousClient>(); var v=Object.FindFirstObjectByType<VehicleController>(); var hud=Object.FindFirstObjectByType<WebClientHud>(); hud.OperatorControls.SelectVehicle(\"V01\"); Camera cam=null; foreach(var candidate in Object.FindObjectsByType<Camera>(FindObjectsSortMode.None)) if(candidate.enabled&&candidate.targetTexture==null) cam=candidate; var recorder=v.gameObject.AddComponent<CampusDriveTelemetry>(); recorder.Begin(v,c,cam,\"artifacts/high_speed_drive/library-40.csv\",300); c.SimulationCruiseKmh=40; c.StartMission(\"library_road_candidate\"); result.Log(\"start speed=40 vehicle=\"+v.OperatorVehicleId+\" pos=\"+v.transform.position+\" camera=\"+cam.name); } }"
+  }
+}

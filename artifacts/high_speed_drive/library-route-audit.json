@@ -1,0 +1,102 @@
+{
+  "scope": "Offline route generation from recorded library arrival; not physical driving",
+  "routes": [
+    {
+      "stop": "anniversary_60_road_candidate",
+      "accepted": true,
+      "lanes": 19,
+      "length_m": 692.222173019734,
+      "planning_ms": 32.47730000111915
+    },
+    {
+      "stop": "biryong_plaza_road_candidate",
+      "accepted": true,
+      "lanes": 19,
+      "length_m": 588.8470152952483,
+      "planning_ms": 36.13690000020142
+    },
+    {
+      "stop": "building_2_road_candidate",
+      "accepted": true,
+      "lanes": 19,
+      "length_m": 718.4856859139487,
+      "planning_ms": 34.23119999933988
+    },
+    {
+      "stop": "building_5_road_candidate",
+      "accepted": true,
+      "lanes": 18,
+      "length_m": 745.3728003405696,
+      "planning_ms": 38.63430000092194
+    },
+    {
+      "stop": "dorm_1_road_candidate",
+      "accepted": false,
+      "reason": "No aligned road within 2m, or no directed route; vehicle retained in place",
+      "planning_ms": 88.91580000090471
+    },
+    {
+      "stop": "dorm_2_road_candidate",
+      "accepted": true,
+      "lanes": 40,
+      "length_m": 1142.842147662379,
+      "planning_ms": 56.65050000061456
+    },
+    {
+      "stop": "dorm_3_road_candidate",
+      "accepted": true,
+      "lanes": 38,
+      "length_m": 1073.375742496144,
+      "planning_ms": 42.76480000044103
+    },
+    {
+      "stop": "hitech_road_candidate",
+      "accepted": true,
+      "lanes": 25,
+      "length_m": 812.4918239301385,
+      "planning_ms": 38.882000000739936
+    },
+    {
+      "stop": "inha_station_road_candidate",
+      "accepted": true,
+      "lanes": 17,
+      "length_m": 587.6174719539262,
+      "planning_ms": 27.6133999996091
+    },
+    {
+      "stop": "library_road_candidate",
+      "accepted": true,
+      "lanes": 1,
+      "length_m": 0.5952065009844756,
+      "planning_ms": 31.555600000501727
+    },
+    {
+      "stop": "main_building_road_candidate",
+      "accepted": true,
+      "lanes": 16,
+      "length_m": 538.8397071973243,
+      "planning_ms": 27.44160000111151
+    },
+    {
+      "stop": "main_gate_road_candidate",
+      "accepted": true,
+      "lanes": 10,
+      "length_m": 178.80951482643005,
+      "planning_ms": 25.209800000084215
+    },
+    {
+      "stop": "rear_gate_road_candidate",
+      "accepted": true,
+      "lanes": 28,
+      "length_m": 767.324058076232,
+      "planning_ms": 36.106700001255376
+    },
+    {
+      "stop": "student_center_road_candidate",
+      "accepted": true,
+      "lanes": 21,
+      "length_m": 627.2891940277864,
+      "planning_ms": 32.599100000879844
+    }
+  ]
+}

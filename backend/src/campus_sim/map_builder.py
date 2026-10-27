@@ -36,6 +36,7 @@ SOURCE_FILES = {
     "unity_coverage": "backend/src/campus_sim/unity_coverage.py",
     "hub_reference": "Docs/MapResearch/Iterations/west-field-hub-validation.json",
     "hub_builder": "backend/src/campus_sim/hubs.py",
+    "service_location_builder": "backend/src/campus_sim/service_locations.py",
 }
 NAMES = {
     "main_gate": "정문",
@@ -116,10 +117,22 @@ def read_policy(path):
     return policy
 
 
-def build_map(project_root, output_dir):
+def build_map(project_root, output_dir, *, location_overrides=None):
     root, output = Path(project_root), Path(output_dir)
     paths = {key: root / name for key, name in SOURCE_FILES.items()}
     policy = read_policy(paths["policy"])
+    from campus_sim.service_locations import EMPTY, validate_locations
+
+    location_path = root / "configs/service_locations.json"
+    if location_overrides is None:
+        location_overrides = (
+            json.loads(location_path.read_text(encoding="utf-8"))
+            if location_path.exists()
+            else EMPTY
+        )
+    locations = validate_locations(location_overrides)
+    if locations["stops"] or locations["hubs"]:
+        policy["service_locations"] = location_overrides
     unity = json.loads(paths["unity"].read_text(encoding="utf-8-sig"))
     if (unity["originLatitude"], unity["originLongitude"]) != (ORIGIN_LAT, ORIGIN_LON):
         raise ValueError("Unity origin differs from explicit coordinate adapter")
@@ -249,6 +262,10 @@ def build_map(project_root, output_dir):
     general = [row for row in entrances if row["role"] == "general"]
     if len({row["landmark_id"] for row in general}) != len(general):
         raise ValueError("duplicate general entrance landmark")
+    if set(locations["stops"]) - {f"{r['landmark_id']}_road_candidate" for r in general}:
+        raise ValueError("service location references unknown Stop")
+    if set(locations["hubs"]) - {h["id"] for h in policy["hubs"]}:
+        raise ValueError("service location references unknown hub")
     for row in sorted(general, key=lambda r: r["landmark_id"]):
         landmark_id = row["landmark_id"]
         landmark = {"id": landmark_id, "name": NAMES.get(landmark_id, landmark_id), "stop_ids": []}
@@ -270,13 +287,25 @@ def build_map(project_root, output_dir):
             )
             for i, s in eligible
         )
+        edited = locations["stops"].get(f"{landmark_id}_road_candidate")
+        if edited:
+            from campus_sim.service_locations import snap_location
+
+            node_id, xy, segment = snap_location(edited, coords, nodes, segments, cuts)
+            gap = math.dist(anchor, xy)
+            if gap > policy["max_stop_gap_m"]:
+                raise ValueError(f"{landmark_id}: moved Stop exceeds entrance gap limit")
         if gap <= policy["max_stop_gap_m"]:
-            segment = segments[segment_index]
-            if ratio <= 1e-9:
+            if edited:
+                pass  # Node and source segment were resolved by the shared snapper.
+            elif ratio <= 1e-9:
+                segment = segments[segment_index]
                 node_id = segment["u"]
             elif ratio >= 1 - 1e-9:
+                segment = segments[segment_index]
                 node_id = segment["v"]
             else:
+                segment = segments[segment_index]
                 ratio = round(ratio, 12)
                 node_id = f"split:{segment['key']}:{ratio}"
                 xy = tuple(
@@ -302,13 +331,26 @@ def build_map(project_root, output_dir):
                     "verification_status": "UNVERIFIED_ROAD_PROJECTION_CANDIDATE",
                     "entrance_verification_status": row["verification_status"],
                     "osm_way_id": segment["osm_way_id"],
-                    "selection_policy": "pinned_corridor_way" if override else "nearest_core_road",
+                    "selection_policy": "unity_editor_override"
+                    if edited
+                    else "pinned_corridor_way"
+                    if override
+                    else "nearest_core_road",
                 }
             )
             landmark["coverage_status"] = "ROAD_STOP_CANDIDATE"
         else:
             landmark.update(coverage_status="NO_STOP_WITHIN_CONFIGURED_GAP", nearest_road_gap_m=gap)
         landmarks.append(landmark)
+
+    for hub in policy["hubs"]:
+        edited = locations["hubs"].get(hub["id"])
+        if edited:
+            from campus_sim.service_locations import snap_location
+
+            node_id, _, _ = snap_location(edited, coords, nodes, segments, cuts)
+            hub.pop("stop_id", None)
+            hub["node_id"] = node_id
 
     edges, provenance = [], []
     for index, segment in enumerate(segments):

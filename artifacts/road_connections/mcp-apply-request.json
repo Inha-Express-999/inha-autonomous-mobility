@@ -1,0 +1,1 @@
+{"name":"Unity_RunCommand","arguments":{"Title":"Apply source-backed road restoration","Code":"using System;internal class CommandScript:IRunCommand {public void Execute(ExecutionResult result){try{CampusRoadConnectionRepair.Apply();result.Log(\"ROAD_REPAIR_APPLIED\");}catch(Exception e){result.Log(\"ROAD_REPAIR_FAILED \"+e);}}}"}}

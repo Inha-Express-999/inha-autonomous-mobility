@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] active=Campus map Cinemachine enabled=True orthographic=True\\n[Log] navigation commands sent\",\n    \"localFixedCode\": \"using UnityEngine;\\r\\nusing Unity.Cinemachine;\\r\\nusing InhaExpress.Client.Presentation;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            var hud = Object.FindFirstObjectByType<WebClientHud>();\\r\\n            foreach (var b in Object.FindObjectsByType<CinemachineBrain>(FindObjectsSortMode.None))\\r\\n                result.Log(\\\"active=\\\" + b.ActiveVirtualCamera?.Name + \\\" enabled=\\\" + b.enabled + \\\" orthographic=\\\" + b.GetComponent<Camera>().orthographic);\\r\\n            hud.OperatorControls.Pan(new Vector2(50, 20));\\r\\n            hud.OperatorControls.Rotate(new Vector2(30, 0));\\r\\n            hud.OperatorControls.Zoom(.8f);\\r\\n            result.Log(\\\"navigation commands sent\\\");\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] active=Campus map Cinemachine enabled=True orthographic=True\n[Log] navigation commands sent",
+      "localFixedCode": "using UnityEngine;\r\nusing Unity.Cinemachine;\r\nusing InhaExpress.Client.Presentation;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            var hud = Object.FindFirstObjectByType<WebClientHud>();\r\n            foreach (var b in Object.FindObjectsByType<CinemachineBrain>(FindObjectsSortMode.None))\r\n                result.Log(\"active=\" + b.ActiveVirtualCamera?.Name + \" enabled=\" + b.enabled + \" orthographic=\" + b.GetComponent<Camera>().orthographic);\r\n            hud.OperatorControls.Pan(new Vector2(50, 20));\r\n            hud.OperatorControls.Rotate(new Vector2(30, 0));\r\n            hud.OperatorControls.Zoom(.8f);\r\n            result.Log(\"navigation commands sent\");\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

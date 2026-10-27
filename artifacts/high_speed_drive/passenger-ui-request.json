@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Code": "using UnityEngine; using Unity.Cinemachine; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { ScreenCapture.CaptureScreenshot(\"artifacts/high_speed_drive/passenger-return-ui.png\"); foreach(var b in Object.FindObjectsByType<CinemachineBrain>(FindObjectsSortMode.None)) result.Log(\"brain=\"+b.enabled+\" active=\"+b.ActiveVirtualCamera?.Name); } }",
+    "Title": "?? ? ?? UI ??"
+  }
+}

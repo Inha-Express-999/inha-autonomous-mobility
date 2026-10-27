@@ -17,12 +17,11 @@
     "rear_gate": {
       "id": "rear_gate",
       "name": "후문",
-      "stop_id": "rear_gate_road_candidate",
       "charging_ports": 1,
-      "node_id": "split:216916382:4:0:0.027897082418",
+      "node_id": "split:216916383:0:0:0.883296855",
       "position_xy_m": [
-        264.71217701774225,
-        45.96414648905591
+        259.1489020187029,
+        61.16660728456404
       ],
       "round_trip_reachable_stop_count": 14,
       "verification_status": "UNVERIFIED_SIMULATION_STAGING_NODE",
@@ -49,8 +48,8 @@
     "V02": "rear_gate",
     "V03": "west_field_parking"
   },
-  "node_count": 187,
-  "directed_edge_count": 402,
+  "node_count": 188,
+  "directed_edge_count": 404,
   "osm_way_count": 59,
   "stop_candidate_count": 14,
   "round_trip_reachable_stop_count": 14,

@@ -1,0 +1,259 @@
+{
+  "hubs": {
+    "main_gate": {
+      "id": "main_gate",
+      "name": "정문",
+      "charging_ports": 1,
+      "node_id": "split:481241683:4:0:0.584475355",
+      "position_xy_m": [
+        -40.46046170993286,
+        -320.946917136858
+      ],
+      "round_trip_reachable_stop_count": 14,
+      "verification_status": "UNVERIFIED_SIMULATION_STAGING_NODE",
+      "charging_status": "SYNTHETIC_ONE_PORT_PER_HUB"
+    },
+    "rear_gate": {
+      "id": "rear_gate",
+      "name": "후문",
+      "stop_id": "rear_gate_road_candidate",
+      "charging_ports": 1,
+      "node_id": "split:216916382:4:0:0.027897082418",
+      "position_xy_m": [
+        264.71217701774225,
+        45.96414648905591
+      ],
+      "round_trip_reachable_stop_count": 14,
+      "verification_status": "UNVERIFIED_SIMULATION_STAGING_NODE",
+      "charging_status": "SYNTHETIC_ONE_PORT_PER_HUB"
+    },
+    "west_field_parking": {
+      "id": "west_field_parking",
+      "name": "운동장 옆 주차장",
+      "node_id": "osm:10058484941",
+      "source_parking_osm_way_id": "568420971",
+      "source_unity_hub_id": "west_field_autonomous_hub",
+      "charging_ports": 1,
+      "position_xy_m": [
+        -312.6637858403053,
+        55.798580885198646
+      ],
+      "round_trip_reachable_stop_count": 14,
+      "verification_status": "UNVERIFIED_SIMULATION_STAGING_NODE",
+      "charging_status": "SYNTHETIC_ONE_PORT_PER_HUB"
+    }
+  },
+  "vehicle_home_hubs": {
+    "V01": "main_gate",
+    "V02": "rear_gate",
+    "V03": "west_field_parking"
+  },
+  "node_count": 188,
+  "directed_edge_count": 404,
+  "osm_way_count": 59,
+  "stop_candidate_count": 14,
+  "round_trip_reachable_stop_count": 14,
+  "landmark_count": 14,
+  "excluded_features": [
+    {
+      "unity_feature_id": "481241666_0",
+      "osm_way_id": "481241666",
+      "reason": "NOT_VEHICLE_ROAD_CLASS"
+    },
+    {
+      "unity_feature_id": "481241667_0",
+      "osm_way_id": "481241667",
+      "reason": "NOT_VEHICLE_ROAD_CLASS"
+    },
+    {
+      "unity_feature_id": "1063265596_0",
+      "osm_way_id": "1063265596",
+      "reason": "NOT_VEHICLE_ROAD_CLASS"
+    },
+    {
+      "unity_feature_id": "1063266065_0",
+      "osm_way_id": "1063266065",
+      "reason": "NOT_VEHICLE_ROAD_CLASS"
+    },
+    {
+      "unity_feature_id": "1063267429_0",
+      "osm_way_id": "1063267429",
+      "reason": "NOT_VEHICLE_ROAD_CLASS"
+    },
+    {
+      "unity_feature_id": "1063267904_0",
+      "osm_way_id": "1063267904",
+      "reason": "NOT_VEHICLE_ROAD_CLASS"
+    },
+    {
+      "unity_feature_id": "1063267905_0",
+      "osm_way_id": "1063267905",
+      "reason": "NOT_VEHICLE_ROAD_CLASS"
+    },
+    {
+      "unity_feature_id": "1063268261_0",
+      "osm_way_id": "1063268261",
+      "reason": "NOT_VEHICLE_ROAD_CLASS"
+    },
+    {
+      "unity_feature_id": "1063579312_0",
+      "osm_way_id": "1063579312",
+      "reason": "NOT_VEHICLE_ROAD_CLASS"
+    },
+    {
+      "unity_feature_id": "1098496332_0",
+      "osm_way_id": "1098496332",
+      "reason": "NOT_VEHICLE_ROAD_CLASS"
+    },
+    {
+      "unity_feature_id": "1098539007_0",
+      "osm_way_id": "1098539007",
+      "reason": "NOT_VEHICLE_ROAD_CLASS"
+    },
+    {
+      "unity_feature_id": "1098539008_0",
+      "osm_way_id": "1098539008",
+      "reason": "NOT_VEHICLE_ROAD_CLASS"
+    },
+    {
+      "unity_feature_id": "1098539009_0",
+      "osm_way_id": "1098539009",
+      "reason": "NOT_VEHICLE_ROAD_CLASS"
+    },
+    {
+      "unity_feature_id": "1098539010_0",
+      "osm_way_id": "1098539010",
+      "reason": "NOT_VEHICLE_ROAD_CLASS"
+    },
+    {
+      "unity_feature_id": "1098539011_0",
+      "osm_way_id": "1098539011",
+      "reason": "NOT_VEHICLE_ROAD_CLASS"
+    },
+    {
+      "unity_feature_id": "1098539012_0",
+      "osm_way_id": "1098539012",
+      "reason": "NOT_VEHICLE_ROAD_CLASS"
+    },
+    {
+      "unity_feature_id": "1098539013_0",
+      "osm_way_id": "1098539013",
+      "reason": "NOT_VEHICLE_ROAD_CLASS"
+    }
+  ],
+  "max_unity_osm_centerline_residual_m": 0.0006554492144623303,
+  "unserved_landmarks": [],
+  "disconnected_stop_ids": [],
+  "extension_corridors": {
+    "targets": [
+      "dorm_1",
+      "dorm_2",
+      "dorm_3",
+      "hitech",
+      "inha_station"
+    ],
+    "pinned_interval_count": 93,
+    "excluded_osm_way_ids": [
+      "1215102704"
+    ],
+    "merged_segment_count": 198,
+    "centerline_length_estimate_m_by_source": {
+      "core_unity": 6058.125003734761,
+      "extension_export": 270.0733521414898,
+      "restored_unity": 104.18135061469975,
+      "scoped_unity": 1053.0493548025593
+    },
+    "coverage_method": "same-way midpoint samples <=2m; 0.05m tolerance; not active mesh/height/access validation",
+    "filtered_expanded_osm_ways": [
+      {
+        "osm_way_id": "71382408",
+        "reason": "TURN_RESTRICTION_REQUIRES_STATEFUL_ROUTER",
+        "tags": {
+          "highway": "secondary",
+          "name": "독배로",
+          "name:en": "Dokbae-ro",
+          "name:ko": "독배로",
+          "ref": "17"
+        }
+      },
+      {
+        "osm_way_id": "71395177",
+        "reason": "TURN_RESTRICTION_REQUIRES_STATEFUL_ROUTER",
+        "tags": {
+          "highway": "secondary",
+          "lanes": "6",
+          "name": "매소홀로",
+          "name:en": "Maesohol-ro",
+          "name:ja": "買召忽路",
+          "name:ko": "매소홀로",
+          "name:ko-Hani": "買召忽路",
+          "name:zh": "买召忽路",
+          "name:zh-Hans": "买召忽路",
+          "name:zh-Hant": "買召忽路",
+          "oneway": "no",
+          "ref": "14",
+          "surface": "asphalt",
+          "wikidata": "Q110114908",
+          "wikipedia": "ko:매소홀로"
+        }
+      },
+      {
+        "osm_way_id": "955217467",
+        "reason": "TURN_RESTRICTION_REQUIRES_STATEFUL_ROUTER",
+        "tags": {
+          "highway": "service"
+        }
+      },
+      {
+        "osm_way_id": "955217468",
+        "reason": "TURN_RESTRICTION_REQUIRES_STATEFUL_ROUTER",
+        "tags": {
+          "highway": "service"
+        }
+      },
+      {
+        "osm_way_id": "955217470",
+        "reason": "TURN_RESTRICTION_REQUIRES_STATEFUL_ROUTER",
+        "tags": {
+          "highway": "secondary",
+          "name": "매소홀로",
+          "name:en": "Maesohol-ro",
+          "name:ja": "買召忽路",
+          "name:ko": "매소홀로",
+          "name:ko-Hani": "買召忽路",
+          "name:zh": "买召忽路",
+          "name:zh-Hans": "买召忽路",
+          "name:zh-Hant": "買召忽路",
+          "oneway": "no",
+          "ref": "14",
+          "wikidata": "Q110114908",
+          "wikipedia": "ko:매소홀로"
+        }
+      },
+      {
+        "osm_way_id": "1063267904",
+        "reason": "EXPLICIT_ACCESS_RESTRICTION",
+        "tags": {
+          "bicycle": "yes",
+          "foot": "yes",
+          "highway": "footway",
+          "horse": "no",
+          "motor_vehicle": "no",
+          "width": "2"
+        }
+      },
+      {
+        "osm_way_id": "1416977808",
+        "reason": "TURN_RESTRICTION_REQUIRES_STATEFUL_ROUTER",
+        "tags": {
+          "highway": "secondary",
+          "name": "독배로",
+          "name:en": "Dokbae-ro",
+          "name:ko": "독배로",
+          "ref": "17",
+          "surface": "asphalt"
+        }
+      }
+    ]
+  }
+}

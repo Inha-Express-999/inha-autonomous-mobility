@@ -1,0 +1,9 @@
+Playing=True
+Server=Local server ready
+Connection=Connected to shared web demo / read only
+RunId=42bc11346d464e8b895b55c6caaaa0cb
+GeometryHash=a912d2bd63406d1c1d4e553f5e03dba23750cb566a44d5560018609ff32d13ce
+biryong_plaza_road_candidate=(227.234000, 3.178992, -125.820800) asphalt=True delta=0
+hitech_road_candidate=(377.024000, 9.213541, -2.079554) asphalt=True delta=0
+inha_station_road_candidate=(-301.688400, -7.737638, -317.047900) asphalt=True delta=0
+rear_gate=(258.831100, 8.207451, 61.159210) asphalt=True delta=0

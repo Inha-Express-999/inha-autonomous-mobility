@@ -1,0 +1,265 @@
+{
+  "run_id": "7a56da4c9d774fe6be1c02c6936bbd82",
+  "geometry_hash": "a912d2bd63406d1c1d4e553f5e03dba23750cb566a44d5560018609ff32d13ce",
+  "time_s": 3.6705122999992454,
+  "speed": 1.0,
+  "paused": false,
+  "planner": "astar",
+  "dispatch": "fifo",
+  "physical_dispatch": "fifo",
+  "physical_dispatch_diagnostics": {
+    "queued": 0,
+    "available": [
+      "V03",
+      "V01"
+    ],
+    "cached_candidates": 0
+  },
+  "map_version": "inha-osm-unity-v2",
+  "vehicles": [
+    {
+      "id": "V01",
+      "home_hub_id": "main_gate",
+      "home_name": "정문",
+      "position": [
+        -38.45991552455394,
+        -320.7707470048732
+      ],
+      "phase": "READY",
+      "remaining_s": 0.0,
+      "remaining_wh": 2000.0,
+      "soc": 1.0,
+      "destination": null,
+      "routes": [],
+      "request_id": null,
+      "departed_at_s": null,
+      "trajectory": [],
+      "physical_status": "PARKED",
+      "motion_source": "unity_physics",
+      "physical_reason": "No automatic mission",
+      "battery_measured": false,
+      "driving_profile": "standard",
+      "cruise_speed_kmh": 18.0,
+      "measured_speed_kmh": 0.00015042843151604756,
+      "observation_fresh": true,
+      "obstacles_ignored": false,
+      "lane_model": "legacy_centerline",
+      "lane_ids": [],
+      "lane_error_m": 0,
+      "lane_profile_hash": null
+    },
+    {
+      "id": "V02",
+      "home_hub_id": "rear_gate",
+      "home_name": "후문",
+      "position": [
+        252.36705177439347,
+        50.80925205303007
+      ],
+      "phase": "TO_PICKUP",
+      "remaining_s": 0.0,
+      "remaining_wh": 1996.0589540273247,
+      "soc": 0.9980294770136624,
+      "destination": "anniversary_60",
+      "routes": [
+        {
+          "phase": "TO_DROPOFF",
+          "points": [
+            [
+              263.16214365070107,
+              48.12797672530445
+            ],
+            [
+              263.1616853688292,
+              48.126029623484364
+            ],
+            [
+              255.28251332956725,
+              49.97616826950077
+            ],
+            [
+              255.2715837085541,
+              49.978756251928026
+            ],
+            [
+              255.26066412009152,
+              49.98138497500978
+            ],
+            [
+              255.24975468102693,
+              49.98405440859861
+            ],
+            [
+              255.23885549794483,
+              49.98676452340944
+            ],
+            [
+              255.22796669037407,
+              49.989515288331894
+            ],
+            [
+              255.2170883715776,
+              49.99230667293183
+            ],
+            [
+              255.2062206536431,
+              49.995138649033294
+            ],
+            [
+              255.19536365408152,
+              49.99801118275837
+            ],
+            [
+              255.18451748211976,
+              50.00092424478302
+            ],
+            [
+              255.17368225437116,
+              50.00387780659144
+            ],
+            [
+              255.16285808199333,
+              50.00687183622307
+            ],
+            [
+              255.15204508101667,
+              50.00990630525759
+            ],
+            [
+              255.14124336651307,
+              50.01298117907382
+            ],
+            [
+              255.13045304805055,
+              50.01609643178536
+            ],
+            [
+              255.11967424554274,
+              50.01925203149096
+            ],
+            [
+              255.1089070661575,
+              50.022447947897966
+            ],
+            [
+              90.80890739361226,
+              99.12604610865122
+            ]
+          ]
+        }
+      ],
+      "request_id": "req-00000001-d1c7c7b73b69",
+      "departed_at_s": null,
+      "trajectory": [],
+      "physical_status": "DRIVING",
+      "motion_source": "unity_physics",
+      "physical_reason": "A* / simulation cruise / obstacles ignored",
+      "battery_measured": false,
+      "driving_profile": "campus_fast_no_obstacles",
+      "cruise_speed_kmh": 40.0,
+      "measured_speed_kmh": 16.738048553466797,
+      "observation_fresh": true,
+      "obstacles_ignored": true,
+      "lane_model": "right_hand_authored_simulation",
+      "lane_ids": [
+        "split:216916382:4:0:0.027897082418|osm:2262335939|216916382:4:0:1:f|right",
+        "osm:2262335939|osm:9767086763|216916383:2:0:0:f|right",
+        "osm:9767086763|split:216916383:3:0:0.236611800777|216916383:3:0:0:f|right",
+        "split:216916383:3:0:0.236611800777|osm:2262335940|216916383:3:0:1:f|right",
+        "osm:2262335940|split:216916383:4:0:0.893099911983|216916383:4:0:0:f|right"
+      ],
+      "lane_error_m": 0.031240249480711264,
+      "lane_profile_hash": "5b106cc9ce5c406082c674b8a48bfdbe9a78b483963d0c61c54a951a5952d1ce",
+      "execution_source": "observed_unity_transport",
+      "transport_reason": ""
+    },
+    {
+      "id": "V03",
+      "home_hub_id": "west_field_parking",
+      "home_name": "운동장 옆 주차장",
+      "position": [
+        -310.13241430932317,
+        54.97973867057425
+      ],
+      "phase": "READY",
+      "remaining_s": 0.0,
+      "remaining_wh": 2000.0,
+      "soc": 1.0,
+      "destination": null,
+      "routes": [],
+      "request_id": null,
+      "departed_at_s": null,
+      "trajectory": [],
+      "physical_status": "PARKED",
+      "motion_source": "unity_physics",
+      "physical_reason": "No automatic mission",
+      "battery_measured": false,
+      "driving_profile": "standard",
+      "cruise_speed_kmh": 18.0,
+      "measured_speed_kmh": 2.266874847833833E-08,
+      "observation_fresh": true,
+      "obstacles_ignored": false,
+      "lane_model": "legacy_centerline",
+      "lane_ids": [],
+      "lane_error_m": 0,
+      "lane_profile_hash": null
+    }
+  ],
+  "requests": [
+    {
+      "id": "req-00000001-d1c7c7b73b69",
+      "owner_id": "unity-operator",
+      "service_type": "PASSENGER",
+      "status": "ASSIGNED",
+      "created_s": 0.0,
+      "pickup_landmark_id": "anniversary_60",
+      "dropoff_landmark_id": "biryong_plaza",
+      "pickup_stop_id": "anniversary_60_road_candidate",
+      "dropoff_stop_id": "biryong_plaza_road_candidate",
+      "service_needs": {
+        "requires_step_free": false,
+        "wheelchair_slots": 0,
+        "boarding_assistance": false
+      },
+      "party_size": 1,
+      "cargo_kg": 0.0,
+      "latest_arrival_s": null,
+      "eta_s": null,
+      "vehicle_id": "V02",
+      "reason": "UNKNOWN"
+    }
+  ],
+  "queue": [],
+  "vehicle_fifo": [],
+  "waiting_reasons": {},
+  "completed": 0,
+  "charging_sessions": [],
+  "events": [
+    {
+      "id": "req-00000001-d1c7c7b73b69:created",
+      "time_s": 0.0,
+      "text": "요청 01 접수 · 비룡플라자"
+    }
+  ],
+  "physical_transport_events": [
+    {
+      "request_id": "req-00000001-d1c7c7b73b69",
+      "vehicle_id": "V02",
+      "phase": "TO_PICKUP",
+      "time_s": 0.00012560000322991982
+    }
+  ],
+  "battery_policy": {
+    "capacity_wh": 2000.0,
+    "initial_wh": 2000.0,
+    "wh_per_m": 0.35,
+    "auxiliary_power_w": 50.0,
+    "reserve_fraction": 0.15,
+    "charge_trigger_fraction": 0.3,
+    "charging_power_w": 1000.0,
+    "passenger_load_fraction": 0.05,
+    "cargo_load_fraction_per_kg": 0.01,
+    "charge_when_idle": true
+  },
+  "simulation_only": true
+}

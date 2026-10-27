@@ -4,7 +4,7 @@ from contextlib import asynccontextmanager, suppress
 from pathlib import Path
 from threading import RLock
 
-from fastapi import FastAPI, HTTPException, status, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, HTTPException, status, WebSocket, WebSocketDisconnect, Request
 from fastapi.responses import RedirectResponse
 from fastapi.staticfiles import StaticFiles
 
@@ -16,7 +16,12 @@ from campus_sim.service import MobilityService
 from campus_sim.unity_map import unity_map
 from campus_sim.web_demo import DemoControl, DemoPlan, DemoScenario, DemoSession
 from campus_sim.unity_drive import AutoMission, EgoObservation, DriveCommand
-from pydantic import ValidationError
+from pydantic import ValidationError, BaseModel, Field
+
+
+class EditorMapReload(BaseModel):
+    expected_geometry_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
+    geometry_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
 
 
 def create_app(service: MobilityService | None = None) -> FastAPI:
@@ -37,7 +42,7 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
             with suppress(asyncio.CancelledError):
                 await task
 
-    app = FastAPI(title="Inha Mobil API", version="0.5.0.0", lifespan=lifespan)
+    app = FastAPI(title="Inha Mobil API", version="0.5.1.0", lifespan=lifespan)
     app.state.service = service or MobilityService.from_osm_map()
     app.state.demo = None
     app.state.demo_lock = RLock()
@@ -65,6 +70,8 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
         session = demo()
         try:
             with session.lock:
+                if session.physical_dispatch.busy(vehicle_id):
+                    raise ValueError("Vehicle is reserved for an observed transport request")
                 return session.physical.mission(vehicle_id, command)
         except ValueError as error:
             raise HTTPException(status_code=409, detail=str(error)) from error
@@ -83,7 +90,9 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
                 observation = EgoObservation.model_validate(data)
                 with session.lock:
                     command = physical.observation(vehicle_id, token, observation)
-                await websocket.send_json(DriveCommand.model_validate(command).model_dump(mode="json", exclude_none=True))
+                await websocket.send_json(DriveCommand.model_validate(command).model_dump(
+                    mode="json", exclude_none=True,
+                    exclude={"transport_phase"} if observation.schema_version < 4 else set()))
         except WebSocketDisconnect:
             pass
         except (ValueError, KeyError, ValidationError):
@@ -115,6 +124,28 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
                 "physics_protocol_versions": [1, 2],
                 "lane_profile_hash": session.physical.lanes.hash if session.physical.lanes else None,
             }
+
+    @app.post("/v1/desktop/editor-map")
+    def editor_map(command: EditorMapReload, request: Request):
+        if request.client is None or request.client.host not in ("127.0.0.1", "::1") or request.headers.get("origin"):
+            raise HTTPException(status_code=403, detail="Local Editor only")
+        with app.state.demo_lock:
+            session = demo()
+            with session.lock:
+                current = unity_map(session.service)["geometry_hash"]
+                if current == command.geometry_hash:
+                    return {"geometry_hash": current, "run_id": session.run_id}
+                if current != command.expected_geometry_hash:
+                    raise HTTPException(status_code=409, detail="Editor map changed concurrently")
+                if session.service.requests or app.state.service.requests or any(v.connected for v in session.physical.vehicles.values()) or not session.clock.paused:
+                    raise HTTPException(status_code=409, detail="Stop/reset the existing session and disconnect vehicles before editing locations")
+                replacement = DemoSession()
+                if unity_map(replacement.service)["geometry_hash"] != command.geometry_hash:
+                    raise HTTPException(status_code=409, detail="Generated map hash does not match Editor")
+                replacement_service = replacement.factory()
+                app.state.service = replacement_service
+                app.state.demo = replacement
+                return {"geometry_hash": command.geometry_hash, "run_id": replacement.run_id}
 
     @app.post("/v1/demo/control")
     def demo_control(command: DemoControl):

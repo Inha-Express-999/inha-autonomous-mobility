@@ -94,10 +94,25 @@ namespace InhaExpress.Client.Tests
                 }
                 Assert.That(overlay.GetComponentsInChildren<Collider>(true), Is.Empty);
                 Assert.That(overlay.GetComponentsInChildren<Rigidbody>(true), Is.Empty);
-                var renderers = overlay.GetComponentsInChildren<MeshRenderer>(true);
+                // Display models now live below service points. Only the
+                // importer-owned debug marker meshes remain combined in three draws.
+                var views=overlay.transform.Cast<Transform>().Where(t=>t.name.EndsWith(" visual markers")).ToArray();
+                var renderers = views.Select(t=>t.GetComponent<MeshRenderer>()).ToArray();
                 Assert.That(renderers.Length, Is.EqualTo(3));
                 Assert.That(renderers.All(r => r.sharedMaterial != null), Is.True);
-                Assert.That(overlay.GetComponentsInChildren<MeshFilter>(true).All(f => f.sharedMesh.vertexCount > 0), Is.True);
+                Assert.That(views.All(t=>t.GetComponent<MeshFilter>().sharedMesh.vertexCount > 0), Is.True);
+                var models=overlay.GetComponentsInChildren<ServicePointVisual>(true);
+                Assert.That(models.Length,Is.EqualTo(17));
+                foreach(var model in models)
+                {
+                    var point=model.transform.parent.GetComponent<ServerMapMarker>();
+                    Assert.That(point,Is.Not.Null);
+                    Assert.That(point.serverId,Is.EqualTo(model.pointId));
+                    Assert.That(point.kind,Is.EqualTo(model.pointKind));
+                    Assert.That(point.kind,Is.Not.EqualTo(ServerMapMarker.MarkerKind.RoadNode));
+                }
+                var vehicles=scene.GetRootGameObjects().SelectMany(g=>g.GetComponentsInChildren<Rigidbody>(true));
+                Assert.That(vehicles.All(v=>v.GetComponentInParent<ServerMapMarker>()==null),Is.True);
             }
             finally { if (opened) EditorSceneManager.CloseScene(scene, true); }
         }

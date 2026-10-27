@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Code": "using UnityEngine;using UnityEngine.UI;using InhaExpress.Client.Presentation;using InhaExpress.Client.MapClient;\ninternal class CommandScript : IRunCommand {public void Execute(ExecutionResult result){var h=Object.FindFirstObjectByType<WebClientHud>();var map=Object.FindFirstObjectByType<CampusServerMap>();if(map.LatestState.requests.Length>0){result.Log(\"REQUEST_EXISTS\");return;}foreach(var d in h.GetComponentsInChildren<Dropdown>(true)){var name=d.name==\"Request Pickup\"?\"60주년\":d.name==\"Request Dropoff\"?\"비룡플라자\":null;if(name==null)continue;int i=d.options.FindIndex(o=>o.text==name);if(i<1)throw new System.Exception(\"Missing stop\");d.value=i;}Camera cam=null;foreach(var c in Object.FindObjectsByType<Camera>(FindObjectsSortMode.None))if(c.enabled&&c.targetTexture==null)cam=c;foreach(var v in Object.FindObjectsByType<VehicleController>(FindObjectsSortMode.None)){UnityAutonomousClient client=null;foreach(var c in Object.FindObjectsByType<UnityAutonomousClient>(FindObjectsSortMode.None))if(c.VehicleId==v.OperatorVehicleId)client=c;var rec=v.gameObject.AddComponent<CampusDriveTelemetry>();rec.Begin(v,client,cam,\"artifacts/high_speed_drive/garage-greedy-\"+v.OperatorVehicleId+\".csv\",900);}foreach(var b in h.GetComponentsInChildren<Button>(true))if(b.transform.parent.name==\"Submit Request\"){b.onClick.Invoke();result.Log(\"SUBMITTED\");return;}}}",
+    "Title": "차고 출발 Greedy 실제 운송 검증"
+  },
+  "name": "Unity_RunCommand"
+}

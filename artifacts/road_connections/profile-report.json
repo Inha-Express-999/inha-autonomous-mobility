@@ -1,0 +1,6 @@
+{
+  "axis_grade_limit": 0.04,
+  "planar_grid_grade_bound": 0.05656854249492381,
+  "spacing_m": 2.0,
+  "note": "Synthetic grade envelope; original DSM retained for physical terrain outside surface footprints."
+}

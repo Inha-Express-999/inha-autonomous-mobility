@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Code": "using UnityEngine; using CampusSim; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { Physics.SyncTransforms(); var root=GameObject.Find(\"Hitech missing OSM road\"); foreach(var b in root.GetComponentsInChildren<CampusTerrainBinding>()){result.Log(\"start=\"+b.roadGradeStart+\" end=\"+b.roadGradeEnd); var dir=(b.roadGradeEnd-b.roadGradeStart);dir.y=0;dir.Normalize();foreach(var p in new[]{b.roadGradeStart,b.roadGradeEnd})for(int i=-4;i<=4;i++){var q=p+dir*i*.5f; foreach(var h in Physics.RaycastAll(q+Vector3.up*30,Vector3.down,60))if(!(h.collider is TerrainCollider))result.Log(\"offset=\"+(i*.5f)+\" point=\"+q+\" hit=\"+h.collider.name+\" y=\"+h.point.y);}} } }",
+    "Title": "복구 도로 접합부 단차 조사"
+  },
+  "name": "Unity_RunCommand"
+}

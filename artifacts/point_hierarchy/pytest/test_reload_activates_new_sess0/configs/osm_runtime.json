@@ -1,0 +1,682 @@
+{
+  "schema_version": 3,
+  "map_version": "inha-osm-unity-v2",
+  "routing_mode": "osm_geometry_simulation",
+  "default_speed_mps": 8.333333333333334,
+  "max_stop_gap_m": 35.0,
+  "allowed_highways": [
+    "service",
+    "residential",
+    "secondary"
+  ],
+  "home_landmark_id": "main_gate",
+  "assumptions": [
+    "OSM topology and Unity road centerlines are source geometry, not approved vehicle access.",
+    "Missing access permission is a simulation assumption only; explicit restrictions remain excluded.",
+    "Speed is a configured 30 km/h (8.333333333333334 m/s) assumption, never an observed speed or legal limit.",
+    "OSM missing oneway follows the simulation bidirectional assumption; explicit oneway is preserved.",
+    "Road widths remain unknown; visual mesh widths are not measurements.",
+    "Length is horizontal AEQD distance; Terrain height, slopes and physical driving are not modeled.",
+    "Stops are projections of Unity general entrance candidates onto existing road segments within 35 m.",
+    "Entrance-to-stop gap is straight-line separation, not a validated pedestrian route.",
+    "No step-free access is certified; requests requiring it are rejected.",
+    "Three synthetic vehicles; one request each; no boarding/dwell time or multi-vehicle collision coordination.",
+    "Only original campus centerlines and explicitly pinned extension corridor intervals are enabled; no whole-network expansion.",
+    "Battery capacity, energy rates and charge power are synthetic configurable assumptions, not vehicle measurements.",
+    "One ideal 1000 W charging port at each configured home hub; charging infrastructure is synthetic.",
+    "Standby vehicles power down: no idle drain. Auxiliary power is applied throughout travel; charging power is net stored power.",
+    "All legs including return to the assigned vehicle home plus 15 percent capacity reserve are required before dispatch; load correction applies to delivery only.",
+    "V01 main_gate, V02 rear_gate, V03 existing OSM road node within parking way568420971; authoring bay/entrance access is unverified, no straight bay connector is created."
+  ],
+  "extension_corridors": {
+    "excluded_osm_way_ids": [
+      "1215102704"
+    ],
+    "targets": {
+      "hitech": {
+        "stop_way_id": "481241714",
+        "segments": [
+          {
+            "osm_way_id": "481241658",
+            "segment_index": 2,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241658",
+            "segment_index": 3,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241658",
+            "segment_index": 4,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241658",
+            "segment_index": 5,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241658",
+            "segment_index": 6,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241658",
+            "segment_index": 7,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241658",
+            "segment_index": 8,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241683",
+            "segment_index": 4,
+            "start_fraction": 0.0,
+            "end_fraction": 0.617567128481
+          },
+          {
+            "osm_way_id": "481241689",
+            "segment_index": 0,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241696",
+            "segment_index": 2,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241696",
+            "segment_index": 3,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241714",
+            "segment_index": 0,
+            "start_fraction": 0.328648316752,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241714",
+            "segment_index": 1,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241714",
+            "segment_index": 2,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241714",
+            "segment_index": 3,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241714",
+            "segment_index": 4,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241715",
+            "segment_index": 0,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          }
+        ]
+      },
+      "dorm_1": {
+        "stop_way_id": "1390060991",
+        "segments": [
+          {
+            "osm_way_id": "1390060991",
+            "segment_index": 3,
+            "start_fraction": 0.579325503739,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 13,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 14,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241658",
+            "segment_index": 0,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241658",
+            "segment_index": 1,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241683",
+            "segment_index": 4,
+            "start_fraction": 0.0,
+            "end_fraction": 0.617567128481
+          },
+          {
+            "osm_way_id": "481241689",
+            "segment_index": 0,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          }
+        ]
+      },
+      "dorm_2": {
+        "stop_way_id": "471332807",
+        "segments": [
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 3,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 4,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 5,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 6,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 7,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 8,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 9,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 10,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 11,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 12,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 13,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 14,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "284010313",
+            "segment_index": 3,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "284010313",
+            "segment_index": 4,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "284010313",
+            "segment_index": 5,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "284010313",
+            "segment_index": 6,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "284010313",
+            "segment_index": 7,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "284010313",
+            "segment_index": 8,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "284010313",
+            "segment_index": 9,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "284010313",
+            "segment_index": 10,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "471332807",
+            "segment_index": 0,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "471332807",
+            "segment_index": 1,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "471332807",
+            "segment_index": 2,
+            "start_fraction": 0.0,
+            "end_fraction": 0.630248405646
+          },
+          {
+            "osm_way_id": "481241658",
+            "segment_index": 0,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241658",
+            "segment_index": 1,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241683",
+            "segment_index": 4,
+            "start_fraction": 0.0,
+            "end_fraction": 0.617567128481
+          },
+          {
+            "osm_way_id": "481241689",
+            "segment_index": 0,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "731224474",
+            "segment_index": 0,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "731224474",
+            "segment_index": 1,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "731224474",
+            "segment_index": 2,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "731224474",
+            "segment_index": 3,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "731224474",
+            "segment_index": 4,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          }
+        ]
+      },
+      "dorm_3": {
+        "stop_way_id": "471332807",
+        "segments": [
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 3,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 4,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 5,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 6,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 7,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 8,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 9,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 10,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 11,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 12,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 13,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 14,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "284010313",
+            "segment_index": 3,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "284010313",
+            "segment_index": 4,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "284010313",
+            "segment_index": 5,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "284010313",
+            "segment_index": 6,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "284010313",
+            "segment_index": 7,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "284010313",
+            "segment_index": 8,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "284010313",
+            "segment_index": 9,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "284010313",
+            "segment_index": 10,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "471332807",
+            "segment_index": 0,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241658",
+            "segment_index": 0,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241658",
+            "segment_index": 1,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241683",
+            "segment_index": 4,
+            "start_fraction": 0.0,
+            "end_fraction": 0.617567128481
+          },
+          {
+            "osm_way_id": "481241689",
+            "segment_index": 0,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "731224474",
+            "segment_index": 0,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "731224474",
+            "segment_index": 1,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "731224474",
+            "segment_index": 2,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "731224474",
+            "segment_index": 3,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "731224474",
+            "segment_index": 4,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          }
+        ]
+      },
+      "inha_station": {
+        "stop_way_id": "955217469",
+        "segments": [
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 16,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 17,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "281621314",
+            "segment_index": 18,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241683",
+            "segment_index": 4,
+            "start_fraction": 0.617567128481,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "481241683",
+            "segment_index": 5,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "955217469",
+            "segment_index": 10,
+            "start_fraction": 0.364442941943,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "955217469",
+            "segment_index": 11,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          }
+        ]
+      }
+    },
+    "selection": "Pinned OSM segment intervals from directed-route audit; no free-space connectors. Station uses Unity-export-backed detour."
+  },
+  "vehicles": [
+    {
+      "id": "V01",
+      "passenger_capacity": 4,
+      "wheelchair_slots": 1,
+      "cargo_capacity_kg": 20,
+      "available": true,
+      "home_hub_id": "main_gate"
+    },
+    {
+      "id": "V02",
+      "passenger_capacity": 4,
+      "wheelchair_slots": 1,
+      "cargo_capacity_kg": 20,
+      "available": true,
+      "home_hub_id": "rear_gate"
+    },
+    {
+      "id": "V03",
+      "passenger_capacity": 4,
+      "wheelchair_slots": 1,
+      "cargo_capacity_kg": 20,
+      "available": true,
+      "home_hub_id": "west_field_parking"
+    }
+  ],
+  "battery": {
+    "charge_when_idle": true,
+    "capacity_wh": 2000.0,
+    "initial_wh": 2000.0,
+    "wh_per_m": 0.35,
+    "auxiliary_power_w": 50.0,
+    "reserve_fraction": 0.15,
+    "charge_trigger_fraction": 0.3,
+    "charging_power_w": 1000.0,
+    "passenger_load_fraction": 0.05,
+    "cargo_load_fraction_per_kg": 0.01
+  },
+  "hubs": [
+    {
+      "id": "main_gate",
+      "name": "정문",
+      "stop_id": "main_gate_road_candidate",
+      "charging_ports": 1
+    },
+    {
+      "id": "rear_gate",
+      "name": "후문",
+      "stop_id": "rear_gate_road_candidate",
+      "charging_ports": 1
+    },
+    {
+      "id": "west_field_parking",
+      "name": "운동장 옆 주차장",
+      "node_id": "osm:10058484941",
+      "source_parking_osm_way_id": "568420971",
+      "source_unity_hub_id": "west_field_autonomous_hub",
+      "charging_ports": 1
+    }
+  ]
+}

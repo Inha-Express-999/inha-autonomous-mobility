@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Code": "using UnityEngine; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { CampusMissingRoadAuthoring.FitEndpointGrade(); CampusRoadSmoothingValidation.Validate(); result.Log(\"Endpoint grade saved and validated\"); } }",
+    "Title": "누락 도로 종단 경사 보정"
+  },
+  "name": "Unity_RunCommand"
+}

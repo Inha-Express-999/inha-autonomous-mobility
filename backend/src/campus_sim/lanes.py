@@ -81,6 +81,48 @@ def shift(point, direction, offset):
     return (point[0] + direction[1] * offset, point[1] - direction[0] * offset)
 
 
+def directed_lane_route(graph, costs, incoming, goal, profiles, coordinates, minimum_radius):
+    """A* over incoming directed edges; a node alone loses turn feasibility.
+
+    Returns following edges (excluding incoming), or None. The same geometric
+    connector validation used for execution rejects unavailable turns during search.
+    """
+    from heapq import heappop, heappush
+    from campus_sim.planning import AStarPlanner
+
+    scale = AStarPlanner().heuristic_scale(graph, costs)
+    by_id = {edge.id: edge for edge in graph.edges}
+    parts = {edge.id: ([coordinates.to_unity(*point) for point in edge.polyline],
+                      profiles.by_edge[edge.id]["right_offset_m"]) for edge in graph.edges}
+    best, parent = {incoming.id: 0.0}, {}
+    heap = [(math.dist(graph.nodes[incoming.v], graph.nodes[goal]) * scale, 0.0, incoming.id)]
+    while heap:
+        _, cost, identifier = heappop(heap)
+        if cost != best[identifier]:
+            continue
+        edge = by_id[identifier]
+        if edge.v == goal:
+            result = []
+            while identifier != incoming.id:
+                result.append(by_id[identifier])
+                identifier = parent[identifier]
+            return list(reversed(result))
+        for following in graph._outgoing[edge.v]:
+            if not following.vehicle_allowed or following.stairs:
+                continue
+            try:
+                lane_path([parts[edge.id], parts[following.id]], minimum_radius)
+            except ValueError:
+                continue
+            candidate = cost + costs.costs_s[following.id]
+            if candidate < best.get(following.id, math.inf):
+                best[following.id] = candidate
+                parent[following.id] = identifier
+                heuristic = math.dist(graph.nodes[following.v], graph.nodes[goal]) * scale
+                heappush(heap, (candidate + heuristic, candidate, following.id))
+    return None
+
+
 def lane_path(parts, minimum_radius):
     """Offset each directed road and smoothly connect lanes inside junctions.
 

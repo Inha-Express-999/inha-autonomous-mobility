@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] hud=False run= error=\",\n    \"localFixedCode\": \"using UnityEngine;\\r\\nusing UnityEngine.UI;\\r\\nusing InhaExpress.Client.Presentation;\\r\\nusing InhaExpress.Client.MapClient;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            var hud = Object.FindFirstObjectByType<WebClientHud>();\\r\\n            var map = Object.FindFirstObjectByType<CampusServerMap>();\\r\\n            result.Log(\\\"hud=\\\" + (hud != null) + \\\" run=\\\" + map?.RunId + \\\" error=\\\" + map?.LastError);\\r\\n            foreach (var c in Object.FindObjectsByType<UnityAutonomousClient>(FindObjectsSortMode.None))\\r\\n                result.Log(\\\"vehicle=\\\" + c.VehicleId + \\\" connected=\\\" + c.Connected + \\\" reserved=\\\" + c.TransportReserved + \\\" status=\\\" + c.Status);\\r\\n            foreach (var d in Object.FindObjectsByType<Dropdown>(FindObjectsSortMode.None))\\r\\n                result.Log(\\\"dropdown=\\\" + d.name + \\\" count=\\\" + d.options.Count);\\r\\n            ScreenCapture.CaptureScreenshot(\\\"artifacts/high_speed_drive/request-ui-before.png\\\");\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] hud=False run= error=",
+      "localFixedCode": "using UnityEngine;\r\nusing UnityEngine.UI;\r\nusing InhaExpress.Client.Presentation;\r\nusing InhaExpress.Client.MapClient;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            var hud = Object.FindFirstObjectByType<WebClientHud>();\r\n            var map = Object.FindFirstObjectByType<CampusServerMap>();\r\n            result.Log(\"hud=\" + (hud != null) + \" run=\" + map?.RunId + \" error=\" + map?.LastError);\r\n            foreach (var c in Object.FindObjectsByType<UnityAutonomousClient>(FindObjectsSortMode.None))\r\n                result.Log(\"vehicle=\" + c.VehicleId + \" connected=\" + c.Connected + \" reserved=\" + c.TransportReserved + \" status=\" + c.Status);\r\n            foreach (var d in Object.FindObjectsByType<Dropdown>(FindObjectsSortMode.None))\r\n                result.Log(\"dropdown=\" + d.name + \" count=\" + d.options.Count);\r\n            ScreenCapture.CaptureScreenshot(\"artifacts/high_speed_drive/request-ui-before.png\");\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

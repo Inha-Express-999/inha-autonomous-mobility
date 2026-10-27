@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Code": "using UnityEngine; using Unity.Cinemachine; using InhaExpress.Client.Presentation; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { foreach(var b in Object.FindObjectsByType<CinemachineBrain>(FindObjectsSortMode.None)) result.Log(\"active=\"+b.ActiveVirtualCamera?.Name+\" yaw=\"+b.transform.eulerAngles.y+\" size=\"+b.GetComponent<Camera>().orthographicSize); Object.FindFirstObjectByType<WebClientHud>().OperatorControls.DeselectVehicle(); ScreenCapture.CaptureScreenshot(\"artifacts/high_speed_drive/path-only-ui.png\"); } }",
+    "Title": "Cinemachine 지도 출력과 UI 저장"
+  }
+}

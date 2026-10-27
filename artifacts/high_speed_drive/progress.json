@@ -1,0 +1,28 @@
+{
+  "date": "2026-10-25",
+  "unity_editor": {
+    "running": true,
+    "compile_verified": false,
+    "mcp_invocation": "failed: no fresh discovery; retry tool unavailable",
+    "process_id": 36172
+  },
+  "backend_tests": {
+    "passed": 26,
+    "warning": "Starlette TestClient deprecation",
+    "scope": "fast profile, drive speed, Unity drive WebSocket, lanes"
+  },
+  "pending": [
+    "Unity compilation",
+    "Full-route 30/40/50 km/h measured drive and camera stability",
+    "Physical request dispatch lifecycle",
+    "Web UI parity and rendered verification"
+  ],
+  "completed_changes": [
+    "Protocol 3 high speed simulation profile 30-50 km/h",
+    "Ignore obstacle slowdown in explicit fast profile",
+    "Retain lane, freshness, goal and curve checks",
+    "Unity speed selector",
+    "Exported command observation mission schemas",
+    "Opt-in read-only drive/camera telemetry recorder"
+  ]
+}

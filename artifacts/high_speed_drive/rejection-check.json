@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] status=경로 접수 실패 · 목적지 확인 후 재시도 result={\\\"detail\\\":\\\"Unknown Stop candidate\\\"} driving=False\",\n    \"localFixedCode\": \"using UnityEngine;\\r\\nusing InhaExpress.Client.Presentation;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            var c = Object.FindFirstObjectByType<UnityAutonomousClient>();\\r\\n            result.Log(\\\"status=\\\" + c.Status + \\\" result=\\\" + c.MissionResult + \\\" driving=\\\" + c.IsDriving);\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] status=경로 접수 실패 · 목적지 확인 후 재시도 result={\"detail\":\"Unknown Stop candidate\"} driving=False",
+      "localFixedCode": "using UnityEngine;\r\nusing InhaExpress.Client.Presentation;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            var c = Object.FindFirstObjectByType<UnityAutonomousClient>();\r\n            result.Log(\"status=\" + c.Status + \" result=\" + c.MissionResult + \" driving=\" + c.IsDriving);\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

@@ -1,0 +1,3 @@
+models=17
+maximumWorldPositionDeltaM=4.023314E-07
+pointIdsPreserved=true

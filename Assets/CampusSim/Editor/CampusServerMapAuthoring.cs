@@ -22,7 +22,6 @@ public static class CampusServerMapAuthoring
         if (EditorApplication.isPlayingOrWillChangePlaymode)
             throw new InvalidOperationException("Import nodes in Edit Mode.");
         var map = ServerMapDocument.Parse(File.ReadAllText(SnapshotPath));
-        AssetDatabase.Refresh();
         var scene = SceneManager.GetSceneByPath(ScenePath);
         if (scene.IsValid() && scene.isDirty)
             throw new InvalidOperationException("Save CampusTerrain before importing server nodes.");
@@ -34,13 +33,12 @@ public static class CampusServerMapAuthoring
         SceneManager.MoveGameObjectToScene(root, scene);
         var overlay = root.GetComponent<CampusServerMap>() ?? root.AddComponent<CampusServerMap>();
 
-        if (overlay.geometryHash != map.geometry_hash || !HasExpectedMarkers(overlay, map))
+        if (root.transform.position != Vector3.zero || root.transform.rotation != Quaternion.identity || root.transform.localScale != Vector3.one)
+            throw new InvalidOperationException("Keep the server map root at identity; edit individual Stop/Hub points.");
+        // Attach legacy display models before moving any anchors, preserving
+        // their current world poses and subsequent local offsets.
+        if(overlay.markers!=null && overlay.markers.Length>0)CampusServicePointVisuals.Migrate(overlay);
         {
-            // Only this importer-owned subtree is regenerated. Existing hubs/cars/roads are untouched.
-            while (root.transform.childCount > 0)
-                UnityEngine.Object.DestroyImmediate(root.transform.GetChild(0).gameObject);
-            root.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
-            root.transform.localScale = Vector3.one;
             var terrain = scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<Terrain>(true))
                 .FirstOrDefault();
             if (!terrain) throw new InvalidOperationException("CampusTerrain has no Terrain for visual height projection.");
@@ -52,18 +50,42 @@ public static class CampusServerMapAuthoring
             var stops = Child(root.transform, "Stop Candidates (access unverified)");
             var hubs = Child(root.transform, "Home Hubs (web road anchors)");
             var markers = new List<ServerMapMarker>();
+            var current=root.GetComponentsInChildren<ServerMapMarker>(true);
+            var retired=scene.GetRootGameObjects().SingleOrDefault(g=>g.name=="Retired service points | preserved models");
+            var candidates=retired?current.Concat(retired.GetComponentsInChildren<ServerMapMarker>(true)):current;
+            var byId=candidates.ToDictionary(m=>m.kind+":"+m.serverId,StringComparer.Ordinal);
+            ServerMapMarker Sync(Transform parent,ServerMapMarker.MarkerKind kind,string id,string nodeId,
+                string name,Vector3 position,string[] vehicles)
+            {
+                byId.TryGetValue(kind+":"+id,out var previous);
+                return Upsert(previous,parent,kind,id,nodeId,name,position,vehicles,terrain,roadColliders);
+            }
             foreach (var node in map.nodes)
-                markers.Add(Create(nodes, ServerMapMarker.MarkerKind.RoadNode, node.id, node.id,
-                    node.id, node.position, Array.Empty<string>(), terrain, roadColliders));
+                markers.Add(Sync(nodes, ServerMapMarker.MarkerKind.RoadNode, node.id, node.id,
+                    node.id, node.position, Array.Empty<string>()));
             foreach (var stop in map.stops)
-                markers.Add(Create(stops, ServerMapMarker.MarkerKind.Stop, stop.id, stop.node_id,
-                    stop.name, stop.position, Array.Empty<string>(), terrain, roadColliders));
+                markers.Add(Sync(stops, ServerMapMarker.MarkerKind.Stop, stop.id, stop.node_id,
+                    stop.name, stop.position, Array.Empty<string>()));
             foreach (var hub in map.hubs)
-                markers.Add(Create(hubs, ServerMapMarker.MarkerKind.Hub, hub.id, hub.node_id,
-                    hub.name, hub.position, hub.vehicle_ids, terrain, roadColliders));
+                markers.Add(Sync(hubs, ServerMapMarker.MarkerKind.Hub, hub.id, hub.node_id,
+                    hub.name, hub.position, hub.vehicle_ids));
+            foreach(var stale in current.Except(markers))
+            {
+                if(stale.transform.childCount==0)Undo.DestroyObjectImmediate(stale.gameObject);
+                else
+                {
+                    // Removed IDs must not silently destroy user-authored models.
+                    var archive=scene.GetRootGameObjects().SingleOrDefault(g=>g.name=="Retired service points | preserved models");
+                    if(!archive){archive=new GameObject("Retired service points | preserved models");Undo.RegisterCreatedObjectUndo(archive,"Preserve removed point models");}
+                    Undo.SetTransformParent(stale.transform,archive.transform,"Preserve removed point and models");
+                    archive.SetActive(false);
+                    Debug.LogWarning("Removed map ID preserved under retired service points: "+stale.serverId);
+                }
+            }
             overlay.markers = markers.ToArray();
             CreateVisuals(root.transform, markers);
         }
+        CampusServicePointVisuals.Migrate(overlay);
         overlay.authoredMap = AssetDatabase.LoadAssetAtPath<TextAsset>(SnapshotPath);
         overlay.geometryHash = map.geometry_hash;
         overlay.mapVersion = map.map_version;
@@ -88,11 +110,16 @@ public static class CampusServerMapAuthoring
 
     private static bool HasExpectedMarkers(CampusServerMap overlay, ServerMapDocument map) =>
         overlay.markers != null && overlay.markers.Length == map.nodes.Length + map.stops.Length + map.hubs.Length &&
-        overlay.markers.All(m => m != null);
+        overlay.markers.All(m => m != null && new Vector2(m.transform.position.x-m.serverPosition.x,
+            m.transform.position.z-m.serverPosition.z).sqrMagnitude <= .0004f);
 
     private static Transform Child(Transform parent, string name)
     {
+        var existing=parent.Cast<Transform>().Where(t=>t.name==name).ToArray();
+        if(existing.Length>1)throw new InvalidOperationException("Duplicate map group: "+name);
+        if(existing.Length==1)return existing[0];
         var child = new GameObject(name).transform;
+        Undo.RegisterCreatedObjectUndo(child.gameObject,"Create map group");
         child.SetParent(parent, false);
         return child;
     }
@@ -105,12 +132,29 @@ public static class CampusServerMapAuthoring
         return false;
     }
 
-    private static ServerMapMarker Create(Transform parent, ServerMapMarker.MarkerKind kind, string id,
+    private static ServerMapMarker Upsert(ServerMapMarker marker,Transform parent, ServerMapMarker.MarkerKind kind, string id,
         string nodeId, string name, Vector3 position, string[] vehicles, Terrain terrain, MeshCollider[] roads)
     {
-        var marker = Child(parent, id + " | " + name).gameObject.AddComponent<ServerMapMarker>();
+        bool preserveHeight=marker && new Vector2(marker.serverPosition.x-position.x,marker.serverPosition.z-position.z).sqrMagnitude<.000001f;
+        float previousHeight=marker?marker.transform.position.y:0;
+        if(!marker)
+        {
+            var go=new GameObject(id+" | "+name);Undo.RegisterCreatedObjectUndo(go,"Create new map point");
+            go.transform.SetParent(parent,false);marker=go.AddComponent<ServerMapMarker>();
+        }
+        Undo.RecordObject(marker,"Update map point metadata");
+        Undo.RecordObject(marker.transform,"Update map point location");
+        if(marker.transform.parent!=parent)Undo.SetTransformParent(marker.transform,parent,"Organize map point");
+        marker.gameObject.name=id+" | "+name;
         marker.kind = kind; marker.serverId = id; marker.nodeId = nodeId; marker.displayName = name;
         marker.vehicleIds = vehicles; marker.serverPosition = position; marker.operationallyVerified = false;
+        if(preserveHeight)
+        {
+            // Metadata-only imports must not rebase manually positioned models.
+            marker.transform.position=new Vector3(position.x,previousHeight,position.z);
+            EditorUtility.SetDirty(marker);
+            return marker;
+        }
         var terrainOrigin = terrain.transform.position;
         var size = terrain.terrainData.size;
         bool inside = position.x >= terrainOrigin.x && position.z >= terrainOrigin.z &&
@@ -130,13 +174,14 @@ public static class CampusServerMapAuthoring
         // Height is visualization only; the server supplies horizontal coordinates, not measured elevation.
         marker.transform.position += Vector3.up * (kind == ServerMapMarker.MarkerKind.Hub ? 1.2f :
             kind == ServerMapMarker.MarkerKind.Stop ? 0.8f : 0.3f);
+        EditorUtility.SetDirty(marker);
         return marker;
     }
 
     private static void CreateVisuals(Transform root, List<ServerMapMarker> markers)
     {
         Directory.CreateDirectory(Generated);
-        AssetDatabase.Refresh();
+        if(!AssetDatabase.IsValidFolder(Generated))AssetDatabase.Refresh();
         var shader = Shader.Find("Universal Render Pipeline/Unlit");
         if (!shader) throw new InvalidOperationException("URP Unlit shader is unavailable.");
         foreach (ServerMapMarker.MarkerKind kind in Enum.GetValues(typeof(ServerMapMarker.MarkerKind)))
@@ -162,8 +207,8 @@ public static class CampusServerMapAuthoring
             if (!mesh) { mesh = new Mesh { name = "Server " + kind + " markers" }; AssetDatabase.CreateAsset(mesh, meshPath); }
             mesh.Clear(); mesh.SetVertices(vertices); mesh.SetTriangles(triangles, 0); mesh.RecalculateNormals(); mesh.RecalculateBounds();
             var view = Child(root, kind + " visual markers").gameObject;
-            view.AddComponent<MeshFilter>().sharedMesh = mesh;
-            var renderer = view.AddComponent<MeshRenderer>();
+            (view.GetComponent<MeshFilter>()??view.AddComponent<MeshFilter>()).sharedMesh = mesh;
+            var renderer = view.GetComponent<MeshRenderer>()??view.AddComponent<MeshRenderer>();
             renderer.sharedMaterial = material; renderer.shadowCastingMode = ShadowCastingMode.Off; renderer.receiveShadows = false;
             EditorUtility.SetDirty(material); EditorUtility.SetDirty(mesh);
         }
@@ -181,6 +226,12 @@ public static class CampusServerMapAuthoring
         if (overlay.GetComponentsInChildren<Collider>(true).Length != 0 ||
             overlay.GetComponentsInChildren<Rigidbody>(true).Length != 0)
             throw new InvalidOperationException("Server map markers must not alter simulation Physics.");
+        foreach(var visual in overlay.GetComponentsInChildren<ServicePointVisual>(true))
+        {
+            var point=visual.transform.parent?visual.transform.parent.GetComponent<ServerMapMarker>():null;
+            if(!point || point.serverId!=visual.pointId || point.kind!=visual.pointKind || point.kind==ServerMapMarker.MarkerKind.RoadNode)
+                throw new InvalidOperationException("Display model binding differs from its parent point: "+visual.name);
+        }
     }
 
     [Serializable] private sealed class Report

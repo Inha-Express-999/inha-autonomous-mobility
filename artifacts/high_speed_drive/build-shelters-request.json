@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Title": "STOP 마커 옆 정류소 배치",
+    "Code": "using UnityEngine; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { CampusStopSignAuthoring.Build(); result.Log(\"Stop shelters saved\"); } }"
+  }
+}

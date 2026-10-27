@@ -1,0 +1,6 @@
+pointIdsPreserved=True
+modelIdsAndLocalPosesPreserved=True
+models=17
+playing=False
+sceneDirty=False
+hash=32950491597bd9b134fda86eaaa95af1fc25737413f6841a04d94dd854cad7c4

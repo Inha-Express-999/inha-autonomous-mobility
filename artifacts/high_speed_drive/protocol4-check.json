@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] connected=True status=자동 운행 대기 reason=No automatic mission\",\n    \"localFixedCode\": \"using UnityEngine;\\r\\nusing System.IO;\\r\\nusing InhaExpress.Client.Presentation;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            var c = Object.FindFirstObjectByType<UnityAutonomousClient>();\\r\\n            if (c == null || string.IsNullOrEmpty(c.LatestObservationJson))\\r\\n            {\\r\\n                result.Log(\\\"NOT_READY\\\");\\r\\n                return;\\r\\n            }\\r\\n\\r\\n            File.WriteAllText(\\\"artifacts/high_speed_drive/protocol4-observation.json\\\", c.LatestObservationJson);\\r\\n            result.Log(\\\"connected=\\\" + c.Connected + \\\" status=\\\" + c.Status + \\\" reason=\\\" + c.DiagnosticReason);\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] connected=True status=자동 운행 대기 reason=No automatic mission",
+      "localFixedCode": "using UnityEngine;\r\nusing System.IO;\r\nusing InhaExpress.Client.Presentation;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            var c = Object.FindFirstObjectByType<UnityAutonomousClient>();\r\n            if (c == null || string.IsNullOrEmpty(c.LatestObservationJson))\r\n            {\r\n                result.Log(\"NOT_READY\");\r\n                return;\r\n            }\r\n\r\n            File.WriteAllText(\"artifacts/high_speed_drive/protocol4-observation.json\", c.LatestObservationJson);\r\n            result.Log(\"connected=\" + c.Connected + \" status=\" + c.Status + \" reason=\" + c.DiagnosticReason);\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

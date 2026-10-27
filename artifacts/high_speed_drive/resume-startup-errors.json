@@ -1,0 +1,8 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Tool 'GetConsoleLogs' executed successfully\",\n  \"data\": {\n    \"logs\": [\n      {\n        \"message\": \"NullReferenceException: Object reference not set to an instance of an object\\nInhaExpress.Client.Presentation.WebClientHud.CreateStopDropdown (UnityEngine.RectTransform root, System.String name, System.String placeholder, System.Single x, System.Single y, System.Single right, System.Single top, System.Action`1[T] selected) (at Assets/CampusSim/Scripts/Presentation/WebClientHud.cs:420)\\nInhaExpress.Client.Presentation.WebClientHud.BuildOperator (UnityEngine.RectTransform root) (at Assets/CampusSim/Scripts/Presentation/WebClientHud.cs:310)\\nInhaExpress.Client.Presentation.WebClientHud.Build (System.Boolean passenger) (at Assets/CampusSim/Scripts/Presentation/WebClientHud.cs:112)\\nInhaExpress.Client.Presentation.WebClientHud+<WaitForWorld>d__53.MoveNext () (at Assets/CampusSim/Scripts/Presentation/WebClientHud.cs:78)\\nUnityEngine.SetupCoroutine.InvokeMoveNext (System.Collections.IEnumerator enumerator, System.IntPtr returnValueAddress) (at <048e1259bbea40078e5d4fad1c7a86a5>:0)\\n\",\n        \"stackTrace\": \"Assets/CampusSim/Scripts/Presentation/WebClientHud.cs\",\n        \"type\": \"Error\",\n        \"timestamp\": \"[21:40:32]\"\n      }\n    ],\n    \"totalCount\": 1,\n    \"errorCount\": 1,\n    \"warningCount\": 0\n  }\n}"
+    }
+  ]
+}

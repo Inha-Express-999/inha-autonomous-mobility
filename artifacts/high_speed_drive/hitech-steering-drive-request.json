@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Title": "???? ?? ?? 50km/h ???",
+    "Code": "using UnityEngine; using InhaExpress.Client.Presentation; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { var c=Object.FindFirstObjectByType<UnityAutonomousClient>(); var v=Object.FindFirstObjectByType<VehicleController>(); var hud=Object.FindFirstObjectByType<WebClientHud>(); if(c==null||v==null||hud==null||hud.OperatorControls==null){result.Log(\"NOT_READY\");return;} hud.OperatorControls.SelectVehicle(\"V01\"); Camera cam=null; foreach(var candidate in Object.FindObjectsByType<Camera>(FindObjectsSortMode.None)) if(candidate.enabled&&candidate.targetTexture==null) cam=candidate; var recorder=v.gameObject.AddComponent<CampusDriveTelemetry>(); recorder.Begin(v,c,cam,\"artifacts/high_speed_drive/hitech-steering-50.csv\",300); c.SimulationCruiseKmh=50; c.StartMission(\"hitech_road_candidate\"); result.Log(\"start speed=50 vehicle=\"+v.OperatorVehicleId+\" pos=\"+v.transform.position+\" camera=\"+cam.name); } }"
+  }
+}

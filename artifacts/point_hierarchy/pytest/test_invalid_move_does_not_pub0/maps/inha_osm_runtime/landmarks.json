@@ -1,0 +1,114 @@
+[
+  {
+    "id": "anniversary_60",
+    "name": "60주년",
+    "stop_ids": [
+      "anniversary_60_road_candidate"
+    ],
+    "coverage_status": "ROAD_STOP_CANDIDATE"
+  },
+  {
+    "id": "biryong_plaza",
+    "name": "비룡플라자",
+    "stop_ids": [
+      "biryong_plaza_road_candidate"
+    ],
+    "coverage_status": "ROAD_STOP_CANDIDATE"
+  },
+  {
+    "id": "building_2",
+    "name": "2호관",
+    "stop_ids": [
+      "building_2_road_candidate"
+    ],
+    "coverage_status": "ROAD_STOP_CANDIDATE"
+  },
+  {
+    "id": "building_5",
+    "name": "5호관",
+    "stop_ids": [
+      "building_5_road_candidate"
+    ],
+    "coverage_status": "ROAD_STOP_CANDIDATE"
+  },
+  {
+    "id": "dorm_1",
+    "name": "기숙사 1",
+    "stop_ids": [
+      "dorm_1_road_candidate"
+    ],
+    "coverage_status": "ROAD_STOP_CANDIDATE"
+  },
+  {
+    "id": "dorm_2",
+    "name": "기숙사 2",
+    "stop_ids": [
+      "dorm_2_road_candidate"
+    ],
+    "coverage_status": "ROAD_STOP_CANDIDATE"
+  },
+  {
+    "id": "dorm_3",
+    "name": "기숙사 3",
+    "stop_ids": [
+      "dorm_3_road_candidate"
+    ],
+    "coverage_status": "ROAD_STOP_CANDIDATE"
+  },
+  {
+    "id": "hitech",
+    "name": "하이테크",
+    "stop_ids": [
+      "hitech_road_candidate"
+    ],
+    "coverage_status": "ROAD_STOP_CANDIDATE"
+  },
+  {
+    "id": "inha_station",
+    "name": "인하대역",
+    "stop_ids": [
+      "inha_station_road_candidate"
+    ],
+    "coverage_status": "ROAD_STOP_CANDIDATE"
+  },
+  {
+    "id": "library",
+    "name": "정석학술정보관",
+    "stop_ids": [
+      "library_road_candidate"
+    ],
+    "coverage_status": "ROAD_STOP_CANDIDATE"
+  },
+  {
+    "id": "main_building",
+    "name": "본관",
+    "stop_ids": [
+      "main_building_road_candidate"
+    ],
+    "coverage_status": "ROAD_STOP_CANDIDATE"
+  },
+  {
+    "id": "main_gate",
+    "name": "정문",
+    "stop_ids": [
+      "main_gate_road_candidate"
+    ],
+    "coverage_status": "ROAD_STOP_CANDIDATE"
+  },
+  {
+    "id": "rear_gate",
+    "name": "후문",
+    "stop_ids": [
+      "rear_gate_road_candidate"
+    ],
+    "coverage_status": "ROAD_STOP_CANDIDATE"
+  },
+  {
+    "id": "student_center",
+    "name": "학생회관",
+    "stop_ids": [
+      "student_center_road_candidate"
+    ],
+    "coverage_status": "ROAD_STOP_CANDIDATE"
+  }
+]

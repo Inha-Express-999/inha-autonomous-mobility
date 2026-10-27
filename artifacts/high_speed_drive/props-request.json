@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Code": "using UnityEngine; using UnityEngine.SceneManagement; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { var s=SceneManager.GetSceneByName(\"CampusTerrain\"); foreach(var root in s.GetRootGameObjects()) { result.Log(root.name); foreach(Transform child in root.transform) { result.Log(\"  \"+child.name); foreach(Transform nested in child) if(nested.childCount>5) result.Log(\"    \"+nested.name+\" children=\"+nested.childCount); } } foreach(var r in Object.FindObjectsByType<CampusDriveTelemetry>(FindObjectsSortMode.None)) r.Close(); } }",
+    "Title": "길가 오브젝트 그룹 조사"
+  }
+}

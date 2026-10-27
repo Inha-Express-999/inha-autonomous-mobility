@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Code": "using UnityEngine; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { CampusMissingRoadAuthoring.Build(); result.Log(\"Hitech road repair saved\"); } }",
+    "Title": "기존 OSM 기반 누락 도로 복구"
+  },
+  "name": "Unity_RunCommand"
+}

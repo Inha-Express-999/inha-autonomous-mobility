@@ -1,0 +1,8 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Tool 'GetConsoleLogs' executed successfully\",\n  \"data\": {\n    \"logs\": [],\n    \"totalCount\": 0,\n    \"errorCount\": 0,\n    \"warningCount\": 0\n  }\n}"
+    }
+  ]
+}

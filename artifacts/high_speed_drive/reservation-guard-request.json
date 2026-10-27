@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Title": "운송 예약 중 목적지 변경 차단 검증",
+    "Code": "using UnityEngine; using System; using System.Reflection; using InhaExpress.Client.Presentation; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { var go=new GameObject(\"Reservation guard verification\"); try { var client=go.AddComponent<UnityAutonomousClient>(); var flags=BindingFlags.Instance|BindingFlags.NonPublic; var latest=typeof(UnityAutonomousClient).GetField(\"latest\",flags); latest.SetValue(client,JsonUtility.FromJson(\"{\\\"transport_phase\\\":\\\"PICKUP_SERVICE\\\"}\",latest.FieldType)); client.StartMission(\"main_gate_road_candidate\"); bool waiting=(bool)typeof(UnityAutonomousClient).GetField(\"waitingForMissionAck\",flags).GetValue(client); int pending=(int)typeof(UnityAutonomousClient).GetField(\"pendingMissions\",flags).GetValue(client); if(!client.TransportReserved || waiting || pending!=0 || string.IsNullOrEmpty(client.MissionResult)) throw new Exception(\"Reservation guard failed\"); result.Log(\"PASS reserved=\"+client.TransportReserved+\" waiting=\"+waiting+\" pending=\"+pending+\" result=\"+client.MissionResult); } finally { UnityEngine.Object.DestroyImmediate(go); } } }"
+  },
+  "name": "Unity_RunCommand"
+}

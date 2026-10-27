@@ -118,3 +118,8 @@ __pycache__/
 .env
 .env.*
 !.env.example
+
+# Local virtual environments, scratch files and pytest working copies
+/tmp/
+/backend/tmp/
+/artifacts/service_locations/pytest-*/

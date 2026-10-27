@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Code": "using UnityEngine; using InhaExpress.Client.Presentation; using UnityEditor; using UnityEditor.SceneManagement; using UnityEngine.SceneManagement; internal class CommandScript : IRunCommand { static void AtLoad(Scene scene,LoadSceneMode mode) { if(scene.name!=\"CampusTerrain\")return; SceneManager.sceneLoaded-=AtLoad; foreach(var v in Object.FindObjectsByType<VehicleController>(FindObjectsSortMode.None))if(v.OperatorVehicleId==\"V01\"){ var body=v.VehicleBody; body.position=new Vector3(91.27118f,-1.970824f,98.98809f);body.rotation=Quaternion.Euler(3.18024f,284.9492f,-2.13211f);body.linearVelocity=Vector3.zero;body.angularVelocity=Vector3.zero;Physics.SyncTransforms();Debug.Log(\"TURN_FIXTURE_INITIAL_POSE: isolated initial condition, not route completion or recovery\"); } } public void Execute(ExecutionResult result) { if(EditorApplication.isPlaying){result.Log(\"ALREADY_PLAYING\");return;} if(!EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())return; EditorSceneManager.OpenScene(\"Assets/CampusSim/Scenes/PC_Bootstrap.unity\");SceneManager.sceneLoaded+=AtLoad;EditorApplication.isPlaying=true;result.Log(\"Initial-condition turn fixture requested; no scene assets changed\"); } }",
+    "Title": "회차 시작 위치에서 진단 실행 준비"
+  },
+  "name": "Unity_RunCommand"
+}

@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Title": "양방향 바퀴 통과 폭 접합부 검사",
+    "Code": "using UnityEngine; using CampusSim; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { Physics.SyncTransforms(); var b=GameObject.Find(\"Hitech missing OSM road\").GetComponentInChildren<CampusTerrainBinding>(); var vertices=b.originalMesh.vertices; var dirs=new[]{(vertices[2]+vertices[3]-vertices[0]-vertices[1]).normalized,(vertices[vertices.Length-2]+vertices[vertices.Length-1]-vertices[vertices.Length-4]-vertices[vertices.Length-3]).normalized}; var ends=new[]{b.roadGradeStart,b.roadGradeEnd}; int holes=0; for(int end=0;end<2;end++){var d=dirs[end];var side=new Vector3(-d.z,0,d.x);foreach(float offset in new[]{-2f,-1.5f,-1f,0f,1f,1.5f,2f})for(int i=-30;i<=30;i++){var p=ends[end]+d*i*.1f+side*offset;bool road=false;foreach(var h in Physics.RaycastAll(p+Vector3.up*50,Vector3.down,100))if(h.collider.name==\"Continuous asphalt network\"||h.collider.name.StartsWith(\"Road 481241714 missing\"))road=true;if(!road){holes++;if(holes<12)result.Log(\"hole=\"+p);}}} result.Log(\"seam_samples=854 holes=\"+holes); } }"
+  },
+  "name": "Unity_RunCommand"
+}

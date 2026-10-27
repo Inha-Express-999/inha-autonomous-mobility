@@ -1,0 +1,20 @@
+{
+  "date": "2026-10-26",
+  "issue": "WebClientHud.Update IndexOutOfRangeException at batteryIndicators[i]",
+  "change": "Guard missing, shorter, or null battery indicator/label arrays and missing fill image after Play-mode reload. Existing fleet UI is preserved.",
+  "verification": {
+    "unity_compilation": "passed: compiling=False compilationFailed=False",
+    "live_battery_widgets": 3,
+    "live_vehicle_connections": 3,
+    "runtime_console_errors": 0,
+    "git_diff_check": "passed",
+    "empty_array_injection": "not executed: Unity MCP rejects System.Reflection namespace"
+  },
+  "driving_validation": {
+    "scope": "Actual Unity Physics, commands issued through project-pinned MCP; no teleport",
+    "V01": "inha_station outbound blocked by Junction aware kerbs collider; home maneuver also blocked",
+    "V02": "hitech outbound blocked by anniversary_60 Photo inspired massing collider",
+    "V03": "PASS: student_center ARRIVED, then home:V03 ARRIVED at west_field_parking; no teleport. This is a direct mission roundtrip, not passenger dispatch validation.",
+    "remaining_stops": "not validated; do not claim full coverage"
+  }
+}

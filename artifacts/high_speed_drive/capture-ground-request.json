@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Code": "using UnityEngine; using UnityEditor; using System.IO; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { var cam=SceneView.lastActiveSceneView.camera; var oldPos=cam.transform.position; var oldRot=cam.transform.rotation; var oldOrtho=cam.orthographic; var oldSize=cam.orthographicSize; cam.transform.SetPositionAndRotation(new Vector3(348,160,-66),Quaternion.Euler(90,0,0)); cam.orthographic=true; cam.orthographicSize=65; var rt=new RenderTexture(1280,720,24); var old=cam.targetTexture; var active=RenderTexture.active; cam.targetTexture=rt; cam.Render(); RenderTexture.active=rt; var tex=new Texture2D(1280,720,TextureFormat.RGB24,false); tex.ReadPixels(new Rect(0,0,1280,720),0,0); tex.Apply(); File.WriteAllBytes(\"artifacts/high_speed_drive/hitech-ground-overview.png\",tex.EncodeToPNG()); cam.targetTexture=old; cam.transform.SetPositionAndRotation(oldPos,oldRot); cam.orthographic=oldOrtho; cam.orthographicSize=oldSize; RenderTexture.active=active; Object.DestroyImmediate(tex); Object.DestroyImmediate(rt); result.Log(\"Saved Scene View\"); } }",
+    "Title": "정지 지점 상공 화면 저장"
+  },
+  "name": "Unity_RunCommand"
+}

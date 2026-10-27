@@ -1,0 +1,14 @@
+{
+  "geometry_hash": "898a4d43d14c9498ca1a8e1a010d086a1c9ccc52560155b4b140f5a47e7c1945",
+  "locations": {
+    "schema_version": 1,
+    "stops": [],
+    "hubs": [
+      {
+        "id": "rear_gate",
+        "x": 258.83105049297455,
+        "z": 61.1592116317712
+      }
+    ]
+  }
+}

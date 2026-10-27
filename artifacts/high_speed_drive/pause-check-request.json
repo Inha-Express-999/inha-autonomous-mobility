@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Title": "자동 운행 초기화 객체 확인",
+    "Code": "using UnityEngine; using UnityEditor; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { result.Log(\"paused=\"+EditorApplication.isPaused+\" time=\"+Time.time+\" scale=\"+Time.timeScale); } }"
+  },
+  "name": "Unity_RunCommand"
+}

@@ -1,0 +1,123 @@
+{
+    "hubId": "west_field_autonomous_hub",
+    "parkingOsmId": "way/568420971",
+    "status": "synthetic_design_unverified_access",
+    "coordinateNote": "legacy map x=east,z=north; unityPosition includes user map rotation; not AEQD graph coordinates",
+    "runtimeNote": "authoring anchors only; Python spawning, occupancy, charging, graph connections and exit reservations not implemented",
+    "terrainOneMeterRebakePassed": true,
+    "departureBayCount": 3,
+    "anchors": [
+        {
+            "id": "Spawn_Bay_01",
+            "unityPosition": {
+                "x": -276.8105163574219,
+                "y": -6.924363136291504,
+                "z": -144.69573974609376
+            },
+            "legacyMapPosition": {
+                "x": -312.3474426269531,
+                "y": -6.924363136291504,
+                "z": 0.015306472778320313
+            },
+            "unityHeadingDegrees": 90.00000762939453
+        },
+        {
+            "id": "Spawn_Bay_02",
+            "unityPosition": {
+                "x": -276.8105163574219,
+                "y": -6.924363136291504,
+                "z": -132.69573974609376
+            },
+            "legacyMapPosition": {
+                "x": -306.78790283203127,
+                "y": -6.924363136291504,
+                "z": 10.649749755859375
+            },
+            "unityHeadingDegrees": 90.00000762939453
+        },
+        {
+            "id": "Spawn_Bay_03",
+            "unityPosition": {
+                "x": -276.8105163574219,
+                "y": -6.924363136291504,
+                "z": -120.69573211669922
+            },
+            "legacyMapPosition": {
+                "x": -301.22833251953127,
+                "y": -6.924363136291504,
+                "z": 21.284198760986329
+            },
+            "unityHeadingDegrees": 90.00000762939453
+        },
+        {
+            "id": "Entry_Unverified",
+            "unityPosition": {
+                "x": -262.3105163574219,
+                "y": -7.604362964630127,
+                "z": -157.69573974609376
+            },
+            "legacyMapPosition": {
+                "x": -305.52032470703127,
+                "y": -7.604362964630127,
+                "z": -18.223129272460939
+            },
+            "unityHeadingDegrees": 0.0
+        },
+        {
+            "id": "Exit_Unverified",
+            "unityPosition": {
+                "x": -262.3105163574219,
+                "y": -7.604362964630127,
+                "z": -93.69572448730469
+            },
+            "legacyMapPosition": {
+                "x": -275.869384765625,
+                "y": -7.604362964630127,
+                "z": 38.49391555786133
+            },
+            "unityHeadingDegrees": 0.0
+        },
+        {
+            "id": "Departure_Hold",
+            "unityPosition": {
+                "x": -262.3105163574219,
+                "y": -6.924363136291504,
+                "z": -102.69572448730469
+            },
+            "legacyMapPosition": {
+                "x": -280.0390319824219,
+                "y": -6.924363136291504,
+                "z": 30.518081665039064
+            },
+            "unityHeadingDegrees": 0.0
+        },
+        {
+            "id": "General_Waiting",
+            "unityPosition": {
+                "x": -287.8105163574219,
+                "y": -6.854362964630127,
+                "z": -110.69573211669922
+            },
+            "legacyMapPosition": {
+                "x": -306.3435974121094,
+                "y": -6.854362964630127,
+                "z": 35.242488861083987
+            },
+            "unityHeadingDegrees": 270.0
+        },
+        {
+            "id": "Assistance_Waiting",
+            "unityPosition": {
+                "x": -280.8105163574219,
+                "y": -6.854362964630127,
+                "z": -102.69573211669922
+            },
+            "legacyMapPosition": {
+                "x": -296.4338073730469,
+                "y": -6.854362964630127,
+                "z": 39.08904266357422
+            },
+            "unityHeadingDegrees": 270.0
+        }
+    ]
+}

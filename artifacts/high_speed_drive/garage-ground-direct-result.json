@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] V01 hits=2\\n[Log] ground=Campus Terrain | approximate DSM relief y=-5.330414 binding=False\\n[Log] ground=Continuous asphalt network y=-5.103164 binding=True\\n[Log] V02 hits=2\\n[Log] ground=Campus Terrain | approximate DSM relief y=-0.4869003 binding=False\\n[Log] ground=Continuous asphalt network y=-0.2347902 binding=True\\n[Log] V03 hits=3\\n[Log] ground=Campus Terrain | approximate DSM relief y=-6.905212 binding=False\\n[Log] ground=Continuous asphalt network y=-6.673859 binding=True\\n[Log] ground=비룡주차장 y=-6.700207 binding=True\",\n    \"localFixedCode\": \"using UnityEngine;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            Physics.SyncTransforms();\\r\\n            var points = new[]{new Vector3(-38.39798f, 100, -320.77752f), new Vector3(262.84065f, 100, 48.11872f), new Vector3(-309.75181f, 100, 54.97094f)};\\r\\n            for (int i = 0; i < points.Length; i++)\\r\\n            {\\r\\n                var hits = Physics.RaycastAll(points[i], Vector3.down, 300);\\r\\n                result.Log(\\\"V0\\\" + (i + 1) + \\\" hits=\\\" + hits.Length);\\r\\n                foreach (var hit in hits)\\r\\n                {\\r\\n                    if (hit.collider == null)\\r\\n                        continue;\\r\\n                    result.Log(\\\"ground=\\\" + hit.collider.name + \\\" y=\\\" + hit.point.y + \\\" binding=\\\" + (hit.collider.GetComponent<CampusSim.CampusTerrainBinding>() != null));\\r\\n                }\\r\\n            }\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] V01 hits=2\n[Log] ground=Campus Terrain | approximate DSM relief y=-5.330414 binding=False\n[Log] ground=Continuous asphalt network y=-5.103164 binding=True\n[Log] V02 hits=2\n[Log] ground=Campus Terrain | approximate DSM relief y=-0.4869003 binding=False\n[Log] ground=Continuous asphalt network y=-0.2347902 binding=True\n[Log] V03 hits=3\n[Log] ground=Campus Terrain | approximate DSM relief y=-6.905212 binding=False\n[Log] ground=Continuous asphalt network y=-6.673859 binding=True\n[Log] ground=비룡주차장 y=-6.700207 binding=True",
+      "localFixedCode": "using UnityEngine;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            Physics.SyncTransforms();\r\n            var points = new[]{new Vector3(-38.39798f, 100, -320.77752f), new Vector3(262.84065f, 100, 48.11872f), new Vector3(-309.75181f, 100, 54.97094f)};\r\n            for (int i = 0; i < points.Length; i++)\r\n            {\r\n                var hits = Physics.RaycastAll(points[i], Vector3.down, 300);\r\n                result.Log(\"V0\" + (i + 1) + \" hits=\" + hits.Length);\r\n                foreach (var hit in hits)\r\n                {\r\n                    if (hit.collider == null)\r\n                        continue;\r\n                    result.Log(\"ground=\" + hit.collider.name + \" y=\" + hit.point.y + \" binding=\" + (hit.collider.GetComponent<CampusSim.CampusTerrainBinding>() != null));\r\n                }\r\n            }\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Title": "전경 복귀와 지도 조작 검증",
+    "Code": "using UnityEngine; using Unity.Cinemachine; using InhaExpress.Client.Presentation; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { var hud=Object.FindFirstObjectByType<WebClientHud>(); foreach(var b in Object.FindObjectsByType<CinemachineBrain>(FindObjectsSortMode.None)) result.Log(\"active=\"+b.ActiveVirtualCamera?.Name+\" enabled=\"+b.enabled+\" orthographic=\"+b.GetComponent<Camera>().orthographic); hud.OperatorControls.Pan(new Vector2(50,20)); hud.OperatorControls.Rotate(new Vector2(30,0)); hud.OperatorControls.Zoom(.8f); result.Log(\"navigation commands sent\"); } }"
+  },
+  "name": "Unity_RunCommand"
+}

@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Title": "기숙사 1 도로 연결 진단",
+    "Code": "using UnityEngine; using CampusSim; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { foreach(var b in Object.FindObjectsByType<CampusTerrainBinding>(FindObjectsInactive.Include,FindObjectsSortMode.None)) if(b.sourceId!=null&&b.sourceId.Contains(\"1390060991\")) { string path=b.name; var t=b.transform.parent; while(t!=null){path=t.name+\"/\"+path;t=t.parent;} result.Log(\"road=\"+path+\" active=\"+b.gameObject.activeInHierarchy+\" mesh=\"+b.bakedMesh?.name); } foreach(var hit in Physics.RaycastAll(new Vector3(74.387f,1000,-468.534f),Vector3.down,2000)) result.Log(\"stop_hit=\"+hit.collider.name+\" y=\"+hit.point.y); } }"
+  }
+}

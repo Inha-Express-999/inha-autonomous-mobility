@@ -25,6 +25,7 @@ from campus_sim.planning import AStarPlanner, DijkstraPlanner, NoPath
 from campus_sim.service import MobilityService
 from campus_sim.unity_map import unity_map
 from campus_sim.unity_drive import UnityDriveSession
+from campus_sim.physical_dispatch import PhysicalDispatcher
 
 
 class DemoControl(BaseModel):
@@ -167,11 +168,14 @@ class DemoSession:
         self.root = Path(__file__).resolve().parents[3]
         self.map = map_presentation(self.service, self.root)
         self.physical = UnityDriveSession(self, unity_map(self.service)["geometry_hash"])
+        self.map["geometry_hash"] = self.physical.geometry_hash
+        self.physical_dispatch = PhysicalDispatcher(self)
 
     def state(self):
         with self.lock:
             service = self.service
             service.step()
+            self.physical_dispatch.step()
             now = service._time_s
             active = {t.vehicle_id: t for t in service.trips.values() if not t.returned}
             vehicles = []
@@ -237,21 +241,39 @@ class DemoSession:
                     physics = self.physical.describe(vehicle.id)
                     if physics["position"] is not None:
                         vehicles[-1].update(position=physics["position"], routes=physics["routes"],
-                                            phase="TO_DROPOFF" if physics["status"] == "DRIVING" else "READY",
+                                            phase=("MANEUVER" if physics["status"] == "MANEUVER" else
+                                                   "TO_DROPOFF" if physics["status"] == "DRIVING" else "READY"),
                                             destination=physics["destination"], trajectory=[], departed_at_s=None,
                                             physical_status=physics["status"], motion_source="unity_physics",
                                             physical_reason=physics["reason"], battery_measured=False,
+                                            driving_profile=physics["driving_profile"],
+                                            cruise_speed_kmh=physics["cruise_speed_kmh"],
+                                            measured_speed_kmh=physics["measured_speed_kmh"],
+                                            observation_fresh=physics["observation_fresh"],
+                                            obstacles_ignored=physics["obstacles_ignored"],
                                             lane_model=physics["lane_model"], lane_ids=physics["lane_ids"],
                                             lane_error_m=physics["lane_error_m"], lane_profile_hash=physics["lane_profile_hash"])
+                    job=next((j for j in self.physical_dispatch.jobs.values()
+                              if j.vehicle_id==vehicle.id and not j.returned),None)
+                    if job is not None:
+                        vehicles[-1].update(request_id=job.request_id,
+                            phase="MANEUVER" if physics["status"]=="MANEUVER" else job.phase,
+                            execution_source="observed_unity_transport",transport_reason=job.reason)
+                    elif vehicle.id in self.physical_dispatch.charging:
+                        vehicles[-1].update(phase="CHARGING",remaining_s=max(0.,
+                            (service.battery_policy.capacity_wh-battery.remaining_wh)*3600/service.battery_policy.charging_power_w))
             requests = [r.model_dump(mode="json") for r in service.requests.values()]
             queued = [r for r in requests if r["status"] == "QUEUED"]
             return {
                 "run_id": self.run_id,
+                "geometry_hash": self.physical.geometry_hash,
                 "time_s": now,
                 "speed": self.clock.speed,
                 "paused": self.clock.paused,
                 "planner": service.route_algorithm,
                 "dispatch": service.dispatch_algorithm,
+                "physical_dispatch": service.dispatch_algorithm,
+                "physical_dispatch_diagnostics": dict(self.physical_dispatch.diagnostics),
                 "map_version": service.graph.map_version,
                 "vehicles": vehicles,
                 "requests": requests,
@@ -262,8 +284,9 @@ class DemoSession:
                 ),
                 "waiting_reasons": dict(service.waiting_reasons),
                 "completed": sum(r["status"] == "COMPLETED" for r in requests),
-                "charging_sessions": [asdict(c) for c in service.charges],
+                "charging_sessions": [asdict(c) for c in (*service.charges,*self.physical_dispatch.charges)],
                 "events": self.events(now),
+                "physical_transport_events": list(self.physical_dispatch.events),
                 "battery_policy": service.battery_policy.model_dump(),
                 "simulation_only": True,
             }
@@ -271,6 +294,7 @@ class DemoSession:
     def advance(self):
         with self.lock:
             self.service.step()
+            self.physical_dispatch.step()
 
     def events(self, now):
         result = []
@@ -325,6 +349,7 @@ class DemoSession:
         with self.lock:
             if command.dispatch is not None:
                 self.service.dispatch_algorithm = command.dispatch
+                self.physical_dispatch.retry_at = 0.
             if command.planner is not None:
                 self.service.route_algorithm = command.planner
             self.service.step()
@@ -363,7 +388,9 @@ class DemoSession:
 
     def submit(self, command: CreateRequest):
         with self.lock:
-            return self.service.create_request(command)
+            ack = self.service.create_request(command, external_execution=bool(self.physical.vehicles))
+            self.physical_dispatch.step()
+            return ack
 
     def scenario(self, name):
         with self.lock:
@@ -401,4 +428,5 @@ class DemoSession:
             self.service.dispatch_algorithm = dispatch
             self.run_id = uuid4().hex
             self.physical = UnityDriveSession(self, unity_map(self.service)["geometry_hash"])
+            self.physical_dispatch = PhysicalDispatcher(self)
             return self.state()

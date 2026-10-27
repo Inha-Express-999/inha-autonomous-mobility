@@ -1,0 +1,7 @@
+{
+  "name": "Unity_RunCommand",
+  "arguments": {
+    "Code": "using UnityEngine; using UnityEngine.UI; using UnityEngine.EventSystems; using InhaExpress.Client.Presentation; using Unity.Cinemachine; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { var hud=Object.FindFirstObjectByType<WebClientHud>(); foreach(var b in Object.FindObjectsByType<CinemachineBrain>(FindObjectsSortMode.None)) result.Log(\"before=\"+b.ActiveVirtualCamera?.Name); foreach(var t in hud.GetComponentsInChildren<Toggle>()) if(t.name==\"Select V01\") { t.OnPointerClick(new PointerEventData(EventSystem.current){button=PointerEventData.InputButton.Left}); result.Log(\"isOn=\"+t.isOn+\" anyOn=\"+t.group.AnyTogglesOn()+\" selectedNull=\"+(hud.OperatorControls.SelectedVehicle==null)+\" following=\"+hud.OperatorControls.IsFollowing); } } }",
+    "Title": "선택 차량 재클릭 해제 검증"
+  }
+}

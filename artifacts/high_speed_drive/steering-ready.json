@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] playing=True\\n[Log] server=Starting local server (PID 54512)\",\n    \"localFixedCode\": \"using UnityEngine;\\r\\nusing UnityEditor;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            Application.runInBackground = true;\\r\\n            result.Log(\\\"playing=\\\" + EditorApplication.isPlaying);\\r\\n            foreach (var c in Object.FindObjectsByType<InhaExpress.Client.Presentation.UnityAutonomousClient>(FindObjectsSortMode.None))\\r\\n                result.Log(\\\"client=\\\" + c.VehicleId + \\\" connected=\\\" + c.Connected + \\\" status=\\\" + c.Status);\\r\\n            foreach (var s in Object.FindObjectsByType<InhaExpress.Client.MapClient.DesktopServerLauncher>(FindObjectsSortMode.None))\\r\\n                result.Log(\\\"server=\\\" + s.Status);\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] playing=True\n[Log] server=Starting local server (PID 54512)",
+      "localFixedCode": "using UnityEngine;\r\nusing UnityEditor;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            Application.runInBackground = true;\r\n            result.Log(\"playing=\" + EditorApplication.isPlaying);\r\n            foreach (var c in Object.FindObjectsByType<InhaExpress.Client.Presentation.UnityAutonomousClient>(FindObjectsSortMode.None))\r\n                result.Log(\"client=\" + c.VehicleId + \" connected=\" + c.Connected + \" status=\" + c.Status);\r\n            foreach (var s in Object.FindObjectsByType<InhaExpress.Client.MapClient.DesktopServerLauncher>(FindObjectsSortMode.None))\r\n                result.Log(\"server=\" + s.Status);\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

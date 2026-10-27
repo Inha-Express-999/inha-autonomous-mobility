@@ -72,7 +72,11 @@
       "if": {
         "properties": {
           "schema_version": {
-            "const": 2
+            "enum": [
+              2,
+              3,
+              4
+            ]
           }
         }
       },
@@ -86,13 +90,70 @@
           "half_width_m"
         ]
       }
+    },
+    {
+      "else": {
+        "properties": {
+          "rays": {
+            "minItems": 7
+          }
+        }
+      },
+      "if": {
+        "properties": {
+          "obstacle_detection_enabled": {
+            "const": false
+          }
+        },
+        "required": [
+          "obstacle_detection_enabled"
+        ]
+      },
+      "then": {
+        "properties": {
+          "schema_version": {
+            "enum": [
+              3,
+              4
+            ]
+          },
+          "rays": {
+            "maxItems": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "schema_version": {
+            "const": 4
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "rear_axle_offset_m": {
+            "type": "number"
+          },
+          "half_length_m": {
+            "type": "number"
+          }
+        },
+        "required": [
+          "rear_axle_offset_m",
+          "half_length_m"
+        ]
+      }
     }
   ],
   "properties": {
     "schema_version": {
       "enum": [
         1,
-        2
+        2,
+        3,
+        4
       ],
       "title": "Schema Version",
       "type": "integer"
@@ -152,12 +213,16 @@
       "title": "Sensor Age S",
       "type": "number"
     },
+    "obstacle_detection_enabled": {
+      "default": true,
+      "title": "Obstacle Detection Enabled",
+      "type": "boolean"
+    },
     "rays": {
       "items": {
         "$ref": "#/$defs/RayDetection"
       },
       "maxItems": 64,
-      "minItems": 7,
       "title": "Rays",
       "type": "array"
     },
@@ -174,6 +239,34 @@
       ],
       "default": null,
       "title": "Half Width M"
+    },
+    "rear_axle_offset_m": {
+      "anyOf": [
+        {
+          "maximum": 10,
+          "minimum": -10,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Rear Axle Offset M"
+    },
+    "half_length_m": {
+      "anyOf": [
+        {
+          "maximum": 15,
+          "minimum": 0.1,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Half Length M"
     }
   },
   "required": [

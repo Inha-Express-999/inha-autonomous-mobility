@@ -1,0 +1,9 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": false,\n  \"error\": \"UNEXPECTED_ERROR: Could not load file or assembly 'C:\\\\Users\\\\sy\\\\Documents\\\\GitHub\\\\inha-autonomous-mobility\\\\Library\\\\AssistantRunCommand\\\\Unity.AI.Assistant.RunCommand.Dynamic.0129e73020714debb8437329ee948462.dll' or one of its dependencies.\"\n}"
+    }
+  ],
+  "isError": true
+}

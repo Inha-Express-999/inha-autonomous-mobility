@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Title": "정류소 배치 검증 및 미리보기",
+    "Code": "using UnityEngine; using UnityEditor; using UnityEngine.SceneManagement; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { var root=GameObject.Find(\"Stop shelters | visual only\"); if(root==null) throw new System.Exception(\"Shelters missing\"); result.Log(\"shelters=\"+root.transform.childCount+\" colliders=\"+root.GetComponentsInChildren<Collider>(true).Length); Transform target=root.transform.GetChild(0); foreach(Transform t in root.transform) if(t.name.StartsWith(\"library_road_candidate\")) target=t; Selection.activeGameObject=target.gameObject; SceneView.lastActiveSceneView.LookAt(target.position+Vector3.up*1.3f,Quaternion.Euler(18,target.eulerAngles.y+160,0),5,false,true); result.Log(\"position=\"+target.position+\" dirty=\"+SceneManager.GetActiveScene().isDirty); } }"
+  },
+  "name": "Unity_RunCommand"
+}

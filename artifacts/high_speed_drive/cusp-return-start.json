@@ -1,0 +1,21 @@
+{
+  "content": [
+    {
+      "type": "text",
+      "text": "{\n  \"success\": true,\n  \"message\": \"Command executed successfully.\",\n  \"data\": {\n    \"isCompilationSuccessful\": true,\n    \"isExecutionSuccessful\": true,\n    \"executionId\": 1,\n    \"compilationLogs\": \"\",\n    \"executionLogs\": \"[Log] HOME_RETURN requested from measured arrival (239.38, 2.57, -95.75)\",\n    \"localFixedCode\": \"using UnityEngine;\\r\\nusing InhaExpress.Client.Presentation;\\r\\n\\r\\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\\r\\n{\\r\\n    internal class CommandScript : IRunCommand\\r\\n    {\\r\\n        public void Execute(ExecutionResult result)\\r\\n        {\\r\\n            var c = Object.FindFirstObjectByType<UnityAutonomousClient>();\\r\\n            var v = Object.FindFirstObjectByType<VehicleController>();\\r\\n            var h = Object.FindFirstObjectByType<WebClientHud>();\\r\\n            if (c == null || !c.Connected || v == null || h == null || v.VehicleBody.linearVelocity.magnitude > .05f)\\r\\n            {\\r\\n                result.Log(\\\"NOT_STOPPED\\\");\\r\\n                return;\\r\\n            }\\r\\n\\r\\n            h.OperatorControls.SelectVehicle(\\\"V01\\\");\\r\\n            Camera cam = null;\\r\\n            foreach (var ca in Object.FindObjectsByType<Camera>(FindObjectsSortMode.None))\\r\\n                if (ca.enabled && ca.targetTexture == null)\\r\\n                    cam = ca;\\r\\n            var rec = v.GetComponent<CampusDriveTelemetry>();\\r\\n            if (rec == null)\\r\\n                rec = v.gameObject.AddComponent<CampusDriveTelemetry>();\\r\\n            rec.Begin(v, c, cam, \\\"artifacts/high_speed_drive/cusp-fixture-home-return.csv\\\", 300);\\r\\n            c.SimulationCruiseKmh = 40;\\r\\n            c.StartMission(\\\"main_gate_road_candidate\\\");\\r\\n            result.Log(\\\"HOME_RETURN requested from measured arrival \\\" + v.transform.position);\\r\\n        }\\r\\n    }\\r\\n}\",\n    \"result\": \"Command executed successfully.\"\n  }\n}"
+    }
+  ],
+  "structuredContent": {
+    "success": true,
+    "message": "Command executed successfully.",
+    "data": {
+      "isCompilationSuccessful": true,
+      "isExecutionSuccessful": true,
+      "executionId": 1,
+      "compilationLogs": "",
+      "executionLogs": "[Log] HOME_RETURN requested from measured arrival (239.38, 2.57, -95.75)",
+      "localFixedCode": "using UnityEngine;\r\nusing InhaExpress.Client.Presentation;\r\n\r\nnamespace Unity.AI.Assistant.Agent.Dynamic.Extension.Editor\r\n{\r\n    internal class CommandScript : IRunCommand\r\n    {\r\n        public void Execute(ExecutionResult result)\r\n        {\r\n            var c = Object.FindFirstObjectByType<UnityAutonomousClient>();\r\n            var v = Object.FindFirstObjectByType<VehicleController>();\r\n            var h = Object.FindFirstObjectByType<WebClientHud>();\r\n            if (c == null || !c.Connected || v == null || h == null || v.VehicleBody.linearVelocity.magnitude > .05f)\r\n            {\r\n                result.Log(\"NOT_STOPPED\");\r\n                return;\r\n            }\r\n\r\n            h.OperatorControls.SelectVehicle(\"V01\");\r\n            Camera cam = null;\r\n            foreach (var ca in Object.FindObjectsByType<Camera>(FindObjectsSortMode.None))\r\n                if (ca.enabled && ca.targetTexture == null)\r\n                    cam = ca;\r\n            var rec = v.GetComponent<CampusDriveTelemetry>();\r\n            if (rec == null)\r\n                rec = v.gameObject.AddComponent<CampusDriveTelemetry>();\r\n            rec.Begin(v, c, cam, \"artifacts/high_speed_drive/cusp-fixture-home-return.csv\", 300);\r\n            c.SimulationCruiseKmh = 40;\r\n            c.StartMission(\"main_gate_road_candidate\");\r\n            result.Log(\"HOME_RETURN requested from measured arrival \" + v.transform.position);\r\n        }\r\n    }\r\n}",
+      "result": "Command executed successfully."
+    }
+  }
+}

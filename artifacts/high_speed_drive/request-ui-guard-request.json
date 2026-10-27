@@ -1,0 +1,7 @@
+{
+  "arguments": {
+    "Title": "실제 운송 예약 보호 확인",
+    "Code": "using UnityEngine; using InhaExpress.Client.Presentation; internal class CommandScript : IRunCommand { public void Execute(ExecutionResult result) { var c=Object.FindFirstObjectByType<UnityAutonomousClient>(); if(c==null||!c.TransportReserved){result.Log(\"NOT_RESERVED\");return;} bool before=c.IsDriving; c.StartMission(\"main_gate_road_candidate\"); result.Log(\"reserved=\"+c.TransportReserved+\" driving_before=\"+before+\" driving_after=\"+c.IsDriving+\" target=\"+c.LastTargetSpeedKmh+\" result=\"+c.MissionResult); ScreenCapture.CaptureScreenshot(\"artifacts/high_speed_drive/request-ui-running.png\"); } }"
+  },
+  "name": "Unity_RunCommand"
+}

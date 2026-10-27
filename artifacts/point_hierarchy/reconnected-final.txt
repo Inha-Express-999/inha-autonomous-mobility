@@ -1,0 +1,12 @@
+project=C:/Users/sy/Documents/GitHub/inha-autonomous-mobility/Assets
+scene=Assets/CampusSim/Scenes/CampusTerrain.unity
+pointIdsPreserved=True
+modelIdsAndLocalPosesPreserved=True
+correctParents=True
+stopModels=14
+garageModels=3
+maximumOriginalPointPositionErrorM=3.051758E-05
+noPhysicsUnderPoints=True
+playing=False
+sceneDirty=False
+hash=32950491597bd9b134fda86eaaa95af1fc25737413f6841a04d94dd854cad7c4

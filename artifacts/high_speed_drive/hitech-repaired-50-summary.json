@@ -1,0 +1,102 @@
+{
+  "source": "artifacts\\high_speed_drive\\hitech-repaired-50.csv",
+  "samples": 2851,
+  "elapsed_s": 64.9151738999999,
+  "horizontal_distance_m": 157.3725515542354,
+  "peak_measured_speed_kmh": 50.53118362426758,
+  "largest_sample_gap_s": 0.4216094000003068,
+  "last_status": "경로 이탈 · 정지",
+  "speed_bands": [
+    {
+      "speed_band_kmh": [
+        0,
+        5
+      ],
+      "samples": 1801,
+      "all_wheels_airborne_samples": 0,
+      "lane_error_abs_p95_m": 0.0,
+      "vertical_speed_abs_p95_mps": 8.532442734576762e-06,
+      "one_second_detrended_rms": {
+        "y": 0.0003796018080701084,
+        "camera_y": 0.0007720378529105919,
+        "pitch_deg": 0.13370993322590005,
+        "roll_deg": 0.018237518975266053,
+        "camera_pitch_deg": 0.010920240597074488,
+        "camera_roll_deg": 1.0523404252488725e-07
+      }
+    },
+    {
+      "speed_band_kmh": [
+        5,
+        30
+      ],
+      "samples": 699,
+      "all_wheels_airborne_samples": 0,
+      "lane_error_abs_p95_m": 0.37512728571891785,
+      "vertical_speed_abs_p95_mps": 0.09203343093395233,
+      "one_second_detrended_rms": {
+        "y": 0.0016475903964945048,
+        "camera_y": 0.002022380973710558,
+        "pitch_deg": 0.24929574326184198,
+        "roll_deg": 0.31156016230211714,
+        "camera_pitch_deg": 0.024627535377457908,
+        "camera_roll_deg": 4.2200005447204853e-07
+      }
+    },
+    {
+      "speed_band_kmh": [
+        30,
+        40
+      ],
+      "samples": 174,
+      "all_wheels_airborne_samples": 0,
+      "lane_error_abs_p95_m": 0.12111730650067322,
+      "vertical_speed_abs_p95_mps": 0.1527534931898117,
+      "one_second_detrended_rms": {
+        "y": 0.0018946200413966906,
+        "camera_y": 0.0021828866227541805,
+        "pitch_deg": 0.37442317408965686,
+        "roll_deg": 0.17164721451459644,
+        "camera_pitch_deg": 0.05034024637530939,
+        "camera_roll_deg": 4.0582193681040523e-07
+      }
+    },
+    {
+      "speed_band_kmh": [
+        40,
+        50
+      ],
+      "samples": 140,
+      "all_wheels_airborne_samples": 0,
+      "lane_error_abs_p95_m": 0.03578658401966095,
+      "vertical_speed_abs_p95_mps": 0.19338170289993287,
+      "one_second_detrended_rms": {
+        "y": 0.0024608633194170984,
+        "camera_y": 0.003011174716457594,
+        "pitch_deg": 0.3184804701243971,
+        "roll_deg": 0.13555027926294153,
+        "camera_pitch_deg": 0.04449192812130033,
+        "camera_roll_deg": 4.670710918371403e-07
+      }
+    },
+    {
+      "speed_band_kmh": [
+        50,
+        null
+      ],
+      "samples": 37,
+      "all_wheels_airborne_samples": 0,
+      "lane_error_abs_p95_m": 0.029008379206061363,
+      "vertical_speed_abs_p95_mps": 0.19656069874763488,
+      "one_second_detrended_rms": {
+        "y": 0.0031344194823995806,
+        "camera_y": 0.004210125021331822,
+        "pitch_deg": 0.2851283940501415,
+        "roll_deg": 0.04329145370677112,
+        "camera_pitch_deg": 0.07229007404739678,
+        "camera_roll_deg": 5.040269614881236e-07
+      }
+    }
+  ],
+  "limitation": "Measured run only. No automatic route-coverage or comfort pass/fail claim."
+}

@@ -1,0 +1,17 @@
+Hub|main_gate|-40.807003|-4.70574|-321.4458
+Hub|rear_gate|264.387|8.017267|45.957413
+Hub|west_field_parking|-312.2801|-4.1838074|55.789646
+Stop|anniversary_60_road_candidate|90.19626|3.3499093|97.44354
+Stop|biryong_plaza_road_candidate|240.76604|4.0139647|-97.0592
+Stop|building_2_road_candidate|195.35468|5.777237|65.86763
+Stop|building_5_road_candidate|28.69127|3.220474|126.12008
+Stop|dorm_1_road_candidate|74.38701|-3.6103408|-468.53387
+Stop|dorm_2_road_candidate|563.5409|13.1305485|-305.78894
+Stop|dorm_3_road_candidate|564.09436|13.021466|-376.93246
+Stop|hitech_road_candidate|381.71115|9.544661|9.718125
+Stop|inha_station_road_candidate|-301.68835|-7.7376375|-317.04794
+Stop|library_road_candidate|-47.455017|-3.2561033|-167.31247
+Stop|main_building_road_candidate|47.26068|-3.8664324|-148.55255
+Stop|main_gate_road_candidate|-40.807003|-5.1057396|-321.4458
+Stop|rear_gate_road_candidate|264.387|7.6172676|45.957413
+Stop|student_center_road_candidate|257.12747|4.6661615|-62.272675

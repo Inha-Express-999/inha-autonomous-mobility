@@ -1,0 +1,41 @@
+{
+  "run_id": "ce62672be8744eb3b4e9e57379b94e79",
+  "samples": 10,
+  "observed_seconds": 45.07794237136841,
+  "result": "interrupted; no roundtrip pass",
+  "vehicles": [
+    {
+      "id": "V01",
+      "destination": "inha_station",
+      "peak_sampled_kmh": 10.883248043060304,
+      "last_status": "DRIVING",
+      "last_position": [
+        -57.3171514791805,
+        -331.3414054693267
+      ],
+      "arrived_observed": false
+    },
+    {
+      "id": "V02",
+      "destination": "hitech",
+      "peak_sampled_kmh": 39.82538108825684,
+      "last_status": "DRIVING",
+      "last_position": [
+        58.59760800497525,
+        -28.9103654370714
+      ],
+      "arrived_observed": false
+    },
+    {
+      "id": "V03",
+      "destination": "student_center",
+      "peak_sampled_kmh": 39.75856018066406,
+      "last_status": "DRIVING",
+      "last_position": [
+        -11.48044072122757,
+        -46.741369836429776
+      ],
+      "arrived_observed": false
+    }
+  ]
+}

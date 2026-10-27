@@ -1,0 +1,2 @@
+blocked=True
+실행 중단: library_road_candidate: 정류장/허브를 실제 아스팔트 위로 이동하세요.

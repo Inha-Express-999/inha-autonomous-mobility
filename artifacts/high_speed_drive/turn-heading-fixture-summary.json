@@ -1,0 +1,32 @@
+{
+  "source": "artifacts\\high_speed_drive\\turn-heading-fixture.csv",
+  "samples": 1387,
+  "elapsed_s": 33.10937389999981,
+  "horizontal_distance_m": 4.780397696965657,
+  "peak_measured_speed_kmh": 2.126255965232849,
+  "largest_sample_gap_s": 0.06298809999952937,
+  "last_status": "경로 이탈 · 정지",
+  "speed_bands": [
+    {
+      "speed_band_kmh": [
+        0,
+        5
+      ],
+      "samples": 1387,
+      "camera_follow_samples": 1387,
+      "all_wheels_airborne_samples": 0,
+      "lane_error_abs_p95_m": 0.0,
+      "vertical_speed_abs_p95_mps": 0.023961596190929413,
+      "one_second_detrended_rms": {
+        "y": 0.000575944334070729,
+        "camera_y": 0.0005132675991782288,
+        "pitch_deg": 0.11266594151627246,
+        "roll_deg": 0.05245609005844791,
+        "camera_pitch_deg": 0.006977487023546859,
+        "camera_roll_deg": 3.0868616903442926e-07
+      }
+    }
+  ],
+  "camera_measurement_scope": "Stable vehicle-follow windows only",
+  "limitation": "Measured run only. No automatic route-coverage or comfort pass/fail claim."
+}
