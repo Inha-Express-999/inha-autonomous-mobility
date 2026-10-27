@@ -16,7 +16,7 @@ from uuid import uuid4
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from campus_sim.map_coordinates import MapCoordinates, projection
-from campus_sim.planning import AStarPlanner, NoPath, RoadGraph, CostSnapshot
+from campus_sim.planning import AStarPlanner, DijkstraPlanner, NoPath, RoadGraph, CostSnapshot
 from campus_sim.lanes import LaneProfiles, lane_path, directed_lane_route, shift, unit
 
 
@@ -144,6 +144,7 @@ class PhysicalVehicle:
     lane_error_m: float = 0
     goal_unity: tuple | None = None
     driving_profile: str = "standard"
+    route_algorithm: str = "astar"
     cruise_speed_mps: float = 5.
     turn: object | None = None
 
@@ -232,6 +233,7 @@ class UnityDriveSession:
             raise ValueError("Stop before replacing an automatic mission")
         if command.driving_profile != "standard" and vehicle.ego.schema_version < 3:
             raise ValueError("High-speed simulation requires protocol 3")
+        vehicle.route_algorithm = service.route_algorithm
         goal = service.home_nodes[vehicle_id] if own_home else service.stop_nodes[command.stop_id]
         origin = (vehicle.ego.x, vehicle.ego.z)
         using_lanes = vehicle.ego.schema_version >= 2
@@ -263,13 +265,15 @@ class UnityDriveSession:
                     continue
                 if using_lanes:
                     following = directed_lane_route(graph, costs, edge, goal, self.lanes, self.coordinates,
-                                                    vehicle.ego.wheelbase_m / math.tan(vehicle.ego.max_steering_rad))
+                                                    vehicle.ego.wheelbase_m / math.tan(vehicle.ego.max_steering_rad),
+                                                    algorithm=service.route_algorithm)
                     if following is None:
                         continue
                     route_length = sum(e.length_m for e in following)
                     continuation = [self.coordinates.to_unity(*p) for e in following for p in e.polyline[1:]]
                 else:
-                    route = AStarPlanner().search(graph, edge.v, goal, costs)
+                    planner = AStarPlanner() if service.route_algorithm == "astar" else DijkstraPlanner()
+                    route = planner.search(graph, edge.v, goal, costs)
                     if isinstance(route, NoPath):
                         continue
                     following = [edges_by_id[identifier] for identifier in route.edge_ids]
@@ -311,7 +315,7 @@ class UnityDriveSession:
         vehicle.progress_m = 0
         vehicle.mission_id = uuid4().hex
         vehicle.last_command_id = command.command_id
-        vehicle.status, vehicle.reason = "DRIVING", "A* route / Unity Physics"
+        vehicle.status, vehicle.reason = "DRIVING", ("A*" if vehicle.route_algorithm == "astar" else "Dijkstra") + " route / Unity Physics"
         if _allow_turn:
             from campus_sim.physical_turn import prefer_shorter_turn
             prefer_shorter_turn(self, vehicle_id, command)
@@ -460,7 +464,7 @@ class UnityDriveSession:
         speed = min(curve_speed, cruise if fast_simulation else vehicle.road_speed_mps,
                     math.sqrt(max(0., 2 * (remaining - .5))),
                     math.inf if fast_simulation else max(0., clearance - stopping_distance))
-        vehicle.status, vehicle.reason = "DRIVING", ("A* / simulation cruise / obstacles ignored" if fast_simulation else "A* / pure pursuit / Raycast safety")
+        vehicle.status, vehicle.reason = "DRIVING", ("A*" if vehicle.route_algorithm == "astar" else "Dijkstra") + (" / simulation cruise / obstacles ignored" if fast_simulation else " / pure pursuit / Raycast safety")
         response.update(target_speed_kmh=speed * 3.6, steering_angle_rad=steering, emergency_stop=False,
                         status=vehicle.status, reason=vehicle.reason)
         return response
@@ -470,6 +474,8 @@ class UnityDriveSession:
         stale = not v.connected or self.clock() - v.received_s > self.stale_s
         return dict(vehicle_id=vehicle_id, status="DISCONNECTED" if stale else v.status,
                     mission_id=v.mission_id, destination=v.destination, reason=v.reason,
+                    route_unity=[dict(x=p[0], y=0., z=p[1]) for p in v.route_unity],
+                    route_progress_m=v.progress_m, route_algorithm=v.route_algorithm,
                     position=self.coordinates.from_unity(v.ego.x, v.ego.z) if v.ego else None,
                     routes=[dict(phase="TO_DROPOFF", points=v.route_xy)] if v.route_xy else [],
                     motion_source="unity_physics", battery_measured=False,

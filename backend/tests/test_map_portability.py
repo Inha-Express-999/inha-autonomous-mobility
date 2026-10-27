@@ -13,7 +13,8 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 def copy_inputs(root, newline):
-    for name in SOURCE_FILES.values():
+    inputs = [*SOURCE_FILES.values(), "configs/service_locations.json"]
+    for name in inputs:
         destination = root / name
         destination.parent.mkdir(parents=True, exist_ok=True)
         destination.write_text(
@@ -31,8 +32,8 @@ def test_source_and_payload_checkout_newlines_load_and_rebuild_identically(tmp_p
         path.write_text(path.read_text(encoding="utf-8"), encoding="utf-8", newline=newline)
 
     bundle = load_map_bundle(checked_out, source_root=root)
-    assert len(bundle.graph.nodes) == 187
-    assert len(bundle.graph.edges) == 402
+    assert len(bundle.graph.nodes) == 188
+    assert len(bundle.graph.edges) == 404
     assert bundle.metadata["source_hashes_checked"]
     build_map(root, output)
     for name in PAYLOAD_FILES | {"manifest.json"}:

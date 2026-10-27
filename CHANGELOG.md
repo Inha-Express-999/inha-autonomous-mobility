@@ -1,5 +1,15 @@
 # 변경 이력
 
+## 0.5.2.0 — 2026-10-27 · 다중 배차 안정화·관제 경로 표시·PC 시연 영상
+
+- 작업: 구버전 로컬 서버의 위치 동기화 차단 안내를 구체화하고 잘못된 JSON identity도 거부한다. 실패한 경로 후보의 반복 재평가가 다른 차량 배차를 막는 결함을 수정하고 차량별 후보 실패/대기 사유를 보존한다.
+- 작업: PC 차량 카드에 출발→도착 및 하차 거점→차고를 표시한다. 고정 제목의 배차 방식/경로 탐색 드롭다운과 실제 A*/Dijkstra 차로 탐색을 연결하고 전경에 차량별 남은 계획 경로·방향 화살표를 표시한다. 기본 거점 선택 안내를 제거하고 공간을 조정한다.
+- 작업: 합성 충전 출력을 20 kW로 변경하고 웹 표시와 배터리 검증을 맞춘다. 세 차량에 서로 다른 요청을 배차한 실제 Unity PC Game View의 20초·1280×720 MP4 및 실행/화면 검증 자료를 포함한다. FHD 변환/18초 편집은 사용자 취소로 수행하지 않았다.
+- 이유: 다중 요청 배차 지연을 해소하고 운행 목적지·경로·탐색 방식을 PC에서 확인하며 현재 구현을 영상으로 재현한다.
+- 호환성/마이그레이션: 서버 재시작 후 새 설정/API 필드가 적용된다. 상태 응답에 경로 표시용 Unity 좌표/임무·진행 거리/운송 단계를 추가하며 기존 필드를 유지한다. 탐색 변경은 새 경로부터 적용하고 진행 중 임무는 유지한다. 독립 protocol/map/config schema와 Unity Editor 6000.3.21f1은 유지한다. VERSION·package/API·Unity·문서·지도 빌드 정보는 0.5.2.0으로 동기화한다.
+- 검증: `python -m campus_sim.map_builder` 및 Unity 지도 export 재생성 성공. `python -m pytest backend/tests -q -p no:cacheprovider` 전체 328개 통과(56.83초, 기존 Starlette 경고 1개). 편집 지도 188노드/404방향 간선·후문 차고 위치·저속 충전 timeline과 줄바꿈 재생성 입력 fixture를 정정했다. `node --check backend/src/campus_sim/web/app.js`, 변경 Python의 Ruff 필수 오류 검사(`--isolated --select E9,F63,F7,F82`), `git diff --check` 통과. Unity 실제 UI/Dijkstra 선택/세 차량 동시 경로와 20초·720p/400프레임 MP4를 검증했다. 최종 XML/요약은 artifacts/release_validation_0.5.2.0, 개발 실행 증거는 Docs/implementation_status.md 및 artifacts/operator-route-ui, multi_vehicle_dispatch, pc-client-video에 보존한다.
+- 미검증/한계: 신규 Windows Player 빌드·모바일 실기기·FPS/프레임 시간·배치 수·메모리·전체 거점 운송/다중 차량 충돌 조정은 재검증하지 않았다. 표시 선은 전역 계획 경로이며 로컬 회차 궤적은 별도다. 영상은 장애물 비활성 개발 프로필의 실제 실행이며 20 fps 인코딩을 성능 측정으로 해석하지 않는다. 20 kW는 온도/후반 감속 없는 합성 순 저장 전력이다.
+
 ## 0.5.1.0 — 2026-10-27 · 관측 기반 물리 운송·차고·서비스 포인트 편집
 
 - 작업: protocol 4 전후진 회차와 관측 기반 요청 실행, FIFO/Greedy 물리 배차·배터리 예비량·차고 복귀/충전, 세 차량 및 PC 표시를 연결한다. 배차 후보 형상 비교의 수치 오차로 무한 대기하던 결함을 보완한다.

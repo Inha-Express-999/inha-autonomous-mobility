@@ -67,5 +67,7 @@ def test_reserve_stops_driving_but_low_home_battery_can_charge():
     b.remaining_wh=s.service.battery_policy.reserve_wh-.1
     s.physical_dispatch._energy_step(0.);tick(s,p,wall)
     assert v.status=='PARKED' and 'V01' in s.physical_dispatch.charging
+    # Fast charging can already lift SOC above reserve; isolate the driving boundary.
+    b.remaining_wh=s.service.battery_policy.reserve_wh-.1
     v.status='DRIVING';tick(s,p,wall,speed_mps=1.)
     assert v.status=='OFF_ROUTE' and 'V01' not in s.physical_dispatch.charging

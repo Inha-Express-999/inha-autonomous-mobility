@@ -26,6 +26,8 @@ namespace InhaExpress.Client.Presentation
         private MapPin selectedHub;
         private Image[] fleetSurfaces;
         private Text[] fleetDetails;
+        private Text[] fleetRoutes;
+        private CampusRouteOverlay[] routeOverlays;
         private readonly List<Dropdown> stopDropdowns = new List<Dropdown>();
         private ServerMapAnchor[] dropdownStops;
         private Camera worldCamera;
@@ -60,9 +62,12 @@ namespace InhaExpress.Client.Presentation
         private Button requestSubmit;
         private Text requestStatus, requestLoad, requestService;
         private Dropdown dispatchDropdown;
+        private Dropdown plannerDropdown;
+        private bool changingPlanner;
         private Text dispatchStatus;
         private bool changingDispatch;
         [Serializable] private sealed class DispatchControl { public string dispatch; }
+        [Serializable] private sealed class PlannerControl { public string planner; }
         private ServerMapAnchor pickup, dropoff;
         private bool cargoRequest, submitting;
         private int requestAmount = 1;
@@ -291,13 +296,23 @@ namespace InhaExpress.Client.Presentation
             Surface(mapHeader, Color.white);
             TextAt(Top(mapHeader, "Map Title", 0, 44, 12, 210), "인하대학교 운행 지도", 13, true);
             desktopMap = FixtureUiFactory.Rect(workspace, "Map Viewport", Vector2.zero, Vector2.one,
-                new Vector2(20, 190), new Vector2(-20, -184));
-            var footer = Bottom(workspace, "Map Footer", 158, 32, 20, 20);
+                new Vector2(20, 220), new Vector2(-20, -184));
+            desktopMap.gameObject.AddComponent<RectMask2D>();
+            routeOverlays = new CampusRouteOverlay[3];
+            for (int i = 0; i < 3; i++)
+            {
+                var layer = FixtureUiFactory.Rect(desktopMap, "V0" + (i + 1) + " Planned Route", Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+                routeOverlays[i] = layer.gameObject.AddComponent<CampusRouteOverlay>();
+                routeOverlays[i].color = VehicleColors[i];
+                routeOverlays[i].raycastTarget = false;
+            }
+            var footer = Bottom(workspace, "Map Footer", 188, 32, 20, 20);
             Surface(footer, Color.white);
             TextAt(Top(footer, "Attribution", 0, 32, 12, 12), "© OpenStreetMap contributors · ODbL 1.0", 10).color = FixtureUiPalette.Muted;
-            TextAt(Bottom(workspace, "Fleet Title", 126, 24, 20, 20), "차량 현황", 15, true);
-            var fleetRow = Bottom(workspace, "Fleet", 16, 102, 20, 20);
+            TextAt(Bottom(workspace, "Fleet Title", 156, 24, 20, 20), "차량 현황", 15, true);
+            var fleetRow = Bottom(workspace, "Fleet", 16, 132, 20, 20);
             fleetCards = new Text[3]; fleetDetails = new Text[3]; fleetSurfaces = new Image[3];
+            fleetRoutes = new Text[3];
             vehicleButtons = new Toggle[3];
             batteryIndicators = new Slider[3]; batteryLabels = new Text[3];
             var group = fleetRow.gameObject.AddComponent<ToggleGroup>(); group.allowSwitchOff = true;
@@ -310,7 +325,12 @@ namespace InhaExpress.Client.Presentation
                 TextAt(Top(card, "Vehicle ID", 10, 24, 14, 14), "V0" + (i + 1), 16, true).color = VehicleColors[i];
                 fleetCards[i] = TextAt(Top(card, "Connection", 38, 22, 14, 14), "미연결", 12);
                 fleetDetails[i] = TextAt(Top(card, "State", 58, 18, 14, 14), "—", 12);
-                var track = Top(card, "Battery", 83, 7, 14, 68);
+                fleetRoutes[i] = TextAt(Top(card, "Route", 78, 30, 14, 14), "", 11);
+                fleetRoutes[i].supportRichText = false;
+                fleetRoutes[i].resizeTextForBestFit = true;
+                fleetRoutes[i].resizeTextMinSize = 9;
+                fleetRoutes[i].resizeTextMaxSize = 11;
+                var track = Top(card, "Battery", 113, 7, 14, 68);
                 BatterySurface(track, new Color(.87f, .90f, .94f));
                 var fill = FixtureUiFactory.Rect(track, "Fill", Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
                 BatterySurface(fill, FixtureUiPalette.Green);
@@ -318,7 +338,7 @@ namespace InhaExpress.Client.Presentation
                 batteryIndicators[i].fillRect = fill;
                 batteryIndicators[i].interactable = false;
                 batteryIndicators[i].transition = Selectable.Transition.None;
-                batteryLabels[i] = TextAt(RightTop(card, "Battery Percent", 76, 48, 20, 14), "—", 11);
+                batteryLabels[i] = TextAt(RightTop(card, "Battery Percent", 106, 48, 20, 14), "—", 11);
                 batteryLabels[i].alignment = TextAnchor.MiddleRight;
                 vehicleButtons[i] = card.gameObject.AddComponent<Toggle>();
                 vehicleButtons[i].targetGraphic = fleetSurfaces[i]; vehicleButtons[i].isOn = false;
@@ -334,8 +354,8 @@ namespace InhaExpress.Client.Presentation
                 new Vector2(-328, 0), Vector2.zero);
             Surface(sidebar, paper, false);
             var tabs = Top(sidebar, "Request Tabs", 16, 32, 16, 16);
-            var form = Top(sidebar, "Operation Log Card", 60, 384, 16, 16);
-            var requestForm = Top(sidebar, "Request Card", 60, 384, 16, 16);
+            var form = Top(sidebar, "Operation Log Card", 60, 360, 16, 16);
+            var requestForm = Top(sidebar, "Request Card", 60, 360, 16, 16);
             BuildRequestForm(requestForm);
             var requestTab = FixtureUiFactory.Rect(tabs, "Request Tab", Vector2.zero, new Vector2(.5f, 1), Vector2.zero, new Vector2(-4, 0));
             var missionTab = FixtureUiFactory.Rect(tabs, "Operation Log Tab", new Vector2(.5f, 0), Vector2.one, new Vector2(4, 0), Vector2.zero);
@@ -358,10 +378,12 @@ namespace InhaExpress.Client.Presentation
             scroll.movementType = ScrollRect.MovementType.Clamped;
             CreateTab(requestTab, "운송 요청", tabGroup, requestForm, true);
             CreateTab(missionTab, "운행 로그", tabGroup, form, false);
-            var policyCard = Top(sidebar, "Dispatch Policy", 456, 100, 16, 16);
+            var policyCard = Top(sidebar, "Dispatch Policy", 432, 100, 16, 16);
             Surface(policyCard, Color.white);
-            dispatchStatus = TextAt(Top(policyCard, "Policy Status", 8, 22, 16, 16), "배차 방식", 14, true);
-            var policyRow = Top(policyCard, "Policy Select", 38, 40, 16, 16);
+            var dispatchColumn = FixtureUiFactory.Rect(policyCard, "Dispatch", Vector2.zero, new Vector2(.5f, 1), Vector2.zero, new Vector2(-4, 0));
+            var plannerColumn = FixtureUiFactory.Rect(policyCard, "Planner", new Vector2(.5f, 0), Vector2.one, new Vector2(4, 0), Vector2.zero);
+            dispatchStatus = TextAt(Top(dispatchColumn, "Policy Status", 8, 22, 12, 8), "배차 방식", 14, true);
+            var policyRow = Top(dispatchColumn, "Policy Select", 38, 40, 12, 8);
             var policyControl=DefaultControls.CreateDropdown(new DefaultControls.Resources());
             policyControl.name="Dispatch Policy Dropdown";policyControl.transform.SetParent(policyRow,false);
             var policyRect=(RectTransform)policyControl.transform;
@@ -370,7 +392,18 @@ namespace InhaExpress.Client.Presentation
             dispatchDropdown.ClearOptions();dispatchDropdown.AddOptions(new List<string>{"FIFO","Greedy"});
             StyleDropdown(dispatchDropdown, 84);
             dispatchDropdown.onValueChanged.AddListener(index=>StartCoroutine(ChangeDispatch(index==0?"fifo":"greedy")));
-            var queueCard = Top(sidebar, "Queue Card", 568, 68, 16, 16);
+            TextAt(Top(plannerColumn, "Planner Title", 8, 22, 8, 12), "경로 탐색", 14, true);
+            var plannerControl = DefaultControls.CreateDropdown(new DefaultControls.Resources());
+            plannerControl.name = "Route Planner Dropdown";
+            plannerControl.transform.SetParent(Top(plannerColumn, "Planner Select", 38, 40, 8, 12), false);
+            var plannerRect = (RectTransform)plannerControl.transform;
+            plannerRect.anchorMin = Vector2.zero; plannerRect.anchorMax = Vector2.one;
+            plannerRect.offsetMin = plannerRect.offsetMax = Vector2.zero;
+            plannerDropdown = plannerControl.GetComponent<Dropdown>();
+            plannerDropdown.ClearOptions(); plannerDropdown.AddOptions(new List<string> { "A*", "Dijkstra" });
+            StyleDropdown(plannerDropdown, 84);
+            plannerDropdown.onValueChanged.AddListener(index => StartCoroutine(ChangePlanner(index == 0 ? "astar" : "dijkstra")));
+            var queueCard = Top(sidebar, "Queue Card", 544, 68, 16, 16);
             Surface(queueCard, Color.white);
             TextAt(Top(queueCard, "Queue Title", 8, 22, 16, 16), "요청 대기열", 15, true);
             queue = TextAt(Top(queueCard, "Queue Status", 32, 28, 16, 16), "연결 대기", 12);
@@ -492,7 +525,7 @@ namespace InhaExpress.Client.Presentation
             UiButton(minus, "−", () => ChangeRequestAmount(-1));
             UiButton(plus, "+", () => ChangeRequestAmount(1));
             requestSubmit = UiButton(Top(form, "Submit Request", 270, 42, 16, 16), "요청 접수", () => StartCoroutine(SubmitTransport()), true);
-            requestStatus = TextAt(Top(form, "Request Status", 322, 50, 16, 16), "출발·도착 거점을 선택하세요", 12);
+            requestStatus = TextAt(Top(form, "Request Status", 322, 26, 16, 16), "", 12);
             requestStatus.color = FixtureUiPalette.Muted;
         }
 
@@ -506,9 +539,24 @@ namespace InhaExpress.Client.Presentation
                 request.downloadHandler = new DownloadHandlerBuffer(); request.timeout = 5;
                 request.SetRequestHeader("Content-Type", "application/json");
                 yield return request.SendWebRequest();
-                dispatchStatus.text = request.result == UnityWebRequest.Result.Success ? "이후 배차부터 적용" : "변경 확인 실패 · 다시 선택하세요";
+                if (request.result != UnityWebRequest.Result.Success) requestStatus.text = "배차 방식 변경 실패 · 다시 선택하세요";
             }
             changingDispatch = false;
+        }
+
+        private IEnumerator ChangePlanner(string planner)
+        {
+            if (changingPlanner || string.IsNullOrEmpty(map?.RunId)) yield break;
+            changingPlanner = true;
+            using (var request = new UnityWebRequest(map.serverUrl.TrimEnd('/') + "/v1/demo/control", "POST"))
+            {
+                request.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(JsonUtility.ToJson(new PlannerControl { planner = planner })));
+                request.downloadHandler = new DownloadHandlerBuffer(); request.timeout = 5;
+                request.SetRequestHeader("Content-Type", "application/json");
+                yield return request.SendWebRequest();
+                if (request.result != UnityWebRequest.Result.Success) requestStatus.text = "경로 탐색 변경 실패 · 다시 선택하세요";
+            }
+            changingPlanner = false;
         }
 
         private void ChangeRequestAmount(int delta)
@@ -762,7 +810,7 @@ namespace InhaExpress.Client.Presentation
                 {
                     "READY" => "대기", "TO_PICKUP" => "픽업 이동", "PICKUP_SERVICE" => "탑승 중",
                     "TO_DROPOFF" => "운송 중", "DROPOFF_SERVICE" => "하차 중",
-                    "RETURNING" => "차고 복귀", "CHARGING" => "충전 중", _ => entry.phase
+                    "RETURNING" => "차고 복귀", "CHARGING" => "충전 중", "MANEUVER" => "회차 중", _ => entry.phase
                 };
                 if (online && entry != null && automaticClients.TryGetValue(pin.vehicleId, out var control) &&
                     (entry.phase == "TO_PICKUP" || entry.phase == "TO_DROPOFF" || entry.phase == "RETURNING") && !control.IsDriving)
@@ -824,6 +872,13 @@ namespace InhaExpress.Client.Presentation
                         fleetDetails[i].text=label;
                         fleetDetails[i].color=serverVehicle.soc<.15f?new Color(.8f,.15f,.12f):FixtureUiPalette.Muted;
                     }
+                    if (fleetRoutes != null && i < fleetRoutes.Length)
+                        fleetRoutes[i].text = serverVehicle == null ? "" : VehicleJourney(serverVehicle, state);
+                    if (routeOverlays != null && i < routeOverlays.Length)
+                        routeOverlays[i].SetRoute(worldCamera, serverVehicle?.mission_id,
+                            serverVehicle?.route_unity, serverVehicle?.route_progress_m ?? 0,
+                            serverVehicle != null && serverVehicle.observation_fresh &&
+                            serverVehicle.phase != "READY" && serverVehicle.phase != "CHARGING");
                     fleetCards[i].color=selected ? FixtureUiPalette.Blue : FixtureUiPalette.Ink;
                 }
             }
@@ -844,7 +899,11 @@ namespace InhaExpress.Client.Presentation
             {
                 dispatchDropdown.interactable = !changingDispatch && online;
                 if(!changingDispatch) dispatchDropdown.SetValueWithoutNotify(state.dispatch=="greedy"?1:0);
-                if(!changingDispatch) dispatchStatus.text = "배차 방식 · " + (state.dispatch == "greedy" ? "Greedy" : state.dispatch == "fifo" ? "FIFO" : state.dispatch);
+            }
+            if (plannerDropdown != null)
+            {
+                plannerDropdown.interactable = !changingPlanner && online;
+                if (!changingPlanner) plannerDropdown.SetValueWithoutNotify(state.planner == "dijkstra" ? 1 : 0);
             }
             if(metrics!=null) metrics.text = mobile ? $"차량 {map.VehicleCount}대 · 대기 {queued}건 · 완료 {map.Completed}건" :
                 $"차량   {map.VehicleCount} / 3       대기 요청   {queued}       운송 완료   {map.Completed}       충전 중   {Array.FindAll(state.vehicles, v => v.phase == "CHARGING").Length}";
@@ -853,6 +912,29 @@ namespace InhaExpress.Client.Presentation
                 if(statCards!=null) { statCards[0].text=boundCount + " / 3"; statCards[1].text=queued.ToString(); statCards[2].text=map.Completed.ToString(); statCards[3].text=state.vehicles == null ? "—" : Array.FindAll(state.vehicles,v=>v.phase=="CHARGING").Length.ToString(); }
                 if(queue!=null) queue.text=queued==0 ? "대기 없음" : $"대기 요청 {queued}건";
             }
+        }
+
+        private string LandmarkName(string id)
+        {
+            if (string.IsNullOrEmpty(id)) return "거점";
+            var stop = map?.Document?.stops == null ? null : Array.Find(map.Document.stops, a => a.landmark_id == id);
+            if (stop != null) return stop.name.Replace(" 후보", "");
+            var hub = map?.Document?.hubs == null ? null : Array.Find(map.Document.hubs, a => a.id == id);
+            return hub?.name ?? id;
+        }
+
+        private string VehicleJourney(CampusServerMap.Vehicle vehicle, CampusServerMap.SharedState state)
+        {
+            if (vehicle.phase == "READY" || vehicle.phase == "CHARGING") return vehicle.home_name;
+            var order = state?.requests == null ? null : Array.Find(state.requests, r => r.id == vehicle.request_id);
+            if (order != null)
+            {
+                if (vehicle.phase == "RETURNING" || vehicle.phase == "RETURN_PENDING" ||
+                    vehicle.transport_phase == "RETURNING" || vehicle.transport_phase == "RETURN_PENDING")
+                    return LandmarkName(order.dropoff_landmark_id) + " → " + vehicle.home_name;
+                return LandmarkName(order.pickup_landmark_id) + " → " + LandmarkName(order.dropoff_landmark_id);
+            }
+            return string.IsNullOrEmpty(vehicle.destination) ? "" : "현재 위치 → " + LandmarkName(vehicle.destination);
         }
 
         private void CreateMapPin(Transform target, string title, string vehicleId, Color color)
@@ -915,6 +997,8 @@ namespace InhaExpress.Client.Presentation
         private void LateUpdate()
         {
             if (worldCamera == null || safeRoot == null) return;
+            if (routeOverlays != null) foreach (var overlay in routeOverlays)
+                if (overlay != null) overlay.ShowOverview = OperatorControls == null || !OperatorControls.IsFollowing;
             if (lastScreenSize != new Vector2Int(Screen.width, Screen.height) || lastSafeArea != Screen.safeArea)
             {
                 Canvas.ForceUpdateCanvases();

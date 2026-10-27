@@ -16,10 +16,12 @@ def test_anniversary_to_plaza_compares_turn_with_long_forward_loop():
     p.mission('V01',command,_allow_turn=False)
     vehicle=p.vehicles['V01']
     length=lambda:sum(math.dist(a,b) for a,b in zip(vehicle.route_unity,vehicle.route_unity[1:]))
-    assert length()>800 and vehicle.turn is None
+    forward_length = length()
+    assert vehicle.turn is None
     vehicle.last_command_id=None
     p.mission('V01',command)
-    assert length()<360 and vehicle.turn is not None
+    # Compare the alternatives on the current edited map, not old Stop distances.
+    assert length()<forward_length/2 and vehicle.turn is not None
     assert vehicle.ego is pose and vehicle.token==token
     assert vehicle.status=='MANEUVER'
 

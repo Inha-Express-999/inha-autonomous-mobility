@@ -1,0 +1,290 @@
+{
+  "run_id": "c0bad2aad50c40a8a04c4ecf8760cc26",
+  "geometry_hash": "a912d2bd63406d1c1d4e553f5e03dba23750cb566a44d5560018609ff32d13ce",
+  "time_s": 0.0,
+  "speed": 10.0,
+  "paused": true,
+  "planner": "astar",
+  "dispatch": "fifo",
+  "physical_dispatch": "fifo",
+  "physical_dispatch_diagnostics": {
+    "queued": 0,
+    "available": [
+      "V03",
+      "V02",
+      "V01"
+    ],
+    "cached_candidates": 0
+  },
+  "map_version": "inha-osm-unity-v2",
+  "vehicles": [
+    {
+      "id": "V01",
+      "home_hub_id": "main_gate",
+      "home_name": "\uc815\ubb38",
+      "position": [
+        -38.45458720285171,
+        -320.76226268029177
+      ],
+      "phase": "READY",
+      "remaining_s": 0.0,
+      "remaining_wh": 2000.0,
+      "soc": 1.0,
+      "destination": null,
+      "routes": [],
+      "request_id": null,
+      "departed_at_s": null,
+      "trajectory": [],
+      "physical_status": "PARKED",
+      "motion_source": "unity_physics",
+      "physical_reason": "No automatic mission",
+      "battery_measured": false,
+      "driving_profile": "standard",
+      "cruise_speed_kmh": 18.0,
+      "measured_speed_kmh": 0.00013033964205533266,
+      "observation_fresh": true,
+      "obstacles_ignored": false,
+      "lane_model": "legacy_centerline",
+      "lane_ids": [],
+      "lane_error_m": 0,
+      "lane_profile_hash": null
+    },
+    {
+      "id": "V02",
+      "home_hub_id": "rear_gate",
+      "home_name": "\ud6c4\ubb38",
+      "position": [
+        263.14478925192077,
+        48.09940633555079
+      ],
+      "phase": "READY",
+      "remaining_s": 0.0,
+      "remaining_wh": 2000.0,
+      "soc": 1.0,
+      "destination": null,
+      "routes": [],
+      "request_id": null,
+      "departed_at_s": null,
+      "trajectory": [],
+      "physical_status": "PARKED",
+      "motion_source": "unity_physics",
+      "physical_reason": "No automatic mission",
+      "battery_measured": false,
+      "driving_profile": "standard",
+      "cruise_speed_kmh": 18.0,
+      "measured_speed_kmh": 9.949133745976724e-05,
+      "observation_fresh": true,
+      "obstacles_ignored": false,
+      "lane_model": "legacy_centerline",
+      "lane_ids": [],
+      "lane_error_m": 0,
+      "lane_profile_hash": null
+    },
+    {
+      "id": "V03",
+      "home_hub_id": "west_field_parking",
+      "home_name": "\uc6b4\ub3d9\uc7a5 \uc606 \uc8fc\ucc28\uc7a5",
+      "position": [
+        -310.1447897779875,
+        54.96190443903457
+      ],
+      "phase": "READY",
+      "remaining_s": 0.0,
+      "remaining_wh": 2000.0,
+      "soc": 1.0,
+      "destination": null,
+      "routes": [],
+      "request_id": null,
+      "departed_at_s": null,
+      "trajectory": [],
+      "physical_status": "PARKED",
+      "motion_source": "unity_physics",
+      "physical_reason": "No automatic mission",
+      "battery_measured": false,
+      "driving_profile": "standard",
+      "cruise_speed_kmh": 18.0,
+      "measured_speed_kmh": -0.00011373236775398254,
+      "observation_fresh": true,
+      "obstacles_ignored": false,
+      "lane_model": "legacy_centerline",
+      "lane_ids": [],
+      "lane_error_m": 0,
+      "lane_profile_hash": null
+    }
+  ],
+  "requests": [
+    {
+      "id": "req-00000001-2436fd6ecc23",
+      "owner_id": "dispatch-diagnostic",
+      "service_type": "PASSENGER",
+      "status": "QUEUED",
+      "created_s": 0.0,
+      "pickup_landmark_id": "anniversary_60",
+      "dropoff_landmark_id": "biryong_plaza",
+      "pickup_stop_id": "anniversary_60_road_candidate",
+      "dropoff_stop_id": "biryong_plaza_road_candidate",
+      "service_needs": {
+        "requires_step_free": false,
+        "wheelchair_slots": 0,
+        "boarding_assistance": false
+      },
+      "party_size": 1,
+      "cargo_kg": 0.0,
+      "latest_arrival_s": null,
+      "eta_s": null,
+      "vehicle_id": null,
+      "reason": "UNKNOWN"
+    },
+    {
+      "id": "req-00000002-6d261587b911",
+      "owner_id": "dispatch-diagnostic",
+      "service_type": "PASSENGER",
+      "status": "QUEUED",
+      "created_s": 0.0,
+      "pickup_landmark_id": "anniversary_60",
+      "dropoff_landmark_id": "biryong_plaza",
+      "pickup_stop_id": "anniversary_60_road_candidate",
+      "dropoff_stop_id": "biryong_plaza_road_candidate",
+      "service_needs": {
+        "requires_step_free": false,
+        "wheelchair_slots": 0,
+        "boarding_assistance": false
+      },
+      "party_size": 1,
+      "cargo_kg": 0.0,
+      "latest_arrival_s": null,
+      "eta_s": null,
+      "vehicle_id": null,
+      "reason": "UNKNOWN"
+    },
+    {
+      "id": "req-00000003-324dd708da93",
+      "owner_id": "dispatch-diagnostic",
+      "service_type": "PASSENGER",
+      "status": "QUEUED",
+      "created_s": 0.0,
+      "pickup_landmark_id": "anniversary_60",
+      "dropoff_landmark_id": "biryong_plaza",
+      "pickup_stop_id": "anniversary_60_road_candidate",
+      "dropoff_stop_id": "biryong_plaza_road_candidate",
+      "service_needs": {
+        "requires_step_free": false,
+        "wheelchair_slots": 0,
+        "boarding_assistance": false
+      },
+      "party_size": 1,
+      "cargo_kg": 0.0,
+      "latest_arrival_s": null,
+      "eta_s": null,
+      "vehicle_id": null,
+      "reason": "UNKNOWN"
+    }
+  ],
+  "queue": [
+    {
+      "id": "req-00000001-2436fd6ecc23",
+      "owner_id": "dispatch-diagnostic",
+      "service_type": "PASSENGER",
+      "status": "QUEUED",
+      "created_s": 0.0,
+      "pickup_landmark_id": "anniversary_60",
+      "dropoff_landmark_id": "biryong_plaza",
+      "pickup_stop_id": "anniversary_60_road_candidate",
+      "dropoff_stop_id": "biryong_plaza_road_candidate",
+      "service_needs": {
+        "requires_step_free": false,
+        "wheelchair_slots": 0,
+        "boarding_assistance": false
+      },
+      "party_size": 1,
+      "cargo_kg": 0.0,
+      "latest_arrival_s": null,
+      "eta_s": null,
+      "vehicle_id": null,
+      "reason": "UNKNOWN"
+    },
+    {
+      "id": "req-00000002-6d261587b911",
+      "owner_id": "dispatch-diagnostic",
+      "service_type": "PASSENGER",
+      "status": "QUEUED",
+      "created_s": 0.0,
+      "pickup_landmark_id": "anniversary_60",
+      "dropoff_landmark_id": "biryong_plaza",
+      "pickup_stop_id": "anniversary_60_road_candidate",
+      "dropoff_stop_id": "biryong_plaza_road_candidate",
+      "service_needs": {
+        "requires_step_free": false,
+        "wheelchair_slots": 0,
+        "boarding_assistance": false
+      },
+      "party_size": 1,
+      "cargo_kg": 0.0,
+      "latest_arrival_s": null,
+      "eta_s": null,
+      "vehicle_id": null,
+      "reason": "UNKNOWN"
+    },
+    {
+      "id": "req-00000003-324dd708da93",
+      "owner_id": "dispatch-diagnostic",
+      "service_type": "PASSENGER",
+      "status": "QUEUED",
+      "created_s": 0.0,
+      "pickup_landmark_id": "anniversary_60",
+      "dropoff_landmark_id": "biryong_plaza",
+      "pickup_stop_id": "anniversary_60_road_candidate",
+      "dropoff_stop_id": "biryong_plaza_road_candidate",
+      "service_needs": {
+        "requires_step_free": false,
+        "wheelchair_slots": 0,
+        "boarding_assistance": false
+      },
+      "party_size": 1,
+      "cargo_kg": 0.0,
+      "latest_arrival_s": null,
+      "eta_s": null,
+      "vehicle_id": null,
+      "reason": "UNKNOWN"
+    }
+  ],
+  "vehicle_fifo": [],
+  "waiting_reasons": {
+    "req-00000001-2436fd6ecc23": "WAITING_EXTERNAL_EXECUTOR",
+    "req-00000002-6d261587b911": "WAITING_EXTERNAL_EXECUTOR",
+    "req-00000003-324dd708da93": "WAITING_EXTERNAL_EXECUTOR"
+  },
+  "completed": 0,
+  "charging_sessions": [],
+  "events": [
+    {
+      "id": "req-00000003-324dd708da93:created",
+      "time_s": 0.0,
+      "text": "\uc694\uccad 03 \uc811\uc218 \u00b7 \ube44\ub8e1\ud50c\ub77c\uc790"
+    },
+    {
+      "id": "req-00000002-6d261587b911:created",
+      "time_s": 0.0,
+      "text": "\uc694\uccad 02 \uc811\uc218 \u00b7 \ube44\ub8e1\ud50c\ub77c\uc790"
+    },
+    {
+      "id": "req-00000001-2436fd6ecc23:created",
+      "time_s": 0.0,
+      "text": "\uc694\uccad 01 \uc811\uc218 \u00b7 \ube44\ub8e1\ud50c\ub77c\uc790"
+    }
+  ],
+  "physical_transport_events": [],
+  "battery_policy": {
+    "capacity_wh": 2000.0,
+    "initial_wh": 2000.0,
+    "wh_per_m": 0.35,
+    "auxiliary_power_w": 50.0,
+    "reserve_fraction": 0.15,
+    "charge_trigger_fraction": 0.3,
+    "charging_power_w": 1000.0,
+    "passenger_load_fraction": 0.05,
+    "cargo_load_fraction_per_kg": 0.01,
+    "charge_when_idle": true
+  },
+  "simulation_only": true
+}

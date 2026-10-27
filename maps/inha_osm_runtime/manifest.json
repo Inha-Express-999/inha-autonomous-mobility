@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "hash_format": "sha256-utf8-lf-v1",
-  "build_project_version": "0.5.1.0",
+  "build_project_version": "0.5.2.0",
   "map_version": "inha-osm-unity-v2",
   "geometry_source": "cached_osm_and_unity_centerlines",
   "synthetic_geometry": false,
@@ -26,7 +26,7 @@
     "Three synthetic vehicles; one request each; no boarding/dwell time or multi-vehicle collision coordination.",
     "Only original campus centerlines and explicitly pinned extension corridor intervals are enabled; no whole-network expansion.",
     "Battery capacity, energy rates and charge power are synthetic configurable assumptions, not vehicle measurements.",
-    "One ideal 1000 W charging port at each configured home hub; charging infrastructure is synthetic.",
+    "One ideal 20000 W fast charging port at each configured home hub; synthetic net stored power with no taper or thermal limits (2 kWh full charge in 6 minutes).",
     "Standby vehicles power down: no idle drain. Auxiliary power is applied throughout travel; charging power is net stored power.",
     "All legs including return to the assigned vehicle home plus 15 percent capacity reserve are required before dispatch; load correction applies to delivery only.",
     "V01 main_gate, V02 rear_gate, V03 existing OSM road node within parking way568420971; authoring bay/entrance access is unverified, no straight bay connector is created."
@@ -47,7 +47,7 @@
     },
     "policy": {
       "path": "configs/osm_runtime.json",
-      "sha256": "9c9ae5a526e40722a332108f95a27cbb2715c4ad5bd172f37bd568dbca1bc007"
+      "sha256": "561685de977b32cb8ec31819245257373660421eede1c99cc64368b689255470"
     },
     "attribution": {
       "path": "Assets/InhaCampus/Source/ATTRIBUTION.txt",
@@ -63,7 +63,7 @@
     },
     "project_version": {
       "path": "VERSION",
-      "sha256": "9cdbce9f3de8397e7cece53307c5d4ddd92b5bf2ac68137abc7910ccb7d5b460"
+      "sha256": "e7cf5ccf5ccdd3e623305926a512e975b54eb870b121c952b4996d4d7aa64e6c"
     },
     "expanded_osm": {
       "path": "Docs/MapResearch/2026-09-17/expanded_campus.osm",
@@ -110,7 +110,7 @@
     "graph.json": "123d950127fd1f5f47079c38f2ad111a3f53f4ffbdfdb05c87c88191cd0f6940",
     "stops.json": "9ebbf281ecac157e7cfd8721a57c5b101d5da5ba75da232971249971b057961c",
     "landmarks.json": "60bbf7051c5f87d6378e447c909a6b519fb725e3d5fe40df365f83926b0ef037",
-    "policy.json": "f878ad8f4ba22e7366156c74b553e5689d21b95baf4b4cca2ada6e0c472db4c3",
+    "policy.json": "7f3d56872d7745bb4467a168c83fd0b5c7cb138512907925913e320f7682a6ce",
     "build_report.json": "1f84e105d2c64cbcfc5873322fc0379f48d3ab83e71559cdc5835b98486beb21",
     "ATTRIBUTION.txt": "c243c904de3a85696895f942921790d66e7c51e3549e5b28b70ed3dea20bdc85"
   }

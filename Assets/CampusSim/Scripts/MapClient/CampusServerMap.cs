@@ -42,7 +42,13 @@ namespace InhaExpress.Client.MapClient
             public TransportRequest[] queue, requests;
             public Vehicle[] vehicles;
         }
-        [Serializable] public sealed class Vehicle { public string id, home_name, phase, destination; public float soc; }
+        [Serializable] public sealed class Vehicle
+        {
+            public string id, home_name, phase, destination, request_id, mission_id, transport_phase;
+            public float soc, route_progress_m;
+            public bool observation_fresh;
+            public Vector3[] route_unity;
+        }
         [Serializable] public sealed class TransportRequest
         {
             public string id, status, vehicle_id, pickup_landmark_id, dropoff_landmark_id, reason;

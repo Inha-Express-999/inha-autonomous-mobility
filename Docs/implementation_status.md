@@ -1,5 +1,11 @@
 # 구현 현황
 
+프로젝트 0.5.2.0 · 2026-10-27 커밋 체크포인트: 아래 0.5.1.0 기반 미커밋 표시는 개발 당시 기록이며 이번 커밋에 포함한다. 현재 변경과 최종 검증은 CHANGELOG.md의 0.5.2.0 항목을 따른다. 과거 실행 자료의 버전은 보존한다.
+
+2026-10-27 · 프로젝트 0.5.1.0 기반 미커밋 다중 요청 수정: 실패한 왕복 경로 후보의 1초 재시도 시간이 다른 후보 계산 중 만료되면 앞선 후보만 반복 평가해 매칭에 도달하지 못하는 결함을 회귀 테스트로 재현했다. 현재 검토의 모든 후보를 매칭에 사용한 뒤 실패 후보를 재시도하도록 수정했다. FIFO/Greedy/Hungarian 각각 초기 3대 및 이미 1대 운행 중인 조건을 검사했다. `physical_dispatch_diagnostics.candidate_failures`에 요청별/차량별 실패 사유를 추가하고 가상 배차가 물리 실행기의 대기 사유를 덮어쓰지 않도록 했다. 관측 유효성·경로·배터리 제약은 유지한다.
+
+검증: `python -m pytest backend/tests/test_physical_dispatch.py backend/tests/test_physical_battery.py backend/tests/test_external_execution.py backend/tests/test_unity_drive.py backend/tests/test_drive_protocol4.py -q -p no:cacheprovider` 49개 통과(기존 Starlette 경고 1개). 변경 Python 4파일의 Ruff 필수 오류 검사(`--isolated --select E9,F63,F7,F82`) 및 `git diff --check` 통과. 전체 Ruff 규칙은 기존 스타일/미사용 변수 등을 보고해 통과로 간주하지 않는다. Unity 소유 서버 재시작 후 실제 60주년→비룡플라자 요청 3건이 각각 다른 차량에 배정됐다. 시뮬레이션 1.60초에 V01/V02/V03 약 3.66/3.77/3.35m 이동 및 12.63/16.21/16.18km/h를 확인했다. 근거: `artifacts/multi_vehicle_dispatch/fixed-before.json`, `fixed-three-driving.json`. 당시 사용자가 경험한 경로 조합은 없어 같은 현상의 직접 원인으로 확정하지 않는다. 장애물 비활성 개발 프로필을 유지한 동시 출발 검사이며 다중 차량 충돌 조정·전체 운송 완료·성능 검증은 아니다. 커밋/릴리스는 수행하지 않았다.
+
 프로젝트 0.5.1.0 · 2026-10-27 커밋 체크포인트. 아래 미커밋 표시는 개발 당시 기록이며 이번 커밋에 포함한다. 과거 실행 버전과 검증 범위는 소급 변경하지 않는다. 커밋 검증: 기존 의존성 경로에서 `python -m campus_sim.map_builder` 재생성 및 `python -m pytest backend/tests/test_release_version.py -q -p no:cacheprovider` 1개 통과, `node --check backend/src/campus_sim/web/app.js` 통과. 전체 backend 및 물리 운행 대상 회귀는 장시간 실행 후 중단해 결과 미확정이며 통과로 간주하지 않는다. 기본 Python의 의존성 누락과 재생성 전 지도 입력 해시 불일치는 실행 경로 정정 및 기존 빌더 재생성으로 해소했다.
 
 2026-10-27 배차 후 무한 대기 수정(미커밋, 해당 결함 VERIFIED): Unity MCP에서 세 차량의 연결·접지는 정상이나 `No automatic mission`, 60주년→비룡플라자 요청은 QUEUED인 상태를 확인했다. 물리 배차 후보 캐시가 매 관측의 Transform 부동소수점 오차를 차량 형상 변경으로 판단해 첫 후보를 반복 계산했다. 형상 비교에 절대 수치 허용 오차 1e-4(m/rad)를 적용하고, 경로 계산 중 관측이 잠시 오래되어도 계산 후보를 보존한다. 실제 배차/출발의 최신 관측 검사와 경로 제약은 유지한다. 상태 응답에 후보 수 진단을 추가하고 임무 시작 실패 사유를 보존한다. 관련 pytest 42개 통과(기존 Starlette 경고 1개); 수치 오차/실제 형상 변경/일시적 stale 회귀 3개 포함. 실제 새 세션에서 같은 요청을 V02에 배정해 TO_PICKUP/DRIVING, 시뮬레이션 3.67초 시점 실측 16.74km/h와 위치 이동을 확인했다. 근거: `artifacts/dispatch_wait_fix/before.json`, `after-start.json`. 검증 명령: `python -m pytest backend/tests/test_physical_dispatch.py backend/tests/test_physical_battery.py backend/tests/test_external_execution.py backend/tests/test_unity_drive.py backend/tests/test_drive_protocol4.py -q -p no:cacheprovider`. 기존 장애물 비활성 시뮬레이션 프로필을 유지했으며 전체 운송 완료·모바일·성능 검증을 의미하지 않는다. 커밋/릴리스 버전 증가는 수행하지 않았다.
@@ -154,3 +160,13 @@
 - 허브는 작은 위치 점/이름표, 차량은 실제 Unity Transform 기반 색상별 ID 표식으로 표시한다. 차량 카드와 표식 색상을 맞추고 표식 클릭 시 추적한다. 겹치는 이름표는 위치 점을 이동하지 않고 연결선과 함께 재배치한다. Unity에 연결되지 않은 차량의 위치는 만들지 않는다.
 - 검증: Unity 프로젝트 csproj의 참조 DLL/소스 목록으로 만든 `tmp/ui-compile.rsp`에 대해 Roslyn C# 컴파일 실행(exit 0, 기존 JSON DTO CS0649 경고). `git diff --check -- Assets/CampusSim/Scripts/Presentation/WebClientHud.cs` 통과.
 - 미검증: Unity batch 렌더 검증을 시도했으나 프로젝트 경로 확인 직후 Editor가 종료되어 이미지가 생성되지 않았다(`tmp/ui-unity.log`). 실제 클릭/스크롤, 해상도별 표시, 차량 추적 중 라벨, PC/모바일 FPS·메모리 측정은 미검증이다. 씬/공유 메시/재질은 변경하지 않았고 UI 스프라이트를 공유하며 표식 탐색은 등록 차량/허브에 한정한다. 성능 개선 완료나 통합 주행 검증으로 해석하지 않는다.
+
+## 2026-10-27 관제 운행 구간·경로 탐색·전경 경로 선 (0.5.1.0 기반 미커밋)
+
+- 차량 현황에 요청의 출발→도착 거점을 표시하고 복귀 임무는 하차 거점→자기 차고로 표시한다. 회차 중에도 운송 단계와 복귀 목적지를 구분한다. 기본 요청 안내 문구를 제거하고 요청 카드 높이를 24px 줄였다. 배차/경로 탐색 제목은 고정하고 선택값은 드롭다운에만 표시한다.
+- PC 경로 탐색 드롭다운을 기존 공통 control API의 A*/Dijkstra 설정과 연결했다. 물리 차로 탐색도 휴리스틱을 사용하는 A* 또는 0 휴리스틱 Dijkstra로 실행한다. 탐색 변경 시 배차 후보 캐시만 비우며 진행 중 경로는 바꾸지 않는다. 새 경로 생성부터 적용한다.
+- 전경 지도에 Python 계획 경로를 차량별 파랑/보라/청록 선과 방향 화살표로 표시한다. 명시적 Unity 좌표 배열과 진행 거리로 지나간 구간을 제외한다. 3개 uGUI Graphic을 재사용하며 별도 월드 메시·재질·Collider를 추가하지 않는다. 경로 변경 때만 표시용 도로 높이를 Raycast하고, 카메라/진행 거리 변경 때 메시를 갱신한다. 지도 밖은 RectMask2D로 자르고 차량 추적 화면에서는 숨긴다. 로컬 회차 조향 궤적 자체의 표시가 아닌 전역 계획 경로 표시다. Python 안전/충돌 계산에는 영향을 주지 않는다. 모바일 HUD에는 생성하지 않는다.
+- 검증: test_lanes/test_physical_dispatch/test_unity_drive/test_drive_protocol4/test_web_demo 대상 56개 통과, 충전 출력 별도 변경으로 기존 고정 시간 충전 테스트 1개 제외. 신규 3개는 선택 알고리즘의 실제 차로 탐색 전달, Dijkstra의 A* 휴리스틱 미사용, 진행 중 임무 보존 및 Unity 경로 출력/후보 캐시 무효화를 검사한다. Ruff 필수 오류 검사 및 git diff --check 통과. 초기 테스트의 필터 없는 그래프 fixture 오류와 초기 CanvasRenderer 누락은 수정 후 재검증했다.
+- Unity 실제 드롭다운으로 Dijkstra를 선택해 서버 planner 반영 및 세 차량의 Dijkstra 경로 생성, 카드의 '60주년 → 비룡플라자', 세 경로 메시(707/427/435 vertices)와 전경 화면을 확인했다. 최신 확인 시 Console 오류 0개. 근거: artifacts/operator-route-ui/idle-ready.png, dijkstra-driving.png, state.json. Editor Game View 캡처 원본 3840×2160이며 별도 1280×720 UI 기준 좌표로 스케일된다. PC/모바일 FPS·프레임 시간·배치 수·메모리는 미측정이므로 성능 개선 완료로 간주하지 않는다. 씬/공유 에셋 원본과 별도 작업의 충전 설정은 보존한다. 커밋/릴리스는 수행하지 않았다.
+
+0.5.2.0 최종 커밋 검증: 전체 backend 328개 통과(56.83초, 기존 Starlette 경고 1개). 처음 전체 실행의 실패 8개는 과거 지도 크기/후문 차고-Stop 동일 위치/충전 시간/절대 회차 경로 길이 및 편집 좌표 입력을 복사하지 않던 fixture에서 발생했다. 실제 현재 지도 크기 188/404와 입력 파일을 반영하고, FIFO 검사는 가까운 차보다 먼저 온 차를 선택하는지·회차 검사는 동일 지도 전진 경로보다 짧은지를 비교하도록 보완했다. 충전 위치/대기열 시간 검사는 기존 1 kW fixture를 명시해 20 kW 기본 설정 검증과 구분했다. 최종 XML: artifacts/release_validation_0.5.2.0/backend-final.xml. 지도/Unity export 재생성, JS 문법, Ruff 필수 오류, 공백 검사를 통과했다. 신규 Player/모바일/성능 전체 검증은 수행하지 않았다.

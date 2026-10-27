@@ -90,6 +90,11 @@ def test_extensions_fifo_and_large_jump_completes_all_three_vehicle_trips():
 
 def test_battery_demo_shows_charging_then_fifo_reentry_and_energy_conservation():
     demo, wall = session()
+    # This timeline fixture exercises the original slow-charge queue. The
+    # configured 20 kW policy and its boundaries are covered by battery tests.
+    demo.service.battery_policy = demo.service.battery_policy.model_copy(
+        update={"charging_power_w": 1000.0}
+    )
     demo.scenario("battery")
     wall[0] += 6
     state = demo.state()

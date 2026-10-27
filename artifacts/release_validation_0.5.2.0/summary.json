@@ -1,0 +1,33 @@
+{
+  "project_version": "0.5.2.0",
+  "date": "2026-10-27",
+  "backend": {
+    "passed": 328,
+    "failed": 0,
+    "warnings": 1,
+    "seconds": 56.83,
+    "command": "python -m pytest backend/tests -q -p no:cacheprovider",
+    "junit": "backend-final.xml"
+  },
+  "checks": {
+    "map_rebuild": "passed",
+    "unity_snapshot_export": "passed",
+    "javascript_syntax": "passed",
+    "ruff_critical_errors": "passed (--isolated --select E9,F63,F7,F82)",
+    "git_diff_check": "passed"
+  },
+  "video": {
+    "path": "../pc-client-video/Inha-Mobil-PC-20s.mp4",
+    "width": 1280,
+    "height": 720,
+    "seconds": 20,
+    "frames": 400,
+    "source_project_version": "0.5.1.0"
+  },
+  "limits": [
+    "Existing Starlette deprecation warning",
+    "No new Player build or mobile/device performance validation",
+    "Historical execution versions in captures remain unchanged",
+    "Multi-vehicle collision coordination remains incomplete"
+  ]
+}

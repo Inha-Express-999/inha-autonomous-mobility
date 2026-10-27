@@ -23,7 +23,7 @@
     "Three synthetic vehicles; one request each; no boarding/dwell time or multi-vehicle collision coordination.",
     "Only original campus centerlines and explicitly pinned extension corridor intervals are enabled; no whole-network expansion.",
     "Battery capacity, energy rates and charge power are synthetic configurable assumptions, not vehicle measurements.",
-    "One ideal 1000 W charging port at each configured home hub; charging infrastructure is synthetic.",
+    "One ideal 20000 W fast charging port at each configured home hub; synthetic net stored power with no taper or thermal limits (2 kWh full charge in 6 minutes).",
     "Standby vehicles power down: no idle drain. Auxiliary power is applied throughout travel; charging power is net stored power.",
     "All legs including return to the assigned vehicle home plus 15 percent capacity reserve are required before dispatch; load correction applies to delivery only.",
     "V01 main_gate, V02 rear_gate, V03 existing OSM road node within parking way568420971; authoring bay/entrance access is unverified, no straight bay connector is created."
@@ -653,7 +653,7 @@
     "auxiliary_power_w": 50.0,
     "reserve_fraction": 0.15,
     "charge_trigger_fraction": 0.3,
-    "charging_power_w": 1000.0,
+    "charging_power_w": 20000.0,
     "passenger_load_fraction": 0.05,
     "cargo_load_fraction_per_kg": 0.01
   },

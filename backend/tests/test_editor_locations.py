@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 from shutil import copyfile
-from urllib.error import URLError
+from urllib.error import HTTPError, URLError
 
 import pytest
 from fastapi.testclient import TestClient
@@ -39,6 +39,25 @@ EDIT = {
     "stops": [{"id": "library_road_candidate", "x": -46.46, "z": -167.31}],
     "hubs": [{"id": "main_gate", "x": -39.8, "z": -321.4}],
 }
+
+
+def test_old_server_identity_404_reports_recovery_without_writing(tmp_path, monkeypatch):
+    def old_server(url, body=None):
+        raise HTTPError(url, 404, "Not Found", {}, None)
+
+    monkeypatch.setattr("campus_sim.editor_locations.request_json", old_server)
+    with pytest.raises(ValueError, match=r"8765/v1/desktop/info returned HTTP 404.*Ctrl\+C"):
+        apply_locations(tmp_path, EDIT)
+    assert not list(tmp_path.iterdir())
+
+
+@pytest.mark.parametrize("identity", [{}, [], None, {"service_id": "another-service"}])
+def test_invalid_identity_cannot_be_treated_as_no_server(tmp_path, monkeypatch, identity):
+    # A JSON null is also an occupied endpoint, not a refused connection.
+    monkeypatch.setattr("campus_sim.editor_locations.request_json", lambda url: identity)
+    with pytest.raises(ValueError, match="incompatible server"):
+        apply_locations(tmp_path, EDIT)
+    assert not list(tmp_path.iterdir())
 
 
 @pytest.fixture

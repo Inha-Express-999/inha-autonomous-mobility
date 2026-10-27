@@ -17,7 +17,7 @@ def test_player_sidecar_keeps_all_pinned_source_hashes_and_web_assets(tmp_path):
     destination = tmp_path / "CampusServer"
     summary = PACKAGER.package_server(ROOT, destination)
     bundle = load_map_bundle(destination / "maps/inha_osm_runtime", source_root=destination)
-    assert len(bundle.graph.nodes) == 187
+    assert len(bundle.graph.nodes) == 188
     assert bundle.metadata["source_hashes_checked"]
     assert (destination / "backend/src/campus_sim/desktop_server.py").is_file()
     assert (destination / "backend/src/campus_sim/web/index.html").is_file()

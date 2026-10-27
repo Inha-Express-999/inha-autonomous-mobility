@@ -85,7 +85,10 @@ def test_battery_shortfall_skips_vehicle_without_rotating_other_ready_vehicles()
     assert service.virtual_state()["batteries"]["V01"]["state"] == "CHARGING"
     session = service.charges[0]
     service.step(session.ends_at_s)
-    assert service.virtual_state()["vehicle_fifo"] == ["V03", "V02", "V01"]
+    # At 20 kW V02 has returned but is still replenishing its trip energy.
+    assert service.trips[request.id].returned
+    assert service.virtual_state()["batteries"]["V02"]["state"] == "CHARGING"
+    assert service.virtual_state()["vehicle_fifo"] == ["V03", "V01"]
 
 
 def test_reserve_boundary_and_not_just_outbound_energy():

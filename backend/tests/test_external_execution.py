@@ -26,6 +26,17 @@ def test_external_request_never_enters_virtual_trip_or_time_completion(policy):
     assert normal.id in service.trips
 
 
+def test_virtual_dispatch_preserves_observed_executor_waiting_reason():
+    service=MobilityService.synthetic_fixture(clock=lambda:0)
+    r=service.create_request(CreateRequest(command_id='reason',owner_id='test',
+        service_type='PASSENGER',pickup_landmark_id='main_gate',dropoff_landmark_id='library'),
+        external_execution=True).request
+    service.waiting_reasons[r.id]='No directed return route'
+    service.step(1)
+    assert service.waiting_reasons[r.id]=='No directed return route'
+    assert r.status==RequestStatus.QUEUED
+
+
 def test_physics_preview_keeps_live_pose_mission_and_clock_even_with_turn():
     s=DemoSession(); p=s.physical; token=p.connect('V01')
     ego=lane_ego(s,schema_version=4,rear_axle_offset_m=-.65,half_length_m=1.55,

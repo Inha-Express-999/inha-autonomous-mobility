@@ -232,3 +232,39 @@ def test_geometry_roundoff_reuses_estimate_but_real_changes_replan(monkeypatch,d
             'tick':vehicle.ego.tick+1,'wheelbase_m':vehicle.ego.wheelbase_m+delta}))
     s.physical_dispatch.step()
     assert calls==expected_calls
+
+
+@pytest.mark.parametrize('policy', ['fifo', 'greedy', 'hungarian'])
+@pytest.mark.parametrize('already_driving', [False, True])
+def test_failed_candidate_cannot_starve_other_requests_and_vehicles(monkeypatch, policy, already_driving):
+    s,p,_token,wall=setup()
+    s.service.dispatch_algorithm=policy
+    if already_driving:
+        initial=request(s,command_id='already-driving')
+        assert initial.vehicle_id=='V01'
+    for identifier in ('V02','V03'):
+        other=p.connect(identifier)
+        p.observation(identifier,other,p.vehicles['V01'].ego.model_copy())
+    calls=[]
+    def estimate(identifier,r):
+        calls.append((identifier,r.id))
+        wall[0]+=.6  # Several route previews exceed the failed-candidate retry interval.
+        if identifier=='V02':
+            raise ValueError('No directed return route')
+        return 'main_gate_road_candidate',10.,[10.,20.,20.]
+    monkeypatch.setattr(s.physical_dispatch,'_estimate',estimate)
+    requests=[request(s,command_id=f'multi-{i}') for i in range(3)]
+    for _ in range(20):
+        wall[0]+=.11
+        for identifier,vehicle in p.vehicles.items():
+            p.observation(identifier,vehicle.token,
+                vehicle.ego.model_copy(update={'tick':vehicle.ego.tick+1}))
+        s.physical_dispatch.step()
+        if len(s.physical_dispatch.jobs)==2:
+            break
+    assert {job.vehicle_id for job in s.physical_dispatch.jobs.values()}=={'V01','V03'}
+    assert sum(r.status==RequestStatus.ASSIGNED for r in requests)==(1 if already_driving else 2)
+    # Both feasible vehicles must start without either completing its first trip.
+    assert all(not job.returned for job in s.physical_dispatch.jobs.values())
+    failures=s.physical_dispatch.diagnostics['candidate_failures']
+    assert failures and all(row['V02']=='No directed return route' for row in failures.values())

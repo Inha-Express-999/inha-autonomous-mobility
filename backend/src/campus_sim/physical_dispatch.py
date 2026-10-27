@@ -148,6 +148,13 @@ class PhysicalDispatcher:
         home,energy,_=self._estimate(vehicle_id,request)
         return home,energy
 
+    def _candidate_failures(self):
+        failures = {}
+        for (identifier, request_id), entry in self.estimates.items():
+            if entry[2] is None:
+                failures.setdefault(request_id, {})[identifier] = entry[3]
+        return failures
+
     def _start_leg(self, job, stop, phase):
         try:
             self.session.physical.mission(job.vehicle_id,self._command(stop))
@@ -237,7 +244,8 @@ class PhysicalDispatcher:
                    if not self.busy(i) and self._fresh(v,now) and
                    v.status in {'PARKED','ARRIVED'} and abs(v.ego.speed_mps)<=.05]
         self.diagnostics = dict(queued=len(queued), available=[v.id for v in available],
-                                cached_candidates=len(self.estimates))
+                                cached_candidates=len(self.estimates),
+                                candidate_failures=self._candidate_failures())
         # A three-leg preview is relatively expensive. Evaluate one candidate
         # per scheduler tick, letting WebSockets refresh localization in between.
         # Cache only cost/feasibility; starting the leg still plans from fresh ego.
@@ -263,10 +271,15 @@ class PhysicalDispatcher:
                         math.atan2(math.sin(cached[0].heading_rad-ego.heading_rad),math.cos(cached[0].heading_rad-ego.heading_rad)))<.03 and all(
                             a == b or (a is not None and b is not None and math.isclose(a,b,rel_tol=0.,abs_tol=1e-4))
                             for a,b in zip(cached[1],signature)):
-                        if cached[2] is not None or now-cached[4]<1: continue
+                        # Finish this matching round before retrying failures.
+                        # Otherwise an early failed route expires while later
+                        # pairs are still being evaluated and starves the batch.
+                        continue
                     try: estimate,reason=self._estimate(vehicle.id,request),''
                     except ValueError as error: estimate,reason=None,str(error)
                     self.estimates[key]=(ego,signature,estimate,reason,now)
+                    self.diagnostics['cached_candidates']=len(self.estimates)
+                    self.diagnostics['candidate_failures']=self._candidate_failures()
                     self.retry_at=p.clock()+.1
                     service.waiting_reasons[request.id]=reason or 'EVALUATING_PHYSICAL_CANDIDATES'
                     return
@@ -320,3 +333,9 @@ class PhysicalDispatcher:
             else:
                 service.waiting_reasons[request.id]=job.reason
                 self.diagnostics['start_failure']=job.reason
+        self.diagnostics['candidate_failures']=self._candidate_failures()
+        # Retry failed estimates only after every pair had a chance to enter
+        # matching. Successful estimates remain bound to pose/geometry above;
+        # energy and fresh observations are still checked at actual dispatch.
+        self.estimates={key:entry for key,entry in self.estimates.items()
+                        if entry[2] is not None or now-entry[4]<1}

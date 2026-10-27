@@ -294,7 +294,8 @@ class MobilityService:
         routes: dict[tuple[str, str], tuple[RoutePlan, RoutePlan, RoutePlan]] = {}
         needs_charge: set[str] = set()
         self.waiting_reasons = {
-            r.id: ("WAITING_EXTERNAL_EXECUTOR" if r.id in self.external_request_ids else "WAITING_FEASIBLE_VEHICLE")
+            r.id: (self.waiting_reasons.get(r.id, "WAITING_EXTERNAL_EXECUTOR")
+                   if r.id in self.external_request_ids else "WAITING_FEASIBLE_VEHICLE")
             for r in self.requests.values()
             if r.status is RequestStatus.QUEUED
         }

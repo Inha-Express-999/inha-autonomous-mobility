@@ -17,7 +17,7 @@ def test_unity_projection_and_export_match_all_web_nodes_hubs_and_stops():
     service = MobilityService.from_osm_map(clock=lambda: 0)
     data = unity_map(service)
     assert data == json.loads(EXPORT.read_text(encoding="utf-8"))
-    assert len(data["nodes"]) == 187 and len(data["edges"]) == 402
+    assert len(data["nodes"]) == 188 and len(data["edges"]) == 404
     assert len(data["hubs"]) == 3 and len(data["stops"]) == 14
     coordinates = MapCoordinates()
     for node in data["nodes"]:

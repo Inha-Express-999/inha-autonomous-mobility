@@ -27,6 +27,12 @@ Unity에서 `PC_Bootstrap.unity`를 열고 Play하면 서버 실행 명령을 �
 
 웹은 `http://127.0.0.1:8765/demo/`에서 같은 session을 표시한다. 현재는 읽기 전용 연결이며 운송 요청·시간 진행·차량 조작을 자동으로 실행하지 않는다. 직접 CampusTerrain만 Play하는 디버그 흐름은 서버를 소유하지 않으므로 기존 수동 서버 또는 PC Bootstrap을 사용한다.
 
+## Editor 위치 동기화에서 포트 호환 오류가 발생할 때
+
+`SERVICE_LOCATIONS_BLOCKED`와 `/v1/desktop/info returned HTTP 404`가 나오면 해당 포트에 구버전 프로젝트 서버 또는 다른 HTTP 서비스가 실행 중인지 확인한다. `/openapi.json`의 `info.version`과 `paths`를 읽어 현재 저장소의 `VERSION` 및 `/v1/desktop/info` 지원 여부와 대조할 수 있다. 2026-10-27 진단에서는 8765의 웹 시연 서버가 API 0.2.4.0을 반환했고 현재 저장소는 0.5.1.0이었다.
+
+기존 프로젝트 서버로 확인되면 실행 터미널에서 Ctrl+C로 종료한 뒤 Unity에서 Play를 다시 실행한다. 위치 동기화가 통과한 후 현재 코드의 로컬 서버가 자동 시작된다. 서버의 메모리 세션 기록은 재시작 시 초기화되므로 필요한 기록은 먼저 보관한다. 다른 서비스라면 종료하지 말고 연결 URL과 포트 설정을 확인한다. 편집 도구는 호환되지 않는 응답을 받으면 지도 파일을 반영하지 않는다.
+
 ## Windows 실행 파일
 
 Windows64 빌드가 성공하면 `DesktopServerBuild`의 postprocessor가 실행 파일 옆 `CampusServer/`에 backend, 오프라인 지도, manifest가 요구하는 원본과 웹/라이선스 파일을 복사한다. 이 작업 환경의 로컬 의존성이 있으면 함께 복사하며 원본 자료를 다시 작성하지 않는다. Python 런타임 자체는 포함하지 않는다.

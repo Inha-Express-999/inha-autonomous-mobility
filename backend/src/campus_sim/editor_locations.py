@@ -80,10 +80,16 @@ def apply_locations(
         raise ValueError("Editor synchronization requires a loopback HTTP server")
     base = server_url.rstrip("/")
     server = None
+    server_found = True
     try:
         server = request_json(base + "/v1/desktop/info")
     except HTTPError as error:
-        raise ValueError("Configured port belongs to an incompatible server") from error
+        raise ValueError(
+            f"{base}/v1/desktop/info returned HTTP {error.code}. "
+            "The configured port may be running an older Inha Mobil server or another service. "
+            "Stop the old project server in its terminal (Ctrl+C), then retry Unity Play "
+            "to start the current server. Do not stop an unrelated service."
+        ) from error
     except URLError as error:
         # Only connection refusal means no server. Timeouts and other failures
         # are not permission to replace a potentially live service.
@@ -91,8 +97,14 @@ def apply_locations(
 
         if getattr(error.reason, "errno", None) not in (errno.ECONNREFUSED, 10061):
             raise ValueError("Existing server could not be checked") from error
-    if server and server.get("service_id") != "inha-mobil-local-demo":
-        raise ValueError("Configured port belongs to an incompatible server")
+        server_found = False
+    if server_found and (
+        not isinstance(server, dict) or server.get("service_id") != "inha-mobil-local-demo"
+    ):
+        raise ValueError(
+            f"Configured port belongs to an incompatible server: {base}. "
+            "Check the server URL and the process using this port."
+        )
 
     target = root / "maps/inha_osm_runtime"
     snapshot = root / "Assets/CampusSim/Data/server_map.json"

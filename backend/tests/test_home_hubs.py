@@ -22,7 +22,7 @@ def test_default_homes_are_three_distinct_source_road_nodes_and_fully_connected(
     }
     assert len(set(bundle.home_nodes.values())) == 3
     assert bundle.home_nodes["V03"] == "osm:10058484941"
-    assert len(bundle.graph.nodes) == 187 and len(bundle.graph.edges) == 402
+    assert len(bundle.graph.nodes) == 188 and len(bundle.graph.edges) == 404
     assert all(h["round_trip_reachable_stop_count"] == 14 for h in bundle.hubs.values())
     assert bundle.hubs["west_field_parking"]["source_parking_osm_way_id"] == "568420971"
     assert bundle.hubs["west_field_parking"]["source_unity_hub_id"] == "west_field_autonomous_hub"
@@ -67,6 +67,10 @@ def test_each_vehicle_routes_from_and_back_to_own_home_and_charges_there():
 def test_web_reset_restores_hub_positions_and_labels_with_stationary_home_charge():
     wall = [0.0]
     demo = DemoSession(wall_clock=lambda: wall[0])
+    # Keep this stationary-charge timeline independent of the fast-charge default.
+    demo.service.battery_policy = demo.service.battery_policy.model_copy(
+        update={"charging_power_w": 1000.0}
+    )
     initial = demo.state()
     assert [v["home_name"] for v in initial["vehicles"]] == ["정문", "후문", "운동장 옆 주차장"]
     assert len({tuple(v["position"]) for v in initial["vehicles"]}) == 3
@@ -103,8 +107,10 @@ def test_distributed_homes_keep_vehicle_fifo_instead_of_nearest_matching():
         trip = service.trips[request.id]
         if expected == "V01":
             assert trip.pickup_route.cost_s > 0
+            first_pickup_cost = trip.pickup_route.cost_s
         else:
-            assert trip.pickup_route.cost_s == 0
+            # The edited rear garage is near, rather than identical to, its Stop.
+            assert 0 <= trip.pickup_route.cost_s < first_pickup_cost
 
 
 @pytest.mark.parametrize(

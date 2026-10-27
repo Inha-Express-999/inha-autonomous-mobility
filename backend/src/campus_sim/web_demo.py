@@ -244,6 +244,8 @@ class DemoSession:
                                             phase=("MANEUVER" if physics["status"] == "MANEUVER" else
                                                    "TO_DROPOFF" if physics["status"] == "DRIVING" else "READY"),
                                             destination=physics["destination"], trajectory=[], departed_at_s=None,
+                                            mission_id=physics["mission_id"], route_unity=physics["route_unity"],
+                                            route_progress_m=physics["route_progress_m"],
                                             physical_status=physics["status"], motion_source="unity_physics",
                                             physical_reason=physics["reason"], battery_measured=False,
                                             driving_profile=physics["driving_profile"],
@@ -257,6 +259,7 @@ class DemoSession:
                               if j.vehicle_id==vehicle.id and not j.returned),None)
                     if job is not None:
                         vehicles[-1].update(request_id=job.request_id,
+                            transport_phase=job.phase,
                             phase="MANEUVER" if physics["status"]=="MANEUVER" else job.phase,
                             execution_source="observed_unity_transport",transport_reason=job.reason)
                     elif vehicle.id in self.physical_dispatch.charging:
@@ -352,6 +355,8 @@ class DemoSession:
                 self.physical_dispatch.retry_at = 0.
             if command.planner is not None:
                 self.service.route_algorithm = command.planner
+                self.physical_dispatch.estimates.clear()
+                self.physical_dispatch.retry_at = 0.
             self.service.step()
             if command.speed is not None:
                 self.clock.speed = 1. if self.physical.vehicles else command.speed

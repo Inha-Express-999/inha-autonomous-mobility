@@ -1,0 +1,57 @@
+{
+  "capture": "Unity PC client Game View, actual running simulation",
+  "video": "Inha-Mobil-PC-20s.mp4",
+  "duration_s": 20,
+  "resolution": [
+    1280,
+    720
+  ],
+  "encoded_fps": 20,
+  "audio": false,
+  "views": [
+    {
+      "from_s": 0,
+      "to_s": 4,
+      "camera": "overview"
+    },
+    {
+      "from_s": 4,
+      "to_s": 8,
+      "camera": "V01 follow"
+    },
+    {
+      "from_s": 8,
+      "to_s": 12,
+      "camera": "V02 follow"
+    },
+    {
+      "from_s": 12,
+      "to_s": 16,
+      "camera": "V03 follow"
+    },
+    {
+      "from_s": 16,
+      "to_s": 20,
+      "camera": "overview"
+    }
+  ],
+  "assigned_requests": {
+    "V01": [
+      "main_gate",
+      "library"
+    ],
+    "V02": [
+      "anniversary_60",
+      "biryong_plaza"
+    ],
+    "V03": [
+      "library",
+      "hitech"
+    ]
+  },
+  "notes": [
+    "Final take includes V01/V02 returning after completing their assigned delivery and V03 carrying out its delivery.",
+    "Video frame rate is an encoding setting, not a measured application performance result.",
+    "Existing simulation debug objects and obstacle-disabled driving profile are preserved."
+  ]
+}

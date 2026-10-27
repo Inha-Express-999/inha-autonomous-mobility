@@ -9,6 +9,53 @@ from campus_sim.unity_drive import AutoMission, EgoObservation
 from campus_sim.web_demo import DemoSession
 
 
+@pytest.mark.parametrize("algorithm", ["astar", "dijkstra"])
+def test_selected_planner_reaches_physics_lane_search_and_exports_unity_route(monkeypatch, algorithm):
+    import campus_sim.unity_drive as drive
+    from campus_sim.web_demo import DemoControl
+
+    calls = []
+    original = drive.directed_lane_route
+    def search(*args, **kwargs):
+        calls.append(kwargs["algorithm"])
+        return original(*args, **kwargs)
+    monkeypatch.setattr(drive, "directed_lane_route", search)
+    session = DemoSession()
+    session.control(DemoControl(planner=algorithm))
+    physical = session.physical
+    token = physical.connect("V01")
+    physical.observation("V01", token, lane_ego(session))
+    physical.mission("V01", AutoMission(run_id=session.run_id, command_id="selected-planner",
+                                       stop_id="main_building_road_candidate"))
+    assert calls and set(calls) == {algorithm}
+    vehicle = physical.vehicles["V01"]
+    exported = session.state()["vehicles"][0]
+    assert exported["mission_id"] == vehicle.mission_id
+    assert [(p["x"], p["z"]) for p in exported["route_unity"]] == vehicle.route_unity
+    mission, route = vehicle.mission_id, list(vehicle.route_unity)
+    session.physical_dispatch.estimates[("V01", "old")] = object()
+    session.control(DemoControl(planner="dijkstra" if algorithm == "astar" else "astar"))
+    assert not session.physical_dispatch.estimates
+    assert vehicle.mission_id == mission and vehicle.route_unity == route
+
+
+def test_dijkstra_lane_search_does_not_use_astar_heuristic(monkeypatch):
+    from campus_sim.lanes import directed_lane_route
+    from campus_sim.planning import AStarPlanner, RoadGraph
+
+    session = DemoSession()
+    source = session.service.graph
+    graph = RoadGraph(source.map_version, source.nodes,
+                      tuple(e for e in source.edges if e.id in session.physical.lanes.by_edge))
+    incoming = next(e for e in graph.edges if e.id in session.physical.lanes.by_edge)
+    def forbidden(*args):
+        raise AssertionError("Dijkstra must not calculate an A* heuristic")
+    monkeypatch.setattr(AStarPlanner, "heuristic_scale", forbidden)
+    result = directed_lane_route(graph, session.service.costs, incoming, incoming.v,
+        session.physical.lanes, session.physical.coordinates, 2.25, algorithm="dijkstra")
+    assert result == []
+
+
 def lane_ego(session, tick=1, **changes):
     values = dict(schema_version=2, run_id=session.run_id, geometry_hash=session.physical.geometry_hash,
                   tick=tick, x=70.0667, z=-159.6858, heading_rad=math.radians(-60), speed_mps=0,

@@ -81,8 +81,9 @@ def shift(point, direction, offset):
     return (point[0] + direction[1] * offset, point[1] - direction[0] * offset)
 
 
-def directed_lane_route(graph, costs, incoming, goal, profiles, coordinates, minimum_radius):
-    """A* over incoming directed edges; a node alone loses turn feasibility.
+def directed_lane_route(graph, costs, incoming, goal, profiles, coordinates, minimum_radius,
+                        algorithm="astar"):
+    """A* or Dijkstra over directed edges; a node alone loses turn feasibility.
 
     Returns following edges (excluding incoming), or None. The same geometric
     connector validation used for execution rejects unavailable turns during search.
@@ -90,7 +91,9 @@ def directed_lane_route(graph, costs, incoming, goal, profiles, coordinates, min
     from heapq import heappop, heappush
     from campus_sim.planning import AStarPlanner
 
-    scale = AStarPlanner().heuristic_scale(graph, costs)
+    if algorithm not in {"astar", "dijkstra"}:
+        raise ValueError("Unknown lane route algorithm")
+    scale = AStarPlanner().heuristic_scale(graph, costs) if algorithm == "astar" else 0.
     by_id = {edge.id: edge for edge in graph.edges}
     parts = {edge.id: ([coordinates.to_unity(*point) for point in edge.polyline],
                       profiles.by_edge[edge.id]["right_offset_m"]) for edge in graph.edges}
