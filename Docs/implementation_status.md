@@ -1,6 +1,6 @@
 # 구현 현황
 
-프로젝트 버전 **0.2.1.1** · 2026-09-24. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
+프로젝트 버전 **0.2.1.1** · 상태 갱신 2026-10-27. 이 문서는 현재 checkout을 기준으로 하며, 과거 검증 기록과 현재 단계 판정을 구분한다. 근거가 없는 기능은 완료로 표시하지 않는다.
 
 ## 단계별 상태
 
@@ -12,7 +12,7 @@
 | M1 단일 차량 수직 흐름 | NOT_STARTED | RoadGraph, Dijkstra/A*, 동작하는 요청→픽업→운송→완료 흐름 및 T01/T03 증거가 아직 없다. |
 | M2 실제 지도·Stop·커버리지 | PARTIAL (조사만) | 후보·출입구 조사가 진행 중이나 검증된 필수 Landmark/Stop, 대표 시설 커버리지, 차량·보행 연결, 비룡플라자 정책은 미완료다. |
 | M3 혼잡·동적 재계획 | NOT_STARTED | 다섯 시간대, 센서/prior 구분 혼잡 추정, A* Full Replan/D* Lite 및 T04~T06/T24가 없다. |
-| M4 센서·안전·지역 계획 | NOT_STARTED | Unity Raycast SensorRig, SensorObservation 계약 연결, TTC/제동/재출발, RRT 및 T07~T09/T21가 없다. |
+| M4 센서·안전·지역 계획 | PARTIAL | Unity Raycast LiDAR는 15m·360방향×13 하향 수직 채널(-30°~수평 0°)의 조정 가능한 prototype 설정으로 ray/관측을 생성한다. 테스트 씬 수평 각도 간격은 1°(360° 전체), 수직은 2.5° 간격이다. 테스트 씬의 센서 원점은 차량 루트의 LiDAR 모양 지붕 부품에 둔 `LiDAR Sensor Mount`를 사용한다. 지면은 객체 감지에서 제외하지만 실제 ground-return 점은 금색, 객체 감지 hit 점은 빨간색으로 `P` 점군에 표시한다. `P`는 차량과 실제 hit 점군만 남기는 단독 표시 모드로, 다른 Renderer/Canvas와 ray 선을 숨기고 종료 시 이전 상태를 복구한다. `L`은 시작 시 꺼진 ray 선을 토글한다. Annyoung Car와 `VehicleController`의 편집기 키보드 주행도 지원하며, Play Mode에서 구동 명령에 따른 이동만 확인했다. 4,680 rays/scan(10Hz·차량당 46,800 raycast/s)이며 실제 처리 성능은 측정 전이다. Python transport/pose context 발급, Radar, TTC/안전 제동/재출발, RRT 및 T07~T09/T21 검증은 없다. |
 | M5 다중 차량·배차·경합 | NOT_STARTED | Greedy/Hungarian, 3대 차량 운용, 에너지/허브, Reservation/CBS 비교가 없다. 현재 Python fixture의 즉시 배정은 이 단계 구현이 아니다. |
 | M5a 실시간 통합 | NOT_STARTED | Python WebSocket, PC/Mobile 권위 상태, 실제 호출/ACK/재접속/세션 격리, 센서 입력 연결이 없다. |
 | M6 실험·성능·OSS/IOSS | NOT_STARTED | E1~E4, 부하/성능 원자료, 재현 run, 동시 데모와 OSS/IOSS 증빙이 없다. |
@@ -39,7 +39,7 @@
 
 ## 차량 모델·프리팹 준비 상태
 
-최근 커밋 `f97fa11`에서 차량 모델과 프리팹을 추가했다. 프로젝트 에셋은 `Assets/CampusSim/Models/AnnyongCar/`, `Models/Default Car/`, `Models/Induck Car/` 및 `Assets/CampusSim/Prefabs/Annyoung Car.prefab`, `DefaultCar.prefab`, `InduckCar.prefab`에 있다. 주행 구현에서는 이 프리팹을 차량의 시각 표현으로 재사용한다. 프리팹 추가만으로 차량 동역학·Collider/Physics 설정·차량 제원·차량 능력·안전 제동이 구현된 것은 아니다. M1/M4에서 축/전방 방향·미터 단위 크기·피벗·Collider/접지·렌더링 비용을 검토한 후, 시각 모델과 물리/제어 루트를 분리해 연결한다. 제원이나 성능은 측정·확인 전까지 미확정이다.
+최근 커밋 `f97fa11`에서 차량 모델과 프리팹을 추가했다. 프로젝트 에셋은 `Assets/CampusSim/Models/AnnyongCar/`, `Models/Default Car/`, `Models/Induck Car/` 및 `Assets/CampusSim/Prefabs/Annyoung Car.prefab`, `DefaultCar.prefab`, `InduckCar.prefab`에 있다. `LidarSensorDemo` 테스트 씬에서는 Annyoung Car 인스턴스의 Rigidbody, BoxCollider, 네 WheelCollider와 `VehicleController`를 사용해 편집기 키보드/구동 명령으로 움직일 수 있다. 이는 테스트 씬 수준의 연결이며 서비스 차량 동역학·차량 제원·접근 능력·안전 제동·성능 검증을 완료한 뜻은 아니다. 해당 항목과 렌더링 비용은 M1/M4에서 실제 사용 조건으로 검토한다. 제원이나 성능은 측정·확인 전까지 미확정이다.
 
 ## 다음 작업 순서
 
