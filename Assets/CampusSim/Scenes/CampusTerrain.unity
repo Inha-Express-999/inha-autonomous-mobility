@@ -180161,7 +180161,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8472938472034, guid: b0729bb165e3b1740a7af57148365849, type: 3}
       propertyPath: m_EditorClassIdentifier
-      value: Assembly-CSharp::InhaExpress.Client.Presentation.VehicleController
+      value: InhaExpress.Simulation::InhaExpress.Client.Presentation.VehicleController
       objectReference: {fileID: 0}
     - target: {fileID: 2199060303391678607, guid: b0729bb165e3b1740a7af57148365849, type: 3}
       propertyPath: m_Size.y
@@ -295230,7 +295230,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e93ea9a6b6105c40b74d451067489a5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InhaExpress.Client.Presentation.VehicleController
+  m_EditorClassIdentifier: InhaExpress.Simulation::InhaExpress.Client.Presentation.VehicleController
   operatorVehicleId: V03
   maxForwardSpeedKmh: 50
   maxReverseSpeedKmh: 12.6
@@ -354513,7 +354513,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1e93ea9a6b6105c40b74d451067489a5, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InhaExpress.Client.Presentation.VehicleController
+  m_EditorClassIdentifier: InhaExpress.Simulation::InhaExpress.Client.Presentation.VehicleController
   operatorVehicleId: V02
   maxForwardSpeedKmh: 50
   maxReverseSpeedKmh: 12.6

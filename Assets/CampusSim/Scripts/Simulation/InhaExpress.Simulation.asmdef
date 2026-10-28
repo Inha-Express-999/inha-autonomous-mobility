@@ -1,0 +1,10 @@
+{
+  "name": "InhaExpress.Simulation",
+  "rootNamespace": "InhaExpress.Simulation",
+  "references": [
+    "InhaExpress.Client.Domain",
+    "InhaExpress.Client.Presentation",
+    "Unity.InputSystem"
+  ],
+  "autoReferenced": true
+}

@@ -2,7 +2,7 @@
 
 Coordinates are ego-local metres: x right, y forward. Relative velocities
 are Cartesian observations in the same instantaneous frame, not Doppler.
-This contract is not yet connected to the Unity/network schema.
+The PC protocol-5 LiDAR adapter uses this boundary for RRT previews.
 """
 
 from math import hypot

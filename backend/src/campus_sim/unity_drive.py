@@ -39,20 +39,44 @@ class RayDetection(StrictModel):
         return self
 
 
+class LidarHit(StrictModel):
+    lateral_m: float = Field(ge=-40, le=40)
+    forward_m: float = Field(ge=-40, le=40)
+    entity_class: Literal["unknown", "static", "pedestrian", "vehicle"] = "unknown"
+
+
+class LidarFrame(StrictModel):
+    tick: int = Field(ge=0, strict=True)
+    ray_count: int = Field(ge=360, le=8192, strict=True)
+    max_range_m: float = Field(ge=1, le=30)
+    valid: bool
+    hits: list[LidarHit] = Field(max_length=8192)
+
+    @model_validator(mode="after")
+    def complete_scan(self):
+        if self.ray_count % 360 or len(self.hits) > self.ray_count:
+            raise ValueError("Complete 360-column scan required; never truncate safety hits")
+        return self
+
+
 class EgoObservation(StrictModel):
     model_config = ConfigDict(extra="forbid", allow_inf_nan=False, json_schema_extra={"allOf": [{
-        "if": {"properties": {"schema_version": {"enum": [2, 3, 4]}}},
+        "if": {"properties": {"schema_version": {"enum": [2, 3, 4, 5]}}},
         "then": {"required": ["half_width_m"], "properties": {"half_width_m": {"type": "number"}}}
     }, {
         "if": {"required": ["obstacle_detection_enabled"], "properties": {"obstacle_detection_enabled": {"const": False}}},
         "then": {"properties": {"schema_version": {"enum": [3, 4]}, "rays": {"maxItems": 0}}},
-        "else": {"properties": {"rays": {"minItems": 7}}}
+        "else": {"if": {"properties": {"schema_version": {"enum": [1, 2, 3, 4]}}}, "then": {"properties": {"rays": {"minItems": 7}}}}
     }, {
-        "if": {"properties": {"schema_version": {"const": 4}}},
+        "if": {"properties": {"schema_version": {"enum": [4, 5]}}},
         "then": {"required": ["rear_axle_offset_m", "half_length_m"], "properties": {
             "rear_axle_offset_m": {"type": "number"}, "half_length_m": {"type": "number"}}}
+    }, {
+        "if": {"properties": {"schema_version": {"const": 5}}},
+        "then": {"required": ["lidar"], "properties": {"lidar": {"type": "object"},
+            "rays": {"maxItems": 0}, "obstacle_detection_enabled": {"const": True}}}
     }]})
-    schema_version: Literal[1, 2, 3, 4]
+    schema_version: Literal[1, 2, 3, 4, 5]
     run_id: str
     geometry_hash: str = Field(min_length=64, max_length=64)
     tick: int = Field(ge=0, strict=True)
@@ -66,20 +90,28 @@ class EgoObservation(StrictModel):
     sensor_age_s: float = Field(ge=0, le=10)
     obstacle_detection_enabled: bool = True
     rays: list[RayDetection] = Field(max_length=64)
+    lidar: LidarFrame | None = None
     half_width_m: float | None = Field(default=None, ge=.1, le=3)
     rear_axle_offset_m: float | None = Field(default=None, ge=-10, le=10)
     half_length_m: float | None = Field(default=None, ge=.1, le=15)
 
     @model_validator(mode="after")
     def lane_geometry_required(self):
-        if self.obstacle_detection_enabled and len(self.rays) < 7:
+        if self.schema_version < 5 and self.obstacle_detection_enabled and len(self.rays) < 7:
             raise ValueError("Enabled obstacle detection requires at least seven rays")
         if not self.obstacle_detection_enabled and (self.schema_version < 3 or self.rays):
             raise ValueError("Disabled obstacle detection requires protocol 3 and no rays")
         if self.schema_version >= 2 and self.half_width_m is None:
             raise ValueError("Measured body half width required for lane protocol 2")
-        if self.schema_version == 4 and (self.rear_axle_offset_m is None or self.half_length_m is None):
+        if self.schema_version >= 4 and (self.rear_axle_offset_m is None or self.half_length_m is None):
             raise ValueError("Protocol 4 requires measured rear axle and body length")
+        if self.schema_version == 5:
+            if self.lidar is None or self.lidar.tick != self.tick or self.rays or not self.obstacle_detection_enabled:
+                raise ValueError("Protocol 5 requires same-tick LiDAR with detection enabled and no legacy rays")
+            if any(math.hypot(h.lateral_m, h.forward_m) > self.lidar.max_range_m + self.half_length_m + self.half_width_m for h in self.lidar.hits):
+                raise ValueError("Hit outside sensor range and measured body offset")
+        elif self.lidar is not None:
+            raise ValueError("LiDAR requires protocol 5")
         return self
 
 
@@ -87,8 +119,16 @@ class AutoMission(StrictModel):
     run_id: str
     command_id: str = Field(min_length=1, max_length=100)
     stop_id: str
-    driving_profile: Literal["standard", "campus_fast_no_obstacles"] = "standard"
-    cruise_speed_kmh: float = Field(default=40, ge=30, le=50)
+    driving_profile: Literal["standard", "campus_fast_no_obstacles", "campus_lidar"] = "standard"
+    cruise_speed_kmh: float = Field(default=40, ge=1, le=50)
+
+    @model_validator(mode="after")
+    def profile_limits(self):
+        if self.driving_profile == "campus_fast_no_obstacles" and self.cruise_speed_kmh < 30:
+            raise ValueError("Legacy fast profile requires at least 30 km/h")
+        if self.driving_profile == "campus_lidar" and self.cruise_speed_kmh > 18:
+            raise ValueError("PC LiDAR trial is capped at 18 km/h")
+        return self
 
 
 class DriveCommand(StrictModel):
@@ -97,9 +137,9 @@ class DriveCommand(StrictModel):
         "then": {"properties": {"target_speed_kmh": {"maximum": 18}}}
     }, {
         "if": {"properties": {"target_speed_kmh": {"exclusiveMaximum": 0}}},
-        "then": {"properties": {"schema_version": {"const": 4}, "status": {"const": "MANEUVER"}}}
+        "then": {"properties": {"schema_version": {"enum": [4, 5]}, "status": {"const": "MANEUVER"}}}
     }]})
-    schema_version: Literal[1, 2, 3, 4]
+    schema_version: Literal[1, 2, 3, 4, 5]
     run_id: str
     tick: int = Field(ge=0)
     target_speed_kmh: float = Field(ge=-5, le=50)
@@ -116,7 +156,7 @@ class DriveCommand(StrictModel):
     def legacy_speed_limit(self):
         if self.schema_version < 3 and self.target_speed_kmh > 18:
             raise ValueError("High-speed simulation requires protocol 3")
-        if self.target_speed_kmh < 0 and (self.schema_version != 4 or self.status != "MANEUVER"):
+        if self.target_speed_kmh < 0 and (self.schema_version < 4 or self.status != "MANEUVER"):
             raise ValueError("Reverse requires protocol 4 and an explicit manoeuvre")
         return self
 
@@ -147,6 +187,10 @@ class PhysicalVehicle:
     route_algorithm: str = "astar"
     cruise_speed_mps: float = 5.
     turn: object | None = None
+    lidar_blocked: bool = False
+    lidar_clear_frames: int = 0
+    lidar_rrt_status: str = "NOT_REQUESTED"
+    lidar_rrt_at_s: float = -10.
 
 
 class UnityDriveSession:
@@ -336,7 +380,7 @@ class UnityDriveSession:
         response = dict(schema_version=ego.schema_version, run_id=self.session.run_id, tick=ego.tick,
                         target_speed_kmh=0., steering_angle_rad=0., emergency_stop=True,
                         valid_for_s=.3, status=vehicle.status, reason=vehicle.reason)
-        if ego.schema_version == 4:
+        if ego.schema_version >= 4:
             dispatcher = getattr(self.session, "physical_dispatch", None)
             response["transport_phase"] = next((job.phase for job in dispatcher.jobs.values()
                 if job.vehicle_id == vehicle_id and not job.returned), "") if dispatcher else ""
@@ -346,7 +390,12 @@ class UnityDriveSession:
             response.update(reason=reason, status=status)
             return response
 
+        if vehicle.driving_profile == "campus_lidar" and ego.schema_version != 5:
+            return stopped("LiDAR profile requires protocol 5")
         if not ego.sensor_valid or ego.sensor_age_s > .2:
+            if ego.schema_version == 5:
+                vehicle.lidar_blocked = True
+                vehicle.lidar_clear_frames = 0
             return stopped("Invalid/stale Raycast observation")
         if not ego.obstacle_detection_enabled and vehicle.driving_profile != "campus_fast_no_obstacles" and vehicle.route_unity:
             return stopped("Obstacle detection disabled; select path-only simulation profile")
@@ -354,11 +403,20 @@ class UnityDriveSession:
             return stopped("Simulation paused")
         if not vehicle.route_unity or vehicle.status in {"ARRIVED", "OFF_ROUTE"}:
             return response
+        lidar_speed_cap = math.inf
+        if ego.schema_version == 5:
+            from campus_sim.physical_lidar import evaluate_lidar
+            check = evaluate_lidar(vehicle_id, vehicle, ego, self.clock())
+            lidar_speed_cap = check.speed_cap_mps
+            if check.stop:
+                return stopped(check.reason)
         if vehicle.turn is not None:
             turn_command = vehicle.turn.update(ego)
             if turn_command['status'] == 'DONE':
                 vehicle.turn = None
                 return stopped('Turn complete; resume onward route', 'DRIVING')
+            if ego.schema_version == 5:
+                turn_command["target_speed_kmh"] = math.copysign(min(abs(turn_command["target_speed_kmh"]), lidar_speed_cap * 3.6), turn_command["target_speed_kmh"])
             response.update(turn_command)
             vehicle.status, vehicle.reason = turn_command['status'], turn_command['reason']
             return response
@@ -389,7 +447,7 @@ class UnityDriveSession:
         if cross_track > allowed_error:
             return stopped("Outside lane/vehicle-width corridor; no teleport/recovery", "OFF_ROUTE")
         vehicle.progress_m = max(vehicle.progress_m, progress)
-        fast_simulation = vehicle.driving_profile == "campus_fast_no_obstacles"
+        fast_simulation = vehicle.driving_profile in {"campus_fast_no_obstacles", "campus_lidar"}
         lateral_limit = self.fast_lateral_acceleration_mps2 if fast_simulation else self.lateral_acceleration_mps2
         cruise = vehicle.cruise_speed_mps if ego.schema_version >= 2 else self.legacy_speed_mps
         curve_speed = cruise
@@ -461,10 +519,10 @@ class UnityDriveSession:
         if not fast_simulation and vehicle.sensor_blocked and clearance <= vehicle.blocked_release_m:
             return stopped("Raycast stopping-distance constraint")
         vehicle.sensor_blocked = False
-        speed = min(curve_speed, cruise if fast_simulation else vehicle.road_speed_mps,
+        speed = min(lidar_speed_cap, vehicle.road_speed_mps if ego.schema_version == 5 else math.inf, curve_speed, cruise if fast_simulation else vehicle.road_speed_mps,
                     math.sqrt(max(0., 2 * (remaining - .5))),
                     math.inf if fast_simulation else max(0., clearance - stopping_distance))
-        vehicle.status, vehicle.reason = "DRIVING", ("A*" if vehicle.route_algorithm == "astar" else "Dijkstra") + (" / simulation cruise / obstacles ignored" if fast_simulation else " / pure pursuit / Raycast safety")
+        vehicle.status, vehicle.reason = "DRIVING", ("A*" if vehicle.route_algorithm == "astar" else "Dijkstra") + (" / LiDAR TTC safety" if ego.schema_version == 5 else " / simulation cruise / obstacles ignored" if fast_simulation else " / pure pursuit / Raycast safety")
         response.update(target_speed_kmh=speed * 3.6, steering_angle_rad=steering, emergency_stop=False,
                         status=vehicle.status, reason=vehicle.reason)
         return response
@@ -480,7 +538,8 @@ class UnityDriveSession:
                     routes=[dict(phase="TO_DROPOFF", points=v.route_xy)] if v.route_xy else [],
                     motion_source="unity_physics", battery_measured=False,
                     driving_profile=v.driving_profile, cruise_speed_kmh=v.cruise_speed_mps * 3.6,
-                    obstacles_ignored=v.driving_profile == "campus_fast_no_obstacles",
+                    obstacles_ignored=v.driving_profile == "campus_fast_no_obstacles" and (v.ego is None or v.ego.schema_version < 5),
+                    lidar_rrt_status=v.lidar_rrt_status, lidar_blocked=v.lidar_blocked,
                     measured_speed_kmh=v.ego.speed_mps * 3.6 if v.ego and not stale else None,
                     observation_fresh=not stale and v.ego is not None,
                     goal_unity=dict(x=v.goal_unity[0], y=0., z=v.goal_unity[1]) if v.goal_unity else None,

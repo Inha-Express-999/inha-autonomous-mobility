@@ -18,12 +18,18 @@ namespace InhaExpress.Client.Tests
     public sealed class DesktopLiveIntegrationTests
     {
         [Serializable] private sealed class LiveState { public string run_id; public double time_s; public bool paused; }
+        [Serializable] private sealed class SensorEnvelope
+        {
+            public int schema_version;
+            public bool sensor_valid, obstacle_detection_enabled;
+            public PhysicalLidarFrame lidar;
+        }
         [Serializable] private sealed class LiveInfo { public int process_id; public string run_id; }
         [Serializable] private sealed class Evidence
         {
             public string project_version, run_id, http_run_id, geometry_hash;
             public double unity_time_s, web_time_s;
-            public int process_id, nodes, hubs, stops;
+            public int process_id, nodes, hubs, stops, lidar_clients;
             public bool auto_started, reused_without_ownership, duplicate_bootstrap_rejected, vehicle_actuation;
             public string[] loaded_scenes;
         }
@@ -60,14 +66,38 @@ namespace InhaExpress.Client.Tests
                 Assert.That(launcher.OwnsServer, Is.True, "This opt-in test requires a free local port 8765.");
                 foreach (string path in paths) Assert.That(SceneManager.GetSceneByPath(path).isLoaded, Is.True, path);
                 Assert.That(UnityEngine.Object.FindObjectsByType<CampusServerMap>(FindObjectsSortMode.None).Length, Is.EqualTo(1));
-                Assert.That(map.markers.Length, Is.EqualTo(204));
                 var document = ServerMapDocument.Parse(map.authoredMap.text);
+                Assert.That(map.markers.Length, Is.EqualTo(document.nodes.Length + document.hubs.Length + document.stops.Length));
                 foreach (var marker in map.markers)
                 {
                     var node = document.nodes.Single(n => n.id == marker.nodeId);
                     Assert.That(marker.transform.position.x, Is.EqualTo(node.position.x).Within(.01));
                     Assert.That(marker.transform.position.z, Is.EqualTo(node.position.z).Within(.01));
                 }
+                // Actual PC components must attach the same continuous sensor contract to all three cars.
+                UnityAutonomousClient[] clients = null;
+                deadline = Time.realtimeSinceStartupAsDouble + 30;
+                while (Time.realtimeSinceStartupAsDouble < deadline)
+                {
+                    clients = UnityEngine.Object.FindObjectsByType<UnityAutonomousClient>(FindObjectsSortMode.None);
+                    if (clients.Length == 3 && clients.All(c=>c.Connected && !string.IsNullOrEmpty(c.LatestObservationJson))) break;
+                    yield return null;
+                }
+                Assert.That(clients.Length, Is.EqualTo(3));
+                foreach (var client in clients)
+                {
+                    Assert.That(client.Connected, Is.True, client.Status);
+                    var sensor = JsonUtility.FromJson<SensorEnvelope>(client.LatestObservationJson);
+                    Assert.That(sensor.schema_version, Is.EqualTo(5));
+                    Assert.That(sensor.obstacle_detection_enabled, Is.True);
+                    Assert.That(sensor.lidar, Is.Not.Null);
+                    Assert.That(sensor.lidar.valid, Is.True, client.VehicleId);
+                    Assert.That(sensor.lidar.ray_count, Is.EqualTo(2520));
+                    Assert.That(sensor.sensor_valid, Is.True, client.VehicleId + " wheel/sensor validity");
+                }
+                var firstTick = JsonUtility.FromJson<SensorEnvelope>(clients[0].LatestObservationJson).lidar.tick;
+                yield return new WaitForSecondsRealtime(.5f);
+                Assert.That(JsonUtility.FromJson<SensorEnvelope>(clients[0].LatestObservationJson).lidar.tick, Is.GreaterThan(firstTick));
                 LiveState state;
                 using (var get = UnityWebRequest.Get("http://127.0.0.1:8765/v1/demo/state"))
                 {
@@ -105,7 +135,7 @@ namespace InhaExpress.Client.Tests
                     geometry_hash = map.geometryHash, unity_time_s = map.SimulationTime, web_time_s = state.time_s,
                     process_id = info.process_id, nodes = document.nodes.Length, hubs = document.hubs.Length,
                     stops = document.stops.Length, auto_started = true, reused_without_ownership = true,
-                    duplicate_bootstrap_rejected = true, vehicle_actuation = false,
+                    duplicate_bootstrap_rejected = true, vehicle_actuation = false, lidar_clients = clients.Length,
                     loaded_scenes = paths.Select(p => SceneManager.GetSceneByPath(p).name).ToArray()
                 };
                 Directory.CreateDirectory(".utmp");

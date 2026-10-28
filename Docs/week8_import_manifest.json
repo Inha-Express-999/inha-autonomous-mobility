@@ -1,0 +1,51 @@
+{
+  "base": "020f6317",
+  "lidar_merge": "53bb8ae6",
+  "transport_source": "78500582",
+  "transport_week8_commits": [
+    "05388eb0",
+    "30d2614f",
+    "78500582"
+  ],
+  "relocated_physics_relays": {
+    "Assets/CampusSim/Scripts/Presentation/ClientConnectionBrakeRelay.cs": "Assets/CampusSim/Scripts/Simulation/ClientConnectionBrakeRelay.cs",
+    "Assets/CampusSim/Scripts/Presentation/ClientConnectionBrakeRelay.cs.meta": "Assets/CampusSim/Scripts/Simulation/ClientConnectionBrakeRelay.cs.meta",
+    "Assets/CampusSim/Scripts/Presentation/ClientVehicleSafetyBinding.cs": "Assets/CampusSim/Scripts/Simulation/ClientVehicleSafetyBinding.cs",
+    "Assets/CampusSim/Scripts/Presentation/ClientVehicleSafetyBinding.cs.meta": "Assets/CampusSim/Scripts/Simulation/ClientVehicleSafetyBinding.cs.meta"
+  },
+  "controller_guid_preserved": "1e93ea9a6b6105c40b74d451067489a5",
+  "scope": "Selective week-8 sources plus continuous PC LiDAR protocol-5 integration. Existing campus Physics/service/Bootstrap architecture retained. Older synthetic Python backend not merged.",
+  "pc_lidar": {
+    "protocol": 5,
+    "horizontal_columns": 360,
+    "vertical_channels": 7,
+    "range_m": 15,
+    "scan_rate_hz": 10,
+    "vertical_degrees": [
+      -30,
+      15
+    ],
+    "rrt_executable": false,
+    "speed_cap_kmh": 18
+  },
+  "integration_source_sha256": {
+    "Assets/CampusSim/Scripts/Simulation/ClientConnectionBrakeRelay.cs": "920843e01c765184b2293d41799211da8321f8b2f8c4b6889c344e1105bc14ab",
+    "Assets/CampusSim/Scripts/Simulation/ClientVehicleSafetyBinding.cs": "b4ef7d65866785f8e29daae0db0887545041ec14785893b68177cc79ead9d073",
+    "Assets/CampusSim/Scripts/Simulation/LidarDebugVisualizer.cs": "9b21b35fcae35e5913402f5bf4ba906d33fd6028e5b3c5b871def3426cd3f362",
+    "Assets/CampusSim/Scripts/Simulation/LidarDemoManualDriver.cs": "464a7692bbde6f7b9e74c08c37798fc95706ff9ebce8db99315f6c727b461dbb",
+    "Assets/CampusSim/Scripts/Simulation/LidarIgnore.cs": "8820f2639e79ca7077bd822df0efd24a9e10a99bb8956f60650bfd779a031bb9",
+    "Assets/CampusSim/Scripts/Simulation/LidarPointCloudVisualizer.cs": "1b83084a08046a45d80cd325fd9ab1139ebdea5de9d9572bf91af0e99a2897a4",
+    "Assets/CampusSim/Scripts/Simulation/LidarSensorRig.cs": "8df3f5a875ddb18abbfd7e609028100e96664194624715d939bc1b2e73bfcaff",
+    "Assets/CampusSim/Scripts/Simulation/LidarTarget.cs": "fc0bb3791864fa2531072632bb95a0a4df5b5749de2f6ae6aabfee6dbc64336b",
+    "Assets/CampusSim/Scripts/Simulation/PcLidarIntegration.cs": "d09c4f460671e3543d314b12afc857b0ab8fad5731afebf9856d35ee867bd036",
+    "Assets/CampusSim/Scripts/Simulation/SensorObservation.cs": "3e2e2c1375ca447a4667a7ae532a89a7148f584688e0b433055136ee0f2402a7",
+    "Assets/CampusSim/Scripts/Simulation/TransportVehicleBrakeBridge.cs": "987917ecb8e421375a8891abdee9952ba3cf94525c3eb78177ab6793d8d903e2",
+    "Assets/CampusSim/Scripts/Simulation/VehicleController.cs": "78bffe28737e060b8a6498fd67930068b289e7cda0e54115bfd5483574ee5ec3",
+    "Assets/CampusSim/Scripts/Presentation/UnityAutonomousClient.cs": "bfeaa4364b4fd8104951b36f8eebac68f32e2b25b8135668650c23478f5bcfeb",
+    "Assets/CampusSim/Scripts/Presentation/PhysicalLidarSource.cs": "862685fee80621ec218323b041fbf3e5190d13094a56b614ed6615e38730869b",
+    "backend/src/campus_sim/physical_lidar.py": "39aa0d3fc8dd85d245e280b5df78940f45504b8edde286ecef4dfe3e281bbfa2",
+    "backend/src/campus_sim/unity_drive.py": "0fe326c82e0b57785e130f8edf2833c28f684d1ae6a53daa15ceddf606cb555f",
+    "backend/src/campus_sim/physical_dispatch.py": "cd1787b570ab9c1d38663ad987731be40ee374d18950a49ac6b7a666016d52ef",
+    "backend/src/campus_sim/physical_turn.py": "b904e63aa8970a4baa761ec9c6ca1bba4d1b384fdf484f823b88eeb45e54d4f2"
+  }
+}

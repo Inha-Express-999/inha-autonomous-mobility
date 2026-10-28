@@ -97,14 +97,19 @@ class PhysicalDispatcher:
     def busy(self, vehicle_id):
         return any(j.vehicle_id==vehicle_id and not j.returned for j in self.jobs.values())
 
-    def _command(self, stop):
+    def _command(self, stop, vehicle_id=None):
+        live = self.session.physical.vehicles.get(vehicle_id)
+        if live and live.ego and live.ego.schema_version == 5:
+            return AutoMission(run_id=self.session.run_id,command_id=uuid4().hex,stop_id=stop,
+                driving_profile="campus_lidar",cruise_speed_kmh=18)
         return AutoMission(run_id=self.session.run_id,command_id=uuid4().hex,stop_id=stop,
                            driving_profile='campus_fast_no_obstacles',cruise_speed_kmh=40)
 
     def _fresh(self, vehicle, now):
         return (vehicle.connected and vehicle.ego is not None and
                 now-vehicle.received_s<=self.session.physical.stale_s and
-                vehicle.ego.sensor_valid and vehicle.ego.sensor_age_s<=.2)
+                vehicle.ego.sensor_valid and vehicle.ego.sensor_age_s<=.2 and
+                (vehicle.ego.schema_version < 5 or (vehicle.ego.lidar is not None and vehicle.ego.lidar.valid)))
 
     def _event(self, job, phase):
         job.phase=phase
@@ -121,14 +126,14 @@ class PhysicalDispatcher:
         pose=physical.vehicles[vehicle_id].ego
         energy=0.; durations=[]
         for leg,stop in enumerate((request.pickup_stop_id,request.dropoff_stop_id,homes[0])):
-            plan=physical.preview_mission(vehicle_id,self._command(stop),origin=pose)
+            plan=physical.preview_mission(vehicle_id,self._command(stop,vehicle_id),origin=pose)
             points=plan.route_unity
             length=sum(math.dist(a,b) for a,b in zip(points,points[1:]))
             turn_length=0.
             if plan.turn:
                 turn_length=sum(sum(math.hypot(b.x-a.x,b.z-a.z) for a,b in zip(arc,arc[1:]))
                                 for arc in plan.turn.controller.arcs)
-            durations.append(length/(40/3.6)+turn_length/.55+(6 if plan.turn else 0))
+            durations.append(length/min(40/3.6,plan.cruise_speed_mps)+turn_length/.55+(6 if plan.turn else 0))
             length+=turn_length
             policy=service.battery_policy
             if policy:
@@ -157,7 +162,7 @@ class PhysicalDispatcher:
 
     def _start_leg(self, job, stop, phase):
         try:
-            self.session.physical.mission(job.vehicle_id,self._command(stop))
+            self.session.physical.mission(job.vehicle_id,self._command(stop,job.vehicle_id))
         except ValueError as error:
             job.reason=str(error)
             return False

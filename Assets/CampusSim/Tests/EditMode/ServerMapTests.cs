@@ -20,8 +20,8 @@ namespace InhaExpress.Client.Tests
         {
             var json = File.ReadAllText(MapPath);
             var map = ServerMapDocument.Parse(json);
-            Assert.That(map.nodes.Length, Is.EqualTo(187));
-            Assert.That(map.edges.Length, Is.EqualTo(402));
+            Assert.That(map.nodes.Length, Is.EqualTo(188));
+            Assert.That(map.edges.Length, Is.EqualTo(404));
             Assert.That(map.hubs.Length, Is.EqualTo(3));
             Assert.That(map.stops.Length, Is.EqualTo(14));
             var hub = map.hubs.Single(h => h.id == "west_field_parking");
@@ -80,8 +80,10 @@ namespace InhaExpress.Client.Tests
                 var overlay = roots[0];
                 var map = ServerMapDocument.Parse(AssetDatabase.LoadAssetAtPath<TextAsset>(MapPath).text);
                 Assert.That(overlay.geometryHash, Is.EqualTo(map.geometry_hash));
-                Assert.That(overlay.markers.Length, Is.EqualTo(204));
-                Assert.That(overlay.markers.Count(m => m.kind == ServerMapMarker.MarkerKind.RoadNode), Is.EqualTo(187));
+                Assert.That(overlay.markers.Length,
+                    Is.EqualTo(map.nodes.Length + map.hubs.Length + map.stops.Length));
+                Assert.That(overlay.markers.Count(m => m.kind == ServerMapMarker.MarkerKind.RoadNode),
+                    Is.EqualTo(map.nodes.Length));
                 Assert.That(overlay.markers.Count(m => m.kind == ServerMapMarker.MarkerKind.Hub), Is.EqualTo(3));
                 Assert.That(overlay.markers.Count(m => m.kind == ServerMapMarker.MarkerKind.Stop), Is.EqualTo(14));
                 foreach (var marker in overlay.markers)

@@ -22,12 +22,14 @@ namespace InhaExpress.Client.Domain
         public ReadOnlyCollection<StopDto> Stops { get; }
         public ReadOnlyCollection<RouteDto> Routes { get; }
         public ReadOnlyCollection<ZoneDto> Zones { get; }
+        public ReadOnlyCollection<VehicleControlDto> ControlCommands { get; }
 
         public WorldSnapshotDto(int schemaVersion, string projectVersion, string mapVersion,
             string runId, long sequence, long simulationTick, double simulationTimeS,
             ClientRole role, string subscriberId, IEnumerable<VehicleDto> vehicles,
             IEnumerable<RequestDto> requests, IEnumerable<LandmarkDto> landmarks,
-            IEnumerable<StopDto> stops, IEnumerable<RouteDto> routes, IEnumerable<ZoneDto> zones)
+            IEnumerable<StopDto> stops, IEnumerable<RouteDto> routes, IEnumerable<ZoneDto> zones,
+            IEnumerable<VehicleControlDto> controlCommands = null)
         {
             if (schemaVersion != SupportedSchemaVersion) throw new ArgumentException("Unsupported schema version.");
             SchemaVersion = schemaVersion;
@@ -56,6 +58,18 @@ namespace InhaExpress.Client.Domain
             Stops = DtoGuard.Copy(stops, nameof(stops));
             Routes = DtoGuard.Copy(routes, nameof(routes));
             Zones = DtoGuard.Copy(zones, nameof(zones));
+            ControlCommands = DtoGuard.Copy(controlCommands ?? Array.Empty<VehicleControlDto>(), nameof(controlCommands));
+            if (role != ClientRole.PC_Operator && ControlCommands.Count > 0)
+                throw new ArgumentException("Only PC operator snapshots may contain actuator commands.");
+            var controlled = new HashSet<string>(StringComparer.Ordinal);
+            foreach (var command in ControlCommands)
+            {
+                if (command.MapVersion != mapVersion || !controlled.Add(command.VehicleId))
+                    throw new ArgumentException("Control map mismatch or duplicate vehicle command.");
+                bool found = false;
+                foreach (var vehicle in Vehicles) if (vehicle.Id == command.VehicleId) found = true;
+                if (!found) throw new ArgumentException("Command references an absent vehicle.");
+            }
         }
     }
 }

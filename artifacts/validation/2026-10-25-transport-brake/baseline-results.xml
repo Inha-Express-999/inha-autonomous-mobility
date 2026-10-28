@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="2" result="Passed" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-25 03:34:40Z" end-time="2026-10-25 03:34:42Z" duration="1.5929683">
+  <test-suite type="TestSuite" id="1010" name="transport-brake-9850bcbae4464d68b1314643ed22af13" fullname="transport-brake-9850bcbae4464d68b1314643ed22af13" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-25 03:34:40Z" end-time="2026-10-25 03:34:42Z" duration="1.592968" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1004" name="TransportBrake.Tests.dll" fullname="C:/Users/leeta/Documents/Codex/inha-autonomous-mobility/tmp/transport-brake-9850bcbae4464d68b1314643ed22af13/Library/ScriptAssemblies/TransportBrake.Tests.dll" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-25 03:34:40Z" end-time="2026-10-25 03:34:42Z" duration="1.582291" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="37276" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1005" name="InhaExpress" fullname="InhaExpress" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-25 03:34:40Z" end-time="2026-10-25 03:34:42Z" duration="1.581519" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1006" name="Client" fullname="InhaExpress.Client" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-25 03:34:40Z" end-time="2026-10-25 03:34:42Z" duration="1.581253" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1007" name="Tests" fullname="InhaExpress.Client.Tests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-25 03:34:40Z" end-time="2026-10-25 03:34:42Z" duration="1.580922" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1001" name="TransportBrakePlayModeTests" fullname="InhaExpress.Client.Tests.TransportBrakePlayModeTests" classname="InhaExpress.Client.Tests.TransportBrakePlayModeTests" runstate="Runnable" testcasecount="2" result="Passed" start-time="2026-10-25 03:34:40Z" end-time="2026-10-25 03:34:42Z" duration="1.579533" total="2" passed="2" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1003" name="SilenceWithPausedSimulationLatchesBrakeAndReconnectRequiresFreshState" fullname="InhaExpress.Client.Tests.TransportBrakePlayModeTests.SilenceWithPausedSimulationLatchesBrakeAndReconnectRequiresFreshState" methodname="SilenceWithPausedSimulationLatchesBrakeAndReconnectRequiresFreshState" classname="InhaExpress.Client.Tests.TransportBrakePlayModeTests" runstate="Runnable" seed="1013744054" result="Passed" start-time="2026-10-25 03:34:40Z" end-time="2026-10-25 03:34:41Z" duration="0.700274" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+              </test-case>
+              <test-case id="1002" name="WorkerDisconnectAppliesWheelBrakeAndStopsMovingBody" fullname="InhaExpress.Client.Tests.TransportBrakePlayModeTests.WorkerDisconnectAppliesWheelBrakeAndStopsMovingBody" methodname="WorkerDisconnectAppliesWheelBrakeAndStopsMovingBody" classname="InhaExpress.Client.Tests.TransportBrakePlayModeTests" runstate="Runnable" seed="2134350442" result="Passed" start-time="2026-10-25 03:34:41Z" end-time="2026-10-25 03:34:42Z" duration="0.862953" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:\Users\leeta\Documents\Codex\inha-autonomous-mobility\tmp\transport-brake-9850bcbae4464d68b1314643ed22af13\results.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

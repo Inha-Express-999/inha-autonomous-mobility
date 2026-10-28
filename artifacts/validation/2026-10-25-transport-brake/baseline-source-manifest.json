@@ -1,0 +1,13 @@
+{
+    "scope":  "isolated WheelCollider bridge tests; no WebSocket integration",
+    "sources":  {
+                    "Assets/CampusSim/Tests/PlayMode/TransportBrakePlayModeTests.cs":  "59953EA2B63814B8E4046B5A5028E0C32E598CA7F911D1508C9AFD57EA68805B",
+                    "Assets/CampusSim/Scripts/Simulation/VehicleController.cs":  "C3369CF65F28C18F5A66C990710AB3F126B1BE27EE4C738FE803F35799B2BBA7",
+                    "Assets/CampusSim/Scripts/Simulation/InhaExpress.Simulation.asmdef":  "17855FC3066190CAFC58B753D801919EC244384E8C1D141F1600F4D299723761",
+                    "ProjectSettings/ProjectVersion.txt":  "0B078D47F0F69849A4CA9A20B19FEC5F1E542D6E22D6A47181E56A1B9EC47E5D",
+                    "Assets/CampusSim/Scripts/Domain/InhaExpress.Client.Domain.asmdef":  "139C77A461C7262E16235FA1D93CA5E0E18BD801D25D887BC0619DF1C0A7854C",
+                    "Assets/CampusSim/Scripts/Domain/TransportSafetyGate.cs":  "B1C76B9982D072BCA232C0ABB478F94D7B81408AC13D2859C5B8648927E5E8A4",
+                    "Assets/CampusSim/Scripts/Simulation/TransportVehicleBrakeBridge.cs":  "987917ECB8E421375A8891ABDEE9952BA3CF94525C3EB78177AB6793D8D903E2"
+                },
+    "editor":  "6000.3.21f1"
+}

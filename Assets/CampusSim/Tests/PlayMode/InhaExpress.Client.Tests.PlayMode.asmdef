@@ -7,7 +7,8 @@
     "InhaExpress.Client.PC",
     "Unity.ugui",
     "InhaExpress.Client.MapClient",
-    "Unity.Cinemachine"
+    "Unity.Cinemachine",
+    "InhaExpress.Simulation"
   ],
   "optionalUnityReferences": [
     "TestAssemblies"

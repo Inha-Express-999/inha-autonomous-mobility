@@ -28,7 +28,7 @@ def prepare_turn(session, vehicle_id, command):
     """
     vehicle=session.vehicles[vehicle_id]
     ego=vehicle.ego
-    if ego.schema_version != 4 or command.driving_profile != 'campus_fast_no_obstacles':
+    if ego.schema_version < 4 or command.driving_profile not in {'campus_fast_no_obstacles','campus_lidar'}:
         return False
     profiles=session.lanes.by_edge
     coordinates=session.coordinates
@@ -114,7 +114,7 @@ def prefer_shorter_turn(session, vehicle_id, command):
     six seconds for stops/acceleration. This is a selection cost, not an ETA.
     """
     vehicle = session.vehicles[vehicle_id]
-    if vehicle.ego.schema_version != 4 or command.driving_profile != 'campus_fast_no_obstacles':
+    if vehicle.ego.schema_version < 4 or command.driving_profile not in {'campus_fast_no_obstacles','campus_lidar'}:
         return False
     candidate = replace(vehicle, last_command_id=None, turn=None)
     session.vehicles[vehicle_id] = candidate

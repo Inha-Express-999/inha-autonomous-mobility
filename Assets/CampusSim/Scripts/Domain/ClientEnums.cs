@@ -18,8 +18,12 @@ namespace InhaExpress.Client.Domain
     public enum ReasonCode
     {
         UNKNOWN, CROWD_AVOIDANCE, ZONE_CLOSED, NO_ACCESSIBLE_ALTERNATIVE,
-        PEDESTRIAN, ROAD_CLOSED, VEHICLE_FAILURE
+        PEDESTRIAN, ROAD_CLOSED, VEHICLE_FAILURE, STALE_LOCALIZATION,
+        SENSOR_DATA_STALE, SENSOR_INVALID, OBSTACLE_STOP, SAFETY_RESUME_HOLD,
+        RESOURCE_WAIT, RESOURCE_STATE_UNAVAILABLE
     }
     public enum ConnectionState { Disconnected, Connecting, Connected, Reconnecting }
     public enum ServerEventType { RequestUpdated, RouteUpdated, ZoneUpdated, Error }
+    public enum SensorType { LIDAR_2D, RADAR }
+    public enum SensorEntityClass { PEDESTRIAN, VEHICLE, STATIC_OBSTACLE, UNKNOWN }
 }

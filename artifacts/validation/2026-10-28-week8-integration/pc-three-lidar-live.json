@@ -1,0 +1,23 @@
+{
+    "project_version": "0.5.3.0",
+    "run_id": "84f76c6913a843a0b2654e6a88b66880",
+    "http_run_id": "84f76c6913a843a0b2654e6a88b66880",
+    "geometry_hash": "a912d2bd63406d1c1d4e553f5e03dba23750cb566a44d5560018609ff32d13ce",
+    "unity_time_s": 0.0,
+    "web_time_s": 0.0,
+    "process_id": 41836,
+    "nodes": 188,
+    "hubs": 3,
+    "stops": 14,
+    "lidar_clients": 3,
+    "auto_started": true,
+    "reused_without_ownership": true,
+    "duplicate_bootstrap_rejected": true,
+    "vehicle_actuation": false,
+    "loaded_scenes": [
+        "PC_Bootstrap",
+        "CampusWorld",
+        "CampusTerrain",
+        "PC_Operator"
+    ]
+}

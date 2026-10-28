@@ -31,7 +31,10 @@
       "then": {
         "properties": {
           "schema_version": {
-            "const": 4
+            "enum": [
+              4,
+              5
+            ]
           },
           "status": {
             "const": "MANEUVER"
@@ -46,7 +49,8 @@
         1,
         2,
         3,
-        4
+        4,
+        5
       ],
       "title": "Schema Version",
       "type": "integer"

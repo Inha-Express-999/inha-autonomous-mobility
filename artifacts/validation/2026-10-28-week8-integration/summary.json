@@ -1,0 +1,29 @@
+{
+  "project_version": "0.5.3.0",
+  "branch": "codex/week8-integration",
+  "python": 390,
+  "editmode": 57,
+  "playmode": 10,
+  "playmode_scope": {
+    "transport": 7,
+    "lidar_spawn_overlay_rear": 2,
+    "live_pc_bootstrap_three_lidar_clients": 1
+  },
+  "pure_csharp_assertions": 37,
+  "pc_actuation_in_live_bootstrap_test": false,
+  "checks": [
+    "Ruff E9,F63,F7,F82",
+    "node --check backend/src/campus_sim/web/app.js"
+  ],
+  "limitations": [
+    "RRT candidates remain non-executable; no automatic detour actuation",
+    "No full campus transport or multi-vehicle coordination validation",
+    "No Player/mobile build or graphical/FPS validation",
+    "Legacy v3 full suite: 7 passed, 2 unsupported integration failures preserved"
+  ],
+  "sources": {
+    "base": "020f6317",
+    "lidar": "53bb8ae6",
+    "transport": "78500582"
+  }
+}

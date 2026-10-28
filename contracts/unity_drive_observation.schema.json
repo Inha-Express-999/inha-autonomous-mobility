@@ -1,5 +1,82 @@
 {
   "$defs": {
+    "LidarFrame": {
+      "additionalProperties": false,
+      "properties": {
+        "tick": {
+          "minimum": 0,
+          "title": "Tick",
+          "type": "integer"
+        },
+        "ray_count": {
+          "maximum": 8192,
+          "minimum": 360,
+          "title": "Ray Count",
+          "type": "integer"
+        },
+        "max_range_m": {
+          "maximum": 30,
+          "minimum": 1,
+          "title": "Max Range M",
+          "type": "number"
+        },
+        "valid": {
+          "title": "Valid",
+          "type": "boolean"
+        },
+        "hits": {
+          "items": {
+            "$ref": "#/$defs/LidarHit"
+          },
+          "maxItems": 8192,
+          "title": "Hits",
+          "type": "array"
+        }
+      },
+      "required": [
+        "tick",
+        "ray_count",
+        "max_range_m",
+        "valid",
+        "hits"
+      ],
+      "title": "LidarFrame",
+      "type": "object"
+    },
+    "LidarHit": {
+      "additionalProperties": false,
+      "properties": {
+        "lateral_m": {
+          "maximum": 40,
+          "minimum": -40,
+          "title": "Lateral M",
+          "type": "number"
+        },
+        "forward_m": {
+          "maximum": 40,
+          "minimum": -40,
+          "title": "Forward M",
+          "type": "number"
+        },
+        "entity_class": {
+          "default": "unknown",
+          "enum": [
+            "unknown",
+            "static",
+            "pedestrian",
+            "vehicle"
+          ],
+          "title": "Entity Class",
+          "type": "string"
+        }
+      },
+      "required": [
+        "lateral_m",
+        "forward_m"
+      ],
+      "title": "LidarHit",
+      "type": "object"
+    },
     "RayDetection": {
       "additionalProperties": false,
       "properties": {
@@ -75,7 +152,8 @@
             "enum": [
               2,
               3,
-              4
+              4,
+              5
             ]
           }
         }
@@ -93,9 +171,23 @@
     },
     {
       "else": {
-        "properties": {
-          "rays": {
-            "minItems": 7
+        "if": {
+          "properties": {
+            "schema_version": {
+              "enum": [
+                1,
+                2,
+                3,
+                4
+              ]
+            }
+          }
+        },
+        "then": {
+          "properties": {
+            "rays": {
+              "minItems": 7
+            }
           }
         }
       },
@@ -127,7 +219,10 @@
       "if": {
         "properties": {
           "schema_version": {
-            "const": 4
+            "enum": [
+              4,
+              5
+            ]
           }
         }
       },
@@ -145,6 +240,31 @@
           "half_length_m"
         ]
       }
+    },
+    {
+      "if": {
+        "properties": {
+          "schema_version": {
+            "const": 5
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "lidar": {
+            "type": "object"
+          },
+          "rays": {
+            "maxItems": 0
+          },
+          "obstacle_detection_enabled": {
+            "const": true
+          }
+        },
+        "required": [
+          "lidar"
+        ]
+      }
     }
   ],
   "properties": {
@@ -153,7 +273,8 @@
         1,
         2,
         3,
-        4
+        4,
+        5
       ],
       "title": "Schema Version",
       "type": "integer"
@@ -225,6 +346,17 @@
       "maxItems": 64,
       "title": "Rays",
       "type": "array"
+    },
+    "lidar": {
+      "anyOf": [
+        {
+          "$ref": "#/$defs/LidarFrame"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null
     },
     "half_width_m": {
       "anyOf": [
