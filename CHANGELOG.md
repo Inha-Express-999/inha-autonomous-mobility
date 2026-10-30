@@ -1,5 +1,13 @@
 # 변경 이력
 
+## 0.5.3.1 — 2026-10-30 · 통합본 재연결 위치 보호
+
+- 작업/이유: protocol 5 연결 세대별 관측 버퍼로 재연결 직후 과거 위치 전송을 방지한다. 강제 단절 TCP 시험과 Unity PlayMode 시험을 추가한다.
+- 통합: main 88550ec5의 선별 통합 결과를 기준으로 algorithms 78500582 이력을 연결한다. 구형 브랜치의 전체 파일을 다시 덮어쓰지 않는다. 기존 폴더의 미커밋 작업은 보존한다.
+- 호환성: protocol 5 및 지도 schema 유지. 프로젝트 버전만 갱신한다.
+- 검증: 서버 관련 pytest 22 passed, 독립 C# 버퍼 7 assertions, 관련 C# 컴파일, 일반/강제 단절 실제 TCP 합성 위치 시험 및 Ruff 통과.
+- 미검증: Unity PlayMode 실행은 라이선스 초기화 실패로 결과 없음. 실제 차량/3대 복구 검증은 남아 있다. 상세는 Docs/transport_week9_integrated_reconnect.md.
+
 ## 0.5.3.0 — 2026-10-28 · 8주차 팀 통합 및 PC 연속 LiDAR 시험
 
 - 작업: 최신 물리 운행 기준선에 vehicle-simulation LiDAR를 병합하고 algorithms의 8주차 통신 복구/제동 게이트와 시험 자산을 선별 반영한다. 기존 차량 GUID와 실제 지도/운송 기준선을 보존한다.

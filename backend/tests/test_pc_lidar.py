@@ -135,3 +135,29 @@ def test_lidar_profile_preserves_map_road_speed_limit():
     s.physical.vehicles["V01"].road_speed_mps=.5
     result=s.physical.observation("V01",t,observed(s,2))
     assert not result["emergency_stop"] and 0<result["target_speed_kmh"]<=1.8
+
+
+def test_reconnected_protocol5_updates_current_pose_and_stays_stopped():
+    from campus_sim.map_coordinates import MapCoordinates
+
+    app = create_app()
+    with TestClient(app) as client:
+        client.get("/v1/demo/state")
+        session = app.state.demo
+        endpoint = "/v1/demo/unity/vehicles/V01/control"
+        with client.websocket_connect(endpoint) as socket:
+            socket.send_json(observed(session).model_dump())
+            first = socket.receive_json()
+            assert first["tick"] == 1 and first["emergency_stop"]
+        with client.websocket_connect(endpoint) as socket:
+            assert session.physical.vehicles["V01"].ego is None
+            fresh = observed(session, tick=2, x=70.57, z=-159.19)
+            socket.send_json(fresh.model_dump())
+            command = socket.receive_json()
+            assert command["schema_version"] == 5
+            assert command["tick"] == 2 and command["run_id"] == session.run_id
+            assert command["emergency_stop"] and command["target_speed_kmh"] == 0
+            assert session.physical.vehicles["V01"].ego.x == fresh.x
+            state = client.get("/v1/demo/state").json()
+            vehicle = next(v for v in state["vehicles"] if v["id"] == "V01")
+            assert vehicle["position"] == pytest.approx(MapCoordinates().from_unity(fresh.x, fresh.z))

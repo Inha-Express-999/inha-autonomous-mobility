@@ -49,6 +49,7 @@ namespace InhaExpress.Client.Presentation
         private CancellationTokenSource cancellation;
         private readonly ConcurrentQueue<Response> responses = new ConcurrentQueue<Response>();
         private volatile string snapshot;
+        private readonly ConnectionObservationBuffer observations = new ConnectionObservationBuffer();
         private volatile string transportStatus = "연결 대기";
         private volatile bool connected;
         private float nextObservation;
@@ -59,7 +60,7 @@ namespace InhaExpress.Client.Presentation
         private IPhysicalLidarSource lidarSource;
         private float rearAxleLocalZ;
         private WheelCollider[] wheels;
-        private int pendingMissions, transportGeneration, consumedGeneration;
+        private int pendingMissions, consumedGeneration;
         private bool waitingForMissionAck;
         private bool missionRejected;
         public string VehicleId => vehicle?.OperatorVehicleId;
@@ -70,11 +71,12 @@ namespace InhaExpress.Client.Presentation
         public string LaneProfileHash { get; private set; }
         public float LaneErrorM => latest?.lane_error_m ?? 0;
         public bool Connected => connected;
+        public int ConnectionGeneration => observations.Generation;
         public bool TransportReserved => !string.IsNullOrEmpty(latest?.transport_phase);
         public float LastTargetSpeedKmh => latest?.target_speed_kmh ?? 0;
         public float SimulationCruiseKmh { get; set; } = 18;
         public string LatestObservationJson => snapshot;
-        public bool IsDriving => !waitingForMissionAck && consumedGeneration == Volatile.Read(ref transportGeneration) &&
+        public bool IsDriving => !waitingForMissionAck && consumedGeneration == observations.Generation &&
             connected && latest != null && !latest.emergency_stop && Time.realtimeSinceStartupAsDouble < commandExpires;
 
         public void Initialize(CampusServerMap sharedMap, IAutonomousVehicle target)
@@ -117,14 +119,14 @@ namespace InhaExpress.Client.Presentation
                     using (var socket = new ClientWebSocket())
                     {
                         await socket.ConnectAsync(uri, token).ConfigureAwait(false);
-                        int generation = Interlocked.Increment(ref transportGeneration);
+                        int generation = observations.BeginConnection();
                         connected = true;
                         transportStatus = "WebSocket 연결";
                         var buffer = new byte[8192];
                         string sent = null;
                         while (!token.IsCancellationRequested && socket.State == WebSocketState.Open)
                         {
-                            string data = snapshot;
+                            string data = observations.Read(generation);
                             if (data == null || data == sent) { await Task.Delay(10, token).ConfigureAwait(false); continue; }
                             sent = data;
                             var bytes = Encoding.UTF8.GetBytes(data);
@@ -155,9 +157,11 @@ namespace InhaExpress.Client.Presentation
             if (!string.IsNullOrEmpty(map.RunId) && string.IsNullOrEmpty(map.LastError) && Time.unscaledTime >= nextObservation)
             {
                 nextObservation = Time.unscaledTime + .1f;
-                snapshot = JsonUtility.ToJson(Capture());
+                int captureGeneration = observations.Generation;
+                string captured = JsonUtility.ToJson(Capture());
+                if (observations.Publish(captureGeneration, captured)) snapshot = captured;
             }
-            int currentGeneration=Volatile.Read(ref transportGeneration);
+            int currentGeneration=observations.Generation;
             if(consumedGeneration!=currentGeneration) { consumedGeneration=currentGeneration; latest=null; commandExpires=0; }
             while (responses.TryDequeue(out var response))
             {

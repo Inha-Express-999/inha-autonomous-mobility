@@ -1,5 +1,7 @@
 # 구현 현황
 
+2026-10-29 · v0.5.3.0 기반 미커밋 통신 보완: protocol 5 관측을 연결 세대별로 분리해 재연결 직후 오래된 위치의 전송을 방지한다. 서버 관련 시험 22개 및 합성 위치 TCP 재연결 검사는 통과했다. 신규 Unity PlayMode 시험은 라이선스 연결 오류로 실행 결과를 확보하지 못했으며 물리 검증 완료가 아니다. 상세: [통합본 재연결 시험](transport_week9_integrated_reconnect.md).
+
 2026-10-28 · 0.5.3.0 PC LiDAR 시험: 기존 PC Additive 운행 차량 3대에 360×7/15m/10Hz 지속 관측과 protocol 5를 연결한다. TTC/정지거리 제동, 5개 연속 clear scan 후 재출발 및 조우 시 기존 점군 연출을 자동 표시한다. 새 `campus_lidar` 프로필은 최대 18km/h다. 관제 UI를 유지하며 객체 Transform/실제 속도를 Python에 전달하지 않는다. RRT는 비실행 후보이며 실제 회피 궤적·동적 충돌 검증은 남는다. 향후 트리거가 물리 Collider를 생성하면 관측 경로가 처리하며 생성 버튼 자체는 추가하지 않았다. 상세 범위/시험은 `Docs/WEEK8_INTEGRATION.md`를 따른다.
 
 프로젝트 0.5.3.0 · 2026-10-28: 8주차 소스 통합과 PC LiDAR 시험을 반영한다. 가져온 과거 v3 snapshot gateway는 실제 PC protocol 5 채널과 별개다. RRT 실제 회피 주행과 전체 운송/성능 완료를 의미하지 않으며 검증 범위는 `WEEK8_INTEGRATION.md`를 따른다.
