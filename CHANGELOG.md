@@ -1,5 +1,13 @@
 # 변경 이력
 
+## 0.5.3.2 — 2026-10-31 · Unity 재연결 시험 실행 및 지도 버전 동기화
+
+- 작업/이유: 시험 프로젝트 Vehicles 모듈, Hub 실행용 Python 경로, PrepareOnly 및 Python 오류 수집을 보완한다. 정지 초기값 대신 실제 명령 호출을 검사한다. 이전 버전 증가에서 누락된 지도 manifest를 정식 builder로 재생성한다.
+- 호환성: protocol 5 및 지도 geometry/schema 유지. VERSION·API/package·Unity·지도 빌드 정보를 동기화한다.
+- 검증: Unity 6000.3.21f1 PlayMode 1 passed/0 failed (v0.5.3.1 + 본 수정 상태), Python 관련 22 passed, Ruff 통과. 원본 XML은 artifacts/validation/2026-10-31-reconnect에 보존한다.
+- 한계: kinematic 시험 객체 1대의 실제 WebSocket 재연결 검증이다. 실제 차량 프리팹 주행/제동 거리 및 3대 운행은 미검증이다.
+
+
 ## 0.5.3.1 — 2026-10-30 · 통합본 재연결 위치 보호
 
 - 작업/이유: protocol 5 연결 세대별 관측 버퍼로 재연결 직후 과거 위치 전송을 방지한다. 강제 단절 TCP 시험과 Unity PlayMode 시험을 추가한다.

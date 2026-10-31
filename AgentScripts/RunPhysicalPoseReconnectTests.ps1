@@ -1,4 +1,4 @@
-param([string]$PythonExecutable='python',[int]$TimeoutSeconds=180)
+param([string]$PythonExecutable='python',[int]$TimeoutSeconds=180,[switch]$PrepareOnly)
 $ErrorActionPreference='Stop'
 $repo=Split-Path $PSScriptRoot -Parent
 $run=Join-Path $repo ('tmp/pose-unity-'+[guid]::NewGuid().ToString('N'))
@@ -11,7 +11,7 @@ foreach($file in $files){$dst=Join-Path $run $file; New-Item -ItemType Directory
 New-Item -ItemType Directory "$run/Packages","$run/ProjectSettings","$run/AgentScripts" -Force | Out-Null
 '{"name":"Reconnect.Runtime","autoReferenced":true}' | Set-Content "$run/Assets/CampusSim/Scripts/Replay.asmdef"
 '{"name":"Reconnect.Tests","references":["Reconnect.Runtime"],"optionalUnityReferences":["TestAssemblies"]}' | Set-Content "$run/Assets/CampusSim/Tests/PlayMode/Tests.asmdef"
-'{"dependencies":{"com.unity.test-framework":"1.6.0","com.unity.modules.physics":"1.0.0","com.unity.modules.jsonserialize":"1.0.0","com.unity.modules.imgui":"1.0.0","com.unity.modules.unitywebrequest":"1.0.0"}}' | Set-Content "$run/Packages/manifest.json"
+'{"dependencies":{"com.unity.test-framework":"1.6.0","com.unity.modules.physics":"1.0.0","com.unity.modules.vehicles":"1.0.0","com.unity.modules.jsonserialize":"1.0.0","com.unity.modules.imgui":"1.0.0","com.unity.modules.unitywebrequest":"1.0.0"}}' | Set-Content "$run/Packages/manifest.json"
 Copy-Item "$repo/ProjectSettings/ProjectVersion.txt" "$run/ProjectSettings/ProjectVersion.txt"
 $fixture=Join-Path $repo 'AgentScripts/pose_reconnect_fixture.py'
 $literal=$fixture.Replace('\','/')
@@ -20,6 +20,8 @@ $hashes['AgentScripts/pose_reconnect_fixture.py']=(Get-FileHash $fixture).Hash
 $hashes | ConvertTo-Json | Set-Content "$run/source-manifest.json"
 Set-Content "$repo/tmp/pose-unity-latest.txt" $run
 $pythonPath=(Get-Command $PythonExecutable).Source
+Set-Content -Encoding utf8 "$run/AgentScripts/test-python.txt" $pythonPath
+if($PrepareOnly){ Write-Output "Prepared Unity project: $run"; return }
 $oldPython=$env:CAMPUS_BRAKE_TEST_PYTHON
 $env:CAMPUS_BRAKE_TEST_PYTHON=$pythonPath
 $unity='C:/Program Files/Unity/Hub/Editor/6000.3.21f1/Editor/Unity.exe'

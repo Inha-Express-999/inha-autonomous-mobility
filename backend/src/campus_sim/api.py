@@ -42,7 +42,7 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
             with suppress(asyncio.CancelledError):
                 await task
 
-    app = FastAPI(title="Inha Mobil API", version="0.5.3.1", lifespan=lifespan)
+    app = FastAPI(title="Inha Mobil API", version="0.5.3.2", lifespan=lifespan)
     app.state.service = service or MobilityService.from_osm_map()
     app.state.demo = None
     app.state.demo_lock = RLock()

@@ -1,11 +1,13 @@
 """Own loopback server: close first physical socket after its first response."""
 import asyncio
 import json
+import os
 import socket
 import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+os.chdir(ROOT)  # Resolve map source paths against the real repository, including Hub launches.
 sys.path[:0] = [str(ROOT / "backend/src"), str(ROOT / "tmp/python-deps")]
 import uvicorn
 from campus_sim.api import create_app

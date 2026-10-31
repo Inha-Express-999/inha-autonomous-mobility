@@ -1,3 +1,5 @@
+2026-10-31: 후속 보완은 v0.5.3.2 커밋에 포함한다. 아래 미커밋 표시는 개발 당시 기록이다.
+
 # 릴리스 기록: v0.5.3.1
 
 아래 미커밋 표시는 개발 당시 기록이다. 이번 커밋에 통합본 재연결 변경을 포함한다.
@@ -65,3 +67,21 @@ python AgentScripts/check_physical_reconnect_loopback.py --forced-disconnect
 ```
 
 다음 필수 단계는 Unity Hub에서 Editor가 정상 실행되는 환경에서 위 PlayMode 시험의 Passed 1/1 결과를 확보하는 것이다. 아직 커밋/푸시하지 않았다.
+
+## Unity Hub 수동 실행 준비 (2026-10-30)
+
+자동화 도구가 Unity Hub 창을 활성화하지 못해 UI 실행 검증은 진행하지 못했다. `-PrepareOnly` 옵션으로 시험 프로젝트 생성만 수행할 수 있다. 선택한 Python 경로를 시험 폴더 안에 기록하므로 Hub에서 열어도 같은 Python을 사용한다. 정지 검사는 기본 true 값을 제거하고 재연결 후 실제 SetDriveCommand 호출 횟수 증가도 검사한다. 수정한 관련 C# 소스 컴파일 및 준비 명령은 통과했다. PlayMode 실행 통과를 의미하지 않는다.
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\AgentScripts\RunPhysicalPoseReconnectTests.ps1 -PythonExecutable C:\Users\leeta\anaconda3\python.exe -PrepareOnly
+```
+
+출력된 폴더를 Unity Hub의 프로젝트 추가에서 선택하고 6000.3.21f1로 연다. Editor에서 Window > General > Test Runner의 PlayMode 탭을 선택해 PhysicalPoseReconnectTests를 실행한다. 이 최소 프로젝트에서는 1개 시험이 통과해야 한다. 준비 폴더는 tmp/pose-unity-latest.txt에서도 확인할 수 있다. 이는 별도 시험용 프로젝트이며 실제 CampusTerrain 운행 검사는 후속이다.
+
+## 2026-10-31 실제 Unity 실행 완료
+
+Hub에서 시험 프로젝트를 열어 PlayMode **1 passed, 0 failed**를 확인했다. 증거는 `artifacts/validation/2026-10-31-reconnect/playmode-results.xml`이다. 이전 미실행 기록은 당시 상태다.
+
+실패 원인은 시험 프로젝트 Vehicles 모듈 누락 및 v0.5.3.1 버전 증가 후 지도 manifest 재생성 누락이었다. map_builder로 재생성했으며 지도 내용은 바뀌지 않았다. Python stderr를 시험 실패 메시지로 노출하도록 보강했다. 작업 폴더 고정은 재현성을 위한 보완이며 직접적인 해시 실패 원인은 VERSION 변경이었다.
+
+검증 범위는 kinematic Rigidbody 1대와 실제 WebSocket의 재연결 첫 위치/정지 명령 호출이다. 실제 차량 프리팹 제동 거리나 3대 운행 검증으로 확대 해석하지 않는다. 이번 수정은 아직 커밋하지 않았다.

@@ -18,9 +18,10 @@ namespace InhaExpress.Client.Tests
         public Rigidbody VehicleBody => GetComponent<Rigidbody>();
         public float WheelbaseM => 1.3f;
         public float MaximumSteeringRad => .52f;
-        public bool StopRequested = true;
+        public bool StopRequested;
+        public int CommandCount;
         public bool SetDriveCommand(float speed, float angle, bool emergencyStop = false)
-        { StopRequested = emergencyStop; return true; }
+        { CommandCount++; StopRequested = emergencyStop; return true; }
     }
     public sealed class PhysicalPoseReconnectTests
     {
@@ -30,20 +31,24 @@ namespace InhaExpress.Client.Tests
         [UnityTest]
         public IEnumerator ReconnectFirstPacketUsesNewRigidbodyPose()
         {
+            string python = Environment.GetEnvironmentVariable("CAMPUS_BRAKE_TEST_PYTHON");
+            string pythonFile = Path.GetFullPath(Path.Combine(Application.dataPath, "../AgentScripts/test-python.txt"));
+            if (string.IsNullOrWhiteSpace(python) && File.Exists(pythonFile)) python = File.ReadAllText(pythonFile).Trim();
             var start = new ProcessStartInfo {
-                FileName = Environment.GetEnvironmentVariable("CAMPUS_BRAKE_TEST_PYTHON") ?? "python",
+                FileName = string.IsNullOrWhiteSpace(python) ? "python" : python,
                 Arguments = "-u \"" + Path.GetFullPath(Path.Combine(Application.dataPath, "../AgentScripts/pose_reconnect_fixture.py")) + "\"",
-                UseShellExecute = false, CreateNoWindow = true, RedirectStandardOutput = true
+                UseShellExecute = false, CreateNoWindow = true, RedirectStandardOutput = true, RedirectStandardError = true
             };
             GameObject car = null, mapObject = null;
             using (var process = Process.Start(start))
             try
             {
+                var errors = process.StandardError.ReadToEndAsync();
                 var line = process.StandardOutput.ReadLineAsync();
                 float until = Time.realtimeSinceStartup + 8;
                 while (!line.IsCompleted && Time.realtimeSinceStartup < until) yield return null;
                 Assert.That(line.IsCompleted, Is.True);
-                Assert.That(int.TryParse(line.GetAwaiter().GetResult(), out int port), Is.True);
+                Assert.That(int.TryParse(line.GetAwaiter().GetResult(), out int port), Is.True, errors.IsCompleted ? errors.GetAwaiter().GetResult() : "Python fixture did not report a port");
                 string url = "http://127.0.0.1:" + port;
                 yield return new WaitForSecondsRealtime(1);
                 Info info;
@@ -73,6 +78,8 @@ namespace InhaExpress.Client.Tests
                 while ((client.ConnectionGeneration < 1 || client.Connected) && Time.realtimeSinceStartup < until) yield return null;
                 Assert.That(client.ConnectionGeneration, Is.EqualTo(1));
                 Assert.That(client.Connected, Is.False);
+                int commandsBeforeReconnect = probe.CommandCount;
+                Assert.That(probe.StopRequested, Is.True, "Disconnect must request braking");
                 var fresh = new Vector3(70.57f, 0, -159.19f); body.position = fresh;
                 until = Time.realtimeSinceStartup + 10;
                 while ((client.ConnectionGeneration < 2 || !client.Connected) && Time.realtimeSinceStartup < until) yield return null;
@@ -89,6 +96,7 @@ namespace InhaExpress.Client.Tests
                     Assert.That(first.z, Is.EqualTo(fresh.z).Within(.001f));
                 }
                 Assert.That(body.position, Is.EqualTo(fresh));
+                Assert.That(probe.CommandCount, Is.GreaterThan(commandsBeforeReconnect));
                 Assert.That(probe.StopRequested, Is.True);
             }
             finally
