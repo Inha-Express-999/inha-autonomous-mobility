@@ -1,5 +1,9 @@
 # 변경 이력
 
+## 0.5.3.4 - 2026-11-01 - V01 stopping distance after disconnect
+
+- Unity PlayMode passed (1/1). In one run, V01 detected disconnect at 2.226 m/s and travelled 0.763 m until a sustained stop was confirmed at 0.620 simulated seconds. Test-only change; no protocol migration.
+
 ## 0.5.3.3 — 2026-11-01 · CampusTerrain V01 reconnect verification
 
 - Unity PlayMode passed (1/1). All four wheels had brake torque and zero motor torque during disconnect. After a controlled displacement the first reconnect sample reported the updated position.

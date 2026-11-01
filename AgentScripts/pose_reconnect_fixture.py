@@ -15,6 +15,7 @@ from campus_sim.api import create_app
 app = create_app()
 connections = 0
 samples = []
+moving_stop = "--moving-stop" in sys.argv
 
 
 @app.get("/__test/poses")
@@ -28,21 +29,34 @@ async def wrapped(scope, receive, send):
         return await app(scope, receive, send)
     connections += 1
     generation = connections
+    if moving_stop and generation > 1:
+        await receive()
+        await send({"type": "websocket.close", "code": 1012})
+        return
     closed = False
+    speed = 0.0
 
     async def read():
+        nonlocal speed
         if closed:
             return {"type": "websocket.disconnect", "code": 1012}
         message = await receive()
         if message["type"] == "websocket.receive" and message.get("text"):
             pose = json.loads(message["text"])
+            speed = pose["speed_mps"]
             if len(samples) < 100:
                 samples.append({"connection": generation, "x": pose["x"], "z": pose["z"], "tick": pose["tick"]})
         return message
 
     async def write(message):
         nonlocal closed
+        if moving_stop and message["type"] == "websocket.send":
+            command = json.loads(message["text"])
+            command.update(target_speed_kmh=10, steering_angle_rad=0, emergency_stop=False, status="DRIVING")
+            message = {**message, "text": json.dumps(command)}
         await send(message)
+        if moving_stop and speed < 1.5:
+            return
         if generation == 1 and message["type"] == "websocket.send" and not closed:
             closed = True
             await send({"type": "websocket.close", "code": 1012})

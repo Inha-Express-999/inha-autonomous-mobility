@@ -22,13 +22,19 @@ namespace InhaExpress.Client.Tests
         [Serializable] private class Pose { public int connection, tick; public float x, z; }
         [Serializable] private class Poses { public Pose[] samples; }
         [UnityTest]
-        public IEnumerator CampusV01BrakesAndSendsFreshPose()
+        public IEnumerator CampusV01BrakesAndSendsFreshPose() => RunDisconnect(false);
+
+        [UnityTest]
+        public IEnumerator CampusV01StopsWhileDisconnected() => RunDisconnect(true);
+
+        private static IEnumerator RunDisconnect(bool moving)
         {
             const string terrain = "Assets/CampusSim/Scenes/CampusTerrain.unity";
             Assert.That(SceneManager.GetSceneByPath(terrain).isLoaded, Is.False);
             yield return EditorSceneManager.LoadSceneAsyncInPlayMode(terrain, new LoadSceneParameters(LoadSceneMode.Additive));
             var scene = SceneManager.GetSceneByPath(terrain);
             var start = PhysicalPoseReconnectTests.FixtureStartInfo();
+            if (moving) start.Arguments += " --moving-stop";
             GameObject car = null, mapObject = null;
             using (var process = Process.Start(start))
             try
@@ -66,6 +72,11 @@ namespace InhaExpress.Client.Tests
                 while ((client.ConnectionGeneration < 1 || client.Connected) && Time.realtimeSinceStartup < until) yield return null;
                 Assert.That(client.ConnectionGeneration, Is.EqualTo(1));
                 Assert.That(client.Connected, Is.False);
+                if (moving)
+                {
+                    yield return MeasureStop(body, wheels, client);
+                    yield break;
+                }
                 yield return new WaitForFixedUpdate();
                 Assert.That(client.Connected, Is.False);
                 AssertBraked(wheels);
@@ -99,6 +110,29 @@ namespace InhaExpress.Client.Tests
                 if (!process.HasExited) { process.Kill(); process.WaitForExit(2000); }
             }
         }
+        private static IEnumerator MeasureStop(Rigidbody body, WheelCollider[] wheels, UnityAutonomousClient client)
+        {
+            var previous = body.position;
+            float initialSpeed = Vector3.ProjectOnPlane(body.linearVelocity, Vector3.up).magnitude;
+            Assert.That(initialSpeed, Is.GreaterThan(0.5f), "Vehicle must still be moving at disconnect detection");
+            float distance = 0, elapsed = 0;
+            int stationarySteps = 0;
+            while (stationarySteps < 5 && elapsed < 5f)
+            {
+                yield return new WaitForFixedUpdate();
+                Assert.That(client.Connected, Is.False);
+                if (elapsed >= Time.fixedDeltaTime) AssertBraked(wheels);
+                elapsed += Time.fixedDeltaTime;
+                distance += Vector3.ProjectOnPlane(body.position - previous, Vector3.up).magnitude;
+                previous = body.position;
+                float speed = Vector3.ProjectOnPlane(body.linearVelocity, Vector3.up).magnitude;
+                stationarySteps = speed < .1f ? stationarySteps + 1 : 0;
+            }
+            Assert.That(stationarySteps, Is.EqualTo(5), "No sustained stop within five simulated seconds");
+            Assert.That(distance, Is.GreaterThan(0f));
+            UnityEngine.Debug.Log($"V01 moving disconnect: initial={initialSpeed:F3} m/s, confirmed_stop={elapsed:F3} s, planar_path={distance:F3} m, fixed_dt={Time.fixedDeltaTime:F3} s");
+        }
+
         private static void AssertBraked(WheelCollider[] wheels)
         {
             foreach (var wheel in wheels)
