@@ -1,5 +1,10 @@
 # 변경 이력
 
+## 0.5.3.3 — 2026-11-01 · CampusTerrain V01 reconnect verification
+
+- Unity PlayMode passed (1/1). All four wheels had brake torque and zero motor torque during disconnect. After a controlled displacement the first reconnect sample reported the updated position.
+- Test-only change. No protocol migration. Moving stopping distance remains unmeasured.
+
 ## 0.5.3.2 — 2026-10-31 · Unity 재연결 시험 실행 및 지도 버전 동기화
 
 - 작업/이유: 시험 프로젝트 Vehicles 모듈, Hub 실행용 Python 경로, PrepareOnly 및 Python 오류 수집을 보완한다. 정지 초기값 대신 실제 명령 호출을 검사한다. 이전 버전 증가에서 누락된 지도 manifest를 정식 builder로 재생성한다.

@@ -28,17 +28,21 @@ namespace InhaExpress.Client.Tests
         [Serializable] private class Info { public string run_id, geometry_hash; }
         [Serializable] private class Pose { public int connection, tick; public float x, z; }
         [Serializable] private class Poses { public Pose[] samples; }
-        [UnityTest]
-        public IEnumerator ReconnectFirstPacketUsesNewRigidbodyPose()
+        internal static ProcessStartInfo FixtureStartInfo()
         {
             string python = Environment.GetEnvironmentVariable("CAMPUS_BRAKE_TEST_PYTHON");
             string pythonFile = Path.GetFullPath(Path.Combine(Application.dataPath, "../AgentScripts/test-python.txt"));
             if (string.IsNullOrWhiteSpace(python) && File.Exists(pythonFile)) python = File.ReadAllText(pythonFile).Trim();
-            var start = new ProcessStartInfo {
+            return new ProcessStartInfo {
                 FileName = string.IsNullOrWhiteSpace(python) ? "python" : python,
                 Arguments = "-u \"" + Path.GetFullPath(Path.Combine(Application.dataPath, "../AgentScripts/pose_reconnect_fixture.py")) + "\"",
                 UseShellExecute = false, CreateNoWindow = true, RedirectStandardOutput = true, RedirectStandardError = true
             };
+        }
+        [UnityTest]
+        public IEnumerator ReconnectFirstPacketUsesNewRigidbodyPose()
+        {
+            var start = FixtureStartInfo();
             GameObject car = null, mapObject = null;
             using (var process = Process.Start(start))
             try
