@@ -1,5 +1,9 @@
 # 변경 이력
 
+## 0.5.4.1 - 2026-11-03 - Count connected vehicle control sockets
+
+- PC fleet summary and vehicle cards reflect the control connection. No protocol migration. Unity passenger demo verified 3/3, 2/3, 3/3 with the same request assigned to V02.
+
 ## 0.5.4.0 - 2026-11-03 - PC vehicle disconnect and recovery demo
 
 - Added per-vehicle disconnect, braking status and restore controls. No wire protocol migration.

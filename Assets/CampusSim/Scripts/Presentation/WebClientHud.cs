@@ -286,7 +286,7 @@ namespace InhaExpress.Client.Presentation
             var stats = Top(workspace, "Summary", 58, 70, 20, 20);
             Surface(stats, Color.white);
             statCards = new Text[4];
-            string[] statNames = { "연결 차량", "대기 요청", "운송 완료", "충전 중" };
+            string[] statNames = { "제어 연결 차량", "대기 요청", "운송 완료", "충전 중" };
             for (int i = 0; i < 4; i++)
             {
                 var cell = FixtureUiFactory.Rect(stats, "Metric " + i, new Vector2(i / 4f, 0),
@@ -859,6 +859,7 @@ namespace InhaExpress.Client.Presentation
                 }
             }
             session.text = $"v{Application.version}";
+            int connectedCount = 0;
             if (!mobile && OperatorControls != null)
             {
                 var controls=OperatorControls;
@@ -868,9 +869,12 @@ namespace InhaExpress.Client.Presentation
                     vehicleButtons[i].interactable=bound;
                     bool selected=controls.SelectedVehicle?.OperatorVehicleId==id;
                     vehicleButtons[i].SetIsOnWithoutNotify(selected);
-                    fleetCards[i].text=bound ? (selected ? "선택됨" : "연결됨") : "미연결";
+                    automaticClients.TryGetValue(id, out var vehicleClient);
+                    bool connected = vehicleClient != null && vehicleClient.Connected;
+                    if (connected) connectedCount++;
+                    fleetCards[i].text = (selected ? "선택됨 · " : "") + (connected ? "제어 연결됨" : "제어 미연결");
                     if (fleetSurfaces != null) fleetSurfaces[i].color = selected ? new Color(.91f, .95f, 1) : Color.white;
-                    if (fleetDetails != null) fleetDetails[i].text = automaticClients.TryGetValue(id, out var vehicleClient)
+                    if (fleetDetails != null) fleetDetails[i].text = vehicleClient != null
                         ? vehicleClient.Status : "—";
                     var serverVehicle=online && state?.vehicles!=null ? Array.Find(state.vehicles,v=>v.id==id) : null;
                     bool hasBattery = serverVehicle != null && !float.IsNaN(serverVehicle.soc) && !float.IsInfinity(serverVehicle.soc);
@@ -889,7 +893,7 @@ namespace InhaExpress.Client.Presentation
                             fillImage.color = serverVehicle.soc < .15f ? FixtureUiPalette.Amber : FixtureUiPalette.Green;
                         }
                     }
-                    if(serverVehicle!=null && fleetDetails!=null)
+                    if(connected && serverVehicle!=null && fleetDetails!=null)
                     {
                         var label=serverVehicle.phase=="CHARGING"?"충전 중":serverVehicle.phase=="RETURNING"?"차고 복귀":
                             serverVehicle.phase=="READY"?"대기":serverVehicle.phase=="TO_PICKUP"?"픽업 이동":
@@ -907,10 +911,7 @@ namespace InhaExpress.Client.Presentation
                     fleetCards[i].color=selected ? FixtureUiPalette.Blue : FixtureUiPalette.Ink;
                 }
             }
-            int boundCount = 0;
-            if (OperatorControls != null) foreach (var vehicle in OperatorControls.Vehicles)
-                if (OperatorControls.HasVehicle(vehicle.OperatorVehicleId)) boundCount++;
-            if (statCards != null) statCards[0].text = boundCount + " / 3";
+            if (statCards != null) statCards[0].text = connectedCount + " / " + vehicleButtons.Length;
             if (state == null || !online)
             {
                 if (statCards != null) for (int i = 1; i < statCards.Length; i++) statCards[i].text = "—";
@@ -934,7 +935,7 @@ namespace InhaExpress.Client.Presentation
                 $"차량   {map.VehicleCount} / 3       대기 요청   {queued}       운송 완료   {map.Completed}       충전 중   {Array.FindAll(state.vehicles, v => v.phase == "CHARGING").Length}";
             if (!mobile)
             {
-                if(statCards!=null) { statCards[0].text=boundCount + " / 3"; statCards[1].text=queued.ToString(); statCards[2].text=map.Completed.ToString(); statCards[3].text=state.vehicles == null ? "—" : Array.FindAll(state.vehicles,v=>v.phase=="CHARGING").Length.ToString(); }
+                if(statCards!=null) { statCards[1].text=queued.ToString(); statCards[2].text=map.Completed.ToString(); statCards[3].text=state.vehicles == null ? "—" : Array.FindAll(state.vehicles,v=>v.phase=="CHARGING").Length.ToString(); }
                 if(queue!=null) queue.text=queued==0 ? "대기 없음" : $"대기 요청 {queued}건";
             }
         }
