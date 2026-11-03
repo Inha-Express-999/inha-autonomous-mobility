@@ -27,14 +27,23 @@ namespace InhaExpress.Client.Tests
         [UnityTest]
         public IEnumerator CampusV01StopsWhileDisconnected() => RunDisconnect(true);
 
-        private static IEnumerator RunDisconnect(bool moving)
+        [UnityTest]
+        public IEnumerator OperatorDisconnectAndRestore() => RunDisconnect(true, "--operator-demo");
+
+        [UnityTest]
+        public IEnumerator SilentSocketBrakes() => RunDisconnect(true, "--silence");
+
+        [UnityTest]
+        public IEnumerator PhysicalServerRestart() => RunDisconnect(true, "--restart-demo");
+
+        private static IEnumerator RunDisconnect(bool moving, string mode = null)
         {
             const string terrain = "Assets/CampusSim/Scenes/CampusTerrain.unity";
             Assert.That(SceneManager.GetSceneByPath(terrain).isLoaded, Is.False);
             yield return EditorSceneManager.LoadSceneAsyncInPlayMode(terrain, new LoadSceneParameters(LoadSceneMode.Additive));
             var scene = SceneManager.GetSceneByPath(terrain);
             var start = PhysicalPoseReconnectTests.FixtureStartInfo();
-            if (moving) start.Arguments += " --moving-stop";
+            if (moving) start.Arguments += " " + (mode ?? "--moving-stop");
             GameObject car = null, mapObject = null;
             using (var process = Process.Start(start))
             try
@@ -69,6 +78,80 @@ namespace InhaExpress.Client.Tests
                 Assert.That(car.GetComponent<UnityAutonomousClient>(), Is.Null);
                 var client = car.AddComponent<UnityAutonomousClient>(); client.Initialize(map, vehicle);
                 until = Time.realtimeSinceStartup + 10;
+                if (mode != null)
+                {
+                    while ((!client.CanDisconnectDemo || client.SpeedMps < 1f) && Time.realtimeSinceStartup < until)
+                        yield return null;
+                    Assert.That(client.CanDisconnectDemo && client.SpeedMps >= 1f, Is.True);
+                    if (mode == "--restart-demo")
+                    {
+                        process.Kill();
+                        Assert.That(process.WaitForExit(2000), Is.True);
+                        while ((client.Connected || client.SpeedMps >= .1f) && Time.realtimeSinceStartup < until)
+                            yield return null;
+                        Assert.That(client.Connected, Is.False);
+                        Assert.That(client.SpeedMps, Is.LessThan(.1f));
+                        AssertBraked(wheels);
+                        var restart = PhysicalPoseReconnectTests.FixtureStartInfo();
+                        restart.Arguments += " --passive --port " + port;
+                        using (var replacement = Process.Start(restart))
+                        try
+                        {
+                            var ready = replacement.StandardOutput.ReadLineAsync();
+                            until = Time.realtimeSinceStartup + 12;
+                            while (!ready.IsCompleted && Time.realtimeSinceStartup < until) yield return null;
+                            Assert.That(ready.IsCompleted, Is.True);
+                            Assert.That(ready.Result, Is.EqualTo(port.ToString()));
+                            yield return new WaitForSecondsRealtime(1);
+                            using (var http = UnityWebRequest.Get(url + "/v1/desktop/info"))
+                            {
+                                http.timeout = 5;
+                                yield return http.SendWebRequest();
+                                Assert.That(http.result, Is.EqualTo(UnityWebRequest.Result.Success));
+                                var restartedInfo = JsonUtility.FromJson<Info>(http.downloadHandler.text);
+                                Assert.That(restartedInfo.run_id, Is.Not.EqualTo(info.run_id));
+                                typeof(CampusServerMap).GetProperty("RunId").SetValue(map, restartedInfo.run_id);
+                            }
+                            while ((!client.Connected || client.ConnectionGeneration < 2) && Time.realtimeSinceStartup < until)
+                                yield return null;
+                            yield return new WaitForSecondsRealtime(.5f);
+                            Assert.That(client.Connected && client.ConnectionGeneration >= 2, Is.True);
+                            Assert.That(client.IsDriving, Is.False);
+                            Assert.That(client.SpeedMps, Is.LessThan(.1f));
+                            AssertBraked(wheels);
+                        }
+                        finally
+                        {
+                            if (!replacement.HasExited) { replacement.Kill(); replacement.WaitForExit(2000); }
+                        }
+                    }
+                    else if (mode == "--operator-demo")
+                    {
+                        client.ToggleDemoConnection();
+                        Assert.That(client.DemoDisconnected, Is.True);
+                        while (!client.CanRestoreDemo && Time.realtimeSinceStartup < until) yield return null;
+                        Assert.That(client.CanRestoreDemo, Is.True);
+                        AssertBraked(wheels);
+                        client.ToggleDemoConnection();
+                        while ((client.ConnectionGeneration < 2 || !client.Connected) && Time.realtimeSinceStartup < until)
+                            yield return null;
+                        Assert.That(client.ConnectionGeneration, Is.EqualTo(2));
+                        yield return new WaitForSecondsRealtime(.5f);
+                        Assert.That(client.SpeedMps, Is.LessThan(.1f));
+                        AssertBraked(wheels);
+                    }
+                    else
+                    {
+                        while ((client.IsDriving || client.SpeedMps >= .1f) && Time.realtimeSinceStartup < until)
+                            yield return null;
+                        Assert.That(client.IsDriving, Is.False);
+                        Assert.That(client.SpeedMps, Is.LessThan(.1f));
+                        Assert.That(client.Connected, Is.True);
+                        Assert.That(client.ConnectionGeneration, Is.EqualTo(1));
+                        AssertBraked(wheels);
+                    }
+                    yield break;
+                }
                 while ((client.ConnectionGeneration < 1 || client.Connected) && Time.realtimeSinceStartup < until) yield return null;
                 Assert.That(client.ConnectionGeneration, Is.EqualTo(1));
                 Assert.That(client.Connected, Is.False);

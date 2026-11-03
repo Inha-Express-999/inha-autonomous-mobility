@@ -1,3 +1,3 @@
 """Inha autonomous campus mobility service."""
 
-__version__ = "0.5.3.4"
+__version__ = "0.5.4.0"

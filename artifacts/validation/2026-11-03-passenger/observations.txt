@@ -1,0 +1,3 @@
+01-driving req-00000001-f5cca55edbd0 ASSIGNED V03 TO_PICKUP mission=ed232179162c4d7f895e441125a11899 connected=True generation=1 speed_mps=1.762 차로 자동 운행 중
+02-held req-00000001-f5cca55edbd0 ASSIGNED V03 TO_PICKUP mission=ed232179162c4d7f895e441125a11899 connected=False generation=1 speed_mps=0.065 시연 단절 · 정지 유지
+03-restored req-00000001-f5cca55edbd0 ASSIGNED V03 TO_PICKUP mission=bd313d10c4754b2e9fe44d728c9b2bf1 connected=True generation=2 speed_mps=0.830 차로 자동 운행 중

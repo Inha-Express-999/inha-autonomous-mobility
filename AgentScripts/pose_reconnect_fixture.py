@@ -15,6 +15,8 @@ from campus_sim.api import create_app
 app = create_app()
 connections = 0
 samples = []
+demo = "--operator-demo" in sys.argv or "--restart-demo" in sys.argv
+silence = "--silence" in sys.argv
 moving_stop = "--moving-stop" in sys.argv
 
 
@@ -50,12 +52,14 @@ async def wrapped(scope, receive, send):
 
     async def write(message):
         nonlocal closed
-        if moving_stop and message["type"] == "websocket.send":
+        if silence and generation == 1 and speed >= 1.5 and message["type"] == "websocket.send":
+            await asyncio.sleep(2)
+        if generation == 1 and (moving_stop or demo or silence) and message["type"] == "websocket.send":
             command = json.loads(message["text"])
             command.update(target_speed_kmh=10, steering_angle_rad=0, emergency_stop=False, status="DRIVING")
             message = {**message, "text": json.dumps(command)}
         await send(message)
-        if moving_stop and speed < 1.5:
+        if "--passive" in sys.argv or demo or silence or (moving_stop and speed < 1.5):
             return
         if generation == 1 and message["type"] == "websocket.send" and not closed:
             closed = True
@@ -66,7 +70,8 @@ async def wrapped(scope, receive, send):
 
 async def main():
     with socket.socket() as listener:
-        listener.bind(("127.0.0.1", 0))
+        port = int(sys.argv[sys.argv.index("--port") + 1]) if "--port" in sys.argv else 0
+        listener.bind(("127.0.0.1", port))
         listener.listen()
         print(listener.getsockname()[1], flush=True)
         server = uvicorn.Server(uvicorn.Config(wrapped, log_level="error"))

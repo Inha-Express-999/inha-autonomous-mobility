@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Failed(Child)" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-11-02 06:46:13Z" end-time="2026-11-02 06:46:25Z" duration="11.1890936">
+  <test-suite type="TestSuite" id="1039" name="Inha Mobil" fullname="Inha Mobil" runstate="Runnable" testcasecount="22" result="Failed" site="Child" start-time="2026-11-02 06:46:13Z" end-time="2026-11-02 06:46:25Z" duration="11.189094" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <failure>
+      <message><![CDATA[One or more child tests had errors]]></message>
+    </failure>
+    <test-suite type="Assembly" id="1032" name="InhaExpress.Client.Tests.PlayMode.dll" fullname="C:/Users/leeta/Documents/Codex/inha-reconnect-integration/Library/ScriptAssemblies/InhaExpress.Client.Tests.PlayMode.dll" runstate="Runnable" testcasecount="22" result="Failed" site="Child" start-time="2026-11-02 06:46:13Z" end-time="2026-11-02 06:46:25Z" duration="11.175651" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="20248" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <failure>
+        <message><![CDATA[One or more child tests had errors]]></message>
+      </failure>
+      <test-suite type="TestSuite" id="1033" name="InhaExpress" fullname="InhaExpress" runstate="Runnable" testcasecount="22" result="Failed" site="Child" start-time="2026-11-02 06:46:13Z" end-time="2026-11-02 06:46:25Z" duration="11.169849" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <failure>
+          <message><![CDATA[One or more child tests had errors]]></message>
+        </failure>
+        <test-suite type="TestSuite" id="1034" name="Client" fullname="InhaExpress.Client" runstate="Runnable" testcasecount="22" result="Failed" site="Child" start-time="2026-11-02 06:46:13Z" end-time="2026-11-02 06:46:25Z" duration="11.167944" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <failure>
+            <message><![CDATA[One or more child tests had errors]]></message>
+          </failure>
+          <test-suite type="TestSuite" id="1035" name="Tests" fullname="InhaExpress.Client.Tests" runstate="Runnable" testcasecount="22" result="Failed" site="Child" start-time="2026-11-02 06:46:13Z" end-time="2026-11-02 06:46:25Z" duration="11.165207" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <failure>
+              <message><![CDATA[One or more child tests had errors]]></message>
+            </failure>
+            <test-suite type="TestFixture" id="1006" name="TransportBrakePlayModeTests" fullname="InhaExpress.Client.Tests.TransportBrakePlayModeTests" classname="InhaExpress.Client.Tests.TransportBrakePlayModeTests" runstate="Runnable" testcasecount="8" result="Failed" site="Child" start-time="2026-11-02 06:46:13Z" end-time="2026-11-02 06:46:25Z" duration="11.162848" total="1" passed="0" failed="1" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <failure>
+                <message><![CDATA[One or more child tests had errors]]></message>
+              </failure>
+              <test-case id="1008" name="ServerRestartRestoresNewSnapshotButKeepsVehicleBraked" fullname="InhaExpress.Client.Tests.TransportBrakePlayModeTests.ServerRestartRestoresNewSnapshotButKeepsVehicleBraked" methodname="ServerRestartRestoresNewSnapshotButKeepsVehicleBraked" classname="InhaExpress.Client.Tests.TransportBrakePlayModeTests" runstate="Runnable" seed="1287211417" result="Failed" start-time="2026-11-02 06:46:13Z" end-time="2026-11-02 06:46:25Z" duration="11.150406" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <failure>
+                  <message><![CDATA[  Expected: True
+  But was:  False
+]]></message>
+                  <stack-trace><![CDATA[at InhaExpress.Client.Tests.TransportBrakePlayModeTests+<ServerRestartRestoresNewSnapshotButKeepsVehicleBraked>d__2.MoveNext () [0x00244] in C:\Users\leeta\Documents\Codex\inha-reconnect-integration\Assets\CampusSim\Tests\PlayMode\ClientBrakeBindingPlayModeTests.cs:121
+at UnityEngine.TestTools.TestEnumerator+<Execute>d__7.MoveNext () [0x0003a] in .\Library\PackageCache\com.unity.test-framework@bd7f943e9647\UnityEngine.TestRunner\NUnitExtensions\Attributes\TestEnumerator.cs:44
+]]></stack-trace>
+                </failure>
+                <output><![CDATA[Server connection ended; retrying: Unable to connect to the remote server
+Server connection ended; retrying: Unable to connect to the remote server
+Server connection ended; retrying: Unable to connect to the remote server
+Server connection ended; retrying: Unable to connect to the remote server
+Server connection ended; retrying: Unable to connect to the remote server
+Saving results to: C:\Users\leeta\Documents\Codex\inha-reconnect-integration\tmp\week10-restart.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

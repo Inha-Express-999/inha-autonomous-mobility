@@ -52,6 +52,34 @@ namespace InhaExpress.Client.Presentation
         private readonly ConnectionObservationBuffer observations = new ConnectionObservationBuffer();
         private volatile string transportStatus = "연결 대기";
         private volatile bool connected;
+        private Uri controlUri;
+        private Task transportTask;
+        public bool DemoDisconnected { get; private set; }
+        public bool DemoUsed { get; private set; }
+        public float SpeedMps => Vector3.ProjectOnPlane(vehicle.VehicleBody.linearVelocity, Vector3.up).magnitude;
+        public bool CanDisconnectDemo => !DemoDisconnected && IsDriving && SpeedMps > .1f;
+        public bool CanRestoreDemo => DemoDisconnected && transportTask.IsCompleted && SpeedMps < .1f;
+
+        public void ToggleDemoConnection()
+        {
+            if (CanRestoreDemo)
+            {
+                cancellation.Dispose();
+                cancellation = new CancellationTokenSource();
+                DemoDisconnected = false;
+                transportTask = RunTransport(controlUri, cancellation.Token);
+            }
+            else if (CanDisconnectDemo)
+            {
+                DemoDisconnected = true;
+                DemoUsed = true;
+                latest = null;
+                commandExpires = 0;
+                vehicle.SetDriveCommand(0, 0, true);
+                cancellation.Cancel();
+            }
+        }
+
         private float nextObservation;
         private int tick, lastCommandTick = -1;
         private double commandExpires;
@@ -106,8 +134,8 @@ namespace InhaExpress.Client.Presentation
             lidarSource = PhysicalLidarSource.Create?.Invoke(target.VehicleTransform, VehicleId, localBody);
             cancellation = new CancellationTokenSource();
             string url = map.serverUrl.TrimEnd('/') + "/v1/demo/unity/vehicles/" + Uri.EscapeDataString(VehicleId) + "/control";
-            var uri = new UriBuilder(url) { Scheme = url.StartsWith("https:") ? "wss" : "ws" }.Uri;
-            _ = RunTransport(uri, cancellation.Token);
+            controlUri = new UriBuilder(url) { Scheme = url.StartsWith("https:") ? "wss" : "ws" }.Uri;
+            transportTask = RunTransport(controlUri, cancellation.Token);
         }
 
         private async Task RunTransport(Uri uri, CancellationToken token)
@@ -154,6 +182,12 @@ namespace InhaExpress.Client.Presentation
         private void Update()
         {
             if (vehicle == null || vehicle is Component component && component == null || vehicle.VehicleTransform == null || cancellation == null) return;
+            if (DemoDisconnected)
+            {
+                vehicle.SetDriveCommand(0, 0, true);
+                Status = SpeedMps < .1f ? "시연 단절 · 정지 유지" : "시연 단절 · 제동 중";
+                return;
+            }
             if (!string.IsNullOrEmpty(map.RunId) && string.IsNullOrEmpty(map.LastError) && Time.unscaledTime >= nextObservation)
             {
                 nextObservation = Time.unscaledTime + .1f;

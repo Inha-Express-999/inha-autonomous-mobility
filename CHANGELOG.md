@@ -1,5 +1,10 @@
 # 변경 이력
 
+## 0.5.4.0 - 2026-11-03 - PC vehicle disconnect and recovery demo
+
+- Added per-vehicle disconnect, braking status and restore controls. No wire protocol migration.
+- Current physical control tests passed 5/5. The legacy client endpoint restart test failed separately. Passenger demo preserved request and vehicle after reconnection; internal mission ID changed.
+
 ## 0.5.3.4 - 2026-11-01 - V01 stopping distance after disconnect
 
 - Unity PlayMode passed (1/1). In one run, V01 detected disconnect at 2.226 m/s and travelled 0.763 m until a sustained stop was confirmed at 0.620 simulated seconds. Test-only change; no protocol migration.

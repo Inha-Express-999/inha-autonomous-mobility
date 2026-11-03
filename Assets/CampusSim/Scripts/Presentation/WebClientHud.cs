@@ -40,6 +40,8 @@ namespace InhaExpress.Client.Presentation
         private GameObject canvasRoot;
         [SerializeField] private bool showWorldMarkers = false;
         private bool mobile;
+        private Button disconnectButton;
+        private Text disconnectLabel, disconnectStatus;
         private float nextRefresh;
         private float fittedSize;
         private readonly List<Camera> suspendedCameras = new List<Camera>();
@@ -295,6 +297,9 @@ namespace InhaExpress.Client.Presentation
             var mapHeader = Top(workspace, "Map Header", 140, 44, 20, 20);
             Surface(mapHeader, Color.white);
             TextAt(Top(mapHeader, "Map Title", 0, 44, 12, 210), "인하대학교 운행 지도", 13, true);
+            disconnectButton = UiButton(RightTop(mapHeader, "Disconnect Demo", 5, 136, 34, 8),
+                "연결 끊김 시연", () => ActiveAutomaticClient?.ToggleDemoConnection());
+            disconnectLabel = disconnectButton.GetComponentInChildren<Text>();
             desktopMap = FixtureUiFactory.Rect(workspace, "Map Viewport", Vector2.zero, Vector2.one,
                 new Vector2(20, 220), new Vector2(-20, -184));
             desktopMap.gameObject.AddComponent<RectMask2D>();
@@ -308,6 +313,10 @@ namespace InhaExpress.Client.Presentation
             }
             var footer = Bottom(workspace, "Map Footer", 188, 32, 20, 20);
             Surface(footer, Color.white);
+            disconnectStatus = TextAt(Top(footer, "Vehicle Link State", 0, 32, 210, 8), "", 12, true);
+            disconnectStatus.resizeTextForBestFit = true;
+            disconnectStatus.resizeTextMinSize = 9;
+            disconnectStatus.resizeTextMaxSize = 12;
             TextAt(Top(footer, "Attribution", 0, 32, 12, 12), "© OpenStreetMap contributors · ODbL 1.0", 10).color = FixtureUiPalette.Muted;
             TextAt(Bottom(workspace, "Fleet Title", 156, 24, 20, 20), "차량 현황", 15, true);
             var fleetRow = Bottom(workspace, "Fleet", 16, 132, 20, 20);
@@ -793,11 +802,27 @@ namespace InhaExpress.Client.Presentation
             return FixtureUiFactory.Text(holder, name, value, size, FixtureUiPalette.Ink, TextAnchor.MiddleLeft, bold ? FontStyle.Bold : FontStyle.Normal);
         }
 
+        private void RefreshDisconnectDemo()
+        {
+            var client = ActiveAutomaticClient;
+            bool held = client != null && client.DemoDisconnected;
+            disconnectButton.interactable = client != null && (client.CanRestoreDemo || client.CanDisconnectDemo);
+            disconnectLabel.text = held ? "차량 연결 복구" : "연결 끊김 시연";
+            if (client == null) disconnectStatus.text = "시연할 차량을 선택하세요";
+            else if (held) disconnectStatus.text = $"{client.VehicleId} 단절 · {client.SpeedMps * 3.6f:F1} km/h · " +
+                (client.CanRestoreDemo ? "정지 유지 · 복구 가능" : "제동 중 · 정지 후 복구");
+            else if (client.DemoUsed) disconnectStatus.text = $"{client.VehicleId} · " +
+                (client.Connected ? client.Status : "재연결 시도 중 · 제동 유지");
+            else disconnectStatus.text = client.CanDisconnectDemo ? $"{client.VehicleId} 운행 중 · 단절 시 자동 제동" :
+                $"{client.VehicleId} · 운행 중 시연 가능";
+        }
+
         private void Update()
         {
             if (map == null || Time.unscaledTime < nextRefresh || connection == null) return;
             nextRefresh = Time.unscaledTime + .25f;
             RefreshStopDropdowns();
+            if (disconnectButton != null) RefreshDisconnectDemo();
             bool online = !string.IsNullOrEmpty(map.RunId) && string.IsNullOrEmpty(map.LastError);
             connection.text = online ? "● 서버 연결됨" : "● 연결 대기";
             connection.color = online ? FixtureUiPalette.Green : FixtureUiPalette.Amber;
