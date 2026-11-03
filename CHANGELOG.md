@@ -1,5 +1,9 @@
 # 변경 이력
 
+## 0.5.4.2 - 2026-11-03 - Verify V02 pickup recovery after reconnect
+
+- Regression test checks stale owner rejection, initial braking, and a fresh pickup mission before a new drive command. Physical dispatch suite: 21 passed. No protocol migration.
+
 ## 0.5.4.1 - 2026-11-03 - Count connected vehicle control sockets
 
 - PC fleet summary and vehicle cards reflect the control connection. No protocol migration. Unity passenger demo verified 3/3, 2/3, 3/3 with the same request assigned to V02.
