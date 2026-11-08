@@ -10,7 +10,7 @@ import math
 import json
 from dataclasses import dataclass, field, replace
 from time import monotonic
-from typing import Literal
+from typing import Annotated, Literal
 from uuid import uuid4
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
@@ -59,24 +59,63 @@ class LidarFrame(StrictModel):
         return self
 
 
+class LidarScan(StrictModel):
+    """Protocol 6 raw range image (channel-major) without labels or pre-filtering.
+
+    Beam directions are leveled to world up; azimuth is clockwise from the
+    projected vehicle forward. Offsets are in the leveled ego frame relative to
+    the localization origin. ``ground_up_m`` is the measured wheel-contact plane
+    height beneath the sensor and ``ground_grade_*`` its grade along leveled
+    forward/right (proprioception), not a terrain or map height query.
+    """
+    tick: int = Field(ge=0, strict=True)
+    valid: bool
+    max_range_m: float = Field(ge=1, le=30)
+    columns: int = Field(ge=360, le=4096, strict=True)
+    azimuth_start_deg: float = Field(ge=-180, le=180)
+    azimuth_span_deg: float = Field(ge=360, le=360)
+    channel_elevations_deg: list[Annotated[float, Field(ge=-90, le=90)]] = Field(min_length=1, max_length=32)
+    sensor_lateral_m: float = Field(ge=-5, le=5)
+    sensor_forward_m: float = Field(ge=-10, le=10)
+    sensor_up_m: float = Field(ge=-2, le=10)
+    ground_up_m: float = Field(ge=-5, le=5)
+    ground_grade_forward: float = Field(ge=-1, le=1)
+    ground_grade_lateral: float = Field(ge=-1, le=1)
+    ranges_mm: list[Annotated[int, Field(ge=0, le=30000)]] = Field(max_length=8192)
+
+    @model_validator(mode="after")
+    def complete_range_image(self):
+        if self.columns % 360:
+            raise ValueError("Complete 360-column scan required")
+        if len(self.ranges_mm) != self.columns * len(self.channel_elevations_deg):
+            raise ValueError("Range image must contain every channel x column ray; never truncate")
+        if any(b <= a for a, b in zip(self.channel_elevations_deg, self.channel_elevations_deg[1:])):
+            raise ValueError("Channel elevations must be strictly increasing")
+        if self.ranges_mm and max(self.ranges_mm) > self.max_range_m * 1000 + 1:
+            raise ValueError("Return beyond sensor range")
+        if self.sensor_up_m <= self.ground_up_m:
+            raise ValueError("Sensor must be mounted above the wheel-contact plane")
+        return self
+
+
 class EgoObservation(StrictModel):
     model_config = ConfigDict(extra="forbid", allow_inf_nan=False, json_schema_extra={"allOf": [{
-        "if": {"properties": {"schema_version": {"enum": [2, 3, 4, 5]}}},
+        "if": {"properties": {"schema_version": {"enum": [2, 3, 4, 5, 6]}}},
         "then": {"required": ["half_width_m"], "properties": {"half_width_m": {"type": "number"}}}
     }, {
         "if": {"required": ["obstacle_detection_enabled"], "properties": {"obstacle_detection_enabled": {"const": False}}},
         "then": {"properties": {"schema_version": {"enum": [3, 4]}, "rays": {"maxItems": 0}}},
         "else": {"if": {"properties": {"schema_version": {"enum": [1, 2, 3, 4]}}}, "then": {"properties": {"rays": {"minItems": 7}}}}
     }, {
-        "if": {"properties": {"schema_version": {"enum": [4, 5]}}},
+        "if": {"properties": {"schema_version": {"enum": [4, 5, 6]}}},
         "then": {"required": ["rear_axle_offset_m", "half_length_m"], "properties": {
             "rear_axle_offset_m": {"type": "number"}, "half_length_m": {"type": "number"}}}
     }, {
-        "if": {"properties": {"schema_version": {"const": 5}}},
+        "if": {"properties": {"schema_version": {"enum": [5, 6]}}},
         "then": {"required": ["lidar"], "properties": {"lidar": {"type": "object"},
             "rays": {"maxItems": 0}, "obstacle_detection_enabled": {"const": True}}}
     }]})
-    schema_version: Literal[1, 2, 3, 4, 5]
+    schema_version: Literal[1, 2, 3, 4, 5, 6]
     run_id: str
     geometry_hash: str = Field(min_length=64, max_length=64)
     tick: int = Field(ge=0, strict=True)
@@ -90,7 +129,7 @@ class EgoObservation(StrictModel):
     sensor_age_s: float = Field(ge=0, le=10)
     obstacle_detection_enabled: bool = True
     rays: list[RayDetection] = Field(max_length=64)
-    lidar: LidarFrame | None = None
+    lidar: LidarFrame | LidarScan | None = None
     half_width_m: float | None = Field(default=None, ge=.1, le=3)
     rear_axle_offset_m: float | None = Field(default=None, ge=-10, le=10)
     half_length_m: float | None = Field(default=None, ge=.1, le=15)
@@ -105,13 +144,16 @@ class EgoObservation(StrictModel):
             raise ValueError("Measured body half width required for lane protocol 2")
         if self.schema_version >= 4 and (self.rear_axle_offset_m is None or self.half_length_m is None):
             raise ValueError("Protocol 4 requires measured rear axle and body length")
-        if self.schema_version == 5:
-            if self.lidar is None or self.lidar.tick != self.tick or self.rays or not self.obstacle_detection_enabled:
+        if self.schema_version == 6:
+            if not isinstance(self.lidar, LidarScan) or self.lidar.tick != self.tick or self.rays or not self.obstacle_detection_enabled:
+                raise ValueError("Protocol 6 requires a same-tick raw range image with detection enabled and no legacy rays")
+        elif self.schema_version == 5:
+            if not isinstance(self.lidar, LidarFrame) or self.lidar.tick != self.tick or self.rays or not self.obstacle_detection_enabled:
                 raise ValueError("Protocol 5 requires same-tick LiDAR with detection enabled and no legacy rays")
             if any(math.hypot(h.lateral_m, h.forward_m) > self.lidar.max_range_m + self.half_length_m + self.half_width_m for h in self.lidar.hits):
                 raise ValueError("Hit outside sensor range and measured body offset")
         elif self.lidar is not None:
-            raise ValueError("LiDAR requires protocol 5")
+            raise ValueError("LiDAR requires protocol 5 or 6")
         return self
 
 
@@ -137,9 +179,9 @@ class DriveCommand(StrictModel):
         "then": {"properties": {"target_speed_kmh": {"maximum": 18}}}
     }, {
         "if": {"properties": {"target_speed_kmh": {"exclusiveMaximum": 0}}},
-        "then": {"properties": {"schema_version": {"enum": [4, 5]}, "status": {"const": "MANEUVER"}}}
+        "then": {"properties": {"schema_version": {"enum": [4, 5, 6]}, "status": {"const": "MANEUVER"}}}
     }]})
-    schema_version: Literal[1, 2, 3, 4, 5]
+    schema_version: Literal[1, 2, 3, 4, 5, 6]
     run_id: str
     tick: int = Field(ge=0)
     target_speed_kmh: float = Field(ge=-5, le=50)
@@ -390,10 +432,10 @@ class UnityDriveSession:
             response.update(reason=reason, status=status)
             return response
 
-        if vehicle.driving_profile == "campus_lidar" and ego.schema_version != 5:
-            return stopped("LiDAR profile requires protocol 5")
+        if vehicle.driving_profile == "campus_lidar" and ego.schema_version < 5:
+            return stopped("LiDAR profile requires protocol 5 or 6")
         if not ego.sensor_valid or ego.sensor_age_s > .2:
-            if ego.schema_version == 5:
+            if ego.schema_version >= 5:
                 vehicle.lidar_blocked = True
                 vehicle.lidar_clear_frames = 0
             return stopped("Invalid/stale Raycast observation")
@@ -404,7 +446,7 @@ class UnityDriveSession:
         if not vehicle.route_unity or vehicle.status in {"ARRIVED", "OFF_ROUTE"}:
             return response
         lidar_speed_cap = math.inf
-        if ego.schema_version == 5:
+        if ego.schema_version >= 5:
             from campus_sim.physical_lidar import evaluate_lidar
             check = evaluate_lidar(vehicle_id, vehicle, ego, self.clock())
             lidar_speed_cap = check.speed_cap_mps
@@ -415,7 +457,7 @@ class UnityDriveSession:
             if turn_command['status'] == 'DONE':
                 vehicle.turn = None
                 return stopped('Turn complete; resume onward route', 'DRIVING')
-            if ego.schema_version == 5:
+            if ego.schema_version >= 5:
                 turn_command["target_speed_kmh"] = math.copysign(min(abs(turn_command["target_speed_kmh"]), lidar_speed_cap * 3.6), turn_command["target_speed_kmh"])
             response.update(turn_command)
             vehicle.status, vehicle.reason = turn_command['status'], turn_command['reason']
@@ -519,10 +561,10 @@ class UnityDriveSession:
         if not fast_simulation and vehicle.sensor_blocked and clearance <= vehicle.blocked_release_m:
             return stopped("Raycast stopping-distance constraint")
         vehicle.sensor_blocked = False
-        speed = min(lidar_speed_cap, vehicle.road_speed_mps if ego.schema_version == 5 else math.inf, curve_speed, cruise if fast_simulation else vehicle.road_speed_mps,
+        speed = min(lidar_speed_cap, vehicle.road_speed_mps if ego.schema_version >= 5 else math.inf, curve_speed, cruise if fast_simulation else vehicle.road_speed_mps,
                     math.sqrt(max(0., 2 * (remaining - .5))),
                     math.inf if fast_simulation else max(0., clearance - stopping_distance))
-        vehicle.status, vehicle.reason = "DRIVING", ("A*" if vehicle.route_algorithm == "astar" else "Dijkstra") + (" / LiDAR TTC safety" if ego.schema_version == 5 else " / simulation cruise / obstacles ignored" if fast_simulation else " / pure pursuit / Raycast safety")
+        vehicle.status, vehicle.reason = "DRIVING", ("A*" if vehicle.route_algorithm == "astar" else "Dijkstra") + (" / LiDAR TTC safety" if ego.schema_version >= 5 else " / simulation cruise / obstacles ignored" if fast_simulation else " / pure pursuit / Raycast safety")
         response.update(target_speed_kmh=speed * 3.6, steering_angle_rad=steering, emergency_stop=False,
                         status=vehicle.status, reason=vehicle.reason)
         return response

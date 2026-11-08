@@ -1,3 +1,5 @@
+PC 운행 제어 경로는 protocol 6 원시 거리 영상과 Python 기하 기반 지면 분리를 사용한다([ADR 0014](ADR/0014-lidar-raw-range-protocol6.md)). 아래의 `LidarTarget`·`LidarIgnore`·지면 평면 필터는 표시/독립 시연용이며 Python 판단에 들어가지 않는다.
+
 PC 연속 LiDAR 연결 및 자동 연출은 [8주차 통합 문서](WEEK8_INTEGRATION.md)와 [ADR 0013](ADR/0013-continuous-pc-lidar-protocol5.md)을 따른다. 아래는 독립 시연 센서의 원본 설명이다.
 
 # 통합 브랜치의 LiDAR 시연

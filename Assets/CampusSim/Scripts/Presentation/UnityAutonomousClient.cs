@@ -17,7 +17,7 @@ namespace InhaExpress.Client.Presentation
         [Serializable] private sealed class Ray { public float range_m, bearing_rad, lateral_m, forward_m, origin_forward_m; }
         [Serializable] private sealed class Observation
         {
-            public int schema_version = 5, tick;
+            public int schema_version = 6, tick;
             public string run_id, geometry_hash;
             public float x, z, heading_rad, speed_mps, wheelbase_m, max_steering_rad, sensor_age_s;
             public float half_width_m;
@@ -165,7 +165,7 @@ namespace InhaExpress.Client.Presentation
                 try
                 {
                     var command = JsonUtility.FromJson<Command>(response.json);
-                    if (command.schema_version != 5 || command.run_id != map.RunId || command.tick <= lastCommandTick ||
+                    if (command.schema_version != 6 || command.run_id != map.RunId || command.tick <= lastCommandTick ||
                         command.tick < tick - 4 || command.tick > tick ||
                         !float.IsFinite(command.target_speed_kmh) || command.target_speed_kmh < -5 || command.target_speed_kmh > 50 ||
                         (command.target_speed_kmh < 0 && command.status != "MANEUVER") ||

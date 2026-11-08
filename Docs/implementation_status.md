@@ -1,3 +1,5 @@
+2026-11-09 · 0.5.5.0 LiDAR 지면 분리: PC 차량이 physical protocol 6으로 360×7 원시 거리 영상(`ranges_mm`)·채널 고각·센서 오프셋·WheelCollider 접지 평면만 보내고, Python `lidar_ground`가 열별 경사 연속성과 같은 채널 거리 불연속으로 지면/장애물을 나눈다. Unity 지면 평면 필터·`hit.normal`·`entity_class`는 제어 경로에서 제외했다. 합성 언덕/요철에서 오검출 0, 보행자 크기 12m 이상 검출은 합성 고정 데이터 결과이며 실제 캠퍼스 주행 검증은 하지 않았다. 언덕 위 낮고 넓은 장애물은 7.6m에서야 보이는 수직 분해능 한계가 있다. 정석학술정보관→60주년 현장 재현에서 찾은 회전 중 반경 정지(연석)와 교차로 회전 시 직진 sweep 오판을 회전 호 차체 궤적·경로 corridor 검사로 고쳤고, 수정 후 PC Play 실주행 2회 모두 해당 구간 정지 0회였다. 상세는 `Docs/ADR/0014-lidar-raw-range-protocol6.md`.
+
 # 구현 현황
 
 2026-10-28 · 0.5.3.0 PC LiDAR 시험: 기존 PC Additive 운행 차량 3대에 360×7/15m/10Hz 지속 관측과 protocol 5를 연결한다. TTC/정지거리 제동, 5개 연속 clear scan 후 재출발 및 조우 시 기존 점군 연출을 자동 표시한다. 새 `campus_lidar` 프로필은 최대 18km/h다. 관제 UI를 유지하며 객체 Transform/실제 속도를 Python에 전달하지 않는다. RRT는 비실행 후보이며 실제 회피 궤적·동적 충돌 검증은 남는다. 향후 트리거가 물리 Collider를 생성하면 관측 경로가 처리하며 생성 버튼 자체는 추가하지 않았다. 상세 범위/시험은 `Docs/WEEK8_INTEGRATION.md`를 따른다.
