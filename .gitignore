@@ -123,3 +123,4 @@ __pycache__/
 /tmp/
 /backend/tmp/
 /artifacts/service_locations/pytest-*/
+.mcp.json
