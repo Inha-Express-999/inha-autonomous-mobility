@@ -1,5 +1,10 @@
 # 변경 이력
 
+## 0.5.4.3 - 2026-11-08 - Verify recovery across transport phases
+
+- Added five reconnect scenarios covering pickup, boarding, dropoff travel, alighting and return. Synthetic observations verify unchanged request ownership, initial braking, fresh missions and eventual completion without duplicates.
+- Physical dispatch suite: 26 passed. Unity phase-by-phase driving remains unverified. No protocol migration.
+
 ## 0.5.4.2 - 2026-11-03 - Verify V02 pickup recovery after reconnect
 
 - Regression test checks stale owner rejection, initial braking, and a fresh pickup mission before a new drive command. Physical dispatch suite: 21 passed. No protocol migration.

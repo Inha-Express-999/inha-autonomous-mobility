@@ -306,3 +306,49 @@ def test_failed_candidate_cannot_starve_other_requests_and_vehicles(monkeypatch,
     assert all(not job.returned for job in s.physical_dispatch.jobs.values())
     failures=s.physical_dispatch.diagnostics['candidate_failures']
     assert failures and all(row['V02']=='No directed return route' for row in failures.values())
+
+
+@pytest.mark.parametrize("interrupted_phase", [
+    "TO_PICKUP", "PICKUP_SERVICE", "TO_DROPOFF", "DROPOFF_SERVICE", "RETURNING",
+])
+def test_reconnect_at_each_transport_phase_completes_same_request(interrupted_phase):
+    session, physical, token, wall = setup()
+    passenger = request(session)
+    job = session.physical_dispatch.jobs[passenger.id]
+
+    # Supply synthetic arrival observations, including service dwell, as in the
+    # existing transport-state fixture. This does not measure Unity driving.
+    for _ in range(150):
+        if job.phase == interrupted_phase:
+            break
+        observe(session, physical, token, wall, arrive=True)
+    assert job.phase == interrupted_phase
+    status = passenger.status
+    old_mission = job.mission_id
+    old_pose = physical.vehicles["V01"].ego
+    old_token = token
+    physical.disconnect("V01", token)
+    wall[0] += 10
+    session.advance()
+    assert passenger.status == status
+    assert job.phase == interrupted_phase and not job.returned
+    assert job.dwell_s == 0
+
+    token = physical.connect("V01")
+    with pytest.raises(ValueError, match="owner"):
+        physical.observation("V01", old_token, old_pose.model_copy(update={"tick": old_pose.tick + 1}))
+    first = physical.observation("V01", token, old_pose.model_copy(update={"tick": 1}))
+    assert first["emergency_stop"] and first["target_speed_kmh"] == 0
+    session.advance()
+    assert passenger.vehicle_id == "V01" and passenger.status == status
+    assert job.mission_id and job.mission_id != old_mission
+    assert len(session.physical_dispatch.jobs) == 1
+
+    for _ in range(180):
+        if job.returned:
+            break
+        observe(session, physical, token, wall, arrive=True)
+    assert passenger.status == RequestStatus.COMPLETED
+    assert job.returned and not session.physical_dispatch.busy("V01")
+    assert len(session.service.requests) == 1
+    assert len(session.physical_dispatch.jobs) == 1
