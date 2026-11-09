@@ -19,7 +19,9 @@ def package_server(
         (root / "maps/inha_osm_runtime/manifest.json").read_text(encoding="utf-8")
     )
     relative_files = {source["path"] for source in manifest["sources"].values()}
-    relative_files.update({"backend/pyproject.toml", "backend/requirements-dev.lock"})
+    relative_files.update(
+        {"backend/pyproject.toml", "backend/requirements-dev.lock", "configs/crowd_prior.json"}
+    )
     program_extensions = {
         ".py",
         ".json",

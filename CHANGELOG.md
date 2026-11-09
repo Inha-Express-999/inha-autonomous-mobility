@@ -1,5 +1,15 @@
 # 변경 이력
 
+## 0.5.7.0 — 2026-11-09 · 도로 혼잡 예상(시간대 prior) 표시와 혼잡 시간대 이동
+
+- 작업: `configs/crowd_prior.json`과 `campus_sim.crowd`를 추가한다. 다섯 시간대 pulse로 합성 구역 8개의 ρ_prior를 계산하고, 양방향 도로 209개에 NORMAL/CAUTION/AVOID를 매긴다. CLOSED는 만들지 않는다.
+- 작업: `GET /v1/demo/crowd`(PC/웹 전용 스냅샷)와 `GET /v1/demo/unity-roads`(Unity 좌표 정적 도로 형상)를 추가한다. 웹 지도 도로에 `road_id`를 붙이고 색·점선·범례·토글로 표시한다. Unity PC에 `CampusCrowdOverlay`, 토글 버튼, 범례를 추가한다. 모바일에는 추가하지 않는다. PC 서버 번들에 설정 파일을 포함한다.
+- 작업: 웹과 Unity PC에 "다음 혼잡 시간대"/"기본 시각" 버튼과 `POST /v1/demo/crowd/time`을 추가한다. 혼잡 예상의 시각만 바꾸며 운행 시계는 그대로다(PC 모드는 1배속 고정).
+- 이유: AGENTS §7/§8 혼잡 시간대와 비룡플라자 앞 회피를 관제 화면에서 먼저 확인하기 위해서다(M3 일부).
+- 호환성/마이그레이션: 기존 `/v1/demo/state`, `/v1/demo/unity-map`, `server_map.json` schema와 geometry_hash는 바뀌지 않는다. 씬 재import가 필요 없다. 웹 `roads` 항목에 `road_id` 필드가 추가된다.
+- 검증: backend pytest 409개 통과, Unity EditMode 60/60 통과, 웹과 PC_Bootstrap Play 화면을 확인했다. 상세는 Docs/CROWD_PRIOR.md를 따른다.
+- 미검증/한계: 합성 구역·생성률이다. 경로 비용·배차·제어에 반영하지 않는다. 센서 관측 혼잡, 모바일, PlayMode 자동 테스트, 성능 측정은 하지 않았다. 0.5.4.0~0.5.6.0 태그는 다른 브랜치에서 이미 사용해 0.5.7.0을 쓴다.
+
 ## 0.5.3.0 — 2026-10-28 · 8주차 팀 통합 및 PC 연속 LiDAR 시험
 
 - 작업: 최신 물리 운행 기준선에 vehicle-simulation LiDAR를 병합하고 algorithms의 8주차 통신 복구/제동 게이트와 시험 자산을 선별 반영한다. 기존 차량 GUID와 실제 지도/운송 기준선을 보존한다.

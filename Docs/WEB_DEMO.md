@@ -106,7 +106,7 @@ scripts/start_web_demo.ps1
 
 `웹 입력 → 시연 API → 기존 MobilityService → FIFO/Dijkstra/배터리 → 상태 응답 → SVG 표시` 순서다. 브라우저는 경로 탐색이나 배차를 대신 계산하지 않는다. 서버 상태를 200ms마다 조회하고 화면 사이에는 최대 350ms 범위에서 서버가 보낸 간선별 경로·시간을 재생한다. 직선으로 목적지에 연결하지 않는다. 스냅샷 사이의 표시는 예측이며 Physics 위치가 아니다. 차량이 같은 위치에 겹치면 배지를 벌리고 실제 위치로 연결선을 그려 구분한다. 실제 좌표는 바꾸지 않는다.
 
-디자인은 루트 `UI_DESIGN_SYSTEM.md`, `PC_CLIENT_DESIGN.md`를 웹에 적용한다. Primary #1677FF·네이비 제목·흰 카드·2px 아웃라인 SVG·차량 ID/색상·충전 상태 배지를 함께 사용한다. 구현하지 않은 센서/혼잡/보행자 항목을 수치나 가짜 메뉴로 표시하지 않는다. Freesentation 400/500/600/700 웹폰트를 `backend/src/campus_sim/web/fonts/`에 포함해 본문, 입력, 버튼, SVG 지도 글자에 적용한다. 외부 CDN 없이 제공하며 원본 SIL OFL 1.1 라이선스와 출처/해시는 같은 폴더에 보존한다. 설명 문구와 중간점 표시는 줄이고 거점 이름과 도로 경로는 유지한다.
+디자인은 루트 `UI_DESIGN_SYSTEM.md`, `PC_CLIENT_DESIGN.md`를 웹에 적용한다. Primary #1677FF·네이비 제목·흰 카드·2px 아웃라인 SVG·차량 ID/색상·충전 상태 배지를 함께 사용한다. 구현하지 않은 센서/보행자 항목을 수치나 가짜 메뉴로 표시하지 않는다. 혼잡은 서버의 시간대 prior만 "예상(실측 아님)"으로 표시한다([CROWD_PRIOR.md](CROWD_PRIOR.md)). Freesentation 400/500/600/700 웹폰트를 `backend/src/campus_sim/web/fonts/`에 포함해 본문, 입력, 버튼, SVG 지도 글자에 적용한다. 외부 CDN 없이 제공하며 원본 SIL OFL 1.1 라이선스와 출처/해시는 같은 폴더에 보존한다. 설명 문구와 중간점 표시는 줄이고 거점 이름과 도로 경로는 유지한다.
 
 ## API와 검증
 

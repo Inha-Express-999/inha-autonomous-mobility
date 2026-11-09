@@ -1,5 +1,7 @@
 # 구현 현황
 
+2026-11-09 · 0.5.7.0 도로 혼잡 예상: 다섯 시간대 합성 prior로 구역 밀도와 도로 209개의 주의/회피 등급을 계산해 웹과 Unity PC 지도에만 표시한다. "다음 혼잡 시간대" 버튼은 혼잡 예상 시각만 옮기고 운행 시계는 그대로 둔다. 실측/센서 혼잡, 경로 비용 반영, 모바일 표시는 없다. 상세는 `Docs/CROWD_PRIOR.md`를 따른다.
+
 2026-10-28 · 0.5.3.0 PC LiDAR 시험: 기존 PC Additive 운행 차량 3대에 360×7/15m/10Hz 지속 관측과 protocol 5를 연결한다. TTC/정지거리 제동, 5개 연속 clear scan 후 재출발 및 조우 시 기존 점군 연출을 자동 표시한다. 새 `campus_lidar` 프로필은 최대 18km/h다. 관제 UI를 유지하며 객체 Transform/실제 속도를 Python에 전달하지 않는다. RRT는 비실행 후보이며 실제 회피 궤적·동적 충돌 검증은 남는다. 향후 트리거가 물리 Collider를 생성하면 관측 경로가 처리하며 생성 버튼 자체는 추가하지 않았다. 상세 범위/시험은 `Docs/WEEK8_INTEGRATION.md`를 따른다.
 
 프로젝트 0.5.3.0 · 2026-10-28: 8주차 소스 통합과 PC LiDAR 시험을 반영한다. 가져온 과거 v3 snapshot gateway는 실제 PC protocol 5 채널과 별개다. RRT 실제 회피 주행과 전체 운송/성능 완료를 의미하지 않으며 검증 범위는 `WEEK8_INTEGRATION.md`를 따른다.
@@ -111,7 +113,7 @@
 | 지도 조사·표현 | PARTIAL | OSM/DSM 조사 자료, 기존 Unity 캠퍼스 장면 및 근사 Terrain/건물 표현이 있다. 서비스용 그래프/Stop 또는 통행·접근성 승인은 아니다. 개별 상태는 [지도 계획](MapResearch/PLAN.md)을 따른다. |
 | M1 단일 차량 수직 흐름 | PARTIAL (실제 형상·가상 시간 실행) | 자체 Dijkstra/A*, 방향/평행 edge와 geometry 복원, FIFO·용량·Stop 접근성·세 구간 경로 확인, 픽업→시간상 완료→복귀 후 재배차. 정적 100 합성 OD를 Floyd–Warshall 기준과 대조했다. 웹 A* 왕복/196 OD 비교와 187개 노드 토글을 추가했다. 승인된 실제 운송 지도, 승하차 시간/도착 판정, Unity 주행은 없어 T01/T03 전체 통과가 아니다. 합성 배터리 소모·예비량·충전과 3대 차량 FIFO 가상 시간 운행을 추가했다. |
 | M2 실제 지도·Stop·커버리지 | PARTIAL (형상 그래프·후보) | OSM/Unity 도로 59 way, 187 node, 402 방향 edge를 AEQD로 변환했다. 인벤토리 14곳 모두 Stop 후보와 정문 왕복 경로를 제공한다. 하이테크/생활관 1·2·3/역을 포함한 v2이며 역은 Unity 중심선 기반 우회 복귀를 사용한다. 접근성·폭·통행·보행/차량 연결 승인과 비룡플라자 정책은 미완료다. 원본/생성 코드 해시와 누락/오류 실패 처리를 검증했다. |
-| M3 혼잡·동적 재계획 | NOT_STARTED | 다섯 시간대, 센서/prior 구분 혼잡 추정, A* Full Replan/D* Lite 및 T04~T06/T24가 없다. |
+| M3 혼잡·동적 재계획 | PARTIAL (시간대 prior 표시만) | 2026-11-09: 다섯 시간대 pulse 기반 구역 ρ_prior와 도로별 NORMAL/CAUTION/AVOID를 계산해 웹과 Unity PC에만 표시한다. 구역·생성률은 합성이며 CLOSED는 만들지 않는다. 센서 관측 혼잡, 경로 비용 반영, A* Full Replan/D* Lite, T04~T06/T24 전체 인수는 없다. [범위](CROWD_PRIOR.md) |
 | M4 센서·안전·지역 계획 | PARTIAL (Python 독립 기초) | 센서 관측 검증, TTC/정지거리 조언, 정적 RRT 기하 후보와 신규 24개 테스트를 추가했다. 전체 backend 147개 통과. 합성 RRT/TTC 웹 시각화를 제공한다. Unity SensorRig/통신/제어/재출발/동적 궤적 검증 및 T07~T09/T21 전체 인수는 미완료다. [범위와 연결 계획](LOCAL_AVOIDANCE.md)을 따른다. |
 | M5 다중 차량·배차·경합 | PARTIAL (가상 시간 한정) | 3대 차량의 가용 순서 FIFO, 합성 배터리 소모·15% 예비량·차량별 거점 가상 충전과 재배차를 검증했다. Greedy/Hungarian 선택·독립 반복 비교와 장기 대기 보호를 추가했다. 실제 제원/충전소 검증, 다중 차량 Physics·Reservation/CBS·수요 기반 재배치 정책은 없다. 정적 거점 분산 운용만 제공한다. M5 전체 완료가 아니다. |
 | M5a 실시간 통합 | NOT_STARTED | Python WebSocket, PC/Mobile 권위 상태, 실제 호출/ACK/재접속/세션 격리, 센서 입력 연결이 없다. |

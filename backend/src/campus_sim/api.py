@@ -14,7 +14,7 @@ from campus_sim.dispatch_comparison import DispatchComparison, compare_dispatch
 from campus_sim.domain import CommandAck, CreateRequest, Landmark, RequestView
 from campus_sim.service import MobilityService
 from campus_sim.unity_map import unity_map
-from campus_sim.web_demo import DemoControl, DemoPlan, DemoScenario, DemoSession
+from campus_sim.web_demo import CrowdTime, DemoControl, DemoPlan, DemoScenario, DemoSession
 from campus_sim.unity_drive import AutoMission, EgoObservation, DriveCommand
 from pydantic import ValidationError, BaseModel, Field
 
@@ -42,7 +42,7 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
             with suppress(asyncio.CancelledError):
                 await task
 
-    app = FastAPI(title="Inha Mobil API", version="0.5.3.0", lifespan=lifespan)
+    app = FastAPI(title="Inha Mobil API", version="0.5.7.0", lifespan=lifespan)
     app.state.service = service or MobilityService.from_osm_map()
     app.state.demo = None
     app.state.demo_lock = RLock()
@@ -64,6 +64,21 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
     @app.get("/v1/demo/state")
     def demo_state():
         return demo().state()
+
+    @app.get("/v1/demo/crowd")
+    def demo_crowd():
+        return demo().crowd_state()
+
+    @app.post("/v1/demo/crowd/time")
+    def demo_crowd_time(command: CrowdTime):
+        try:
+            return demo().crowd_time(command)
+        except ValueError as error:
+            raise HTTPException(status_code=422, detail=str(error)) from error
+
+    @app.get("/v1/demo/unity-roads")
+    def demo_unity_roads():
+        return demo().unity_roads()
 
     @app.post("/v1/demo/unity/vehicles/{vehicle_id}/mission")
     def unity_mission(vehicle_id: str, command: AutoMission):
