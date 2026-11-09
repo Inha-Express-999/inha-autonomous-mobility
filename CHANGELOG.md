@@ -1,5 +1,10 @@
 # 변경 이력
 
+## 0.5.4.4 - 2026-11-09 - Prepare local Python environment for PC demo
+
+- Added project .venv setup script and operator disconnect demo instructions; ignore local environment files. No protocol migration.
+- Fresh environment passed pip check, server imports, HTTP readiness and 26 physical dispatch tests on the pre-release version. Unity environment selection after restart remains unverified.
+
 ## 0.5.4.3 - 2026-11-08 - Verify recovery across transport phases
 
 - Added five reconnect scenarios covering pickup, boarding, dropoff travel, alighting and return. Synthetic observations verify unchanged request ownership, initial braking, fresh missions and eventual completion without duplicates.

@@ -123,3 +123,6 @@ __pycache__/
 /tmp/
 /backend/tmp/
 /artifacts/service_locations/pytest-*/
+
+# Project-local Python environment
+.venv/
