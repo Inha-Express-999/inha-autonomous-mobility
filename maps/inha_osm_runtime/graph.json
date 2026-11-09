@@ -710,9 +710,9 @@
       188.43433888741419,
       20.96740528977481
     ],
-    "split:216916383:4:0:0.893099911983": [
-      90.3066249083672,
-      97.44940101143288
+    "split:1098496331:0:0:0.083117023": [
+      22.34285395531524,
+      -18.200137829521246
     ],
     "split:481241663:0:0:0.478845445": [
       227.51816060863302,
@@ -722,13 +722,13 @@
       195.59447103201182,
       65.87355398404289
     ],
-    "split:937727088:0:0:0.399868428418": [
-      28.726281276649587,
-      126.12707829598756
+    "split:481241675:2:0:0.584201329": [
+      -59.897733767417904,
+      3.6868548449159615
     ],
-    "split:481241714:0:0:0.426317296": [
-      377.4898290252757,
-      -2.0711229334815755
+    "split:216916382:0:0:0.390000301": [
+      322.7166414449161,
+      -3.7366053756263575
     ],
     "split:481241685:2:0:0.674809737286": [
       -47.51459230230647,
@@ -1073,7 +1073,7 @@
     },
     {
       "u": "osm:4741759455",
-      "v": "osm:4741759446",
+      "v": "split:1098496331:0:0:0.083117023",
       "key": "1098496331:0:0:0:f",
       "polyline": [
         [
@@ -1081,11 +1081,53 @@
           -15.11627292100539
         ],
         [
+          22.34285395531524,
+          -18.200137829521246
+        ]
+      ],
+      "length_m": 3.51202484952008,
+      "speed_mps": 8.333333333333334,
+      "width_m": null,
+      "vehicle_allowed": true,
+      "stairs": false,
+      "verified": false
+    },
+    {
+      "u": "split:1098496331:0:0:0.083117023",
+      "v": "osm:4741759455",
+      "key": "1098496331:0:0:0:r",
+      "polyline": [
+        [
+          22.34285395531524,
+          -18.200137829521246
+        ],
+        [
+          24.023358572884327,
+          -15.11627292100539
+        ]
+      ],
+      "length_m": 3.51202484952008,
+      "speed_mps": 8.333333333333334,
+      "width_m": null,
+      "vehicle_allowed": true,
+      "stairs": false,
+      "verified": false
+    },
+    {
+      "u": "split:1098496331:0:0:0.083117023",
+      "v": "osm:4741759446",
+      "key": "1098496331:0:0:1:f",
+      "polyline": [
+        [
+          22.34285395531524,
+          -18.200137829521246
+        ],
+        [
           3.804821419922415,
           -52.21896015892363
         ]
       ],
-      "length_m": 42.25397785866417,
+      "length_m": 38.74195300914409,
       "speed_mps": 8.333333333333334,
       "width_m": null,
       "vehicle_allowed": true,
@@ -1094,19 +1136,19 @@
     },
     {
       "u": "osm:4741759446",
-      "v": "osm:4741759455",
-      "key": "1098496331:0:0:0:r",
+      "v": "split:1098496331:0:0:0.083117023",
+      "key": "1098496331:0:0:1:r",
       "polyline": [
         [
           3.804821419922415,
           -52.21896015892363
         ],
         [
-          24.023358572884327,
-          -15.11627292100539
+          22.34285395531524,
+          -18.200137829521246
         ]
       ],
-      "length_m": 42.25397785866417,
+      "length_m": 38.74195300914409,
       "speed_mps": 8.333333333333334,
       "width_m": null,
       "vehicle_allowed": true,
@@ -2396,7 +2438,7 @@
     },
     {
       "u": "osm:2262335941",
-      "v": "osm:4741759513",
+      "v": "split:216916382:0:0:0.390000301",
       "key": "216916382:0:0:0:f",
       "polyline": [
         [
@@ -2404,11 +2446,53 @@
           -14.487759685663804
         ],
         [
+          322.7166414449161,
+          -3.7366053756263575
+        ]
+      ],
+      "length_m": 22.316869917426477,
+      "speed_mps": 8.333333333333334,
+      "width_m": null,
+      "vehicle_allowed": true,
+      "stairs": false,
+      "verified": false
+    },
+    {
+      "u": "split:216916382:0:0:0.390000301",
+      "v": "osm:2262335941",
+      "key": "216916382:0:0:0:r",
+      "polyline": [
+        [
+          322.7166414449161,
+          -3.7366053756263575
+        ],
+        [
+          342.27310748336737,
+          -14.487759685663804
+        ]
+      ],
+      "length_m": 22.316869917426477,
+      "speed_mps": 8.333333333333334,
+      "width_m": null,
+      "vehicle_allowed": true,
+      "stairs": false,
+      "verified": false
+    },
+    {
+      "u": "split:216916382:0:0:0.390000301",
+      "v": "osm:4741759513",
+      "key": "216916382:0:0:1:f",
+      "polyline": [
+        [
+          322.7166414449161,
+          -3.7366053756263575
+        ],
+        [
           292.12836147084755,
           13.07928137166463
         ]
       ],
-      "length_m": 57.222699213830815,
+      "length_m": 34.905829296404335,
       "speed_mps": 8.333333333333334,
       "width_m": null,
       "vehicle_allowed": true,
@@ -2417,19 +2501,19 @@
     },
     {
       "u": "osm:4741759513",
-      "v": "osm:2262335941",
-      "key": "216916382:0:0:0:r",
+      "v": "split:216916382:0:0:0.390000301",
+      "key": "216916382:0:0:1:r",
       "polyline": [
         [
           292.12836147084755,
           13.07928137166463
         ],
         [
-          342.27310748336737,
-          -14.487759685663804
+          322.7166414449161,
+          -3.7366053756263575
         ]
       ],
-      "length_m": 57.222699213830815,
+      "length_m": 34.905829296404335,
       "speed_mps": 8.333333333333334,
       "width_m": null,
       "vehicle_allowed": true,
@@ -2900,7 +2984,7 @@
     },
     {
       "u": "osm:2262335940",
-      "v": "split:216916383:4:0:0.893099911983",
+      "v": "osm:2262335931",
       "key": "216916383:4:0:0:f",
       "polyline": [
         [
@@ -2908,53 +2992,11 @@
           86.07070731547377
         ],
         [
-          90.3066249083672,
-          97.44940101143288
-        ]
-      ],
-      "length_m": 38.96619100888624,
-      "speed_mps": 8.333333333333334,
-      "width_m": null,
-      "vehicle_allowed": true,
-      "stairs": false,
-      "verified": false
-    },
-    {
-      "u": "split:216916383:4:0:0.893099911983",
-      "v": "osm:2262335940",
-      "key": "216916383:4:0:0:r",
-      "polyline": [
-        [
-          90.3066249083672,
-          97.44940101143288
-        ],
-        [
-          127.57443100846581,
-          86.07070731547377
-        ]
-      ],
-      "length_m": 38.96619100888624,
-      "speed_mps": 8.333333333333334,
-      "width_m": null,
-      "vehicle_allowed": true,
-      "stairs": false,
-      "verified": false
-    },
-    {
-      "u": "split:216916383:4:0:0.893099911983",
-      "v": "osm:2262335931",
-      "key": "216916383:4:0:1:f",
-      "polyline": [
-        [
-          90.3066249083672,
-          97.44940101143288
-        ],
-        [
           85.84583424111108,
           98.81138004792804
         ]
       ],
-      "length_m": 4.664079788439685,
+      "length_m": 43.63027079732593,
       "speed_mps": 8.333333333333334,
       "width_m": null,
       "vehicle_allowed": true,
@@ -2963,19 +3005,19 @@
     },
     {
       "u": "osm:2262335931",
-      "v": "split:216916383:4:0:0.893099911983",
-      "key": "216916383:4:0:1:r",
+      "v": "osm:2262335940",
+      "key": "216916383:4:0:0:r",
       "polyline": [
         [
           85.84583424111108,
           98.81138004792804
         ],
         [
-          90.3066249083672,
-          97.44940101143288
+          127.57443100846581,
+          86.07070731547377
         ]
       ],
-      "length_m": 4.664079788439685,
+      "length_m": 43.63027079732593,
       "speed_mps": 8.333333333333334,
       "width_m": null,
       "vehicle_allowed": true,
@@ -6596,7 +6638,7 @@
     },
     {
       "u": "osm:4741759486",
-      "v": "osm:4741759481",
+      "v": "split:481241675:2:0:0.584201329",
       "key": "481241675:2:0:0:f",
       "polyline": [
         [
@@ -6604,11 +6646,53 @@
           15.494064571591895
         ],
         [
+          -59.897733767417904,
+          3.6868548449159615
+        ]
+      ],
+      "length_m": 25.118732297460916,
+      "speed_mps": 8.333333333333334,
+      "width_m": null,
+      "vehicle_allowed": true,
+      "stairs": false,
+      "verified": false
+    },
+    {
+      "u": "split:481241675:2:0:0.584201329",
+      "v": "osm:4741759486",
+      "key": "481241675:2:0:0:r",
+      "polyline": [
+        [
+          -59.897733767417904,
+          3.6868548449159615
+        ],
+        [
+          -82.06844667209906,
+          15.494064571591895
+        ]
+      ],
+      "length_m": 25.118732297460916,
+      "speed_mps": 8.333333333333334,
+      "width_m": null,
+      "vehicle_allowed": true,
+      "stairs": false,
+      "verified": false
+    },
+    {
+      "u": "split:481241675:2:0:0.584201329",
+      "v": "osm:4741759481",
+      "key": "481241675:2:0:1:f",
+      "polyline": [
+        [
+          -59.897733767417904,
+          3.6868548449159615
+        ],
+        [
           -44.117980276153645,
           -4.716792782818425
         ]
       ],
-      "length_m": 42.9967051606295,
+      "length_m": 17.877972863168587,
       "speed_mps": 8.333333333333334,
       "width_m": null,
       "vehicle_allowed": true,
@@ -6617,19 +6701,19 @@
     },
     {
       "u": "osm:4741759481",
-      "v": "osm:4741759486",
-      "key": "481241675:2:0:0:r",
+      "v": "split:481241675:2:0:0.584201329",
+      "key": "481241675:2:0:1:r",
       "polyline": [
         [
           -44.117980276153645,
           -4.716792782818425
         ],
         [
-          -82.06844667209906,
-          15.494064571591895
+          -59.897733767417904,
+          3.6868548449159615
         ]
       ],
-      "length_m": 42.9967051606295,
+      "length_m": 17.877972863168587,
       "speed_mps": 8.333333333333334,
       "width_m": null,
       "vehicle_allowed": true,
@@ -8318,7 +8402,7 @@
     },
     {
       "u": "clip:expanded:481241714:0:0.136187164195",
-      "v": "split:481241714:0:0:0.426317296",
+      "v": "osm:4741759648",
       "key": "481241714:0:0:0:f",
       "polyline": [
         [
@@ -8326,53 +8410,11 @@
           22.644355008941993
         ],
         [
-          377.4898290252757,
-          -2.0711229334815755
-        ]
-      ],
-      "length_m": 26.598467480353424,
-      "speed_mps": 8.333333333333334,
-      "width_m": null,
-      "vehicle_allowed": true,
-      "stairs": false,
-      "verified": false
-    },
-    {
-      "u": "split:481241714:0:0:0.426317296",
-      "v": "clip:expanded:481241714:0:0.136187164195",
-      "key": "481241714:0:0:0:r",
-      "polyline": [
-        [
-          377.4898290252757,
-          -2.0711229334815755
-        ],
-        [
-          387.3195605771032,
-          22.644355008941993
-        ]
-      ],
-      "length_m": 26.598467480353424,
-      "speed_mps": 8.333333333333334,
-      "width_m": null,
-      "vehicle_allowed": true,
-      "stairs": false,
-      "verified": false
-    },
-    {
-      "u": "split:481241714:0:0:0.426317296",
-      "v": "osm:4741759648",
-      "key": "481241714:0:0:1:f",
-      "polyline": [
-        [
-          377.4898290252757,
-          -2.0711229334815755
-        ],
-        [
           364.2622470595501,
           -35.330018009279556
         ]
       ],
-      "length_m": 35.79277896898938,
+      "length_m": 62.39124644934281,
       "speed_mps": 8.333333333333334,
       "width_m": null,
       "vehicle_allowed": true,
@@ -8381,19 +8423,19 @@
     },
     {
       "u": "osm:4741759648",
-      "v": "split:481241714:0:0:0.426317296",
-      "key": "481241714:0:0:1:r",
+      "v": "clip:expanded:481241714:0:0.136187164195",
+      "key": "481241714:0:0:0:r",
       "polyline": [
         [
           364.2622470595501,
           -35.330018009279556
         ],
         [
-          377.4898290252757,
-          -2.0711229334815755
+          387.3195605771032,
+          22.644355008941993
         ]
       ],
-      "length_m": 35.79277896898938,
+      "length_m": 62.39124644934281,
       "speed_mps": 8.333333333333334,
       "width_m": null,
       "vehicle_allowed": true,
@@ -8864,7 +8906,7 @@
     },
     {
       "u": "osm:2262335931",
-      "v": "split:937727088:0:0:0.399868428418",
+      "v": "osm:8687774327",
       "key": "937727088:0:0:0:f",
       "polyline": [
         [
@@ -8872,53 +8914,11 @@
           98.81138004792804
         ],
         [
-          28.726281276649587,
-          126.12707829598756
-        ]
-      ],
-      "length_m": 63.31501166105052,
-      "speed_mps": 8.333333333333334,
-      "width_m": null,
-      "vehicle_allowed": true,
-      "stairs": false,
-      "verified": false
-    },
-    {
-      "u": "split:937727088:0:0:0.399868428418",
-      "v": "osm:2262335931",
-      "key": "937727088:0:0:0:r",
-      "polyline": [
-        [
-          28.726281276649587,
-          126.12707829598756
-        ],
-        [
-          85.84583424111108,
-          98.81138004792804
-        ]
-      ],
-      "length_m": 63.31501166105052,
-      "speed_mps": 8.333333333333334,
-      "width_m": null,
-      "vehicle_allowed": true,
-      "stairs": false,
-      "verified": false
-    },
-    {
-      "u": "split:937727088:0:0:0.399868428418",
-      "v": "osm:8687774327",
-      "key": "937727088:0:0:1:f",
-      "polyline": [
-        [
-          28.726281276649587,
-          126.12707829598756
-        ],
-        [
           -57.00003431231198,
           167.1230953692117
         ]
       ],
-      "length_m": 95.02459997456617,
+      "length_m": 158.3396116356167,
       "speed_mps": 8.333333333333334,
       "width_m": null,
       "vehicle_allowed": true,
@@ -8927,19 +8927,19 @@
     },
     {
       "u": "osm:8687774327",
-      "v": "split:937727088:0:0:0.399868428418",
-      "key": "937727088:0:0:1:r",
+      "v": "osm:2262335931",
+      "key": "937727088:0:0:0:r",
       "polyline": [
         [
           -57.00003431231198,
           167.1230953692117
         ],
         [
-          28.726281276649587,
-          126.12707829598756
+          85.84583424111108,
+          98.81138004792804
         ]
       ],
-      "length_m": 95.02459997456617,
+      "length_m": 158.3396116356167,
       "speed_mps": 8.333333333333334,
       "width_m": null,
       "vehicle_allowed": true,
@@ -9707,7 +9707,7 @@
     {
       "edge_id": [
         "osm:4741759455",
-        "osm:4741759446",
+        "split:1098496331:0:0:0.083117023",
         "1098496331:0:0:0:f"
       ],
       "osm_way_id": "1098496331",
@@ -9737,9 +9737,71 @@
     },
     {
       "edge_id": [
-        "osm:4741759446",
+        "split:1098496331:0:0:0.083117023",
         "osm:4741759455",
         "1098496331:0:0:0:r"
+      ],
+      "osm_way_id": "1098496331",
+      "unity_feature_id": null,
+      "osm_tags": {
+        "highway": "service",
+        "surface": "asphalt"
+      },
+      "access_status": "UNVERIFIED_SIMULATION_ONLY",
+      "speed_source": "configured_assumption",
+      "source_osm_file": "Docs/MapResearch/2026-09-17/expanded_campus.osm",
+      "source_segment_index": 0,
+      "source_fraction_interval": [
+        0.0,
+        1.0
+      ],
+      "source_pieces": [
+        {
+          "kind": "unity_core",
+          "unity_feature_id": "1098496331_0",
+          "source_file": "Assets/InhaCampus/Source/campus.json"
+        }
+      ],
+      "unity_centerline_sources": [
+        "core_unity"
+      ]
+    },
+    {
+      "edge_id": [
+        "split:1098496331:0:0:0.083117023",
+        "osm:4741759446",
+        "1098496331:0:0:1:f"
+      ],
+      "osm_way_id": "1098496331",
+      "unity_feature_id": null,
+      "osm_tags": {
+        "highway": "service",
+        "surface": "asphalt"
+      },
+      "access_status": "UNVERIFIED_SIMULATION_ONLY",
+      "speed_source": "configured_assumption",
+      "source_osm_file": "Docs/MapResearch/2026-09-17/expanded_campus.osm",
+      "source_segment_index": 0,
+      "source_fraction_interval": [
+        0.0,
+        1.0
+      ],
+      "source_pieces": [
+        {
+          "kind": "unity_core",
+          "unity_feature_id": "1098496331_0",
+          "source_file": "Assets/InhaCampus/Source/campus.json"
+        }
+      ],
+      "unity_centerline_sources": [
+        "core_unity"
+      ]
+    },
+    {
+      "edge_id": [
+        "osm:4741759446",
+        "split:1098496331:0:0:0.083117023",
+        "1098496331:0:0:1:r"
       ],
       "osm_way_id": "1098496331",
       "unity_feature_id": null,
@@ -11617,7 +11679,7 @@
     {
       "edge_id": [
         "osm:2262335941",
-        "osm:4741759513",
+        "split:216916382:0:0:0.390000301",
         "216916382:0:0:0:f"
       ],
       "osm_way_id": "216916382",
@@ -11638,6 +11700,11 @@
           "kind": "unity_core",
           "unity_feature_id": "216916382_0",
           "source_file": "Assets/InhaCampus/Source/campus.json"
+        },
+        {
+          "kind": "pinned_extension",
+          "target": "hitech",
+          "source_file": "Docs/MapResearch/2026-09-17/expanded_campus.osm"
         }
       ],
       "unity_centerline_sources": [
@@ -11646,7 +11713,7 @@
     },
     {
       "edge_id": [
-        "osm:4741759513",
+        "split:216916382:0:0:0.390000301",
         "osm:2262335941",
         "216916382:0:0:0:r"
       ],
@@ -11668,6 +11735,81 @@
           "kind": "unity_core",
           "unity_feature_id": "216916382_0",
           "source_file": "Assets/InhaCampus/Source/campus.json"
+        },
+        {
+          "kind": "pinned_extension",
+          "target": "hitech",
+          "source_file": "Docs/MapResearch/2026-09-17/expanded_campus.osm"
+        }
+      ],
+      "unity_centerline_sources": [
+        "core_unity"
+      ]
+    },
+    {
+      "edge_id": [
+        "split:216916382:0:0:0.390000301",
+        "osm:4741759513",
+        "216916382:0:0:1:f"
+      ],
+      "osm_way_id": "216916382",
+      "unity_feature_id": null,
+      "osm_tags": {
+        "highway": "service"
+      },
+      "access_status": "UNVERIFIED_SIMULATION_ONLY",
+      "speed_source": "configured_assumption",
+      "source_osm_file": "Docs/MapResearch/2026-09-17/expanded_campus.osm",
+      "source_segment_index": 0,
+      "source_fraction_interval": [
+        0.0,
+        1.0
+      ],
+      "source_pieces": [
+        {
+          "kind": "unity_core",
+          "unity_feature_id": "216916382_0",
+          "source_file": "Assets/InhaCampus/Source/campus.json"
+        },
+        {
+          "kind": "pinned_extension",
+          "target": "hitech",
+          "source_file": "Docs/MapResearch/2026-09-17/expanded_campus.osm"
+        }
+      ],
+      "unity_centerline_sources": [
+        "core_unity"
+      ]
+    },
+    {
+      "edge_id": [
+        "osm:4741759513",
+        "split:216916382:0:0:0.390000301",
+        "216916382:0:0:1:r"
+      ],
+      "osm_way_id": "216916382",
+      "unity_feature_id": null,
+      "osm_tags": {
+        "highway": "service"
+      },
+      "access_status": "UNVERIFIED_SIMULATION_ONLY",
+      "speed_source": "configured_assumption",
+      "source_osm_file": "Docs/MapResearch/2026-09-17/expanded_campus.osm",
+      "source_segment_index": 0,
+      "source_fraction_interval": [
+        0.0,
+        1.0
+      ],
+      "source_pieces": [
+        {
+          "kind": "unity_core",
+          "unity_feature_id": "216916382_0",
+          "source_file": "Assets/InhaCampus/Source/campus.json"
+        },
+        {
+          "kind": "pinned_extension",
+          "target": "hitech",
+          "source_file": "Docs/MapResearch/2026-09-17/expanded_campus.osm"
         }
       ],
       "unity_centerline_sources": [
@@ -12337,7 +12479,7 @@
     {
       "edge_id": [
         "osm:2262335940",
-        "split:216916383:4:0:0.893099911983",
+        "osm:2262335931",
         "216916383:4:0:0:f"
       ],
       "osm_way_id": "216916383",
@@ -12366,69 +12508,9 @@
     },
     {
       "edge_id": [
-        "split:216916383:4:0:0.893099911983",
+        "osm:2262335931",
         "osm:2262335940",
         "216916383:4:0:0:r"
-      ],
-      "osm_way_id": "216916383",
-      "unity_feature_id": null,
-      "osm_tags": {
-        "highway": "service"
-      },
-      "access_status": "UNVERIFIED_SIMULATION_ONLY",
-      "speed_source": "configured_assumption",
-      "source_osm_file": "Docs/MapResearch/2026-09-17/expanded_campus.osm",
-      "source_segment_index": 4,
-      "source_fraction_interval": [
-        0.0,
-        1.0
-      ],
-      "source_pieces": [
-        {
-          "kind": "unity_core",
-          "unity_feature_id": "216916383_0",
-          "source_file": "Assets/InhaCampus/Source/campus.json"
-        }
-      ],
-      "unity_centerline_sources": [
-        "core_unity"
-      ]
-    },
-    {
-      "edge_id": [
-        "split:216916383:4:0:0.893099911983",
-        "osm:2262335931",
-        "216916383:4:0:1:f"
-      ],
-      "osm_way_id": "216916383",
-      "unity_feature_id": null,
-      "osm_tags": {
-        "highway": "service"
-      },
-      "access_status": "UNVERIFIED_SIMULATION_ONLY",
-      "speed_source": "configured_assumption",
-      "source_osm_file": "Docs/MapResearch/2026-09-17/expanded_campus.osm",
-      "source_segment_index": 4,
-      "source_fraction_interval": [
-        0.0,
-        1.0
-      ],
-      "source_pieces": [
-        {
-          "kind": "unity_core",
-          "unity_feature_id": "216916383_0",
-          "source_file": "Assets/InhaCampus/Source/campus.json"
-        }
-      ],
-      "unity_centerline_sources": [
-        "core_unity"
-      ]
-    },
-    {
-      "edge_id": [
-        "osm:2262335931",
-        "split:216916383:4:0:0.893099911983",
-        "216916383:4:0:1:r"
       ],
       "osm_way_id": "216916383",
       "unity_feature_id": null,
@@ -18251,7 +18333,7 @@
     {
       "edge_id": [
         "osm:4741759486",
-        "osm:4741759481",
+        "split:481241675:2:0:0.584201329",
         "481241675:2:0:0:f"
       ],
       "osm_way_id": "481241675",
@@ -18280,9 +18362,69 @@
     },
     {
       "edge_id": [
-        "osm:4741759481",
+        "split:481241675:2:0:0.584201329",
         "osm:4741759486",
         "481241675:2:0:0:r"
+      ],
+      "osm_way_id": "481241675",
+      "unity_feature_id": null,
+      "osm_tags": {
+        "highway": "service"
+      },
+      "access_status": "UNVERIFIED_SIMULATION_ONLY",
+      "speed_source": "configured_assumption",
+      "source_osm_file": "Docs/MapResearch/2026-09-17/expanded_campus.osm",
+      "source_segment_index": 2,
+      "source_fraction_interval": [
+        0.0,
+        1.0
+      ],
+      "source_pieces": [
+        {
+          "kind": "unity_core",
+          "unity_feature_id": "481241675_0",
+          "source_file": "Assets/InhaCampus/Source/campus.json"
+        }
+      ],
+      "unity_centerline_sources": [
+        "core_unity"
+      ]
+    },
+    {
+      "edge_id": [
+        "split:481241675:2:0:0.584201329",
+        "osm:4741759481",
+        "481241675:2:0:1:f"
+      ],
+      "osm_way_id": "481241675",
+      "unity_feature_id": null,
+      "osm_tags": {
+        "highway": "service"
+      },
+      "access_status": "UNVERIFIED_SIMULATION_ONLY",
+      "speed_source": "configured_assumption",
+      "source_osm_file": "Docs/MapResearch/2026-09-17/expanded_campus.osm",
+      "source_segment_index": 2,
+      "source_fraction_interval": [
+        0.0,
+        1.0
+      ],
+      "source_pieces": [
+        {
+          "kind": "unity_core",
+          "unity_feature_id": "481241675_0",
+          "source_file": "Assets/InhaCampus/Source/campus.json"
+        }
+      ],
+      "unity_centerline_sources": [
+        "core_unity"
+      ]
+    },
+    {
+      "edge_id": [
+        "osm:4741759481",
+        "split:481241675:2:0:0.584201329",
+        "481241675:2:0:1:r"
       ],
       "osm_way_id": "481241675",
       "unity_feature_id": null,
@@ -20887,7 +21029,7 @@
     {
       "edge_id": [
         "clip:expanded:481241714:0:0.136187164195",
-        "split:481241714:0:0:0.426317296",
+        "osm:4741759648",
         "481241714:0:0:0:f"
       ],
       "osm_way_id": "481241714",
@@ -20922,81 +21064,9 @@
     },
     {
       "edge_id": [
-        "split:481241714:0:0:0.426317296",
+        "osm:4741759648",
         "clip:expanded:481241714:0:0.136187164195",
         "481241714:0:0:0:r"
-      ],
-      "osm_way_id": "481241714",
-      "unity_feature_id": null,
-      "osm_tags": {
-        "highway": "service"
-      },
-      "access_status": "UNVERIFIED_SIMULATION_ONLY",
-      "speed_source": "configured_assumption",
-      "source_osm_file": "Docs/MapResearch/2026-09-17/expanded_campus.osm",
-      "source_segment_index": 0,
-      "source_fraction_interval": [
-        0.13618716419474888,
-        1.0
-      ],
-      "source_pieces": [
-        {
-          "kind": "unity_core",
-          "unity_feature_id": "481241714_0",
-          "source_file": "Assets/InhaCampus/Source/campus.json"
-        },
-        {
-          "kind": "pinned_extension",
-          "target": "hitech",
-          "source_file": "Docs/MapResearch/2026-09-17/expanded_campus.osm"
-        }
-      ],
-      "unity_centerline_sources": [
-        "core_unity",
-        "extension_export"
-      ]
-    },
-    {
-      "edge_id": [
-        "split:481241714:0:0:0.426317296",
-        "osm:4741759648",
-        "481241714:0:0:1:f"
-      ],
-      "osm_way_id": "481241714",
-      "unity_feature_id": null,
-      "osm_tags": {
-        "highway": "service"
-      },
-      "access_status": "UNVERIFIED_SIMULATION_ONLY",
-      "speed_source": "configured_assumption",
-      "source_osm_file": "Docs/MapResearch/2026-09-17/expanded_campus.osm",
-      "source_segment_index": 0,
-      "source_fraction_interval": [
-        0.13618716419474888,
-        1.0
-      ],
-      "source_pieces": [
-        {
-          "kind": "unity_core",
-          "unity_feature_id": "481241714_0",
-          "source_file": "Assets/InhaCampus/Source/campus.json"
-        },
-        {
-          "kind": "pinned_extension",
-          "target": "hitech",
-          "source_file": "Docs/MapResearch/2026-09-17/expanded_campus.osm"
-        }
-      ],
-      "unity_centerline_sources": [
-        "core_unity",
-        "extension_export"
-      ]
-    },
-    {
-      "edge_id": [
-        "osm:4741759648",
-        "split:481241714:0:0:0.426317296",
-        "481241714:0:0:1:r"
       ],
       "osm_way_id": "481241714",
       "unity_feature_id": null,
@@ -21825,7 +21895,7 @@
     {
       "edge_id": [
         "osm:2262335931",
-        "split:937727088:0:0:0.399868428418",
+        "osm:8687774327",
         "937727088:0:0:0:f"
       ],
       "osm_way_id": "937727088",
@@ -21854,69 +21924,9 @@
     },
     {
       "edge_id": [
-        "split:937727088:0:0:0.399868428418",
+        "osm:8687774327",
         "osm:2262335931",
         "937727088:0:0:0:r"
-      ],
-      "osm_way_id": "937727088",
-      "unity_feature_id": null,
-      "osm_tags": {
-        "highway": "service"
-      },
-      "access_status": "UNVERIFIED_SIMULATION_ONLY",
-      "speed_source": "configured_assumption",
-      "source_osm_file": "Docs/MapResearch/2026-09-17/expanded_campus.osm",
-      "source_segment_index": 0,
-      "source_fraction_interval": [
-        0.0,
-        1.0
-      ],
-      "source_pieces": [
-        {
-          "kind": "unity_core",
-          "unity_feature_id": "937727088_0",
-          "source_file": "Assets/InhaCampus/Source/campus.json"
-        }
-      ],
-      "unity_centerline_sources": [
-        "core_unity"
-      ]
-    },
-    {
-      "edge_id": [
-        "split:937727088:0:0:0.399868428418",
-        "osm:8687774327",
-        "937727088:0:0:1:f"
-      ],
-      "osm_way_id": "937727088",
-      "unity_feature_id": null,
-      "osm_tags": {
-        "highway": "service"
-      },
-      "access_status": "UNVERIFIED_SIMULATION_ONLY",
-      "speed_source": "configured_assumption",
-      "source_osm_file": "Docs/MapResearch/2026-09-17/expanded_campus.osm",
-      "source_segment_index": 0,
-      "source_fraction_interval": [
-        0.0,
-        1.0
-      ],
-      "source_pieces": [
-        {
-          "kind": "unity_core",
-          "unity_feature_id": "937727088_0",
-          "source_file": "Assets/InhaCampus/Source/campus.json"
-        }
-      ],
-      "unity_centerline_sources": [
-        "core_unity"
-      ]
-    },
-    {
-      "edge_id": [
-        "osm:8687774327",
-        "split:937727088:0:0:0.399868428418",
-        "937727088:0:0:1:r"
       ],
       "osm_way_id": "937727088",
       "unity_feature_id": null,

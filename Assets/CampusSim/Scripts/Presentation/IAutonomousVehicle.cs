@@ -5,6 +5,7 @@ namespace InhaExpress.Client.Presentation
     {
         float WheelbaseM { get; }
         float MaximumSteeringRad { get; }
+        float SteeringRateRadPerSecond { get; }
         bool SetDriveCommand(float targetSpeedKmh, float steeringAngleRad, bool emergencyStop = false);
     }
 }

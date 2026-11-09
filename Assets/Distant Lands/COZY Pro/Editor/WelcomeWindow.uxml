@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <Style src="project://database/Assets/Distant%20Lands/COZY%20Pro/Editor/WelcomeWindow.uss?fileID=7433441132597879392&amp;guid=98d97fb87c7dd3f48aac804898ad58ac&amp;type=3#WelcomeWindow" />
+    <ui:VisualElement class="banner">
+        <ui:Label tabindex="-1" text="COZY Weather" parse-escape-sequences="true" display-tooltip-when-elided="true" />
+    </ui:VisualElement>
+    <ui:ScrollView vertical-scroller-visibility="AlwaysVisible" horizontal-scroller-visibility="Hidden" style="flex-grow: 1;">
+        <ui:Label tabindex="-1" text="Thank you!" parse-escape-sequences="true" display-tooltip-when-elided="true" class="h1" style="margin-bottom: 8px; margin-top: 12px; height: 23px;" />
+        <ui:Label tabindex="-1" text="Thank you for purchasing COZY Weather Pro for Unity. I hope that this package and these modules " parse-escape-sequences="true" display-tooltip-when-elided="true" class="p" />
+        <ui:Label tabindex="-1" text="Importing the Packages" parse-escape-sequences="true" display-tooltip-when-elided="true" class="h1" style="margin-bottom: 8px; margin-top: 12px; height: 23px;" />
+        <ui:Label tabindex="-1" text="COZY Pro gives you full access to COZY Weather 3 and all COZY 3 extension modules free of charge. To start using COZY, import the COZY Core package and all modules that you need for your project!" parse-escape-sequences="true" display-tooltip-when-elided="true" class="p" />
+        <ui:Label tabindex="-1" text="Clicking the download button will take you to the Unity Asset Store page for each package. Make sure that you are signed in to your account and the package will appear free to you. If you have any questions, please reach out to customer support at contact@distantlands.space" parse-escape-sequences="true" display-tooltip-when-elided="true" class="p" />
+        <ui:VisualElement name="module-grid" class="module-grid" />
+    </ui:ScrollView>
+</ui:UXML>

@@ -15,6 +15,7 @@ namespace InhaExpress.Client.Presentation
         public Transform VehicleTransform => transform;
         public Rigidbody VehicleBody => vehicleBody != null ? vehicleBody : GetComponent<Rigidbody>();
         public float MaximumSteeringRad => maxSteerAngle * Mathf.Deg2Rad;
+        public float SteeringRateRadPerSecond => steeringRateDegreesPerSecond * Mathf.Deg2Rad;
         public float WheelbaseM => frontLeftWheel == null || rearLeftWheel == null ? 0 : Vector3.Distance(
             (frontLeftWheel.transform.TransformPoint(frontLeftWheel.center) + frontRightWheel.transform.TransformPoint(frontRightWheel.center)) * .5f,
             (rearLeftWheel.transform.TransformPoint(rearLeftWheel.center) + rearRightWheel.transform.TransformPoint(rearRightWheel.center)) * .5f);

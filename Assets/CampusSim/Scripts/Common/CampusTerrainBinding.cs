@@ -27,5 +27,14 @@ namespace CampusSim
         public bool roadEndpointGrade;
         public Vector3 roadGradeStart;
         public Vector3 roadGradeEnd;
+
+        private void Awake()
+        {
+            // The imported building/ground meshes are fixed scene geometry.
+            // This supplies a sensor class only, not poses or driving permission.
+            if (Application.isPlaying && (kind == BindingKind.Building || kind == BindingKind.Surface) &&
+                GetComponent<InhaExpress.Client.Simulation.LidarStaticMapSurface>() == null)
+                gameObject.AddComponent<InhaExpress.Client.Simulation.LidarStaticMapSurface>();
+        }
     }
 }

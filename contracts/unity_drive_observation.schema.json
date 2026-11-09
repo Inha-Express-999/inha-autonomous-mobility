@@ -31,6 +31,34 @@
           "maxItems": 8192,
           "title": "Hits",
           "type": "array"
+        },
+        "weather": {
+          "default": "clear",
+          "enum": [
+            "clear",
+            "rain",
+            "snow",
+            "fog"
+          ],
+          "title": "Weather",
+          "type": "string"
+        },
+        "road_condition": {
+          "default": "dry",
+          "enum": [
+            "dry",
+            "wet",
+            "snow",
+            "ice",
+            "unknown"
+          ],
+          "title": "Road Condition",
+          "type": "string"
+        },
+        "observation_complete": {
+          "default": true,
+          "title": "Observation Complete",
+          "type": "boolean"
         }
       },
       "required": [
@@ -399,6 +427,62 @@
       ],
       "default": null,
       "title": "Half Length M"
+    },
+    "body_front_m": {
+      "anyOf": [
+        {
+          "maximum": 20,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Body Front M"
+    },
+    "body_rear_m": {
+      "anyOf": [
+        {
+          "maximum": 20,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Body Rear M"
+    },
+    "steering_angle_rad": {
+      "anyOf": [
+        {
+          "maximum": 1.57,
+          "minimum": -1.57,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Steering Angle Rad"
+    },
+    "steering_rate_rad_s": {
+      "anyOf": [
+        {
+          "maximum": 100,
+          "minimum": 0,
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Steering Rate Rad S"
     }
   },
   "required": [

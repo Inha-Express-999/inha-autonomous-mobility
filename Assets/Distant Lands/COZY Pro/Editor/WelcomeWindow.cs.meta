@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 1e482a27533326643ae03845bc1b794d
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - m_ViewDataDictionary: {instanceID: 0}
+  - m_VisualTreeAsset: {fileID: 9197481963319205126, guid: 0ee0148430d853a4baa06185c970ec0a,
+      type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 278975
+  packageName: 'COZY Pro: Stylized Weather Bundle'
+  packageVersion: 3.6.4
+  assetPath: Assets/Distant Lands/COZY Pro/Editor/WelcomeWindow.cs
+  uploadId: 783565

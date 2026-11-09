@@ -24,6 +24,11 @@ class EditorMapReload(BaseModel):
     geometry_hash: str = Field(pattern=r"^[0-9a-f]{64}$")
 
 
+class PassengerCancellation(BaseModel):
+    owner_id: str = Field(min_length=1, max_length=128)
+    command_id: str = Field(min_length=1, max_length=128)
+
+
 def create_app(service: MobilityService | None = None) -> FastAPI:
     @asynccontextmanager
     async def lifespan(app: FastAPI):
@@ -42,7 +47,7 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
             with suppress(asyncio.CancelledError):
                 await task
 
-    app = FastAPI(title="Inha Mobil API", version="0.5.3.0", lifespan=lifespan)
+    app = FastAPI(title="Inha Mobil API", version="0.5.7.0", lifespan=lifespan)
     app.state.service = service or MobilityService.from_osm_map()
     app.state.demo = None
     app.state.demo_lock = RLock()
@@ -117,6 +122,7 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
                 "schema_version": 1,
                 "map_schema_version": 1,
                 "project_version": app.version,
+                "listen_host": os.environ.get("CAMPUS_SIM_LISTEN_HOST", "unknown"),
                 "process_id": os.getpid(),
                 "run_id": session.run_id,
                 "geometry_hash": unity_map(session.service)["geometry_hash"],
@@ -189,11 +195,34 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
         return demo().scenario(command.name)
 
     @app.post("/v1/demo/requests", response_model=CommandAck, status_code=201)
-    def demo_request(command: CreateRequest):
+    def demo_request(command: CreateRequest, request: Request):
         try:
-            return demo().submit(command)
+            session = demo()
+            with session.lock:
+                expected_run = request.headers.get("x-campus-run-id")
+                if expected_run and expected_run != session.run_id:
+                    raise HTTPException(status_code=409, detail="Server session changed; refresh before requesting")
+                return session.submit(command)
         except ValueError as error:
             raise HTTPException(status_code=422, detail=str(error)) from error
+
+    @app.get("/v1/demo/passengers/{owner_id}/requests", response_model=list[RequestView])
+    def passenger_requests(owner_id: str):
+        session = demo()
+        with session.lock:
+            return session.service.requests_for_owner(owner_id)
+
+    @app.post("/v1/demo/passengers/requests/{request_id}/cancel", response_model=CommandAck)
+    def passenger_cancel(request_id: str, command: PassengerCancellation):
+        session = demo()
+        with session.lock:
+            request = session.service.requests.get(request_id)
+            if request is None or request.owner_id != command.owner_id:
+                raise HTTPException(status_code=404, detail="request not found")
+            try:
+                return session.service.cancel_request(request_id, command.command_id, command.owner_id)
+            except ValueError as error:
+                raise HTTPException(status_code=409, detail=str(error)) from error
 
     @app.post("/v1/demo/requests/{request_id}/cancel", response_model=CommandAck)
     def demo_cancel(request_id: str):

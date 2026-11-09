@@ -48,6 +48,25 @@ def test_actual_control_brakes_for_each_observed_class_and_recovers_after_clear_
     assert not s.physical.describe("V01")["obstacles_ignored"]
 
 
+def test_pedestrian_yield_does_not_release_when_ego_stops_but_crossing_is_occupied():
+    s, token = drive_session()
+    pedestrian = [hit(y=6, kind="pedestrian")]
+    first = s.physical.observation("V01", token, observed(s, 2, pedestrian, speed_mps=4))
+    assert first["emergency_stop"]
+    # The same observed obstacle remains ahead after braking: zero ego TTC must
+    # not turn this into five clear scans and a creep/brake cycle.
+    for tick in range(3, 18):
+        command = s.physical.observation("V01", token, observed(s, tick, pedestrian))
+        assert command["emergency_stop"] and command["target_speed_kmh"] == 0
+        assert s.physical.vehicles["V01"].lidar_clear_frames == 0
+    # Side returns remain visible after the pedestrian exits the swept corridor.
+    for tick in range(18, 22):
+        command = s.physical.observation("V01", token, observed(s, tick, [hit(x=4, y=6, kind="pedestrian")]))
+        assert command["emergency_stop"]
+    command = s.physical.observation("V01", token, observed(s, 22, [hit(x=4, y=6, kind="pedestrian")]))
+    assert not command["emergency_stop"] and command["target_speed_kmh"] > 0
+
+
 @pytest.mark.parametrize("changes",[
     dict(sensor_valid=False),dict(sensor_age_s=.3),
     dict(lidar=dict(tick=2,ray_count=2520,max_range_m=15,valid=False,hits=[]))])
@@ -135,3 +154,72 @@ def test_lidar_profile_preserves_map_road_speed_limit():
     s.physical.vehicles["V01"].road_speed_mps=.5
     result=s.physical.observation("V01",t,observed(s,2))
     assert not result["emergency_stop"] and 0<result["target_speed_kmh"]<=1.8
+
+
+@pytest.mark.parametrize("weather,road", [("rain", "wet"), ("snow", "snow"), ("fog", "dry")])
+def test_weather_reduces_clear_corridor_speed(weather, road):
+    s, _ = drive_session()
+    vehicle = s.physical.vehicles["V01"]
+    clear = observed(s, 2)
+    baseline = evaluate_lidar("V01", vehicle, clear, 1).speed_cap_mps
+    vehicle.lidar_environment = None  # Independent initial weather scenario.
+    frame = clear.lidar.model_copy(update=dict(weather=weather, road_condition=road))
+    result = evaluate_lidar("V01", vehicle, clear.model_copy(update=dict(lidar=frame)), 2)
+    assert not result.stop
+    assert 0 < result.speed_cap_mps < baseline
+
+
+@pytest.mark.parametrize("road", ["ice", "unknown"])
+def test_unsupported_surface_stops_even_without_hits(road):
+    s, t = drive_session()
+    ego = observed(s, 2)
+    ego.lidar.road_condition = road
+    assert s.physical.observation("V01", t, ego)["emergency_stop"]
+
+
+def test_outage_resets_recovery_and_needs_five_complete_scans():
+    s, t = drive_session()
+    for tick in (2, 5):
+        ego = observed(s, tick)
+        ego.lidar.observation_complete = False
+        assert s.physical.observation("V01", t, ego)["emergency_stop"]
+        if tick == 2:
+            for n in (3, 4):
+                assert s.physical.observation("V01", t, observed(s, n))["emergency_stop"]
+    for tick in range(6, 10):
+        assert s.physical.observation("V01", t, observed(s, tick))["emergency_stop"]
+    assert not s.physical.observation("V01", t, observed(s, 10))["emergency_stop"]
+
+
+def test_wet_road_brakes_earlier_than_dry_and_fog_stops_beyond_visibility():
+    s, _ = drive_session()
+    vehicle = s.physical.vehicles["V01"]
+    vehicle.route_unity = []  # Isolate braking from curved-route projection.
+    ego = observed(s, 2, [hit(y=10.5, kind="static")], speed_mps=4)
+    assert not evaluate_lidar("V01", vehicle, ego, 1).stop
+    ego.lidar.road_condition = "wet"
+    vehicle.lidar_environment = None
+    assert evaluate_lidar("V01", vehicle, ego, 2).stop
+    ego = observed(s, 3, speed_mps=5)
+    ego.lidar.weather = "fog"
+    assert evaluate_lidar("V01", vehicle, ego, 3).stop
+
+
+@pytest.mark.parametrize("change", [dict(weather="storm"), dict(road_condition="mud")])
+def test_weather_contract_rejects_unknown_settings(change):
+    from campus_sim.unity_drive import LidarFrame
+    data = observed(DemoSession()).lidar.model_dump()
+    data.update(change)
+    with pytest.raises(ValidationError):
+        LidarFrame(**data)
+
+
+def test_weather_change_requires_five_scans_in_the_new_condition():
+    s, t = drive_session()
+    s.physical.observation("V01", t, observed(s, 2))
+    for tick in range(3, 8):
+        ego = observed(s, tick)
+        ego.lidar.weather = "rain"
+        ego.lidar.road_condition = "wet"
+        result = s.physical.observation("V01", t, ego)
+        assert result["emergency_stop"] == (tick < 7)

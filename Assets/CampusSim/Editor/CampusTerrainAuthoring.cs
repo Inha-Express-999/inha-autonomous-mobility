@@ -8,6 +8,7 @@ using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
 using CampusSim;
+using Unity.Cinemachine;
 
 public static class CampusTerrainAuthoring
 {
@@ -106,10 +107,62 @@ public static class CampusTerrainAuthoring
         foreach(var camera in cameras) { camera.gameObject.SetActive(false);camera.tag="Untagged"; }
         var overview=cameras.FirstOrDefault(c=>c.name=="Campus overview camera");
         if(overview){overview.gameObject.SetActive(true);overview.tag="MainCamera";overview.transform.position=new Vector3(-530,520,-700);overview.transform.LookAt(new Vector3(20,5,-90));}
+        ConfigureCameras(scene);
         RenderSettings.fog=false;
         EditorSceneManager.SaveScene(scene);
         Capture();
         Debug.Log("Campus terrain working scene created; original scene and source meshes preserved.");
+    }
+
+    // Preserve authored viewpoints while routing all rendering/audio through one output.
+    public static void ConfigureCameras(Scene scene)
+    {
+        if (EditorApplication.isPlayingOrWillChangePlaymode || scene.path != ScenePath)
+            throw new InvalidOperationException("Expected CampusTerrain in Edit Mode.");
+        var cameras = scene.GetRootGameObjects().SelectMany(g => g.GetComponentsInChildren<Camera>(true)).ToArray();
+        var output = cameras.FirstOrDefault(c => c.name == "Main Camera");
+        var source = cameras.FirstOrDefault(c => c.isActiveAndEnabled) ?? cameras.FirstOrDefault();
+        if (!source) throw new InvalidOperationException("No camera to migrate.");
+        if (!output)
+        {
+            var go = new GameObject("Main Camera");
+            Undo.RegisterCreatedObjectUndo(go, "Create single camera output");
+            SceneManager.MoveGameObjectToScene(go, scene);
+            output = Undo.AddComponent<Camera>(go);
+            output.CopyFrom(source);
+            output.transform.SetPositionAndRotation(source.transform.position, source.transform.rotation);
+            var urp = source.GetComponent<UnityEngine.Rendering.Universal.UniversalAdditionalCameraData>();
+            if (urp) EditorUtility.CopySerialized(urp,
+                Undo.AddComponent<UnityEngine.Rendering.Universal.UniversalAdditionalCameraData>(go));
+        }
+        Undo.RecordObject(output.gameObject, "Set main output");
+        output.tag = "MainCamera";
+        output.gameObject.SetActive(true);
+        output.enabled = true;
+        if (!output.GetComponent<AudioListener>()) Undo.AddComponent<AudioListener>(output.gameObject);
+        var brain = output.GetComponent<CinemachineBrain>() ?? Undo.AddComponent<CinemachineBrain>(output.gameObject);
+        brain.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.Cut, 0);
+        brain.LensModeOverride = new CinemachineBrain.LensModeOverrideSettings
+            { Enabled = true, DefaultMode = LensSettings.OverrideModes.Perspective };
+        foreach (var camera in cameras)
+        {
+            if (camera == output) continue;
+            var go = camera.gameObject;
+            var lens = LensSettings.FromCamera(camera);
+            lens.ModeOverride = camera.orthographic ? LensSettings.OverrideModes.Orthographic : LensSettings.OverrideModes.Perspective;
+            var virtualCamera = go.GetComponent<CinemachineCamera>() ?? Undo.AddComponent<CinemachineCamera>(go);
+            Undo.RecordObject(virtualCamera, "Preserve camera viewpoint");
+            virtualCamera.Lens = lens;
+            virtualCamera.Priority = 10;
+            Undo.RecordObject(go, "Remove output camera tag");
+            go.tag = "Untagged";
+            var listener = go.GetComponent<AudioListener>();
+            if (listener) Undo.DestroyObjectImmediate(listener);
+            var urp = go.GetComponent<UnityEngine.Rendering.Universal.UniversalAdditionalCameraData>();
+            if (urp) Undo.DestroyObjectImmediate(urp);
+            Undo.DestroyObjectImmediate(camera);
+        }
+        EditorSceneManager.MarkSceneDirty(scene);
     }
 
     static void FlattenPad(TerrainData data,Bounds bounds,Vector3 origin)
@@ -322,6 +375,8 @@ public static class CampusTerrainAuthoring
         CampusHubAuthoring.FitGround();
         CampusWaterShoreAuthoring.FitAfterBake();
         CampusEntranceApproaches.FitAfterTerrainBake();
+        CampusDenseLandscapeAuthoring.Reground();
+        CampusStopSignAuthoring.Build();
         AssetDatabase.SaveAssets();
         Debug.Log("Terrain bindings and entrance approaches baked. Access remains unverified; authoring geometry only.");
     }

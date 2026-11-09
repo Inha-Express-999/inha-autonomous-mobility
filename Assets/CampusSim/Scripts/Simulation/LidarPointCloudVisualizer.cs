@@ -58,6 +58,11 @@ namespace InhaExpress.Client.Simulation
                 visualizationEnabled = value;
                 if (!visualizationEnabled && pointCloud != null)
                     pointCloud.Clear(true);
+                if (pcOverlay)
+                {
+                    if (visualizationEnabled && isActiveAndEnabled) LidarPointCloudBackdrop.Acquire(this);
+                    else LidarPointCloudBackdrop.Release(this);
+                }
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
                 if (visualizationEnabled && !pcOverlay)
                     EnterIsolatedView();
@@ -88,6 +93,7 @@ namespace InhaExpress.Client.Simulation
                 sensor = GetComponent<LidarSensorRig>();
             if (sensor != null)
                 sensor.ObservationUpdated += AddObservationPoints;
+            if (visualizationEnabled && pcOverlay) LidarPointCloudBackdrop.Acquire(this);
 #if UNITY_EDITOR || DEVELOPMENT_BUILD
             if (visualizationEnabled && !pcOverlay)
                 EnterIsolatedView();
@@ -96,6 +102,7 @@ namespace InhaExpress.Client.Simulation
 
         private void OnDisable()
         {
+            LidarPointCloudBackdrop.Release(this);
             if (sensor != null)
                 sensor.ObservationUpdated -= AddObservationPoints;
             if (pointCloud != null)
@@ -107,6 +114,7 @@ namespace InhaExpress.Client.Simulation
 
         private void OnDestroy()
         {
+            LidarPointCloudBackdrop.Release(this);
             if (pointMaterial != null)
                 Destroy(pointMaterial);
         }

@@ -1,8 +1,9 @@
-"""PC-owned, loopback-only server. A parent stdin pipe controls graceful shutdown."""
+"""PC-owned LAN demo server. A parent stdin pipe controls graceful shutdown."""
 
 from __future__ import annotations
 
 import argparse
+import os
 import sys
 from threading import Thread
 
@@ -20,13 +21,15 @@ def watch_parent(stream, server):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--port", type=int, default=8765)
+    parser.add_argument("--host", default="0.0.0.0", choices=["0.0.0.0", "127.0.0.1"])
     parser.add_argument("--parent-pipe", action="store_true")
     args = parser.parse_args()
     if not 1024 <= args.port <= 65535:
         parser.error("port must be between 1024 and 65535")
+    os.environ["CAMPUS_SIM_LISTEN_HOST"] = args.host
     server = uvicorn.Server(
         uvicorn.Config(
-            "campus_sim.api:app", host="127.0.0.1", port=args.port, workers=1, log_level="warning"
+            "campus_sim.api:app", host=args.host, port=args.port, workers=1, log_level="warning"
         )
     )
     if args.parent_pipe:

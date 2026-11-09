@@ -95,6 +95,8 @@ namespace InhaExpress.Client.Simulation
             RayCount = 0;
         }
 
+        internal void Invalidate() => IsValid = false;
+
         internal int AddDetection(SensorDetection detection)
         {
             if (DetectionCount >= detections.Length)

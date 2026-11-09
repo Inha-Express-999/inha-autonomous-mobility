@@ -4,7 +4,11 @@
   "references": [
     "InhaExpress.Client.Domain",
     "InhaExpress.Client.Presentation",
-    "Unity.InputSystem"
+    "InhaExpress.Client.MapClient",
+    "Unity.InputSystem",
+    "DistantLands.Cozy.Runtime",
+    "Unity.RenderPipelines.Core.Runtime",
+    "Unity.RenderPipelines.Universal.Runtime"
   ],
   "autoReferenced": true
 }

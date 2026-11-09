@@ -17,10 +17,12 @@ public static class CampusWillowCanopy
     {
         if(EditorApplication.isPlayingOrWillChangePlaymode || EditorSceneManager.GetActiveScene().path!="Assets/CampusSim/Scenes/CampusTerrain.unity")
             throw new InvalidOperationException("Open the working scene in edit mode.");
-        var originals=Enumerable.Range(1,3).SelectMany(i=>AssetDatabase.LoadAllAssetsAtPath(
+        var originals=Enumerable.Range(1,5).SelectMany(i=>AssetDatabase.LoadAllAssetsAtPath(
             "Assets/Idyllic Fantasy Nature/Models/Trees/WillowTree_0"+i+".fbx").OfType<Mesh>()).ToArray();
         var bindings=UnityEngine.Object.FindObjectsByType<CampusTerrainBinding>(FindObjectsSortMode.None)
-            .Where(b=>b.name.StartsWith("Lakeside willow ",StringComparison.Ordinal)).ToArray();
+            .Where(b=>b.name.StartsWith("Lakeside willow ",StringComparison.Ordinal)).Select(b=>b.gameObject)
+            .Concat(UnityEngine.Object.FindObjectsByType<CampusPlantGroundAnchor>(FindObjectsSortMode.None)
+                .Where(a=>a.sourcePrefab.Contains("WillowTree_")).Select(a=>a.gameObject)).Distinct().ToArray();
         var assignments=new List<(MeshFilter filter,Mesh source)>();
         foreach(var b in bindings)foreach(var f in b.GetComponentsInChildren<MeshFilter>())
         {
@@ -63,7 +65,7 @@ public static class CampusWillowCanopy
             string path=Folder+"/"+source.name+"_Overhead.asset";
             var mesh=AssetDatabase.LoadAssetAtPath<Mesh>(path);bool create=!mesh;
             if(create)mesh=new Mesh{name=source.name+"_Overhead"};
-            else {Undo.RecordObject(mesh,"Update willow canopy");mesh.Clear();}
+            else {Undo.RegisterCompleteObjectUndo(mesh,"Update willow canopy");mesh.Clear();}
             mesh.indexFormat=UnityEngine.Rendering.IndexFormat.UInt32;
             mesh.SetVertices(vertices);mesh.SetUVs(0,tex);mesh.subMeshCount=2;
             mesh.SetTriangles(source.GetTriangles(0),0);mesh.SetTriangles(indices,1);

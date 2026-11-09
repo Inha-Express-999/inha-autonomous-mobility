@@ -99,7 +99,7 @@ namespace InhaExpress.Client.Presentation
                 vehicle_actuation = FindFirstObjectByType<WebClientHud>().ActiveAutomaticClient?.IsDriving ?? false
             };
             foreach (var camera in FindObjectsByType<Camera>(FindObjectsSortMode.None))
-                if (camera.isActiveAndEnabled && camera.name == "Campus overview camera")
+                if (camera.isActiveAndEnabled && camera.CompareTag("MainCamera"))
                 {
                     evidence.camera_rect = camera.rect;
                     evidence.camera_aspect = camera.aspect;

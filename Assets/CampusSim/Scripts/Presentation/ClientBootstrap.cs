@@ -59,6 +59,11 @@ namespace InhaExpress.Client.Presentation
                 roleScenePath = "Assets/CampusSim/Scenes/Mobile_Passenger.unity";
                 useFixture = false;
             }
+            ClientServerSettings.MobileMode = clientRole == ClientRole.Mobile_Passenger && !useFixture;
+#if UNITY_STANDALONE
+            if (ClientServerSettings.MobileMode && Array.IndexOf(Environment.GetCommandLineArgs(), "-screen-width") < 0)
+                Screen.SetResolution(390, 844, FullScreenMode.Windowed);
+#endif
             if (!useFixture && autoStartLocalServer && clientRole == ClientRole.PC_Operator)
             {
                 var launcher = gameObject.AddComponent<DesktopServerLauncher>();

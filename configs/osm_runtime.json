@@ -34,7 +34,7 @@
     ],
     "targets": {
       "hitech": {
-        "stop_way_id": "481241714",
+        "stop_way_id": "216916382",
         "segments": [
           {
             "osm_way_id": "481241658",
@@ -134,6 +134,12 @@
           },
           {
             "osm_way_id": "481241715",
+            "segment_index": 0,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "216916382",
             "segment_index": 0,
             "start_fraction": 0.0,
             "end_fraction": 1.0

@@ -3,6 +3,7 @@ using InhaExpress.Client.Presentation;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.TestTools;
+using Unity.Cinemachine;
 
 namespace InhaExpress.Client.Tests
 {
@@ -16,6 +17,42 @@ namespace InhaExpress.Client.Tests
 
     public sealed class PcCameraNavigationTests
     {
+        [UnityTest]
+        public IEnumerator AuthoredBrainIsReusedAndSceneViewResumesAfterControlsAreDestroyed()
+        {
+            var cameraObject = new GameObject("Shared output camera test");
+            var sceneViewObject = new GameObject("Authored scene viewpoint test");
+            var controlsObject = new GameObject("Shared brain controls test");
+            try
+            {
+                var camera = cameraObject.AddComponent<Camera>();
+                var brain = cameraObject.AddComponent<CinemachineBrain>();
+                brain.UpdateMethod = CinemachineBrain.UpdateMethods.LateUpdate;
+                brain.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.Cut, 0);
+                var sceneView = sceneViewObject.AddComponent<CinemachineCamera>();
+                sceneView.Priority = 10;
+                var controls = controlsObject.AddComponent<PcOperatorControls>();
+                controls.Initialize(camera, new Bounds(Vector3.zero, Vector3.one * 100), 100);
+                yield return null;
+                yield return null;
+                Assert.That(cameraObject.GetComponents<CinemachineBrain>().Length, Is.EqualTo(1));
+                Assert.That(brain.ActiveVirtualCamera.Name, Is.EqualTo("Campus map Cinemachine"));
+                Assert.That(camera.orthographic, Is.True);
+                Assert.That(camera.farClipPlane, Is.GreaterThanOrEqualTo(2500));
+                Object.Destroy(controlsObject);
+                yield return null;
+                yield return null;
+                Assert.That(brain != null && brain.enabled, Is.True);
+                Assert.That(brain.ActiveVirtualCamera, Is.SameAs(sceneView));
+            }
+            finally
+            {
+                if (controlsObject != null) Object.DestroyImmediate(controlsObject);
+                Object.DestroyImmediate(sceneViewObject);
+                Object.DestroyImmediate(cameraObject);
+            }
+        }
+
         [UnityTest]
         public IEnumerator FollowRejectsRoadVibrationButTracksSustainedElevationAndResetsOnSelection()
         {

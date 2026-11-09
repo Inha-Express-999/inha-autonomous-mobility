@@ -8,7 +8,10 @@
     "Unity.ugui",
     "InhaExpress.Client.MapClient",
     "Unity.Cinemachine",
-    "InhaExpress.Simulation"
+    "InhaExpress.Simulation",
+    "DistantLands.Cozy.Runtime",
+    "Unity.RenderPipelines.Core.Runtime",
+    "Unity.RenderPipelines.Universal.Runtime"
   ],
   "optionalUnityReferences": [
     "TestAssemblies"

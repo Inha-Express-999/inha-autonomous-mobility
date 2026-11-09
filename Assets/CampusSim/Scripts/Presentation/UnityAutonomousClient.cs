@@ -22,6 +22,8 @@ namespace InhaExpress.Client.Presentation
             public float x, z, heading_rad, speed_mps, wheelbase_m, max_steering_rad, sensor_age_s;
             public float half_width_m;
             public float rear_axle_offset_m, half_length_m;
+            public float body_front_m, body_rear_m;
+            public float steering_angle_rad, steering_rate_rad_s;
             public bool sensor_valid;
             public bool obstacle_detection_enabled;
             public Ray[] rays;
@@ -72,6 +74,9 @@ namespace InhaExpress.Client.Presentation
         public bool Connected => connected;
         public bool TransportReserved => !string.IsNullOrEmpty(latest?.transport_phase);
         public float LastTargetSpeedKmh => latest?.target_speed_kmh ?? 0;
+        public string ServerCommandStatus => latest?.status;
+        public bool ServerEmergencyStop => latest?.emergency_stop ?? false;
+        public int ServerCommandTick => latest?.tick ?? -1;
         public float SimulationCruiseKmh { get; set; } = 18;
         public string LatestObservationJson => snapshot;
         public bool IsDriving => !waitingForMissionAck && consumedGeneration == Volatile.Read(ref transportGeneration) &&
@@ -216,6 +221,15 @@ namespace InhaExpress.Client.Presentation
             observation.rear_axle_offset_m = rearAxleLocalZ * root.TransformVector(Vector3.forward).magnitude;
             observation.half_length_m = root.TransformVector(Vector3.forward * Mathf.Max(
                 Mathf.Abs(localBody.min.z-rearAxleLocalZ), Mathf.Abs(localBody.max.z-rearAxleLocalZ))).magnitude;
+            observation.body_front_m = root.TransformVector(Vector3.forward * Mathf.Max(0, localBody.max.z)).magnitude;
+            observation.body_rear_m = root.TransformVector(Vector3.forward * Mathf.Max(0, -localBody.min.z)).magnitude;
+            float axleMid = rearAxleLocalZ + vehicle.WheelbaseM / root.TransformVector(Vector3.forward).magnitude * .5f;
+            int steeringWheels = 0;
+            foreach (var wheel in wheels)
+                if (root.InverseTransformPoint(wheel.transform.TransformPoint(wheel.center)).z > axleMid)
+                { observation.steering_angle_rad += wheel.steerAngle * Mathf.Deg2Rad; steeringWheels++; }
+            if (steeringWheels > 0) observation.steering_angle_rad /= steeringWheels;
+            observation.steering_rate_rad_s = vehicle.SteeringRateRadPerSecond;
             foreach (var wheel in wheels) if (!wheel.GetGroundHit(out _)) observation.sensor_valid = false;
             observation.lidar = lidarSource?.Capture(observation.tick);
             observation.sensor_valid &= observation.lidar != null && observation.lidar.valid;

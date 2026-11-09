@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "hash_format": "sha256-utf8-lf-v1",
-  "build_project_version": "0.5.3.0",
+  "build_project_version": "0.5.7.0",
   "map_version": "inha-osm-unity-v2",
   "geometry_source": "cached_osm_and_unity_centerlines",
   "synthetic_geometry": false,
@@ -43,11 +43,11 @@
     },
     "entrances": {
       "path": "Docs/MapResearch/Iterations/EntranceInventory/entrances.csv",
-      "sha256": "f2fbcd810ca2e460269a239e8a0a94d06e8eb0fda961aa3cd72cf1b9ac4cf6b5"
+      "sha256": "16997c9d1ae53a8c4fc444a6407b57bba875753f94f1dba0bde673e6cef8d600"
     },
     "policy": {
       "path": "configs/osm_runtime.json",
-      "sha256": "561685de977b32cb8ec31819245257373660421eede1c99cc64368b689255470"
+      "sha256": "6e644ed5e7a33af8677275bdfef40dba2cc4a4a6b45363324ef1f7bc556d8a97"
     },
     "attribution": {
       "path": "Assets/InhaCampus/Source/ATTRIBUTION.txt",
@@ -63,7 +63,7 @@
     },
     "project_version": {
       "path": "VERSION",
-      "sha256": "0a26767d819911498de7e6487c092b15be9577f7a10291cf36c13d513fee5165"
+      "sha256": "f68021e9f01fbc1533df48a7c3a70fc894d21c91b9bfc8fe61f69516adaeb971"
     },
     "expanded_osm": {
       "path": "Docs/MapResearch/2026-09-17/expanded_campus.osm",
@@ -107,11 +107,11 @@
     }
   },
   "files": {
-    "graph.json": "123d950127fd1f5f47079c38f2ad111a3f53f4ffbdfdb05c87c88191cd0f6940",
-    "stops.json": "9ebbf281ecac157e7cfd8721a57c5b101d5da5ba75da232971249971b057961c",
+    "graph.json": "1122eff88783d24f4830212f8b3f9e41c62dfe7eeb415d43809bf5e99678c7ed",
+    "stops.json": "98c5afed3228eb97e94c510486c6fb03ec90bad7305d52d7603e436f19be809e",
     "landmarks.json": "60bbf7051c5f87d6378e447c909a6b519fb725e3d5fe40df365f83926b0ef037",
-    "policy.json": "7f3d56872d7745bb4467a168c83fd0b5c7cb138512907925913e320f7682a6ce",
-    "build_report.json": "1f84e105d2c64cbcfc5873322fc0379f48d3ab83e71559cdc5835b98486beb21",
+    "policy.json": "277cac1877a2ddb11c57178f9211b502ae31ef5ed063745ab9c7d085e253e9f4",
+    "build_report.json": "172b7c969f6cfc424090a58d83918c4255a23f40ce03b6d3b561c4e5f6d12abd",
     "ATTRIBUTION.txt": "c243c904de3a85696895f942921790d66e7c51e3549e5b28b70ed3dea20bdc85"
   }
 }

@@ -1,0 +1,13 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: CrossingWaiting
+  m_Controller: {fileID: 9100000, guid: 1398e9f885d902a4f9abf5a532cc953e, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: be0d8dca9d917c5428cffb4764c27359, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 6967092375e99e84f9a2b8c052f95cbe, type: 2}

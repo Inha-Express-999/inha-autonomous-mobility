@@ -18,13 +18,14 @@ namespace InhaExpress.Client.MapClient
         public int OwnedProcessId => ownedProcess == null ? 0 : ownedProcess.Id;
         public string Status { get; private set; } = "Not started";
         public string RunId { get; private set; }
+        public bool LanEnabled { get; private set; }
         private Process ownedProcess;
         private UnityWebRequest request;
         private bool starting;
 
         [Serializable] private sealed class Info
         {
-            public string service_id, project_version, run_id, geometry_hash;
+            public string service_id, project_version, run_id, geometry_hash, listen_host;
             public int schema_version, map_schema_version;
             public bool simulation_only;
         }
@@ -49,7 +50,7 @@ namespace InhaExpress.Client.MapClient
                 var info = new ProcessStartInfo
                 {
                     FileName = python,
-                    Arguments = "-m campus_sim.desktop_server --parent-pipe --port " + url.Port,
+                    Arguments = "-m campus_sim.desktop_server --parent-pipe --host 0.0.0.0 --port " + url.Port,
                     WorkingDirectory = root,
                     UseShellExecute = false, CreateNoWindow = true,
                     RedirectStandardInput = true
@@ -99,6 +100,8 @@ namespace InhaExpress.Client.MapClient
                         { Status = "Server map differs from edited locations. Stop Play and apply locations again."; yield break; }
 #endif
                         Ready = true; RunId = info.run_id; Status = ownedProcess == null ? "Reusing existing local server" : "Local server ready";
+                        LanEnabled = info.listen_host == "0.0.0.0";
+                        if (!LanEnabled) Status += " / LAN listening not confirmed; restart the old server for mobile access";
                     }
                 }
             }
