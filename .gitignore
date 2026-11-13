@@ -131,3 +131,6 @@ __pycache__/
 /artifacts/vehicle-stop-diagnostic/
 /artifacts/road_connections/*.png
 /artifacts/road_connections/*-meshes.json
+
+# Project-local Python environment
+.venv/

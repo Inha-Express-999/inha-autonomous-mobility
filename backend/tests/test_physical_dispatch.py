@@ -187,6 +187,44 @@ def test_reconnect_resumes_same_request_without_duplicate_assignment():
     assert job.mission_id!=old_mission and job.mission_id==p.vehicles['V01'].mission_id
     assert len(s.physical_dispatch.jobs)==1 and r.status==RequestStatus.ASSIGNED
 
+def test_v02_reconnect_waits_for_new_pickup_mission_before_drive_command():
+    wall = [0.]
+    session = DemoSession(wall_clock=lambda: wall[0])
+    physical = session.physical
+    physical.clock = lambda: wall[0]
+    vehicle_id = "V02"
+
+    def observation(token, tick):
+        ego = lane_ego(session, tick=tick, schema_version=5, rear_axle_offset_m=-.65,
+                       half_length_m=1.55, half_width_m=.46, rays=[],
+                       lidar=dict(tick=tick, ray_count=2520, max_range_m=15, valid=True, hits=[]))
+        return physical.observation(vehicle_id, token, ego)
+
+    old_token = physical.connect(vehicle_id)
+    observation(old_token, 1)
+    passenger = request(session, pickup_landmark_id="anniversary_60", dropoff_landmark_id="biryong_plaza")
+    old_mission = physical.vehicles[vehicle_id].mission_id
+    assert old_mission and observation(old_token, 2)["target_speed_kmh"] > 0
+
+    physical.disconnect(vehicle_id, old_token)
+    wall[0] += 2
+    session.advance()
+    new_token = physical.connect(vehicle_id)
+    with pytest.raises(ValueError, match="owner"):
+        observation(old_token, 3)
+    first = observation(new_token, 1)
+    assert first["emergency_stop"] and first["target_speed_kmh"] == 0
+    assert physical.vehicles[vehicle_id].mission_id is None
+
+    session.advance()
+    resumed = observation(new_token, 2)
+    job = session.physical_dispatch.jobs[passenger.id]
+    assert passenger.status == RequestStatus.ASSIGNED and passenger.vehicle_id == vehicle_id
+    assert job.phase == "TO_PICKUP" and job.mission_id and job.mission_id != old_mission
+    assert resumed["status"] == "DRIVING" and not resumed["emergency_stop"]
+    assert resumed["target_speed_kmh"] > 0
+
+
 def test_preflight_cache_survives_temporary_stale_observations(monkeypatch):
     s,p,token,wall=setup()
     for identifier in ('V02','V03'):
@@ -268,3 +306,49 @@ def test_failed_candidate_cannot_starve_other_requests_and_vehicles(monkeypatch,
     assert all(not job.returned for job in s.physical_dispatch.jobs.values())
     failures=s.physical_dispatch.diagnostics['candidate_failures']
     assert failures and all(row['V02']=='No directed return route' for row in failures.values())
+
+
+@pytest.mark.parametrize("interrupted_phase", [
+    "TO_PICKUP", "PICKUP_SERVICE", "TO_DROPOFF", "DROPOFF_SERVICE", "RETURNING",
+])
+def test_reconnect_at_each_transport_phase_completes_same_request(interrupted_phase):
+    session, physical, token, wall = setup()
+    passenger = request(session)
+    job = session.physical_dispatch.jobs[passenger.id]
+
+    # Supply synthetic arrival observations, including service dwell, as in the
+    # existing transport-state fixture. This does not measure Unity driving.
+    for _ in range(150):
+        if job.phase == interrupted_phase:
+            break
+        observe(session, physical, token, wall, arrive=True)
+    assert job.phase == interrupted_phase
+    status = passenger.status
+    old_mission = job.mission_id
+    old_pose = physical.vehicles["V01"].ego
+    old_token = token
+    physical.disconnect("V01", token)
+    wall[0] += 10
+    session.advance()
+    assert passenger.status == status
+    assert job.phase == interrupted_phase and not job.returned
+    assert job.dwell_s == 0
+
+    token = physical.connect("V01")
+    with pytest.raises(ValueError, match="owner"):
+        physical.observation("V01", old_token, old_pose.model_copy(update={"tick": old_pose.tick + 1}))
+    first = physical.observation("V01", token, old_pose.model_copy(update={"tick": 1}))
+    assert first["emergency_stop"] and first["target_speed_kmh"] == 0
+    session.advance()
+    assert passenger.vehicle_id == "V01" and passenger.status == status
+    assert job.mission_id and job.mission_id != old_mission
+    assert len(session.physical_dispatch.jobs) == 1
+
+    for _ in range(180):
+        if job.returned:
+            break
+        observe(session, physical, token, wall, arrive=True)
+    assert passenger.status == RequestStatus.COMPLETED
+    assert job.returned and not session.physical_dispatch.busy("V01")
+    assert len(session.service.requests) == 1
+    assert len(session.physical_dispatch.jobs) == 1

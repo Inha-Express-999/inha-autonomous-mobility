@@ -48,6 +48,8 @@ namespace InhaExpress.Client.Presentation
         private GameObject canvasRoot;
         [SerializeField] private bool showWorldMarkers = false;
         private bool mobile;
+        private Button disconnectButton;
+        private Text disconnectLabel, disconnectStatus;
         private float nextRefresh;
         private float fittedSize;
         private readonly List<Camera> suspendedCameras = new List<Camera>();
@@ -329,7 +331,7 @@ namespace InhaExpress.Client.Presentation
             var stats = Top(workspace, "Summary", 58, 70, 20, 20);
             Surface(stats, Color.white);
             statCards = new Text[4];
-            string[] statNames = { "연결 차량", "대기 요청", "운송 완료", "충전 중" };
+            string[] statNames = { "제어 연결 차량", "대기 요청", "운송 완료", "충전 중" };
             for (int i = 0; i < 4; i++)
             {
                 var cell = FixtureUiFactory.Rect(stats, "Metric " + i, new Vector2(i / 4f, 0),
@@ -339,8 +341,12 @@ namespace InhaExpress.Client.Presentation
             }
             var mapHeader = Top(workspace, "Map Header", 140, 44, 20, 20);
             Surface(mapHeader, Color.white);
-            TextAt(Top(mapHeader, "Map Title", 0, 44, 12, 228), "인하대학교 운행 지도", 13, true);
+            TextAt(Top(mapHeader, "Map Title", 0, 44, 12, 368), "인하대학교 운행 지도", 13, true);
             BuildEnvironmentControls(mapHeader);
+            // Left of the weather choices (right 8..216).
+            disconnectButton = UiButton(RightTop(mapHeader, "Disconnect Demo", 5, 136, 34, 224),
+                "연결 끊김 시연", () => ActiveAutomaticClient?.ToggleDemoConnection());
+            disconnectLabel = disconnectButton.GetComponentInChildren<Text>();
             desktopMap = FixtureUiFactory.Rect(workspace, "Map Viewport", Vector2.zero, Vector2.one,
                 new Vector2(20, 248), new Vector2(-20, -184));
             desktopMap.gameObject.AddComponent<RectMask2D>();
@@ -371,6 +377,11 @@ namespace InhaExpress.Client.Presentation
                 "보행자 등장", SpawnPedestrian);
             pedestrianSpawnButton.interactable = false;
             pedestrianSpawnButton.transform.parent.gameObject.SetActive(false);
+            // Between the dispatch/planner selectors (12..396) and the pedestrian button.
+            disconnectStatus = TextAt(Top(footer, "Vehicle Link State", 4, 30, 408, 152), "", 12, true);
+            disconnectStatus.resizeTextForBestFit = true;
+            disconnectStatus.resizeTextMinSize = 9;
+            disconnectStatus.resizeTextMaxSize = 12;
             pedestrianStatus = TextAt(Top(footer, "Pedestrian Status", 38, 20, 12, 12),
                 "차량을 추적하면 보행자 횡단을 실행할 수 있습니다", 12);
             pedestrianStatus.supportRichText = false;
@@ -1141,6 +1152,21 @@ namespace InhaExpress.Client.Presentation
             return FixtureUiFactory.Text(holder, name, value, size, FixtureUiPalette.Ink, TextAnchor.MiddleLeft, bold ? FontStyle.Bold : FontStyle.Normal);
         }
 
+        private void RefreshDisconnectDemo()
+        {
+            var client = ActiveAutomaticClient;
+            bool held = client != null && client.DemoDisconnected;
+            disconnectButton.interactable = client != null && (client.CanRestoreDemo || client.CanDisconnectDemo);
+            disconnectLabel.text = held ? "차량 연결 복구" : "연결 끊김 시연";
+            if (client == null) disconnectStatus.text = "시연할 차량을 선택하세요";
+            else if (held) disconnectStatus.text = $"{client.VehicleId} 단절 · {client.SpeedMps * 3.6f:F1} km/h · " +
+                (client.CanRestoreDemo ? "정지 유지 · 복구 가능" : "제동 중 · 정지 후 복구");
+            else if (client.DemoUsed) disconnectStatus.text = $"{client.VehicleId} · " +
+                (client.Connected ? client.Status : "재연결 시도 중 · 제동 유지");
+            else disconnectStatus.text = client.CanDisconnectDemo ? $"{client.VehicleId} 운행 중 · 단절 시 자동 제동" :
+                $"{client.VehicleId} · 운행 중 시연 가능";
+        }
+
         private void Update()
         {
             if (!mobile) RefreshVehicleReadout();
@@ -1148,6 +1174,7 @@ namespace InhaExpress.Client.Presentation
             nextRefresh = Time.unscaledTime + .25f;
             if (!mobile) RefreshEnvironmentControls();
             RefreshStopDropdowns();
+            if (disconnectButton != null) RefreshDisconnectDemo();
             bool online = !string.IsNullOrEmpty(map.RunId) && string.IsNullOrEmpty(map.LastError);
             if (serverAddressStatus != null) serverAddressStatus.text = online ? map.serverUrl : map.LastError ?? "연결 중…";
             connection.text = online ? "● 서버 연결됨" : "● 연결 대기";
@@ -1204,6 +1231,7 @@ namespace InhaExpress.Client.Presentation
                 }
             }
             session.text = $"v{Application.version}";
+            int connectedCount = 0;
             if (!mobile && OperatorControls != null)
             {
                 var controls=OperatorControls;
@@ -1213,9 +1241,12 @@ namespace InhaExpress.Client.Presentation
                     vehicleButtons[i].interactable=bound;
                     bool selected=controls.SelectedVehicle?.OperatorVehicleId==id;
                     vehicleButtons[i].SetIsOnWithoutNotify(selected);
-                    fleetCards[i].text=bound ? (selected ? "선택됨" : "연결됨") : "미연결";
+                    automaticClients.TryGetValue(id, out var vehicleClient);
+                    bool connected = vehicleClient != null && vehicleClient.Connected;
+                    if (connected) connectedCount++;
+                    fleetCards[i].text = (selected ? "선택됨 · " : "") + (connected ? "제어 연결됨" : "제어 미연결");
                     if (fleetSurfaces != null) fleetSurfaces[i].color = selected ? new Color(.91f, .95f, 1) : Color.white;
-                    if (fleetDetails != null) fleetDetails[i].text = automaticClients.TryGetValue(id, out var vehicleClient)
+                    if (fleetDetails != null) fleetDetails[i].text = vehicleClient != null
                         ? vehicleClient.Status : "—";
                     var serverVehicle=online && state?.vehicles!=null ? Array.Find(state.vehicles,v=>v.id==id) : null;
                     bool hasBattery = serverVehicle != null && !float.IsNaN(serverVehicle.soc) && !float.IsInfinity(serverVehicle.soc);
@@ -1234,7 +1265,7 @@ namespace InhaExpress.Client.Presentation
                             fillImage.color = serverVehicle.soc < .15f ? FixtureUiPalette.Amber : FixtureUiPalette.Green;
                         }
                     }
-                    if(serverVehicle!=null && fleetDetails!=null)
+                    if(connected && serverVehicle!=null && fleetDetails!=null)
                     {
                         var label=serverVehicle.phase=="CHARGING"?"충전 중":serverVehicle.phase=="RETURNING"?"차고 복귀":
                             serverVehicle.phase=="READY"?"대기":serverVehicle.phase=="TO_PICKUP"?"픽업 이동":
@@ -1252,10 +1283,7 @@ namespace InhaExpress.Client.Presentation
                     fleetCards[i].color=selected ? FixtureUiPalette.Blue : FixtureUiPalette.Ink;
                 }
             }
-            int boundCount = 0;
-            if (OperatorControls != null) foreach (var vehicle in OperatorControls.Vehicles)
-                if (OperatorControls.HasVehicle(vehicle.OperatorVehicleId)) boundCount++;
-            if (statCards != null) statCards[0].text = boundCount + " / 3";
+            if (statCards != null) statCards[0].text = connectedCount + " / " + vehicleButtons.Length;
             if (state == null || !online)
             {
                 if (statCards != null) for (int i = 1; i < statCards.Length; i++) statCards[i].text = "—";
@@ -1279,7 +1307,7 @@ namespace InhaExpress.Client.Presentation
                 $"차량   {map.VehicleCount} / 3       대기 요청   {queued}       운송 완료   {map.Completed}       충전 중   {Array.FindAll(state.vehicles, v => v.phase == "CHARGING").Length}";
             if (!mobile)
             {
-                if(statCards!=null) { statCards[0].text=boundCount + " / 3"; statCards[1].text=queued.ToString(); statCards[2].text=map.Completed.ToString(); statCards[3].text=state.vehicles == null ? "—" : Array.FindAll(state.vehicles,v=>v.phase=="CHARGING").Length.ToString(); }
+                if(statCards!=null) { statCards[1].text=queued.ToString(); statCards[2].text=map.Completed.ToString(); statCards[3].text=state.vehicles == null ? "—" : Array.FindAll(state.vehicles,v=>v.phase=="CHARGING").Length.ToString(); }
                 if(queue!=null) queue.text=queued==0 ? "대기 없음" : $"대기 요청 {queued}건";
             }
         }

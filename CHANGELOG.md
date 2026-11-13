@@ -1,5 +1,14 @@
 # 변경 이력
 
+## 0.5.10.0 — 2026-11-13 · main에 algorithms 병합
+
+- 작업: algorithms 브랜치(0.5.3.1~0.5.4.4: 재연결 시 관측 세대 분리와 최신 위치 보호, Unity 단절 시 제동 유지, PC 차량 연결 끊김/복구 시연, 제어 연결 차량 수 표시, 운송 단계별 복구 검증, PC용 로컬 Python 환경 준비 스크립트)를 main에 병합했다.
+- 작업: 관제 HUD 충돌은 week8 배치를 유지했다. '연결 끊김 시연' 버튼은 지도 머리글의 날씨 토글 왼쪽에, 연결 상태 문구는 지도 하단 배차/경로 선택과 보행자 버튼 사이에 두었다. `.gitignore`는 세 규칙(`.mcp.json`, 검증 산출물, `.venv/`)을 모두 유지했다.
+- 이유: 분기된 재연결·복구 작업을 main 기준선으로 모은다.
+- 호환성/마이그레이션: 통신 schema·map_version은 바꾸지 않았다. algorithms가 추적하던 `artifacts/validation/` 기록은 그대로 추적되며, 새 검증 산출물은 week8 `.gitignore` 규칙에 따라 제외된다.
+- 검증: `pytest backend/tests` — 491 통과, 5 xfail, 2 실패(0.5.9.0과 같은 기존 실패: 배터리 부족 순환, 하이테크 연결 감사).
+- 미검증/한계: Unity 컴파일, PlayMode 재연결 시험, HUD 배치 화면 확인은 실행하지 않았다.
+
 ## 0.5.9.0 — 2026-11-13 · main에 lidar-ground-segmentation 병합
 
 - 작업: protocol 6 원시 거리 영상, Python 기하 지면 분리(`lidar_ground`), 회전 호·경로 corridor 판단(ADR 0014)을 main에 병합했다. week8에서 들어온 합성 날씨/노면 정책(관측거리 제한, 감속도·반응시간·여유, 불완전 관측/결빙 보류, 환경 변경 후 5회 확인, 일반화한 재출발 속도 상한)을 lidar 판단 로직 위에 결합했다.
@@ -33,6 +42,54 @@
 - 호환성/마이그레이션: 새 PC 클라이언트는 protocol 6 지원 서버가 필요하므로 서버와 함께 갱신한다. 서버는 protocol 1~5를 계속 받는다. 계약 스키마(contracts/unity_drive_*.schema.json)를 재생성했다. protocol 6 점에는 분류가 없어 RRT 후보는 항상 비실행 대기다. 지도 schema와 Editor 6000.3.21f1은 유지한다.
 - 검증: `python -m pytest backend/tests -q -p no:cacheprovider` 432개 통과, 3개 실패(작업 트리의 미커밋 `maps/inha_osm_runtime/policy.json` 소수점 표기 변경으로 인한 지도 재생성 비교, 이번 변경과 무관). Unity 컴파일 오류 없음, PlayMode PcLidarIntegrationTests 2개 통과. PC_Bootstrap 실주행: 수정 후 정석학술정보관→60주년 호출 2건 모두 해당 구간 정지 0회(121초/154초), 출발·하차 후 U턴 정상. 저장한 현장 정지 프레임 80개 재생 시 정지 0회. 현장 사례 회귀 테스트 2개는 수정 전 코드에서 실패한다.
 - 미검증/한계: 합성 임계값(경사 변화 8°, 장애물 0.15m, 연석 0.4m)은 실측 노면/연석/지상고가 아니다. 7채널·센서 높이 약 0.92m에서는 낮은 물체를 약 7m 안에서만 보며 18km/h 정지 요구(약 9.2m)보다 짧다. 하강 단차, 군집/다중 스캔 확인, 프레임 처리 시간·전송량 실측, DesktopLiveIntegrationTests, 다른 경로 전반과 모바일/Player 빌드는 검증하지 않았다.
+
+## 0.5.4.4 (algorithms 브랜치) - 2026-11-09 - Prepare local Python environment for PC demo
+
+- Added project .venv setup script and operator disconnect demo instructions; ignore local environment files. No protocol migration.
+- Fresh environment passed pip check, server imports, HTTP readiness and 26 physical dispatch tests on the pre-release version. Unity environment selection after restart remains unverified.
+
+## 0.5.4.3 (algorithms 브랜치) - 2026-11-08 - Verify recovery across transport phases
+
+- Added five reconnect scenarios covering pickup, boarding, dropoff travel, alighting and return. Synthetic observations verify unchanged request ownership, initial braking, fresh missions and eventual completion without duplicates.
+- Physical dispatch suite: 26 passed. Unity phase-by-phase driving remains unverified. No protocol migration.
+
+## 0.5.4.2 (algorithms 브랜치) - 2026-11-03 - Verify V02 pickup recovery after reconnect
+
+- Regression test checks stale owner rejection, initial braking, and a fresh pickup mission before a new drive command. Physical dispatch suite: 21 passed. No protocol migration.
+
+## 0.5.4.1 (algorithms 브랜치) - 2026-11-03 - Count connected vehicle control sockets
+
+- PC fleet summary and vehicle cards reflect the control connection. No protocol migration. Unity passenger demo verified 3/3, 2/3, 3/3 with the same request assigned to V02.
+
+## 0.5.4.0 (algorithms 브랜치) - 2026-11-03 - PC vehicle disconnect and recovery demo
+
+- Added per-vehicle disconnect, braking status and restore controls. No wire protocol migration.
+- Current physical control tests passed 5/5. The legacy client endpoint restart test failed separately. Passenger demo preserved request and vehicle after reconnection; internal mission ID changed.
+
+## 0.5.3.4 (algorithms 브랜치) - 2026-11-01 - V01 stopping distance after disconnect
+
+- Unity PlayMode passed (1/1). In one run, V01 detected disconnect at 2.226 m/s and travelled 0.763 m until a sustained stop was confirmed at 0.620 simulated seconds. Test-only change; no protocol migration.
+
+## 0.5.3.3 (algorithms 브랜치) — 2026-11-01 · CampusTerrain V01 reconnect verification
+
+- Unity PlayMode passed (1/1). All four wheels had brake torque and zero motor torque during disconnect. After a controlled displacement the first reconnect sample reported the updated position.
+- Test-only change. No protocol migration. Moving stopping distance remains unmeasured.
+
+## 0.5.3.2 (algorithms 브랜치) — 2026-10-31 · Unity 재연결 시험 실행 및 지도 버전 동기화
+
+- 작업/이유: 시험 프로젝트 Vehicles 모듈, Hub 실행용 Python 경로, PrepareOnly 및 Python 오류 수집을 보완한다. 정지 초기값 대신 실제 명령 호출을 검사한다. 이전 버전 증가에서 누락된 지도 manifest를 정식 builder로 재생성한다.
+- 호환성: protocol 5 및 지도 geometry/schema 유지. VERSION·API/package·Unity·지도 빌드 정보를 동기화한다.
+- 검증: Unity 6000.3.21f1 PlayMode 1 passed/0 failed (v0.5.3.1 + 본 수정 상태), Python 관련 22 passed, Ruff 통과. 원본 XML은 artifacts/validation/2026-10-31-reconnect에 보존한다.
+- 한계: kinematic 시험 객체 1대의 실제 WebSocket 재연결 검증이다. 실제 차량 프리팹 주행/제동 거리 및 3대 운행은 미검증이다.
+
+
+## 0.5.3.1 (algorithms 브랜치) — 2026-10-30 · 통합본 재연결 위치 보호
+
+- 작업/이유: protocol 5 연결 세대별 관측 버퍼로 재연결 직후 과거 위치 전송을 방지한다. 강제 단절 TCP 시험과 Unity PlayMode 시험을 추가한다.
+- 통합: main 88550ec5의 선별 통합 결과를 기준으로 algorithms 78500582 이력을 연결한다. 구형 브랜치의 전체 파일을 다시 덮어쓰지 않는다. 기존 폴더의 미커밋 작업은 보존한다.
+- 호환성: protocol 5 및 지도 schema 유지. 프로젝트 버전만 갱신한다.
+- 검증: 서버 관련 pytest 22 passed, 독립 C# 버퍼 7 assertions, 관련 C# 컴파일, 일반/강제 단절 실제 TCP 합성 위치 시험 및 Ruff 통과.
+- 미검증: Unity PlayMode 실행은 라이선스 초기화 실패로 결과 없음. 실제 차량/3대 복구 검증은 남아 있다. 상세는 Docs/transport_week9_integrated_reconnect.md.
 
 ## 미커밋 — 2026-11-02 · 관제 인지 표시·보행자 횡단·날씨 보완
 

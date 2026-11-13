@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<test-run id="2" testcasecount="1" result="Passed" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0" engine-version="3.5.0.0" clr-version="4.0.30319.42000" start-time="2026-10-31 12:20:48Z" end-time="2026-10-31 12:20:52Z" duration="3.7528057">
+  <test-suite type="TestSuite" id="1008" name="pose-unity-95503740ae8e40b4ac7e89b8e3e1bb3f" fullname="pose-unity-95503740ae8e40b4ac7e89b8e3e1bb3f" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-10-31 12:20:48Z" end-time="2026-10-31 12:20:52Z" duration="3.752806" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+    <properties>
+      <property name="platform" value="PlayMode" />
+    </properties>
+    <test-suite type="Assembly" id="1003" name="Reconnect.Tests.dll" fullname="C:/Users/leeta/Documents/Codex/inha-reconnect-integration/tmp/pose-unity-95503740ae8e40b4ac7e89b8e3e1bb3f/Library/ScriptAssemblies/Reconnect.Tests.dll" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-10-31 12:20:48Z" end-time="2026-10-31 12:20:52Z" duration="3.742620" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+      <properties>
+        <property name="_PID" value="32536" />
+        <property name="_APPDOMAIN" value="Unity Child Domain" />
+        <property name="platform" value="PlayMode" />
+        <property name="EditorOnly" value="False" />
+      </properties>
+      <test-suite type="TestSuite" id="1004" name="InhaExpress" fullname="InhaExpress" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-10-31 12:20:48Z" end-time="2026-10-31 12:20:52Z" duration="3.741283" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+        <properties />
+        <test-suite type="TestSuite" id="1005" name="Client" fullname="InhaExpress.Client" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-10-31 12:20:48Z" end-time="2026-10-31 12:20:52Z" duration="3.740094" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+          <properties />
+          <test-suite type="TestSuite" id="1006" name="Tests" fullname="InhaExpress.Client.Tests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-10-31 12:20:48Z" end-time="2026-10-31 12:20:52Z" duration="3.738726" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+            <properties />
+            <test-suite type="TestFixture" id="1001" name="PhysicalPoseReconnectTests" fullname="InhaExpress.Client.Tests.PhysicalPoseReconnectTests" classname="InhaExpress.Client.Tests.PhysicalPoseReconnectTests" runstate="Runnable" testcasecount="1" result="Passed" start-time="2026-10-31 12:20:48Z" end-time="2026-10-31 12:20:52Z" duration="3.736875" total="1" passed="1" failed="0" inconclusive="0" skipped="0" asserts="0">
+              <properties />
+              <test-case id="1002" name="ReconnectFirstPacketUsesNewRigidbodyPose" fullname="InhaExpress.Client.Tests.PhysicalPoseReconnectTests.ReconnectFirstPacketUsesNewRigidbodyPose" methodname="ReconnectFirstPacketUsesNewRigidbodyPose" classname="InhaExpress.Client.Tests.PhysicalPoseReconnectTests" runstate="Runnable" seed="1055493558" result="Passed" start-time="2026-10-31 12:20:48Z" end-time="2026-10-31 12:20:52Z" duration="3.727546" asserts="0">
+                <properties>
+                  <property name="_JOINTYPE" value="UnityCombinatorial" />
+                  <property name="retryIteration" value="0" />
+                  <property name="repeatIteration" value="0" />
+                </properties>
+                <output><![CDATA[Saving results to: C:\Users\leeta\Documents\Codex\inha-reconnect-integration\tmp\pose-unity-95503740ae8e40b4ac7e89b8e3e1bb3f\results.xml
+]]></output>
+              </test-case>
+            </test-suite>
+          </test-suite>
+        </test-suite>
+      </test-suite>
+    </test-suite>
+  </test-suite>
+</test-run>

@@ -1,0 +1,3 @@
+01-driving 3 / 3 | req-00000001-9c41e3069b72 ASSIGNED V02 generation=1 speed=3.833 m/s 차로 자동 운행 중
+02-held 2 / 3 | req-00000001-9c41e3069b72 ASSIGNED V02 generation=1 speed=0.043 m/s 시연 단절 · 정지 유지
+03-restored 3 / 3 | req-00000001-9c41e3069b72 ASSIGNED V02 generation=2 speed=0.000 m/s 자동 운행 대기
