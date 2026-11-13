@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edc9e8ccf7e1f314da24a604c1a11094, type: 3}
+  m_Name: Campus Fog
+  m_EditorClassIdentifier: 
+  minTime: 1
+  maxTime: 1
+  chance:
+    baseChance: 1
+    chanceEffectors: []
+  forecastNext: []
+  forecastModifierMethod: 2
+  FX:
+  - {fileID: 11400000, guid: 37958e75fc835c242a6ab218c3f7c868, type: 2}
+  - {fileID: 11400000, guid: 3539307017f50244e9815d6d39bd997b, type: 2}
+  - {fileID: 11400000, guid: 0fd424003762fd243bc32a39a3fbd0d8, type: 2}
+  - {fileID: 11400000, guid: ef3826386d1751f44a28d91e803dad21, type: 2}

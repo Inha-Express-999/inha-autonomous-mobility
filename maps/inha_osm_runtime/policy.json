@@ -34,7 +34,7 @@
     ],
     "targets": {
       "hitech": {
-        "stop_way_id": "481241714",
+        "stop_way_id": "216916382",
         "segments": [
           {
             "osm_way_id": "481241658",
@@ -134,6 +134,12 @@
           },
           {
             "osm_way_id": "481241715",
+            "segment_index": 0,
+            "start_fraction": 0.0,
+            "end_fraction": 1.0
+          },
+          {
+            "osm_way_id": "216916382",
             "segment_index": 0,
             "start_fraction": 0.0,
             "end_fraction": 1.0
@@ -689,13 +695,23 @@
       },
       {
         "id": "hitech_road_candidate",
-        "x": 377.02397003392076,
-        "z": -2.0795543233714398
+        "x": 322.3183135408053,
+        "z": -3.742645212928153
       },
       {
         "id": "inha_station_road_candidate",
         "x": -301.6883673675083,
         "z": -317.04793058425224
+      },
+      {
+        "id": "anniversary_60_road_candidate",
+        "x": 22.31523755622179,
+        "z": -18.199166638450492
+      },
+      {
+        "id": "building_5_road_candidate",
+        "x": -59.82385552005857,
+        "z": 3.68643683382075
       }
     ],
     "hubs": [

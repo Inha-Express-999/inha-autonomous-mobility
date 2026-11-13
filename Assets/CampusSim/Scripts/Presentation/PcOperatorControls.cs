@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using UnityEngine.Rendering;
+using InhaExpress.Client.MapClient;
 
 namespace InhaExpress.Client.Presentation
 {
@@ -15,6 +17,10 @@ namespace InhaExpress.Client.Presentation
         private readonly Dictionary<string, IOperatorVehicle> vehicles = new Dictionary<string, IOperatorVehicle>();
         private Camera output;
         private CinemachineBrain brain;
+        private bool ownsBrain, originalBrainEnabled;
+        private CinemachineBrain.UpdateMethods originalBrainUpdate;
+        private CinemachineBlendDefinition originalBlend;
+        private CinemachineBrain.LensModeOverrideSettings originalLensMode;
         private CinemachineCamera followCamera;
         private CinemachineCamera mapCamera;
         public bool InputEnabled { get; set; } = true;
@@ -28,8 +34,11 @@ namespace InhaExpress.Client.Presentation
         private bool initialized;
         private bool panGesture, rotateGesture;
         private float originalNearClip, originalFarClip, originalFov;
+        private readonly List<Renderer> garageDisplays = new List<Renderer>();
+        private readonly Dictionary<Renderer, bool> hiddenGarageDisplays = new Dictionary<Renderer, bool>();
         public IOperatorVehicle SelectedVehicle { get; private set; }
         public bool IsFollowing { get; private set; }
+        public Camera OutputCamera => output;
         public string SelectionMessage { get; private set; } = "차량을 선택하면 추적합니다";
         public CinemachineCamera FollowCamera => followCamera;
         public IEnumerable<IOperatorVehicle> Vehicles => vehicles.Values;
@@ -56,7 +65,21 @@ namespace InhaExpress.Client.Presentation
                     }
                     vehicles.Add(vehicle.OperatorVehicleId, vehicle);
                 }
-            brain = output.gameObject.AddComponent<CinemachineBrain>();
+            foreach (var model in FindObjectsByType<ServicePointVisual>(FindObjectsSortMode.None))
+                if (model.pointKind == ServerMapMarker.MarkerKind.Hub)
+                    garageDisplays.AddRange(model.GetComponentsInChildren<Renderer>(true));
+            foreach (var map in FindObjectsByType<CampusServerMap>(FindObjectsSortMode.None))
+            {
+                var markers = map.transform.Find("Hub visual markers");
+                if (markers != null) garageDisplays.AddRange(markers.GetComponentsInChildren<Renderer>(true));
+            }
+            brain = output.GetComponent<CinemachineBrain>();
+            ownsBrain = brain == null;
+            if (ownsBrain) brain = output.gameObject.AddComponent<CinemachineBrain>();
+            originalBrainEnabled = brain.enabled;
+            originalBrainUpdate = brain.UpdateMethod;
+            originalBlend = brain.DefaultBlend;
+            originalLensMode = brain.LensModeOverride;
             brain.enabled = true;
             brain.UpdateMethod = CinemachineBrain.UpdateMethods.LateUpdate;
             brain.DefaultBlend = new CinemachineBlendDefinition(CinemachineBlendDefinition.Styles.Cut, 0);
@@ -65,13 +88,17 @@ namespace InhaExpress.Client.Presentation
             var mapRig = new GameObject("Campus map Cinemachine");
             mapRig.transform.SetParent(transform, false);
             mapCamera = mapRig.AddComponent<CinemachineCamera>();
+            mapCamera.Priority = 100;
             mapCamera.Lens.ModeOverride = LensSettings.OverrideModes.Orthographic;
             mapCamera.Lens.NearClipPlane = originalNearClip;
-            mapCamera.Lens.FarClipPlane = originalFarClip;
+            // The map rig sits 1 km from its center. A close-up scene view may
+            // leave the shared output at a 1 km far clip; retain campus coverage.
+            mapCamera.Lens.FarClipPlane = Mathf.Max(originalFarClip, 2500);
             var rig = new GameObject("PC selected vehicle Cinemachine");
             rig.transform.SetParent(transform, false);
             rig.SetActive(false);
             followCamera = rig.AddComponent<CinemachineCamera>();
+            followCamera.Priority = 100;
             followCamera.Lens.FieldOfView = 55;
             followCamera.Lens.NearClipPlane = .1f;
             followCamera.Lens.FarClipPlane = 2000;
@@ -236,10 +263,56 @@ namespace InhaExpress.Client.Presentation
         }
 
         private void OnApplicationFocus(bool focused) { if (!focused) panGesture = rotateGesture = false; }
-        private void OnDisable() { if (brain != null) brain.enabled = false; if (followCamera != null) followCamera.gameObject.SetActive(false); }
+        private void OnEnable()
+        {
+            RenderPipelineManager.beginCameraRendering += BeginFollowView;
+            RenderPipelineManager.endCameraRendering += EndFollowView;
+        }
+        private void BeginFollowView(ScriptableRenderContext context, Camera camera)
+        {
+            RestoreGarageDisplays();
+            if (!IsFollowing || camera != output) return;
+            // Garage models and hub cubes are collider-free presentation overlays.
+            // At a parked vehicle they surround the follow camera and obscure the road.
+            foreach (var renderer in garageDisplays)
+                if (renderer != null && !hiddenGarageDisplays.ContainsKey(renderer))
+                {
+                    hiddenGarageDisplays.Add(renderer, renderer.forceRenderingOff);
+                    renderer.forceRenderingOff = true;
+                }
+        }
+        private void EndFollowView(ScriptableRenderContext context, Camera camera)
+        {
+            if (camera == output) RestoreGarageDisplays();
+        }
+        private void RestoreGarageDisplays()
+        {
+            foreach (var pair in hiddenGarageDisplays)
+                if (pair.Key != null) pair.Key.forceRenderingOff = pair.Value;
+            hiddenGarageDisplays.Clear();
+        }
+        private void OnDisable()
+        {
+            RenderPipelineManager.beginCameraRendering -= BeginFollowView;
+            RenderPipelineManager.endCameraRendering -= EndFollowView;
+            RestoreGarageDisplays();
+            if (brain != null && ownsBrain) brain.enabled = false;
+            if (followCamera != null) followCamera.gameObject.SetActive(false);
+            if (mapCamera != null) mapCamera.gameObject.SetActive(false);
+        }
         private void OnDestroy()
         {
-            if (brain != null) Destroy(brain);
+            if (brain != null)
+            {
+                if (ownsBrain) Destroy(brain);
+                else
+                {
+                    brain.UpdateMethod = originalBrainUpdate;
+                    brain.DefaultBlend = originalBlend;
+                    brain.LensModeOverride = originalLensMode;
+                    brain.enabled = originalBrainEnabled;
+                }
+            }
             if (followCamera != null) Destroy(followCamera.gameObject);
             if (mapCamera != null) Destroy(mapCamera.gameObject);
             if (stabilizedTarget != null) Destroy(stabilizedTarget.gameObject);

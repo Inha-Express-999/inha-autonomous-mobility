@@ -162,6 +162,7 @@ class DemoSession:
         self.factory = factory
         self.wall_clock = wall_clock
         self.clock = SimulationClock(wall_clock)
+        self.presentation_coordinates = MapCoordinates()
         self.service = factory(clock=self.clock.read)
         self.service.route_algorithm = "astar"
         self.run_id = uuid4().hex
@@ -265,6 +266,9 @@ class DemoSession:
                     elif vehicle.id in self.physical_dispatch.charging:
                         vehicles[-1].update(phase="CHARGING",remaining_s=max(0.,
                             (service.battery_policy.capacity_wh-battery.remaining_wh)*3600/service.battery_policy.charging_power_w))
+            for entry in vehicles:
+                x, z = self.presentation_coordinates.to_unity(*entry["position"])
+                entry["position_unity"] = {"x": x, "y": 0.0, "z": z}
             requests = [r.model_dump(mode="json") for r in service.requests.values()]
             queued = [r for r in requests if r["status"] == "QUEUED"]
             return {

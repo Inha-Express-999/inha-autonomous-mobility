@@ -3,13 +3,15 @@
 
 Python 기본 운행: 기존 **OSM + Unity 도로 중심선·출입구 후보**를 사용한 지도에서 차량 **3대**의 **요청·차량 FIFO → Dijkstra 픽업/운송/복귀 → 복귀·충전 후 재배차**를 제공한다. 배터리 소모와 왕복 후 15% 예비량 검사를 포함한다. 기본 배치는 **V01 정문·V02 후문·V03 운동장 옆 주차장**이며 각 차량은 자기 거점으로 복귀·충전한다. 도로 형상은 원본 기반이며 속도·승하차 거점·통행은 미검증인 가상 시간 실행이다. 기준속도 30km/h의 v2 지도에서 왕복 가능한 도로 Stop 후보는 14개이다. V01 물리 자동 경로 운행은 아래와 같이 별도로 연결했다. 실행·파일 구조·시간 예제는 [서버 안내](Docs/server_m0.md)를 참고한다.
 
-프로젝트 버전: **0.5.3.0**. Unity 차량 3대의 관측 기반 물리 배차·회차·승하차·차고 복귀와 합성 배터리/충전을 연결했습니다. 정류장·허브의 Editor 위치 편집과 서버 지도 동기화, 도로 연결·표면 보정을 포함합니다. 기존 가상 시연과 물리 실행은 구분하며, 전체 거점 운송·다중 차량 충돌 조정·모바일 실기기·성능 검증은 완료되지 않았습니다. 상세와 검증 근거는 `Docs/implementation_status.md`를 따릅니다. 관제 차량 카드에 운행 구간을 표시하고 A*/Dijkstra 선택 및 차량별 전경 경로 선을 지원합니다. 다중 요청 후보 재평가를 보완했고 합성 충전 출력을 20 kW로 설정했습니다. 실제 PC 화면의 20초·720p 영상은 `artifacts/pc-client-video/Inha-Mobil-PC-20s.mp4`에 있습니다.
+프로젝트 버전: **0.5.8.0**. Unity 차량 3대의 관측 기반 물리 배차·회차·승하차·차고 복귀와 합성 배터리/충전을 연결했습니다. 정류장·허브의 Editor 위치 편집과 서버 지도 동기화, 도로 연결·표면 보정을 포함합니다. 기존 가상 시연과 물리 실행은 구분하며, 전체 거점 운송·다중 차량 충돌 조정·모바일 실기기·성능 검증은 완료되지 않았습니다. 상세와 검증 근거는 `Docs/implementation_status.md`를 따릅니다. 관제 차량 카드에 운행 구간을 표시하고 A*/Dijkstra 선택 및 차량별 전경 경로 선을 지원합니다. 다중 요청 후보 재평가를 보완했고 합성 충전 출력을 20 kW로 설정했습니다. 실제 PC 화면의 20초·720p 영상은 `artifacts/pc-client-video/Inha-Mobil-PC-20s.mp4`에 있습니다.
 
 [통합 개발 규칙](AGENTS.md), [구현 현황](Docs/implementation_status.md), [물리 자동 운행](Docs/UNITY_PHYSICS_AUTODRIVE.md), [차로 모델과 가정](Docs/LANE_MODEL.md), [지도 출처](Docs/MapResearch/PLAN.md)를 참고하세요.
 
 ## PC 클라이언트 시작
 
 `PC_Bootstrap`에서 Play하면 Python 서버를 자동 실행/재사용하고 기존 `CampusWorld → CampusTerrain` 및 `PC_Operator`를 Additive로 불러온다. 별도 서버 실행 명령은 필요 없다. PC에서 V01 목적 거점을 선택해 자동 운행한다. [PC 자동 실행·실제 세션 검증·Windows bundle](Docs/PC_SERVER_STARTUP.md)을 참고한다.
+
+Unity 모바일 앱의 같은 LAN 접속·주소 저장·호출·자기 요청 상태·취소와 모바일 빌드는 [모바일 LAN 시연](Docs/MOBILE_LAN_DEMO.md)을 참고한다. 기존 `Mobile_Bootstrap`/`Mobile_Passenger` 씬을 사용하며 별도 모바일 웹 UI는 추가하지 않는다.
 
 ## CampusTerrain 서버 지도
 
@@ -52,3 +54,5 @@ FIFO 기준선과 Greedy/Hungarian을 웹에서 선택한다. 같은 초기 차�
 [지도 데이터 출처](Assets/InhaCampus/Source/ATTRIBUTION.txt)를 유지해 주세요.
 
 PC LiDAR 시험 통합(0.5.3.0): 차량별 연속 관측, TTC/정지거리 제동, 자동 점군 연출과 RRT 후보 검토 범위는 [통합 문서](Docs/WEEK8_INTEGRATION.md)를 따른다.
+
+날씨별 LiDAR·노면 안전 정책(0.5.4.0)의 설정과 한계는 [날씨 정책](Docs/WEATHER_DRIVING.md)을 따른다.

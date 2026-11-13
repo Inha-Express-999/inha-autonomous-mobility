@@ -45,13 +45,15 @@ namespace InhaExpress.Client.MapClient
         [Serializable] public sealed class Vehicle
         {
             public string id, home_name, phase, destination, request_id, mission_id, transport_phase;
+            public string physical_status, physical_reason, motion_source;
             public float soc, route_progress_m;
             public bool observation_fresh;
             public Vector3[] route_unity;
+            public Vector3 position_unity;
         }
         [Serializable] public sealed class TransportRequest
         {
-            public string id, status, vehicle_id, pickup_landmark_id, dropoff_landmark_id, reason;
+            public string id, owner_id, status, vehicle_id, pickup_landmark_id, dropoff_landmark_id, reason;
         }
 
         private void OnEnable()
@@ -61,6 +63,14 @@ namespace InhaExpress.Client.MapClient
             {
                 if (!authoredMap) throw new ArgumentException("No authored server map asset.");
                 localMap = ServerMapDocument.Parse(authoredMap.text);
+                if (ClientServerSettings.MobileMode)
+                {
+                    serverUrl = ClientServerSettings.MobileUrl;
+                    foreach (string argument in Environment.GetCommandLineArgs())
+                        if (argument.StartsWith("--server-url=")) serverUrl = ClientServerSettings.NormalizeUrl(argument.Substring(13));
+                    if (string.IsNullOrEmpty(serverUrl))
+                    { LastError = "PC의 서버 주소를 입력하고 연결하세요."; ConnectionStatus = "Server address required"; return; }
+                }
                 if (!Uri.TryCreate(serverUrl, UriKind.Absolute, out var url) ||
                     (url.Scheme != "http" && url.Scheme != "https"))
                     throw new ArgumentException("Set a valid HTTP server URL in the Inspector.");
@@ -75,6 +85,20 @@ namespace InhaExpress.Client.MapClient
             connection = null;
             if (activeRequest != null) { activeRequest.Abort(); activeRequest.Dispose(); activeRequest = null; }
             ConnectionStatus = "Disconnected / authored nodes retained";
+            LastError = "서버 연결이 끊겼습니다. 다시 연결하는 중입니다.";
+            RunId = null;
+            LatestState = null;
+        }
+
+        public void ConnectToServer(string address)
+        {
+            string normalized = ClientServerSettings.NormalizeUrl(address);
+            OnDisable();
+            serverUrl = normalized;
+            RunId = null; LatestState = null; LastError = null; ServerProjectVersion = null;
+            ConnectionStatus = "Connecting";
+            PlayerPrefs.SetString(ClientServerSettings.AddressKey, normalized); PlayerPrefs.Save();
+            connection = StartCoroutine(Poll());
         }
 
         public void ValidateRemote(string json)

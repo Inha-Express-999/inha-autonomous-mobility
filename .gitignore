@@ -124,3 +124,10 @@ __pycache__/
 /backend/tmp/
 /artifacts/service_locations/pytest-*/
 .mcp.json
+
+# Local verification outputs and packaged demo builds (keep source/tests)
+/artifacts/validation/
+/artifacts/pc_*/
+/artifacts/vehicle-stop-diagnostic/
+/artifacts/road_connections/*.png
+/artifacts/road_connections/*-meshes.json

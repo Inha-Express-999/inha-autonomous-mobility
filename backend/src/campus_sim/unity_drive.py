@@ -51,6 +51,9 @@ class LidarFrame(StrictModel):
     max_range_m: float = Field(ge=1, le=30)
     valid: bool
     hits: list[LidarHit] = Field(max_length=8192)
+    weather: Literal["clear", "rain", "snow", "fog"] = "clear"
+    road_condition: Literal["dry", "wet", "snow", "ice", "unknown"] = "dry"
+    observation_complete: bool = True
 
     @model_validator(mode="after")
     def complete_scan(self):
@@ -94,6 +97,10 @@ class EgoObservation(StrictModel):
     half_width_m: float | None = Field(default=None, ge=.1, le=3)
     rear_axle_offset_m: float | None = Field(default=None, ge=-10, le=10)
     half_length_m: float | None = Field(default=None, ge=.1, le=15)
+    body_front_m: float | None = Field(default=None, ge=0, le=20)
+    body_rear_m: float | None = Field(default=None, ge=0, le=20)
+    steering_angle_rad: float | None = Field(default=None, ge=-1.57, le=1.57)
+    steering_rate_rad_s: float | None = Field(default=None, ge=0, le=100)
 
     @model_validator(mode="after")
     def lane_geometry_required(self):
@@ -105,6 +112,18 @@ class EgoObservation(StrictModel):
             raise ValueError("Measured body half width required for lane protocol 2")
         if self.schema_version >= 4 and (self.rear_axle_offset_m is None or self.half_length_m is None):
             raise ValueError("Protocol 4 requires measured rear axle and body length")
+        supplied_body = (self.body_front_m is not None, self.body_rear_m is not None)
+        supplied_steering = (self.steering_angle_rad is not None, self.steering_rate_rad_s is not None)
+        if any(supplied_steering) and (not all(supplied_steering) or self.schema_version != 5 or
+                abs(self.steering_angle_rad) > self.max_steering_rad + .01):
+            raise ValueError("Measured ego steering requires a valid protocol 5 pair")
+        if any(supplied_body):
+            if not all(supplied_body) or self.schema_version != 5:
+                raise ValueError("Measured root body extents require both fields and protocol 5")
+            if (self.body_front_m + self.body_rear_m < .2 or
+                    self.body_front_m > self.half_length_m + self.rear_axle_offset_m + .01 or
+                    self.body_rear_m > self.half_length_m - self.rear_axle_offset_m + .01):
+                raise ValueError("Measured root body extents exceed rear-axle envelope")
         if self.schema_version == 5:
             if self.lidar is None or self.lidar.tick != self.tick or self.rays or not self.obstacle_detection_enabled:
                 raise ValueError("Protocol 5 requires same-tick LiDAR with detection enabled and no legacy rays")
@@ -189,6 +208,7 @@ class PhysicalVehicle:
     turn: object | None = None
     lidar_blocked: bool = False
     lidar_clear_frames: int = 0
+    lidar_environment: tuple | None = None
     lidar_rrt_status: str = "NOT_REQUESTED"
     lidar_rrt_at_s: float = -10.
 

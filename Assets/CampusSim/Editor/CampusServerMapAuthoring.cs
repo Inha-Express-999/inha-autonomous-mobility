@@ -95,7 +95,7 @@ public static class CampusServerMapAuthoring
         AssetDatabase.SaveAssets();
         ValidateScene(overlay, map);
         Directory.CreateDirectory("artifacts");
-        File.WriteAllText("artifacts/campus_server_nodes_validation.json", JsonUtility.ToJson(new Report
+        string report = JsonUtility.ToJson(new Report
         {
             project_version = map.project_version, map_version = map.map_version, geometry_hash = map.geometry_hash,
             road_nodes = map.nodes.Length, directed_edges = map.edges.Length, hubs = map.hubs.Length,
@@ -104,7 +104,22 @@ public static class CampusServerMapAuthoring
             terrain_projected = overlay.markers.Count(m => m.surfaceSource == "terrain_visual_only"),
             outside_terrain = overlay.markers.Count(m => m.surfaceSource == "outside_terrain_flat_unverified"),
             marker_renderers = overlay.GetComponentsInChildren<MeshRenderer>(true).Length
-        }, true) + "\n");
+        }, true) + "\n";
+        const string reportPath = "artifacts/campus_server_nodes_validation.json";
+        if (!File.Exists(reportPath) || File.ReadAllText(reportPath) != report)
+        {
+            // An Editor preview may memory-map the previous report. Truncating it
+            // then fails with Win32 1224 and incorrectly blocks entering Play.
+            // Publish a complete replacement; existing readers retain their view.
+            string temporary = reportPath + "." + Guid.NewGuid().ToString("N") + ".tmp";
+            try
+            {
+                File.WriteAllText(temporary, report);
+                if (File.Exists(reportPath)) File.Replace(temporary, reportPath, null);
+                else File.Move(temporary, reportPath);
+            }
+            finally { if (File.Exists(temporary)) File.Delete(temporary); }
+        }
         Debug.Log($"Server map imported into existing CampusTerrain: {map.nodes.Length} nodes, {map.hubs.Length} hubs, {map.stops.Length} Stop candidates. No vehicles spawned or driven.");
     }
 

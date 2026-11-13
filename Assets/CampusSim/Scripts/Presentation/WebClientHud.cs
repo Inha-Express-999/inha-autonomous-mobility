@@ -15,6 +15,14 @@ namespace InhaExpress.Client.Presentation
     {
         private CampusServerMap map;
         private Text connection, session, metrics;
+        private InputField serverAddress;
+        private Text serverAddressStatus;
+        private Toggle mobileStepFree;
+        private string passengerId;
+        private string passengerRun;
+        private readonly List<Renderer> mobileHiddenRenderers = new List<Renderer>();
+        private readonly Dictionary<Rigidbody, bool> mobileBodies = new Dictionary<Rigidbody, bool>();
+        [Serializable] private sealed class PendingPassengerRequest { public string server, run, json; }
         private RectTransform desktopMap;
         private readonly Vector3[] mapCorners = new Vector3[4];
         private Text operationLog;
@@ -64,6 +72,16 @@ namespace InhaExpress.Client.Presentation
         private Dropdown dispatchDropdown;
         private Dropdown plannerDropdown;
         private bool changingPlanner;
+        private Text selectedSpeed, queueDetails;
+        private RectTransform queueContent, queueViewport;
+        private Toggle[] weatherToggles;
+        private Button pedestrianSpawnButton;
+        private Text pedestrianStatus;
+        private string pedestrianFeedback, pedestrianFeedbackVehicle;
+        private float pedestrianFeedbackUntil;
+        private static readonly string[] WeatherKeys = { "clear", "fog", "rain", "snow" };
+        private static readonly string[] WeatherLabels = { "맑음", "안개", "비", "눈" };
+        private static readonly string[] WeatherRoads = { "dry", "dry", "wet", "snow" };
         private Text dispatchStatus;
         private bool changingDispatch;
         [Serializable] private sealed class DispatchControl { public string dispatch; }
@@ -78,7 +96,9 @@ namespace InhaExpress.Client.Presentation
             public string pickup_landmark_id, dropoff_landmark_id;
             public int party_size;
             public float cargo_kg;
+            public TransportNeeds service_needs = new TransportNeeds();
         }
+        [Serializable] private sealed class TransportNeeds { public bool requires_step_free; public int wheelchair_slots; public bool boarding_assistance; }
         [Serializable] private sealed class TransportAck
         {
             public bool accepted;
@@ -93,7 +113,8 @@ namespace InhaExpress.Client.Presentation
         {
             get
             {
-                if (mobile || desktopMap == null) return new Rect(0, .49f, 1, .43f);
+                if (mobile) return new Rect(0, .60f, 1, .32f);
+                if (desktopMap == null) return new Rect(0, .49f, 1, .43f);
                 desktopMap.GetWorldCorners(mapCorners);
                 var safe = Screen.safeArea;
                 return new Rect((mapCorners[0].x - safe.x) / safe.width,
@@ -114,6 +135,17 @@ namespace InhaExpress.Client.Presentation
         private void Build(bool passenger)
         {
             mobile = passenger;
+            if (mobile) passengerId = ClientServerSettings.PassengerId;
+            if (mobile)
+            {
+                try
+                {
+                    var pending = JsonUtility.FromJson<PendingPassengerRequest>(PlayerPrefs.GetString("InhaMobil.Passenger.Pending", "{}"));
+                    if (pending != null && pending.server == map.serverUrl)
+                    { pendingRequestJson = pending.json; pendingRequestRun = pending.run; }
+                }
+                catch (ArgumentException) { ClearPendingRequest(); }
+            }
             map = FindFirstObjectByType<CampusServerMap>();
             if (map != null) map.showStatus = false;
             canvasRoot = new GameObject("Inha Mobil Web UI", typeof(RectTransform), typeof(Canvas), typeof(CanvasScaler), typeof(GraphicRaycaster));
@@ -124,7 +156,7 @@ namespace InhaExpress.Client.Presentation
             var scaler = canvasRoot.GetComponent<CanvasScaler>();
             scaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
             scaler.referenceResolution = mobile ? new Vector2(390, 844) : new Vector2(1280, 720);
-            scaler.matchWidthOrHeight = .5f;
+            scaler.matchWidthOrHeight = mobile ? 0 : .5f;
             var root = FixtureUiFactory.Rect(canvasRoot.transform, "Safe Area", Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
             safeRoot = root;
             root.gameObject.AddComponent<SafeAreaPanel>();
@@ -146,7 +178,7 @@ namespace InhaExpress.Client.Presentation
             Canvas.ForceUpdateCanvases();
             worldCamera = Camera.main;
             foreach (var camera in FindObjectsByType<Camera>(FindObjectsInactive.Include, FindObjectsSortMode.None))
-                if (camera.name == "Campus overview camera")
+                if (camera.CompareTag("MainCamera"))
                 {
                     if (worldCamera != null && worldCamera != camera)
                     {
@@ -212,6 +244,13 @@ namespace InhaExpress.Client.Presentation
                 foreach (var vehicle in OperatorControls.Vehicles)
                 {
                     if (vehicle.VehicleTransform == null) continue;
+                    if (mobile)
+                    {
+                        foreach (var renderer in vehicle.VehicleTransform.GetComponentsInChildren<Renderer>())
+                            if (renderer.enabled) { mobileHiddenRenderers.Add(renderer); renderer.enabled = false; }
+                        foreach (var body in vehicle.VehicleTransform.GetComponentsInChildren<Rigidbody>())
+                            if (!mobileBodies.ContainsKey(body)) { mobileBodies.Add(body, body.isKinematic); body.isKinematic = true; }
+                    }
                     int index = vehicle.OperatorVehicleId == "V01" ? 0 : vehicle.OperatorVehicleId == "V02" ? 1 : vehicle.OperatorVehicleId == "V03" ? 2 : colorIndex % 3;
                     CreateMapPin(vehicle.VehicleTransform, vehicle.OperatorVehicleId, vehicle.OperatorVehicleId, VehicleColors[index]);
                     colorIndex++;
@@ -265,8 +304,14 @@ namespace InhaExpress.Client.Presentation
             }
             var brand = TextAt(Top(header, "Brand", 0, 64, 76, 300), "Inha Mobil", 22, true);
             brand.color = FixtureUiPalette.Blue;
-            session = TextAt(Top(header, "Version", 0, 64, 0, 24), $"v{Application.version}", 11);
+            session = TextAt(RightTop(header, "Version", 0, 80, 64, 24), $"v{Application.version}", 11);
             session.alignment = TextAnchor.MiddleRight; session.color = FixtureUiPalette.Muted;
+            var serverUri = new Uri(map.serverUrl);
+            var urls = ClientServerSettings.LanUrls(serverUri.Port);
+            string address = !serverUri.IsLoopback ? map.serverUrl : urls.Length > 0 ? urls[0] : "LAN 주소 확인";
+            var serverLabel = TextAt(RightTop(header, "Server Address", 0, 400, 64, 120), "서버 " + address, 11);
+            serverLabel.alignment = TextAnchor.MiddleRight;
+            serverLabel.color = FixtureUiPalette.Muted;
 
             var body = FixtureUiFactory.Rect(root, "Dashboard", Vector2.zero, Vector2.one,
                 Vector2.zero, new Vector2(0, -64));
@@ -294,9 +339,10 @@ namespace InhaExpress.Client.Presentation
             }
             var mapHeader = Top(workspace, "Map Header", 140, 44, 20, 20);
             Surface(mapHeader, Color.white);
-            TextAt(Top(mapHeader, "Map Title", 0, 44, 12, 210), "인하대학교 운행 지도", 13, true);
+            TextAt(Top(mapHeader, "Map Title", 0, 44, 12, 228), "인하대학교 운행 지도", 13, true);
+            BuildEnvironmentControls(mapHeader);
             desktopMap = FixtureUiFactory.Rect(workspace, "Map Viewport", Vector2.zero, Vector2.one,
-                new Vector2(20, 220), new Vector2(-20, -184));
+                new Vector2(20, 248), new Vector2(-20, -184));
             desktopMap.gameObject.AddComponent<RectMask2D>();
             routeOverlays = new CampusRouteOverlay[3];
             for (int i = 0; i < 3; i++)
@@ -306,9 +352,28 @@ namespace InhaExpress.Client.Presentation
                 routeOverlays[i].color = VehicleColors[i];
                 routeOverlays[i].raycastTarget = false;
             }
-            var footer = Bottom(workspace, "Map Footer", 188, 32, 20, 20);
-            Surface(footer, Color.white);
-            TextAt(Top(footer, "Attribution", 0, 32, 12, 12), "© OpenStreetMap contributors · ODbL 1.0", 10).color = FixtureUiPalette.Muted;
+            var speedPanel = Bottom(desktopMap, "Selected Vehicle Speed", 12, 44, 12, 0);
+            speedPanel.anchorMax = speedPanel.anchorMin = Vector2.zero;
+            speedPanel.sizeDelta = new Vector2(190, 44);
+            speedPanel.anchoredPosition = new Vector2(107, 34);
+            selectedSpeed = TextAt(Top(speedPanel, "Speed", 0, 44, 12, 12), "", 20, true);
+            selectedSpeed.color = Color.white;
+            var speedOutline = selectedSpeed.gameObject.AddComponent<Outline>();
+            speedOutline.effectColor = new Color(0, 0, 0, .85f);
+            speedOutline.effectDistance = new Vector2(1, -1);
+            var speedShadow = selectedSpeed.gameObject.AddComponent<Shadow>();
+            speedShadow.effectColor = new Color(0, 0, 0, .35f);
+            speedShadow.effectDistance = new Vector2(2, -2);
+            speedPanel.gameObject.SetActive(false);
+            var footer = Bottom(workspace, "Map Footer", 188, 60, 20, 20);
+            Surface(footer, Color.white, false);
+            pedestrianSpawnButton = UiButton(RightTop(footer, "Pedestrian Spawn", 4, 132, 30, 12),
+                "보행자 등장", SpawnPedestrian);
+            pedestrianSpawnButton.interactable = false;
+            pedestrianSpawnButton.transform.parent.gameObject.SetActive(false);
+            pedestrianStatus = TextAt(Top(footer, "Pedestrian Status", 38, 20, 12, 12),
+                "차량을 추적하면 보행자 횡단을 실행할 수 있습니다", 12);
+            pedestrianStatus.supportRichText = false;
             TextAt(Bottom(workspace, "Fleet Title", 156, 24, 20, 20), "차량 현황", 15, true);
             var fleetRow = Bottom(workspace, "Fleet", 16, 132, 20, 20);
             fleetCards = new Text[3]; fleetDetails = new Text[3]; fleetSurfaces = new Image[3];
@@ -378,12 +443,14 @@ namespace InhaExpress.Client.Presentation
             scroll.movementType = ScrollRect.MovementType.Clamped;
             CreateTab(requestTab, "운송 요청", tabGroup, requestForm, true);
             CreateTab(missionTab, "운행 로그", tabGroup, form, false);
-            var policyCard = Top(sidebar, "Dispatch Policy", 432, 100, 16, 16);
-            Surface(policyCard, Color.white);
+            var policyCard = Top(footer, "Dispatch Policy", 4, 30, 12, 0);
+            policyCard.anchorMax = policyCard.anchorMin = new Vector2(0, 1);
+            policyCard.sizeDelta = new Vector2(384, 30);
+            policyCard.anchoredPosition = new Vector2(204, -19);
             var dispatchColumn = FixtureUiFactory.Rect(policyCard, "Dispatch", Vector2.zero, new Vector2(.5f, 1), Vector2.zero, new Vector2(-4, 0));
             var plannerColumn = FixtureUiFactory.Rect(policyCard, "Planner", new Vector2(.5f, 0), Vector2.one, new Vector2(4, 0), Vector2.zero);
-            dispatchStatus = TextAt(Top(dispatchColumn, "Policy Status", 8, 22, 12, 8), "배차 방식", 14, true);
-            var policyRow = Top(dispatchColumn, "Policy Select", 38, 40, 12, 8);
+            dispatchStatus = TextAt(Top(dispatchColumn, "Policy Status", 0, 30, 0, 130), "배차 방식", 11, true);
+            var policyRow = Top(dispatchColumn, "Policy Select", 0, 30, 58, 8);
             var policyControl=DefaultControls.CreateDropdown(new DefaultControls.Resources());
             policyControl.name="Dispatch Policy Dropdown";policyControl.transform.SetParent(policyRow,false);
             var policyRect=(RectTransform)policyControl.transform;
@@ -392,10 +459,10 @@ namespace InhaExpress.Client.Presentation
             dispatchDropdown.ClearOptions();dispatchDropdown.AddOptions(new List<string>{"FIFO","Greedy"});
             StyleDropdown(dispatchDropdown, 84);
             dispatchDropdown.onValueChanged.AddListener(index=>StartCoroutine(ChangeDispatch(index==0?"fifo":"greedy")));
-            TextAt(Top(plannerColumn, "Planner Title", 8, 22, 8, 12), "경로 탐색", 14, true);
+            TextAt(Top(plannerColumn, "Planner Title", 0, 30, 0, 130), "경로 탐색", 11, true);
             var plannerControl = DefaultControls.CreateDropdown(new DefaultControls.Resources());
             plannerControl.name = "Route Planner Dropdown";
-            plannerControl.transform.SetParent(Top(plannerColumn, "Planner Select", 38, 40, 8, 12), false);
+            plannerControl.transform.SetParent(Top(plannerColumn, "Planner Select", 0, 30, 58, 0), false);
             var plannerRect = (RectTransform)plannerControl.transform;
             plannerRect.anchorMin = Vector2.zero; plannerRect.anchorMax = Vector2.one;
             plannerRect.offsetMin = plannerRect.offsetMax = Vector2.zero;
@@ -403,11 +470,145 @@ namespace InhaExpress.Client.Presentation
             plannerDropdown.ClearOptions(); plannerDropdown.AddOptions(new List<string> { "A*", "Dijkstra" });
             StyleDropdown(plannerDropdown, 84);
             plannerDropdown.onValueChanged.AddListener(index => StartCoroutine(ChangePlanner(index == 0 ? "astar" : "dijkstra")));
-            var queueCard = Top(sidebar, "Queue Card", 544, 68, 16, 16);
+            var queueCard = FixtureUiFactory.Rect(sidebar, "Queue Card", Vector2.zero, Vector2.one,
+                new Vector2(16, 16), new Vector2(-16, -432));
             Surface(queueCard, Color.white);
             TextAt(Top(queueCard, "Queue Title", 8, 22, 16, 16), "요청 대기열", 15, true);
             queue = TextAt(Top(queueCard, "Queue Status", 32, 28, 16, 16), "연결 대기", 12);
             queue.color = FixtureUiPalette.Muted;
+            queueViewport = FixtureUiFactory.Rect(queueCard, "Queue Viewport", Vector2.zero, Vector2.one,
+                new Vector2(16, 12), new Vector2(-16, -64));
+            queueViewport.gameObject.AddComponent<RectMask2D>();
+            Surface(queueViewport, Color.white).raycastTarget = true;
+            queueContent = Top(queueViewport, "Queue Content", 0, 0, 0, 0);
+            queueContent.pivot = new Vector2(.5f, 1);
+            queueDetails = TextAt(queueContent, "서버 연결 후 대기 요청을 표시합니다", 12);
+            queueDetails.alignment = TextAnchor.UpperLeft;
+            queueDetails.supportRichText = false;
+            var queueScroll = queueViewport.gameObject.AddComponent<ScrollRect>();
+            queueScroll.viewport = queueViewport; queueScroll.content = queueContent; queueScroll.horizontal = false;
+            queueScroll.movementType = ScrollRect.MovementType.Clamped;
+        }
+
+        private void BuildEnvironmentControls(RectTransform panel)
+        {
+            weatherToggles = CreateWeatherChoices(RightTop(panel, "Weather Choices", 3, 208, 38, 8));
+            RefreshEnvironmentControls();
+        }
+
+        private void SpawnPedestrian()
+        {
+            if (OperatorControls == null || !OperatorControls.IsFollowing) return;
+            var selected = OperatorControls?.SelectedVehicle;
+            if (selected == null) return;
+            var message = PedestrianScenarioActions.SpawnAhead?.Invoke(selected);
+            pedestrianFeedback = message ?? "보행자 기능을 준비하고 있습니다";
+            pedestrianFeedbackVehicle = selected.OperatorVehicleId;
+            pedestrianFeedbackUntil = Time.unscaledTime + 8;
+            RefreshEnvironmentControls();
+        }
+
+        private Toggle[] CreateWeatherChoices(RectTransform groupRoot)
+        {
+            var group = groupRoot.gameObject.AddComponent<ToggleGroup>();
+            group.allowSwitchOff = false;
+            var toggles = new Toggle[WeatherKeys.Length];
+            for (int i = 0; i < WeatherKeys.Length; i++)
+            {
+                int index = i;
+                var rect = FixtureUiFactory.Rect(groupRoot, "Weather " + WeatherKeys[i],
+                    new Vector2(i / 4f, 0), new Vector2((i + 1f) / 4, 1),
+                    new Vector2(2, 0), new Vector2(-2, 0));
+                var background = Surface(rect, FixtureUiPalette.Canvas); background.raycastTarget = true;
+                var iconRect = Top(rect, "Icon", 2, 20, 14, 14);
+                var icon = iconRect.gameObject.AddComponent<OperatorWeatherIcon>();
+                icon.Weather = WeatherKeys[i]; icon.raycastTarget = false;
+                var label = TextAt(Bottom(rect, "Caption", 1, 14, 0, 0), WeatherLabels[i], 10, true);
+                label.alignment = TextAnchor.MiddleCenter;
+                var toggle = rect.gameObject.AddComponent<Toggle>();
+                toggle.SetIsOnWithoutNotify(false);
+                toggle.group = group; toggle.targetGraphic = background;
+                toggle.transition = Selectable.Transition.None;
+                toggle.onValueChanged.AddListener(on => {
+                    if (!on) return;
+                    PhysicalLidarSource.ApplyEnvironment?.Invoke(WeatherKeys[index], WeatherRoads[index]);
+                    RefreshEnvironmentControls();
+                });
+                toggles[i] = toggle;
+            }
+            return toggles;
+        }
+
+        private void RefreshEnvironmentControls()
+        {
+            if (pedestrianSpawnButton != null)
+            {
+                bool following = OperatorControls != null && OperatorControls.IsFollowing &&
+                    OperatorControls.SelectedVehicle != null;
+                pedestrianSpawnButton.transform.parent.gameObject.SetActive(following);
+                pedestrianSpawnButton.interactable = following && PedestrianScenarioActions.SpawnAhead != null;
+                if (pedestrianStatus != null)
+                    pedestrianStatus.text = !following ? "차량을 추적하면 보행자 횡단을 실행할 수 있습니다" :
+                        Time.unscaledTime < pedestrianFeedbackUntil && pedestrianFeedbackVehicle == OperatorControls.SelectedVehicle.OperatorVehicleId ? pedestrianFeedback :
+                        PedestrianScenarioActions.ReadStatus?.Invoke() ?? "차량 앞 도로에 보행자를 등장시킵니다";
+            }
+            var state = PhysicalLidarSource.ReadEnvironment?.Invoke();
+            bool available = state != null && PhysicalLidarSource.ApplyEnvironment != null;
+            UpdateEnvironmentChoices(weatherToggles, WeatherKeys, state?.weather, available);
+        }
+
+        private void RefreshVehicleReadout()
+        {
+            if (selectedSpeed == null) return;
+            var vehicle = OperatorControls?.SelectedVehicle;
+            bool visible = vehicle != null && OperatorControls.IsFollowing;
+            selectedSpeed.transform.parent.parent.gameObject.SetActive(visible);
+            if (!visible) return;
+            var body = vehicle.VehicleBody;
+            selectedSpeed.text =
+                (body != null ? (body.linearVelocity.magnitude * 3.6f).ToString("0") : "—") + " km/h";
+        }
+
+        private void RefreshQueue(CampusServerMap.SharedState state, bool online)
+        {
+            if (queueDetails == null) return;
+            var orders = online ? state?.queue : null;
+            if (queue != null) queue.text = !online ? "연결 대기" : orders == null || orders.Length == 0 ? "대기 없음" : $"대기 요청 {orders.Length}건";
+            var lines = new StringBuilder();
+            if (!online) lines.Append("서버 연결 후 대기 요청을 표시합니다");
+            else if (orders == null || orders.Length == 0) lines.Append("현재 대기 중인 요청이 없습니다");
+            else for (int i = 0; i < orders.Length; i++)
+            {
+                var order = orders[i];
+                if (order == null) continue;
+                lines.Append(i + 1).Append(". ").Append(order.id).Append(" · 가용 차량 대기\n")
+                    .Append(LandmarkName(order.pickup_landmark_id)).Append(" → ")
+                    .Append(LandmarkName(order.dropoff_landmark_id)).Append("\n\n");
+            }
+            string details = lines.ToString();
+            if (queueDetails.text != details)
+            {
+                queueDetails.text = details;
+                queueContent.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,
+                    Mathf.Max(queueViewport.rect.height, queueDetails.preferredHeight));
+            }
+        }
+
+        private static void UpdateEnvironmentChoices(Toggle[] toggles, string[] keys, string selected, bool available)
+        {
+            if (toggles == null) return;
+            // Set the active choice first so group notification cannot clear it later.
+            int active = Array.IndexOf(keys, selected);
+            if (active >= 0) toggles[active].SetIsOnWithoutNotify(true);
+            for (int i = 0; i < toggles.Length; i++)
+            {
+                bool on = i == active;
+                toggles[i].SetIsOnWithoutNotify(on);
+                toggles[i].interactable = available;
+                toggles[i].GetComponent<Image>().color = on ? FixtureUiPalette.Blue : FixtureUiPalette.Canvas;
+                toggles[i].GetComponentInChildren<Text>().color = on ? Color.white : FixtureUiPalette.Muted;
+                toggles[i].GetComponentInChildren<OperatorWeatherIcon>().color = on ? Color.white : FixtureUiPalette.Muted;
+            }
         }
 
         private static void CreateTab(RectTransform rect, string title, ToggleGroup group, RectTransform panel, bool initial)
@@ -480,19 +681,62 @@ namespace InhaExpress.Client.Presentation
         private void RefreshOperationLog(CampusServerMap.SharedState state)
         {
             if (operationLog == null) return;
-            if (logRun != state.run_id)
-            { logRun = state.run_id; observedStates.Clear(); logLines.Clear(); }
             bool changed = false;
+            if (logRun != state.run_id)
+            { logRun = state.run_id; observedStates.Clear(); logLines.Clear(); changed = true; }
             if (state.vehicles != null) foreach (var vehicle in state.vehicles)
                 changed |= ObserveLog("vehicle:" + vehicle.id, vehicle.phase + "|" + vehicle.destination,
-                    vehicle.id + " · " + vehicle.phase + (string.IsNullOrEmpty(vehicle.destination) ? "" : " → " + vehicle.destination), state.time_s);
+                    VehicleLogMessage(vehicle), state.time_s);
             if (state.requests != null) foreach (var request in state.requests)
                 changed |= ObserveLog("request:" + request.id, request.status + "|" + request.vehicle_id,
-                    request.id + " · " + TransportStatus(request), state.time_s);
+                    RequestLogMessage(request), state.time_s);
             if (!changed) return;
             operationLog.text = string.Join("\n\n", logLines);
             ((RectTransform)operationLog.transform.parent).SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical,
                 Mathf.Max(290, operationLog.preferredHeight + 8));
+        }
+
+        private string VehicleLogMessage(CampusServerMap.Vehicle vehicle)
+        {
+            string destination = string.IsNullOrEmpty(vehicle.destination) ? "목적지" : LandmarkName(vehicle.destination);
+            string description = vehicle.phase switch
+            {
+                "READY" => "배차 대기",
+                "TO_PICKUP" => $"픽업 {destination} 방면 이동",
+                "PICKUP_SERVICE" => "출발지 탑승/적재",
+                "TO_DROPOFF" => $"{destination} 방면 운송",
+                "DROPOFF_SERVICE" => "도착지 하차/하역",
+                "RETURN_PENDING" => "복귀 준비",
+                "RETURNING" => (string.IsNullOrEmpty(vehicle.home_name) ? "차고지" : vehicle.home_name) + " 방면 복귀",
+                "TO_CHARGER" => "충전소 이동",
+                "CHARGING" => "배터리 충전",
+                "MANEUVER" => "방향 전환",
+                "OUT_OF_SERVICE" => "운행 중단",
+                _ => "운행 상태 변경"
+            };
+            return vehicle.id + " " + description;
+        }
+
+        private string RequestLogMessage(CampusServerMap.TransportRequest request)
+        {
+            string vehicle = string.IsNullOrEmpty(request.vehicle_id) ? "차량" : request.vehicle_id + " 차량";
+            string description = request.status switch
+            {
+                "CREATED" => "요청 접수",
+                "VALIDATED" => "운송 조건 확인",
+                "QUEUED" => "배차 대기",
+                "ASSIGNED" => vehicle + " 배정",
+                "PICKUP_SERVICE" => "출발지 탑승/적재",
+                "IN_TRANSIT" => "목적지 이동",
+                "DROPOFF_SERVICE" => "도착지 하차/하역",
+                "COMPLETED" => "운송 완료",
+                "REJECTED" => "요청 거절",
+                "CANCELLED" => "요청 취소",
+                "EXPIRED" => "요청 기한 만료",
+                "FAILED" => "운송 실패 운영자 확인 필요",
+                _ => "요청 상태 변경"
+            };
+            return $"요청 {request.id} {LandmarkName(request.pickup_landmark_id)} → {LandmarkName(request.dropoff_landmark_id)}\n{description}";
         }
 
         private bool ObserveLog(string key, string value, string message, double time)
@@ -579,9 +823,17 @@ namespace InhaExpress.Client.Presentation
                 { requestStatus.text = "출발과 도착 거점을 다르게 선택하세요"; yield break; }
                 pendingRequestRun = map.RunId;
                 pendingRequestJson = JsonUtility.ToJson(new TransportOrder { command_id = Guid.NewGuid().ToString("N"),
+                    owner_id = mobile ? passengerId : "unity-operator",
                     service_type = cargoRequest ? "CARGO" : "PASSENGER", pickup_landmark_id = pickup.landmark_id,
                     dropoff_landmark_id = dropoff.landmark_id, party_size = cargoRequest ? 0 : requestAmount,
-                    cargo_kg = cargoRequest ? requestAmount : 0 });
+                    cargo_kg = cargoRequest ? requestAmount : 0,
+                    service_needs = new TransportNeeds { requires_step_free = mobileStepFree != null && mobileStepFree.isOn,
+                        boarding_assistance = mobileStepFree != null && mobileStepFree.isOn } });
+                if (mobile)
+                {
+                    PlayerPrefs.SetString("InhaMobil.Passenger.Pending", JsonUtility.ToJson(new PendingPassengerRequest { server = map.serverUrl, run = pendingRequestRun, json = pendingRequestJson }));
+                    PlayerPrefs.Save();
+                }
             }
             submitting = true; submittedRequestId = null; requestStatus.text = "요청 접수 중…";
             using (var request = new UnityWebRequest(map.serverUrl.TrimEnd('/') + "/v1/demo/requests", "POST"))
@@ -589,25 +841,57 @@ namespace InhaExpress.Client.Presentation
                 request.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(pendingRequestJson));
                 request.downloadHandler = new DownloadHandlerBuffer(); request.timeout = 5;
                 request.SetRequestHeader("Content-Type", "application/json");
+                request.SetRequestHeader("X-Campus-Run-Id", pendingRequestRun);
                 yield return request.SendWebRequest();
                 if (map.RunId != pendingRequestRun)
-                { pendingRequestJson = null; requestStatus.text = "서버 세션이 바뀌었습니다. 요청 상태를 확인하세요"; }
+                { ClearPendingRequest(); requestStatus.text = "서버 세션이 바뀌었습니다. 요청 상태를 확인하세요"; }
                 else if (request.result == UnityWebRequest.Result.Success)
                 {
                     TransportAck ack = null;
                     try { ack = JsonUtility.FromJson<TransportAck>(request.downloadHandler.text); } catch (ArgumentException) { }
                     if (ack?.request != null && !string.IsNullOrEmpty(ack.request.id))
                     {
-                        submittedRequestId = ack.request.id; pendingRequestJson = null;
+                        submittedRequestId = ack.request.id; ClearPendingRequest();
                         requestStatus.text = TransportStatus(ack.request);
                     }
                     else requestStatus.text = "접수 응답을 확인하지 못했습니다. 같은 요청으로 재시도하세요";
                 }
                 else if (request.responseCode >= 400 && request.responseCode < 500)
-                { pendingRequestJson = null; requestStatus.text = "요청이 거부됐습니다. 거점과 적재 인원을 확인하세요"; }
+                { ClearPendingRequest(); requestStatus.text = "요청이 거부됐습니다. 거점과 적재 인원을 확인하세요"; }
                 else requestStatus.text = "접수 확인 실패 · 다시 누르면 같은 요청으로 확인합니다";
             }
             submitting = false;
+        }
+        private void ClearPendingRequest()
+        {
+            pendingRequestJson = null;
+            if (mobile) { PlayerPrefs.DeleteKey("InhaMobil.Passenger.Pending"); PlayerPrefs.Save(); }
+        }
+
+        [Serializable] private sealed class PassengerCancel { public string command_id, owner_id; }
+        private IEnumerator CancelPassengerRequest()
+        {
+            if (submitting || submittedRequestId == null || map.LatestState == null || !string.IsNullOrEmpty(map.LastError)) yield break;
+            submitting = true;
+            string id = submittedRequestId;
+            using (var request = new UnityWebRequest(map.serverUrl + "/v1/demo/passengers/requests/" + Uri.EscapeDataString(id) + "/cancel", "POST"))
+            {
+                request.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(JsonUtility.ToJson(new PassengerCancel { command_id = "cancel-" + id, owner_id = passengerId })));
+                request.downloadHandler = new DownloadHandlerBuffer(); request.timeout = 5;
+                request.SetRequestHeader("Content-Type", "application/json");
+                yield return request.SendWebRequest();
+                requestStatus.text = request.result == UnityWebRequest.Result.Success ? "요청 취소됨" : "취소 확인 실패 · 요청 상태를 확인하세요";
+            }
+            submitting = false;
+        }
+        private void MobilePrimaryAction()
+        {
+            if (submitting) return;
+            var current = map.LatestState?.requests == null ? null : Array.Find(map.LatestState.requests, r => r.id == submittedRequestId && r.owner_id == passengerId);
+            if (pendingRequestJson == null && current != null && (current.status == "QUEUED" || current.status == "ASSIGNED"))
+                StartCoroutine(CancelPassengerRequest());
+            else if (pendingRequestJson != null || current == null || IsTerminal(current.status))
+                StartCoroutine(SubmitTransport());
         }
         private static string TransportStatus(CampusServerMap.TransportRequest request)
         {
@@ -617,6 +901,7 @@ namespace InhaExpress.Client.Presentation
                 "REJECTED" => "요청 거부", "CANCELLED" => "요청 취소", "FAILED" => "운송 실패", "EXPIRED" => "요청 만료", _ => "요청 접수" };
             return string.IsNullOrEmpty(request.vehicle_id) ? phase : request.vehicle_id + " · " + phase;
         }
+        private static bool IsTerminal(string status) => status == "COMPLETED" || status == "REJECTED" || status == "CANCELLED" || status == "FAILED" || status == "EXPIRED";
 
         private static RectTransform Top(Transform parent, string name, float top, float height, float left, float right) =>
             FixtureUiFactory.Rect(parent, name, new Vector2(0, 1), Vector2.one,
@@ -709,7 +994,13 @@ namespace InhaExpress.Client.Presentation
             rect.anchorMax = Vector2.one;
             rect.offsetMin = rect.offsetMax = Vector2.zero;
             var dropdown = control.GetComponent<Dropdown>();
-            StyleDropdown(dropdown, 224);
+            StyleDropdown(dropdown, mobile ? 264 : 224);
+            if (mobile)
+            {
+                dropdown.captionText.fontSize = 15; dropdown.itemText.fontSize = 15;
+                var item = dropdown.itemText.GetComponentInParent<Toggle>(true).GetComponent<RectTransform>();
+                item.sizeDelta = new Vector2(item.sizeDelta.x, 44);
+            }
             dropdown.ClearOptions();
             dropdown.AddOptions(new List<string> { placeholder });
             dropdown.interactable = false;
@@ -744,21 +1035,78 @@ namespace InhaExpress.Client.Presentation
 
         private void BuildMobile(RectTransform root)
         {
-            Panel(root, "Sheet Background", 0, 0, 1, .49f, FixtureUiPalette.Canvas);
-            Panel(root, "Passenger Sheet", 0, 0, 1, .49f);
-            Label(root, "Title", "셔틀 호출", 23, .05f, .435f, .95f, .485f, true);
-            CreateStopDropdown(root,"Origin","출발지 선택",.05f,.355f,.95f,.425f);
-            CreateStopDropdown(root,"Destination","목적지 선택",.05f,.275f,.95f,.345f);
-            Panel(root, "General", .05f, .215f, .48f, .265f, new Color(.89f,.95f,1));
-            Label(root, "General Text", "일반 이동", 14, .08f, .215f, .46f, .265f, true);
-            Panel(root, "Accessible", .52f, .215f, .95f, .265f, FixtureUiPalette.Canvas);
-            Label(root, "Accessible Text", "이동지원", 14, .55f, .215f, .93f, .265f);
-            metrics = Label(root, "Status", "연결 대기", 11, .05f, .175f, .95f, .21f);
-            Panel(root, "Deferred Action", .05f, .105f, .95f, .165f, FixtureUiPalette.Blue);
-            var action = Label(root, "Action Text", "차량 호출 준비 중", 17, .05f, .105f, .95f, .165f, true);
-            action.color = Color.white; action.alignment = TextAnchor.MiddleCenter;
-            ActionButton(root,"Map Overview","◎",.84f,.55f,.95f,.60f,ResetView);
-            Label(root,"Attribution","© OpenStreetMap contributors · ODbL 1.0",8,.05f,.49f,.95f,.505f);
+            Panel(root, "Sheet Background", 0, 0, 1, .60f, FixtureUiPalette.Canvas);
+            var viewport = FixtureUiFactory.Rect(root, "Passenger Sheet Viewport", new Vector2(0,.045f), new Vector2(1,.60f), Vector2.zero, Vector2.zero);
+            viewport.gameObject.AddComponent<Image>().color = FixtureUiPalette.Surface;
+            viewport.gameObject.AddComponent<RectMask2D>();
+            var sheet = FixtureUiFactory.Rect(viewport, "Passenger Sheet", new Vector2(0,1), Vector2.one, Vector2.zero, Vector2.zero);
+            sheet.pivot = new Vector2(.5f,1); sheet.sizeDelta = new Vector2(0,548);
+            var scroll = viewport.gameObject.AddComponent<ScrollRect>();
+            scroll.viewport = viewport; scroll.content = sheet; scroll.horizontal = false;
+            scroll.movementType = ScrollRect.MovementType.Clamped; scroll.scrollSensitivity = 24;
+            TextAt(Top(sheet,"Title",18,30,20,20),"어디로 이동할까요?",22,true);
+            TextAt(Top(sheet,"Subtitle",50,22,20,20),"출발지와 목적지를 선택하세요",12).color = FixtureUiPalette.Muted;
+            CreateStopDropdown(Top(sheet,"Pickup Row",84,52,20,20),"Request Pickup","출발지 선택",0,0,1,1, stop => pickup = stop);
+            CreateStopDropdown(Top(sheet,"Dropoff Row",146,52,20,20),"Request Dropoff","목적지 선택",0,0,1,1, stop => dropoff = stop);
+            var needs = DefaultControls.CreateToggle(new DefaultControls.Resources());
+            needs.name = "Step Free Access"; needs.transform.SetParent(Top(sheet,"Access Row",204,44,20,20), false);
+            var needsRect = (RectTransform)needs.transform;
+            needsRect.anchorMin = Vector2.zero; needsRect.anchorMax = Vector2.one;
+            needsRect.offsetMin = needsRect.offsetMax = Vector2.zero;
+            mobileStepFree = needs.GetComponent<Toggle>(); mobileStepFree.isOn = false;
+            mobileStepFree.targetGraphic.color = new Color(.82f,.87f,.94f);
+            mobileStepFree.graphic.color = FixtureUiPalette.Blue;
+            var needsText = needs.GetComponentInChildren<Text>(); needsText.font = FixtureUiFactory.Font;
+            needsText.text = "계단 없는 접근 · 승하차 도움"; needsText.fontSize = 14;
+            requestStatus = TextAt(Top(sheet,"My Request Status",252,46,20,20),"거점을 선택해 호출하세요",13);
+            requestSubmit = UiButton(Top(sheet,"Submit Passenger Request",304,52,20,20),"차량 호출",MobilePrimaryAction,true);
+            requestSubmit.GetComponentInChildren<Text>().fontSize = 16;
+            TextAt(Top(sheet,"Server Heading",370,20,20,20),"PC 서버 연결",12,true);
+            var addressRow = Top(sheet,"Server Address Row",396,48,20,20);
+            var addressObject = DefaultControls.CreateInputField(new DefaultControls.Resources());
+            addressObject.name = "PC Server Address"; addressObject.transform.SetParent(addressRow, false);
+            var addressRect = (RectTransform)addressObject.transform;
+            addressRect.anchorMin = Vector2.zero; addressRect.anchorMax = new Vector2(.73f,1);
+            addressRect.offsetMin = addressRect.offsetMax = Vector2.zero;
+            serverAddress = addressObject.GetComponent<InputField>();
+            serverAddress.textComponent.font = FixtureUiFactory.Font; serverAddress.textComponent.fontSize = 13;
+            serverAddress.keyboardType = TouchScreenKeyboardType.URL;
+            serverAddress.characterLimit = 200;
+            ((Text)serverAddress.placeholder).font = FixtureUiFactory.Font;
+            ((Text)serverAddress.placeholder).text = "PC IP:8765";
+            serverAddress.text = map.serverUrl;
+            var connect = FixtureUiFactory.Rect(addressRow,"Connect PC Server",new Vector2(.76f,0),Vector2.one,Vector2.zero,Vector2.zero);
+            UiButton(connect,"연결",ConnectMobileServer);
+            serverAddressStatus = TextAt(Top(sheet,"Server Address Status",446,22,20,20),"PC와 같은 네트워크에 연결하세요",11);
+            var vegetation = DefaultControls.CreateToggle(new DefaultControls.Resources());
+            vegetation.name = "Mobile Vegetation";
+            vegetation.transform.SetParent(Top(sheet,"Vegetation Row",480,48,20,20), false);
+            var vegetationRect = (RectTransform)vegetation.transform;
+            vegetationRect.anchorMin = Vector2.zero; vegetationRect.anchorMax = Vector2.one;
+            vegetationRect.offsetMin = vegetationRect.offsetMax = Vector2.zero;
+            var vegetationToggle = vegetation.GetComponent<Toggle>();
+            vegetationToggle.SetIsOnWithoutNotify(VegetationDisplaySettings.MobileVisible);
+            vegetationToggle.onValueChanged.AddListener(VegetationDisplaySettings.SetMobileVisible);
+            vegetationToggle.graphic.color = FixtureUiPalette.Blue;
+            var vegetationText = vegetation.GetComponentInChildren<Text>();
+            vegetationText.font = FixtureUiFactory.Font; vegetationText.fontSize = 14;
+            vegetationText.text = "나무·잔디 표시";
+            UiButton(FixtureUiFactory.Rect(root,"Map Overview",new Vector2(.82f,.63f),new Vector2(.95f,.69f),Vector2.zero,Vector2.zero),"전체",ResetView);
+            Label(root,"Attribution","© OpenStreetMap contributors · ODbL 1.0",8,.05f,.60f,.95f,.615f);
+        }
+
+        private void ConnectMobileServer()
+        {
+            try
+            {
+                string normalized = ClientServerSettings.NormalizeUrl(serverAddress.text);
+                if (normalized != map.serverUrl && (pendingRequestJson != null || submitting))
+                    throw new ArgumentException("접수 확인 후 서버를 변경하세요.");
+                if (submitting) return;
+                map.ConnectToServer(normalized); serverAddress.text = normalized;
+                submittedRequestId = null; requestStatus.text = "서버 연결 중…";
+            }
+            catch (ArgumentException error) { requestStatus.text = error.Message; }
         }
 
         private static Sprite rounded, pointSprite;
@@ -795,13 +1143,19 @@ namespace InhaExpress.Client.Presentation
 
         private void Update()
         {
+            if (!mobile) RefreshVehicleReadout();
             if (map == null || Time.unscaledTime < nextRefresh || connection == null) return;
             nextRefresh = Time.unscaledTime + .25f;
+            if (!mobile) RefreshEnvironmentControls();
             RefreshStopDropdowns();
             bool online = !string.IsNullOrEmpty(map.RunId) && string.IsNullOrEmpty(map.LastError);
+            if (serverAddressStatus != null) serverAddressStatus.text = online ? map.serverUrl : map.LastError ?? "연결 중…";
             connection.text = online ? "● 서버 연결됨" : "● 연결 대기";
             connection.color = online ? FixtureUiPalette.Green : FixtureUiPalette.Amber;
             var state = map.LatestState;
+            if (!mobile) RefreshQueue(state, online);
+            if (mobile && online && passengerRun != map.RunId)
+            { passengerRun = map.RunId; submittedRequestId = null; requestStatus.text = "거점을 선택해 호출하세요"; }
             foreach (var pin in mapPins)
             {
                 if (pin.vehicleId == null || pin.caption == null) continue;
@@ -819,11 +1173,13 @@ namespace InhaExpress.Client.Presentation
             }
             if (requestSubmit != null)
             {
-                if (!submitting && pendingRequestJson != null && pendingRequestRun != map.RunId)
-                { pendingRequestJson = null; requestStatus.text = "서버 세션 변경 · 거점을 다시 확인하세요"; }
+                if (mobile && online && submittedRequestId == null && state?.requests != null)
+                    submittedRequestId = Array.FindLast(state.requests, r => r.owner_id == passengerId)?.id;
+                if (!submitting && online && pendingRequestJson != null && pendingRequestRun != map.RunId)
+                { ClearPendingRequest(); requestStatus.text = "서버 세션 변경 · 거점을 다시 확인하세요"; }
                 requestSubmit.interactable = online && !submitting && (pendingRequestJson != null ||
                     pickup != null && dropoff != null && !string.IsNullOrEmpty(pickup.landmark_id) && !string.IsNullOrEmpty(dropoff.landmark_id) && pickup.landmark_id != dropoff.landmark_id);
-                requestSubmit.GetComponentInChildren<Text>().text = submitting ? "접수 중…" : pendingRequestJson != null ? "같은 요청 재확인" : "요청 접수";
+                requestSubmit.GetComponentInChildren<Text>().text = submitting ? "접수 중…" : pendingRequestJson != null ? "같은 요청 재확인" : mobile ? "차량 호출" : "요청 접수";
                 foreach (var dropdown in stopDropdowns)
                     if (dropdown.name == "Request Pickup" || dropdown.name == "Request Dropoff")
                         dropdown.interactable = !submitting && pendingRequestJson == null && dropdownStops != null && dropdownStops.Length > 0;
@@ -831,6 +1187,20 @@ namespace InhaExpress.Client.Presentation
                 {
                     var found = Array.Find(state.requests, r => r.id == submittedRequestId);
                     if (found != null) requestStatus.text = TransportStatus(found);
+                    if (mobile && found != null && !IsTerminal(found.status) && pendingRequestJson == null)
+                    {
+                        bool canCancel = found.status == "QUEUED" || found.status == "ASSIGNED";
+                        requestSubmit.interactable = online && !submitting && pendingRequestJson == null && canCancel;
+                        requestSubmit.GetComponentInChildren<Text>().text = submitting ? "처리 중…" : canCancel ? "요청 취소" : "운송 진행 중";
+                        foreach (var dropdown in stopDropdowns) dropdown.interactable = false;
+                        if (mobileStepFree != null) mobileStepFree.interactable = false;
+                        var vehicle = state.vehicles == null ? null : Array.Find(state.vehicles, v => v.id == found.vehicle_id);
+                        if (vehicle != null && vehicle.motion_source == "unity_physics" &&
+                            (vehicle.physical_status == "YIELDING" || vehicle.physical_status == "EMERGENCY_STOP" || !vehicle.observation_fresh))
+                            requestStatus.text += "\n센서 안전 확인 대기";
+                        else if (map.ServerPaused) requestStatus.text += "\nPC에서 운행을 시작하면 진행됩니다";
+                    }
+                    else if (mobileStepFree != null) mobileStepFree.interactable = !submitting && pendingRequestJson == null;
                 }
             }
             session.text = $"v{Application.version}";
@@ -1013,9 +1383,16 @@ namespace InhaExpress.Client.Presentation
                 // Fleet badges remain visible in the PC overview independently
                 // of optional hub/debug markers. Follow view stays unobstructed.
                 bool fleetOverview = !mobile && pin.vehicleId != null && OperatorControls != null && !OperatorControls.IsFollowing;
-                if ((!showWorldMarkers && !fleetOverview) || pin.target == null)
+                if ((!mobile && !showWorldMarkers && !fleetOverview) || pin.target == null)
                 { pin.root.gameObject.SetActive(false); pin.hovered = false; continue; }
-                var point = worldCamera.WorldToViewportPoint(pin.target.position);
+                var position = pin.target.position;
+                if (mobile && pin.vehicleId != null)
+                {
+                    var entry = map.LatestState?.vehicles == null ? null : Array.Find(map.LatestState.vehicles, v => v.id == pin.vehicleId);
+                    if (entry == null || !string.IsNullOrEmpty(map.LastError)) { pin.root.gameObject.SetActive(false); continue; }
+                    position = entry.position_unity; position.y = pin.target.position.y;
+                }
+                var point = worldCamera.WorldToViewportPoint(position);
                 bool visible = point.z > 0 && point.x >= 0 && point.x <= 1 && point.y >= 0 && point.y <= 1;
                 pin.root.gameObject.SetActive(visible);
                 if (!visible) { pin.hovered = false; continue; }
@@ -1050,6 +1427,8 @@ namespace InhaExpress.Client.Presentation
 
         private void OnDestroy()
         {
+            foreach (var renderer in mobileHiddenRenderers) if (renderer != null) renderer.enabled = true;
+            foreach (var pair in mobileBodies) if (pair.Key != null) pair.Key.isKinematic = pair.Value;
             foreach(var client in automaticClients.Values) if(client!=null) client.enabled=false;
             if (OperatorControls != null) { OperatorControls.ShowMap(); OperatorControls.enabled=false; }
             if (worldCamera != null)
