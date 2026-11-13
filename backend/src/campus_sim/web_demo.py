@@ -19,6 +19,7 @@ from uuid import uuid4
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from campus_sim.crowd import CrowdPrior, road_groups
 from campus_sim.domain import CreateRequest, RequestStatus
 from campus_sim.map_coordinates import MapCoordinates
 from campus_sim.planning import AStarPlanner, DijkstraPlanner, NoPath
@@ -40,6 +41,14 @@ class DemoPlan(BaseModel):
     model_config = ConfigDict(extra="forbid")
     pickup: str = Field(min_length=1)
     dropoff: str = Field(min_length=1)
+
+
+class CrowdTime(BaseModel):
+    """Changes only the crowd prior's time of day, never the simulation clock."""
+
+    model_config = ConfigDict(extra="forbid", strict=True)
+    action: Literal["next_peak", "reset", "set"]
+    time_of_day: str | None = Field(default=None, pattern=r"^\d{2}:\d{2}(:\d{2})?$")
 
 
 class DemoScenario(BaseModel):
@@ -118,12 +127,14 @@ def map_presentation(service, root):
             areas.append(
                 {**item, "kind": "parking" if tags.get("amenity") == "parking" else "field"}
             )
-    seen, roads = set(), []
-    for edge in graph.edges:
-        key = tuple(sorted((edge.polyline, tuple(reversed(edge.polyline)))))
-        if key not in seen:
-            seen.add(key)
-            roads.append({"points": edge.polyline, "speed_mps": edge.speed_mps})
+    roads = [
+        {
+            "road_id": road.id,
+            "points": road.polyline,
+            "speed_mps": next(e for e in graph.edges if e.id == road.edge_ids[0]).speed_mps,
+        }
+        for road in road_groups(graph)
+    ]
     stops = []
     for landmark in service.landmarks.values():
         stop_id = landmark.stop_ids[0]
@@ -171,6 +182,52 @@ class DemoSession:
         self.physical = UnityDriveSession(self, unity_map(self.service)["geometry_hash"])
         self.map["geometry_hash"] = self.physical.geometry_hash
         self.physical_dispatch = PhysicalDispatcher(self)
+        self.crowd = CrowdPrior.from_service(self.service, self.root)
+
+    def crowd_state(self):
+        """PC/web-only prior snapshot; mobile clients must not subscribe (AGENTS §11/§13)."""
+        with self.lock:
+            return {
+                "run_id": self.run_id,
+                "map_version": self.service.graph.map_version,
+                "geometry_hash": self.physical.geometry_hash,
+                **self.crowd.snapshot(self.service._time_s),
+            }
+
+    def crowd_time(self, command: CrowdTime):
+        with self.lock:
+            now = self.service._time_s
+            if command.action == "next_peak":
+                self.crowd.next_peak(now)
+            elif command.action == "reset":
+                self.crowd.reset_time()
+            elif command.time_of_day is None:
+                raise ValueError("time_of_day is required for set")
+            else:
+                self.crowd.set_time_of_day(now, command.time_of_day)
+            return self.crowd_state()
+
+    def unity_roads(self):
+        """Static road centerlines in Unity legacy X/Z for the PC crowd overlay."""
+        coordinates = MapCoordinates()
+        with self.lock:
+            roads = []
+            for road in self.crowd.road_geometry():
+                points = []
+                for east, north in road["points"]:
+                    x, z = coordinates.to_unity(east, north)
+                    points.append({"x": x, "y": 0.0, "z": z})
+                roads.append({"road_id": road["road_id"], "points": points,
+                              "zone_ids": road["zone_ids"]})
+            return {
+                "schema_version": 1,
+                "map_version": self.service.graph.map_version,
+                "geometry_hash": self.physical.geometry_hash,
+                "coordinate_system": "unity_legacy_x_east_z_north_m",
+                "height_mode": "project_to_unity_surface_visual_only",
+                "simulation_only": True,
+                "roads": roads,
+            }
 
     def state(self):
         with self.lock:
@@ -438,4 +495,5 @@ class DemoSession:
             self.run_id = uuid4().hex
             self.physical = UnityDriveSession(self, unity_map(self.service)["geometry_hash"])
             self.physical_dispatch = PhysicalDispatcher(self)
+            self.crowd = CrowdPrior.from_service(self.service, self.root)
             return self.state()

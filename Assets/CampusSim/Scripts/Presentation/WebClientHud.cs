@@ -36,6 +36,9 @@ namespace InhaExpress.Client.Presentation
         private Text[] fleetDetails;
         private Text[] fleetRoutes;
         private CampusRouteOverlay[] routeOverlays;
+        private CampusCrowdOverlay crowdOverlay;
+        private Text crowdStatus, crowdToggleLabel;
+        private GameObject crowdResetButton;
         private readonly List<Dropdown> stopDropdowns = new List<Dropdown>();
         private ServerMapAnchor[] dropdownStops;
         private Camera worldCamera;
@@ -229,6 +232,7 @@ namespace InhaExpress.Client.Presentation
             }
             if (worldCamera != null)
             {
+                if (crowdOverlay != null && map != null) crowdOverlay.Initialize(map, worldCamera);
                 OperatorControls = gameObject.AddComponent<PcOperatorControls>();
                 OperatorControls.Initialize(worldCamera, framingBounds, fittedSize, mobile ? 55 : 65, mobile ? 25 : 0);
                 OperatorControls.InputEnabled = !mobile;
@@ -341,15 +345,31 @@ namespace InhaExpress.Client.Presentation
             }
             var mapHeader = Top(workspace, "Map Header", 140, 44, 20, 20);
             Surface(mapHeader, Color.white);
-            TextAt(Top(mapHeader, "Map Title", 0, 44, 12, 368), "인하대학교 운행 지도", 13, true);
+            TextAt(Top(mapHeader, "Map Title", 0, 44, 12, 752), "인하대학교 운행 지도", 13, true);
             BuildEnvironmentControls(mapHeader);
-            // Left of the weather choices (right 8..216).
+            // Right to left: weather choices (8..216), disconnect demo (224..360),
+            // crowd prior buttons (368..744); the title keeps the remaining width.
             disconnectButton = UiButton(RightTop(mapHeader, "Disconnect Demo", 5, 136, 34, 224),
                 "연결 끊김 시연", () => ActiveAutomaticClient?.ToggleDemoConnection());
             disconnectLabel = disconnectButton.GetComponentInChildren<Text>();
             desktopMap = FixtureUiFactory.Rect(workspace, "Map Viewport", Vector2.zero, Vector2.one,
                 new Vector2(20, 248), new Vector2(-20, -184));
             desktopMap.gameObject.AddComponent<RectMask2D>();
+            // Crowd prior sits below the vehicle routes. PC only; mobile never builds it.
+            var crowdLayer = FixtureUiFactory.Rect(desktopMap, "Crowd Prior Roads", Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+            crowdOverlay = crowdLayer.gameObject.AddComponent<CampusCrowdOverlay>();
+            crowdOverlay.raycastTarget = false;
+            var crowdToggle = UiButton(RightTop(mapHeader, "Crowd Toggle", 7, 128, 30, 368), "혼잡 예상 표시", ToggleCrowd);
+            crowdToggleLabel = crowdToggle.GetComponentInChildren<Text>();
+            crowdToggleLabel.fontSize = 12;
+            // Moves only the crowd prior's time of day; the shared simulation clock stays 1x.
+            var nextPeak = UiButton(RightTop(mapHeader, "Crowd Next Peak", 7, 140, 30, 504), "다음 혼잡 시간대", NextCrowdPeak);
+            nextPeak.GetComponentInChildren<Text>().fontSize = 12;
+            var resetHolder = RightTop(mapHeader, "Crowd Reset Time", 7, 92, 30, 652);
+            var resetTime = UiButton(resetHolder, "기본 시각", ResetCrowdTime);
+            resetTime.GetComponentInChildren<Text>().fontSize = 12;
+            crowdResetButton = resetHolder.gameObject;
+            crowdResetButton.SetActive(false);
             routeOverlays = new CampusRouteOverlay[3];
             for (int i = 0; i < 3; i++)
             {
@@ -382,7 +402,8 @@ namespace InhaExpress.Client.Presentation
             disconnectStatus.resizeTextForBestFit = true;
             disconnectStatus.resizeTextMinSize = 9;
             disconnectStatus.resizeTextMaxSize = 12;
-            pedestrianStatus = TextAt(Top(footer, "Pedestrian Status", 38, 20, 12, 12),
+            BuildCrowdLegend(RightTop(footer, "Crowd Legend", 34, 470, 24, 12));
+            pedestrianStatus = TextAt(Top(footer, "Pedestrian Status", 38, 20, 12, 494),
                 "차량을 추적하면 보행자 횡단을 실행할 수 있습니다", 12);
             pedestrianStatus.supportRichText = false;
             TextAt(Bottom(workspace, "Fleet Title", 156, 24, 20, 20), "차량 현황", 15, true);
@@ -977,6 +998,43 @@ namespace InhaExpress.Client.Presentation
             return image;
         }
 
+        private void BuildCrowdLegend(RectTransform legend)
+        {
+            var caution = FixtureUiFactory.Rect(legend, "Caution Swatch", new Vector2(0, .5f), new Vector2(0, .5f), new Vector2(0, -2), new Vector2(18, 2));
+            Surface(caution, CampusCrowdOverlay.CautionColor, false);
+            var cautionText = TextAt(FixtureUiFactory.Rect(legend, "Caution Label", new Vector2(0, 0), new Vector2(0, 1), new Vector2(22, 0), new Vector2(66, 0)), "혼잡 주의", 10);
+            cautionText.color = FixtureUiPalette.Muted;
+            for (int i = 0; i < 3; i++)
+            {
+                var dash = FixtureUiFactory.Rect(legend, "Avoid Dash " + i, new Vector2(0, .5f), new Vector2(0, .5f), new Vector2(72 + i * 7, -2), new Vector2(77 + i * 7, 2));
+                Surface(dash, CampusCrowdOverlay.AvoidColor, false);
+            }
+            var avoidText = TextAt(FixtureUiFactory.Rect(legend, "Avoid Label", new Vector2(0, 0), new Vector2(0, 1), new Vector2(96, 0), new Vector2(140, 0)), "혼잡 회피", 10);
+            avoidText.color = FixtureUiPalette.Muted;
+            crowdStatus = TextAt(FixtureUiFactory.Rect(legend, "Crowd Status", Vector2.zero, Vector2.one, new Vector2(146, 0), Vector2.zero), "혼잡 예상: 도로 형상 대기", 10);
+            crowdStatus.color = FixtureUiPalette.Muted;
+            crowdStatus.horizontalOverflow = HorizontalWrapMode.Overflow;
+        }
+
+        private void NextCrowdPeak()
+        {
+            if (crowdOverlay == null) return;
+            if (!crowdOverlay.Visible) ToggleCrowd();
+            StartCoroutine(crowdOverlay.ChangeTime("next_peak"));
+        }
+
+        private void ResetCrowdTime()
+        {
+            if (crowdOverlay != null) StartCoroutine(crowdOverlay.ChangeTime("reset"));
+        }
+
+        private void ToggleCrowd()
+        {
+            if (crowdOverlay == null) return;
+            crowdOverlay.Visible = !crowdOverlay.Visible;
+            crowdToggleLabel.text = crowdOverlay.Visible ? "혼잡 예상 표시" : "혼잡 예상 숨김";
+        }
+
         private Text queue;
         private Text[] statCards;
         private void Zoom(float factor)
@@ -1175,6 +1233,10 @@ namespace InhaExpress.Client.Presentation
             if (!mobile) RefreshEnvironmentControls();
             RefreshStopDropdowns();
             if (disconnectButton != null) RefreshDisconnectDemo();
+            if (crowdStatus != null && crowdOverlay != null)
+                crowdStatus.text = crowdOverlay.Visible ? crowdOverlay.StatusText : "혼잡 예상 숨김";
+            if (crowdResetButton != null && crowdOverlay != null)
+                crowdResetButton.SetActive(crowdOverlay.TimeOverridden);
             bool online = !string.IsNullOrEmpty(map.RunId) && string.IsNullOrEmpty(map.LastError);
             if (serverAddressStatus != null) serverAddressStatus.text = online ? map.serverUrl : map.LastError ?? "연결 중…";
             connection.text = online ? "● 서버 연결됨" : "● 연결 대기";
@@ -1397,6 +1459,7 @@ namespace InhaExpress.Client.Presentation
             if (worldCamera == null || safeRoot == null) return;
             if (routeOverlays != null) foreach (var overlay in routeOverlays)
                 if (overlay != null) overlay.ShowOverview = OperatorControls == null || !OperatorControls.IsFollowing;
+            if (crowdOverlay != null) crowdOverlay.ShowOverview = OperatorControls == null || !OperatorControls.IsFollowing;
             if (lastScreenSize != new Vector2Int(Screen.width, Screen.height) || lastSafeArea != Screen.safeArea)
             {
                 Canvas.ForceUpdateCanvases();

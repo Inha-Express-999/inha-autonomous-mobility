@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "project_version": "0.5.10.0",
+  "project_version": "0.5.11.0",
   "map_version": "inha-osm-unity-v2",
   "geometry_hash": "881064a03d85ff5067998b761d0124d3fadcb6c15113dab45daee52fa36f29ec",
   "coordinate_system": "unity_legacy_x_east_z_north_m",

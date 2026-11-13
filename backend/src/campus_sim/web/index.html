@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <title>Inha Mobil | 캠퍼스 운행 시뮬레이션</title>
   <link rel="icon" sizes="1024x1024" type="image/png" href="./inha-mobil-logo-579cbb6f.png">
-  <link rel="stylesheet" href="./style.css?v=f59ebfe268b3">
+  <link rel="stylesheet" href="./style.css?v=53c004dd4a30">
   <link rel="stylesheet" href="./dashboard.css?v=cd60a1d247ea">
-  <script src="./app.js?v=32cd5d203fb1" defer></script>
+  <script src="./app.js?v=684598f2b9d7" defer></script>
 <link rel="stylesheet" href="./polish.css?v=1ce57c5d31dd">
 </head>
 <body class="dashboard">
@@ -25,13 +25,13 @@
         <div><span class="stat-icon amber"><svg class="icon " aria-hidden="true"><use href="./icons.svg#bolt"></use></svg></span><span>충전 중</span><strong id="charging-count">0</strong></div>
       </div>
       <section id="map-panel" class="map-panel" aria-label="캠퍼스 운행 지도">
-        <div class="map-heading"><div><span class="dot"></span><strong><svg class="icon " aria-hidden="true"><use href="./icons.svg#layers"></use></svg> 인하대학교   운행 지도</strong><span class="map-version">실제 OSM 형상</span></div><button id="toggle-nodes" class="icon-button" aria-pressed="false">노드 보기</button><button id="fit" class="icon-button" title="지도 전체 보기"><svg class="icon " aria-hidden="true"><use href="./icons.svg#focus"></use></svg> 전체 보기</button></div>
+        <div class="map-heading"><div><span class="dot"></span><strong><svg class="icon " aria-hidden="true"><use href="./icons.svg#layers"></use></svg> 인하대학교   운행 지도</strong><span class="map-version">실제 OSM 형상</span></div><button id="crowd-next-peak" class="icon-button" title="혼잡 예상 시각만 다음 혼잡 시간대로 옮깁니다. 운행 시계는 바뀌지 않습니다.">다음 혼잡 시간대</button><button id="crowd-reset-time" class="icon-button" title="혼잡 예상 시각을 설정 시작 시각 기준으로 되돌립니다." hidden>기본 시각</button><button id="toggle-crowd" class="icon-button" aria-pressed="true" title="시간대 기반 예상 혼잡도 (실측 아님)">혼잡 예상</button><button id="toggle-nodes" class="icon-button" aria-pressed="false">노드 보기</button><button id="fit" class="icon-button" title="지도 전체 보기"><svg class="icon " aria-hidden="true"><use href="./icons.svg#focus"></use></svg> 전체 보기</button></div>
         <div id="map-container">
           <svg id="map" role="group" aria-label="OSM 캠퍼스 도로, 거점 및 차량 지도" tabindex="0"><g id="areas"></g><g id="buildings"></g><g id="context-roads"></g><g id="roads"></g><g id="routes"></g><g id="graph-nodes" hidden></g><g id="search-nodes"></g><g id="stops"></g><g id="hubs"></g><g id="cars"></g></svg>
           <div class="map-hint">드래그 이동   휠 확대   거점 클릭으로 출발/도착 선택</div>
           <div class="map-controls"><button id="zoom-in" aria-label="지도 확대"><svg class="icon " aria-hidden="true"><use href="./icons.svg#plus"></use></svg></button><button id="zoom-out" aria-label="지도 축소"><svg class="icon " aria-hidden="true"><use href="./icons.svg#minus"></use></svg></button></div>
           <div class="north">N<span>↑</span></div>
-          <div class="map-legend"><span class="legend-road"></span>운행 그래프 <span class="legend-path"></span>현재 경로</div>
+          <div class="map-legend"><span class="legend-road"></span>운행 그래프 <span class="legend-path"></span>현재 경로<span id="crowd-legend" class="crowd-legend"><span class="legend-crowd caution"></span>혼잡 주의 <span class="legend-crowd avoid"></span>혼잡 회피 <span id="crowd-status">혼잡 예상 정보 없음</span></span></div>
           <a class="attribution" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors   ODbL 1.0</a>
         </div>
         <div class="simulation-toolbar"><div class="planner-tools"><label for="dispatch">배차</label><select id="dispatch"><option value="fifo">FIFO</option><option value="greedy">Greedy</option><option value="hungarian">Hungarian</option></select><label for="planner">경로 탐색</label><select id="planner"><option value="astar">A*</option><option value="dijkstra">Dijkstra</option></select></div><div class="playback"><button id="play" class="play-button"><svg class="icon " aria-hidden="true"><use href="./icons.svg#play"></use></svg><span>시작</span></button><div class="clock"><small><svg class="icon " aria-hidden="true"><use href="./icons.svg#clock"></use></svg> 가상 경과 시간</small><time id="clock">00:00:00</time></div><label for="speed">배속</label><select id="speed"><option value="1">1×</option><option value="5">5×</option><option value="10" selected>10×</option><option value="30">30×</option><option value="100">100×</option><option value="300">300×</option></select><button id="reset" class="text-button"><svg class="icon " aria-hidden="true"><use href="./icons.svg#reset"></use></svg> 초기화</button></div></div>

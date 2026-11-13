@@ -8,6 +8,8 @@ const phaseNames = {READY:"배차 대기",TO_PICKUP:"픽업 이동",TO_DROPOFF:"
 const reasons = {WAITING_FEASIBLE_VEHICLE:"가용 차량을 기다리고 있습니다",WAITING_BATTERY_CHARGE:"운행에 필요한 배터리를 충전하고 있습니다",BATTERY_CAPACITY_INSUFFICIENT:"완충해도 왕복 에너지가 부족합니다",NO_ROUND_TRIP_ROUTE:"왕복 경로를 찾을 수 없습니다",STOP_ACCESS_UNAVAILABLE:"거점 접근 조건을 확인하세요"};
 let mapData, state, receivedAt = 0, selectedVehicle = null, mapView, initialView, stopTarget = "dropoff";
 let planningTicket=0;
+let crowd=null,crowdVisible=true,crowdPolling=false;
+const roadElements=new Map(),crowdNames={CAUTION:"혼잡 주의",AVOID:"혼잡 회피"};
 let epoch = 0, polling = false, busy = false, timer, toastTimer, lastQueueKey = "", lastFleetKey = "";
 const carElements = new Map();
 const esc = value => String(value ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
@@ -49,7 +51,8 @@ function drawMap(data) {
   for(const hub of data.hubs||[]){if(data.stops.some(stop=>stop.id===hub.id))continue;const [x,y]=hub.position_xy_m,group=element("g",{"data-x":x,"data-y":-y,"data-hub":hub.id},$("hubs"));const text=element("text",{x:9,y:20},group);text.textContent=hub.name;const title=element("title",{},group);title.textContent="출발 복귀 가상 충전 거점 (통행 미검증)";}
   for(const building of data.buildings)element("polygon",{points:pointString(building.points)},$("buildings"));
   for(const road of data.context_roads)element("polyline",{points:pointString(road.points)},$("context-roads"));
-  for(const road of data.roads)element("polyline",{points:pointString(road.points)},$("roads"));
+  roadElements.clear();
+  for(const road of data.roads){const line=element("polyline",{points:pointString(road.points),"data-road":road.road_id},$("roads"));roadElements.set(road.road_id,line);}
   for(const node of data.nodes||[]){const dot=element("circle",{cx:node.point[0],cy:-node.point[1],r:3},$("graph-nodes"));element("title",{},dot).textContent=node.id;}
   data.stops.forEach((stop,index)=>{
     const [x,y]=stop.point,group=element("g",{"data-stop":stop.id,"data-x":x,"data-y":-y,role:"button",tabindex:"0","aria-label":`${stop.name} 거점 선택`},$("stops"));
@@ -63,8 +66,23 @@ function drawMap(data) {
     const group=element("g",{"data-vehicle":id},$("cars"));element("path",{d:"M0 0",stroke:colors[id],"stroke-width":1,opacity:.6},group);element("rect",{x:-13,y:-16,width:26,height:30,rx:8,fill:"white",stroke:colors[id],"stroke-width":2},group);element("path",{d:"M-6 -8 Q-6 -11 -3 -11 H3 Q6 -11 6 -8 V3 H-6 Z M-6 -3 H6 M-4 7 V9 M4 7 V9 M-3 2 H-2 M2 2 H3",fill:"none",stroke:colors[id],"stroke-width":1.7,"stroke-linecap":"round"},group);const label=element("text",{y:24},group);label.textContent=id;carElements.set(id,group);
   }
   for(const select of [$("pickup"),$("dropoff")])for(const stop of data.stops){const option=document.createElement("option");option.value=stop.id;option.textContent=stop.name;select.append(option);}
-  $("pickup").value=data.stops.some(s=>s.id===previousPickup)?previousPickup:"main_gate";$("dropoff").value=data.stops.some(s=>s.id===previousDropoff)?previousDropoff:"hitech";layoutStops();
+  $("pickup").value=data.stops.some(s=>s.id===previousPickup)?previousPickup:"main_gate";$("dropoff").value=data.stops.some(s=>s.id===previousDropoff)?previousDropoff:"hitech";layoutStops();applyCrowd(crowd);
 }
+// Time-of-day prior only (not observed people); PC/web operator view, never the mobile client.
+function applyCrowd(next){
+  if(next&&mapData&&next.geometry_hash&&mapData.geometry_hash&&next.geometry_hash!==mapData.geometry_hash)return;
+  crowd=next;const levels=new Map((crowdVisible&&next?next.roads:[]).map(r=>[r.road_id,r]));
+  const zones=new Map((next?.zones||[]).map(z=>[z.id,z]));
+  for(const [id,line] of roadElements){const road=levels.get(id);line.classList.toggle("crowd-caution",road?.level==="CAUTION");line.classList.toggle("crowd-avoid",road?.level==="AVOID");
+    let title=line.querySelector("title");if(!road){title?.remove();continue;}if(!title)title=element("title",{},line);
+    title.textContent=`${crowdNames[road.level]} · ${zones.get(road.zone_id)?.name||road.zone_id} · 예상 ${road.rho_prior.toFixed(2)}명/m²${road.reason==="CONGESTION_WINDOW"?" · 혼잡 시간대 선제 회피":""} (시간대 prior, 실측 아님)`;}
+  const status=$("crowd-status");if(!status)return;
+  if(!next){status.textContent="혼잡 예상 정보 없음";return;}
+  $("crowd-reset-time").hidden=!next.time_override;
+  const count=next.roads.length;status.textContent=`${next.time_override?"혼잡 시각 ":""}${next.time_of_day.slice(0,5)} 예상 ${next.in_congestion_window?"혼잡 시간대":"평시"} · ${count?`${count}개 구간`:"혼잡 구간 없음"}${crowdVisible?"":" (숨김)"}`;
+}
+async function changeCrowdTime(body){try{if(!crowdVisible){crowdVisible=true;$("toggle-crowd").setAttribute("aria-pressed",true);$("crowd-legend").hidden=false;}const next=await api("crowd/time",body);applyCrowd(next);toast(next.time_override?`혼잡 예상 시각 ${next.time_of_day.slice(0,5)} · 운행 시계는 그대로입니다`:"혼잡 예상 시각을 기본으로 되돌렸습니다");}catch(error){toast(error.message);}}
+async function pollCrowd(){if(crowdPolling)return;crowdPolling=true;try{applyCrowd(await api("crowd"));}catch{}finally{crowdPolling=false;}}
 function layoutStops(){
   const svg=$("map"),matrix=svg.getScreenCTM();if(!matrix)return;
   const scale=1/matrix.a,boxes=[];
@@ -144,7 +162,10 @@ $("map").addEventListener("pointerdown",event=>{if(event.target.closest("[data-s
 $("map").addEventListener("pointermove",event=>{if(!drag)return;const p=new DOMPoint(event.clientX,event.clientY).matrixTransform(drag.matrix);setView([drag.view[0]-(p.x-drag.x),drag.view[1]-(p.y-drag.y),drag.view[2],drag.view[3]]);});
 $("map").addEventListener("pointerup",()=>drag=null);$("map").addEventListener("pointercancel",()=>drag=null);
 $("map").addEventListener("keydown",event=>{if(event.target!==$("map"))return;const [x,y,w,h]=mapView;if(event.key==="+"||event.key==="=")zoom(.8);else if(event.key==="-")zoom(1.25);else if(event.key==="ArrowLeft")setView([x-w*.1,y,w,h]);else if(event.key==="ArrowRight")setView([x+w*.1,y,w,h]);else if(event.key==="ArrowUp")setView([x,y-h*.1,w,h]);else if(event.key==="ArrowDown")setView([x,y+h*.1,w,h]);else return;event.preventDefault();});
-async function boot(){try{mapData=await api("map");drawMap(mapData);await poll();if(!timer)timer=setInterval(poll,200);}catch(error){connected(false);toast("지도를 불러오지 못했습니다. 서버와 지도 묶음을 확인하세요.");setTimeout(boot,3000);}}
+$("crowd-next-peak").addEventListener("click",()=>changeCrowdTime({action:"next_peak"}));
+$("crowd-reset-time").addEventListener("click",()=>changeCrowdTime({action:"reset"}));
+$("toggle-crowd").addEventListener("click",()=>{crowdVisible=!crowdVisible;$("toggle-crowd").setAttribute("aria-pressed",crowdVisible);$("crowd-legend").hidden=!crowdVisible;applyCrowd(crowd);});
+async function boot(){try{mapData=await api("map");drawMap(mapData);await poll();if(!timer){timer=setInterval(poll,200);pollCrowd();setInterval(pollCrowd,1000);}}catch(error){connected(false);toast("지도를 불러오지 못했습니다. 서버와 지도 묶음을 확인하세요.");setTimeout(boot,3000);}}
 document.fonts.ready.then(()=>{layoutStops();renderFrame();});
 boot();animate();
 
