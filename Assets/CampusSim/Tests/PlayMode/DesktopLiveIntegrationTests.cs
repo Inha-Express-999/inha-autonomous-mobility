@@ -88,11 +88,12 @@ namespace InhaExpress.Client.Tests
                 {
                     Assert.That(client.Connected, Is.True, client.Status);
                     var sensor = JsonUtility.FromJson<SensorEnvelope>(client.LatestObservationJson);
-                    Assert.That(sensor.schema_version, Is.EqualTo(5));
+                    Assert.That(sensor.schema_version, Is.EqualTo(6));
                     Assert.That(sensor.obstacle_detection_enabled, Is.True);
                     Assert.That(sensor.lidar, Is.Not.Null);
                     Assert.That(sensor.lidar.valid, Is.True, client.VehicleId);
-                    Assert.That(sensor.lidar.ray_count, Is.EqualTo(2520));
+                    Assert.That(sensor.lidar.ranges_mm.Length, Is.EqualTo(2520));
+                    Assert.That(sensor.lidar.columns * sensor.lidar.channel_elevations_deg.Length, Is.EqualTo(2520));
                     Assert.That(sensor.sensor_valid, Is.True, client.VehicleId + " wheel/sensor validity");
                 }
                 var firstTick = JsonUtility.FromJson<SensorEnvelope>(clients[0].LatestObservationJson).lidar.tick;

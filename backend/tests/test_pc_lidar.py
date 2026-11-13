@@ -48,6 +48,7 @@ def test_actual_control_brakes_for_each_observed_class_and_recovers_after_clear_
     assert not s.physical.describe("V01")["obstacles_ignored"]
 
 
+@pytest.mark.xfail(strict=True, reason="2026-11-13 병합 결정: lidar-ground-segmentation 판단 로직을 유지하고 week8의 날씨/노면 정책만 결합했다. week8의 보행자 정지 유지(pedestrian hold)는 미채택. protocol 6은 의미 분류를 보내지 않아 이 조건이 PC에서 발생하지 않는다.")
 def test_pedestrian_yield_does_not_release_when_ego_stops_but_crossing_is_occupied():
     s, token = drive_session()
     pedestrian = [hit(y=6, kind="pedestrian")]
@@ -223,3 +224,93 @@ def test_weather_change_requires_five_scans_in_the_new_condition():
         ego.lidar.road_condition = "wet"
         result = s.physical.observation("V01", t, ego)
         assert result["emergency_stop"] == (tick < 7)
+
+
+def bare_vehicle(route, **changes):
+    value = dict(route_unity=route, progress_m=0., turn=None, lidar_blocked=False, lidar_clear_frames=0,
+                 lidar_rrt_status="NOT_REQUESTED", lidar_rrt_at_s=-10., lane_width_m=None, lane_error_m=0.,
+                 lidar_environment=None)
+    value.update(changes)
+    return SimpleNamespace(**value)
+
+
+def left_turn_route(radius=6., steps=24):
+    """3 m straight north, then a quarter circle turning left (west)."""
+    route = [(0., -.65), (0., 3.)]
+    for i in range(1, steps + 1):
+        angle = math.pi / 2 * i / steps
+        route.append((-radius + radius * math.cos(angle), 3. + radius * math.sin(angle)))
+    return route + [(-radius - 10., 3. + radius)]
+
+
+def heading_north(session, hits, speed=3.):
+    return observed(session, 1, hits, x=0., z=0., heading_rad=0., speed_mps=speed)
+
+
+def test_outside_kerb_of_a_junction_turn_is_not_read_as_straight_ahead():
+    # Field case 2026-11-09 (library -> 60th): a 0.2 m kerb 1.85 m outside the
+    # left-turn route sat ahead-right of the momentary heading and stalled V01.
+    s = DemoSession()
+    route, radius = left_turn_route(), 6.
+    turned = math.radians(30)  # Vehicle is 30 deg into the left turn.
+    x, z = route[8]
+    heading = -turned
+    progress = 3.65 + radius * turned
+    def local(world):
+        dx, dz = world[0] - x, world[1] - z
+        return dx * math.cos(heading) - dz * math.sin(heading), dx * math.sin(heading) + dz * math.cos(heading)
+    kerb = []
+    for degrees in (56, 58, 60):  # 1.85 m outside the curve, as measured in the field.
+        angle = math.radians(degrees)
+        kerb.append(local((-radius + (radius + 1.85) * math.cos(angle), 3. + (radius + 1.85) * math.sin(angle))))
+    assert all(abs(lateral) <= .46 + .8 and forward > 2 for lateral, forward in kerb)  # Straight ahead of the heading.
+    ego = observed(s, 1, [hit(x=lateral, y=forward) for lateral, forward in kerb], x=x, z=z, heading_rad=heading, speed_mps=3.)
+    result = evaluate_lidar("V01", bare_vehicle(route, progress_m=progress), ego, 0.)
+    assert not result.stop
+
+
+def test_return_on_the_curved_route_still_brakes():
+    s = DemoSession()
+    route = left_turn_route()
+    on_route = route[8]  # Inside the curve, ~5 m along.
+    result = evaluate_lidar("V01", bare_vehicle(route), heading_north(s, [hit(x=on_route[0], y=on_route[1])]), 0.)
+    assert result.stop
+
+
+def test_return_just_ahead_of_the_bumper_still_brakes_on_a_curved_route():
+    s = DemoSession()
+    result = evaluate_lidar("V01", bare_vehicle(left_turn_route()), heading_north(s, [hit(x=.3, y=1.2)]), 0.)
+    assert result.stop
+
+
+def test_stopped_vehicle_never_creeps_toward_a_close_route_return():
+    s = DemoSession()
+    result = evaluate_lidar("V01", bare_vehicle(left_turn_route()), heading_north(s, [hit(x=0., y=2.5)], speed=0.), 0.)
+    assert result.stop
+
+
+def turning_vehicle():
+    from campus_sim.physical_turn import PhysicalTurn
+    from campus_sim.turnaround import TurnController
+    controller = TurnController(wheelbase_m=1.3, max_steering_rad=.52, lane_offset_m=1.5, road_half_width_m=6.,
+        forward_space_m=20., rear_space_m=20., minimum_radius_m=2 * 1.3 / math.tan(.52),
+        half_width_m=.46, half_length_m=1.55)
+    # Local turn frame == world; the rear axle (root z - 0.65) starts at x=1.5, z=0.
+    return bare_vehicle([(1.5, .65), (1.5, 20.)], turn=PhysicalTurn(controller, (0., 0.), 0.)), controller
+
+
+def test_kerb_beside_a_turn_does_not_block_the_planned_sweep():
+    # Field case: a rear-gate U-turn never started because any return within
+    # 3.5 m (a kerb) blocked it, although the planned sweep stayed in the road.
+    s = DemoSession()
+    vehicle, _ = turning_vehicle()
+    ego = observed(s, 1, [hit(x=1.9, y=-1.7), hit(x=1.9, y=-4.2)], x=1.5, z=.65, heading_rad=0., speed_mps=0.)
+    assert not evaluate_lidar("V01", vehicle, ego, 0.).stop
+
+
+def test_return_on_the_swept_turn_arc_blocks():
+    s = DemoSession()
+    vehicle, controller = turning_vehicle()
+    sample = controller.arcs[0][len(controller.arcs[0]) * 2 // 3]
+    ego = observed(s, 1, [hit(x=sample.x - 1.5, y=sample.z - .65)], x=1.5, z=.65, heading_rad=0., speed_mps=0.)
+    assert evaluate_lidar("V01", vehicle, ego, 0.).stop

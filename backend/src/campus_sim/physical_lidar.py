@@ -1,15 +1,21 @@
 """PC LiDAR trial: continuous sensor-only braking; RRT remains a non-executable candidate.
 
-Assumptions (not measured guarantees): 2 m/s짼 braking, .3 s reaction,
-.5 m margin, 18 km/h ceiling. Unknown/dynamic returns close to the path
-receive extra clearance; neither target transforms nor actual velocities enter.
+Protocol 6 sends a raw range image; obstacle returns come only from the
+geometry-only ground segmentation in ``lidar_ground`` (no labels or tags).
+Protocol 5 hits were already ground-filtered/labelled in Unity and remain
+accepted for compatibility.
+
+Assumptions (not measured guarantees): 2 m/s² braking, .3 s reaction,
+.5 m margin, 18 km/h ceiling in clear/dry conditions. Synthetic weather/road
+presets shorten the observed range and braking deceleration (week8 policy).
+Unknown/dynamic returns close to the path receive extra clearance; neither target transforms nor actual velocities enter.
 """
 from dataclasses import dataclass
 from math import cos, sin, hypot, sqrt
 
+from campus_sim.lidar_ground import segment_scan
 from campus_sim.map_coordinates import projection
-from campus_sim.safety import stopping_distance
-from campus_sim.lidar_corridor import body_extents, collision_distance, motion_sweep
+from campus_sim.safety import crossing_ttc, stopping_distance
 
 
 @dataclass(frozen=True)
@@ -17,6 +23,53 @@ class LidarDecision:
     stop: bool
     reason: str
     speed_cap_mps: float = 0.
+
+
+# Assumption: a return lower than this above the local ground cannot be a
+# standing person or a vehicle body (kerbs, wheel stops). Geometry only.
+LOW_STRUCTURE_HEIGHT_M = .4
+
+
+def clearance_margin(hit):
+    height = getattr(hit, "height_m", None)
+    if height is not None:
+        return .2 if height < LOW_STRUCTURE_HEIGHT_M else .8
+    return .2 if hit.entity_class == "static" else .8
+
+
+def turn_sweep_blocked(turn, ego, world, margin):
+    """Whether a world point meets the remaining swept body of the current turn arc.
+
+    Returns None when the turn exposes no planned arcs (caller stays conservative).
+    """
+    controller = getattr(turn, "controller", None)
+    center, heading = getattr(turn, "center", None), getattr(turn, "heading", None)
+    arcs = getattr(controller, "arcs", None)
+    if center is None or heading is None or not arcs:
+        return None
+    index = getattr(controller, "arc_index", 0)
+    if index >= len(arcs):
+        return False
+    dx, dz = world[0] - center[0], world[1] - center[1]
+    px, pz = dx*cos(heading) - dz*sin(heading), dx*sin(heading) + dz*cos(heading)
+    half_width = ego.half_width_m + margin
+    half_length = ego.half_length_m + margin
+    reach = hypot(half_width, half_length)
+    for sample in arcs[index][max(0, getattr(controller, "sample_index", 0) - 2):]:
+        rx, rz = px - sample.x, pz - sample.z
+        if abs(rx) > reach or abs(rz) > reach:
+            continue
+        c, s_ = cos(sample.heading_rad), sin(sample.heading_rad)
+        if abs(rx*c - rz*s_) <= half_width and abs(rx*s_ + rz*c) <= half_length:
+            return True
+    return False
+
+
+def obstacle_hits(frame):
+    """Obstacle returns in the ego frame (lateral_m, forward_m, entity_class)."""
+    if hasattr(frame, "ranges_mm"):
+        return segment_scan(frame).obstacles
+    return frame.hits
 
 
 def evaluate_lidar(vehicle_id, vehicle, ego, now):
@@ -39,48 +92,72 @@ def evaluate_lidar(vehicle_id, vehicle, ego, now):
         vehicle.lidar_clear_frames = 0
     vehicle.lidar_environment = environment
     effective_range = min(frame.max_range_m, weather_range)
-    reaction = .3 if frame.weather == "clear" and frame.road_condition == "dry" else .5
-    margin = .5 if reaction == .3 else 1.
+    reaction_time = .3 if frame.weather == "clear" and frame.road_condition == "dry" else .5
+    margin = .5 if reaction_time == .3 else 1.
+    hits = obstacle_hits(frame)
     speed = abs(ego.speed_mps)
-    body_front, body_rear = body_extents(ego)
-    stopping = stopping_distance(speed, reaction, deceleration, margin)
+    body_front = ego.rear_axle_offset_m + ego.half_length_m
+    body_rear = ego.half_length_m - ego.rear_axle_offset_m
+    stopping = stopping_distance(speed, reaction_time, deceleration, margin)
     clearance = max(0., effective_range - max(body_front, body_rear))
-    risk = stopping > clearance
-    sweep = motion_sweep(vehicle, ego, effective_range)
-    # Check the measured vehicle envelope before lane/turn control. During a turn,
-    # all nearby directions matter, including reversing into a return.
-    for hit in frame.hits:
+    risk = False
+    upcoming = []
+    walked = 0.
+    for a, b in zip(vehicle.route_unity, vehicle.route_unity[1:]):
+        length = hypot(b[0]-a[0], b[1]-a[1])
+        if walked > vehicle.progress_m + effective_range + max(body_front, body_rear):
+            break
+        if walked + length >= vehicle.progress_m - .5:
+            upcoming.append((a,b,walked,length))
+        walked += length
+    # With a route ahead, the vehicle follows the route, not its momentary heading:
+    # a straight sweep only holds over the reaction distance, after which the
+    # corridor along the route (widened by the measured lane error) decides. On a
+    # junction turn this keeps the outside kerb from reading as "straight ahead".
+    follows_route = vehicle.turn is None and bool(upcoming)
+    reaction = max(.5, speed * reaction_time)
+    route_horizon = max(stopping, 2. * speed)  # Same 2 s horizon as the straight TTC.
+    lane_error = min(.5, max(0., getattr(vehicle, "lane_error_m", 0.) or 0.))
+    # Check the measured vehicle envelope before lane/turn control. During a turn
+    # the remaining swept body of the planned arc is checked in every direction
+    # (forward and reverse); a turn without arc geometry keeps the radius check.
+    for hit in hits:
         x, y = hit.lateral_m, hit.forward_m
-        kind_margin = .2 if hit.entity_class == "static" else .8
+        kind_margin = clearance_margin(hit)
         width = ego.half_width_m + kind_margin
+        front_distance = y - body_front
+        rear_distance = -y - body_rear
         near_body = abs(x) <= width and -body_rear - .5 <= y <= body_front + .5
-        turn_risk = sweep is None and hypot(x, y) <= hypot(ego.half_width_m, max(body_front, body_rear)) + stopping + kind_margin
-        # A falling ego speed is not evidence that a pedestrian has crossed.
-        # Once yielding, retain the stop until observed pedestrian returns leave
-        # the forward/route corridor, then require the usual five clear scans.
-        pedestrian_hold = vehicle.lidar_blocked and hit.entity_class == "pedestrian"
-        if pedestrian_hold and abs(x) <= width and y >= 0:
-            # Crossing actors have unknown motion. Preserve the existing hold
-            # until they also leave the current forward strip, even if a future
-            # curve would geometrically pass them on one side.
-            risk = True
-            break
-        # Keep the currently occupied body and the reaction-time motion envelope
-        # independent of the route. A steering change cannot instantly avert these.
-        reaction_gap = y - body_front if ego.speed_mps >= 0 else -y - body_rear
-        reaction_risk = speed > .01 and abs(x) <= width and 0 <= reaction_gap <= speed * reaction + .1
-        if near_body or turn_risk or reaction_risk:
-            risk = True
-            break
-        # TTC is travel to first swept-body overlap on the authorised path, not
-        # collision with a long circular body continuing along the current tangent.
         world = (ego.x + x*cos(ego.heading_rad) + y*sin(ego.heading_rad),
                  ego.z - x*sin(ego.heading_rad) + y*cos(ego.heading_rad))
-        distance = collision_distance(world, sweep, ego.half_width_m, body_front, body_rear, kind_margin) if sweep is not None else None
-        if distance is not None:
-            clearance = min(clearance, distance)
-            if pedestrian_hold or distance <= stopping or (speed > .01 and distance / speed <= 2.):
-                risk = True
+        turn_risk = False
+        if vehicle.turn is not None:
+            swept = turn_sweep_blocked(vehicle.turn, ego, world, kind_margin)
+            turn_risk = (hypot(x, y) <= max(body_front, body_rear) + stopping + kind_margin) if swept is None else swept
+        in_forward_sweep = abs(x) <= width and y >= 0 and (not follows_route or front_distance <= reaction)
+        in_reverse_sweep = abs(x) <= width and y < 0 and ego.speed_mps < -.01
+        distance = front_distance if in_forward_sweep else rear_distance
+        # A straight constant-relative-velocity TTC is an advisory lower-level check.
+        # Dynamic motion is unknown; the expanded envelope never claims prediction.
+        ttc = crossing_ttc((x, y), (0., -ego.speed_mps), max(body_front, body_rear) + kind_margin)             if not follows_route or not in_forward_sweep else float("inf")
+        if near_body or turn_risk or ((in_forward_sweep or in_reverse_sweep) and (distance <= stopping or ttc <= 2.)):
+            risk = True
+            break
+        if in_forward_sweep or in_reverse_sweep:
+            clearance = min(clearance, max(0., distance))
+        # Also check the upcoming curved route, using the original route corridor.
+        # While turning, the onward route starts at the post-turn pose; its
+        # first metres are covered by the swept turn check instead.
+        for a, b, walked, length in (() if vehicle.turn is not None else upcoming):
+            error, ratio, _ = projection(world, a, b)
+            ahead = walked + ratio*length - vehicle.progress_m
+            if 0 <= ahead <= effective_range and error <= width + lane_error:
+                clearance = min(clearance, max(0., ahead - body_front))
+                # Keep the straight TTC's standstill keep-out (body radius + margin)
+                # so a stopped vehicle never creeps toward a return on its route.
+                if hypot(x, y) <= max(body_front, body_rear) + kind_margin or ahead - body_front <= route_horizon:
+                    risk = True
+                    break
         if risk:
             break
     if risk:
@@ -88,13 +165,10 @@ def evaluate_lidar(vehicle_id, vehicle, ego, now):
         vehicle.lidar_clear_frames = 0
         if now - vehicle.lidar_rrt_at_s >= 1. and speed < .1:
             vehicle.lidar_rrt_at_s = now
-            vehicle.lidar_rrt_status = rrt_candidate(vehicle_id, vehicle, ego, frame.hits)
+            vehicle.lidar_rrt_status = rrt_candidate(vehicle_id, vehicle, ego, hits)
         return LidarDecision(True, "LiDAR TTC/stopping-distance risk; brake before RRT / " + vehicle.lidar_rrt_status)
     if vehicle.lidar_blocked:
-        # Reuse the risk decision above. A separate 1 m release threshold can
-        # deadlock a stopped car with a safe, TTC-limited creeping command.
-        # Unsafe returns already reset this counter in the risk branch.
-        vehicle.lidar_clear_frames += 1
+        vehicle.lidar_clear_frames = vehicle.lidar_clear_frames + 1 if clearance > 1. else 0
         if vehicle.lidar_clear_frames < 5:
             return LidarDecision(True, "LiDAR waiting for five clear scans")
         vehicle.lidar_blocked = False
@@ -102,11 +176,9 @@ def evaluate_lidar(vehicle_id, vehicle, ego, now):
     # Even a clear 15 m scan cannot authorize the previous 40 km/h setting.
     # Conservative available-distance bound includes reaction time and body offset.
     available = max(0., clearance - margin)
-    ar = deceleration * reaction
+    ar = deceleration * reaction_time
     cap = max(0., -ar + sqrt(ar * ar + 2 * deceleration * available))
-    # The restart/approach cap must obey the same TTC horizon as the stop check.
-    # Otherwise a stationary scan releases the brake then commands an unsafe speed.
-    return LidarDecision(False, f"LiDAR observed corridor clear / {frame.weather} / {frame.road_condition}", min(5., cap, clearance / 2.25))
+    return LidarDecision(False, f"LiDAR observed corridor clear / {frame.weather} / {frame.road_condition}", min(5., cap))
 
 
 def rrt_candidate(vehicle_id, vehicle, ego, hits):

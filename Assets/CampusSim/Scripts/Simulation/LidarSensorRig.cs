@@ -85,6 +85,9 @@ namespace InhaExpress.Client.Simulation
         public int HorizontalRayCount => horizontalRayCount;
         public int VerticalChannelCount => verticalChannelCount;
         public float MaxRangeM => maxRangeM;
+        public int HorizontalFieldOfViewDegrees => horizontalFieldOfViewDegrees;
+        /// <summary>World position every beam of the next scan starts from.</summary>
+        public Vector3 ScanOriginWorld => Mount.position + Vector3.up * worldUpOffsetM;
         public string VehicleId => vehicleId;
         public string SensorId => sensorId;
 
@@ -160,6 +163,8 @@ namespace InhaExpress.Client.Simulation
             EnsureBuffers();
         }
 
+        /// <summary>Display-only ground plane for point colours/detections. The control
+        /// path uses raw ReturnRangeM and Python geometry-only ground segmentation.</summary>
         public void SetGroundSurfaceHeight(float height) => groundSurfaceHeight = height;
 
         public void SetGroundPlane(Vector3 point, Vector3 normal)
@@ -179,11 +184,22 @@ namespace InhaExpress.Client.Simulation
                 Vector3.Dot(hit.point - groundPlanePoint, groundPlaneNormal) <= .08f);
         }
 
+        /// <summary>Beam elevation above the world-leveled horizontal plane.</summary>
+        public float GetChannelElevationDegrees(int verticalIndex)
+        {
+            if (verticalIndex < 0 || verticalIndex >= verticalChannelCount)
+                throw new ArgumentOutOfRangeException(nameof(verticalIndex));
+            return verticalChannelCount <= 1
+                ? 0f
+                : -verticalFieldOfViewDegrees +
+                  (verticalFieldOfViewDegrees + upperElevationDegrees) * verticalIndex / (verticalChannelCount - 1);
+        }
+
         private void Scan()
         {
             EnsureBuffers();
             Transform mount = Mount;
-            Vector3 origin = mount.position + Vector3.up * worldUpOffsetM;
+            Vector3 origin = ScanOriginWorld;
             Vector3 forward = Vector3.ProjectOnPlane(mount.forward, Vector3.up);
             if (forward.sqrMagnitude < 0.0001f)
                 forward = Vector3.forward;
@@ -210,10 +226,7 @@ namespace InhaExpress.Client.Simulation
             bool fullCircle = horizontalFieldOfViewDegrees >= 360;
             for (int verticalIndex = 0; verticalIndex < verticalChannelCount; verticalIndex++)
             {
-                float elevationDegrees = verticalChannelCount <= 1
-                    ? 0f
-                    : -verticalFieldOfViewDegrees +
-                      (verticalFieldOfViewDegrees + upperElevationDegrees) * verticalIndex / (verticalChannelCount - 1);
+                float elevationDegrees = GetChannelElevationDegrees(verticalIndex);
                 float elevationRad = elevationDegrees * Mathf.Deg2Rad;
                 float horizontalScale = Mathf.Cos(elevationRad);
                 float verticalScale = Mathf.Sin(elevationRad);
@@ -251,10 +264,12 @@ namespace InhaExpress.Client.Simulation
                     int detectionIndex = -1;
                     Vector3 endpoint = origin + direction * EffectiveRangeM;
                     bool hasVisualReturn = false;
+                    float returnRange = 0f;
                     if (nearestHitIndex >= 0)
                     {
                         RaycastHit hit = hitBuffer[nearestHitIndex];
                         endpoint = hit.point;
+                        returnRange = hit.distance;
                         LidarIgnore ignoredSurface = hit.collider.GetComponentInParent<LidarIgnore>();
                         hasVisualReturn = ignoredSurface == null || ignoredSurface.ShowReturnInPointCloud;
                         bool ground = IsGroundReturn(hit);
@@ -280,7 +295,7 @@ namespace InhaExpress.Client.Simulation
                     }
 
                     latestObservation.AddRay(new LidarRaySample(origin, endpoint, detectionIndex,
-                        overflowed, hasVisualReturn));
+                        overflowed, hasVisualReturn, returnRange));
                 }
             }
 

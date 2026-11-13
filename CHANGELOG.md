@@ -1,5 +1,14 @@
 # 변경 이력
 
+## 0.5.9.0 — 2026-11-13 · main에 lidar-ground-segmentation 병합
+
+- 작업: protocol 6 원시 거리 영상, Python 기하 지면 분리(`lidar_ground`), 회전 호·경로 corridor 판단(ADR 0014)을 main에 병합했다. week8에서 들어온 합성 날씨/노면 정책(관측거리 제한, 감속도·반응시간·여유, 불완전 관측/결빙 보류, 환경 변경 후 5회 확인, 일반화한 재출발 속도 상한)을 lidar 판단 로직 위에 결합했다.
+- 작업: protocol 6 `LidarScan`과 Unity `PhysicalLidarFrame`에 `weather`·`road_condition`·`observation_complete`를 추가했다. Unity는 날씨로 제한된 유효 거리(`EffectiveRangeM`)를 `max_range_m`으로 보낸다. 측정 차체/조향 선택 필드는 protocol 5와 6에서 받는다. week8의 접지 평면 필터와 의미 분류는 PC 점군 표시·오버레이 전용으로 남겼다.
+- 이유: 두 브랜치가 같은 LiDAR 정지 문제를 서로 다르게 고쳤다. 사용자 결정에 따라 판단 로직은 lidar 브랜치 것을 유지했다.
+- 호환성/마이그레이션: PC 클라이언트는 protocol 6을 보내므로 서버와 함께 갱신해야 한다. 서버는 protocol 1~6을 받는다. week8의 측정 차체 swept-body 판단, 보행자 정지 유지, 재출발 TTC 상한(clearance/2.25)은 채택하지 않았다. 이를 전제로 한 Python 시험 5개는 사유를 단 strict xfail로 표시했다. week8 PlayMode 시험은 protocol 6 프레임과 센서 detection을 확인하도록 고쳤다.
+- 검증: `pytest backend/tests` — 484 통과, 5 xfail, 2 실패. 실패 2개(`test_battery_fleet`의 배터리 부족 순환, `test_connection_audit`의 하이테크 연결)는 이 병합이 건드리지 않은 파일의 시험으로 week8 병합 직후 main에도 있던 실패다. protocol 6 날씨/노면 정책 시험 3개를 추가했고 계약 JSON Schema를 재생성했다.
+- 미검증/한계: Unity 컴파일과 PlayMode 시험, 실제 주행은 실행하지 않았다. `lidar_corridor.py`는 더 이상 `evaluate_lidar`에서 쓰지 않지만 단위 시험과 함께 남겨 두었다.
+
 ## 0.5.8.0 — 2026-11-13 · main에 codex/week8-integration 병합
 
 - 작업: codex/week8-integration(0.5.7.0 캠퍼스 씬·관제·센서·모바일 정리, COZY 패키지 포함)을 main에 병합했다. `.gitignore` 충돌은 main의 `.mcp.json`과 week8의 검증 산출물 제외 규칙을 모두 유지했다.
@@ -14,6 +23,16 @@
 - 호환성/마이그레이션: Unity와 Python을 함께 갱신한다. 통신 schema와 map_version은 독립적으로 유지하며 프로젝트 버전은 0.5.7.0으로 동기화한다. COZY 내장 패키지 및 씬 참조 에셋을 포함한다. 생성 백업, 일회성 검증 실행기, 캡처, 빌드 결과는 커밋에서 제외한다.
 - 검증: 버전/정류장/지도/LiDAR 회귀 74개 통과(HTTP 관련 5개 제외), 여섯 허브-정류장 왕복 그래프 연결 확인. 계단/두 승강장과 도로 교집합 0m². 도로 표본 783,465개에서 지형 관통/Collider 불일치 0건. 아래 과거 시험 기록은 당시 결과이며 이번 커밋의 전체 재검증을 의미하지 않는다.
 - 미검증/한계: HTTP TestClient 관련 시험, 전체 Unity 회귀, 새 Player/모바일 빌드 및 실제 성능/전 경로 물리 주행은 이번 정리에서 검증하지 않았다. 출입구·계단은 합성/미검증 후보다.
+
+## 0.5.5.0 (lidar-ground-segmentation 브랜치) — 2026-11-09 · LiDAR 기하 기반 지면 분리와 회전/교차로 정지 수정
+
+- 작업: PC LiDAR를 물리 protocol 6으로 전환한다. Unity는 360×7 원시 거리 영상(`ranges_mm`)·채널 고각·센서 오프셋·WheelCollider 접지 평면만 보내고, 지면 평면 필터·`hit.normal`·`entity_class`/`LidarIgnore`는 제어 경로에서 뺀다(PC 점군 표시에만 유지).
+- 작업: Python `lidar_ground`가 방위 열별 경사 연속성과 같은 채널의 거리 불연속(가림 경계)으로 지면/장애물/머리 위 구조물을 나눈다. 제동 판단은 분리된 장애물점만 사용하고 protocol 5는 호환용으로 유지한다.
+- 작업: 정석학술정보관→60주년 현장 재현에서 찾은 정지를 고친다. 회전 중에는 반경 3.5m 원 대신 현재 회전 호의 남은 차체 궤적만 검사한다. 경로 주행 중 직진 sweep은 반응 거리까지만 쓰고 그 너머는 경로 corridor(차선 오차 반영)로 판단한다. 낮은 구조물(연석) 여유 기준을 0.4m로 올린다.
+- 이유: 미세한 언덕·연석을 장애물로 읽어 주행 중 멈칫하거나, U턴/교차로 좌회전에서 움직이지 못하는 현상을 해결하고, 실제 LiDAR가 주지 않는 의미 정보(태그)를 판단에서 제거한다.
+- 호환성/마이그레이션: 새 PC 클라이언트는 protocol 6 지원 서버가 필요하므로 서버와 함께 갱신한다. 서버는 protocol 1~5를 계속 받는다. 계약 스키마(contracts/unity_drive_*.schema.json)를 재생성했다. protocol 6 점에는 분류가 없어 RRT 후보는 항상 비실행 대기다. 지도 schema와 Editor 6000.3.21f1은 유지한다.
+- 검증: `python -m pytest backend/tests -q -p no:cacheprovider` 432개 통과, 3개 실패(작업 트리의 미커밋 `maps/inha_osm_runtime/policy.json` 소수점 표기 변경으로 인한 지도 재생성 비교, 이번 변경과 무관). Unity 컴파일 오류 없음, PlayMode PcLidarIntegrationTests 2개 통과. PC_Bootstrap 실주행: 수정 후 정석학술정보관→60주년 호출 2건 모두 해당 구간 정지 0회(121초/154초), 출발·하차 후 U턴 정상. 저장한 현장 정지 프레임 80개 재생 시 정지 0회. 현장 사례 회귀 테스트 2개는 수정 전 코드에서 실패한다.
+- 미검증/한계: 합성 임계값(경사 변화 8°, 장애물 0.15m, 연석 0.4m)은 실측 노면/연석/지상고가 아니다. 7채널·센서 높이 약 0.92m에서는 낮은 물체를 약 7m 안에서만 보며 18km/h 정지 요구(약 9.2m)보다 짧다. 하강 단차, 군집/다중 스캔 확인, 프레임 처리 시간·전송량 실측, DesktopLiveIntegrationTests, 다른 경로 전반과 모바일/Player 빌드는 검증하지 않았다.
 
 ## 미커밋 — 2026-11-02 · 관제 인지 표시·보행자 횡단·날씨 보완
 

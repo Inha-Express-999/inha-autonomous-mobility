@@ -13,6 +13,14 @@ namespace InhaExpress.Client.Tests
 {
     public sealed class PcLidarIntegrationTests
     {
+        private static bool HasDetectedClass(LidarSensorRig sensor, LidarEntityClass entityClass)
+        {
+            var observation = sensor.LatestObservation;
+            for (int i = 0; i < observation.DetectionCount; i++)
+                if (observation.GetDetection(i).EntityClass == entityClass) return true;
+            return false;
+        }
+
         [Test]
         public void FixedMapClassificationKeepsReturnsAndDoesNotOverrideActors()
         {
@@ -26,8 +34,9 @@ namespace InhaExpress.Client.Tests
                     new Bounds(new Vector3(0, .5f, 0), new Vector3(1, 1, 2)));
                 Physics.SyncTransforms();
                 var frame = source.Capture(1);
-                Assert.That(System.Array.Exists(frame.hits, h => h.entity_class == "static"), Is.True);
                 var integration = root.GetComponentInChildren<PcLidarIntegration>();
+                Assert.That(System.Array.Exists(frame.ranges_mm, r => r > 0), Is.True, "Raw returns are retained for safety.");
+                Assert.That(HasDetectedClass(integration.Sensor, LidarEntityClass.StaticObstacle), Is.True);
                 Assert.That(integration.EffectActive, Is.False,
                     "Static map returns are retained for safety but do not alone announce an encounter.");
                 source.SetSafetyFeedback(true);
@@ -36,11 +45,11 @@ namespace InhaExpress.Client.Tests
                 obstacle.AddComponent<Rigidbody>().isKinematic = true;
                 Physics.SyncTransforms();
                 frame = source.Capture(2);
-                Assert.That(System.Array.Exists(frame.hits, h => h.entity_class == "unknown"), Is.True,
+                Assert.That(HasDetectedClass(integration.Sensor, LidarEntityClass.Unknown), Is.True,
                     "A Rigidbody actor cannot inherit fixed-map semantics.");
                 obstacle.AddComponent<LidarTarget>().SetObservedClass(LidarEntityClass.Pedestrian);
                 frame = source.Capture(3);
-                Assert.That(System.Array.Exists(frame.hits, h => h.entity_class == "pedestrian"), Is.True);
+                Assert.That(HasDetectedClass(integration.Sensor, LidarEntityClass.Pedestrian), Is.True);
             }
             finally { Object.DestroyImmediate(root); Object.DestroyImmediate(obstacle); }
         }
@@ -186,7 +195,8 @@ namespace InhaExpress.Client.Tests
                     new Bounds(new Vector3(0, .5f, 0), new Vector3(1, 1, 2)));
                 var sensor = root.GetComponentInChildren<PcLidarIntegration>().Sensor;
                 Physics.SyncTransforms();
-                Assert.That(source.Capture(1).hits.Length, Is.GreaterThan(0),
+                source.Capture(1);
+                Assert.That(sensor.LatestObservation.DetectionCount, Is.GreaterThan(0),
                     "Reproduce uphill ground above the old world-height cutoff.");
                 sensor.SetGroundPlane(ground.transform.TransformPoint(new Vector3(0, .5f, 0)), ground.transform.up);
                 sensor.SetFrameContext("slope-test", 2, 2);
@@ -214,8 +224,15 @@ namespace InhaExpress.Client.Tests
             }
         }
 
+        // Channel 3 of the PC layout (-30..+15 deg, 7 channels) is -7.5 deg.
+        private const int MinusSevenFiveChannel = 3;
+        private const int ForwardColumn = 180, RearColumn = 0;
+
+        private static int Range(PhysicalLidarFrame frame, int channel, int column) =>
+            frame.ranges_mm[channel * frame.columns + column];
+
         [UnityTest]
-        public IEnumerator ContinuousScanSeesSpawnedColliderAndRemovalWithoutTriggerWiring()
+        public IEnumerator ContinuousScanSendsRawRangesWithoutLabelsAndTracksRemoval()
         {
             var root = new GameObject("lidar-owner");
             var ground = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -232,15 +249,25 @@ namespace InhaExpress.Client.Tests
                 Physics.SyncTransforms();
                 var empty = source.Capture(1);
                 Assert.That(empty.valid, Is.True);
-                Assert.That(empty.ray_count, Is.EqualTo(2520));
-                Assert.That(empty.hits, Is.Empty, "Flat ground must not become an obstacle.");
+                Assert.That(empty.columns, Is.EqualTo(360));
+                Assert.That(empty.channel_elevations_deg.Length, Is.EqualTo(7));
+                Assert.That(empty.channel_elevations_deg[MinusSevenFiveChannel], Is.EqualTo(-7.5f).Within(.001f));
+                Assert.That(empty.ranges_mm.Length, Is.EqualTo(2520));
+                Assert.That(empty.azimuth_span_deg, Is.EqualTo(360f));
+                Assert.That(empty.sensor_up_m, Is.EqualTo(1.25f).Within(.01f));
+                Assert.That(empty.ground_up_m, Is.EqualTo(0f).Within(.01f), "Body-bottom fallback without wheels.");
+                // Raw sensor: flat ground is returned, not pre-filtered in Unity.
+                float flatGroundMm = 1250f / Mathf.Sin(7.5f * Mathf.Deg2Rad);
+                Assert.That(Range(empty, MinusSevenFiveChannel, ForwardColumn), Is.EqualTo(flatGroundMm).Within(40));
+
                 obstacle = GameObject.CreatePrimitive(PrimitiveType.Cube);
                 obstacle.transform.position = new Vector3(0,.5f,4);
                 obstacle.AddComponent<LidarTarget>().SetObservedClass(LidarEntityClass.Pedestrian);
                 Physics.SyncTransforms();
                 var detected = source.Capture(2);
-                Assert.That(detected.hits.Length, Is.GreaterThan(0));
-                Assert.That(System.Array.Exists(detected.hits,h=>h.entity_class=="pedestrian" && h.forward_m>3),Is.True);
+                float faceMm = 3500f / Mathf.Cos(7.5f * Mathf.Deg2Rad);
+                Assert.That(Range(detected, MinusSevenFiveChannel, ForwardColumn), Is.EqualTo(faceMm).Within(40));
+                Assert.That(JsonUtility.ToJson(detected), Does.Not.Contain("pedestrian"), "Labels must not cross the control boundary.");
                 var integration = root.GetComponentInChildren<PcLidarIntegration>();
                 Assert.That(integration.EffectActive, Is.True);
                 source.Capture(3);
@@ -250,7 +277,7 @@ namespace InhaExpress.Client.Tests
                 Object.Destroy(obstacle); obstacle=null;
                 yield return null;
                 Physics.SyncTransforms();
-                Assert.That(source.Capture(4).hits, Is.Empty);
+                Assert.That(Range(source.Capture(4), MinusSevenFiveChannel, ForwardColumn), Is.EqualTo(flatGroundMm).Within(40));
                 yield return new WaitForSecondsRealtime(.8f);
                 source.SetSafetyFeedback(false);
                 source.Capture(5);
@@ -276,21 +303,21 @@ namespace InhaExpress.Client.Tests
                     new Bounds(new Vector3(0, .5f, 0), new Vector3(1, 1, 2)));
                 var rig = root.GetComponentInChildren<PcLidarIntegration>().Sensor;
                 Physics.SyncTransforms();
-                Assert.That(source.Capture(1).hits.Length, Is.GreaterThan(0));
+                Assert.That(System.Array.Exists(source.Capture(1).ranges_mm, r => r > 0), Is.True);
                 rig.ConfigureWeather(LidarSensorRig.WeatherCondition.Fog, LidarSensorRig.RoadCondition.Wet);
                 var fog = source.Capture(2);
                 Assert.That(fog.max_range_m, Is.EqualTo(6));
                 Assert.That(fog.weather, Is.EqualTo("fog"));
                 Assert.That(fog.road_condition, Is.EqualTo("wet"));
-                Assert.That(fog.hits, Is.Empty);
+                Assert.That(System.Array.TrueForAll(fog.ranges_mm, r => r == 0), Is.True, "The 10 m return is beyond fog range.");
                 Assert.That(fog.valid, Is.True);
                 rig.ConfigureWeather(LidarSensorRig.WeatherCondition.Snow, LidarSensorRig.RoadCondition.Snow, 1f);
                 var outage = source.Capture(3);
                 Assert.That(outage.max_range_m, Is.EqualTo(8));
                 Assert.That(outage.observation_complete, Is.False);
                 Assert.That(outage.valid, Is.False);
-                Assert.That(outage.hits, Is.Empty);
-                Assert.That(outage.ray_count, Is.EqualTo(2520));
+                Assert.That(System.Array.TrueForAll(outage.ranges_mm, r => r == 0), Is.True);
+                Assert.That(outage.ranges_mm.Length, Is.EqualTo(2520));
                 rig.ConfigureWeather(LidarSensorRig.WeatherCondition.Rain, LidarSensorRig.RoadCondition.Wet);
                 Assert.That(source.Capture(4).max_range_m, Is.EqualTo(12));
                 Assert.That(source.Capture(5).valid, Is.True);
@@ -501,8 +528,10 @@ namespace InhaExpress.Client.Tests
                 Physics.SyncTransforms();
                 var frame=source.Capture(1);
                 Assert.That(frame.valid,Is.True);
-                Assert.That(System.Array.Exists(frame.hits,h=>h.entity_class=="vehicle" && h.forward_m< -3),Is.True);
-                Assert.That(System.Array.Exists(frame.hits,h=>Mathf.Abs(h.forward_m)<1 && Mathf.Abs(h.lateral_m)<1),Is.False);
+                float faceMm = 3500f / Mathf.Cos(7.5f * Mathf.Deg2Rad);
+                Assert.That(Range(frame, MinusSevenFiveChannel, RearColumn), Is.EqualTo(faceMm).Within(40));
+                Assert.That(System.Array.Exists(frame.ranges_mm, r => r > 0 && r < 900), Is.False, "Own body must be masked.");
+                Assert.That(JsonUtility.ToJson(frame), Does.Not.Contain("vehicle"));
             }
             finally {Object.Destroy(root);Object.Destroy(other);}
             yield return null;

@@ -105,6 +105,148 @@
       "title": "LidarHit",
       "type": "object"
     },
+    "LidarScan": {
+      "additionalProperties": false,
+      "description": "Protocol 6 raw range image (channel-major) without labels or pre-filtering.\n\nBeam directions are leveled to world up; azimuth is clockwise from the\nprojected vehicle forward. Offsets are in the leveled ego frame relative to\nthe localization origin. ``ground_up_m`` is the measured wheel-contact plane\nheight beneath the sensor and ``ground_grade_*`` its grade along leveled\nforward/right (proprioception), not a terrain or map height query.",
+      "properties": {
+        "tick": {
+          "minimum": 0,
+          "title": "Tick",
+          "type": "integer"
+        },
+        "valid": {
+          "title": "Valid",
+          "type": "boolean"
+        },
+        "max_range_m": {
+          "maximum": 30,
+          "minimum": 1,
+          "title": "Max Range M",
+          "type": "number"
+        },
+        "columns": {
+          "maximum": 4096,
+          "minimum": 360,
+          "title": "Columns",
+          "type": "integer"
+        },
+        "azimuth_start_deg": {
+          "maximum": 180,
+          "minimum": -180,
+          "title": "Azimuth Start Deg",
+          "type": "number"
+        },
+        "azimuth_span_deg": {
+          "maximum": 360,
+          "minimum": 360,
+          "title": "Azimuth Span Deg",
+          "type": "number"
+        },
+        "channel_elevations_deg": {
+          "items": {
+            "maximum": 90,
+            "minimum": -90,
+            "type": "number"
+          },
+          "maxItems": 32,
+          "minItems": 1,
+          "title": "Channel Elevations Deg",
+          "type": "array"
+        },
+        "sensor_lateral_m": {
+          "maximum": 5,
+          "minimum": -5,
+          "title": "Sensor Lateral M",
+          "type": "number"
+        },
+        "sensor_forward_m": {
+          "maximum": 10,
+          "minimum": -10,
+          "title": "Sensor Forward M",
+          "type": "number"
+        },
+        "sensor_up_m": {
+          "maximum": 10,
+          "minimum": -2,
+          "title": "Sensor Up M",
+          "type": "number"
+        },
+        "ground_up_m": {
+          "maximum": 5,
+          "minimum": -5,
+          "title": "Ground Up M",
+          "type": "number"
+        },
+        "ground_grade_forward": {
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Ground Grade Forward",
+          "type": "number"
+        },
+        "ground_grade_lateral": {
+          "maximum": 1,
+          "minimum": -1,
+          "title": "Ground Grade Lateral",
+          "type": "number"
+        },
+        "ranges_mm": {
+          "items": {
+            "maximum": 30000,
+            "minimum": 0,
+            "type": "integer"
+          },
+          "maxItems": 8192,
+          "title": "Ranges Mm",
+          "type": "array"
+        },
+        "weather": {
+          "default": "clear",
+          "enum": [
+            "clear",
+            "rain",
+            "snow",
+            "fog"
+          ],
+          "title": "Weather",
+          "type": "string"
+        },
+        "road_condition": {
+          "default": "dry",
+          "enum": [
+            "dry",
+            "wet",
+            "snow",
+            "ice",
+            "unknown"
+          ],
+          "title": "Road Condition",
+          "type": "string"
+        },
+        "observation_complete": {
+          "default": true,
+          "title": "Observation Complete",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "tick",
+        "valid",
+        "max_range_m",
+        "columns",
+        "azimuth_start_deg",
+        "azimuth_span_deg",
+        "channel_elevations_deg",
+        "sensor_lateral_m",
+        "sensor_forward_m",
+        "sensor_up_m",
+        "ground_up_m",
+        "ground_grade_forward",
+        "ground_grade_lateral",
+        "ranges_mm"
+      ],
+      "title": "LidarScan",
+      "type": "object"
+    },
     "RayDetection": {
       "additionalProperties": false,
       "properties": {
@@ -181,7 +323,8 @@
               2,
               3,
               4,
-              5
+              5,
+              6
             ]
           }
         }
@@ -249,7 +392,8 @@
           "schema_version": {
             "enum": [
               4,
-              5
+              5,
+              6
             ]
           }
         }
@@ -273,7 +417,10 @@
       "if": {
         "properties": {
           "schema_version": {
-            "const": 5
+            "enum": [
+              5,
+              6
+            ]
           }
         }
       },
@@ -302,7 +449,8 @@
         2,
         3,
         4,
-        5
+        5,
+        6
       ],
       "title": "Schema Version",
       "type": "integer"
@@ -381,10 +529,14 @@
           "$ref": "#/$defs/LidarFrame"
         },
         {
+          "$ref": "#/$defs/LidarScan"
+        },
+        {
           "type": "null"
         }
       ],
-      "default": null
+      "default": null,
+      "title": "Lidar"
     },
     "half_width_m": {
       "anyOf": [

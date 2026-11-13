@@ -2,19 +2,25 @@ using System;
 using UnityEngine;
 namespace InhaExpress.Client.Presentation
 {
-    [Serializable] public sealed class PhysicalLidarHit
-    {
-        public float lateral_m, forward_m;
-        public string entity_class;
-    }
+    /// <summary>
+    /// Physical protocol 6 raw range image. ranges_mm is channel-major
+    /// (channel * columns + column), 0 = no return. No labels or pre-filtered hits:
+    /// Python segments ground from geometry only. Offsets are in the world-leveled
+    /// ego frame (right, forward, up) relative to the vehicle localization origin;
+    /// ground_* is the measured wheel-contact plane (proprioception).
+    /// </summary>
     [Serializable] public sealed class PhysicalLidarFrame
     {
-        public int tick, ray_count;
-        public float max_range_m;
+        public int tick, columns;
         public bool valid;
+        public float max_range_m, azimuth_start_deg, azimuth_span_deg;
+        public float[] channel_elevations_deg;
+        public float sensor_lateral_m, sensor_forward_m, sensor_up_m;
+        public float ground_up_m, ground_grade_forward, ground_grade_lateral;
+        public int[] ranges_mm;
+        // Synthetic weather/road experiment condition (week8 policy) carried with the raw scan.
         public string weather = "clear", road_condition = "dry";
         public bool observation_complete = true;
-        public PhysicalLidarHit[] hits;
     }
     public interface IPhysicalLidarSource
     {

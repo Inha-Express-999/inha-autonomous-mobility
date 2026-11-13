@@ -36,6 +36,9 @@ namespace InhaExpress.Client.Simulation
         public bool IsOverflowed { get; }
         public bool HasHit => DetectionIndex >= 0;
         public bool HasVisualReturn { get; }
+        /// <summary>Raw distance to the nearest non-ego surface; 0 when nothing returned.
+        /// Independent of labels and display filters.</summary>
+        public float ReturnRangeM { get; }
 
         public LidarRaySample(Vector3 originWorld, Vector3 endpointWorld, int detectionIndex, bool isOverflowed)
             : this(originWorld, endpointWorld, detectionIndex, isOverflowed, detectionIndex >= 0)
@@ -44,12 +47,20 @@ namespace InhaExpress.Client.Simulation
 
         public LidarRaySample(Vector3 originWorld, Vector3 endpointWorld, int detectionIndex,
             bool isOverflowed, bool hasVisualReturn)
+            : this(originWorld, endpointWorld, detectionIndex, isOverflowed, hasVisualReturn,
+                detectionIndex >= 0 ? Vector3.Distance(originWorld, endpointWorld) : 0f)
+        {
+        }
+
+        public LidarRaySample(Vector3 originWorld, Vector3 endpointWorld, int detectionIndex,
+            bool isOverflowed, bool hasVisualReturn, float returnRangeM)
         {
             OriginWorld = originWorld;
             EndpointWorld = endpointWorld;
             DetectionIndex = detectionIndex;
             IsOverflowed = isOverflowed;
             HasVisualReturn = hasVisualReturn;
+            ReturnRangeM = returnRangeM;
         }
     }
 

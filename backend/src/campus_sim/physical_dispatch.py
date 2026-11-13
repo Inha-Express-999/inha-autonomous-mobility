@@ -99,7 +99,7 @@ class PhysicalDispatcher:
 
     def _command(self, stop, vehicle_id=None):
         live = self.session.physical.vehicles.get(vehicle_id)
-        if live and live.ego and live.ego.schema_version == 5:
+        if live and live.ego and live.ego.schema_version >= 5:
             return AutoMission(run_id=self.session.run_id,command_id=uuid4().hex,stop_id=stop,
                 driving_profile="campus_lidar",cruise_speed_kmh=18)
         return AutoMission(run_id=self.session.run_id,command_id=uuid4().hex,stop_id=stop,

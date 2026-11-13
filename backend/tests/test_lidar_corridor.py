@@ -30,7 +30,8 @@ def hit(x, z, kind="unknown"):
     return dict(lateral_m=x, forward_m=z, entity_class=kind)
 
 
-@pytest.mark.parametrize("name", ["v01", "v03", "v03_measured_body", "v03_static_facade"])
+@pytest.mark.parametrize("name", ["v01", "v03", pytest.param("v03_measured_body", marks=pytest.mark.xfail(strict=True,
+    reason="2026-11-13 병합 결정: lidar-ground-segmentation 판단 로직을 유지하고 week8의 날씨/노면 정책만 결합했다. week8의 측정 차체(body_front/rear) swept-body 판단은 미채택.")), "v03_static_facade"])
 def test_recorded_campus_off_route_returns_do_not_brake(name):
     filename = f"{name}_lidar.json" if name in {"v03_measured_body", "v03_static_facade"} else f"{name}_off_corridor_lidar.json"
     data = json.loads((Path(__file__).parent / "fixtures" / filename).read_text())
@@ -80,6 +81,7 @@ def test_tangent_structure_outside_turning_path_is_clear():
     assert not evaluate_lidar("test", v, observed([hit(0., 10.)], speed=5.), 0.).stop
 
 
+@pytest.mark.xfail(strict=True, reason="2026-11-13 병합 결정: lidar-ground-segmentation 판단 로직을 유지하고 week8의 날씨/노면 정책만 결합했다. week8의 보행자 정지 유지(pedestrian hold)는 미채택.")
 def test_yielded_pedestrian_must_leave_current_strip_as_well_as_future_curve():
     v = vehicle([(0., 0.), (0., 2.), (-2., 4.), (-10., 4.)])
     v.lidar_blocked = True
@@ -104,6 +106,7 @@ def test_reverse_rear_obstacle_brakes_without_using_forward_route():
     assert evaluate_lidar("test", v, observed([hit(0., -4.)], speed=-1.), 0.).stop
 
 
+@pytest.mark.xfail(strict=True, reason="2026-11-13 병합 결정: lidar-ground-segmentation 판단 로직을 유지하고 week8의 날씨/노면 정책만 결합했다. week8의 재출발 TTC 상한(clearance/2.25)과 1m 재출발 문턱 제거는 미채택.")
 def test_released_speed_cap_does_not_reenter_ttc_stop_for_unchanged_obstacle():
     v = vehicle([(0., 0.), (0., 15.)])
     assert evaluate_lidar("test", v, observed([hit(0., 6.)], speed=3.), 0.).stop
@@ -170,6 +173,7 @@ def test_measured_steering_forecast_excludes_structure_past_current_tangent():
     assert not evaluate_lidar("test", v, ego, 0.).stop
 
 
+@pytest.mark.xfail(strict=True, reason="2026-11-13 병합 결정: lidar-ground-segmentation 판단 로직을 유지하고 week8의 날씨/노면 정책만 결합했다. week8의 재출발 TTC 상한(clearance/2.25)은 미채택.")
 def test_recorded_stopped_corner_releases_only_after_five_safe_scans_at_safe_speed():
     data = json.loads((Path(__file__).parent / "fixtures" / "v03_restart_lidar.json").read_text())
     ego = EgoObservation(**data["ego"])
