@@ -18,6 +18,8 @@ namespace InhaExpress.Client.Tests
         public Rigidbody VehicleBody => GetComponent<Rigidbody>();
         public float WheelbaseM => 1.3f;
         public float MaximumSteeringRad => .52f;
+        // Interface member added by week8 (protocol 5/6 measured steering rate).
+        public float SteeringRateRadPerSecond => 1f;
         public bool StopRequested;
         public int CommandCount;
         public bool SetDriveCommand(float speed, float angle, bool emergencyStop = false)

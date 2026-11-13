@@ -1,5 +1,13 @@
 # 변경 이력
 
+## 0.5.11.1 — 2026-11-13 · 병합 후 PlayMode 시험 컴파일 오류 수정
+
+- 작업: algorithms의 `PoseProbeVehicle` 시험 차량에 week8이 `IAutonomousVehicle`에 추가한 `SteeringRateRadPerSecond`를 구현했다.
+- 이유: 병합 후 `InhaExpress.Client.Tests.PlayMode` 어셈블리가 CS0535로 컴파일되지 않아 Unity가 Play 모드에 들어가지 못했다.
+- 호환성/마이그레이션: 시험 코드만 바뀌었다. 런타임·통신 schema·map_version은 그대로다.
+- 검증: Unity 6000.3.21f1의 Roslyn과 Bee 응답 파일로 프로젝트 어셈블리 9개와 Assembly-CSharp/Assembly-CSharp-Editor를 컴파일했다. 모두 오류 0건.
+- 미검증/한계: Unity Editor 안의 재컴파일, Play 모드 실행, PlayMode 시험은 실행하지 않았다.
+
 ## 0.5.11.0 — 2026-11-13 · main에 road-density 병합
 
 - 작업: road-density(도로 혼잡 예상 시간대 prior 표시, 다음 혼잡 시간대/기본 시각 버튼, `crowd.py`, `configs/crowd_prior.json`, 웹·Unity PC 혼잡 오버레이)를 main에 병합했다.
