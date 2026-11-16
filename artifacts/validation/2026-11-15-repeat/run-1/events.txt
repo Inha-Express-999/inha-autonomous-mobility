@@ -1,0 +1,2 @@
+disconnect_click elapsed=188.4 count=3 / 3 request=req-00000001-768f851045d4 status=IN_TRANSIT vehicle=V02 phase=TO_DROPOFF/TO_DROPOFF mission=b6e7ed71a30e47f0ad4140cd6872d617 generation=1 speed=3.245 target=18.000 lane_error=0.020 reason=A* / LiDAR TTC safety client=차로 자동 운행 중
+restore_click elapsed=190.6 count=2 / 3 request=req-00000001-768f851045d4 status=IN_TRANSIT vehicle=V02 phase=TO_DROPOFF/TO_DROPOFF mission=b6e7ed71a30e47f0ad4140cd6872d617 generation=1 speed=0.000 target=0.000 lane_error=0.000 reason=A* / LiDAR TTC safety client=시연 단절 · 정지 유지

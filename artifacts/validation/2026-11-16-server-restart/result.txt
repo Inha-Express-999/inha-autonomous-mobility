@@ -1,0 +1,1 @@
+OBSERVED: stopped after process termination; restarted server has new run. Old request present=False elapsed=175.6 stage=8 old_run=2d7f4c4d8f5748dfa9809a2429603b88 run=ef8b3e616e05467a969c7e41f0220ca8 request=req-00000001-6244cfa96cdc speed=0.0001 target=0.000 generation=3 reason=No automatic mission client=자동 운행 대기

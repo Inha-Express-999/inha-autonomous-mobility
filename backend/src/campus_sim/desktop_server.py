@@ -23,10 +23,13 @@ def main():
     parser.add_argument("--port", type=int, default=8765)
     parser.add_argument("--host", default="0.0.0.0", choices=["0.0.0.0", "127.0.0.1"])
     parser.add_argument("--parent-pipe", action="store_true")
+    parser.add_argument("--state-db", help="Opt-in SQLite checkpoint for physical service; use a dedicated path")
     args = parser.parse_args()
     if not 1024 <= args.port <= 65535:
         parser.error("port must be between 1024 and 65535")
     os.environ["CAMPUS_SIM_LISTEN_HOST"] = args.host
+    if args.state_db:
+        os.environ["CAMPUS_SIM_RECOVERY_DB"] = args.state_db
     server = uvicorn.Server(
         uvicorn.Config(
             "campus_sim.api:app", host=args.host, port=args.port, workers=1, log_level="warning"

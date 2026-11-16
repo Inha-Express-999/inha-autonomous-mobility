@@ -1,0 +1,1 @@
+PASS: same request completed and vehicle returned to home after reconnect. elapsed=423.4 count=3 / 3 request=req-00000001-5d747146c94a status=COMPLETED vehicle=V03 phase=CHARGING/ mission=c68513ceef474000890a9c61f4b28e41 generation=2 speed=0.000 target=0.000 lane_error=0.000 reason=Reached Stop candidate client=목적 거점 도착

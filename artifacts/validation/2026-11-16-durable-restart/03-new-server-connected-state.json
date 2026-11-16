@@ -1,0 +1,87 @@
+{
+    "run_id": "856eca1e96084a61a2af5c5665b6bff8",
+    "map_version": "inha-osm-unity-v2",
+    "time_s": 143.7349999999999,
+    "paused": false,
+    "simulation_only": true,
+    "completed": 0,
+    "planner": "astar",
+    "dispatch": "fifo",
+    "queue": [],
+    "requests": [
+        {
+            "id": "req-00000001-9b27622582fa",
+            "owner_id": "unity-operator",
+            "status": "IN_TRANSIT",
+            "vehicle_id": "V01",
+            "pickup_landmark_id": "anniversary_60",
+            "dropoff_landmark_id": "biryong_plaza",
+            "reason": "UNKNOWN"
+        }
+    ],
+    "vehicles": [
+        {
+            "id": "V01",
+            "home_name": "정문",
+            "phase": "TO_DROPOFF",
+            "destination": "",
+            "request_id": "req-00000001-9b27622582fa",
+            "mission_id": "",
+            "transport_phase": "TO_DROPOFF",
+            "physical_status": "",
+            "physical_reason": "",
+            "motion_source": "",
+            "soc": 0.9082540273666382,
+            "route_progress_m": 0.0,
+            "observation_fresh": false,
+            "route_unity": [],
+            "position_unity": {
+                "x": -40.807003021240237,
+                "y": 0.0,
+                "z": -321.44580078125
+            }
+        },
+        {
+            "id": "V02",
+            "home_name": "후문",
+            "phase": "READY",
+            "destination": "",
+            "request_id": "",
+            "mission_id": "",
+            "transport_phase": "",
+            "physical_status": "",
+            "physical_reason": "",
+            "motion_source": "",
+            "soc": 1.0,
+            "route_progress_m": 0.0,
+            "observation_fresh": false,
+            "route_unity": [],
+            "position_unity": {
+                "x": 258.8310546875,
+                "y": 0.0,
+                "z": 61.159210205078128
+            }
+        },
+        {
+            "id": "V03",
+            "home_name": "운동장 옆 주차장",
+            "phase": "READY",
+            "destination": "",
+            "request_id": "",
+            "mission_id": "",
+            "transport_phase": "",
+            "physical_status": "",
+            "physical_reason": "",
+            "motion_source": "",
+            "soc": 1.0,
+            "route_progress_m": 0.0,
+            "observation_fresh": false,
+            "route_unity": [],
+            "position_unity": {
+                "x": -312.28009033203127,
+                "y": 0.0,
+                "z": 55.78964614868164
+            }
+        }
+    ]
+}

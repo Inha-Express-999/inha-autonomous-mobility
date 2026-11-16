@@ -1,0 +1,2 @@
+CAMPUS_SIM_PYTHON=
+venv_exists=True

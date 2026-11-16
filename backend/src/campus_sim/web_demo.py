@@ -168,7 +168,8 @@ def map_presentation(service, root):
 
 
 class DemoSession:
-    def __init__(self, factory: Callable = MobilityService.from_osm_map, wall_clock=monotonic):
+    def __init__(self, factory: Callable = MobilityService.from_osm_map, wall_clock=monotonic, recovery_path=None):
+        self.recovery = None
         self.lock = RLock()
         self.factory = factory
         self.wall_clock = wall_clock
@@ -183,6 +184,18 @@ class DemoSession:
         self.map["geometry_hash"] = self.physical.geometry_hash
         self.physical_dispatch = PhysicalDispatcher(self)
         self.crowd = CrowdPrior.from_service(self.service, self.root)
+        if recovery_path is not None:
+            from campus_sim.recovery import RecoveryStore
+            self.recovery = RecoveryStore(recovery_path)
+            self.recovery.restore(self)
+
+    def checkpoint(self):
+        if self.recovery is not None:
+            self.recovery.save(self)
+
+    def ensure_recovery(self):
+        if self.recovery is not None:
+            self.recovery.healthy()
 
     def crowd_state(self):
         """PC/web-only prior snapshot; mobile clients must not subscribe (AGENTS §11/§13)."""
@@ -454,12 +467,15 @@ class DemoSession:
 
     def submit(self, command: CreateRequest):
         with self.lock:
-            ack = self.service.create_request(command, external_execution=bool(self.physical.vehicles))
+            self.ensure_recovery()
+            ack = self.service.create_request(command, external_execution=self.recovery is not None or bool(self.physical.vehicles))
             self.physical_dispatch.step()
             return ack
 
     def scenario(self, name):
         with self.lock:
+            if self.recovery is not None:
+                raise ValueError("Virtual scenarios are disabled with physical recovery")
             self.clock.read()
             self.clock.paused = True
             destinations = (
@@ -486,6 +502,7 @@ class DemoSession:
 
     def reset(self):
         with self.lock:
+            self.ensure_recovery()
             planner = self.service.route_algorithm
             dispatch = self.service.dispatch_algorithm
             self.clock = SimulationClock(self.wall_clock)

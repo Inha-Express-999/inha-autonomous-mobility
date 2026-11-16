@@ -1,0 +1,77 @@
+{
+    "run_id": "ef8b3e616e05467a969c7e41f0220ca8",
+    "map_version": "inha-osm-unity-v2",
+    "time_s": 0.0,
+    "paused": true,
+    "simulation_only": true,
+    "completed": 0,
+    "planner": "astar",
+    "dispatch": "fifo",
+    "queue": [],
+    "requests": [],
+    "vehicles": [
+        {
+            "id": "V01",
+            "home_name": "정문",
+            "phase": "READY",
+            "destination": "",
+            "request_id": "",
+            "mission_id": "",
+            "transport_phase": "",
+            "physical_status": "PARKED",
+            "physical_reason": "No automatic mission",
+            "motion_source": "unity_physics",
+            "soc": 1.0,
+            "route_progress_m": 0.0,
+            "observation_fresh": true,
+            "route_unity": [],
+            "position_unity": {
+                "x": 15.902865409851075,
+                "y": 0.0,
+                "z": -26.228893280029298
+            }
+        },
+        {
+            "id": "V02",
+            "home_name": "후문",
+            "phase": "READY",
+            "destination": "",
+            "request_id": "",
+            "mission_id": "",
+            "transport_phase": "",
+            "physical_status": "PARKED",
+            "physical_reason": "No automatic mission",
+            "motion_source": "unity_physics",
+            "soc": 1.0,
+            "route_progress_m": 0.0,
+            "observation_fresh": true,
+            "route_unity": [],
+            "position_unity": {
+                "x": 262.8216247558594,
+                "y": 0.0,
+                "z": 48.09260940551758
+            }
+        },
+        {
+            "id": "V03",
+            "home_name": "운동장 옆 주차장",
+            "phase": "READY",
+            "destination": "",
+            "request_id": "",
+            "mission_id": "",
+            "transport_phase": "",
+            "physical_status": "PARKED",
+            "physical_reason": "No automatic mission",
+            "motion_source": "unity_physics",
+            "soc": 1.0,
+            "route_progress_m": 0.0,
+            "observation_fresh": true,
+            "route_unity": [],
+            "position_unity": {
+                "x": -309.76416015625,
+                "y": 0.0,
+                "z": 54.95310974121094
+            }
+        }
+    ]
+}

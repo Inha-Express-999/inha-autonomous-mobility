@@ -1,0 +1,143 @@
+using System;
+using System.IO;
+using System.Linq;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.UI;
+using InhaExpress.Client.MapClient;
+using InhaExpress.Client.Presentation;
+
+[InitializeOnLoad]
+static class LocalUpdatedMapCheck
+{
+    const string Key = "LocalUpdatedMapCheck.run";
+    static string Folder => Path.GetFullPath("artifacts/validation/2026-11-16-server-restart");
+    static int stage;
+    static System.Diagnostics.ProcessStartInfo restartInfo;
+    static string oldRun;
+    static double killedAt, restartedAt;
+    static double start, next, lastRecord, stationary;
+    static string id, lastPhase;
+    static string[] prior;
+    static LocalUpdatedMapCheck() { EditorApplication.update += Step; }
+    static void Save(string name, string text)
+    {
+        File.AppendAllText(Path.Combine(Folder, "observations.txt"), name + " " + text + Environment.NewLine);
+        ScreenCapture.CaptureScreenshot(Path.Combine(Folder, name + ".png"));
+        var map=UnityEngine.Object.FindFirstObjectByType<CampusServerMap>();
+        File.WriteAllText(Path.Combine(Folder,name+"-state.json"),JsonUtility.ToJson(map.LatestState,true));
+    }
+    static void Finish(string result)
+    {
+        File.WriteAllText(Path.Combine(Folder, "result.txt"), result);
+        SessionState.SetBool(Key, false);
+        if (EditorApplication.isPlaying) EditorApplication.isPlaying = false;
+    }
+    static void Step()
+    {
+        try
+        {
+            if (!EditorApplication.isPlayingOrWillChangePlaymode && !EditorApplication.isCompiling && File.Exists("tmp/updated-map.request"))
+            {
+                File.Delete("tmp/updated-map.request");
+                if (UnityEngine.SceneManagement.SceneManager.GetActiveScene().isDirty) throw new Exception("Unsaved scene; not replaced.");
+                Directory.CreateDirectory(Folder);
+                File.WriteAllText(Path.Combine(Folder,"environment.txt"), "CAMPUS_SIM_PYTHON=" + Environment.GetEnvironmentVariable("CAMPUS_SIM_PYTHON") + "\nvenv_exists=" + File.Exists(".venv/Scripts/python.exe"));
+                EditorSceneManager.OpenScene("Assets/CampusSim/Scenes/PC_Bootstrap.unity");
+                SessionState.SetBool(Key,true);
+                EditorApplication.isPlaying = true;
+                return;
+            }
+            if (!SessionState.GetBool(Key,false) || !Application.isPlaying) return;
+            double t=EditorApplication.timeSinceStartup;
+            if(start==0)start=t;
+            if(t-start>900) { Finish("TIMEOUT stage="+stage); return; }
+            if(t<next)return;
+            next=t+.2;
+            var hud=UnityEngine.Object.FindFirstObjectByType<WebClientHud>();
+            var map=UnityEngine.Object.FindFirstObjectByType<CampusServerMap>();
+            var state=map?.LatestState;
+            if(hud==null || state==null)return;
+            var buttons=hud.GetComponentsInChildren<Button>();
+            var btn=buttons.FirstOrDefault(b=>b.transform.parent.name=="Disconnect Demo");
+            if(btn==null)return;
+            var count=hud.GetComponentsInChildren<Text>().First(x=>x.transform.parent.name=="Value" && x.transform.parent.parent.name=="Metric 0").text;
+            if(stage==0)
+            {
+                if(count!="3 / 3" || state.vehicles==null || state.vehicles.Count(v=>v.observation_fresh)<3)return;
+                var ds=hud.GetComponentsInChildren<Dropdown>().Where(d=>d.name.StartsWith("Request ")).ToArray();
+                if(ds.Length!=2 || ds.Any(d=>d.options.Count<3 || !d.interactable))return;
+                var pd=ds.First(d=>d.name.Contains("Pickup")); pd.value=pd.options.FindIndex(o=>o.text.Contains("60주년"));
+                var dd=ds.First(d=>d.name.Contains("Dropoff")); dd.value=dd.options.FindIndex(o=>o.text.Contains("비룡플라자"));
+                var submit=buttons.First(b=>b.transform.parent.name=="Submit Request");
+                if(!submit.interactable)return;
+                prior=state.requests?.Select(r=>r.id).ToArray()??Array.Empty<string>();
+                submit.onClick.Invoke();stage++;return;
+            }
+            if(stage>=4)
+            {
+                var client=hud.ActiveAutomaticClient;
+                if(client==null)return;
+                string line=$"elapsed={t-start:F1} stage={stage} old_run={oldRun} run={state.run_id} request={id} speed={client.SpeedMps:F4} target={client.LastTargetSpeedKmh:F3} generation={client.ConnectionGeneration} reason={client.DiagnosticReason} client={client.Status}";
+                if(t-lastRecord>=1){lastRecord=t;File.AppendAllText(Path.Combine(Folder,"restart-timeline.txt"),line+Environment.NewLine);File.WriteAllText(Path.Combine(Folder,"latest-state.json"),JsonUtility.ToJson(state,true));File.WriteAllText(Path.Combine(Folder,"latest-observation.json"),client.LatestObservationJson??"");}
+                if(stage==4 && Math.Abs(client.SpeedMps)<.05){Save("02-server-down-stopped",line);stage=5;next=t+5;return;}
+                if(stage==4 && t-killedAt>15){Finish("FAIL: vehicle did not stop within 15 seconds. "+line);return;}
+                if(stage==5)
+                {
+                    var launcher=UnityEngine.Object.FindFirstObjectByType<DesktopServerLauncher>();
+                    var replacement=System.Diagnostics.Process.Start(restartInfo);
+                    typeof(DesktopServerLauncher).GetField("ownedProcess",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).SetValue(launcher,replacement);
+                    restartedAt=t;File.AppendAllText(Path.Combine(Folder,"events.txt"),"restart pid="+replacement.Id+" "+line+Environment.NewLine);stage=6;return;
+                }
+                if(stage==6 && state.run_id!=oldRun && count=="3 / 3")
+                {
+                    Save("03-new-server-connected",line);stage=7;next=t+15;return;
+                }
+                if(stage==6 && t-restartedAt>60){Save("03-restart-timeout",line);Finish("FAIL: reconnection timeout. "+line);return;}
+                if(stage==7)
+                {
+                    bool requestPresent=state.requests!=null && state.requests.Any(r=>r.id==id);
+                    Save("04-after-restart",line+" old_request_present="+requestPresent);
+                    stage=8;next=t+2;return;
+                }
+                if(stage==8){Finish("OBSERVED: stopped after process termination; restarted server has new run. Old request present="+(state.requests!=null && state.requests.Any(r=>r.id==id))+" "+line);return;}
+                return;
+            }
+            var req=state.requests?.FirstOrDefault(r=>id==null?!prior.Contains(r.id):r.id==id);
+            if(req==null || string.IsNullOrEmpty(req.vehicle_id))return;
+            id=req.id;
+            if(stage==1){hud.OperatorControls.SelectVehicle(req.vehicle_id);stage++;return;}
+            var c=hud.ActiveAutomaticClient;
+            var v=state.vehicles.First(x=>x.id==req.vehicle_id);
+            if(c==null)return;
+            string s=$"elapsed={t-start:F1} count={count} request={id} status={req.status} vehicle={req.vehicle_id} phase={v.phase}/{v.transport_phase} mission={v.mission_id} generation={c.ConnectionGeneration} speed={c.SpeedMps:F3} target={c.LastTargetSpeedKmh:F3} lane_error={c.LaneErrorM:F3} reason={c.DiagnosticReason} client={c.Status}";
+            if(t-lastRecord>=1)
+            {
+                lastRecord=t;
+                File.AppendAllText(Path.Combine(Folder,"timeline.txt"),s+Environment.NewLine);
+                File.WriteAllText(Path.Combine(Folder,"latest-state.json"),JsonUtility.ToJson(state,true));
+                File.WriteAllText(Path.Combine(Folder,"latest-observation.json"),c.LatestObservationJson??"");
+            }
+            string phase=req.status+"/"+v.phase+"/"+v.transport_phase;
+            if(phase!=lastPhase){Save("phase-"+(int)(t-start),s);lastPhase=phase;}
+            if(stage==2 && req.status=="IN_TRANSIT" && v.phase=="TO_DROPOFF" && c.CanDisconnectDemo && c.SpeedMps>1 && btn.interactable){Save("01-driving",s);stage++;next=t+.5;}
+            else if(stage==3 && req.status=="IN_TRANSIT" && v.phase=="TO_DROPOFF" && c.SpeedMps>1)
+            {
+                var launcher=UnityEngine.Object.FindFirstObjectByType<DesktopServerLauncher>();
+                if(launcher==null || !launcher.OwnsServer)throw new Exception("Refusing to terminate a reused server");
+                var owned=(System.Diagnostics.Process)typeof(DesktopServerLauncher).GetField("ownedProcess",System.Reflection.BindingFlags.Instance|System.Reflection.BindingFlags.NonPublic).GetValue(launcher);
+                restartInfo=owned.StartInfo;
+                if(restartInfo.WorkingDirectory!=Directory.GetCurrentDirectory() || !restartInfo.Arguments.Contains("campus_sim.desktop_server"))throw new Exception("Unexpected owned process");
+                oldRun=state.run_id;killedAt=t;
+                File.AppendAllText(Path.Combine(Folder,"events.txt"),"kill_owned_tree pid="+owned.Id+" "+s+Environment.NewLine);
+                var kill=new System.Diagnostics.ProcessStartInfo("taskkill.exe","/PID "+owned.Id+" /T /F"){UseShellExecute=false,CreateNoWindow=true};
+                using(var action=System.Diagnostics.Process.Start(kill)){if(!action.WaitForExit(5000)||action.ExitCode!=0)throw new Exception("Owned process termination failed");}
+                stage=4;
+            }
+        }
+        catch(Exception e){Directory.CreateDirectory(Folder);Finish("ERROR: "+e);}
+    }
+}
+
+

@@ -1,0 +1,77 @@
+{
+    "run_id": "ef8b3e616e05467a969c7e41f0220ca8",
+    "map_version": "inha-osm-unity-v2",
+    "time_s": 0.0,
+    "paused": true,
+    "simulation_only": true,
+    "completed": 0,
+    "planner": "astar",
+    "dispatch": "fifo",
+    "queue": [],
+    "requests": [],
+    "vehicles": [
+        {
+            "id": "V01",
+            "home_name": "정문",
+            "phase": "READY",
+            "destination": "",
+            "request_id": "",
+            "mission_id": "",
+            "transport_phase": "",
+            "physical_status": "",
+            "physical_reason": "",
+            "motion_source": "",
+            "soc": 1.0,
+            "route_progress_m": 0.0,
+            "observation_fresh": false,
+            "route_unity": [],
+            "position_unity": {
+                "x": -40.807003021240237,
+                "y": 0.0,
+                "z": -321.44580078125
+            }
+        },
+        {
+            "id": "V02",
+            "home_name": "후문",
+            "phase": "READY",
+            "destination": "",
+            "request_id": "",
+            "mission_id": "",
+            "transport_phase": "",
+            "physical_status": "",
+            "physical_reason": "",
+            "motion_source": "",
+            "soc": 1.0,
+            "route_progress_m": 0.0,
+            "observation_fresh": false,
+            "route_unity": [],
+            "position_unity": {
+                "x": 258.8310546875,
+                "y": 0.0,
+                "z": 61.159210205078128
+            }
+        },
+        {
+            "id": "V03",
+            "home_name": "운동장 옆 주차장",
+            "phase": "READY",
+            "destination": "",
+            "request_id": "",
+            "mission_id": "",
+            "transport_phase": "",
+            "physical_status": "",
+            "physical_reason": "",
+            "motion_source": "",
+            "soc": 1.0,
+            "route_progress_m": 0.0,
+            "observation_fresh": false,
+            "route_unity": [],
+            "position_unity": {
+                "x": -312.28009033203127,
+                "y": 0.0,
+                "z": 55.78964614868164
+            }
+        }
+    ]
+}

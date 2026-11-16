@@ -1,0 +1,2 @@
+kill_owned_tree pid=9856 elapsed=149.4 count=3 / 3 request=req-00000001-6244cfa96cdc status=IN_TRANSIT vehicle=V01 phase=TO_DROPOFF/TO_DROPOFF mission=f906debd010a4c26a66055caaa87d61b generation=1 speed=5.053 target=18.000 lane_error=0.040 reason=A* / LiDAR TTC safety client=차로 자동 운행 중
+restart pid=14312 elapsed=155.7 stage=5 old_run=2d7f4c4d8f5748dfa9809a2429603b88 run=2d7f4c4d8f5748dfa9809a2429603b88 request=req-00000001-6244cfa96cdc speed=0.0001 target=18.000 generation=1 reason=A* / LiDAR TTC safety client=제어 재연결 · WebSocketException · 제동 대기

@@ -47,15 +47,17 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
             with suppress(asyncio.CancelledError):
                 await task
 
-    app = FastAPI(title="Inha Mobil API", version="0.5.11.1", lifespan=lifespan)
+    app = FastAPI(title="Inha Mobil API", version="0.5.12.0", lifespan=lifespan)
     app.state.service = service or MobilityService.from_osm_map()
     app.state.demo = None
     app.state.demo_lock = RLock()
+    if os.environ.get("CAMPUS_SIM_RECOVERY_DB"):
+        app.state.demo = DemoSession(recovery_path=os.environ["CAMPUS_SIM_RECOVERY_DB"])
 
     def demo():
         with app.state.demo_lock:
             if app.state.demo is None:
-                app.state.demo = DemoSession()
+                app.state.demo = DemoSession(recovery_path=os.environ.get("CAMPUS_SIM_RECOVERY_DB"))
             return app.state.demo
 
     @app.get("/", include_in_schema=False)
@@ -160,6 +162,8 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
                     raise HTTPException(status_code=409, detail="Editor map changed concurrently")
                 if session.service.requests or app.state.service.requests or any(v.connected for v in session.physical.vehicles.values()) or not session.clock.paused:
                     raise HTTPException(status_code=409, detail="Stop/reset the existing session and disconnect vehicles before editing locations")
+                if session.recovery is not None:
+                    raise HTTPException(status_code=409, detail="Stop the recovery server before changing map identity")
                 replacement = DemoSession()
                 if unity_map(replacement.service)["geometry_hash"] != command.geometry_hash:
                     raise HTTPException(status_code=409, detail="Generated map hash does not match Editor")
@@ -235,7 +239,10 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
             if request is None or request.owner_id != command.owner_id:
                 raise HTTPException(status_code=404, detail="request not found")
             try:
-                return session.service.cancel_request(request_id, command.command_id, command.owner_id)
+                session.ensure_recovery()
+                ack = session.service.cancel_request(request_id, command.command_id, command.owner_id)
+                session.checkpoint()
+                return ack
             except ValueError as error:
                 raise HTTPException(status_code=409, detail=str(error)) from error
 
@@ -244,9 +251,12 @@ def create_app(service: MobilityService | None = None) -> FastAPI:
         session = demo()
         try:
             with session.lock:
-                return session.service.cancel_request(
+                session.ensure_recovery()
+                ack = session.service.cancel_request(
                     request_id, f"web-cancel-{request_id}", "web-demo"
                 )
+                session.checkpoint()
+                return ack
         except KeyError as error:
             raise HTTPException(status_code=404, detail="request not found") from error
         except ValueError as error:

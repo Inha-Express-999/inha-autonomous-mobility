@@ -1,0 +1,1135 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="9" failures="0" skipped="5" tests="166" time="33.665" timestamp="2026-11-14T23:09:31.432041+09:00" hostname="태호의컴퓨터"><testcase classname="tests.test_release_version" name="test_release_versions_match_without_changing_independent_contract_versions" time="0.048" /><testcase classname="tests.test_osm_map" name="test_pinned_bundle_sources_topology_and_oneway" time="0.045" /><testcase classname="tests.test_osm_map" name="test_three_projection_control_points_and_unity_round_trip[126.6535-37.4506]" time="0.004" /><testcase classname="tests.test_osm_map" name="test_three_projection_control_points_and_unity_round_trip[126.652-37.448]" time="0.002" /><testcase classname="tests.test_osm_map" name="test_three_projection_control_points_and_unity_round_trip[126.657-37.451]" time="0.001" /><testcase classname="tests.test_osm_map" name="test_rebuild_is_deterministic_and_does_not_edit_sources" time="0.044"><error message="failed on setup with &quot;OSError: could not create numbered dir with prefix pytest- in C:\Users\leeta\AppData\Local\Packages\OpenAI.Codex_2p2nqsd0c76g0\AC\#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}\Temp\pytest-of-leeta after 10 tries&quot;">cls = &lt;class '_pytest.runner.CallInfo'&gt;
+func = &lt;function call_and_report.&lt;locals&gt;.&lt;lambda&gt; at 0x00000292DF1DD440&gt;
+when = 'setup'
+reraise = (&lt;class '_pytest.outcomes.Exit'&gt;, &lt;class 'KeyboardInterrupt'&gt;)
+
+    @classmethod
+    def from_call(
+        cls,
+        func: Callable[[], TResult],
+        when: Literal["collect", "setup", "call", "teardown"],
+        reraise: type[BaseException] | tuple[type[BaseException], ...] | None = None,
+    ) -&gt; CallInfo[TResult]:
+        """Call func, wrapping the result in a CallInfo.
+    
+        :param func:
+            The function to call. Called without arguments.
+        :type func: Callable[[], _pytest.runner.TResult]
+        :param when:
+            The phase in which the function is called.
+        :param reraise:
+            Exception or exceptions that shall propagate if raised by the
+            function, instead of being wrapped in the CallInfo.
+        """
+        excinfo = None
+        instant = timing.Instant()
+        try:
+&gt;           result: TResult | None = func()
+                                     ^^^^^^
+
+.venv\Lib\site-packages\_pytest\runner.py:344: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\_pytest\runner.py:246: in &lt;lambda&gt;
+    lambda: runtest_hook(item=item, **kwds), when=when, reraise=reraise
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_caller.py:197: in __call__
+    return self._hookexec(
+.venv\Lib\site-packages\pluggy\_manager.py:183: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\logging.py:843: in pytest_runtest_setup
+    yield
+.venv\Lib\site-packages\_pytest\capture.py:895: in pytest_runtest_setup
+    return (yield)
+            ^^^^^
+.venv\Lib\site-packages\_pytest\runner.py:164: in pytest_runtest_setup
+    item.session._setupstate.setup(item)
+.venv\Lib\site-packages\_pytest\runner.py:514: in setup
+    col.setup()
+.venv\Lib\site-packages\_pytest\python.py:1674: in setup
+    self._request._fillfixtures()
+.venv\Lib\site-packages\_pytest\fixtures.py:720: in _fillfixtures
+    item.funcargs[argname] = self.getfixturevalue(argname)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:549: in getfixturevalue
+    fixturedef = self._get_active_fixturedef(argname)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:640: in _get_active_fixturedef
+    fixturedef.execute(request=subrequest)
+.venv\Lib\site-packages\_pytest\fixtures.py:1128: in execute
+    result = ihook.pytest_fixture_setup(fixturedef=self, request=request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_caller.py:197: in __call__
+    return self._hookexec(
+.venv\Lib\site-packages\pluggy\_manager.py:183: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_execution.py:64: in run_old_style_hookwrapper
+    return result.get_result()
+           ^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_execution.py:49: in run_old_style_hookwrapper
+    res = yield
+          ^^^^^
+.venv\Lib\site-packages\_pytest\setuponly.py:36: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:1196: in pytest_fixture_setup
+    result = call_fixture_func(fixturefunc, request, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:923: in call_fixture_func
+    fixture_result = next(generator)
+                     ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:264: in tmp_path
+    path = _mk_tmp(request, tmp_path_factory)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:251: in _mk_tmp
+    return factory.mktemp(name, numbered=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:130: in mktemp
+    basename = self._ensure_relative_to_basetemp(basename)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:111: in _ensure_relative_to_basetemp
+    if (self.getbasetemp() / basename).resolve().parent != self.getbasetemp():
+        ^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:186: in getbasetemp
+    basetemp = make_numbered_dir_with_cleanup(
+.venv\Lib\site-packages\_pytest\pathlib.py:407: in make_numbered_dir_with_cleanup
+    raise e
+.venv\Lib\site-packages\_pytest\pathlib.py:388: in make_numbered_dir_with_cleanup
+    p = make_numbered_dir(root, prefix, mode)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+root = WindowsPath('C:/Users/leeta/AppData/Local/Packages/OpenAI.Codex_2p2nqsd0c76g0/AC/#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}/Temp/pytest-of-leeta')
+prefix = 'pytest-', mode = 448
+
+    def make_numbered_dir(root: Path, prefix: str, mode: int = 0o700) -&gt; Path:
+        """Create a directory with an increased number as suffix for the given prefix."""
+        for i in range(10):
+            # try up to 10 times to create the folder
+            max_existing = max(map(parse_num, find_suffixes(root, prefix)), default=-1)
+            new_number = max_existing + 1
+            new_path = root.joinpath(f"{prefix}{new_number}")
+            try:
+                new_path.mkdir(mode=mode)
+            except Exception:
+                pass
+            else:
+                _force_symlink(root, prefix + "current", new_path)
+                return new_path
+        else:
+&gt;           raise OSError(
+                "could not create numbered dir with prefix "
+                f"{prefix} in {root} after 10 tries"
+            )
+E           OSError: could not create numbered dir with prefix pytest- in C:\Users\leeta\AppData\Local\Packages\OpenAI.Codex_2p2nqsd0c76g0\AC\#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}\Temp\pytest-of-leeta after 10 tries
+
+.venv\Lib\site-packages\_pytest\pathlib.py:240: OSError</error></testcase><testcase classname="tests.test_osm_map" name="test_payload_tampering_and_missing_data_fail_without_fallback" time="0.040"><error message="failed on setup with &quot;OSError: could not create numbered dir with prefix pytest- in C:\Users\leeta\AppData\Local\Packages\OpenAI.Codex_2p2nqsd0c76g0\AC\#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}\Temp\pytest-of-leeta after 10 tries&quot;">cls = &lt;class '_pytest.runner.CallInfo'&gt;
+func = &lt;function call_and_report.&lt;locals&gt;.&lt;lambda&gt; at 0x00000292DF292F20&gt;
+when = 'setup'
+reraise = (&lt;class '_pytest.outcomes.Exit'&gt;, &lt;class 'KeyboardInterrupt'&gt;)
+
+    @classmethod
+    def from_call(
+        cls,
+        func: Callable[[], TResult],
+        when: Literal["collect", "setup", "call", "teardown"],
+        reraise: type[BaseException] | tuple[type[BaseException], ...] | None = None,
+    ) -&gt; CallInfo[TResult]:
+        """Call func, wrapping the result in a CallInfo.
+    
+        :param func:
+            The function to call. Called without arguments.
+        :type func: Callable[[], _pytest.runner.TResult]
+        :param when:
+            The phase in which the function is called.
+        :param reraise:
+            Exception or exceptions that shall propagate if raised by the
+            function, instead of being wrapped in the CallInfo.
+        """
+        excinfo = None
+        instant = timing.Instant()
+        try:
+&gt;           result: TResult | None = func()
+                                     ^^^^^^
+
+.venv\Lib\site-packages\_pytest\runner.py:344: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\_pytest\runner.py:246: in &lt;lambda&gt;
+    lambda: runtest_hook(item=item, **kwds), when=when, reraise=reraise
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_caller.py:197: in __call__
+    return self._hookexec(
+.venv\Lib\site-packages\pluggy\_manager.py:183: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\logging.py:843: in pytest_runtest_setup
+    yield
+.venv\Lib\site-packages\_pytest\capture.py:895: in pytest_runtest_setup
+    return (yield)
+            ^^^^^
+.venv\Lib\site-packages\_pytest\runner.py:164: in pytest_runtest_setup
+    item.session._setupstate.setup(item)
+.venv\Lib\site-packages\_pytest\runner.py:514: in setup
+    col.setup()
+.venv\Lib\site-packages\_pytest\python.py:1674: in setup
+    self._request._fillfixtures()
+.venv\Lib\site-packages\_pytest\fixtures.py:720: in _fillfixtures
+    item.funcargs[argname] = self.getfixturevalue(argname)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:549: in getfixturevalue
+    fixturedef = self._get_active_fixturedef(argname)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:640: in _get_active_fixturedef
+    fixturedef.execute(request=subrequest)
+.venv\Lib\site-packages\_pytest\fixtures.py:1128: in execute
+    result = ihook.pytest_fixture_setup(fixturedef=self, request=request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_caller.py:197: in __call__
+    return self._hookexec(
+.venv\Lib\site-packages\pluggy\_manager.py:183: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_execution.py:64: in run_old_style_hookwrapper
+    return result.get_result()
+           ^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_execution.py:49: in run_old_style_hookwrapper
+    res = yield
+          ^^^^^
+.venv\Lib\site-packages\_pytest\setuponly.py:36: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:1196: in pytest_fixture_setup
+    result = call_fixture_func(fixturefunc, request, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:923: in call_fixture_func
+    fixture_result = next(generator)
+                     ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:264: in tmp_path
+    path = _mk_tmp(request, tmp_path_factory)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:251: in _mk_tmp
+    return factory.mktemp(name, numbered=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:130: in mktemp
+    basename = self._ensure_relative_to_basetemp(basename)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:111: in _ensure_relative_to_basetemp
+    if (self.getbasetemp() / basename).resolve().parent != self.getbasetemp():
+        ^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:186: in getbasetemp
+    basetemp = make_numbered_dir_with_cleanup(
+.venv\Lib\site-packages\_pytest\pathlib.py:407: in make_numbered_dir_with_cleanup
+    raise e
+.venv\Lib\site-packages\_pytest\pathlib.py:388: in make_numbered_dir_with_cleanup
+    p = make_numbered_dir(root, prefix, mode)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+root = WindowsPath('C:/Users/leeta/AppData/Local/Packages/OpenAI.Codex_2p2nqsd0c76g0/AC/#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}/Temp/pytest-of-leeta')
+prefix = 'pytest-', mode = 448
+
+    def make_numbered_dir(root: Path, prefix: str, mode: int = 0o700) -&gt; Path:
+        """Create a directory with an increased number as suffix for the given prefix."""
+        for i in range(10):
+            # try up to 10 times to create the folder
+            max_existing = max(map(parse_num, find_suffixes(root, prefix)), default=-1)
+            new_number = max_existing + 1
+            new_path = root.joinpath(f"{prefix}{new_number}")
+            try:
+                new_path.mkdir(mode=mode)
+            except Exception:
+                pass
+            else:
+                _force_symlink(root, prefix + "current", new_path)
+                return new_path
+        else:
+&gt;           raise OSError(
+                "could not create numbered dir with prefix "
+                f"{prefix} in {root} after 10 tries"
+            )
+E           OSError: could not create numbered dir with prefix pytest- in C:\Users\leeta\AppData\Local\Packages\OpenAI.Codex_2p2nqsd0c76g0\AC\#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}\Temp\pytest-of-leeta after 10 tries
+
+.venv\Lib\site-packages\_pytest\pathlib.py:240: OSError</error></testcase><testcase classname="tests.test_osm_map" name="test_changed_original_source_invalidates_pinned_bundle" time="0.038"><error message="failed on setup with &quot;OSError: could not create numbered dir with prefix pytest- in C:\Users\leeta\AppData\Local\Packages\OpenAI.Codex_2p2nqsd0c76g0\AC\#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}\Temp\pytest-of-leeta after 10 tries&quot;">cls = &lt;class '_pytest.runner.CallInfo'&gt;
+func = &lt;function call_and_report.&lt;locals&gt;.&lt;lambda&gt; at 0x00000292DF292700&gt;
+when = 'setup'
+reraise = (&lt;class '_pytest.outcomes.Exit'&gt;, &lt;class 'KeyboardInterrupt'&gt;)
+
+    @classmethod
+    def from_call(
+        cls,
+        func: Callable[[], TResult],
+        when: Literal["collect", "setup", "call", "teardown"],
+        reraise: type[BaseException] | tuple[type[BaseException], ...] | None = None,
+    ) -&gt; CallInfo[TResult]:
+        """Call func, wrapping the result in a CallInfo.
+    
+        :param func:
+            The function to call. Called without arguments.
+        :type func: Callable[[], _pytest.runner.TResult]
+        :param when:
+            The phase in which the function is called.
+        :param reraise:
+            Exception or exceptions that shall propagate if raised by the
+            function, instead of being wrapped in the CallInfo.
+        """
+        excinfo = None
+        instant = timing.Instant()
+        try:
+&gt;           result: TResult | None = func()
+                                     ^^^^^^
+
+.venv\Lib\site-packages\_pytest\runner.py:344: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\_pytest\runner.py:246: in &lt;lambda&gt;
+    lambda: runtest_hook(item=item, **kwds), when=when, reraise=reraise
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_caller.py:197: in __call__
+    return self._hookexec(
+.venv\Lib\site-packages\pluggy\_manager.py:183: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\logging.py:843: in pytest_runtest_setup
+    yield
+.venv\Lib\site-packages\_pytest\capture.py:895: in pytest_runtest_setup
+    return (yield)
+            ^^^^^
+.venv\Lib\site-packages\_pytest\runner.py:164: in pytest_runtest_setup
+    item.session._setupstate.setup(item)
+.venv\Lib\site-packages\_pytest\runner.py:514: in setup
+    col.setup()
+.venv\Lib\site-packages\_pytest\python.py:1674: in setup
+    self._request._fillfixtures()
+.venv\Lib\site-packages\_pytest\fixtures.py:720: in _fillfixtures
+    item.funcargs[argname] = self.getfixturevalue(argname)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:549: in getfixturevalue
+    fixturedef = self._get_active_fixturedef(argname)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:640: in _get_active_fixturedef
+    fixturedef.execute(request=subrequest)
+.venv\Lib\site-packages\_pytest\fixtures.py:1128: in execute
+    result = ihook.pytest_fixture_setup(fixturedef=self, request=request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_caller.py:197: in __call__
+    return self._hookexec(
+.venv\Lib\site-packages\pluggy\_manager.py:183: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_execution.py:64: in run_old_style_hookwrapper
+    return result.get_result()
+           ^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_execution.py:49: in run_old_style_hookwrapper
+    res = yield
+          ^^^^^
+.venv\Lib\site-packages\_pytest\setuponly.py:36: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:1196: in pytest_fixture_setup
+    result = call_fixture_func(fixturefunc, request, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:923: in call_fixture_func
+    fixture_result = next(generator)
+                     ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:264: in tmp_path
+    path = _mk_tmp(request, tmp_path_factory)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:251: in _mk_tmp
+    return factory.mktemp(name, numbered=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:130: in mktemp
+    basename = self._ensure_relative_to_basetemp(basename)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:111: in _ensure_relative_to_basetemp
+    if (self.getbasetemp() / basename).resolve().parent != self.getbasetemp():
+        ^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:186: in getbasetemp
+    basetemp = make_numbered_dir_with_cleanup(
+.venv\Lib\site-packages\_pytest\pathlib.py:407: in make_numbered_dir_with_cleanup
+    raise e
+.venv\Lib\site-packages\_pytest\pathlib.py:388: in make_numbered_dir_with_cleanup
+    p = make_numbered_dir(root, prefix, mode)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+root = WindowsPath('C:/Users/leeta/AppData/Local/Packages/OpenAI.Codex_2p2nqsd0c76g0/AC/#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}/Temp/pytest-of-leeta')
+prefix = 'pytest-', mode = 448
+
+    def make_numbered_dir(root: Path, prefix: str, mode: int = 0o700) -&gt; Path:
+        """Create a directory with an increased number as suffix for the given prefix."""
+        for i in range(10):
+            # try up to 10 times to create the folder
+            max_existing = max(map(parse_num, find_suffixes(root, prefix)), default=-1)
+            new_number = max_existing + 1
+            new_path = root.joinpath(f"{prefix}{new_number}")
+            try:
+                new_path.mkdir(mode=mode)
+            except Exception:
+                pass
+            else:
+                _force_symlink(root, prefix + "current", new_path)
+                return new_path
+        else:
+&gt;           raise OSError(
+                "could not create numbered dir with prefix "
+                f"{prefix} in {root} after 10 tries"
+            )
+E           OSError: could not create numbered dir with prefix pytest- in C:\Users\leeta\AppData\Local\Packages\OpenAI.Codex_2p2nqsd0c76g0\AC\#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}\Temp\pytest-of-leeta after 10 tries
+
+.venv\Lib\site-packages\_pytest\pathlib.py:240: OSError</error></testcase><testcase classname="tests.test_osm_map" name="test_importer_caps_configured_30kmh_at_lower_osm_limit" time="0.033"><error message="failed on setup with &quot;OSError: could not create numbered dir with prefix pytest- in C:\Users\leeta\AppData\Local\Packages\OpenAI.Codex_2p2nqsd0c76g0\AC\#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}\Temp\pytest-of-leeta after 10 tries&quot;">cls = &lt;class '_pytest.runner.CallInfo'&gt;
+func = &lt;function call_and_report.&lt;locals&gt;.&lt;lambda&gt; at 0x00000292DF293D80&gt;
+when = 'setup'
+reraise = (&lt;class '_pytest.outcomes.Exit'&gt;, &lt;class 'KeyboardInterrupt'&gt;)
+
+    @classmethod
+    def from_call(
+        cls,
+        func: Callable[[], TResult],
+        when: Literal["collect", "setup", "call", "teardown"],
+        reraise: type[BaseException] | tuple[type[BaseException], ...] | None = None,
+    ) -&gt; CallInfo[TResult]:
+        """Call func, wrapping the result in a CallInfo.
+    
+        :param func:
+            The function to call. Called without arguments.
+        :type func: Callable[[], _pytest.runner.TResult]
+        :param when:
+            The phase in which the function is called.
+        :param reraise:
+            Exception or exceptions that shall propagate if raised by the
+            function, instead of being wrapped in the CallInfo.
+        """
+        excinfo = None
+        instant = timing.Instant()
+        try:
+&gt;           result: TResult | None = func()
+                                     ^^^^^^
+
+.venv\Lib\site-packages\_pytest\runner.py:344: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\_pytest\runner.py:246: in &lt;lambda&gt;
+    lambda: runtest_hook(item=item, **kwds), when=when, reraise=reraise
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_caller.py:197: in __call__
+    return self._hookexec(
+.venv\Lib\site-packages\pluggy\_manager.py:183: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\logging.py:843: in pytest_runtest_setup
+    yield
+.venv\Lib\site-packages\_pytest\capture.py:895: in pytest_runtest_setup
+    return (yield)
+            ^^^^^
+.venv\Lib\site-packages\_pytest\runner.py:164: in pytest_runtest_setup
+    item.session._setupstate.setup(item)
+.venv\Lib\site-packages\_pytest\runner.py:514: in setup
+    col.setup()
+.venv\Lib\site-packages\_pytest\python.py:1674: in setup
+    self._request._fillfixtures()
+.venv\Lib\site-packages\_pytest\fixtures.py:720: in _fillfixtures
+    item.funcargs[argname] = self.getfixturevalue(argname)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:549: in getfixturevalue
+    fixturedef = self._get_active_fixturedef(argname)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:640: in _get_active_fixturedef
+    fixturedef.execute(request=subrequest)
+.venv\Lib\site-packages\_pytest\fixtures.py:1128: in execute
+    result = ihook.pytest_fixture_setup(fixturedef=self, request=request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_caller.py:197: in __call__
+    return self._hookexec(
+.venv\Lib\site-packages\pluggy\_manager.py:183: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_execution.py:64: in run_old_style_hookwrapper
+    return result.get_result()
+           ^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_execution.py:49: in run_old_style_hookwrapper
+    res = yield
+          ^^^^^
+.venv\Lib\site-packages\_pytest\setuponly.py:36: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:1196: in pytest_fixture_setup
+    result = call_fixture_func(fixturefunc, request, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:923: in call_fixture_func
+    fixture_result = next(generator)
+                     ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:264: in tmp_path
+    path = _mk_tmp(request, tmp_path_factory)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:251: in _mk_tmp
+    return factory.mktemp(name, numbered=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:130: in mktemp
+    basename = self._ensure_relative_to_basetemp(basename)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:111: in _ensure_relative_to_basetemp
+    if (self.getbasetemp() / basename).resolve().parent != self.getbasetemp():
+        ^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:186: in getbasetemp
+    basetemp = make_numbered_dir_with_cleanup(
+.venv\Lib\site-packages\_pytest\pathlib.py:407: in make_numbered_dir_with_cleanup
+    raise e
+.venv\Lib\site-packages\_pytest\pathlib.py:388: in make_numbered_dir_with_cleanup
+    p = make_numbered_dir(root, prefix, mode)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+root = WindowsPath('C:/Users/leeta/AppData/Local/Packages/OpenAI.Codex_2p2nqsd0c76g0/AC/#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}/Temp/pytest-of-leeta')
+prefix = 'pytest-', mode = 448
+
+    def make_numbered_dir(root: Path, prefix: str, mode: int = 0o700) -&gt; Path:
+        """Create a directory with an increased number as suffix for the given prefix."""
+        for i in range(10):
+            # try up to 10 times to create the folder
+            max_existing = max(map(parse_num, find_suffixes(root, prefix)), default=-1)
+            new_number = max_existing + 1
+            new_path = root.joinpath(f"{prefix}{new_number}")
+            try:
+                new_path.mkdir(mode=mode)
+            except Exception:
+                pass
+            else:
+                _force_symlink(root, prefix + "current", new_path)
+                return new_path
+        else:
+&gt;           raise OSError(
+                "could not create numbered dir with prefix "
+                f"{prefix} in {root} after 10 tries"
+            )
+E           OSError: could not create numbered dir with prefix pytest- in C:\Users\leeta\AppData\Local\Packages\OpenAI.Codex_2p2nqsd0c76g0\AC\#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}\Temp\pytest-of-leeta after 10 tries
+
+.venv\Lib\site-packages\_pytest\pathlib.py:240: OSError</error></testcase><testcase classname="tests.test_osm_map" name="test_invalid_imports_fail_without_inventing_roads[geometry]" time="0.033"><error message="failed on setup with &quot;OSError: could not create numbered dir with prefix pytest- in C:\Users\leeta\AppData\Local\Packages\OpenAI.Codex_2p2nqsd0c76g0\AC\#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}\Temp\pytest-of-leeta after 10 tries&quot;">cls = &lt;class '_pytest.runner.CallInfo'&gt;
+func = &lt;function call_and_report.&lt;locals&gt;.&lt;lambda&gt; at 0x00000292DFC30EA0&gt;
+when = 'setup'
+reraise = (&lt;class '_pytest.outcomes.Exit'&gt;, &lt;class 'KeyboardInterrupt'&gt;)
+
+    @classmethod
+    def from_call(
+        cls,
+        func: Callable[[], TResult],
+        when: Literal["collect", "setup", "call", "teardown"],
+        reraise: type[BaseException] | tuple[type[BaseException], ...] | None = None,
+    ) -&gt; CallInfo[TResult]:
+        """Call func, wrapping the result in a CallInfo.
+    
+        :param func:
+            The function to call. Called without arguments.
+        :type func: Callable[[], _pytest.runner.TResult]
+        :param when:
+            The phase in which the function is called.
+        :param reraise:
+            Exception or exceptions that shall propagate if raised by the
+            function, instead of being wrapped in the CallInfo.
+        """
+        excinfo = None
+        instant = timing.Instant()
+        try:
+&gt;           result: TResult | None = func()
+                                     ^^^^^^
+
+.venv\Lib\site-packages\_pytest\runner.py:344: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\_pytest\runner.py:246: in &lt;lambda&gt;
+    lambda: runtest_hook(item=item, **kwds), when=when, reraise=reraise
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_caller.py:197: in __call__
+    return self._hookexec(
+.venv\Lib\site-packages\pluggy\_manager.py:183: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\logging.py:843: in pytest_runtest_setup
+    yield
+.venv\Lib\site-packages\_pytest\capture.py:895: in pytest_runtest_setup
+    return (yield)
+            ^^^^^
+.venv\Lib\site-packages\_pytest\runner.py:164: in pytest_runtest_setup
+    item.session._setupstate.setup(item)
+.venv\Lib\site-packages\_pytest\runner.py:514: in setup
+    col.setup()
+.venv\Lib\site-packages\_pytest\python.py:1674: in setup
+    self._request._fillfixtures()
+.venv\Lib\site-packages\_pytest\fixtures.py:720: in _fillfixtures
+    item.funcargs[argname] = self.getfixturevalue(argname)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:549: in getfixturevalue
+    fixturedef = self._get_active_fixturedef(argname)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:640: in _get_active_fixturedef
+    fixturedef.execute(request=subrequest)
+.venv\Lib\site-packages\_pytest\fixtures.py:1128: in execute
+    result = ihook.pytest_fixture_setup(fixturedef=self, request=request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_caller.py:197: in __call__
+    return self._hookexec(
+.venv\Lib\site-packages\pluggy\_manager.py:183: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_execution.py:64: in run_old_style_hookwrapper
+    return result.get_result()
+           ^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_execution.py:49: in run_old_style_hookwrapper
+    res = yield
+          ^^^^^
+.venv\Lib\site-packages\_pytest\setuponly.py:36: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:1196: in pytest_fixture_setup
+    result = call_fixture_func(fixturefunc, request, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:923: in call_fixture_func
+    fixture_result = next(generator)
+                     ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:264: in tmp_path
+    path = _mk_tmp(request, tmp_path_factory)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:251: in _mk_tmp
+    return factory.mktemp(name, numbered=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:130: in mktemp
+    basename = self._ensure_relative_to_basetemp(basename)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:111: in _ensure_relative_to_basetemp
+    if (self.getbasetemp() / basename).resolve().parent != self.getbasetemp():
+        ^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:186: in getbasetemp
+    basetemp = make_numbered_dir_with_cleanup(
+.venv\Lib\site-packages\_pytest\pathlib.py:407: in make_numbered_dir_with_cleanup
+    raise e
+.venv\Lib\site-packages\_pytest\pathlib.py:388: in make_numbered_dir_with_cleanup
+    p = make_numbered_dir(root, prefix, mode)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+root = WindowsPath('C:/Users/leeta/AppData/Local/Packages/OpenAI.Codex_2p2nqsd0c76g0/AC/#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}/Temp/pytest-of-leeta')
+prefix = 'pytest-', mode = 448
+
+    def make_numbered_dir(root: Path, prefix: str, mode: int = 0o700) -&gt; Path:
+        """Create a directory with an increased number as suffix for the given prefix."""
+        for i in range(10):
+            # try up to 10 times to create the folder
+            max_existing = max(map(parse_num, find_suffixes(root, prefix)), default=-1)
+            new_number = max_existing + 1
+            new_path = root.joinpath(f"{prefix}{new_number}")
+            try:
+                new_path.mkdir(mode=mode)
+            except Exception:
+                pass
+            else:
+                _force_symlink(root, prefix + "current", new_path)
+                return new_path
+        else:
+&gt;           raise OSError(
+                "could not create numbered dir with prefix "
+                f"{prefix} in {root} after 10 tries"
+            )
+E           OSError: could not create numbered dir with prefix pytest- in C:\Users\leeta\AppData\Local\Packages\OpenAI.Codex_2p2nqsd0c76g0\AC\#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}\Temp\pytest-of-leeta after 10 tries
+
+.venv\Lib\site-packages\_pytest\pathlib.py:240: OSError</error></testcase><testcase classname="tests.test_osm_map" name="test_invalid_imports_fail_without_inventing_roads[missing_osm_node]" time="0.046"><error message="failed on setup with &quot;OSError: could not create numbered dir with prefix pytest- in C:\Users\leeta\AppData\Local\Packages\OpenAI.Codex_2p2nqsd0c76g0\AC\#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}\Temp\pytest-of-leeta after 10 tries&quot;">cls = &lt;class '_pytest.runner.CallInfo'&gt;
+func = &lt;function call_and_report.&lt;locals&gt;.&lt;lambda&gt; at 0x00000292DF292700&gt;
+when = 'setup'
+reraise = (&lt;class '_pytest.outcomes.Exit'&gt;, &lt;class 'KeyboardInterrupt'&gt;)
+
+    @classmethod
+    def from_call(
+        cls,
+        func: Callable[[], TResult],
+        when: Literal["collect", "setup", "call", "teardown"],
+        reraise: type[BaseException] | tuple[type[BaseException], ...] | None = None,
+    ) -&gt; CallInfo[TResult]:
+        """Call func, wrapping the result in a CallInfo.
+    
+        :param func:
+            The function to call. Called without arguments.
+        :type func: Callable[[], _pytest.runner.TResult]
+        :param when:
+            The phase in which the function is called.
+        :param reraise:
+            Exception or exceptions that shall propagate if raised by the
+            function, instead of being wrapped in the CallInfo.
+        """
+        excinfo = None
+        instant = timing.Instant()
+        try:
+&gt;           result: TResult | None = func()
+                                     ^^^^^^
+
+.venv\Lib\site-packages\_pytest\runner.py:344: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\_pytest\runner.py:246: in &lt;lambda&gt;
+    lambda: runtest_hook(item=item, **kwds), when=when, reraise=reraise
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_caller.py:197: in __call__
+    return self._hookexec(
+.venv\Lib\site-packages\pluggy\_manager.py:183: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\logging.py:843: in pytest_runtest_setup
+    yield
+.venv\Lib\site-packages\_pytest\capture.py:895: in pytest_runtest_setup
+    return (yield)
+            ^^^^^
+.venv\Lib\site-packages\_pytest\runner.py:164: in pytest_runtest_setup
+    item.session._setupstate.setup(item)
+.venv\Lib\site-packages\_pytest\runner.py:514: in setup
+    col.setup()
+.venv\Lib\site-packages\_pytest\python.py:1674: in setup
+    self._request._fillfixtures()
+.venv\Lib\site-packages\_pytest\fixtures.py:720: in _fillfixtures
+    item.funcargs[argname] = self.getfixturevalue(argname)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:549: in getfixturevalue
+    fixturedef = self._get_active_fixturedef(argname)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:640: in _get_active_fixturedef
+    fixturedef.execute(request=subrequest)
+.venv\Lib\site-packages\_pytest\fixtures.py:1128: in execute
+    result = ihook.pytest_fixture_setup(fixturedef=self, request=request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_caller.py:197: in __call__
+    return self._hookexec(
+.venv\Lib\site-packages\pluggy\_manager.py:183: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_execution.py:64: in run_old_style_hookwrapper
+    return result.get_result()
+           ^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_execution.py:49: in run_old_style_hookwrapper
+    res = yield
+          ^^^^^
+.venv\Lib\site-packages\_pytest\setuponly.py:36: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:1196: in pytest_fixture_setup
+    result = call_fixture_func(fixturefunc, request, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:923: in call_fixture_func
+    fixture_result = next(generator)
+                     ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:264: in tmp_path
+    path = _mk_tmp(request, tmp_path_factory)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:251: in _mk_tmp
+    return factory.mktemp(name, numbered=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:130: in mktemp
+    basename = self._ensure_relative_to_basetemp(basename)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:111: in _ensure_relative_to_basetemp
+    if (self.getbasetemp() / basename).resolve().parent != self.getbasetemp():
+        ^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:186: in getbasetemp
+    basetemp = make_numbered_dir_with_cleanup(
+.venv\Lib\site-packages\_pytest\pathlib.py:407: in make_numbered_dir_with_cleanup
+    raise e
+.venv\Lib\site-packages\_pytest\pathlib.py:388: in make_numbered_dir_with_cleanup
+    p = make_numbered_dir(root, prefix, mode)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+root = WindowsPath('C:/Users/leeta/AppData/Local/Packages/OpenAI.Codex_2p2nqsd0c76g0/AC/#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}/Temp/pytest-of-leeta')
+prefix = 'pytest-', mode = 448
+
+    def make_numbered_dir(root: Path, prefix: str, mode: int = 0o700) -&gt; Path:
+        """Create a directory with an increased number as suffix for the given prefix."""
+        for i in range(10):
+            # try up to 10 times to create the folder
+            max_existing = max(map(parse_num, find_suffixes(root, prefix)), default=-1)
+            new_number = max_existing + 1
+            new_path = root.joinpath(f"{prefix}{new_number}")
+            try:
+                new_path.mkdir(mode=mode)
+            except Exception:
+                pass
+            else:
+                _force_symlink(root, prefix + "current", new_path)
+                return new_path
+        else:
+&gt;           raise OSError(
+                "could not create numbered dir with prefix "
+                f"{prefix} in {root} after 10 tries"
+            )
+E           OSError: could not create numbered dir with prefix pytest- in C:\Users\leeta\AppData\Local\Packages\OpenAI.Codex_2p2nqsd0c76g0\AC\#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}\Temp\pytest-of-leeta after 10 tries
+
+.venv\Lib\site-packages\_pytest\pathlib.py:240: OSError</error></testcase><testcase classname="tests.test_osm_map" name="test_invalid_imports_fail_without_inventing_roads[pedestrian]" time="0.039"><error message="failed on setup with &quot;OSError: could not create numbered dir with prefix pytest- in C:\Users\leeta\AppData\Local\Packages\OpenAI.Codex_2p2nqsd0c76g0\AC\#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}\Temp\pytest-of-leeta after 10 tries&quot;">cls = &lt;class '_pytest.runner.CallInfo'&gt;
+func = &lt;function call_and_report.&lt;locals&gt;.&lt;lambda&gt; at 0x00000292DF04D1C0&gt;
+when = 'setup'
+reraise = (&lt;class '_pytest.outcomes.Exit'&gt;, &lt;class 'KeyboardInterrupt'&gt;)
+
+    @classmethod
+    def from_call(
+        cls,
+        func: Callable[[], TResult],
+        when: Literal["collect", "setup", "call", "teardown"],
+        reraise: type[BaseException] | tuple[type[BaseException], ...] | None = None,
+    ) -&gt; CallInfo[TResult]:
+        """Call func, wrapping the result in a CallInfo.
+    
+        :param func:
+            The function to call. Called without arguments.
+        :type func: Callable[[], _pytest.runner.TResult]
+        :param when:
+            The phase in which the function is called.
+        :param reraise:
+            Exception or exceptions that shall propagate if raised by the
+            function, instead of being wrapped in the CallInfo.
+        """
+        excinfo = None
+        instant = timing.Instant()
+        try:
+&gt;           result: TResult | None = func()
+                                     ^^^^^^
+
+.venv\Lib\site-packages\_pytest\runner.py:344: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\_pytest\runner.py:246: in &lt;lambda&gt;
+    lambda: runtest_hook(item=item, **kwds), when=when, reraise=reraise
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_caller.py:197: in __call__
+    return self._hookexec(
+.venv\Lib\site-packages\pluggy\_manager.py:183: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\logging.py:843: in pytest_runtest_setup
+    yield
+.venv\Lib\site-packages\_pytest\capture.py:895: in pytest_runtest_setup
+    return (yield)
+            ^^^^^
+.venv\Lib\site-packages\_pytest\runner.py:164: in pytest_runtest_setup
+    item.session._setupstate.setup(item)
+.venv\Lib\site-packages\_pytest\runner.py:514: in setup
+    col.setup()
+.venv\Lib\site-packages\_pytest\python.py:1674: in setup
+    self._request._fillfixtures()
+.venv\Lib\site-packages\_pytest\fixtures.py:720: in _fillfixtures
+    item.funcargs[argname] = self.getfixturevalue(argname)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:549: in getfixturevalue
+    fixturedef = self._get_active_fixturedef(argname)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:640: in _get_active_fixturedef
+    fixturedef.execute(request=subrequest)
+.venv\Lib\site-packages\_pytest\fixtures.py:1128: in execute
+    result = ihook.pytest_fixture_setup(fixturedef=self, request=request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_caller.py:197: in __call__
+    return self._hookexec(
+.venv\Lib\site-packages\pluggy\_manager.py:183: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_execution.py:64: in run_old_style_hookwrapper
+    return result.get_result()
+           ^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_execution.py:49: in run_old_style_hookwrapper
+    res = yield
+          ^^^^^
+.venv\Lib\site-packages\_pytest\setuponly.py:36: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:1196: in pytest_fixture_setup
+    result = call_fixture_func(fixturefunc, request, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:923: in call_fixture_func
+    fixture_result = next(generator)
+                     ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:264: in tmp_path
+    path = _mk_tmp(request, tmp_path_factory)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:251: in _mk_tmp
+    return factory.mktemp(name, numbered=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:130: in mktemp
+    basename = self._ensure_relative_to_basetemp(basename)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:111: in _ensure_relative_to_basetemp
+    if (self.getbasetemp() / basename).resolve().parent != self.getbasetemp():
+        ^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:186: in getbasetemp
+    basetemp = make_numbered_dir_with_cleanup(
+.venv\Lib\site-packages\_pytest\pathlib.py:407: in make_numbered_dir_with_cleanup
+    raise e
+.venv\Lib\site-packages\_pytest\pathlib.py:388: in make_numbered_dir_with_cleanup
+    p = make_numbered_dir(root, prefix, mode)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+root = WindowsPath('C:/Users/leeta/AppData/Local/Packages/OpenAI.Codex_2p2nqsd0c76g0/AC/#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}/Temp/pytest-of-leeta')
+prefix = 'pytest-', mode = 448
+
+    def make_numbered_dir(root: Path, prefix: str, mode: int = 0o700) -&gt; Path:
+        """Create a directory with an increased number as suffix for the given prefix."""
+        for i in range(10):
+            # try up to 10 times to create the folder
+            max_existing = max(map(parse_num, find_suffixes(root, prefix)), default=-1)
+            new_number = max_existing + 1
+            new_path = root.joinpath(f"{prefix}{new_number}")
+            try:
+                new_path.mkdir(mode=mode)
+            except Exception:
+                pass
+            else:
+                _force_symlink(root, prefix + "current", new_path)
+                return new_path
+        else:
+&gt;           raise OSError(
+                "could not create numbered dir with prefix "
+                f"{prefix} in {root} after 10 tries"
+            )
+E           OSError: could not create numbered dir with prefix pytest- in C:\Users\leeta\AppData\Local\Packages\OpenAI.Codex_2p2nqsd0c76g0\AC\#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}\Temp\pytest-of-leeta after 10 tries
+
+.venv\Lib\site-packages\_pytest\pathlib.py:240: OSError</error></testcase><testcase classname="tests.test_osm_map" name="test_invalid_imports_fail_without_inventing_roads[verified]" time="0.047"><error message="failed on setup with &quot;OSError: could not create numbered dir with prefix pytest- in C:\Users\leeta\AppData\Local\Packages\OpenAI.Codex_2p2nqsd0c76g0\AC\#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}\Temp\pytest-of-leeta after 10 tries&quot;">cls = &lt;class '_pytest.runner.CallInfo'&gt;
+func = &lt;function call_and_report.&lt;locals&gt;.&lt;lambda&gt; at 0x00000292DF293240&gt;
+when = 'setup'
+reraise = (&lt;class '_pytest.outcomes.Exit'&gt;, &lt;class 'KeyboardInterrupt'&gt;)
+
+    @classmethod
+    def from_call(
+        cls,
+        func: Callable[[], TResult],
+        when: Literal["collect", "setup", "call", "teardown"],
+        reraise: type[BaseException] | tuple[type[BaseException], ...] | None = None,
+    ) -&gt; CallInfo[TResult]:
+        """Call func, wrapping the result in a CallInfo.
+    
+        :param func:
+            The function to call. Called without arguments.
+        :type func: Callable[[], _pytest.runner.TResult]
+        :param when:
+            The phase in which the function is called.
+        :param reraise:
+            Exception or exceptions that shall propagate if raised by the
+            function, instead of being wrapped in the CallInfo.
+        """
+        excinfo = None
+        instant = timing.Instant()
+        try:
+&gt;           result: TResult | None = func()
+                                     ^^^^^^
+
+.venv\Lib\site-packages\_pytest\runner.py:344: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\_pytest\runner.py:246: in &lt;lambda&gt;
+    lambda: runtest_hook(item=item, **kwds), when=when, reraise=reraise
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_caller.py:197: in __call__
+    return self._hookexec(
+.venv\Lib\site-packages\pluggy\_manager.py:183: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\logging.py:843: in pytest_runtest_setup
+    yield
+.venv\Lib\site-packages\_pytest\capture.py:895: in pytest_runtest_setup
+    return (yield)
+            ^^^^^
+.venv\Lib\site-packages\_pytest\runner.py:164: in pytest_runtest_setup
+    item.session._setupstate.setup(item)
+.venv\Lib\site-packages\_pytest\runner.py:514: in setup
+    col.setup()
+.venv\Lib\site-packages\_pytest\python.py:1674: in setup
+    self._request._fillfixtures()
+.venv\Lib\site-packages\_pytest\fixtures.py:720: in _fillfixtures
+    item.funcargs[argname] = self.getfixturevalue(argname)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:549: in getfixturevalue
+    fixturedef = self._get_active_fixturedef(argname)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:640: in _get_active_fixturedef
+    fixturedef.execute(request=subrequest)
+.venv\Lib\site-packages\_pytest\fixtures.py:1128: in execute
+    result = ihook.pytest_fixture_setup(fixturedef=self, request=request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_caller.py:197: in __call__
+    return self._hookexec(
+.venv\Lib\site-packages\pluggy\_manager.py:183: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_execution.py:64: in run_old_style_hookwrapper
+    return result.get_result()
+           ^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_execution.py:49: in run_old_style_hookwrapper
+    res = yield
+          ^^^^^
+.venv\Lib\site-packages\_pytest\setuponly.py:36: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:1196: in pytest_fixture_setup
+    result = call_fixture_func(fixturefunc, request, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:923: in call_fixture_func
+    fixture_result = next(generator)
+                     ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:264: in tmp_path
+    path = _mk_tmp(request, tmp_path_factory)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:251: in _mk_tmp
+    return factory.mktemp(name, numbered=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:130: in mktemp
+    basename = self._ensure_relative_to_basetemp(basename)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:111: in _ensure_relative_to_basetemp
+    if (self.getbasetemp() / basename).resolve().parent != self.getbasetemp():
+        ^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:186: in getbasetemp
+    basetemp = make_numbered_dir_with_cleanup(
+.venv\Lib\site-packages\_pytest\pathlib.py:407: in make_numbered_dir_with_cleanup
+    raise e
+.venv\Lib\site-packages\_pytest\pathlib.py:388: in make_numbered_dir_with_cleanup
+    p = make_numbered_dir(root, prefix, mode)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+root = WindowsPath('C:/Users/leeta/AppData/Local/Packages/OpenAI.Codex_2p2nqsd0c76g0/AC/#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}/Temp/pytest-of-leeta')
+prefix = 'pytest-', mode = 448
+
+    def make_numbered_dir(root: Path, prefix: str, mode: int = 0o700) -&gt; Path:
+        """Create a directory with an increased number as suffix for the given prefix."""
+        for i in range(10):
+            # try up to 10 times to create the folder
+            max_existing = max(map(parse_num, find_suffixes(root, prefix)), default=-1)
+            new_number = max_existing + 1
+            new_path = root.joinpath(f"{prefix}{new_number}")
+            try:
+                new_path.mkdir(mode=mode)
+            except Exception:
+                pass
+            else:
+                _force_symlink(root, prefix + "current", new_path)
+                return new_path
+        else:
+&gt;           raise OSError(
+                "could not create numbered dir with prefix "
+                f"{prefix} in {root} after 10 tries"
+            )
+E           OSError: could not create numbered dir with prefix pytest- in C:\Users\leeta\AppData\Local\Packages\OpenAI.Codex_2p2nqsd0c76g0\AC\#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}\Temp\pytest-of-leeta after 10 tries
+
+.venv\Lib\site-packages\_pytest\pathlib.py:240: OSError</error></testcase><testcase classname="tests.test_osm_map" name="test_unknown_source_verification_cannot_be_silently_promoted" time="0.050"><error message="failed on setup with &quot;OSError: could not create numbered dir with prefix pytest- in C:\Users\leeta\AppData\Local\Packages\OpenAI.Codex_2p2nqsd0c76g0\AC\#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}\Temp\pytest-of-leeta after 10 tries&quot;">cls = &lt;class '_pytest.runner.CallInfo'&gt;
+func = &lt;function call_and_report.&lt;locals&gt;.&lt;lambda&gt; at 0x00000292DFC31120&gt;
+when = 'setup'
+reraise = (&lt;class '_pytest.outcomes.Exit'&gt;, &lt;class 'KeyboardInterrupt'&gt;)
+
+    @classmethod
+    def from_call(
+        cls,
+        func: Callable[[], TResult],
+        when: Literal["collect", "setup", "call", "teardown"],
+        reraise: type[BaseException] | tuple[type[BaseException], ...] | None = None,
+    ) -&gt; CallInfo[TResult]:
+        """Call func, wrapping the result in a CallInfo.
+    
+        :param func:
+            The function to call. Called without arguments.
+        :type func: Callable[[], _pytest.runner.TResult]
+        :param when:
+            The phase in which the function is called.
+        :param reraise:
+            Exception or exceptions that shall propagate if raised by the
+            function, instead of being wrapped in the CallInfo.
+        """
+        excinfo = None
+        instant = timing.Instant()
+        try:
+&gt;           result: TResult | None = func()
+                                     ^^^^^^
+
+.venv\Lib\site-packages\_pytest\runner.py:344: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+.venv\Lib\site-packages\_pytest\runner.py:246: in &lt;lambda&gt;
+    lambda: runtest_hook(item=item, **kwds), when=when, reraise=reraise
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_caller.py:197: in __call__
+    return self._hookexec(
+.venv\Lib\site-packages\pluggy\_manager.py:183: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\logging.py:843: in pytest_runtest_setup
+    yield
+.venv\Lib\site-packages\_pytest\capture.py:895: in pytest_runtest_setup
+    return (yield)
+            ^^^^^
+.venv\Lib\site-packages\_pytest\runner.py:164: in pytest_runtest_setup
+    item.session._setupstate.setup(item)
+.venv\Lib\site-packages\_pytest\runner.py:514: in setup
+    col.setup()
+.venv\Lib\site-packages\_pytest\python.py:1674: in setup
+    self._request._fillfixtures()
+.venv\Lib\site-packages\_pytest\fixtures.py:720: in _fillfixtures
+    item.funcargs[argname] = self.getfixturevalue(argname)
+                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:549: in getfixturevalue
+    fixturedef = self._get_active_fixturedef(argname)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:640: in _get_active_fixturedef
+    fixturedef.execute(request=subrequest)
+.venv\Lib\site-packages\_pytest\fixtures.py:1128: in execute
+    result = ihook.pytest_fixture_setup(fixturedef=self, request=request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_caller.py:197: in __call__
+    return self._hookexec(
+.venv\Lib\site-packages\pluggy\_manager.py:183: in _hookexec
+    return self._inner_hookexec(hook_name, methods, kwargs, firstresult)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_execution.py:64: in run_old_style_hookwrapper
+    return result.get_result()
+           ^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\pluggy\_execution.py:49: in run_old_style_hookwrapper
+    res = yield
+          ^^^^^
+.venv\Lib\site-packages\_pytest\setuponly.py:36: in pytest_fixture_setup
+    return (yield)
+            ^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:1196: in pytest_fixture_setup
+    result = call_fixture_func(fixturefunc, request, kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\fixtures.py:923: in call_fixture_func
+    fixture_result = next(generator)
+                     ^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:264: in tmp_path
+    path = _mk_tmp(request, tmp_path_factory)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:251: in _mk_tmp
+    return factory.mktemp(name, numbered=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:130: in mktemp
+    basename = self._ensure_relative_to_basetemp(basename)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:111: in _ensure_relative_to_basetemp
+    if (self.getbasetemp() / basename).resolve().parent != self.getbasetemp():
+        ^^^^^^^^^^^^^^^^^^
+.venv\Lib\site-packages\_pytest\tmpdir.py:186: in getbasetemp
+    basetemp = make_numbered_dir_with_cleanup(
+.venv\Lib\site-packages\_pytest\pathlib.py:407: in make_numbered_dir_with_cleanup
+    raise e
+.venv\Lib\site-packages\_pytest\pathlib.py:388: in make_numbered_dir_with_cleanup
+    p = make_numbered_dir(root, prefix, mode)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+root = WindowsPath('C:/Users/leeta/AppData/Local/Packages/OpenAI.Codex_2p2nqsd0c76g0/AC/#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}/Temp/pytest-of-leeta')
+prefix = 'pytest-', mode = 448
+
+    def make_numbered_dir(root: Path, prefix: str, mode: int = 0o700) -&gt; Path:
+        """Create a directory with an increased number as suffix for the given prefix."""
+        for i in range(10):
+            # try up to 10 times to create the folder
+            max_existing = max(map(parse_num, find_suffixes(root, prefix)), default=-1)
+            new_number = max_existing + 1
+            new_path = root.joinpath(f"{prefix}{new_number}")
+            try:
+                new_path.mkdir(mode=mode)
+            except Exception:
+                pass
+            else:
+                _force_symlink(root, prefix + "current", new_path)
+                return new_path
+        else:
+&gt;           raise OSError(
+                "could not create numbered dir with prefix "
+                f"{prefix} in {root} after 10 tries"
+            )
+E           OSError: could not create numbered dir with prefix pytest- in C:\Users\leeta\AppData\Local\Packages\OpenAI.Codex_2p2nqsd0c76g0\AC\#!sandbox.{f6d9151a-c3c9-4495-b479-64f5d3f145ca}\Temp\pytest-of-leeta after 10 tries
+
+.venv\Lib\site-packages\_pytest\pathlib.py:240: OSError</error></testcase><testcase classname="tests.test_osm_map" name="test_service_one_vehicle_actual_route_lengths_time_and_fifo_return" time="0.045" /><testcase classname="tests.test_osm_map" name="test_step_free_access_is_not_claimed_by_adding_virtual_road_connections" time="0.040" /><testcase classname="tests.test_osm_map" name="test_disconnected_stop_waits_and_does_not_block_feasible_next_request" time="0.042" /><testcase classname="tests.test_osm_map" name="test_pinned_stop_reachability_matches_search_not_straight_line" time="0.022" /><testcase classname="tests.test_osm_map" name="test_osm_http_state_has_explicit_mode_and_unity_path_coordinates" time="0.075" /><testcase classname="tests.test_unity_map" name="test_unity_projection_and_export_match_all_web_nodes_hubs_and_stops" time="0.045" /><testcase classname="tests.test_unity_map" name="test_unity_endpoint_shares_web_session_and_never_changes_its_controls" time="0.236" /><testcase classname="tests.test_unity_map" name="test_geometry_hash_detects_hub_binding_and_node_changes" time="0.051" /><testcase classname="tests.test_lidar_ground" name="test_drivable_ground_and_gentle_hills_are_not_obstacles[flat-0.0]" time="0.101" /><testcase classname="tests.test_lidar_ground" name="test_drivable_ground_and_gentle_hills_are_not_obstacles[&lt;lambda&gt;-0.0_0]" time="0.158" /><testcase classname="tests.test_lidar_ground" name="test_drivable_ground_and_gentle_hills_are_not_obstacles[&lt;lambda&gt;-0.15]" time="0.100" /><testcase classname="tests.test_lidar_ground" name="test_drivable_ground_and_gentle_hills_are_not_obstacles[&lt;lambda&gt;--0.15]" time="0.114" /><testcase classname="tests.test_lidar_ground" name="test_drivable_ground_and_gentle_hills_are_not_obstacles[&lt;lambda&gt;-0.0_1]" time="0.188" /><testcase classname="tests.test_lidar_ground" name="test_drivable_ground_and_gentle_hills_are_not_obstacles[&lt;lambda&gt;-0.0_2]" time="0.116" /><testcase classname="tests.test_lidar_ground" name="test_drivable_ground_and_gentle_hills_are_not_obstacles[&lt;lambda&gt;-0.0_3]" time="0.108" /><testcase classname="tests.test_lidar_ground" name="test_measured_contact_grade_is_needed_when_ego_already_climbs_a_steep_grade" time="0.212" /><testcase classname="tests.test_lidar_ground" name="test_vertical_structure_on_hills_is_still_an_obstacle[flat-extent0]" time="0.104" /><testcase classname="tests.test_lidar_ground" name="test_vertical_structure_on_hills_is_still_an_obstacle[flat-extent1]" time="0.109" /><testcase classname="tests.test_lidar_ground" name="test_vertical_structure_on_hills_is_still_an_obstacle[flat-extent2]" time="0.107" /><testcase classname="tests.test_lidar_ground" name="test_vertical_structure_on_hills_is_still_an_obstacle[flat-extent3]" time="0.129" /><testcase classname="tests.test_lidar_ground" name="test_vertical_structure_on_hills_is_still_an_obstacle[flat-extent4]" time="0.141" /><testcase classname="tests.test_lidar_ground" name="test_vertical_structure_on_hills_is_still_an_obstacle[flat-extent5]" time="0.167" /><testcase classname="tests.test_lidar_ground" name="test_vertical_structure_on_hills_is_still_an_obstacle[&lt;lambda&gt;-extent0]" time="0.366" /><testcase classname="tests.test_lidar_ground" name="test_vertical_structure_on_hills_is_still_an_obstacle[&lt;lambda&gt;-extent1]" time="0.288" /><testcase classname="tests.test_lidar_ground" name="test_vertical_structure_on_hills_is_still_an_obstacle[&lt;lambda&gt;-extent2]" time="0.310" /><testcase classname="tests.test_lidar_ground" name="test_vertical_structure_on_hills_is_still_an_obstacle[&lt;lambda&gt;-extent3]" time="0.311" /><testcase classname="tests.test_lidar_ground" name="test_vertical_structure_on_hills_is_still_an_obstacle[&lt;lambda&gt;-extent4]" time="0.633" /><testcase classname="tests.test_lidar_ground" name="test_vertical_structure_on_hills_is_still_an_obstacle[&lt;lambda&gt;-extent5]" time="0.295" /><testcase classname="tests.test_lidar_ground" name="test_overhead_structure_above_vehicle_clearance_is_ignored" time="0.158" /><testcase classname="tests.test_lidar_ground" name="test_incomplete_or_labelled_range_image_is_rejected[changes0]" time="0.172" /><testcase classname="tests.test_lidar_ground" name="test_incomplete_or_labelled_range_image_is_rejected[changes1]" time="0.395" /><testcase classname="tests.test_lidar_ground" name="test_incomplete_or_labelled_range_image_is_rejected[changes2]" time="0.242" /><testcase classname="tests.test_lidar_ground" name="test_incomplete_or_labelled_range_image_is_rejected[changes3]" time="0.147" /><testcase classname="tests.test_lidar_ground" name="test_incomplete_or_labelled_range_image_is_rejected[changes4]" time="0.176" /><testcase classname="tests.test_lidar_ground" name="test_incomplete_or_labelled_range_image_is_rejected[changes5]" time="0.183" /><testcase classname="tests.test_lidar_ground" name="test_incomplete_or_labelled_range_image_is_rejected[changes6]" time="0.242" /><testcase classname="tests.test_lidar_ground" name="test_incomplete_or_labelled_range_image_is_rejected[changes7]" time="0.191" /><testcase classname="tests.test_lidar_ground" name="test_protocol6_hill_keeps_driving_without_hesitation" time="2.128" /><testcase classname="tests.test_lidar_ground" name="test_protocol6_obstacle_brakes_and_resumes_after_five_clear_scans" time="1.061" /><testcase classname="tests.test_lidar_ground" name="test_protocol6_scan_obeys_weather_and_road_hold[changes0]" time="1.778" /><testcase classname="tests.test_lidar_ground" name="test_protocol6_scan_obeys_weather_and_road_hold[changes1]" time="0.902" /><testcase classname="tests.test_lidar_ground" name="test_protocol6_rain_lowers_clear_speed_cap" time="1.039" /><testcase classname="tests.test_lidar_ground" name="test_protocol6_rrt_preview_never_trusts_unlabelled_returns" time="0.989" /><testcase classname="tests.test_lidar_ground" name="test_protocol6_requires_same_tick_raw_range_image[changes0]" time="0.400" /><testcase classname="tests.test_lidar_ground" name="test_protocol6_requires_same_tick_raw_range_image[changes1]" time="0.262" /><testcase classname="tests.test_lidar_ground" name="test_protocol6_requires_same_tick_raw_range_image[changes2]" time="0.237" /><testcase classname="tests.test_lidar_ground" name="test_protocol6_requires_same_tick_raw_range_image[changes3]" time="0.189" /><testcase classname="tests.test_lidar_ground" name="test_protocol6_requires_same_tick_raw_range_image[changes4]" time="0.130" /><testcase classname="tests.test_lidar_ground" name="test_protocol5_frame_cannot_claim_protocol6_and_vice_versa" time="0.205" /><testcase classname="tests.test_lidar_ground" name="test_protocol6_schema_command_and_websocket" time="0.476" /><testcase classname="tests.test_lidar_corridor" name="test_recorded_campus_off_route_returns_do_not_brake[v01]" time="0.010" /><testcase classname="tests.test_lidar_corridor" name="test_recorded_campus_off_route_returns_do_not_brake[v03]" time="0.020" /><testcase classname="tests.test_lidar_corridor" name="test_recorded_campus_off_route_returns_do_not_brake[v03_measured_body]" time="0.005"><skipped type="pytest.xfail" message="2026-11-13 병합 결정: lidar-ground-segmentation 판단 로직을 유지하고 week8의 날씨/노면 정책만 결합했다. week8의 측정 차체(body_front/rear) swept-body 판단은 미채택." /></testcase><testcase classname="tests.test_lidar_corridor" name="test_recorded_campus_off_route_returns_do_not_brake[v03_static_facade]" time="0.049" /><testcase classname="tests.test_lidar_corridor" name="test_unclassified_actor_keeps_larger_clearance_than_fixed_map_facade" time="0.006" /><testcase classname="tests.test_lidar_corridor" name="test_partial_or_out_of_envelope_measured_body_is_rejected[changes0]" time="0.000" /><testcase classname="tests.test_lidar_corridor" name="test_partial_or_out_of_envelope_measured_body_is_rejected[changes1]" time="0.000" /><testcase classname="tests.test_lidar_corridor" name="test_partial_or_out_of_envelope_measured_body_is_rejected[changes2]" time="0.000" /><testcase classname="tests.test_lidar_corridor" name="test_partial_or_out_of_envelope_measured_body_is_rejected[changes3]" time="0.001" /><testcase classname="tests.test_lidar_corridor" name="test_partial_or_out_of_envelope_measured_body_is_rejected[changes4]" time="0.001" /><testcase classname="tests.test_lidar_corridor" name="test_measured_root_body_preserves_front_and_rear_obstacle_braking" time="0.001" /><testcase classname="tests.test_lidar_corridor" name="test_curve_obstacle_stops_even_outside_current_forward_strip[static]" time="0.000" /><testcase classname="tests.test_lidar_corridor" name="test_curve_obstacle_stops_even_outside_current_forward_strip[unknown]" time="0.000" /><testcase classname="tests.test_lidar_corridor" name="test_curve_obstacle_stops_even_outside_current_forward_strip[pedestrian]" time="0.000" /><testcase classname="tests.test_lidar_corridor" name="test_curve_obstacle_stops_even_outside_current_forward_strip[vehicle]" time="0.001" /><testcase classname="tests.test_lidar_corridor" name="test_tangent_structure_outside_turning_path_is_clear" time="0.001" /><testcase classname="tests.test_lidar_corridor" name="test_yielded_pedestrian_must_leave_current_strip_as_well_as_future_curve" time="0.001"><skipped type="pytest.xfail" message="2026-11-13 병합 결정: lidar-ground-segmentation 판단 로직을 유지하고 week8의 날씨/노면 정책만 결합했다. week8의 보행자 정지 유지(pedestrian hold)는 미채택." /></testcase><testcase classname="tests.test_lidar_corridor" name="test_immediate_body_intrusion_cannot_be_filtered_by_route[static]" time="0.001" /><testcase classname="tests.test_lidar_corridor" name="test_immediate_body_intrusion_cannot_be_filtered_by_route[unknown]" time="0.000" /><testcase classname="tests.test_lidar_corridor" name="test_immediate_body_intrusion_cannot_be_filtered_by_route[pedestrian]" time="0.000" /><testcase classname="tests.test_lidar_corridor" name="test_immediate_body_intrusion_cannot_be_filtered_by_route[vehicle]" time="0.001" /><testcase classname="tests.test_lidar_corridor" name="test_current_motion_reaction_envelope_overrides_a_departing_route" time="0.000" /><testcase classname="tests.test_lidar_corridor" name="test_reverse_rear_obstacle_brakes_without_using_forward_route" time="0.001" /><testcase classname="tests.test_lidar_corridor" name="test_released_speed_cap_does_not_reenter_ttc_stop_for_unchanged_obstacle" time="0.001"><skipped type="pytest.xfail" message="2026-11-13 병합 결정: lidar-ground-segmentation 판단 로직을 유지하고 week8의 날씨/노면 정책만 결합했다. week8의 재출발 TTC 상한(clearance/2.25)과 1m 재출발 문턱 제거는 미채택." /></testcase><testcase classname="tests.test_lidar_corridor" name="test_actual_turn_arc_checks_swept_body_instead_of_full_circle" time="0.001" /><testcase classname="tests.test_lidar_corridor" name="test_incomplete_or_impossible_measured_steering_is_rejected[changes0]" time="0.000" /><testcase classname="tests.test_lidar_corridor" name="test_incomplete_or_impossible_measured_steering_is_rejected[changes1]" time="0.001" /><testcase classname="tests.test_lidar_corridor" name="test_incomplete_or_impossible_measured_steering_is_rejected[changes2]" time="0.001" /><testcase classname="tests.test_lidar_corridor" name="test_incomplete_or_impossible_measured_steering_is_rejected[changes3]" time="0.000" /><testcase classname="tests.test_lidar_corridor" name="test_measured_steering_forecast_follows_straight_ego_motion" time="0.009" /><testcase classname="tests.test_lidar_corridor" name="test_measured_steering_forecast_brakes_for_obstacle_on_actual_turn[static]" time="0.001" /><testcase classname="tests.test_lidar_corridor" name="test_measured_steering_forecast_brakes_for_obstacle_on_actual_turn[unknown]" time="0.001" /><testcase classname="tests.test_lidar_corridor" name="test_measured_steering_forecast_brakes_for_obstacle_on_actual_turn[pedestrian]" time="0.001" /><testcase classname="tests.test_lidar_corridor" name="test_measured_steering_forecast_brakes_for_obstacle_on_actual_turn[vehicle]" time="0.001" /><testcase classname="tests.test_lidar_corridor" name="test_measured_steering_forecast_excludes_structure_past_current_tangent" time="0.000" /><testcase classname="tests.test_lidar_corridor" name="test_recorded_stopped_corner_releases_only_after_five_safe_scans_at_safe_speed" time="0.130"><skipped type="pytest.xfail" message="2026-11-13 병합 결정: lidar-ground-segmentation 판단 로직을 유지하고 week8의 날씨/노면 정책만 결합했다. week8의 재출발 TTC 상한(clearance/2.25)은 미채택." /></testcase><testcase classname="tests.test_lidar_corridor" name="test_unknown_turn_retains_circumscribed_body_corner_protection" time="0.000" /><testcase classname="tests.test_pc_lidar" name="test_actual_control_brakes_for_each_observed_class_and_recovers_after_clear_scans[unknown]" time="0.137" /><testcase classname="tests.test_pc_lidar" name="test_actual_control_brakes_for_each_observed_class_and_recovers_after_clear_scans[static]" time="0.172" /><testcase classname="tests.test_pc_lidar" name="test_actual_control_brakes_for_each_observed_class_and_recovers_after_clear_scans[pedestrian]" time="0.138" /><testcase classname="tests.test_pc_lidar" name="test_actual_control_brakes_for_each_observed_class_and_recovers_after_clear_scans[vehicle]" time="0.143" /><testcase classname="tests.test_pc_lidar" name="test_pedestrian_yield_does_not_release_when_ego_stops_but_crossing_is_occupied" time="0.139"><skipped type="pytest.xfail" message="2026-11-13 병합 결정: lidar-ground-segmentation 판단 로직을 유지하고 week8의 날씨/노면 정책만 결합했다. week8의 보행자 정지 유지(pedestrian hold)는 미채택. protocol 6은 의미 분류를 보내지 않아 이 조건이 PC에서 발생하지 않는다." /></testcase><testcase classname="tests.test_pc_lidar" name="test_invalid_stale_overflowed_scan_never_drives[changes0]" time="0.143" /><testcase classname="tests.test_pc_lidar" name="test_invalid_stale_overflowed_scan_never_drives[changes1]" time="0.146" /><testcase classname="tests.test_pc_lidar" name="test_invalid_stale_overflowed_scan_never_drives[changes2]" time="0.143" /><testcase classname="tests.test_pc_lidar" name="test_missing_mismatched_or_ground_truth_frame_is_rejected[changes0]" time="0.121" /><testcase classname="tests.test_pc_lidar" name="test_missing_mismatched_or_ground_truth_frame_is_rejected[changes1]" time="0.174" /><testcase classname="tests.test_pc_lidar" name="test_missing_mismatched_or_ground_truth_frame_is_rejected[changes2]" time="0.124" /><testcase classname="tests.test_pc_lidar" name="test_missing_mismatched_or_ground_truth_frame_is_rejected[changes3]" time="0.125" /><testcase classname="tests.test_pc_lidar" name="test_missing_mismatched_or_ground_truth_frame_is_rejected[changes4]" time="0.113" /><testcase classname="tests.test_pc_lidar" name="test_missing_mismatched_or_ground_truth_frame_is_rejected[changes5]" time="0.124" /><testcase classname="tests.test_pc_lidar" name="test_protocol5_schema_and_reverse_command" time="0.127" /><testcase classname="tests.test_pc_lidar" name="test_rear_return_stops_turn_before_turn_controller_runs" time="0.136" /><testcase classname="tests.test_pc_lidar" name="test_path_only_profile_cannot_disable_protocol5_safety" time="0.142" /><testcase classname="tests.test_pc_lidar" name="test_observed_clear_range_caps_old_high_speed_configuration" time="0.170" /><testcase classname="tests.test_pc_lidar" name="test_dynamic_rrt_candidate_never_becomes_executable" time="0.143" /><testcase classname="tests.test_pc_lidar" name="test_static_rrt_preview_runs_but_brakes_remain_authoritative" time="0.119" /><testcase classname="tests.test_pc_lidar" name="test_websocket_accepts_same_lidar_contract_and_returns_valid_stop" time="0.363" /><testcase classname="tests.test_pc_lidar" name="test_lidar_profile_preserves_map_road_speed_limit" time="0.153" /><testcase classname="tests.test_pc_lidar" name="test_weather_reduces_clear_corridor_speed[rain-wet]" time="0.147" /><testcase classname="tests.test_pc_lidar" name="test_weather_reduces_clear_corridor_speed[snow-snow]" time="0.187" /><testcase classname="tests.test_pc_lidar" name="test_weather_reduces_clear_corridor_speed[fog-dry]" time="0.147" /><testcase classname="tests.test_pc_lidar" name="test_unsupported_surface_stops_even_without_hits[ice]" time="0.180" /><testcase classname="tests.test_pc_lidar" name="test_unsupported_surface_stops_even_without_hits[unknown]" time="0.147" /><testcase classname="tests.test_pc_lidar" name="test_outage_resets_recovery_and_needs_five_complete_scans" time="0.167" /><testcase classname="tests.test_pc_lidar" name="test_wet_road_brakes_earlier_than_dry_and_fog_stops_beyond_visibility" time="0.148" /><testcase classname="tests.test_pc_lidar" name="test_weather_contract_rejects_unknown_settings[change0]" time="0.122" /><testcase classname="tests.test_pc_lidar" name="test_weather_contract_rejects_unknown_settings[change1]" time="0.130" /><testcase classname="tests.test_pc_lidar" name="test_weather_change_requires_five_scans_in_the_new_condition" time="0.184" /><testcase classname="tests.test_pc_lidar" name="test_outside_kerb_of_a_junction_turn_is_not_read_as_straight_ahead" time="0.151" /><testcase classname="tests.test_pc_lidar" name="test_return_on_the_curved_route_still_brakes" time="0.134" /><testcase classname="tests.test_pc_lidar" name="test_return_just_ahead_of_the_bumper_still_brakes_on_a_curved_route" time="0.145" /><testcase classname="tests.test_pc_lidar" name="test_stopped_vehicle_never_creeps_toward_a_close_route_return" time="0.127" /><testcase classname="tests.test_pc_lidar" name="test_kerb_beside_a_turn_does_not_block_the_planned_sweep" time="0.150" /><testcase classname="tests.test_pc_lidar" name="test_return_on_the_swept_turn_arc_blocks" time="0.174" /><testcase classname="tests.test_pc_lidar" name="test_reconnected_protocol5_updates_current_pose_and_stays_stopped" time="0.194" /><testcase classname="tests.test_physical_dispatch" name="test_recorded_main_gate_spawn_can_dispatch_and_keeps_its_home" time="0.263" /><testcase classname="tests.test_physical_dispatch" name="test_physical_policy_selects_fifo_or_lower_feasible_cost[fifo-V01]" time="0.149" /><testcase classname="tests.test_physical_dispatch" name="test_physical_policy_selects_fifo_or_lower_feasible_cost[greedy-V02]" time="0.148" /><testcase classname="tests.test_physical_dispatch" name="test_policy_change_does_not_replace_active_physical_mission" time="0.219" /><testcase classname="tests.test_physical_dispatch" name="test_vehicle_home_goal_is_bound_to_own_existing_road_node" time="0.134" /><testcase classname="tests.test_physical_dispatch" name="test_preview_can_use_snapshot_but_start_still_requires_fresh_pose" time="0.164" /><testcase classname="tests.test_physical_dispatch" name="test_observed_transport_requires_arrival_dwell_and_return" time="0.281" /><testcase classname="tests.test_physical_dispatch" name="test_transport_reservation_is_reported_until_return_and_blocks_manual_mission" time="0.279" /><testcase classname="tests.test_physical_dispatch" name="test_capacity_and_battery_failure_leave_external_request_queued" time="0.429" /><testcase classname="tests.test_physical_dispatch" name="test_cancel_before_pickup_returns_vehicle_without_transporting" time="0.439" /><testcase classname="tests.test_physical_dispatch" name="test_reconnect_resumes_same_request_without_duplicate_assignment" time="0.301" /><testcase classname="tests.test_physical_dispatch" name="test_v02_reconnect_waits_for_new_pickup_mission_before_drive_command" time="0.296" /><testcase classname="tests.test_physical_dispatch" name="test_preflight_cache_survives_temporary_stale_observations" time="0.166" /><testcase classname="tests.test_physical_dispatch" name="test_geometry_roundoff_reuses_estimate_but_real_changes_replan[1e-05-expected_calls0]" time="0.127" /><testcase classname="tests.test_physical_dispatch" name="test_geometry_roundoff_reuses_estimate_but_real_changes_replan[0.01-expected_calls1]" time="0.164" /><testcase classname="tests.test_physical_dispatch" name="test_failed_candidate_cannot_starve_other_requests_and_vehicles[False-fifo]" time="0.248" /><testcase classname="tests.test_physical_dispatch" name="test_failed_candidate_cannot_starve_other_requests_and_vehicles[False-greedy]" time="0.186" /><testcase classname="tests.test_physical_dispatch" name="test_failed_candidate_cannot_starve_other_requests_and_vehicles[False-hungarian]" time="0.212" /><testcase classname="tests.test_physical_dispatch" name="test_failed_candidate_cannot_starve_other_requests_and_vehicles[True-fifo]" time="0.381" /><testcase classname="tests.test_physical_dispatch" name="test_failed_candidate_cannot_starve_other_requests_and_vehicles[True-greedy]" time="0.325" /><testcase classname="tests.test_physical_dispatch" name="test_failed_candidate_cannot_starve_other_requests_and_vehicles[True-hungarian]" time="0.279" /><testcase classname="tests.test_physical_dispatch" name="test_reconnect_at_each_transport_phase_completes_same_request[TO_PICKUP]" time="0.402" /><testcase classname="tests.test_physical_dispatch" name="test_reconnect_at_each_transport_phase_completes_same_request[PICKUP_SERVICE]" time="0.340" /><testcase classname="tests.test_physical_dispatch" name="test_reconnect_at_each_transport_phase_completes_same_request[TO_DROPOFF]" time="0.404" /><testcase classname="tests.test_physical_dispatch" name="test_reconnect_at_each_transport_phase_completes_same_request[DROPOFF_SERVICE]" time="0.355" /><testcase classname="tests.test_physical_dispatch" name="test_reconnect_at_each_transport_phase_completes_same_request[RETURNING]" time="0.420" /></testsuite></testsuites>

@@ -433,6 +433,7 @@ class UnityDriveSession:
         return self.describe(vehicle_id)
 
     def observation(self, vehicle_id, token, ego: EgoObservation):
+        self.session.ensure_recovery()
         vehicle = self.vehicles[vehicle_id]
         if self.run_id != self.session.run_id or token != vehicle.token or ego.run_id != self.run_id or ego.geometry_hash != self.geometry_hash:
             raise ValueError("Physics owner, run or map mismatch")

@@ -1,0 +1,9 @@
+{
+  "backend/src/campus_sim/recovery.py": "6ef10c5c135dca60a7ed25866ba849d7d7952a0ab655cedc485f71288185f704",
+  "backend/src/campus_sim/web_demo.py": "6301aa631bad5bb9b0878251730a51dd87980f2cd70a613b543f8a70a9ee4fff",
+  "backend/src/campus_sim/api.py": "7413e8a4ac8b51a865e70b5b0c2a7890e0122f3d1ee194ecadd6afef0e1867ae",
+  "backend/src/campus_sim/physical_dispatch.py": "cb0c5e789b84b5b2e18b288c37e4ce17881424fecde0f3f3bc8a14b5d5f5c05a",
+  "backend/src/campus_sim/unity_drive.py": "c053ebac74d83917290b7f0d3a492998cff695d749204b49991937b6a7ab9cc7",
+  "backend/src/campus_sim/desktop_server.py": "3bc2af16ee47528501c6e4280f326337d9c18fff32e5d0270cd797adc50b762d",
+  "backend/tests/test_recovery.py": "22053b82120d46c43feeb3671f77f033ce5d2e2c1d8bff01222d27032849f396"
+}

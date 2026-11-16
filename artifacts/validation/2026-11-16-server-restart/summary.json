@@ -1,0 +1,24 @@
+{
+  "evidence_verified": true,
+  "service_recovery": "NOT_RESTORED_REQUEST_LOST",
+  "source_commit": "69ef457c90a6e99cf2b243643fb260a8decdca26",
+  "repetitions": 1,
+  "vehicle_id": "V01",
+  "request_id": "req-00000001-6244cfa96cdc",
+  "old_run": "2d7f4c4d8f5748dfa9809a2429603b88",
+  "new_run": "ef8b3e616e05467a969c7e41f0220ca8",
+  "speed_at_kill_mps": 5.053,
+  "stop_observed_after_kill_s": 1.3,
+  "new_run_connection_observed_after_restart_s": 2.9,
+  "final_observation_after_connection_s": 15.0,
+  "checks": {
+    "interrupted_in_transit": true,
+    "stopped_before_restart": true,
+    "new_server_run": true,
+    "fresh_observation_after_restart": true,
+    "old_request_absent": true,
+    "no_restored_mission": true,
+    "vehicle_still_stopped_at_final_observation": true,
+    "not_falsely_completed": true
+  }
+}

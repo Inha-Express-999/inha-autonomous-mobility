@@ -1,5 +1,12 @@
 # 변경 이력
 
+## 0.5.12.0 — 2026-11-16 · 서버 재시작 후 물리 운송 상태 복원
+
+- SQLite 저장 옵션으로 요청·중복 명령 응답·배차/운송 단계·배터리 상태를 transaction에 저장하고 재시작 시 복원한다.
+- 새 run ID와 신선한 차량 관측으로 같은 구간을 재계획하며, 저장 실패/손상/지도·정책 불일치는 운행을 차단한다. 기본 메모리 모드는 유지한다.
+- 검증: 관련 Python 58개 통과. 실제 Unity V01에서 서버 강제 종료→정지→같은 요청 복원→운송 완료→정문 차고지 복귀/충전 1회 확인. 연결 단절 반복 3회 및 저장 미적용 실패 근거도 포함한다.
+- 한계: 단일 서버 전용 opt-in. 자동 서버 재기동, 모바일 통합, 여러 프로세스의 동시 DB 소유는 지원하지 않는다. 설정은 Docs/SERVER_RECOVERY.md, 실제 근거는 artifacts/validation/2026-11-16-durable-restart를 참고한다.
+
 ## 0.5.11.1 — 2026-11-13 · 병합 후 PlayMode 시험 컴파일 오류 수정
 
 - 작업: algorithms의 `PoseProbeVehicle` 시험 차량에 week8이 `IAutonomousVehicle`에 추가한 `SteeringRateRadPerSecond`를 구현했다.

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="2" failures="0" skipped="0" tests="2" time="5.359" timestamp="2026-11-14T23:07:32.191642+09:00" hostname="태호의컴퓨터"><testcase classname="" name="tests.test_lidar_ground" time="0.000"><error message="collection failure">ImportError while importing test module 'C:\Users\leeta\Documents\Codex\inha-map-update-20261114\backend\tests\test_lidar_ground.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+..\..\..\anaconda3\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\tests\test_lidar_ground.py:10: in &lt;module&gt;
+    from jsonschema import Draft202012Validator
+E   ModuleNotFoundError: No module named 'jsonschema'</error></testcase><testcase classname="" name="tests.test_pc_lidar" time="0.000"><error message="collection failure">ImportError while importing test module 'C:\Users\leeta\Documents\Codex\inha-map-update-20261114\backend\tests\test_pc_lidar.py'.
+Hint: make sure your test modules/packages have valid Python names.
+Traceback:
+..\..\..\anaconda3\Lib\importlib\__init__.py:90: in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+backend\tests\test_pc_lidar.py:6: in &lt;module&gt;
+    from jsonschema import Draft202012Validator
+E   ModuleNotFoundError: No module named 'jsonschema'</error></testcase></testsuite></testsuites>

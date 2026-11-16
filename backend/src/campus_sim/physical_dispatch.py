@@ -173,6 +173,11 @@ class PhysicalDispatcher:
         return True
 
     def step(self):
+        self.session.ensure_recovery()
+        self._step()
+        self.session.checkpoint()
+
+    def _step(self):
         s=self.session; service=s.service; p=s.physical; now=p.clock()
         self._energy_step(now)
         for job in list(self.jobs.values()):
