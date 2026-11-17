@@ -1,5 +1,13 @@
 # 변경 이력
 
+## 0.5.13.0 — 2026-11-17 · 모바일 지도의 배정 차량 자동 포커스
+
+- 작업: 모바일 지도가 본인 요청에 배정된 차량이 있으면(ASSIGNED~DROPOFF_SERVICE) 같은 쿼터뷰로 그 차량의 서버 표시 좌표를 부드럽게 확대·추적하고, 없으면 캠퍼스 전경을 보여준다. `PcOperatorControls`에 지도 지점 추적(`TrackMapPoint`/`StopTrackingPoint`)을 추가했고 모바일의 "전체" 버튼을 제거했다.
+- 이유: 승객이 호출 후 자기 차량의 위치를 찾지 않고 바로 볼 수 있게 한다.
+- 호환성/마이그레이션: 표시 전용이며 차량 Transform·서버 상태·통신 schema·map_version은 바꾸지 않았다. PC 관제 카메라 동작은 그대로다. 확대 범위(세로 반폭 45m)는 합성 표시값이다. `v0.5.12.0` 태그는 algorithms 브랜치 커밋(68280a3b)이 이미 사용하므로 다음 미사용 버전을 썼다.
+- 검증: 열린 Unity 6000.3.21f1 Editor에서 재컴파일 오류 0건. PlayMode `MobilePassengerFlowTests` 2/2, `PcCameraNavigationTests` 5/5 통과(신규: 대기 중 전경 유지 → 배정 시 추적 → 위치 갱신 추종 → 완료 시 전경 복귀, 지점 추적의 완만한 이동·초기화).
+- 미검증/한계: 모바일 Player 빌드·실기기와 실제 Python 서버 연결 화면에서는 확인하지 않았다. 차량은 여전히 핀으로만 표시하며 좌표는 상태 조회 주기(기본 1초)로 갱신된다. 배차 중 수동으로 전경을 볼 방법은 없다.
+
 ## 0.5.11.1 — 2026-11-13 · 병합 후 PlayMode 시험 컴파일 오류 수정
 
 - 작업: algorithms의 `PoseProbeVehicle` 시험 차량에 week8이 `IAutonomousVehicle`에 추가한 `SteeringRateRadPerSecond`를 구현했다.

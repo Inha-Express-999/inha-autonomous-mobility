@@ -111,6 +111,80 @@ namespace InhaExpress.Client.Tests
             }
         }
 
+        [UnityTest]
+        public IEnumerator MobileMapStaysOnOverviewUntilDispatchThenFollowsTheAssignedVehicle()
+        {
+            var root = new GameObject("Mobile vehicle focus test"); root.SetActive(false);
+            var cameraObject = new GameObject("Mobile vehicle focus camera");
+            var asset = new TextAsset(File.ReadAllText(Path.Combine(Application.dataPath, "CampusSim/Data/server_map.json")));
+            var document = ServerMapDocument.Parse(asset.text);
+            string savedPending = PlayerPrefs.GetString("InhaMobil.Passenger.Pending", "");
+            PlayerPrefs.DeleteKey("InhaMobil.Passenger.Pending");
+            using (var server = new PassengerServer(asset.text, document.map_version))
+            try
+            {
+                // The passenger's request already exists on the server and is still waiting for a vehicle.
+                server.Order = new OrderData { owner_id = "mobile-test" };
+                var map = root.AddComponent<CampusServerMap>();
+                map.authoredMap = asset; map.geometryHash = document.geometry_hash; map.mapVersion = document.map_version;
+                map.serverUrl = server.Url; map.pollSeconds = .5f; map.showStatus = false;
+                var hud = root.AddComponent<WebClientHud>();
+                Field("mobile").SetValue(hud, true); Field("passengerId").SetValue(hud, "mobile-test"); Field("map").SetValue(hud, map);
+                var canvas = new GameObject("Mobile Canvas", typeof(RectTransform), typeof(Canvas)); canvas.transform.SetParent(root.transform);
+                var rect = (RectTransform)canvas.transform;
+                Call(hud, "BuildMobile", rect);
+                Field("connection").SetValue(hud, FixtureUiFactory.Text(rect, "Connection", "", 12, Color.black));
+                Field("session").SetValue(hud, FixtureUiFactory.Text(rect, "Session", "", 12, Color.black));
+                var camera = cameraObject.AddComponent<Camera>();
+                var controls = root.AddComponent<PcOperatorControls>();
+                controls.Initialize(camera, new Bounds(Vector3.zero, new Vector3(600, 10, 600)), 300, 55, 25);
+                controls.InputEnabled = false;
+                typeof(WebClientHud).GetProperty("OperatorControls").SetValue(hud, controls);
+                root.SetActive(true);
+                var offset = Quaternion.Euler(55, 25, 0) * Vector3.forward * 1000;
+                var status = (Text)Field("requestStatus").GetValue(hud);
+                Assert.That(Array.Find(root.GetComponentsInChildren<Button>(true), b => b.transform.parent.name == "Map Overview"),
+                    Is.Null, "The map view is chosen by the assignment alone; there is no manual toggle.");
+
+                double until = Time.realtimeSinceStartupAsDouble + 10;
+                while (!status.text.Contains("가용 차량 대기") && Time.realtimeSinceStartupAsDouble < until) yield return null;
+                Assert.That(status.text, Does.Contain("가용 차량 대기"), map.LastError);
+                yield return new WaitForSecondsRealtime(.6f);
+                var overview = camera.transform.position;
+                Assert.That(controls.IsTrackingPoint, Is.False, "A waiting request keeps the campus overview.");
+                Assert.That(Vector3.Distance(-offset, overview), Is.LessThan(.01f));
+
+                server.VehiclesJson = "{\"id\":\"V01\",\"phase\":\"TO_PICKUP\",\"position_unity\":{\"x\":120,\"y\":0,\"z\":-80}}";
+                server.DispatchedStatus = "ASSIGNED";
+                until = Time.realtimeSinceStartupAsDouble + 5;
+                while (!controls.IsTrackingPoint && Time.realtimeSinceStartupAsDouble < until) yield return null;
+                Assert.That(controls.IsTrackingPoint, Is.True, "Dispatch focuses the assigned vehicle.");
+                yield return new WaitForSecondsRealtime(4);
+                Assert.That(Vector3.Distance(new Vector3(120, 0, -80) - offset, camera.transform.position), Is.LessThan(.5f));
+                Assert.That(camera.orthographicSize, Is.EqualTo(45).Within(.5f));
+
+                server.VehiclesJson = "{\"id\":\"V01\",\"phase\":\"TO_DROPOFF\",\"position_unity\":{\"x\":150,\"y\":0,\"z\":-60}}";
+                server.DispatchedStatus = "IN_TRANSIT";
+                yield return new WaitForSecondsRealtime(5);
+                Assert.That(Vector3.Distance(new Vector3(150, 0, -60) - offset, camera.transform.position), Is.LessThan(.5f),
+                    "The focus follows the reported vehicle position.");
+
+                server.DispatchedStatus = "COMPLETED";
+                until = Time.realtimeSinceStartupAsDouble + 5;
+                while (controls.IsTrackingPoint && Time.realtimeSinceStartupAsDouble < until) yield return null;
+                Assert.That(controls.IsTrackingPoint, Is.False, "A finished trip returns to the overview.");
+                yield return null;
+                yield return null; // Allow the Cinemachine LateUpdate to drive the output camera.
+                Assert.That(Vector3.Distance(overview, camera.transform.position), Is.LessThan(.01f));
+            }
+            finally
+            {
+                PlayerPrefs.SetString("InhaMobil.Passenger.Pending", savedPending); PlayerPrefs.Save();
+                UnityEngine.Object.DestroyImmediate(root); UnityEngine.Object.DestroyImmediate(cameraObject);
+                UnityEngine.Object.DestroyImmediate(asset);
+            }
+        }
+
         [Serializable] private sealed class OrderData { public string command_id, owner_id, pickup_landmark_id, dropoff_landmark_id; }
         private sealed class PassengerServer : IDisposable
         {
@@ -128,7 +202,21 @@ namespace InhaExpress.Client.Tests
                 Url = "http://127.0.0.1:" + ((IPEndPoint)listener.LocalEndpoint).Port;
                 worker = new Thread(Serve) { IsBackground = true }; worker.Start();
             }
-            private string Request => Order == null ? "" : "{\"id\":\"mobile-request\",\"owner_id\":\"mobile-test\",\"status\":\"" + (CancelCount > 0 ? "CANCELLED" : "QUEUED") + "\"}";
+            /// <summary>Server-side dispatch result for the request; null keeps it QUEUED without a vehicle.</summary>
+            public volatile string DispatchedStatus;
+            /// <summary>JSON vehicle entries of the shared state (comma separated).</summary>
+            public volatile string VehiclesJson = "";
+            private string Request
+            {
+                get
+                {
+                    if (Order == null) return "";
+                    string dispatched = DispatchedStatus;
+                    return "{\"id\":\"mobile-request\",\"owner_id\":\"mobile-test\",\"status\":\"" +
+                        (CancelCount > 0 ? "CANCELLED" : dispatched ?? "QUEUED") + "\"" +
+                        (dispatched != null ? ",\"vehicle_id\":\"V01\"" : "") + "}";
+                }
+            }
             private void Serve()
             {
                 try
@@ -153,7 +241,7 @@ namespace InhaExpress.Client.Tests
                             response = "{\"accepted\":true,\"request\":" + Request + "}";
                         }
                         else if (line.Contains("/unity-map ")) response = map;
-                        else response = "{\"run_id\":\"mobile-fixture\",\"map_version\":\"" + version + "\",\"simulation_only\":true,\"vehicles\":[],\"queue\":[],\"requests\":[" + Request + "]}";
+                        else response = "{\"run_id\":\"mobile-fixture\",\"map_version\":\"" + version + "\",\"simulation_only\":true,\"vehicles\":[" + VehiclesJson + "],\"queue\":[],\"requests\":[" + Request + "]}";
                         byte[] bytes = Encoding.UTF8.GetBytes(response);
                         byte[] head = Encoding.ASCII.GetBytes("HTTP/1.1 200 OK\r\nContent-Type: application/json\r\nConnection: close\r\nContent-Length: " + bytes.Length + "\r\n\r\n");
                         stream.Write(head, 0, head.Length); stream.Write(bytes, 0, bytes.Length);
