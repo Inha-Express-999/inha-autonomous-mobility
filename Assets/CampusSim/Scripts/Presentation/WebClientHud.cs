@@ -18,6 +18,9 @@ namespace InhaExpress.Client.Presentation
         private InputField serverAddress;
         private Text serverAddressStatus;
         private Toggle mobileStepFree;
+        // Mobile: orthographic half-height (m) of the map while it follows the passenger's dispatched vehicle.
+        private const float PassengerFocusViewMeters = 45f;
+        private string focusAssignment;
         private string passengerId;
         private string passengerRun;
         private readonly List<Renderer> mobileHiddenRenderers = new List<Renderer>();
@@ -1145,7 +1148,6 @@ namespace InhaExpress.Client.Presentation
         {
             if(OperatorControls!=null) { OperatorControls.Zoom(factor); return; }
         }
-        private void ResetView() => OperatorControls?.DeselectVehicle();
         private static void ActionButton(RectTransform root,string name,string value,float x,float y,float right,float top,UnityEngine.Events.UnityAction action)
         {
             var holder=FixtureUiFactory.Rect(root,name+" Bounds",new Vector2(x,y),new Vector2(right,top),Vector2.zero,Vector2.zero);
@@ -1264,8 +1266,47 @@ namespace InhaExpress.Client.Presentation
             var vegetationText = vegetation.GetComponentInChildren<Text>();
             vegetationText.font = FixtureUiFactory.Font; vegetationText.fontSize = 14;
             vegetationText.text = "나무·잔디 표시";
-            UiButton(FixtureUiFactory.Rect(root,"Map Overview",new Vector2(.82f,.63f),new Vector2(.95f,.69f),Vector2.zero,Vector2.zero),"전체",ResetView);
             Label(root,"Attribution","© OpenStreetMap contributors · ODbL 1.0",8,.05f,.60f,.95f,.615f);
+        }
+
+        private static bool HasDispatchedVehicle(string status) => status == "ASSIGNED" || status == "PICKUP_SERVICE" ||
+            status == "IN_TRANSIT" || status == "DROPOFF_SERVICE";
+
+        // The server decides the assignment; the client only looks up its own request's vehicle.
+        private CampusServerMap.Vehicle DispatchedPassengerVehicle(CampusServerMap.SharedState state)
+        {
+            if (submittedRequestId == null || state?.requests == null || state.vehicles == null) return null;
+            var request = Array.Find(state.requests, r => r.id == submittedRequestId && r.owner_id == passengerId);
+            if (request == null || string.IsNullOrEmpty(request.vehicle_id) || !HasDispatchedVehicle(request.status)) return null;
+            return Array.Find(state.vehicles, v => v.id == request.vehicle_id);
+        }
+
+        // Same display point as the mobile pin: server XZ at the local vehicle height (the server reports y = 0).
+        private Vector3 ReportedVehiclePosition(CampusServerMap.Vehicle entry)
+        {
+            var position = entry.position_unity;
+            foreach (var pin in mapPins)
+                if (pin.vehicleId == entry.id && pin.target != null) { position.y = pin.target.position.y; break; }
+            return position;
+        }
+
+        /// <summary>
+        /// Mobile: the map follows the server-reported position of the vehicle dispatched to the
+        /// passenger's own request, and shows the campus overview whenever there is none.
+        /// </summary>
+        private void RefreshPassengerFocus(CampusServerMap.SharedState state, bool online)
+        {
+            // Offline: keep the current view and stop following; a stale position is never chased.
+            if (OperatorControls == null || !online) return;
+            var vehicle = DispatchedPassengerVehicle(state);
+            string assignment = vehicle == null ? null : submittedRequestId + "/" + vehicle.id;
+            if (assignment != focusAssignment)
+            {
+                focusAssignment = assignment;
+                if (assignment == null) OperatorControls.DeselectVehicle();
+            }
+            if (vehicle != null)
+                OperatorControls.TrackMapPoint(ReportedVehiclePosition(vehicle), PassengerFocusViewMeters);
         }
 
         private void ConnectMobileServer()
@@ -1397,6 +1438,7 @@ namespace InhaExpress.Client.Presentation
                     else if (mobileStepFree != null) mobileStepFree.interactable = !submitting && pendingRequestJson == null;
                 }
             }
+            if (mobile) RefreshPassengerFocus(state, online);
             session.text = $"v{Application.version}";
             int connectedCount = 0;
             if (!mobile && OperatorControls != null)

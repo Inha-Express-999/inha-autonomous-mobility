@@ -220,6 +220,58 @@ namespace InhaExpress.Client.Tests
         }
 
         [UnityTest]
+        public IEnumerator MapEasesOntoTrackedPointFollowsItsUpdatesAndResetsToOverview()
+        {
+            var cameraObject = new GameObject("Tracked point camera test");
+            var controlsObject = new GameObject("Tracked point controls test");
+            try
+            {
+                var camera = cameraObject.AddComponent<Camera>();
+                var controls = controlsObject.AddComponent<PcOperatorControls>();
+                controls.Initialize(camera, new Bounds(Vector3.zero, new Vector3(600, 10, 600)), 300, 55, 25);
+                controls.InputEnabled = false;
+                yield return null;
+                yield return null; // Allow the Cinemachine LateUpdate to drive the output camera.
+                var overview = camera.transform.position;
+                var offset = Quaternion.Euler(55, 25, 0) * Vector3.forward * 1000;
+
+                controls.TrackMapPoint(new Vector3(float.NaN, 0, 0), 45);
+                Assert.That(controls.IsTrackingPoint, Is.False, "Invalid reported positions are ignored.");
+                var point = new Vector3(120, 0, -80);
+                controls.TrackMapPoint(point, 45);
+                Assert.That(controls.IsTrackingPoint, Is.True);
+                Assert.That(controls.IsFollowing, Is.False);
+                yield return null;
+                yield return null;
+                Assert.That(Vector3.Distance(overview, camera.transform.position), Is.GreaterThan(0),
+                    "The view eases instead of holding the overview.");
+                Assert.That(Vector3.Distance(point - offset, camera.transform.position), Is.GreaterThan(1),
+                    "The view eases instead of cutting to the point.");
+                yield return new WaitForSecondsRealtime(4);
+                Assert.That(Vector3.Distance(point - offset, camera.transform.position), Is.LessThan(.5f));
+                Assert.That(camera.orthographic, Is.True);
+                Assert.That(camera.orthographicSize, Is.EqualTo(45).Within(.5f));
+
+                point = new Vector3(150, 0, -60);
+                controls.TrackMapPoint(point, 45);
+                yield return new WaitForSecondsRealtime(4);
+                Assert.That(Vector3.Distance(point - offset, camera.transform.position), Is.LessThan(.5f));
+
+                controls.DeselectVehicle();
+                Assert.That(controls.IsTrackingPoint, Is.False);
+                yield return null;
+                yield return null; // Allow the Cinemachine LateUpdate to drive the output camera.
+                Assert.That(Vector3.Distance(overview, camera.transform.position), Is.LessThan(.01f));
+                Assert.That(camera.orthographicSize, Is.EqualTo(300).Within(.01f));
+            }
+            finally
+            {
+                Object.DestroyImmediate(controlsObject);
+                Object.DestroyImmediate(cameraObject);
+            }
+        }
+
+        [UnityTest]
         public IEnumerator MapNavigationPreservesZoomOnResizeAndResetsItsPose()
         {
             var cameraObject = new GameObject("Map camera test");

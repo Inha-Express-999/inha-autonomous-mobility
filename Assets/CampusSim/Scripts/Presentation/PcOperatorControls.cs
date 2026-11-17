@@ -33,6 +33,11 @@ namespace InhaExpress.Client.Presentation
         private Bounds bounds;
         private bool initialized;
         private bool panGesture, rotateGesture;
+        private Vector3 trackedPoint, trackVelocity;
+        private float trackedViewSize, trackZoomVelocity;
+        private const float TrackSmoothTime = .6f;
+        /// <summary>True while the map view eases toward a reported world point.</summary>
+        public bool IsTrackingPoint { get; private set; }
         private float originalNearClip, originalFarClip, originalFov;
         private readonly List<Renderer> garageDisplays = new List<Renderer>();
         private readonly Dictionary<Renderer, bool> hiddenGarageDisplays = new Dictionary<Renderer, bool>();
@@ -147,6 +152,7 @@ namespace InhaExpress.Client.Presentation
                 return false;
             }
             SelectedVehicle = vehicles[id];
+            StopTrackingPoint();
             UpdateStabilizedTarget(true);
             followCamera.Follow = stabilizedTarget;
             followCamera.LookAt = stabilizedTarget;
@@ -187,9 +193,32 @@ namespace InhaExpress.Client.Presentation
             followCamera.Follow = null;
             followCamera.LookAt = null;
             panGesture = rotateGesture = false;
+            StopTrackingPoint();
             if (reset) { mapCenter = initialCenter; mapYaw = initialYaw; mapPitch = initialPitch; mapZoom = 1; }
             ApplyMapPose();
             SelectionMessage = "운영 지도 · 드래그 이동 / 우클릭 회전 / 휠 확대";
+        }
+
+        /// <summary>
+        /// Eases the map view onto a reported world position and keeps it centered as the caller
+        /// reports new positions. Presentation only: no vehicle Transform is read or written.
+        /// </summary>
+        /// <param name="viewHalfHeight">Orthographic half-height in meters while focused.</param>
+        public void TrackMapPoint(Vector3 point, float viewHalfHeight)
+        {
+            if (!initialized || output == null || !float.IsFinite(point.x) || !float.IsFinite(point.y) ||
+                !float.IsFinite(point.z) || !float.IsFinite(viewHalfHeight) || viewHalfHeight <= 0) return;
+            if (IsFollowing) ShowMap();
+            trackedPoint = ClampToMap(point);
+            trackedViewSize = viewHalfHeight;
+            IsTrackingPoint = true;
+        }
+
+        public void StopTrackingPoint()
+        {
+            IsTrackingPoint = false;
+            trackVelocity = Vector3.zero;
+            trackZoomVelocity = 0;
         }
 
         public void Resize(float fittedSize)
@@ -284,19 +313,27 @@ namespace InhaExpress.Client.Presentation
             if (!initialized || !float.IsFinite(factor) || factor <= 0) return;
             if (FleetView) { fleetDistance = Mathf.Clamp(fleetDistance * factor, 3, 40); return; }
             if (IsFollowing) { followDistance = Mathf.Clamp(followDistance * factor, 3, 40); UpdateFollowDistance(); }
+            else if (IsTrackingPoint) trackedViewSize = Mathf.Clamp(trackedViewSize * factor, 20, fit * 2);
             else { mapZoom = Mathf.Clamp(mapZoom * factor, 20 / fit, 2); ApplyMapPose(); }
         }
 
         public void Pan(Vector2 pixels)
         {
             if (!initialized || IsFollowing) return;
+            StopTrackingPoint();
             var rotation = Quaternion.Euler(0, mapYaw, 0);
             float units = 2 * output.orthographicSize / Mathf.Max(1, output.pixelHeight);
-            mapCenter -= rotation * new Vector3(pixels.x, 0, pixels.y / Mathf.Sin(mapPitch * Mathf.Deg2Rad)) * units;
-            float limit = Mathf.Max(bounds.size.x, bounds.size.z);
-            mapCenter.x = Mathf.Clamp(mapCenter.x, initialCenter.x - limit, initialCenter.x + limit);
-            mapCenter.z = Mathf.Clamp(mapCenter.z, initialCenter.z - limit, initialCenter.z + limit);
+            mapCenter = ClampToMap(mapCenter -
+                rotation * new Vector3(pixels.x, 0, pixels.y / Mathf.Sin(mapPitch * Mathf.Deg2Rad)) * units);
             ApplyMapPose();
+        }
+
+        private Vector3 ClampToMap(Vector3 point)
+        {
+            float limit = Mathf.Max(bounds.size.x, bounds.size.z);
+            point.x = Mathf.Clamp(point.x, initialCenter.x - limit, initialCenter.x + limit);
+            point.z = Mathf.Clamp(point.z, initialCenter.z - limit, initialCenter.z + limit);
+            return point;
         }
 
         public void Rotate(Vector2 degrees)
@@ -322,6 +359,16 @@ namespace InhaExpress.Client.Presentation
         {
             if (IsFollowing && SelectedVehicle is Component component && component != null &&
                 SelectedVehicle.VehicleTransform != null) UpdateStabilizedTarget(false);
+            else if (IsTrackingPoint && initialized && !IsFollowing)
+            {
+                // Positions arrive at the server poll rate; ease between them and settle when they stop.
+                float dt = Time.unscaledDeltaTime;
+                mapCenter = Vector3.SmoothDamp(mapCenter, trackedPoint, ref trackVelocity,
+                    TrackSmoothTime, Mathf.Infinity, dt);
+                mapZoom = Mathf.SmoothDamp(mapZoom, Mathf.Clamp(trackedViewSize / fit, 20 / fit, 2),
+                    ref trackZoomVelocity, TrackSmoothTime, Mathf.Infinity, dt);
+                ApplyMapPose();
+            }
             if (FleetView) UpdateFleetPanes(false);
         }
 

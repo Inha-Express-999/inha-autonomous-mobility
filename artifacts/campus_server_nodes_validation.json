@@ -1,7 +1,7 @@
 {
-    "project_version": "0.5.1.0",
+    "project_version": "0.5.11.1",
     "map_version": "inha-osm-unity-v2",
-    "geometry_hash": "a912d2bd63406d1c1d4e553f5e03dba23750cb566a44d5560018609ff32d13ce",
+    "geometry_hash": "881064a03d85ff5067998b761d0124d3fadcb6c15113dab45daee52fa36f29ec",
     "road_nodes": 188,
     "directed_edges": 404,
     "hubs": 3,
@@ -9,7 +9,7 @@
     "road_mesh_projected": 197,
     "terrain_projected": 8,
     "outside_terrain": 0,
-    "marker_renderers": 154,
+    "marker_renderers": 756,
     "operationally_verified": false,
     "vehicle_actuation": false
 }

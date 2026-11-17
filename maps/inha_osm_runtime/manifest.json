@@ -1,7 +1,7 @@
 {
   "schema_version": 2,
   "hash_format": "sha256-utf8-lf-v1",
-  "build_project_version": "0.5.14.0",
+  "build_project_version": "0.5.15.0",
   "map_version": "inha-osm-unity-v2",
   "geometry_source": "cached_osm_and_unity_centerlines",
   "synthetic_geometry": false,
@@ -63,7 +63,7 @@
     },
     "project_version": {
       "path": "VERSION",
-      "sha256": "c90de8e72ab73facbca34e2e74be37faf59b948ba562eae15681edcc6a9e2b2b"
+      "sha256": "bbe43ba2383ba28f992cefaa98805ea52bc57a48758326b83ae4ed18f4837563"
     },
     "expanded_osm": {
       "path": "Docs/MapResearch/2026-09-17/expanded_campus.osm",
@@ -110,7 +110,7 @@
     "graph.json": "1122eff88783d24f4830212f8b3f9e41c62dfe7eeb415d43809bf5e99678c7ed",
     "stops.json": "98c5afed3228eb97e94c510486c6fb03ec90bad7305d52d7603e436f19be809e",
     "landmarks.json": "60bbf7051c5f87d6378e447c909a6b519fb725e3d5fe40df365f83926b0ef037",
-    "policy.json": "277cac1877a2ddb11c57178f9211b502ae31ef5ed063745ab9c7d085e253e9f4",
+    "policy.json": "d7631f2cdf1f7899641ed7257830bc02ea0aac0802645e4e04554e6e77a81727",
     "build_report.json": "172b7c969f6cfc424090a58d83918c4255a23f40ce03b6d3b561c4e5f6d12abd",
     "ATTRIBUTION.txt": "c243c904de3a85696895f942921790d66e7c51e3549e5b28b70ed3dea20bdc85"
   }

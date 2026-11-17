@@ -1,5 +1,14 @@
 # 변경 이력
 
+## 0.5.15.0 — 2026-11-17 · mobile-client와 pc-client-multi-camera-view 병합
+
+- 작업: `mobile-client`(0.5.13.0 모바일 지도의 배정 차량 자동 포커스)와 `pc-client-multi-camera-view`(0.5.14.0 PC 운행 지도 기본/전체 보기)를 새 브랜치 `merge-mobile-pc-client`에서 병합했다.
+- 작업: `PcOperatorControls` 충돌 해결: `LateUpdate`에서 선택 차량 추적 → 지도 지점 추적(`TrackMapPoint`) 완화 이동 → 전체 보기 칸 갱신(`UpdateFleetPanes`) 순서로 둘 다 유지했다. `Zoom`은 전체 보기 → 차량 추적 → 지점 추적 → 지도 순서다. PlayMode `PcCameraNavigationTests`는 양쪽 신규 시험을 모두 보존했다.
+- 이유: 모바일 승객 지도 포커스와 PC 다중 카메라 관제를 한 기준선에서 함께 시험하기 위해서다.
+- 호환성/마이그레이션: 두 기능 모두 표시 전용이며 차량 Transform·서버 상태·통신 schema·map_version은 바꾸지 않았다. 지점 추적은 모바일, 전체 보기는 PC에서만 호출한다. 기존 태그 v0.5.13.0·v0.5.14.0은 이동하지 않았다.
+- 검증: Unity 6000.3.21f1 Roslyn과 Bee 응답 파일로 `InhaExpress.Client.Presentation`, `InhaExpress.Client.Tests.PlayMode`를 임시 폴더에 컴파일했다. 오류 0건. `pytest backend/tests` — 510 passed, 5 xfailed, 2 failed(v0.5.9.0부터 같은 기존 실패: test_battery_fleet, test_connection_audit).
+- 미검증/한계: Unity Editor 안의 재컴파일, 나머지 어셈블리(PC·Mobile·Assembly-CSharp·EditMode) 컴파일, PlayMode 시험 실행, 실제 화면은 확인하지 않았다.
+
 ## 0.5.14.0 — 2026-11-17 · PC 운행 지도 기본/전체 보기
 
 - 작업: PC 운행 지도 오른쪽 위에 기본/전체 전환을 추가했다. 기본은 기존 운영 지도·선택 차량 추적 그대로다. 전체는 지도 영역을 차량 ID 순으로 나눠 차량별 추적 카메라(V01~V03)를 나란히 보여 주고, 칸마다 차량 상태·속도 배지를 표시한다. 배지를 누르면 그 차량이 선택된다.
@@ -9,6 +18,14 @@
 - 호환성/마이그레이션: PC 표시 전용이다. 선택·추적 상태, 차량 Transform·센서·주행 명령, 통신 schema·map_version은 바꾸지 않았다. 모바일은 영향이 없다. 버전 0.5.12.0·0.5.13.0은 다른 브랜치의 태그가 이미 사용해 다음 미사용 번호를 썼다.
 - 검증: Unity 6000.3.21f1의 Roslyn과 Bee 응답 파일로 변경 어셈블리 6개(MapClient, Presentation, Assembly-CSharp, Simulation, Tests.PlayMode, Tests.EditMode)를 컴파일했다. 오류 0건.
 - 미검증/한계: Unity Editor 안의 재컴파일, 실제 화면 확인, 추가한 PlayMode 시험은 실행하지 않았다. 전체 보기는 카메라 3대가 동시에 그리며 FPS·배치 수·메모리는 측정하지 않았다.
+
+## 0.5.13.0 — 2026-11-17 · 모바일 지도의 배정 차량 자동 포커스
+
+- 작업: 모바일 지도가 본인 요청에 배정된 차량이 있으면(ASSIGNED~DROPOFF_SERVICE) 같은 쿼터뷰로 그 차량의 서버 표시 좌표를 부드럽게 확대·추적하고, 없으면 캠퍼스 전경을 보여준다. `PcOperatorControls`에 지도 지점 추적(`TrackMapPoint`/`StopTrackingPoint`)을 추가했고 모바일의 "전체" 버튼을 제거했다.
+- 이유: 승객이 호출 후 자기 차량의 위치를 찾지 않고 바로 볼 수 있게 한다.
+- 호환성/마이그레이션: 표시 전용이며 차량 Transform·서버 상태·통신 schema·map_version은 바꾸지 않았다. PC 관제 카메라 동작은 그대로다. 확대 범위(세로 반폭 45m)는 합성 표시값이다. `v0.5.12.0` 태그는 algorithms 브랜치 커밋(68280a3b)이 이미 사용하므로 다음 미사용 버전을 썼다.
+- 검증: 열린 Unity 6000.3.21f1 Editor에서 재컴파일 오류 0건. PlayMode `MobilePassengerFlowTests` 2/2, `PcCameraNavigationTests` 5/5 통과(신규: 대기 중 전경 유지 → 배정 시 추적 → 위치 갱신 추종 → 완료 시 전경 복귀, 지점 추적의 완만한 이동·초기화).
+- 미검증/한계: 모바일 Player 빌드·실기기와 실제 Python 서버 연결 화면에서는 확인하지 않았다. 차량은 여전히 핀으로만 표시하며 좌표는 상태 조회 주기(기본 1초)로 갱신된다. 배차 중 수동으로 전경을 볼 방법은 없다.
 
 ## 0.5.11.1 — 2026-11-13 · 병합 후 PlayMode 시험 컴파일 오류 수정
 
