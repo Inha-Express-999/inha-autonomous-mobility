@@ -61,3 +61,11 @@ Unity PC_Bootstrap은 호환되는 실행 중 서버를 재사용한다. Unity�
 2026-11-17 복구 상태 표시와 간편 실행기 추가: 관련 Python 시험 48개 통과, 변경 Unity assembly 2개 Roslyn 컴파일 통과. 실행기의 DB 검사, 사용 중 포트 거부, 손상 DB 보존을 확인했다. 실제 Unity 관제 표시는 로컬 서버 접속 시간 초과(SERVICE_LOCATIONS_BLOCKED)로 확인하지 못했다. 이번 결과는 실제 화면 또는 추가 주행 시험 통과를 의미하지 않는다.
 
 후속 실제 화면 확인: 저장 중/서버 응답 없음/요청 1건 복원 완료 및 연결 3/3 표시를 확인했다. V02의 같은 요청이 서버 재시작 뒤 새 mission으로 운행을 재개하고 COMPLETED, 완료 집계 1건에 도달했다. 사용자 CMD에서 Ctrl+C 후 같은 DB로 재실행한 시험이다. [기록](../artifacts/validation/2026-11-17-live-recovery/README.md).
+
+## 릴리스 버전 변경 후 지도 검증
+
+런타임 지도 manifest는 VERSION 원본 해시도 고정한다. 프로젝트 버전 변경 후에는 `python -m campus_sim.map_builder`로 지도 묶음을 재생성하고 `load_map_bundle(..., source_root=...)` 검증을 수행한다. 버전만 바뀐 릴리스에서는 재생성 전후 payload 해시가 같은지도 확인한다. manifest 해시를 수동 수정하거나 검증을 생략하지 않는다.
+
+2026-11-17 후속 시험 준비 중 v0.5.13.0의 manifest가 이전 버전을 참조해 서버 시작을 거부하는 오류를 발견했다. 임시 디렉터리에서 정상 재생성·검증하고 모든 payload 해시가 동일함을 확인한 후 manifest를 갱신했다. API 0.5.13.0 초기화 및 기존 DB 요청 1건 복원을 확인했다. 다음 IN_TRANSIT 재시작·차고 복귀 시험은 별도 DB `tmp/in-transit-recovery-20261117.db`로 진행한다.
+
+후속 V03 시험: IN_TRANSIT 중 사용자 서버 종료·같은 DB 재시작 후 같은 요청 복원, 새 mission 주행, 완료 1건, 차고지 도착·배정 해제·충전 및 DB returned=true를 확인했다. [원자료와 한계](../artifacts/validation/2026-11-17-in-transit-recovery/README.md).

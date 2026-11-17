@@ -1,0 +1,11 @@
+{
+  "stopped_in_transit": true,
+  "new_run": true,
+  "same_vehicle": true,
+  "restored_in_transit": true,
+  "new_mission": true,
+  "fresh_and_moving": true,
+  "completed_once": true,
+  "home_released": true,
+  "home_stopped_fresh": true
+}

@@ -1,0 +1,46 @@
+{
+  "requests": {
+    "req-00000001-4bfb21e8eb11": {
+      "cargo_kg": 0.0,
+      "created_s": 0.0,
+      "dropoff_landmark_id": "biryong_plaza",
+      "dropoff_stop_id": "biryong_plaza_road_candidate",
+      "eta_s": null,
+      "id": "req-00000001-4bfb21e8eb11",
+      "latest_arrival_s": null,
+      "owner_id": "recovery-validation",
+      "party_size": 1,
+      "pickup_landmark_id": "anniversary_60",
+      "pickup_stop_id": "anniversary_60_road_candidate",
+      "reason": "UNKNOWN",
+      "service_needs": {
+        "boarding_assistance": false,
+        "requires_step_free": false,
+        "wheelchair_slots": 0
+      },
+      "service_type": "PASSENGER",
+      "status": "IN_TRANSIT",
+      "vehicle_id": "V03"
+    }
+  },
+  "jobs": {
+    "req-00000001-4bfb21e8eb11": {
+      "budget_wh": 575.39359014973,
+      "consumed_wh": 191.02703719562822,
+      "dwell_s": 0.0,
+      "home_stop": "home:V03",
+      "last_position": [
+        91.03164672851562,
+        -98.28791046142578
+      ],
+      "last_tick": 8329,
+      "last_wall": 101981.109,
+      "mission_id": "edd6129fbbf840a4b3b86fd7265bf131",
+      "phase": "TO_DROPOFF",
+      "reason": "",
+      "request_id": "req-00000001-4bfb21e8eb11",
+      "returned": false,
+      "vehicle_id": "V03"
+    }
+  }
+}
