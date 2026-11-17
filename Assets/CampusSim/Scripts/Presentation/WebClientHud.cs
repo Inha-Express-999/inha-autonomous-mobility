@@ -18,6 +18,9 @@ namespace InhaExpress.Client.Presentation
         private InputField serverAddress;
         private Text serverAddressStatus;
         private Toggle mobileStepFree;
+        // Mobile: orthographic half-height (m) of the map while it follows the passenger's dispatched vehicle.
+        private const float PassengerFocusViewMeters = 45f;
+        private string focusAssignment;
         private string passengerId;
         private string passengerRun;
         private readonly List<Renderer> mobileHiddenRenderers = new List<Renderer>();
@@ -80,6 +83,12 @@ namespace InhaExpress.Client.Presentation
         private Text selectedSpeed, queueDetails;
         private RectTransform queueContent, queueViewport;
         private Toggle[] weatherToggles;
+        // Map view mode: 기본 = single map/follow view, 전체 = one chase view per vehicle.
+        private Image[] viewModeSurfaces;
+        private Text[] viewModeLabels;
+        private RectTransform fleetLayer;
+        private RectTransform[] fleetBadges, fleetDividers;
+        private Text[] fleetBadgeLabels;
         private Button pedestrianSpawnButton;
         private Text pedestrianStatus;
         private string pedestrianFeedback, pedestrianFeedbackVehicle;
@@ -391,6 +400,7 @@ namespace InhaExpress.Client.Presentation
             speedShadow.effectColor = new Color(0, 0, 0, .35f);
             speedShadow.effectDistance = new Vector2(2, -2);
             speedPanel.gameObject.SetActive(false);
+            BuildViewModeSwitch();
             var footer = Bottom(workspace, "Map Footer", 188, 60, 20, 20);
             Surface(footer, Color.white, false);
             pedestrianSpawnButton = UiButton(RightTop(footer, "Pedestrian Spawn", 4, 132, 30, 12),
@@ -589,11 +599,108 @@ namespace InhaExpress.Client.Presentation
             UpdateEnvironmentChoices(weatherToggles, WeatherKeys, state?.weather, available);
         }
 
+        // Top-right edge of the live map. The switch only changes which cameras draw the map area.
+        private void BuildViewModeSwitch()
+        {
+            fleetLayer = FixtureUiFactory.Rect(desktopMap, "Fleet Views", Vector2.zero, Vector2.one, Vector2.zero, Vector2.zero);
+            fleetDividers = new RectTransform[2];
+            fleetBadges = new RectTransform[3];
+            fleetBadgeLabels = new Text[3];
+            var paper = FixtureUiPalette.Canvas; paper.a = 1;
+            for (int i = 0; i < fleetDividers.Length; i++)
+            {
+                // Opaque seams: hide sub-pixel gaps between neighbouring camera rects.
+                fleetDividers[i] = FixtureUiFactory.Rect(fleetLayer, "Divider " + (i + 1), Vector2.zero, Vector2.up,
+                    new Vector2(-2, 0), new Vector2(2, 0));
+                Surface(fleetDividers[i], paper, false);
+            }
+            for (int i = 0; i < fleetBadges.Length; i++)
+            {
+                int index = i;
+                fleetBadges[i] = FixtureUiFactory.Rect(fleetLayer, "Vehicle Badge " + (i + 1), Vector2.up, Vector2.up,
+                    new Vector2(10, -38), new Vector2(186, -10));
+                var surface = Surface(fleetBadges[i], VehicleColors[i]); surface.raycastTarget = true;
+                var shadow = fleetBadges[i].gameObject.AddComponent<Shadow>();
+                shadow.effectColor = new Color(.06f, .14f, .25f, .16f); shadow.effectDistance = new Vector2(0, -2);
+                fleetBadgeLabels[i] = FixtureUiFactory.Text(fleetBadges[i], "Name", "", 12, Color.white,
+                    TextAnchor.MiddleCenter, FontStyle.Bold);
+                fleetBadgeLabels[i].supportRichText = false;
+                var button = fleetBadges[i].gameObject.AddComponent<Button>(); button.targetGraphic = surface;
+                button.onClick.AddListener(() => {
+                    var vehicle = OperatorControls?.FleetPaneVehicle(index);
+                    if (vehicle != null) OperatorControls.SelectVehicle(vehicle.OperatorVehicleId);
+                });
+            }
+            fleetLayer.gameObject.SetActive(false);
+
+            var holder = RightTop(desktopMap, "View Mode", 8, 56, 62, 8);
+            var background = Surface(holder, Color.white); background.raycastTarget = true;
+            var holderShadow = holder.gameObject.AddComponent<Shadow>();
+            holderShadow.effectColor = new Color(.06f, .14f, .25f, .16f); holderShadow.effectDistance = new Vector2(0, -2);
+            string[] names = { "기본", "전체" };
+            viewModeSurfaces = new Image[2];
+            viewModeLabels = new Text[2];
+            for (int i = 0; i < 2; i++)
+            {
+                bool fleet = i == 1;
+                var button = UiButton(Top(holder, "View Mode " + names[i], 4 + i * 28, 26, 4, 4), names[i],
+                    () => SetFleetView(fleet));
+                viewModeSurfaces[i] = button.GetComponent<Image>();
+                viewModeLabels[i] = button.GetComponentInChildren<Text>();
+                viewModeLabels[i].fontSize = 12;
+            }
+            RefreshFleetView();
+        }
+
+        private void SetFleetView(bool fleet)
+        {
+            if (OperatorControls == null) return;
+            OperatorControls.SetFleetView(fleet);
+            RefreshFleetView();
+        }
+
+        private void RefreshFleetView()
+        {
+            if (viewModeSurfaces == null || viewModeSurfaces.Length < 2 || fleetLayer == null) return;
+            bool fleet = OperatorControls != null && OperatorControls.FleetView;
+            for (int i = 0; i < viewModeSurfaces.Length; i++)
+            {
+                bool on = (i == 1) == fleet;
+                viewModeSurfaces[i].color = on ? FixtureUiPalette.Blue : FixtureUiPalette.Canvas;
+                viewModeLabels[i].color = on ? Color.white : FixtureUiPalette.Ink;
+            }
+            if (fleetLayer.gameObject.activeSelf != fleet) fleetLayer.gameObject.SetActive(fleet);
+            if (!fleet) return;
+            int count = OperatorControls.FleetPaneCount;
+            for (int i = 0; i < fleetBadges.Length; i++)
+            {
+                var vehicle = i < count ? OperatorControls.FleetPaneVehicle(i) : null;
+                fleetBadges[i].gameObject.SetActive(vehicle != null);
+                if (i > 0) fleetDividers[i - 1].gameObject.SetActive(vehicle != null);
+                if (vehicle == null) continue;
+                var corner = new Vector2((float)i / count, 1);
+                fleetBadges[i].anchorMin = fleetBadges[i].anchorMax = corner;
+                if (i > 0)
+                {
+                    fleetDividers[i - 1].anchorMin = new Vector2(corner.x, 0);
+                    fleetDividers[i - 1].anchorMax = corner;
+                }
+                string id = vehicle.OperatorVehicleId;
+                int color = id == "V01" ? 0 : id == "V02" ? 1 : id == "V03" ? 2 : i % 3;
+                fleetBadges[i].GetComponent<Image>().color = VehicleColors[color];
+                var pin = mapPins.Find(p => p.vehicleId == id);
+                bool present = !(vehicle is Component component && component == null) && vehicle.VehicleTransform != null;
+                var body = present ? vehicle.VehicleBody : null;
+                fleetBadgeLabels[i].text = (pin?.caption != null ? pin.caption.text : id) + " · " +
+                    (!present ? "차량 없음" : body != null ? (body.linearVelocity.magnitude * 3.6f).ToString("0") + " km/h" : "— km/h");
+            }
+        }
+
         private void RefreshVehicleReadout()
         {
             if (selectedSpeed == null) return;
             var vehicle = OperatorControls?.SelectedVehicle;
-            bool visible = vehicle != null && OperatorControls.IsFollowing;
+            bool visible = vehicle != null && OperatorControls.IsFollowing && !OperatorControls.FleetView;
             selectedSpeed.transform.parent.parent.gameObject.SetActive(visible);
             if (!visible) return;
             var body = vehicle.VehicleBody;
@@ -1041,7 +1148,6 @@ namespace InhaExpress.Client.Presentation
         {
             if(OperatorControls!=null) { OperatorControls.Zoom(factor); return; }
         }
-        private void ResetView() => OperatorControls?.DeselectVehicle();
         private static void ActionButton(RectTransform root,string name,string value,float x,float y,float right,float top,UnityEngine.Events.UnityAction action)
         {
             var holder=FixtureUiFactory.Rect(root,name+" Bounds",new Vector2(x,y),new Vector2(right,top),Vector2.zero,Vector2.zero);
@@ -1160,8 +1266,47 @@ namespace InhaExpress.Client.Presentation
             var vegetationText = vegetation.GetComponentInChildren<Text>();
             vegetationText.font = FixtureUiFactory.Font; vegetationText.fontSize = 14;
             vegetationText.text = "나무·잔디 표시";
-            UiButton(FixtureUiFactory.Rect(root,"Map Overview",new Vector2(.82f,.63f),new Vector2(.95f,.69f),Vector2.zero,Vector2.zero),"전체",ResetView);
             Label(root,"Attribution","© OpenStreetMap contributors · ODbL 1.0",8,.05f,.60f,.95f,.615f);
+        }
+
+        private static bool HasDispatchedVehicle(string status) => status == "ASSIGNED" || status == "PICKUP_SERVICE" ||
+            status == "IN_TRANSIT" || status == "DROPOFF_SERVICE";
+
+        // The server decides the assignment; the client only looks up its own request's vehicle.
+        private CampusServerMap.Vehicle DispatchedPassengerVehicle(CampusServerMap.SharedState state)
+        {
+            if (submittedRequestId == null || state?.requests == null || state.vehicles == null) return null;
+            var request = Array.Find(state.requests, r => r.id == submittedRequestId && r.owner_id == passengerId);
+            if (request == null || string.IsNullOrEmpty(request.vehicle_id) || !HasDispatchedVehicle(request.status)) return null;
+            return Array.Find(state.vehicles, v => v.id == request.vehicle_id);
+        }
+
+        // Same display point as the mobile pin: server XZ at the local vehicle height (the server reports y = 0).
+        private Vector3 ReportedVehiclePosition(CampusServerMap.Vehicle entry)
+        {
+            var position = entry.position_unity;
+            foreach (var pin in mapPins)
+                if (pin.vehicleId == entry.id && pin.target != null) { position.y = pin.target.position.y; break; }
+            return position;
+        }
+
+        /// <summary>
+        /// Mobile: the map follows the server-reported position of the vehicle dispatched to the
+        /// passenger's own request, and shows the campus overview whenever there is none.
+        /// </summary>
+        private void RefreshPassengerFocus(CampusServerMap.SharedState state, bool online)
+        {
+            // Offline: keep the current view and stop following; a stale position is never chased.
+            if (OperatorControls == null || !online) return;
+            var vehicle = DispatchedPassengerVehicle(state);
+            string assignment = vehicle == null ? null : submittedRequestId + "/" + vehicle.id;
+            if (assignment != focusAssignment)
+            {
+                focusAssignment = assignment;
+                if (assignment == null) OperatorControls.DeselectVehicle();
+            }
+            if (vehicle != null)
+                OperatorControls.TrackMapPoint(ReportedVehiclePosition(vehicle), PassengerFocusViewMeters);
         }
 
         private void ConnectMobileServer()
@@ -1231,6 +1376,7 @@ namespace InhaExpress.Client.Presentation
             if (map == null || Time.unscaledTime < nextRefresh || connection == null) return;
             nextRefresh = Time.unscaledTime + .25f;
             if (!mobile) RefreshEnvironmentControls();
+            if (!mobile) RefreshFleetView();
             RefreshStopDropdowns();
             if (disconnectButton != null) RefreshDisconnectDemo();
             if (crowdStatus != null && crowdOverlay != null)
@@ -1292,6 +1438,7 @@ namespace InhaExpress.Client.Presentation
                     else if (mobileStepFree != null) mobileStepFree.interactable = !submitting && pendingRequestJson == null;
                 }
             }
+            if (mobile) RefreshPassengerFocus(state, online);
             session.text = $"v{Application.version}";
             int connectedCount = 0;
             if (!mobile && OperatorControls != null)
@@ -1457,9 +1604,11 @@ namespace InhaExpress.Client.Presentation
         private void LateUpdate()
         {
             if (worldCamera == null || safeRoot == null) return;
+            // Map-projected overlays belong to the single overview camera only.
+            bool overview = OperatorControls == null || !OperatorControls.IsFollowing && !OperatorControls.FleetView;
             if (routeOverlays != null) foreach (var overlay in routeOverlays)
-                if (overlay != null) overlay.ShowOverview = OperatorControls == null || !OperatorControls.IsFollowing;
-            if (crowdOverlay != null) crowdOverlay.ShowOverview = OperatorControls == null || !OperatorControls.IsFollowing;
+                if (overlay != null) overlay.ShowOverview = overview;
+            if (crowdOverlay != null) crowdOverlay.ShowOverview = overview;
             if (lastScreenSize != new Vector2Int(Screen.width, Screen.height) || lastSafeArea != Screen.safeArea)
             {
                 Canvas.ForceUpdateCanvases();
@@ -1469,11 +1618,14 @@ namespace InhaExpress.Client.Presentation
             var size = safeRoot.rect.size;
             var bounds = new Rect(view.x * size.x + 8, view.y * size.y + 8, view.width * size.x - 16, view.height * size.y - 16);
             placedLabels.Clear();
+            // Vehicle labels keep clear of the view mode switch in the map's top-right corner.
+            if (viewModeSurfaces != null)
+                placedLabels.Add(new Rect(view.xMax * size.x - 70, view.yMax * size.y - 76, 70, 76));
             foreach (var pin in mapPins)
             {
                 // Fleet badges remain visible in the PC overview independently
                 // of optional hub/debug markers. Follow view stays unobstructed.
-                bool fleetOverview = !mobile && pin.vehicleId != null && OperatorControls != null && !OperatorControls.IsFollowing;
+                bool fleetOverview = !mobile && pin.vehicleId != null && overview;
                 if ((!mobile && !showWorldMarkers && !fleetOverview) || pin.target == null)
                 { pin.root.gameObject.SetActive(false); pin.hovered = false; continue; }
                 var position = pin.target.position;

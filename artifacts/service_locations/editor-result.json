@@ -1,6 +1,6 @@
 {
   "success": true,
-  "geometry_hash": "a912d2bd63406d1c1d4e553f5e03dba23750cb566a44d5560018609ff32d13ce",
+  "geometry_hash": "881064a03d85ff5067998b761d0124d3fadcb6c15113dab45daee52fa36f29ec",
   "stops": 14,
   "hubs": 3,
   "server_reloaded": false,
@@ -8,14 +8,24 @@
     "schema_version": 1,
     "stops": [
       {
+        "id": "anniversary_60_road_candidate",
+        "x": 22.31523755622179,
+        "z": -18.199166638450492
+      },
+      {
         "id": "biryong_plaza_road_candidate",
         "x": 227.23400839916872,
         "z": -125.82083241883694
       },
       {
+        "id": "building_5_road_candidate",
+        "x": -59.82385552005857,
+        "z": 3.68643683382075
+      },
+      {
         "id": "hitech_road_candidate",
-        "x": 377.02397003392076,
-        "z": -2.0795543233714398
+        "x": 322.3183135408053,
+        "z": -3.742645212928153
       },
       {
         "id": "inha_station_road_candidate",
