@@ -197,6 +197,29 @@ class DemoSession:
         if self.recovery is not None:
             self.recovery.healthy()
 
+    def recovery_state(self):
+        store = self.recovery
+        if store is None:
+            return {"status": "DISABLED", "enabled": False, "restored_requests": 0, "pending_vehicles": []}
+        status = "STORAGE_FAILED" if store.failed else "READY"
+        pending = []
+        if not store.failed:
+            for job in self.physical_dispatch.jobs.values():
+                if job.request_id not in store.restored_request_ids or job.returned:
+                    continue
+                vehicle = self.physical.vehicles.get(job.vehicle_id)
+                if vehicle is None or not self.physical_dispatch._fresh(vehicle, self.physical.clock()):
+                    status = "WAITING_OBSERVATION"
+                    pending.append(job.vehicle_id)
+                elif not vehicle.mission_id or vehicle.mission_id != job.mission_id or job.reason:
+                    if status != "WAITING_OBSERVATION":
+                        status = "WAITING_REPLAN"
+                    pending.append(job.vehicle_id)
+            if status == "READY" and store.restored_request_ids:
+                status = "RESTORED"
+        return {"status": status, "enabled": True, "restored_requests": len(store.restored_request_ids),
+                "pending_vehicles": sorted(set(pending))}
+
     def crowd_state(self):
         """PC/web-only prior snapshot; mobile clients must not subscribe (AGENTS §11/§13)."""
         with self.lock:
@@ -245,8 +268,13 @@ class DemoSession:
     def state(self):
         with self.lock:
             service = self.service
-            service.step()
-            self.physical_dispatch.step()
+            if not (self.recovery and self.recovery.failed):
+                service.step()
+                try:
+                    self.physical_dispatch.step()
+                except ValueError:
+                    if not (self.recovery and self.recovery.failed):
+                        raise
             now = service._time_s
             active = {t.vehicle_id: t for t in service.trips.values() if not t.returned}
             vehicles = []
@@ -349,6 +377,7 @@ class DemoSession:
                 "paused": self.clock.paused,
                 "planner": service.route_algorithm,
                 "dispatch": service.dispatch_algorithm,
+                "recovery": self.recovery_state(),
                 "physical_dispatch": service.dispatch_algorithm,
                 "physical_dispatch_diagnostics": dict(self.physical_dispatch.diagnostics),
                 "map_version": service.graph.map_version,
@@ -370,8 +399,14 @@ class DemoSession:
 
     def advance(self):
         with self.lock:
+            if self.recovery and self.recovery.failed:
+                return
             self.service.step()
-            self.physical_dispatch.step()
+            try:
+                self.physical_dispatch.step()
+            except ValueError:
+                if not (self.recovery and self.recovery.failed):
+                    raise
 
     def events(self, now):
         result = []

@@ -1,0 +1,26 @@
+{
+  "command_id": "live-recovery-20261117-1",
+  "accepted": true,
+  "request": {
+    "id": "req-00000001-39fa3453891f",
+    "owner_id": "recovery-validation",
+    "service_type": "PASSENGER",
+    "status": "QUEUED",
+    "created_s": 0.0,
+    "pickup_landmark_id": "anniversary_60",
+    "dropoff_landmark_id": "biryong_plaza",
+    "pickup_stop_id": "anniversary_60_road_candidate",
+    "dropoff_stop_id": "biryong_plaza_road_candidate",
+    "service_needs": {
+      "requires_step_free": false,
+      "wheelchair_slots": 0,
+      "boarding_assistance": false
+    },
+    "party_size": 1,
+    "cargo_kg": 0.0,
+    "latest_arrival_s": null,
+    "eta_s": null,
+    "vehicle_id": null,
+    "reason": "UNKNOWN"
+  }
+}

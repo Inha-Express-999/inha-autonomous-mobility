@@ -4,6 +4,33 @@ SQLite checkpoint를 명시적으로 켜면 요청, command_id 응답 기록, �
 
 ## 활성화
 
+간편 실행: 저장소의 `scripts/start_recovery_server.cmd`를 CMD에서 실행한다. 프로젝트 `.venv`와 기본 `tmp/physical-service.db`를 사용한다. 서버 창을 켜둔 상태에서 Unity PC_Bootstrap을 Play하면 이 서버를 재사용한다. 서버 종료는 해당 창에서 Ctrl+C로 한다. 다음 실행에서도 같은 DB를 사용하며 초기화하지 않는다.
+
+```cmd
+scripts\start_recovery_server.cmd
+```
+
+다른 DB/포트: `scripts\start_recovery_server.cmd -Database tmp/my-demo.db -Port 8765`. DB 경로는 상대 경로인 경우 저장소 루트 기준이다. `-CheckOnly`는 DB를 생성/열고 복원 호환성을 검사한 후 종료한다. 포트 사용 중이면 기존 서버를 종료하지 않고 실행을 거부한다. 손상 DB도 지우지 않는다. 기본 바인딩은 이 PC의 loopback이며 모바일 LAN 접속용 실행 스크립트가 아니다.
+
+## 관제 복구 안내
+
+PC 관제 제목 아래에 서버가 보고한 복구 상태를 표시한다. 모바일 화면은 변경하지 않는다.
+
+| 상태 | 표시/의미 |
+|---|---|
+| DISABLED | 메모리 모드: 서버 재시작 시 요청 초기화 |
+| READY | 저장 모드 활성화, 이번 프로세스에서 복원한 요청 없음 |
+| WAITING_OBSERVATION | 요청을 복원했지만 배정 차량의 새 관측 대기 |
+| WAITING_REPLAN | 새 관측 이후 경로 설치/복구 조건 해결 대기 |
+| RESTORED | 복원 대상의 경로 준비 또는 운송 종료 확인. 실제 주행 여부는 차량 상태 확인 |
+| STORAGE_FAILED | 저장 실패를 기록한 상태, 제어 거부. 저장소 확인 후 서버 재시작 필요 |
+
+서버에 접속할 수 없으면 `서버 응답 없음 · 제동/재연결 대기 · 서버 로그 확인`을 표시한다. 이 문구만으로 차량의 물리적 정지가 확인된 것은 아니다. 시작 단계의 DB 손상/지도 불일치로 서버가 기동되지 않는 경우 구체 원인은 서버 실행 창에서 확인한다. 서버가 살아 있는 동안 발생한 저장 실패는 상태 조회를 유지해 관제에 표시하며, 제어 차단은 유지한다.
+
+`/v1/demo/state`에 선택적 `recovery` 객체(status, enabled, restored_requests, pending_vehicles)를 추가했다. 구버전 서버의 필드 누락은 관제에서 미지원으로 표시한다. 이 객체는 표현용이며 차량 안전 판단이나 운행 재개 명령으로 사용하지 않는다.
+
+## 직접 실행
+
 저장소 루트에서 실행한다. 하나의 DB는 동시에 하나의 서버만 사용해야 한다. 기존 서버가 있으면 동일 포트에 중복 실행하지 않는다.
 
 ```powershell
@@ -30,3 +57,7 @@ Unity PC_Bootstrap은 호환되는 실행 중 서버를 재사용한다. Unity�
 `backend/tests/test_recovery.py`는 요청 중복 방지, 5개 운송 단계 복원, 새 관측 이전 주행 방지, 복원 후 완료/복귀 및 두 번째 재시작의 완료 집계, DB 손상/지도 불일치, 저장 실패 시 제어 거부, 별도 Python 프로세스의 비정상 종료 후 읽기, API 설정 연결을 검사한다. 합성 도착 관측 시험과 실제 Unity 주행 결과는 구분한다.
 
 2026-11-16 관련 Python 시험 합계 58개 통과. 복구 옵션을 켠 실제 Unity 시험에서도 V01 운송 중 서버 강제 종료 후 같은 요청을 복원해 운송 완료와 정문 차고지 복귀/충전을 1회 확인했다. [원자료·조건·한계](../artifacts/validation/2026-11-16-durable-restart/README.md)를 참고한다.
+
+2026-11-17 복구 상태 표시와 간편 실행기 추가: 관련 Python 시험 48개 통과, 변경 Unity assembly 2개 Roslyn 컴파일 통과. 실행기의 DB 검사, 사용 중 포트 거부, 손상 DB 보존을 확인했다. 실제 Unity 관제 표시는 로컬 서버 접속 시간 초과(SERVICE_LOCATIONS_BLOCKED)로 확인하지 못했다. 이번 결과는 실제 화면 또는 추가 주행 시험 통과를 의미하지 않는다.
+
+후속 실제 화면 확인: 저장 중/서버 응답 없음/요청 1건 복원 완료 및 연결 3/3 표시를 확인했다. V02의 같은 요청이 서버 재시작 뒤 새 mission으로 운행을 재개하고 COMPLETED, 완료 집계 1건에 도달했다. 사용자 CMD에서 Ctrl+C 후 같은 DB로 재실행한 시험이다. [기록](../artifacts/validation/2026-11-17-live-recovery/README.md).

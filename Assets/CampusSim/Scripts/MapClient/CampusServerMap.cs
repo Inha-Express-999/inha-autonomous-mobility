@@ -41,6 +41,14 @@ namespace InhaExpress.Client.MapClient
             public string planner, dispatch;
             public TransportRequest[] queue, requests;
             public Vehicle[] vehicles;
+            public RecoveryState recovery;
+        }
+        [Serializable] public sealed class RecoveryState
+        {
+            public string status;
+            public bool enabled;
+            public int restored_requests;
+            public string[] pending_vehicles;
         }
         [Serializable] public sealed class Vehicle
         {

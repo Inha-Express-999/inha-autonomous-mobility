@@ -16,6 +16,7 @@ class RecoveryStore:
         self.path = Path(path)
         self.path.parent.mkdir(parents=True, exist_ok=True)
         self.failed = False
+        self.restored_request_ids = set()
         with sqlite3.connect(self.path) as db:
             db.execute(
                 "CREATE TABLE IF NOT EXISTS checkpoint (id INTEGER PRIMARY KEY CHECK(id=1), payload TEXT NOT NULL, digest TEXT NOT NULL)"
@@ -157,6 +158,7 @@ class RecoveryStore:
             dispatcher.ready_sequence = data["ready_sequence"]
             dispatcher.opportunity_count = data["opportunities"]
             dispatcher.events = data["events"]
+            self.restored_request_ids = set(requests)
         except Exception as error:
             self.failed = True
             raise ValueError(

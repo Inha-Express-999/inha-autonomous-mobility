@@ -168,3 +168,36 @@ def test_api_uses_explicit_recovery_path(tmp_path, monkeypatch):
     original = app.state.demo.submit(command)
     other = create_app()
     assert other.state.demo.submit(command).request.id == original.request.id
+
+
+def test_recovery_status_waits_for_pose_and_replan(tmp_path):
+    assert DemoSession().recovery_state()["status"] == "DISABLED"
+    s, p, token, wall = setup()
+    attach(s, tmp_path / "status.db")
+    assert s.recovery_state()["status"] == "READY"
+    r = request(s)
+    pose = p.vehicles["V01"].ego
+    recovered = DemoSession(wall_clock=lambda: wall[0], recovery_path=tmp_path / "status.db")
+    recovered.physical.clock = lambda: wall[0]
+    assert recovered.state()["recovery"]["status"] == "WAITING_OBSERVATION"
+    assert recovered.recovery_state()["pending_vehicles"] == ["V01"]
+    token = recovered.physical.connect("V01")
+    recovered.physical.observation("V01", token, pose.model_copy(update={"run_id": recovered.run_id, "tick": 1}))
+    assert recovered.recovery_state()["status"] == "WAITING_REPLAN"
+    recovered.advance()
+    assert recovered.recovery_state()["status"] == "RESTORED"
+    assert recovered.recovery_state()["restored_requests"] == 1
+    assert r.id in recovered.service.requests
+
+
+def test_storage_error_remains_visible_without_resuming_control(tmp_path, monkeypatch):
+    s, p, token, _wall = setup()
+    attach(s, tmp_path / "status.db")
+    request(s)
+    def fail(*args, **kwargs):
+        raise OSError("unavailable")
+    monkeypatch.setattr(sqlite3, "connect", fail)
+    s.advance()
+    assert s.state()["recovery"]["status"] == "STORAGE_FAILED"
+    with pytest.raises(ValueError, match="RECOVERY_STORAGE_FAILED"):
+        p.observation("V01", token, p.vehicles["V01"].ego.model_copy(update={"tick": 2}))

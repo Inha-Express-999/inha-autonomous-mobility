@@ -53,6 +53,7 @@ namespace InhaExpress.Client.Presentation
         private bool mobile;
         private Button disconnectButton;
         private Text disconnectLabel, disconnectStatus;
+        private Text recoveryStatus;
         private float nextRefresh;
         private float fittedSize;
         private readonly List<Camera> suspendedCameras = new List<Camera>();
@@ -335,6 +336,8 @@ namespace InhaExpress.Client.Presentation
             var stats = Top(workspace, "Summary", 58, 70, 20, 20);
             Surface(stats, Color.white);
             statCards = new Text[4];
+            recoveryStatus = TextAt(Top(workspace, "Server Recovery", 44, 14, 20, 20), "", 11);
+            recoveryStatus.supportRichText = false;
             string[] statNames = { "제어 연결 차량", "대기 요청", "운송 완료", "충전 중" };
             for (int i = 0; i < 4; i++)
             {
@@ -1242,6 +1245,22 @@ namespace InhaExpress.Client.Presentation
             connection.text = online ? "● 서버 연결됨" : "● 연결 대기";
             connection.color = online ? FixtureUiPalette.Green : FixtureUiPalette.Amber;
             var state = map.LatestState;
+            if (recoveryStatus != null)
+            {
+                var recovery = state?.recovery;
+                recoveryStatus.text = !online ? "서버 응답 없음 · 제동/재연결 대기 · 서버 로그 확인" : recovery?.status switch
+                {
+                    "DISABLED" => "메모리 모드 · 서버 재시작 시 요청 초기화",
+                    "READY" => "운송 상태 저장 중",
+                    "WAITING_OBSERVATION" => "요청 복원 · 새 차량 관측 대기",
+                    "WAITING_REPLAN" => "요청 복원 · 경로 재계획 대기",
+                    "RESTORED" => $"요청 {recovery.restored_requests}건 복원 완료 · 차량 운행 상태 확인",
+                    "STORAGE_FAILED" => "저장 실패 · 제어 중단 · 저장소 확인 후 서버 재시작",
+                    _ => "복구 상태 미지원 · 서버 버전 확인"
+                };
+                recoveryStatus.color = online && (recovery?.status == "READY" || recovery?.status == "RESTORED")
+                    ? FixtureUiPalette.Green : FixtureUiPalette.Amber;
+            }
             if (!mobile) RefreshQueue(state, online);
             if (mobile && online && passengerRun != map.RunId)
             { passengerRun = map.RunId; submittedRequestId = null; requestStatus.text = "거점을 선택해 호출하세요"; }

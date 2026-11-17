@@ -1,0 +1,9 @@
+{
+  "new_run": true,
+  "same_request": true,
+  "same_vehicle": true,
+  "restored": true,
+  "fresh_observation": true,
+  "new_mission": true,
+  "moving": true
+}
