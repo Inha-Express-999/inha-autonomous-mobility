@@ -1,5 +1,15 @@
 # 변경 이력
 
+## 0.5.14.0 — 2026-11-17 · PC 운행 지도 기본/전체 보기
+
+- 작업: PC 운행 지도 오른쪽 위에 기본/전체 전환을 추가했다. 기본은 기존 운영 지도·선택 차량 추적 그대로다. 전체는 지도 영역을 차량 ID 순으로 나눠 차량별 추적 카메라(V01~V03)를 나란히 보여 주고, 칸마다 차량 상태·속도 배지를 표시한다. 배지를 누르면 그 차량이 선택된다.
+- 작업: 전체에서는 지도 투영 오버레이(차량 핀·경로 선·혼잡 예상)와 선택 차량 속도 패널을 숨기고, 휠은 세 칸 공통 추적 거리만 바꾼다. 차고 표시 모델은 추적 화면과 같이 전체 보기 카메라에서도 가린다. 식생 표시 거리는 전체 보기 카메라 위치도 함께 고려한다(`VegetationDisplaySettings.ExtraViewpoints`).
+- 작업: PlayMode 시험 `FleetViewShowsEveryVehicleSideBySideAndRestoresTheSingleView`를 추가했다.
+- 이유: 차량 3대의 주행 화면을 한 번에 관제하기 위해서다.
+- 호환성/마이그레이션: PC 표시 전용이다. 선택·추적 상태, 차량 Transform·센서·주행 명령, 통신 schema·map_version은 바꾸지 않았다. 모바일은 영향이 없다. 버전 0.5.12.0·0.5.13.0은 다른 브랜치의 태그가 이미 사용해 다음 미사용 번호를 썼다.
+- 검증: Unity 6000.3.21f1의 Roslyn과 Bee 응답 파일로 변경 어셈블리 6개(MapClient, Presentation, Assembly-CSharp, Simulation, Tests.PlayMode, Tests.EditMode)를 컴파일했다. 오류 0건.
+- 미검증/한계: Unity Editor 안의 재컴파일, 실제 화면 확인, 추가한 PlayMode 시험은 실행하지 않았다. 전체 보기는 카메라 3대가 동시에 그리며 FPS·배치 수·메모리는 측정하지 않았다.
+
 ## 0.5.11.1 — 2026-11-13 · 병합 후 PlayMode 시험 컴파일 오류 수정
 
 - 작업: algorithms의 `PoseProbeVehicle` 시험 차량에 week8이 `IAutonomousVehicle`에 추가한 `SteeringRateRadPerSecond`를 구현했다.

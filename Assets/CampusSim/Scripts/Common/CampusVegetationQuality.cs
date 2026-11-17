@@ -56,7 +56,12 @@ namespace CampusSim
                     float radius = Mathf.Max(DrawDistance, viewCamera.orthographicSize * Mathf.Max(1, viewCamera.aspect) * 1.2f);
                     limit = radius * radius;
                 }
-                patch.enabled = patch.bounds.SqrDistance(origin) <= limit;
+                bool near = patch.bounds.SqrDistance(origin) <= limit;
+                // Additional cameras (PC all-vehicle view) keep their own surroundings drawn.
+                var extra = InhaExpress.Client.MapClient.VegetationDisplaySettings.ExtraViewpoints;
+                for (int i = 0; !near && i < extra.Count; i++)
+                    near = extra[i] && patch.bounds.SqrDistance(extra[i].position) <= distanceSquared;
+                patch.enabled = near;
             }
         }
         void OnDisable()
